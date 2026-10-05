@@ -332,9 +332,9 @@ class SettingsScreen extends ConsumerWidget {
         const Divider(),
         row('Verify email', '/auth/verify'),
         const Divider(),
-        row('My courses', '/courses'),
+        row('My courses', '/settings/courses'),
         const Divider(),
-        row('Password', '/login'),
+        row('Password', '/settings/password'),
         const SizedBox(height: 25),
         const Text('PREFERENCES', style: sectionStyle),
         const SizedBox(height: 10),
@@ -461,6 +461,19 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
         keyboardType: TextInputType.emailAddress,
         maxLength: 254,
         decoration: const InputDecoration(labelText: 'Email'),
+      ),
+      const SizedBox(height: 12),
+      ListTile(
+        contentPadding: EdgeInsets.zero,
+        title: const Text(
+          'Change password',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+        trailing: const Icon(
+          Icons.chevron_right,
+          color: ReferenceColors.disabled,
+        ),
+        onTap: () => context.push('/settings/password'),
       ),
       if (error != null)
         Padding(

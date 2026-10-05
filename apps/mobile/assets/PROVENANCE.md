@@ -30,3 +30,13 @@ English Story/Radio/Roleplay, challenges, Adventure airport scenes/object icons 
 Stories covers, Max offer/reminder/plans/welcome/call/benefits/invite/completion/app-icon artwork and Timer Boost clock/basket/barrel/rays retain byte-identical Gummble sources. Their per-screen IDs and native-state interpretation are in `docs/design/flows/13_STORIES_LIBRARY.md`, `14_MAX_SUBSCRIPTION.md` and `15_TIMER_BOOST.md`. Max call and black Duo artwork are original stills; their original speech/flight rigs were not obtained. Timer Boost illustrations do not establish a proprietary animation timeline. UI text, prices, trial confirmation and store-stock controls are native widgets with local mock state.
 
 Streak/family, achievement/monthly badge, Friends Clash and status/feed sources are mapped in `docs/design/flows/16_STREAK_SOCIAL.md` through `19_STATUS_FEED.md`. Clash uses the original Eddy coach and Zari/Oscar exercise exports; feed detail uses original Oscar/Eddy exports where mapped. Their verified state machine inputs are reused without invented speech inputs. Actual native Rive frames are captured separately from layout stills. Joint character scenes, premium status symbols and other unmatched source illustrations remain stills; these exports do not establish identical archived pose/frame timing.
+
+Course-removal continuation adds the202nd byte-intact bundled PNG,
+`reference_art/course-remove.png`, from Gummble screen
+`sc_39a18bbd6e52469ea53842c8e2f55829`. SHA-256:
+`7b0e84798f3461e4b4fc820778c1e004945972d6ad044903a6da83c247d10bec`.
+The earlier201-file audit above is the published snapshot; the current audit is202.
+The crying-Duo ROI includes the original rounded ground shadow, with native
+sheet copy/controls outside it. Its animation rig/timing remains unresolved.
+Profile QR reuses the existing avatar and logotype ROIs; QR modules, controls and
+copy receipt are native. No avatar-builder layers were fabricated.

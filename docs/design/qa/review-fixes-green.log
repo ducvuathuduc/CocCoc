@@ -1,0 +1,13 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: League profile uses the same identity for block, report and following
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: League profile uses the same identity for block, report and following
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: League profile uses the same identity for block, report and following
+00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: League profile uses the same identity for block, report and following
+00:01 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+00:01 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: report cancellation retains following; confirm blocks once and unblock does not refollow
+00:01 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: report cancellation retains following; confirm blocks once and unblock does not refollow
+00:01 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: report cancellation retains following; confirm blocks once and unblock does not refollow
+00:01 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: report cancellation retains following; confirm blocks once and unblock does not refollow
+00:01 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: report cancellation retains following; confirm blocks once and unblock does not refollow
+00:01 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: own profile link copies actual local URL then closes back to profile
+00:01 +11: All tests passed!

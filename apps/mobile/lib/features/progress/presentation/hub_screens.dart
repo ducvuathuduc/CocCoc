@@ -12,6 +12,8 @@ import '../application/extended_controller.dart';
 import 'timer_boost_screen.dart';
 import 'social_screens.dart';
 import '../application/social_controller.dart';
+import '../application/profile_actions_controller.dart';
+import 'profile_actions.dart';
 
 class PreviewPage extends StatelessWidget {
   const PreviewPage({
@@ -537,7 +539,7 @@ class LeagueScreen extends ConsumerWidget {
                     ),
                   ),
                   onTap: () =>
-                      context.push('/profile/${i == 2 ? 'me' : 'sample-$i'}'),
+                      context.push('/profile/${i == 2 ? 'me' : names[i]}'),
                 ),
               ),
             const Padding(
@@ -589,16 +591,16 @@ class ProfileScreen extends ConsumerWidget {
     final preview = ref.watch(previewControllerProvider),
         progress = ref.watch(learningStateProvider);
     final own = userId == 'me';
+    if (!own && !sampleProfileIds.contains(userId)) {
+      return const PreviewPage(
+        title: 'Profile unavailable',
+        children: [Text('This profile is not available in the local preview.')],
+      );
+    }
+    final blocked = ref.watch(profileActionsProvider).blocked.contains(userId);
     final name = own
         ? preview.name
-        : const {
-            'Alex',
-            'Maria',
-            'Lucas',
-            'Anna',
-            'Samira',
-            'Sam Lee',
-          }.contains(userId)
+        : sampleProfileIds.contains(userId)
         ? userId
         : 'Alex';
     return Scaffold(
@@ -633,11 +635,7 @@ class ProfileScreen extends ConsumerWidget {
                         tooltip: own ? 'Settings' : 'Profile options',
                         onPressed: () => own
                             ? context.push('/settings')
-                            : showLearningNotice(
-                                context,
-                                'Sample profile',
-                                'This is a public sample profile in the local preview.',
-                              ),
+                            : showProfileOptions(context, ref, userId),
                         icon: Icon(
                           own ? Icons.settings : Icons.more_horiz,
                           color: ReferenceColors.muted,
@@ -661,15 +659,32 @@ class ProfileScreen extends ConsumerWidget {
                   if (own)
                     Align(
                       alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () => context.push('/settings/profile'),
-                        child: const Text(
-                          'EDIT',
-                          style: TextStyle(
-                            color: LearningColors.blue,
-                            fontWeight: FontWeight.w700,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            tooltip: 'Profile link',
+                            onPressed: () => showProfileShare(
+                              context,
+                              userId: userId,
+                              name: name,
+                            ),
+                            icon: const Icon(
+                              Icons.qr_code,
+                              color: LearningColors.blue,
+                            ),
                           ),
-                        ),
+                          TextButton(
+                            onPressed: () => context.push('/settings/profile'),
+                            child: const Text(
+                              'EDIT',
+                              style: TextStyle(
+                                color: LearningColors.blue,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   Text(
@@ -712,6 +727,8 @@ class ProfileScreen extends ConsumerWidget {
                   ReferenceButton(
                     label: own
                         ? 'ADD FRIENDS'
+                        : blocked
+                        ? 'UNBLOCK USER'
                         : preview.following.contains(userId)
                         ? 'FOLLOWING'
                         : 'FOLLOW',
@@ -719,6 +736,10 @@ class ProfileScreen extends ConsumerWidget {
                     foregroundColor: LearningColors.blue,
                     onPressed: () => own
                         ? context.push('/friends')
+                        : blocked
+                        ? ref
+                              .read(profileActionsProvider.notifier)
+                              .unblock(userId)
                         : ref
                               .read(previewControllerProvider.notifier)
                               .follow(userId),

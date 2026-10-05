@@ -1,0 +1,23 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: Manage accounts opens full screen and Done preserves account
+00:01 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: visibility, retry and internal Back preserve form input
+00:02 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: visibility, retry and internal Back preserve form input
+00:03 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: visibility, retry and internal Back preserve form input
+00:03 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: pending Remove disables duplicate account removal
+00:03 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: busy screen blocks duplicate and stale taps
+00:04 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: busy screen blocks duplicate and stale taps
+00:04 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: recovery failure retains email and never shows sent sheet
+00:04 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: recovery success opens dismissible sheet
+00:05 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login choice fits width 360.0 text2 and keyboard
+00:05 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login details fits width 360.0 text2 and keyboard
+00:05 +11: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login forgot fits width 360.0 text2 and keyboard
+00:06 +12: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login reset fits width 360.0 text2 and keyboard
+00:06 +13: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login choice fits width 390.0 text2 and keyboard
+00:06 +14: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login details fits width 390.0 text2 and keyboard
+00:06 +15: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login forgot fits width 390.0 text2 and keyboard
+00:06 +16: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login reset fits width 390.0 text2 and keyboard
+00:06 +17: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login choice fits width 430.0 text2 and keyboard
+00:06 +18: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login details fits width 430.0 text2 and keyboard
+00:06 +19: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login forgot fits width 430.0 text2 and keyboard
+00:06 +20: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: login reset fits width 430.0 text2 and keyboard
+00:07 +21: All tests passed!

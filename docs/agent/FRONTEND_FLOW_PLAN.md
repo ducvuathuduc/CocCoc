@@ -12,6 +12,11 @@ Spec: docs/design/flows/01_ONBOARDING.md is written from inspected Gummble refer
 
 ## Tasks
 
+2026-10-05 continuation: use the [remaining plan](FRONTEND_REMAINING_PLAN.md) and
+[persistent flow checklist](../design/qa/FLOW_CHECKLIST.md) for new claims. Reuse
+completed families. [Continuation evidence](../design/qa/ENGLISH_CONTINUATION_REPORT.md)
+supersedes earlier239-test frontend evidence for current course/account/profile work.
+
 - [x] UI-FOUND-001: Android/iOS shell plus web preview, local Git branch `codex/flutter-onboarding-login`, pinned pubspec/lock, scripts/CI and infrastructure/toolchain.json. CI and iOS builds are configured, not executed.
 - [x] UI-REF-001: live Gummble MCP, 20 ordered onboarding screenshots and 17 deduplicated login references, inspected before feature code. See flows/01_ONBOARDING.md and 02_LOGIN.md.
 - [x] UI-STATE-001: tested selections, Back, serialized durable saves, failures/retry, bootstrap restoration and routing.

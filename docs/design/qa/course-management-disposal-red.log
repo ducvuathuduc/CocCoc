@@ -1,0 +1,21 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/course_management_test.dart
+00:00 +0: English is protected with a visible fixture reason
+00:00 +1: cancel retains enrollment and confirmation removes once
+00:00 +2: course removal leaves learning progress state untouched
+00:00 +3: disposal during removal resolves false without stale state access
+00:00 +3 -1: disposal during removal resolves false without stale state access [E]
+  Cannot use the Ref of NotifierProvider<CourseManagementController, CourseManagementState>#af776 after it has been disposed. This typically happens if:
+  - A provider rebuilt, but the previous "build" was still pending and is still performing operations.
+    You should therefore either use `ref.onDispose` to cancel pending work, or
+    check `ref.mounted` after async gaps or anything that could invalidate the provider.
+  - You tried to use Ref inside `onDispose` or other life-cycles.
+    This is not supported, as the provider is already being disposed.
+
+  package:riverpod/src/core/ref.dart 240:7                                                 Ref._throwIfInvalidUsage
+  package:riverpod/src/core/provider/notifier_provider.dart 83:9                           AnyNotifier.state
+  package:cocenglish/features/account/application/course_management_controller.dart 108:9  CourseManagementController.confirmRemoval
+
+00:00 +3 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/course_management_test.dart: disposal during removal resolves false without stale state access

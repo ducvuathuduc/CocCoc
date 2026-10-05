@@ -148,6 +148,8 @@ class _ReferenceButtonState extends State<ReferenceButton> {
               onPressed: widget.onPressed,
               child: widget.leading == null
                   ? Text(widget.label, textAlign: TextAlign.center)
+                  : widget.label.isEmpty
+                  ? widget.leading!
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

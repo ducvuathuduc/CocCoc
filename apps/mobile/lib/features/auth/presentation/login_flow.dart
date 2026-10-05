@@ -9,6 +9,7 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../application/auth_controller.dart';
 import '../domain/auth_state.dart';
+import 'saved_account_management.dart';
 
 const authBlue = Color(0xFF1CB0F6);
 const authBlueEdge = Color(0xFF1899D6);
@@ -255,32 +256,15 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
           ),
           gap(32),
           TextButton(
-            onPressed: () => showModalBottomSheet<void>(
-              context: context,
-              showDragHandle: true,
-              builder: (sheetContext) => SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      heading('Manage accounts'),
-                      gap(20),
-                      Text(account.email),
-                      gap(24),
-                      ReferenceButton(
-                        label: 'REMOVE FROM THIS DEVICE',
-                        outlined: true,
-                        onPressed: () async {
-                          await c.forgetRemembered();
-                          if (sheetContext.mounted) Navigator.pop(sheetContext);
-                        },
-                      ),
-                    ],
-                  ),
+            onPressed: () async {
+              final removed = await Navigator.of(context).push<bool>(
+                MaterialPageRoute(
+                  builder: (_) =>
+                      SavedAccountManagementScreen(account: account),
                 ),
-              ),
-            ),
+              );
+              if (removed == true && mounted) widget.onExit();
+            },
             child: const Text(
               'MANAGE ACCOUNTS',
               style: TextStyle(

@@ -1,0 +1,96 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart
+test/profile_actions_ui_test.dart:2:8: Error: Error when reading 'lib/features/progress/application/profile_actions_controller.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/application/profile_actions_controller.dart';
+       ^
+test/profile_actions_ui_test.dart:3:8: Error: Error when reading 'lib/features/progress/presentation/profile_actions.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/presentation/profile_actions.dart';
+       ^
+test/profile_actions_ui_test.dart:14:7: Error: Undefined name 'profileClipboardWriterProvider'.
+      profileClipboardWriterProvider.overrideWithValue((url) async {
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/profile_actions_ui_test.dart:18:120: Error: Method not found: 'showProfileShare'.
+    ],child: MaterialApp(theme: referenceTheme,home: Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Sam Lee',name:'Sam Lee'),child:const Text('OPEN')))))));
+                                                                                          ^^^^^^^^^^^^^^^^
+test/profile_actions_ui_test.dart:21:20: Error: Method not found: 'profilePreviewUrl'.
+    expect(qr.data,profilePreviewUrl('Sam Lee'));
+                   ^^^^^^^^^^^^^^^^^
+test/profile_actions_ui_test.dart:36:276: Error: Method not found: 'showProfileShare'.
+        await t.pumpWidget(ProviderScope(child:MaterialApp(theme:referenceTheme,builder:(context,child)=>MediaQuery(data:MediaQuery.of(context).copyWith(textScaler:TextScaler.linear(scale)),child:child!),home:Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Alex',name:'Alex'),child:const Text('OPEN')))))));
+                                                                                          ^^^^^^^^^^^^^^^^
+test/profile_actions_ui_test.dart:42:26: Error: Method not found: 'profilePreviewUrl'.
+        expect(find.text(profilePreviewUrl('Alex')),findsOneWidget);
+                         ^^^^^^^^^^^^^^^^^
+test/profile_actions_ui_test.dart:18:33: Error: The argument type 'ThemeData Function()' can't be assigned to the parameter type 'ThemeData?'.
+ - 'ThemeData' is from 'package:flutter/src/material/theme_data.dart' ('/C:/flutter/packages/flutter/lib/src/material/theme_data.dart').
+    ],child: MaterialApp(theme: referenceTheme,home: Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Sam Lee',name:'Sam Lee'),child:const Text('OPEN')))))));
+                                ^
+test/profile_actions_ui_test.dart:21:15: Error: The getter 'data' isn't defined for the type 'QrImageView'.
+ - 'QrImageView' is from 'package:qr_flutter/src/qr_image_view.dart' ('../../../../AppData/Local/Pub/Cache/hosted/pub.dev/qr_flutter-4.1.0/lib/src/qr_image_view.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'data'.
+    expect(qr.data,profilePreviewUrl('Sam Lee'));
+              ^^^^
+test/profile_actions_ui_test.dart:29:21: Error: The getter 'data' isn't defined for the type 'QrImageView'.
+ - 'QrImageView' is from 'package:qr_flutter/src/qr_image_view.dart' ('../../../../AppData/Local/Pub/Cache/hosted/pub.dev/qr_flutter-4.1.0/lib/src/qr_image_view.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'data'.
+    expect(urls,[qr.data,qr.data]);
+                    ^^^^
+test/profile_actions_ui_test.dart:29:29: Error: The getter 'data' isn't defined for the type 'QrImageView'.
+ - 'QrImageView' is from 'package:qr_flutter/src/qr_image_view.dart' ('../../../../AppData/Local/Pub/Cache/hosted/pub.dev/qr_flutter-4.1.0/lib/src/qr_image_view.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'data'.
+    expect(urls,[qr.data,qr.data]);
+                            ^^^^
+test/profile_actions_ui_test.dart:36:66: Error: The argument type 'ThemeData Function()' can't be assigned to the parameter type 'ThemeData?'.
+ - 'ThemeData' is from 'package:flutter/src/material/theme_data.dart' ('/C:/flutter/packages/flutter/lib/src/material/theme_data.dart').
+        await t.pumpWidget(ProviderScope(child:MaterialApp(theme:referenceTheme,builder:(context,child)=>MediaQuery(data:MediaQuery.of(context).copyWith(textScaler:TextScaler.linear(scale)),child:child!),home:Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Alex',name:'Alex'),child:const Text('OPEN')))))));
+                                                                 ^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: test/profile_actions_ui_test.dart:2:8: Error: Error when reading 'lib/features/progress/application/profile_actions_controller.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/application/profile_actions_controller.dart';
+         ^
+  test/profile_actions_ui_test.dart:3:8: Error: Error when reading 'lib/features/progress/presentation/profile_actions.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/presentation/profile_actions.dart';
+         ^
+  test/profile_actions_ui_test.dart:14:7: Error: Undefined name 'profileClipboardWriterProvider'.
+        profileClipboardWriterProvider.overrideWithValue((url) async {
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/profile_actions_ui_test.dart:18:120: Error: Method not found: 'showProfileShare'.
+      ],child: MaterialApp(theme: referenceTheme,home: Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Sam Lee',name:'Sam Lee'),child:const Text('OPEN')))))));
+                                                                                                                         ^^^^^^^^^^^^^^^^
+  test/profile_actions_ui_test.dart:21:20: Error: Method not found: 'profilePreviewUrl'.
+      expect(qr.data,profilePreviewUrl('Sam Lee'));
+                     ^^^^^^^^^^^^^^^^^
+  test/profile_actions_ui_test.dart:36:276: Error: Method not found: 'showProfileShare'.
+          await t.pumpWidget(ProviderScope(child:MaterialApp(theme:referenceTheme,builder:(context,child)=>MediaQuery(data:MediaQuery.of(context).copyWith(textScaler:TextScaler.linear(scale)),child:child!),home:Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Alex',name:'Alex'),child:const Text('OPEN')))))));
+                                                                                                                                                                                                                                                                                     ^^^^^^^^^^^^^^^^
+  test/profile_actions_ui_test.dart:42:26: Error: Method not found: 'profilePreviewUrl'.
+          expect(find.text(profilePreviewUrl('Alex')),findsOneWidget);
+                           ^^^^^^^^^^^^^^^^^
+  test/profile_actions_ui_test.dart:18:33: Error: The argument type 'ThemeData Function()' can't be assigned to the parameter type 'ThemeData?'.
+   - 'ThemeData' is from 'package:flutter/src/material/theme_data.dart' ('/C:/flutter/packages/flutter/lib/src/material/theme_data.dart').
+      ],child: MaterialApp(theme: referenceTheme,home: Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Sam Lee',name:'Sam Lee'),child:const Text('OPEN')))))));
+                                  ^
+  test/profile_actions_ui_test.dart:21:15: Error: The getter 'data' isn't defined for the type 'QrImageView'.
+   - 'QrImageView' is from 'package:qr_flutter/src/qr_image_view.dart' ('../../../../AppData/Local/Pub/Cache/hosted/pub.dev/qr_flutter-4.1.0/lib/src/qr_image_view.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'data'.
+      expect(qr.data,profilePreviewUrl('Sam Lee'));
+                ^^^^
+  test/profile_actions_ui_test.dart:29:21: Error: The getter 'data' isn't defined for the type 'QrImageView'.
+   - 'QrImageView' is from 'package:qr_flutter/src/qr_image_view.dart' ('../../../../AppData/Local/Pub/Cache/hosted/pub.dev/qr_flutter-4.1.0/lib/src/qr_image_view.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'data'.
+      expect(urls,[qr.data,qr.data]);
+                      ^^^^
+  test/profile_actions_ui_test.dart:29:29: Error: The getter 'data' isn't defined for the type 'QrImageView'.
+   - 'QrImageView' is from 'package:qr_flutter/src/qr_image_view.dart' ('../../../../AppData/Local/Pub/Cache/hosted/pub.dev/qr_flutter-4.1.0/lib/src/qr_image_view.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'data'.
+      expect(urls,[qr.data,qr.data]);
+                              ^^^^
+  test/profile_actions_ui_test.dart:36:66: Error: The argument type 'ThemeData Function()' can't be assigned to the parameter type 'ThemeData?'.
+   - 'ThemeData' is from 'package:flutter/src/material/theme_data.dart' ('/C:/flutter/packages/flutter/lib/src/material/theme_data.dart').
+          await t.pumpWidget(ProviderScope(child:MaterialApp(theme:referenceTheme,builder:(context,child)=>MediaQuery(data:MediaQuery.of(context).copyWith(textScaler:TextScaler.linear(scale)),child:child!),home:Builder(builder:(context)=>Scaffold(body:TextButton(onPressed:()=>showProfileShare(context,userId:'Alex',name:'Alex'),child:const Text('OPEN')))))));
+                                                                   ^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart

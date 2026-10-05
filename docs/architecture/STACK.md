@@ -42,6 +42,7 @@ All are observed latest stable versions on the research date, **not an installed
 | [uuid4.6.0](https://pub.dev/packages/uuid) | 2026-07-15 | selected operation/install IDs | cryptographically safe randomness; no device hardware IDs |
 | [cryptography2.9.0](https://pub.dev/packages/cryptography) | 2025-11-21 | selected P4 SHA-256/Ed25519 bundle verification, pure Dart/platform implementation | published version from registry; shared canonical-byte/signature fixtures mandatory |
 | [rive0.14.11](https://pub.dev/packages/rive), [lottie3.6.1](https://pub.dev/packages/lottie) | 2026-08-03 /09-18 | installed for authorized mock frontend | original vector assets; verified character inputs and reduced-motion/lifecycle behavior; full source timing/performance acceptance remains open |
+| [qr_flutter4.1.0](https://pub.dev/documentation/qr_flutter/latest/qr_flutter/) | verified2026-10-05 | installed for native mock profile QR | encoded URL equals clipboard text; independent decode check; no sharing service or architecture change |
 | [mocktail1.0.5](https://pub.dev/packages/mocktail) | 2026-04-10 | dev; prefer handwritten repository fakes, mock platform adapter as needed | no implementation-mirroring tests |
 | [patrol4.10.0](https://pub.dev/packages/patrol) | 2026-09-15 | defer until native permission/device automation requires it | flutter_test/integration_test SDK first; pin golden host |
 | [flutter_lints6.0.0](https://pub.dev/packages/flutter_lints) | 2025-05-27 | selected dev analyzer baseline | add only meaningful project rules |

@@ -83,6 +83,19 @@ class MockAuthRepository implements AuthRepository {
     _remembered = null;
   }
 
+  // In-memory UI preview only; not part of the production auth contract.
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    final email = _remembered?.email ?? demoUser.email;
+    await Future<void>.delayed(delay);
+    if (oldPassword != (_passwords[email] ?? _initialPassword)) {
+      throw const AuthFailure('Old password is incorrect. Try again.');
+    }
+    if (newPassword.length < 12 || newPassword.length > 128) {
+      throw const AuthFailure('Use 12 to 128 characters.');
+    }
+    _passwords[email] = newPassword;
+  }
+
   bool _validEmail(String value) =>
       RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value);
 }

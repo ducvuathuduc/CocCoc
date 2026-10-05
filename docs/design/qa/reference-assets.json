@@ -93,7 +93,7 @@
     }
   ],
   "sourceScreens": 951,
-  "bundledPngs": 201,
+  "bundledPngs": 202,
   "assets": [
     {
       "file": "achievement-awards-bottom.png",
@@ -306,6 +306,13 @@
       "sha256": "cd1804a953b90dee70a7cef203c267b8c98d7f3cb9f44973703fa42dea7753f6",
       "references": [
         "catalog-cache/sc_530abf70717743a08ea749d1ca83ce24.png"
+      ]
+    },
+    {
+      "file": "course-remove.png",
+      "sha256": "7b0e84798f3461e4b4fc820778c1e004945972d6ad044903a6da83c247d10bec",
+      "references": [
+        "catalog-cache/sc_39a18bbd6e52469ea53842c8e2f55829.png"
       ]
     },
     {
