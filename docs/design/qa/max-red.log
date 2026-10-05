@@ -1,0 +1,94 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart
+test/max_flow_test.dart:3:8: Error: Error when reading 'lib/features/progress/application/max_controller.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/application/max_controller.dart';
+       ^
+test/max_flow_test.dart:4:8: Error: Error when reading 'lib/features/progress/presentation/max_screen.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/presentation/max_screen.dart';
+       ^
+test/max_flow_test.dart:16:23: Error: Undefined name 'maxControllerProvider'.
+    final vm = c.read(maxControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^
+test/max_flow_test.dart:19:19: Error: Undefined name 'maxControllerProvider'.
+    expect(c.read(maxControllerProvider).stage, MaxStage.reminder);
+                  ^^^^^^^^^^^^^^^^^^^^^
+test/max_flow_test.dart:19:49: Error: Undefined name 'MaxStage'.
+    expect(c.read(maxControllerProvider).stage, MaxStage.reminder);
+                                                ^^^^^^^^
+test/max_flow_test.dart:20:41: Error: Undefined name 'maxControllerProvider'.
+    vm.chooseReminder(8); expect(c.read(maxControllerProvider).reminderDays, isNull);
+                                        ^^^^^^^^^^^^^^^^^^^^^
+test/max_flow_test.dart:24:19: Error: Undefined name 'maxControllerProvider'.
+    expect(c.read(maxControllerProvider).selectedPlan, 'max-individual');
+                  ^^^^^^^^^^^^^^^^^^^^^
+test/max_flow_test.dart:58:19: Error: Undefined name 'maxControllerProvider'.
+    expect(c.read(maxControllerProvider).selectedPlan, 'max-family');
+                  ^^^^^^^^^^^^^^^^^^^^^
+test/max_flow_test.dart:77:23: Error: Undefined name 'maxControllerProvider'.
+      final vm=c.read(maxControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^
+test/max_flow_test.dart:82:47: Error: Couldn't find constructor 'MaxScreen'.
+      for(var i=0;i<4;i++) { await show(const MaxScreen()); vm.chooseReminder(2); vm.next(); }
+                                              ^^^^^^^^^
+test/max_flow_test.dart:84:47: Error: Couldn't find constructor 'MaxTourScreen'.
+      for(var i=0;i<9;i++) { await show(const MaxTourScreen()); vm.advanceTour(); }
+                                              ^^^^^^^^^^^^^
+test/max_flow_test.dart:26:47: Error: The getter 'isMax' isn't defined for the type 'ExtendedState'.
+ - 'ExtendedState' is from 'package:cocenglish/features/progress/application/extended_controller.dart' ('lib/features/progress/application/extended_controller.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'isMax'.
+    expect(c.read(extendedControllerProvider).isMax, isTrue);
+                                              ^^^^^
+test/max_flow_test.dart:35:47: Error: The getter 'isFamily' isn't defined for the type 'ExtendedState'.
+ - 'ExtendedState' is from 'package:cocenglish/features/progress/application/extended_controller.dart' ('lib/features/progress/application/extended_controller.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'isFamily'.
+    expect(c.read(extendedControllerProvider).isFamily, isTrue);
+                                              ^^^^^^^^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: test/max_flow_test.dart:3:8: Error: Error when reading 'lib/features/progress/application/max_controller.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/application/max_controller.dart';
+         ^
+  test/max_flow_test.dart:4:8: Error: Error when reading 'lib/features/progress/presentation/max_screen.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/presentation/max_screen.dart';
+         ^
+  test/max_flow_test.dart:16:23: Error: Undefined name 'maxControllerProvider'.
+      final vm = c.read(maxControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^
+  test/max_flow_test.dart:19:19: Error: Undefined name 'maxControllerProvider'.
+      expect(c.read(maxControllerProvider).stage, MaxStage.reminder);
+                    ^^^^^^^^^^^^^^^^^^^^^
+  test/max_flow_test.dart:19:49: Error: Undefined name 'MaxStage'.
+      expect(c.read(maxControllerProvider).stage, MaxStage.reminder);
+                                                  ^^^^^^^^
+  test/max_flow_test.dart:20:41: Error: Undefined name 'maxControllerProvider'.
+      vm.chooseReminder(8); expect(c.read(maxControllerProvider).reminderDays, isNull);
+                                          ^^^^^^^^^^^^^^^^^^^^^
+  test/max_flow_test.dart:24:19: Error: Undefined name 'maxControllerProvider'.
+      expect(c.read(maxControllerProvider).selectedPlan, 'max-individual');
+                    ^^^^^^^^^^^^^^^^^^^^^
+  test/max_flow_test.dart:58:19: Error: Undefined name 'maxControllerProvider'.
+      expect(c.read(maxControllerProvider).selectedPlan, 'max-family');
+                    ^^^^^^^^^^^^^^^^^^^^^
+  test/max_flow_test.dart:77:23: Error: Undefined name 'maxControllerProvider'.
+        final vm=c.read(maxControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^
+  test/max_flow_test.dart:82:47: Error: Couldn't find constructor 'MaxScreen'.
+        for(var i=0;i<4;i++) { await show(const MaxScreen()); vm.chooseReminder(2); vm.next(); }
+                                                ^^^^^^^^^
+  test/max_flow_test.dart:84:47: Error: Couldn't find constructor 'MaxTourScreen'.
+        for(var i=0;i<9;i++) { await show(const MaxTourScreen()); vm.advanceTour(); }
+                                                ^^^^^^^^^^^^^
+  test/max_flow_test.dart:26:47: Error: The getter 'isMax' isn't defined for the type 'ExtendedState'.
+   - 'ExtendedState' is from 'package:cocenglish/features/progress/application/extended_controller.dart' ('lib/features/progress/application/extended_controller.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'isMax'.
+      expect(c.read(extendedControllerProvider).isMax, isTrue);
+                                                ^^^^^
+  test/max_flow_test.dart:35:47: Error: The getter 'isFamily' isn't defined for the type 'ExtendedState'.
+   - 'ExtendedState' is from 'package:cocenglish/features/progress/application/extended_controller.dart' ('lib/features/progress/application/extended_controller.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'isFamily'.
+      expect(c.read(extendedControllerProvider).isFamily, isTrue);
+                                                ^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart

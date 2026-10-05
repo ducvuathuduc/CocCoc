@@ -1,0 +1,14 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/progress_preview_test.dart
+00:00 +0: quest and purchase receipts are idempotent and reject invalid funds
+00:00 +0 -1: quest and purchase receipts are idempotent and reject invalid funds [E]
+  Expected: <false>
+    Actual: <true>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\progress_preview_test.dart 19:7                main.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/progress_preview_test.dart: quest and purchase receipts are idempotent and reject invalid funds

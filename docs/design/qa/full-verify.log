@@ -1,0 +1,166 @@
+
+> cocenglish@ verify C:\Users\ADMIN\Desktop\CocEnglish
+> node tools/scripts/mobile-check.mjs --with-blueprint
+
+
+> Blueprint validation
+{
+  "status": "PASS",
+  "files": 723,
+  "markdown": 85,
+  "localLinks": 214,
+  "requirements": 39,
+  "nfr": 19,
+  "screens": 42,
+  "edgeCases": 39,
+  "tasks": 38,
+  "tables": 37,
+  "schemas": 94,
+  "paths": 41,
+  "operations": 42,
+  "refs": 680,
+  "adrs": 17,
+  "skills": 8,
+  "scope": "Phase0 structural consistency; no app build, account or device proof"
+}
+
+> Dart format check
+Formatted 61 files (0 changed) in 0.40 seconds.
+
+> Flutter analyze
+Analyzing mobile...                                             
+No issues found! (ran in 7.6s)
+
+> Flutter test
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: Back after sign-in returns to the saved account chooser
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: local validation blocks invalid sign-in, recovery, and reset calls
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: busy sign-in blocks duplicate commands and accepts only verified user
+00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: sign-in failure restores details and preserves entered credentials
+00:00 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: failed recovery does not show the success sheet
+00:00 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: reset requires link arguments and clears passwords only after success
+00:00 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: initialize loads remembered metadata and ignores callbacks after disposal
+00:00 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: a user command supersedes initialization without leaving it stuck
+00:00 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: default debug repository exposes all mock providers
+00:00 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: selecting any account clears the prior password
+00:00 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: reset stays on its stage and blocks Back and edits while pending
+00:00 +11: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: recovery failure clears busy and keeps entered email
+00:00 +12: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/auth_controller_test.dart: remembered metadata failure does not block verified session restore
+00:00 +13: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +14: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +15: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +16: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +17: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +18: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +19: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +20: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +21: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +22: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +23: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:01 +24: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: all original motion assets parse into compositions
+00:01 +25: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: all original motion assets parse into compositions
+00:02 +26: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:02 +27: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:02 +28: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:02 +29: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:02 +30: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:02 +31: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:02 +32: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:09 +33: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:10 +34: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:10 +35: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:10 +36: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +37: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +38: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +39: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +40: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +41: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +42: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +43: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +44: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +45: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +46: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +47: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:11 +48: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+00:12 +49: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+00:14 +50: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+00:15 +51: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+00:16 +52: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+00:16 +53: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+00:17 +54: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+00:18 +55: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+00:18 +56: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: monthly quest introduction continues once into daily quests
+00:18 +57: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: capture analyzed frontend states with original fonts
+00:21 +58: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language requires a selection and Back retains it
+00:22 +59: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reminder preview can be cancelled without losing the step
+00:22 +60: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: welcome fits width 360.0 with text scale 2
+00:22 +61: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: greeting fits width 360.0 with text scale 2
+00:22 +62: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: questions fits width 360.0 with text scale 2
+00:22 +63: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language fits width 360.0 with text scale 2
+00:22 +64: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: knowledge fits width 360.0 with text scale 2
+00:22 +65: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reasons fits width 360.0 with text scale 2
+00:22 +66: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: routine fits width 360.0 with text scale 2
+00:22 +67: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: goal fits width 360.0 with text scale 2
+00:22 +68: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: promise fits width 360.0 with text scale 2
+00:22 +69: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reminder fits width 360.0 with text scale 2
+00:22 +70: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: widget fits width 360.0 with text scale 2
+00:22 +71: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: benefits fits width 360.0 with text scale 2
+00:23 +72: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: plan fits width 360.0 with text scale 2
+00:23 +73: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: startPoint fits width 360.0 with text scale 2
+00:23 +74: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: levelConfirmation fits width 360.0 with text scale 2
+00:23 +75: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: lessonEntry fits width 360.0 with text scale 2
+00:23 +76: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: welcome fits width 390.0 with text scale 2
+00:23 +77: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: greeting fits width 390.0 with text scale 2
+00:23 +78: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: questions fits width 390.0 with text scale 2
+00:23 +79: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language fits width 390.0 with text scale 2
+00:23 +80: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: knowledge fits width 390.0 with text scale 2
+00:23 +81: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reasons fits width 390.0 with text scale 2
+00:23 +82: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: routine fits width 390.0 with text scale 2
+00:23 +83: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: goal fits width 390.0 with text scale 2
+00:23 +84: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: promise fits width 390.0 with text scale 2
+00:23 +85: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reminder fits width 390.0 with text scale 2
+00:23 +86: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: widget fits width 390.0 with text scale 2
+00:23 +87: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: benefits fits width 390.0 with text scale 2
+00:23 +88: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: plan fits width 390.0 with text scale 2
+00:23 +89: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: startPoint fits width 390.0 with text scale 2
+00:23 +90: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: levelConfirmation fits width 390.0 with text scale 2
+00:23 +91: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: lessonEntry fits width 390.0 with text scale 2
+00:23 +92: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: welcome fits width 430.0 with text scale 2
+00:24 +93: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: greeting fits width 430.0 with text scale 2
+00:24 +94: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: questions fits width 430.0 with text scale 2
+00:24 +95: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language fits width 430.0 with text scale 2
+00:24 +96: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: knowledge fits width 430.0 with text scale 2
+00:24 +97: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reasons fits width 430.0 with text scale 2
+00:24 +98: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: routine fits width 430.0 with text scale 2
+00:24 +99: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: goal fits width 430.0 with text scale 2
+00:24 +100: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: promise fits width 430.0 with text scale 2
+00:24 +101: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reminder fits width 430.0 with text scale 2
+00:24 +102: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: widget fits width 430.0 with text scale 2
+00:24 +103: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: benefits fits width 430.0 with text scale 2
+00:24 +104: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: plan fits width 430.0 with text scale 2
+00:24 +105: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: startPoint fits width 430.0 with text scale 2
+00:24 +106: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: levelConfirmation fits width 430.0 with text scale 2
+00:24 +107: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: lessonEntry fits width 430.0 with text scale 2
+00:25 +108: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: final step stays reviewable until its snapshot is saved successfully
+00:25 +109: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: required answers block Continue; Back retains language and level
+00:25 +110: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: reasons toggle independently and removing the last disables Continue
+00:25 +111: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: goal and denied reminder survive restart; scratch bypasses level confirmation
+00:25 +112: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: queued writes preserve latest selection while a prior save is blocked
+00:25 +113: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: save failure keeps input and retry clears the error
+00:25 +114: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: corrupt/unknown snapshots reset safely; missing earlier answer resumes there
+00:25 +115: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: practice hub keeps source hierarchy at text scale two
+00:26 +116: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: word practice reveals an answer and records local recall
+00:30 +117: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: denied speech uses an assisted guest text substitution
+00:30 +118: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: background resets recording and disposal cancels its callback
+00:30 +119: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: call reconnects safely after app resumes
+00:31 +120: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/progress_preview_test.dart: quest and purchase receipts are idempotent and reject invalid funds
+00:39 +121: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/motion_reference_capture_test.dart: inspect original Duo vector timeline frames
+00:39 +122: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/mock_auth_repository_test.dart: demo sign-in stays asynchronous and remembers metadata only
+00:40 +123: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/reference_button_test.dart: tactile edge depresses on press and cancellation does not act
+00:40 +124: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/reference_button_test.dart: tactile edge depresses on press and cancellation does not act
+00:40 +125: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/reference_button_test.dart: tactile edge depresses on press and cancellation does not act
+00:40 +126: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/reference_button_test.dart: tactile edge depresses on press and cancellation does not act
+00:42 +127: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/registration_controller_test.dart: registration preserves input on duplicate email and clears password after success
+00:42 +128: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/registration_controller_test.dart: invalid age does not advance and Back keeps existing names
+00:43 +129: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+00:44 +130: All tests passed!

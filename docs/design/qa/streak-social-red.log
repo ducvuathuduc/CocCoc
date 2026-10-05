@@ -1,0 +1,44 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart
+00:00 +0: incoming accept is validated, once-only and reserves one slot
+00:00 +0 -1: incoming accept is validated, once-only and reserves one slot [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\streak_social_test.dart 11:5                   main.<fn>
+  
+00:00 +0 -1: declining frees candidate, invitation and removal cannot duplicate
+00:00 +0 -2: declining frees candidate, invitation and removal cannot duplicate [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\streak_social_test.dart 22:5                   main.<fn>
+  
+00:00 +0 -2: all five candidates reserve slots without overfilling
+00:00 +0 -3: all five candidates reserve slots without overfilling [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\streak_social_test.dart 38:7                   main.<fn>
+  
+00:00 +0 -3: calendar crosses year and switching personal clears edit without losing friends
+00:00 +0 -4: calendar crosses year and switching personal clears edit without losing friends [E]
+  Expected: DateTime:<2025-12-01 00:00:00.000>
+    Actual: DateTime:<2026-01-01 00:00:00.000>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\streak_social_test.dart 48:5                   main.<fn>
+  
+00:00 +0 -4: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart: all five candidates reserve slots without overfilling
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart: calendar crosses year and switching personal clears edit without losing friends
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart: declining frees candidate, invitation and removal cannot duplicate
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart: incoming accept is validated, once-only and reserves one slot

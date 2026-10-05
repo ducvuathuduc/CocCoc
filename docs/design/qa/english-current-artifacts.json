@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-05",
+  "scope": "User-authorized mock frontend. Release compilation and artifact integrity; no physical-device, iOS or production capability sign-off.",
+  "testCount": 239,
+  "extendedCaptures": {
+    "static": 124,
+    "actualClashRive": 4,
+    "browser": 2
+  },
+  "bundledReferencePngs": 201,
+  "records": [
+    {
+      "path": "apps/mobile/build/web/main.dart.js",
+      "bytes": 3704702,
+      "sha256": "3d09a42fb529b9baec266310591ca42caf6df2e549561a16f08a93c7fb780a52"
+    },
+    {
+      "path": "apps/mobile/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk",
+      "bytes": 40870471,
+      "sha256": "5cc9a2cab39e05ddce98744d36bb727796d96828a99081dd10e54534111b413d"
+    },
+    {
+      "path": "apps/mobile/build/app/outputs/flutter-apk/app-arm64-v8a-release.apk",
+      "bytes": 44182381,
+      "sha256": "62edee159a5ad8d9a6fc6d8a14337665aac8ece0304c2fc9b082bd410970d8df"
+    },
+    {
+      "path": "apps/mobile/build/app/outputs/flutter-apk/app-x86_64-release.apk",
+      "bytes": 46070238,
+      "sha256": "832568cf561bcc2ad6c1a1b01bc361df4a6cc5f5c43290adc6b81745ac59a39a"
+    }
+  ]
+}

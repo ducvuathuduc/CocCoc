@@ -1,0 +1,48 @@
+# JavaScript and package-manager state
+node_modules/
+**/node_modules/
+.pnpm-store/
+
+# Flutter, Dart, Android, and generated build state
+.dart_tool/
+**/.dart_tool/
+.flutter-plugins-dependencies
+**/.flutter-plugins-dependencies
+.pub-cache/
+build/
+**/build/
+.gradle/
+**/.gradle/
+**/local.properties
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/ephemeral/
+
+# Local environment and private credentials
+.mcp.json
+.codex/config.toml
+.env
+.env.*
+!.env.example
+!.env.*.example
+.secrets/
+**/.secrets/
+*.jks
+*.keystore
+*.p12
+*.mobileprovision
+
+# Tool caches and transient reports
+.cache/
+**/.cache/
+coverage/
+**/coverage/
+tmp/
+**/tmp/
+
+# Ephemeral captures and private exports. Reference and QA artifacts elsewhere stay tracked.
+.screenshots/
+**/.screenshots/
+artifacts/private/
+private-exports/

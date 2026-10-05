@@ -1,0 +1,13 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart: status draft cancels, commits, clears and rejects unknown IDs
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart: premium status checks internal wallet and buys only once per icon
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart: suggested friends add once and never unfollow existing selections
+00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart: feed reactions and validated comments preserve local state
+00:00 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual league status sheet cancels draft, commits and clears
+00:01 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual status insufficient purchase preserves draft and funded buy spends once
+00:02 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+00:02 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width360.0 text1.0
+00:03 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width360.0 text2.0
+00:03 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width430.0 text1.0
+00:03 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width430.0 text2.0
+00:03 +11: All tests passed!

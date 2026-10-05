@@ -1,0 +1,138 @@
+{
+  "captured": "2026-10-04",
+  "source": "Gummble MCP",
+  "flowId": "238c4339-7173-4257-89c5-2716a8a68c44",
+  "name": "Completing a lesson",
+  "screens": [
+    {
+      "id": "sc_bab6c64dec12434297fede3f7c0bef68",
+      "publicId": "sc_bab6c64dec12434297fede3f7c0bef68",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/1899dc6e-b564-4069-8705-f6759fbe2c68.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_bab6c64dec12434297fede3f7c0bef68?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xODk5ZGM2ZS1iNTY0LTQwNjktODcwNS1mNjc1OWZiZTJjNjgucG5n",
+      "file": "01.png"
+    },
+    {
+      "id": "sc_23afb65ade9a45f19dba4cf32e1fd5ab",
+      "publicId": "sc_23afb65ade9a45f19dba4cf32e1fd5ab",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/ddf87a96-c818-48f0-9758-7d4890e1e61e.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_23afb65ade9a45f19dba4cf32e1fd5ab?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kZGY4N2E5Ni1jODE4LTQ4ZjAtOTc1OC03ZDQ4OTBlMWU2MWUucG5n",
+      "file": "02.png"
+    },
+    {
+      "id": "sc_3dbac870c7ff43b098c0d2ab535f5663",
+      "publicId": "sc_3dbac870c7ff43b098c0d2ab535f5663",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/f644c400-6bdb-4037-bb3d-7efb689b1638.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_3dbac870c7ff43b098c0d2ab535f5663?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNjQ0YzQwMC02YmRiLTQwMzctYmIzZC03ZWZiNjg5YjE2MzgucG5n",
+      "file": "03.png"
+    },
+    {
+      "id": "sc_1f7647c98db7449abdd5a0dcabf26c22",
+      "publicId": "sc_1f7647c98db7449abdd5a0dcabf26c22",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/22519a67-8f1b-489d-b0a3-ec396b2189ec.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_1f7647c98db7449abdd5a0dcabf26c22?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yMjUxOWE2Ny04ZjFiLTQ4OWQtYjBhMy1lYzM5NmIyMTg5ZWMucG5n",
+      "file": "04.png"
+    },
+    {
+      "id": "sc_106ffd05af76441d9838316a15364702",
+      "publicId": "sc_106ffd05af76441d9838316a15364702",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/9a942b87-13fb-4815-a54d-0dc7fbb2dde5.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_106ffd05af76441d9838316a15364702?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YTk0MmI4Ny0xM2ZiLTQ4MTUtYTU0ZC0wZGM3ZmJiMmRkZTUucG5n",
+      "file": "05.png"
+    },
+    {
+      "id": "sc_38a51e13fd4349c9a0aa86a18b282699",
+      "publicId": "sc_38a51e13fd4349c9a0aa86a18b282699",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/76368f90-b225-4ac0-b14d-c03df83aeb46.png",
+      "width": 1179,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_38a51e13fd4349c9a0aa86a18b282699?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83NjM2OGY5MC1iMjI1LTRhYzAtYjE0ZC1jMDNkZjgzYWViNDYucG5n",
+      "file": "06.png"
+    },
+    {
+      "id": "sc_05ed075ef15a4875abb2a66d983c5d87",
+      "publicId": "sc_05ed075ef15a4875abb2a66d983c5d87",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/7681f980-67fb-435c-9c0c-4d5deee84a4e.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_05ed075ef15a4875abb2a66d983c5d87?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83NjgxZjk4MC02N2ZiLTQzNWMtOWMwYy00ZDVkZWVlODRhNGUucG5n",
+      "file": "07.png"
+    },
+    {
+      "id": "sc_f9d6728691e74d4e8d80defa9ce46242",
+      "publicId": "sc_f9d6728691e74d4e8d80defa9ce46242",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/3aef3a2e-1262-4191-aee9-ea3673920fc7.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_f9d6728691e74d4e8d80defa9ce46242?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zYWVmM2EyZS0xMjYyLTQxOTEtYWVlOS1lYTM2NzM5MjBmYzcucG5n",
+      "file": "08.png"
+    },
+    {
+      "id": "sc_853bd57dfb154e84b27b960d2b51d057",
+      "publicId": "sc_853bd57dfb154e84b27b960d2b51d057",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/61001357-944d-416c-94a7-a8b8361c43cd.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_853bd57dfb154e84b27b960d2b51d057?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MTAwMTM1Ny05NDRkLTQxNmMtOTRhNy1hOGI4MzYxYzQzY2QucG5n",
+      "file": "09.png"
+    },
+    {
+      "id": "sc_160a2b0bb5df4056a2d07d0d39986340",
+      "publicId": "sc_160a2b0bb5df4056a2d07d0d39986340",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/cafc5c72-9cad-4350-9785-d07cd4eacf50.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_160a2b0bb5df4056a2d07d0d39986340?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jYWZjNWM3Mi05Y2FkLTQzNTAtOTc4NS1kMDdjZDRlYWNmNTAucG5n",
+      "file": "10.png"
+    },
+    {
+      "id": "sc_dce14ffb5c8d48e6881134d6d238da30",
+      "publicId": "sc_dce14ffb5c8d48e6881134d6d238da30",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/77e067c9-623e-4e9c-ad34-49ff030637e7.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_dce14ffb5c8d48e6881134d6d238da30?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83N2UwNjdjOS02MjNlLTRlOWMtYWQzNC00OWZmMDMwNjM3ZTcucG5n",
+      "file": "11.png"
+    },
+    {
+      "id": "sc_5b5a967073af415ab3f144a7b181cbb0",
+      "publicId": "sc_5b5a967073af415ab3f144a7b181cbb0",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/aef6c2ef-eef8-437e-9ca3-9ad41298b4a1.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_5b5a967073af415ab3f144a7b181cbb0?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hZWY2YzJlZi1lZWY4LTQzN2UtOWNhMy05YWQ0MTI5OGI0YTEucG5n",
+      "file": "12.png"
+    },
+    {
+      "id": "sc_b124959ed17c40e595ab2059c448d178",
+      "publicId": "sc_b124959ed17c40e595ab2059c448d178",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/1bce4a3f-75e1-497e-a79c-f89f7c95ce3b.png",
+      "width": 1180,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_b124959ed17c40e595ab2059c448d178?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xYmNlNGEzZi03NWUxLTQ5N2UtYTc5Yy1mODlmN2M5NWNlM2IucG5n",
+      "file": "13.png"
+    }
+  ]
+}

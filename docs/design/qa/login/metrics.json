@@ -1,0 +1,109 @@
+{
+  "frame": "Per-screen dimensions below; 1179 or 1180 × 2556",
+  "logicalWidth": 390,
+  "excludeSystemInsets": [
+    59,
+    34
+  ],
+  "colorTolerance": 12,
+  "foregroundDefinition": "Either image has any RGB channel below 240",
+  "note": "Diagnostics, not a pixel-perfect score. White space can inflate whole-body similarity. Font/renderer differences remain.",
+  "screens": [
+    {
+      "screen": 2,
+      "frame": [
+        1179,
+        2556
+      ],
+      "bodyMaeRgb": 4.307,
+      "foregroundMaeRgb": 33.328,
+      "pixelsBeyondTolerance": 92263,
+      "comparedPixels": 2682225,
+      "foregroundPixels": 273696
+    },
+    {
+      "screen": 3,
+      "frame": [
+        1179,
+        2556
+      ],
+      "bodyMaeRgb": 7.965,
+      "foregroundMaeRgb": 41.724,
+      "pixelsBeyondTolerance": 309720,
+      "comparedPixels": 2682225,
+      "foregroundPixels": 463369
+    },
+    {
+      "screen": 4,
+      "frame": [
+        1179,
+        2556
+      ],
+      "bodyMaeRgb": 10.627,
+      "foregroundMaeRgb": 53.314,
+      "pixelsBeyondTolerance": 360508,
+      "comparedPixels": 2682225,
+      "foregroundPixels": 497293
+    },
+    {
+      "screen": 5,
+      "frame": [
+        1179,
+        2556
+      ],
+      "bodyMaeRgb": 1.952,
+      "foregroundMaeRgb": 23.25,
+      "pixelsBeyondTolerance": 38742,
+      "comparedPixels": 2682225,
+      "foregroundPixels": 113298
+    },
+    {
+      "screen": 7,
+      "frame": [
+        1179,
+        2556
+      ],
+      "bodyMaeRgb": 3.308,
+      "foregroundMaeRgb": 35.793,
+      "pixelsBeyondTolerance": 101840,
+      "comparedPixels": 2682225,
+      "foregroundPixels": 178471
+    },
+    {
+      "screen": 13,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 3.51,
+      "foregroundMaeRgb": 31.231,
+      "pixelsBeyondTolerance": 80024,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 243584
+    },
+    {
+      "screen": 15,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 3.211,
+      "foregroundMaeRgb": 27.238,
+      "pixelsBeyondTolerance": 107286,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 242541
+    },
+    {
+      "screen": 16,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 3.385,
+      "foregroundMaeRgb": 29.908,
+      "pixelsBeyondTolerance": 77091,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 230487
+    }
+  ]
+}

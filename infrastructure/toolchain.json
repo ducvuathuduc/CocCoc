@@ -1,0 +1,15 @@
+{
+  "flutter": "3.47.0",
+  "dart": "3.13.0",
+  "nodeCiAndBackend": "22",
+  "nodeVerifiedLocal": "24.16.0",
+  "pnpmVerifiedLocal": "10.15.0",
+  "androidGradlePlugin": "9.1.0",
+  "gradle": "9.3.1",
+  "kotlin": "2.4.0",
+  "androidCompileSdk": 36,
+  "androidTargetSdk": 36,
+  "androidEmulatorVerifiedApi": 34,
+  "iosBuildVerified": false,
+  "scope": "user-authorized onboarding and mock-login frontend slice"
+}

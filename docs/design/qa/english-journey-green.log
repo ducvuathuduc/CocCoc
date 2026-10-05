@@ -1,0 +1,5 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart
+00:00 +0: story preserves a wrong selection through feedback and finishes once
+00:00 +1: radio cannot check half a pair, and transcript picks are editable
+00:00 +2: roleplay preserves draft on validation, resumes, and resets deliberately
+00:00 +3: All tests passed!

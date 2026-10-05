@@ -1,0 +1,134 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart
+test/english_journey_test.dart:1:8: Error: Error when reading 'lib/features/practice/application/journey_controller.dart': The system cannot find the file specified
+import 'package:cocenglish/features/practice/application/journey_controller.dart';
+       ^
+test/english_journey_test.dart:8:21: Error: Method not found: 'journeyControllerProvider'.
+    final vm=c.read(journeyControllerProvider('story').notifier);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:10:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('story')).step,1);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:12:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('story')).feedback,false);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:13:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('story')).selected,['True']);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:18:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('story')).complete,true);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:19:23: Error: Method not found: 'journeyControllerProvider'.
+    final done=c.read(journeyControllerProvider('story'));
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:20:30: Error: Method not found: 'journeyControllerProvider'.
+    vm.next(); expect(c.read(journeyControllerProvider('story')),same(done));
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:25:21: Error: Method not found: 'journeyControllerProvider'.
+    final vm=c.read(journeyControllerProvider('radio').notifier); vm.start();
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:27:31: Error: Method not found: 'journeyControllerProvider'.
+    vm.check(); expect(c.read(journeyControllerProvider('radio')).feedback,isNull);
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:29:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('radio')).feedback,true);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:31:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('radio')).selected,['large']);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:33:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('radio')).feedback,true);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:37:21: Error: Method not found: 'journeyControllerProvider'.
+    final vm=c.read(journeyControllerProvider('roleplay').notifier); vm.start();
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:39:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('roleplay')).draft,' ');
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:40:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('roleplay')).error,isNotNull);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:42:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('roleplay')).replies,['Yes, please.']);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:44:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('roleplay')).draft,'Water, please.');
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:46:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('roleplay')).complete,true);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:48:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('roleplay')).replies,isEmpty);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+test/english_journey_test.dart:49:19: Error: Method not found: 'journeyControllerProvider'.
+    expect(c.read(journeyControllerProvider('roleplay')).draft,isEmpty);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: test/english_journey_test.dart:1:8: Error: Error when reading 'lib/features/practice/application/journey_controller.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/practice/application/journey_controller.dart';
+         ^
+  test/english_journey_test.dart:8:21: Error: Method not found: 'journeyControllerProvider'.
+      final vm=c.read(journeyControllerProvider('story').notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:10:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('story')).step,1);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:12:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('story')).feedback,false);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:13:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('story')).selected,['True']);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:18:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('story')).complete,true);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:19:23: Error: Method not found: 'journeyControllerProvider'.
+      final done=c.read(journeyControllerProvider('story'));
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:20:30: Error: Method not found: 'journeyControllerProvider'.
+      vm.next(); expect(c.read(journeyControllerProvider('story')),same(done));
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:25:21: Error: Method not found: 'journeyControllerProvider'.
+      final vm=c.read(journeyControllerProvider('radio').notifier); vm.start();
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:27:31: Error: Method not found: 'journeyControllerProvider'.
+      vm.check(); expect(c.read(journeyControllerProvider('radio')).feedback,isNull);
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:29:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('radio')).feedback,true);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:31:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('radio')).selected,['large']);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:33:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('radio')).feedback,true);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:37:21: Error: Method not found: 'journeyControllerProvider'.
+      final vm=c.read(journeyControllerProvider('roleplay').notifier); vm.start();
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:39:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('roleplay')).draft,' ');
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:40:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('roleplay')).error,isNotNull);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:42:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('roleplay')).replies,['Yes, please.']);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:44:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('roleplay')).draft,'Water, please.');
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:46:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('roleplay')).complete,true);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:48:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('roleplay')).replies,isEmpty);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/english_journey_test.dart:49:19: Error: Method not found: 'journeyControllerProvider'.
+      expect(c.read(journeyControllerProvider('roleplay')).draft,isEmpty);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart

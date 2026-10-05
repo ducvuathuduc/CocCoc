@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CocEnglish · Thử toàn bộ flow</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#f1f2f4;color:#4d4b4e;font:15px system-ui,sans-serif;display:grid;justify-items:center;gap:12px;padding:16px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:min(100%,430px)}strong{font-size:16px}button{background:white;border:1px solid #ddd;border-radius:8px;padding:8px 12px;color:inherit;cursor:pointer}
+  .phone{position:relative;width:390px;height:844px}iframe{width:390px;height:844px;transform-origin:top left;position:absolute;inset:0;background:#fff;border:1px solid #dedee1;border-radius:18px;box-shadow:0 8px 36px #0000000d}
+  p{margin:0;width:min(100%,430px);font-size:12px;line-height:1.5;color:#727078}code{font-size:12px} @media(max-width:440px){body{padding:8px}}
+</style>
+<header><strong>CocEnglish · Mock preview</strong><span><button type="button" id="learn">Vào học</button> <button type="button" id="restart">Tải lại</button></span></header>
+<div class="phone"><iframe src="/" title="Ứng dụng Flutter: học, ôn tập, nhiệm vụ và tài khoản"></iframe></div>
+<p>Bấm “Vào học” để thử 5 tab, bài học, kết quả, ôn tập và cài đặt. Dữ liệu mới giữ trong phiên preview.<br>Đăng nhập demo: <code>demo@cocenglish.test</code> · <code>duolingo-demo</code>. Email, ghi âm và hội thoại đều mô phỏng.</p>
+<script>
+const phone=document.querySelector('.phone'), frame=document.querySelector('iframe');
+function fitPhone(){const scale=Math.min(1,(innerWidth-24)/390,Math.max(300,innerHeight-150)/844);phone.style.width=`${390*scale}px`;phone.style.height=`${844*scale}px`;frame.style.transform=`scale(${scale})`;}
+addEventListener('resize',fitPhone);fitPhone();
+document.querySelector('#restart').onclick=()=>{frame.src='/';};document.querySelector('#learn').onclick=()=>{frame.src='/#/home';};
+</script>
+</html>

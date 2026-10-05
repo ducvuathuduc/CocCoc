@@ -1,0 +1,80 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart
+test/adventure_test.dart:2:8: Error: Error when reading 'lib/features/practice/application/adventure_controller.dart': The system cannot find the file specified
+import 'package:cocenglish/features/practice/application/adventure_controller.dart';
+       ^
+test/adventure_test.dart:3:8: Error: Error when reading 'lib/features/practice/presentation/adventure_screen.dart': The system cannot find the file specified
+import 'package:cocenglish/features/practice/presentation/adventure_screen.dart';
+       ^
+test/adventure_test.dart:12:23: Error: Undefined name 'adventureControllerProvider'.
+    final vm = c.read(adventureControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:17:19: Error: Undefined name 'adventureControllerProvider'.
+    expect(c.read(adventureControllerProvider).selected, 'A dog!');
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:18:19: Error: Undefined name 'adventureControllerProvider'.
+    expect(c.read(adventureControllerProvider).stage, 2);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:20:19: Error: Undefined name 'adventureControllerProvider'.
+    expect(c.read(adventureControllerProvider).stage, 2);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:24:19: Error: Undefined name 'adventureControllerProvider'.
+    expect(c.read(adventureControllerProvider).attempted, 2);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:27:19: Error: Undefined name 'adventureControllerProvider'.
+    expect(c.read(adventureControllerProvider).stage, 4);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:32:19: Error: Undefined name 'adventureControllerProvider'.
+    expect(c.read(adventureControllerProvider).complete, isTrue);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:33:19: Error: Undefined name 'adventureControllerProvider'.
+    expect(c.read(adventureControllerProvider).accuracy, 67);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/adventure_test.dart:52:26: Error: Couldn't find constructor 'AdventureScreen'.
+            child: const AdventureScreen()))));
+                         ^^^^^^^^^^^^^^^
+test/adventure_test.dart:53:27: Error: Undefined name 'adventureControllerProvider'.
+        final vm = c.read(adventureControllerProvider.notifier);
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: test/adventure_test.dart:2:8: Error: Error when reading 'lib/features/practice/application/adventure_controller.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/practice/application/adventure_controller.dart';
+         ^
+  test/adventure_test.dart:3:8: Error: Error when reading 'lib/features/practice/presentation/adventure_screen.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/practice/presentation/adventure_screen.dart';
+         ^
+  test/adventure_test.dart:12:23: Error: Undefined name 'adventureControllerProvider'.
+      final vm = c.read(adventureControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:17:19: Error: Undefined name 'adventureControllerProvider'.
+      expect(c.read(adventureControllerProvider).selected, 'A dog!');
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:18:19: Error: Undefined name 'adventureControllerProvider'.
+      expect(c.read(adventureControllerProvider).stage, 2);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:20:19: Error: Undefined name 'adventureControllerProvider'.
+      expect(c.read(adventureControllerProvider).stage, 2);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:24:19: Error: Undefined name 'adventureControllerProvider'.
+      expect(c.read(adventureControllerProvider).attempted, 2);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:27:19: Error: Undefined name 'adventureControllerProvider'.
+      expect(c.read(adventureControllerProvider).stage, 4);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:32:19: Error: Undefined name 'adventureControllerProvider'.
+      expect(c.read(adventureControllerProvider).complete, isTrue);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:33:19: Error: Undefined name 'adventureControllerProvider'.
+      expect(c.read(adventureControllerProvider).accuracy, 67);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/adventure_test.dart:52:26: Error: Couldn't find constructor 'AdventureScreen'.
+              child: const AdventureScreen()))));
+                           ^^^^^^^^^^^^^^^
+  test/adventure_test.dart:53:27: Error: Undefined name 'adventureControllerProvider'.
+          final vm = c.read(adventureControllerProvider.notifier);
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart

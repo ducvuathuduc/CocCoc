@@ -1,0 +1,15 @@
+{
+  "name": "cocenglish",
+  "private": true,
+  "scripts": {
+    "blueprint:check": "node tools/blueprint/validate.mjs",
+    "mobile:verify": "node tools/scripts/mobile-check.mjs",
+    "build:web": "node tools/scripts/mobile-web-build.mjs",
+    "preview:web": "node tools/scripts/mobile-preview.mjs",
+    "build:android": "node tools/scripts/mobile-check.mjs --build-android",
+    "verify": "node tools/scripts/mobile-check.mjs --with-blueprint"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

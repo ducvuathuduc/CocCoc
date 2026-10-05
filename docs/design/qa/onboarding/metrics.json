@@ -1,0 +1,253 @@
+{
+  "frame": "Per-screen dimensions below; 1179 or 1180 × 2556",
+  "logicalWidth": 390,
+  "excludeSystemInsets": [
+    59,
+    34
+  ],
+  "colorTolerance": 12,
+  "foregroundDefinition": "Either image has any RGB channel below 240",
+  "note": "Diagnostics, not a pixel-perfect score. White space can inflate whole-body similarity. Font/renderer differences remain.",
+  "screens": [
+    {
+      "screen": 1,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 4.412,
+      "foregroundMaeRgb": 4.412,
+      "pixelsBeyondTolerance": 151261,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 2683320
+    },
+    {
+      "screen": 2,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 2.372,
+      "foregroundMaeRgb": 18.668,
+      "pixelsBeyondTolerance": 88486,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 337336
+    },
+    {
+      "screen": 3,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 1.224,
+      "foregroundMaeRgb": 11.775,
+      "pixelsBeyondTolerance": 51902,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 276687
+    },
+    {
+      "screen": 4,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 2.551,
+      "foregroundMaeRgb": 21.839,
+      "pixelsBeyondTolerance": 81941,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 311320
+    },
+    {
+      "screen": 5,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 11.569,
+      "foregroundMaeRgb": 39.299,
+      "pixelsBeyondTolerance": 540563,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 784195
+    },
+    {
+      "screen": 6,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 12.132,
+      "foregroundMaeRgb": 34.935,
+      "pixelsBeyondTolerance": 558412,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 926689
+    },
+    {
+      "screen": 7,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 3.113,
+      "foregroundMaeRgb": 48.052,
+      "pixelsBeyondTolerance": 95230,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 172832
+    },
+    {
+      "screen": 8,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 8.929,
+      "foregroundMaeRgb": 29.894,
+      "pixelsBeyondTolerance": 389690,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 796470
+    },
+    {
+      "screen": 9,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 11.136,
+      "foregroundMaeRgb": 37.006,
+      "pixelsBeyondTolerance": 539317,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 784244
+    },
+    {
+      "screen": 10,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 12.485,
+      "foregroundMaeRgb": 26.987,
+      "pixelsBeyondTolerance": 632046,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 1235801
+    },
+    {
+      "screen": 11,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 3.363,
+      "foregroundMaeRgb": 19.687,
+      "pixelsBeyondTolerance": 83214,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 311001
+    },
+    {
+      "screen": 12,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 5.865,
+      "foregroundMaeRgb": 23.491,
+      "pixelsBeyondTolerance": 282844,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 665148
+    },
+    {
+      "screen": 13,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 2.057,
+      "foregroundMaeRgb": 17.519,
+      "pixelsBeyondTolerance": 86993,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 312747
+    },
+    {
+      "screen": 14,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 5.903,
+      "foregroundMaeRgb": 33.011,
+      "pixelsBeyondTolerance": 212876,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 435722
+    },
+    {
+      "screen": 15,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 5.303,
+      "foregroundMaeRgb": 12.973,
+      "pixelsBeyondTolerance": 172602,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 1052651
+    },
+    {
+      "screen": 16,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 7.375,
+      "foregroundMaeRgb": 42.262,
+      "pixelsBeyondTolerance": 208783,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 449134
+    },
+    {
+      "screen": 17,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 6.148,
+      "foregroundMaeRgb": 32.322,
+      "pixelsBeyondTolerance": 265278,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 484126
+    },
+    {
+      "screen": 18,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 6.48,
+      "foregroundMaeRgb": 22.352,
+      "pixelsBeyondTolerance": 280178,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 744966
+    },
+    {
+      "screen": 19,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 7.073,
+      "foregroundMaeRgb": 23.244,
+      "pixelsBeyondTolerance": 287310,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 811401
+    },
+    {
+      "screen": 20,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 1.963,
+      "foregroundMaeRgb": 17.116,
+      "pixelsBeyondTolerance": 71850,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 305479
+    }
+  ]
+}

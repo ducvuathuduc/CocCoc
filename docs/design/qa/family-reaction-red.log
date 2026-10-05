@@ -1,0 +1,14 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/family_reaction_test.dart
+00:00 +0: reaction sends only once to an invited member of active family
+00:00 +0 -1: reaction sends only once to an invited member of active family [E]
+  Expected: <2>
+    Actual: <0>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\family_reaction_test.dart 11:18                main.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/family_reaction_test.dart: reaction sends only once to an invited member of active family

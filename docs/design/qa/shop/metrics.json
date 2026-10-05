@@ -1,0 +1,25 @@
+{
+  "frame": "Per-screen dimensions below; 1179 or 1180 × 2556",
+  "logicalWidth": 390,
+  "excludeSystemInsets": [
+    59,
+    34
+  ],
+  "colorTolerance": 12,
+  "foregroundDefinition": "Either image has any RGB channel below 240",
+  "note": "Diagnostics, not a pixel-perfect score. White space can inflate whole-body similarity. Font/renderer differences remain.",
+  "screens": [
+    {
+      "screen": 2,
+      "frame": [
+        1179,
+        2556
+      ],
+      "bodyMaeRgb": 42.565,
+      "foregroundMaeRgb": 102.629,
+      "pixelsBeyondTolerance": 1050162,
+      "comparedPixels": 2682225,
+      "foregroundPixels": 1097695
+    }
+  ]
+}

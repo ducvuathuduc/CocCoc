@@ -1,0 +1,9 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart
+00:00 +0: extended screens fit width360.0 text1.0
+00:04 +1: extended screens fit width360.0 text2.0
+00:04 +2: extended screens fit width430.0 text1.0
+00:04 +3: extended screens fit width430.0 text2.0
+00:05 +4: plan checkout is local, selected, and cancellation clears unlimited energy
+00:05 +5: word sorting preserves recall and the current flashcard
+00:05 +6: native words opens sort sheet and renders reordered rows
+00:06 +7: All tests passed!
