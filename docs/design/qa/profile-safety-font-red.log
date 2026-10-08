@@ -24,7 +24,7 @@ The test description was:
 00:00 +0 -1: foreign achievement section is compact at 320 text2 [E]
   Test failed. See exception logs above.
   The test description was: foreign achievement section is compact at 320 text2
-  
+
 00:00 +0 -1: Some tests failed.
 
 Failing tests:

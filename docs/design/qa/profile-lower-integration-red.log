@@ -48,7 +48,7 @@ The test description was:
 00:02 +0 -1: lower profile keeps its header and opens monthly badges [E]
   Test failed. See exception logs above.
   The test description was: lower profile keeps its header and opens monthly badges
-  
+
 00:02 +0 -1: Some tests failed.
 
 Failing tests:

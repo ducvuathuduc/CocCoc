@@ -6,33 +6,33 @@
 00:21 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_builder_test.dart: shows all current categories and saves a valid choice
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
@@ -40,33 +40,33 @@
 00:22 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_capture_test.dart: original avatar builder source sized captures
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
@@ -77,33 +77,33 @@
 00:28 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════

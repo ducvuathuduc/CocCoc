@@ -45,7 +45,7 @@ The test description was:
 00:00 +0 -1: badges and family invite keep engineering notes out of product copy [E]
   Test failed. See exception logs above.
   The test description was: badges and family invite keep engineering notes out of product copy
-  
+
 00:00 +0 -1: connection recovery exposes only learner actions
 00:01 +1 -1: Some tests failed.
 

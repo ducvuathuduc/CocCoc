@@ -28,7 +28,7 @@ The test description was:
 00:01 +0 -1: joined League keeps source layout and profile Back state [E]
   Test failed. See exception logs above.
   The test description was: joined League keeps source layout and profile Back state
-  
+
 00:01 +0 -1: Some tests failed.
 
 Failing tests:

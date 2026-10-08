@@ -44,7 +44,7 @@ The test description was:
 00:00 +0 -1: connection recovery exposes only learner actions [E]
   Test failed. See exception logs above.
   The test description was: connection recovery exposes only learner actions
-  
+
 00:00 +0 -1: Some tests failed.
 
 Failing tests:

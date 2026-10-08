@@ -42,7 +42,7 @@ The test description was:
 00:00 +0 -1: one local lesson unlocks Welcome; Continue joins without reward [E]
   Test failed. See exception logs above.
   The test description was: one local lesson unlocks Welcome; Continue joins without reward
-  
+
 00:00 +0 -1: Some tests failed.
 
 Failing tests:

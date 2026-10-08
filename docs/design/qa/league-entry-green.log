@@ -23,33 +23,33 @@ Try `flutter pub outdated` for more information.
 00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_source_route_test.dart: one local lesson unlocks Welcome; Continue joins without reward
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════

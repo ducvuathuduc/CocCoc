@@ -6,22 +6,22 @@
 00:02 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
 
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
@@ -29,11 +29,11 @@
 00:02 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
@@ -69,7 +69,7 @@ The test description was:
 00:31 +9 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: routed mock checkout dismiss preserves selection and confirms only explicitly [E]
   Test failed. See exception logs above.
   The test description was: routed mock checkout dismiss preserves selection and confirms only explicitly
-  
+
 00:31 +9 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 360.0 text 1.0
 00:33 +10 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 360.0 text 2.0
 00:33 +11 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 430.0 text 1.0

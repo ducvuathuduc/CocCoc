@@ -17,11 +17,11 @@ Try `flutter pub outdated` for more information.
 00:00 +0: original avatar rig exposes selectable states and triggers
 ═════════════════════════════════════════════════════════════════════════════════════════
 [31m[1m  Rive Native: Failed to open dynamic library[0m
-[33m  Library: rive_native.dll[0m      
+[33m  Library: rive_native.dll[0m
 
-  To fix this issue, run the following command:     
-[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
-  
+  To fix this issue, run the following command:
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m
+
   See the troubleshooting section in the docs for more information:
 [36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
 ═════════════════════════════════════════════════════════════════════════════════════════
@@ -76,7 +76,7 @@ unexpected.
 00:00 +0 -1: original avatar rig exposes selectable states and triggers [E]
   Test failed. See exception logs above.
   The test description was: original avatar rig exposes selectable states and triggers
-  
+
 00:00 +0 -1: Some tests failed.
 
 Failing tests:

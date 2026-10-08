@@ -23,7 +23,7 @@ The test description was:
 00:01 +0 -1: populated followers follow back once and retain source state on return [E]
   Test failed. See exception logs above.
   The test description was: populated followers follow back once and retain source state on return
-  
+
 00:01 +0 -1: Some tests failed.
 
 Failing tests:

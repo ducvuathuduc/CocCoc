@@ -24,7 +24,7 @@ The test description was:
 00:01 +0 -1: full profile fields preserve draft on validation failure [E]
   Test failed. See exception logs above.
   The test description was: full profile fields preserve draft on validation failure
-  
+
 00:01 +0 -1: Some tests failed.
 
 Failing tests:

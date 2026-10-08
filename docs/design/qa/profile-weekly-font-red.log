@@ -23,7 +23,7 @@ The test description was:
 00:00 +0 -1: canvas labels inherit font and repaint when typography changes [E]
   Test failed. See exception logs above.
   The test description was: canvas labels inherit font and repaint when typography changes
-  
+
 00:00 +0 -1: weekly fixtures cover known profiles and expose immutable seven days
 00:00 +1 -1: learner receipts change only You weekly progress
 00:00 +2 -1: axis keeps a zero floor and expands for large learner values

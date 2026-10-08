@@ -21,11 +21,11 @@ Try `flutter pub outdated` for more information.
 00:00 +0 -1: English Score remains within its 0–160 scale after repeated lessons [E]
   Expected: <160>
     Actual: <165>
-  
+
   package:matcher                                     expect
   package:flutter_test/src/widget_tester.dart 473:18  expect
   test\learning_controller_test.dart 45:5             main.<fn>
-  
+
 00:00 +0 -1: Some tests failed.
 
 Failing tests:

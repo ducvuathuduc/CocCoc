@@ -24,7 +24,7 @@ The test description was:
 00:02 +0 -1: own profile QR uses saved avatar and username; other profiles do not [E]
   Test failed. See exception logs above.
   The test description was: own profile QR uses saved avatar and username; other profiles do not
-  
+
 00:02 +0 -1: Some tests failed.
 
 Failing tests:

@@ -4,11 +4,11 @@
   Expected: be in range from 0 (inclusive) to 5 (inclusive)
     Actual: <9>
   Alex:flawless-finisher
-  
+
   package:matcher                                     expect
   package:flutter_test/src/widget_tester.dart 473:18  expect
   test\foreign_achievements_route_test.dart 22:9      main.<fn>
-  
+
 00:00 +0 -1: Some tests failed.
 
 Failing tests:

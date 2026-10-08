@@ -34,7 +34,7 @@ The test description was:
 00:00 +0 -1: foreign record cards do not invent learner record dates [E]
   Test failed. See exception logs above.
   The test description was: foreign record cards do not invent learner record dates
-  
+
 00:00 +0 -1: Some tests failed.
 
 Failing tests:

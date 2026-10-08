@@ -24,7 +24,7 @@ The test description was:
 00:01 +0 -1: profile courses reflect enrollment; opening the list does not switch English [E]
   Test failed. See exception logs above.
   The test description was: profile courses reflect enrollment; opening the list does not switch English
-  
+
 00:01 +0 -1: profile friend tabs keep following identity and empty followers separate
 ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
 The following TestFailure was thrown running a test:
@@ -50,7 +50,7 @@ The test description was:
 00:01 +0 -2: profile friend tabs keep following identity and empty followers separate [E]
   Test failed. See exception logs above.
   The test description was: profile friend tabs keep following identity and empty followers separate
-  
+
 00:01 +0 -2: Some tests failed.
 
 Failing tests:

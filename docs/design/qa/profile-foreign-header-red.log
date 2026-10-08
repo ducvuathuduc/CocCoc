@@ -24,7 +24,7 @@ The test description was:
 00:01 +0 -1: foreign header places original avatar before identity and actions [E]
   Test failed. See exception logs above.
   The test description was: foreign header places original avatar before identity and actions
-  
+
 00:01 +0 -1: Some tests failed.
 
 Failing tests:

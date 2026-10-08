@@ -46,7 +46,7 @@ The test description was:
 00:01 +0 -1: foreign View all retains owner through achievement list and Back [E]
   Test failed. See exception logs above.
   The test description was: foreign View all retains owner through achievement list and Back
-  
+
 00:01 +0 -1: foreign detail cannot claim learner rewards; unknown owner fails safely
 ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
 The following TestFailure was thrown running a test:
@@ -75,7 +75,7 @@ The test description was:
 00:01 +0 -2: foreign detail cannot claim learner rewards; unknown owner fails safely [E]
   Test failed. See exception logs above.
   The test description was: foreign detail cannot claim learner rewards; unknown owner fails safely
-  
+
 00:01 +0 -2: Some tests failed.
 
 Failing tests:

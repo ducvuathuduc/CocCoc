@@ -30,7 +30,7 @@ The test description was:
 00:02 +2 -1: denied speech uses an assisted guest text substitution [E]
   Test failed. See exception logs above.
   The test description was: denied speech uses an assisted guest text substitution
-  
+
 00:02 +2 -1: background resets recording and disposal cancels its callback
 ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
 The following assertion was thrown running a test:
@@ -56,7 +56,7 @@ The test description was:
 00:02 +2 -2: background resets recording and disposal cancels its callback [E]
   Test failed. See exception logs above.
   The test description was: background resets recording and disposal cancels its callback
-  
+
 00:02 +2 -2: call reconnects safely after app resumes
 ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
 The following StateError was thrown running a test:
@@ -81,7 +81,7 @@ The test description was:
 00:02 +2 -3: call reconnects safely after app resumes [E]
   Test failed. See exception logs above.
   The test description was: call reconnects safely after app resumes
-  
+
 00:02 +2 -3: Some tests failed.
 
 Failing tests:

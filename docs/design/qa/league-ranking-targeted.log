@@ -25,7 +25,7 @@ The test description was:
 00:01 +2 -1: source ranking opens profiles and own avatar opens status [E]
   Test failed. See exception logs above.
   The test description was: source ranking opens profiles and own avatar opens status
-  
+
 00:01 +2 -1: ranking rows expand safely at 320 and text scale two
 ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
 The following StateError was thrown running a test:
@@ -49,7 +49,7 @@ The test description was:
 00:01 +2 -2: ranking rows expand safely at 320 and text scale two [E]
   Test failed. See exception logs above.
   The test description was: ranking rows expand safely at 320 and text scale two
-  
+
 00:01 +2 -2: Some tests failed.
 
 Failing tests:

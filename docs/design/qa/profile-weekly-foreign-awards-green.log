@@ -34,7 +34,7 @@ The test description was:
 00:02 +9 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart: foreign View all retains owner through achievement list and Back [E]
   Test failed. See exception logs above.
   The test description was: foreign View all retains owner through achievement list and Back
-  
+
 00:02 +10 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: source award opens matching detail, shares locally, and keeps claim across Back
 00:02 +11 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
 00:02 +12 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two

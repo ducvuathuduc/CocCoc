@@ -42,7 +42,7 @@ The test description was:
 00:00 +0 -1: changing friend route query selects the requested tab in the reused page [E]
   Test failed. See exception logs above.
   The test description was: changing friend route query selects the requested tab in the reused page
-  
+
 00:01 +0 -1: Some tests failed.
 
 Failing tests:

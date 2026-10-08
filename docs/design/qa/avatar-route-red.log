@@ -22,7 +22,7 @@ The test description was:
 00:01 +0 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_editor_test.dart: full profile fields preserve draft on validation failure [E]
   Test failed. See exception logs above.
   The test description was: full profile fields preserve draft on validation failure
-  
+
 00:01 +0 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft
 00:03 +0 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
 ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
@@ -49,7 +49,7 @@ The test description was:
 00:03 +0 -2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft [E]
   Test failed. See exception logs above.
   The test description was: profile password route closes back without losing profile draft
-  
+
 00:03 +0 -2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft
 ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
 The following TestFailure was thrown running a test:
@@ -75,7 +75,7 @@ The test description was:
 00:03 +0 -3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft [E]
   Test failed. See exception logs above.
   The test description was: profile opens avatar and cancel preserves profile draft
-  
+
 00:03 +0 -3: Some tests failed.
 
 Failing tests:
