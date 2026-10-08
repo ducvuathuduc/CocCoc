@@ -52,6 +52,8 @@ void main() {
           .optIntoLeague();
       await t.tap(find.byTooltip('League'));
       await t.pumpAndSettle();
+      await t.ensureVisible(find.text('Alex'));
+      await t.pump();
       await t.tap(find.text('Alex'));
       await t.pumpAndSettle();
       final c = ProviderScope.containerOf(
@@ -66,7 +68,7 @@ void main() {
       await t.pumpAndSettle();
       await t.tap(find.text('BLOCK'));
       await t.pumpAndSettle();
-      expect(find.text('UNBLOCK USER'), findsOneWidget);
+      expect(find.bySemanticsLabel('Unblock Alex'), findsOneWidget);
       expect(c.read(profileActionsProvider).blocked, contains('Alex'));
       expect(
         c.read(previewControllerProvider).following,
@@ -97,8 +99,9 @@ void main() {
       await t.tap(find.text('REPORT'));
       await t.pumpAndSettle();
       expect(c.read(profileActionsProvider).reports, {'Alex': 'Spam'});
-      expect(find.text('UNBLOCK USER'), findsOneWidget);
-      await t.tap(find.text('UNBLOCK USER'));
+      final unblock = find.bySemanticsLabel('Unblock Alex');
+      expect(unblock, findsOneWidget);
+      await t.tap(unblock);
       await t.pumpAndSettle();
       expect(c.read(profileActionsProvider).blocked, isEmpty);
       expect(

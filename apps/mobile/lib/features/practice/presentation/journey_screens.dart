@@ -95,8 +95,8 @@ class JourneyEntryScreen extends ConsumerWidget {
                     LearningCard(
                       child: Text(
                         kind == 'roleplay'
-                            ? 'Text conversation preview. Voice and AI are simulated.'
-                            : 'English preview with Vietnamese support. Recorded audio is unavailable; use the transcript.',
+                            ? 'Practice your conversation with typed replies.'
+                            : 'Practice English with Vietnamese support. Follow along with the transcript.',
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 16, height: 1.4),
                       ),

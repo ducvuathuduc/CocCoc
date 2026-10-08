@@ -24,6 +24,32 @@ const choiceExercise = Exercise(
 );
 
 void main() {
+  test(
+    'English Score remains within its 0–160 scale after repeated lessons',
+    () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final controller = container.read(learningStateProvider.notifier);
+      for (var index = 0; index < 33; index++) {
+        controller.claim(
+          SessionReceipt(
+            id: 'score-limit-$index',
+            nodeId: 'score-node-$index',
+            xp: 10,
+            accuracy: 1,
+            elapsed: const Duration(minutes: 1),
+            firstCompletion: true,
+            guest: false,
+            placement: false,
+          ),
+        );
+      }
+      expect(container.read(learningStateProvider).score, 160);
+      expect(container.read(learningStateProvider).xp, 330);
+      expect(container.read(learningStateProvider).completedLessons, 33);
+    },
+  );
+
   test('unknown choices and tokens cannot enable checking', () async {
     final c = containerFor(MockLearningRepository(delay: Duration.zero));
     addTearDown(c.dispose);

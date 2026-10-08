@@ -12,7 +12,7 @@ void main() {
     expect(controller.requestRemoval('english'), isFalse);
     expect(
       container.read(courseManagementProvider).protectionMessage,
-      'English is your active mock course and cannot be removed.',
+      'English is your active course and cannot be removed.',
     );
     expect(
       container

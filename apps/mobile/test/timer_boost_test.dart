@@ -9,8 +9,46 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:cocenglish/features/progress/presentation/hub_screens.dart';
 
 void main() {
+  testWidgets(
+    'GET GEMS opens Shop without minting balance or losing the selected pack',
+    (t) async {
+      await t.pumpWidget(
+        MainApp(
+          initial: OnboardingState(
+            step: OnboardingStep.lessonEntry,
+            language: 'English',
+          ),
+        ),
+      );
+      await t.pumpAndSettle();
+      final context = t.element(find.byTooltip('Practice'));
+      final c = ProviderScope.containerOf(context);
+      await t.tap(find.byTooltip('Shop'));
+      await t.pumpAndSettle();
+      await t.scrollUntilVisible(find.text('GET'), 180);
+      await t.tap(find.text('GET'));
+      await t.pumpAndSettle();
+      await t.tap(find.text('Single'));
+      await t.pumpAndSettle();
+      await t.tap(find.text('GET TIMER BOOSTS'));
+      await t.pumpAndSettle();
+      expect(find.text('Not enough gems'), findsOneWidget);
+      await t.ensureVisible(find.text('GET GEMS'));
+      await t.tap(find.text('GET GEMS'));
+      await t.pumpAndSettle();
+      expect(find.byType(ShopScreen), findsOneWidget);
+      expect(c.read(previewControllerProvider).spentGems, 0);
+      expect(c.read(previewControllerProvider).demoBalanceUsed, isFalse);
+      expect(c.read(timerBoostControllerProvider).pack, 1);
+      GoRouter.of(t.element(find.byType(ShopScreen))).pop();
+      await t.pumpAndSettle();
+      expect(find.text('Not enough gems'), findsOneWidget);
+      await t.pumpWidget(const SizedBox.shrink());
+    },
+  );
   test('boost purchase preserves insufficient selection, then spends once from demo balance', () {
     final c = ProviderContainer();
     addTearDown(c.dispose);
@@ -108,8 +146,8 @@ void main() {
       expect(c.read(timerBoostControllerProvider).pack, 1);
       await tester.tap(find.text('GET TIMER BOOSTS').last);
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('USE DEMO BALANCE'));
-      await tester.tap(find.text('USE DEMO BALANCE'));
+      expect(find.text('USE DEMO BALANCE'), findsNothing);
+      c.read(timerBoostControllerProvider.notifier).useDemoBalance();
       await tester.pumpAndSettle();
       await tester.tap(find.text('GET TIMER BOOSTS').last);
       await tester.pumpAndSettle();
@@ -173,9 +211,8 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('GET TIMER BOOSTS'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('USE DEMO BALANCE'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('USE DEMO BALANCE'));
+      expect(find.text('USE DEMO BALANCE'), findsNothing);
+      c.read(timerBoostControllerProvider.notifier).useDemoBalance();
       await tester.pumpAndSettle();
       await tester.tap(find.text('GET TIMER BOOSTS'));
       await tester.pumpAndSettle();
@@ -225,8 +262,8 @@ void main() {
         await tester.tap(find.text('GET TIMER BOOSTS'));
         await tester.pumpAndSettle();
         expect(find.text('Not enough gems'), findsOneWidget);
-        await tester.ensureVisible(find.text('USE DEMO BALANCE'));
-        await tester.tap(find.text('USE DEMO BALANCE'));
+        expect(find.text('USE DEMO BALANCE'), findsNothing);
+        c.read(timerBoostControllerProvider.notifier).useDemoBalance();
         await tester.pumpAndSettle();
         await tester.ensureVisible(find.text('GET TIMER BOOSTS'));
         await tester.tap(find.text('GET TIMER BOOSTS'));

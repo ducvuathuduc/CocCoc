@@ -12,6 +12,7 @@ import '../application/learning_controller.dart';
 import '../domain/learning_models.dart';
 import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
+import '../../progress/domain/score_information.dart';
 import 'learning_visuals.dart';
 
 class LearningPath extends ConsumerStatefulWidget {
@@ -421,90 +422,132 @@ class _LearningPathState extends ConsumerState<LearningPath> {
     ),
   );
 
-  Widget _coursePanel(BuildContext context, LearningState progress) => Material(
-    color: ReferenceColors.surface,
-    child: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  Widget _coursePanel(BuildContext context, LearningState progress) {
+    final band = scoreBandIndex(progress.score);
+    final start = scoreBandStarts[band];
+    final next = scoreBandNext[band];
+    final value = ((progress.score - start) / (next - start))
+        .clamp(0, 1)
+        .toDouble();
+    return Material(
+      color: ReferenceColors.surface,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * .75,
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              Row(
                 children: [
-                  ReferenceArt(LearningArt.english, width: 72, height: 54),
-                  const SizedBox(height: 7),
-                  const Text('English', style: headingStyle),
+                  Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: LearningColors.blue,
+                            width: 3,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const ReferenceArt(
+                          LearningArt.english,
+                          width: 52,
+                          height: 40,
+                        ),
+                      ),
+                      const SizedBox(height: 7),
+                      const Text('English', style: headingStyle),
+                    ],
+                  ),
+                  const SizedBox(width: 30),
+                  InkWell(
+                    onTap: () {
+                      setState(() => _courses = false);
+                      context.push('/courses');
+                    },
+                    child: const Column(
+                      children: [
+                        Icon(
+                          Icons.add_box_outlined,
+                          size: 52,
+                          color: ReferenceColors.disabled,
+                        ),
+                        Text('Course', style: headingStyle),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(width: 30),
-              InkWell(
-                onTap: () {
-                  setState(() => _courses = false);
-                  context.push('/courses');
-                },
-                child: const Column(
+              const SizedBox(height: 18),
+              LearningCard(
+                child: Column(
                   children: [
-                    Icon(
-                      Icons.add_box_outlined,
-                      size: 64,
-                      color: ReferenceColors.disabled,
+                    Row(
+                      children: [
+                        Text(
+                          '$start',
+                          key: const ValueKey('course-score-start'),
+                          style: headingStyle,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: LinearProgressIndicator(
+                            key: const ValueKey('course-score-progress'),
+                            value: value,
+                            minHeight: 16,
+                            borderRadius: BorderRadius.circular(20),
+                            color: LearningColors.green,
+                            backgroundColor: ReferenceColors.border,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('$next', style: headingStyle),
+                      ],
                     ),
-                    Text('Course', style: headingStyle),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Your English Score is ${progress.score}',
+                      style: const TextStyle(
+                        fontSize: 17,
+                        color: ReferenceColors.muted,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => context.push('/score'),
+                      child: const Text(
+                        'MORE ABOUT SCORE',
+                        style: TextStyle(
+                          color: LearningColors.blue,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
                   ],
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() => _courses = false);
+                  context.push('/sections');
+                },
+                child: const Text(
+                  'VIEW SECTIONS',
+                  style: TextStyle(
+                    color: LearningColors.blue,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 18),
-          LearningCard(
-            child: Column(
-              children: [
-                LinearProgressIndicator(
-                  value: .1,
-                  minHeight: 16,
-                  borderRadius: BorderRadius.circular(20),
-                  color: LearningColors.green,
-                  backgroundColor: ReferenceColors.border,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Your English Score is ${progress.score}',
-                  style: const TextStyle(
-                    fontSize: 17,
-                    color: ReferenceColors.muted,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => context.push('/score'),
-                  child: const Text(
-                    'MORE ABOUT SCORE',
-                    style: TextStyle(
-                      color: LearningColors.blue,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              setState(() => _courses = false);
-              context.push('/sections');
-            },
-            child: const Text(
-              'SECTIONS',
-              style: TextStyle(
-                color: LearningColors.blue,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class PathNode extends StatelessWidget {
@@ -660,8 +703,8 @@ class UnitGuideScreen extends StatelessWidget {
                             tooltip: 'Listen to ${phrase.$1}',
                             onPressed: () => showLearningNotice(
                               context,
-                              'Audio preview',
-                              'The bundled text is available offline. Recorded phrase audio is not connected in this mock preview.',
+                              'Audio unavailable',
+                              'Audio isn’t available right now. You can still review the phrase below.',
                             ),
                             icon: const Icon(
                               Icons.volume_up_rounded,

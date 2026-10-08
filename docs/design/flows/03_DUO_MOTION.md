@@ -23,3 +23,16 @@ The player is MIT licensed; the first-party artwork has no established open-sour
 Verification must establish playback/frame differences, paused/reduced-motion behavior, disposal, no font/layout regression, and Android runtime rendering. A pixel-perfect or 100% motion equivalence claim requires matching source video/timeline for the archived iOS flows; static screenshot error metrics cannot establish it.
 
 Additional path sources identified2026-10-04: original [DUO_JUMPFLAP](https://d35aaqx5ub95lt.cloudfront.net/lottie/8bb6c897c3f01efa2cbd0c138772ef67.json),1080²/60fps/frames0–220, drives the native path character through its measured illustration viewport. Original [DUO_TWIRL](https://d35aaqx5ub95lt.cloudfront.net/lottie/01a1427cc5613179ea3d7568a5f7445b.json),1080²/60fps/frames0–280, is identified and retained but not activated on a screen. Both keep source bytes and hashes in asset provenance. Tests parse all seven compositions and establish advancing path frames/reduced-motion fallback; no new Android path-motion or physical frame-rate measurement is claimed. Other result/call character artwork remains static where a matching archived timeline has not been identified.
+
+Primary motion research rechecked2026-10-06: [Duolingo's designer/developer
+handoff](https://rive.app/blog/creative-technologists-duolingo-s-solution-to-the-designer-to-developer-handoff)
+describes authored Rive state machines and explicit input specifications,
+including reward interactions. [Lily Video Call](https://framer.rive.app/blog/duolingo-s-ai-powered-video-call-brings-lily-to-life)
+describes modular head/body machines, expression and viseme control in an internal
+call asset. These articles establish the production workflow; they do not provide
+a downloadable original call rig or the missing crying/walking Duo timelines.
+The available in-lesson Lily rig is therefore not evidence of equivalent call
+motion. Community recreations were not substituted or labeled as original.
+The shipped public avatar export and ten in-lesson character exports remain
+separate, verified assets. Exact archived motion still needs the matching source
+timeline and a frame-level comparison.

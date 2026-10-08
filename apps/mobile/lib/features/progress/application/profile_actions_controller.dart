@@ -6,6 +6,7 @@ import 'preview_controller.dart';
 const reportReasons = {'Nudity', 'Spam', 'Something else'};
 const sampleProfileIds = {
   'Alex',
+  'James Smith',
   'Maria',
   'Lucas',
   'Anna',

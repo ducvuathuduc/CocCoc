@@ -29,7 +29,7 @@ class LearningStateController extends Notifier<LearningState> {
     state = state.copyWith(
       xp: state.xp + receipt.xp,
       streak: state.streak == 0 ? 1 : state.streak,
-      score: state.score + 5,
+      score: (state.score + 5).clamp(0, 160),
       gems: state.gems + receipt.gems,
       completedNodes: <String>{...state.completedNodes, receipt.nodeId},
       currentNode: state.currentNode + 1,

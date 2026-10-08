@@ -52,7 +52,7 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Remove English course'));
     await tester.pumpAndSettle();
     expect(
-      find.text('English is your active mock course and cannot be removed.'),
+      find.text('English is your active course and cannot be removed.'),
       findsOneWidget,
     );
     expect(find.text('Are you sure?'), findsNothing);

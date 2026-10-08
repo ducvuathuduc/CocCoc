@@ -10,6 +10,9 @@ import '../../learning/presentation/learning_visuals.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/hub_screens.dart';
 import '../application/registration_controller.dart';
+import '../application/profile_editor_controller.dart';
+import '../application/avatar_controller.dart';
+import 'avatar_motion.dart';
 
 class RegistrationScreen extends ConsumerWidget {
   const RegistrationScreen({super.key});
@@ -172,7 +175,7 @@ class RegistrationScreen extends ConsumerWidget {
                       if (s.step == 4) ...[
                         const SizedBox(height: 110),
                         Text(
-                          'Welcome, ${s.first}! Your profile has been created in this preview.',
+                          'Welcome, ${s.first}! Your profile is ready.',
                           textAlign: TextAlign.center,
                           style: headingStyle,
                         ),
@@ -189,7 +192,7 @@ class RegistrationScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 30),
                         const Text(
-                          'Continue to the email verification preview.',
+                          'Verify your email to keep your progress safe.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 18,
@@ -220,7 +223,7 @@ class RegistrationScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 15),
                   const Text(
-                    'Local preview • no account or email is created on a server.',
+                    'Save your progress and keep learning.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: ReferenceColors.muted,
@@ -266,14 +269,14 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
         const SizedBox(height: 18),
         Text(
           s.verified
-              ? 'Your demo verification is complete.'
-              : '${s.email}\nThis preview does not send email. Use the simulated verification below.',
+              ? 'Your email is verified.'
+              : '${s.email}\nVerify your email to keep your account up to date.',
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 18, color: ReferenceColors.muted),
         ),
         const SizedBox(height: 30),
         ReferenceButton(
-          label: s.verified ? 'CONTINUE' : 'SIMULATE VERIFIED LINK',
+          label: 'CONTINUE',
           onPressed: () {
             if (s.verified) {
               context.go('/home');
@@ -285,7 +288,7 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
         const SizedBox(height: 20),
         if (!s.verified)
           ReferenceButton(
-            label: sent ? 'PREVIEW LINK READY' : 'RESEND PREVIEW LINK',
+            label: sent ? 'LINK READY' : 'RESEND LINK',
             outlined: true,
             onPressed: sent ? null : () => setState(() => sent = true),
           ),
@@ -372,7 +375,7 @@ class SettingsScreen extends ConsumerWidget {
         row('Connection and recovery', '/recovery'),
         const SizedBox(height: 25),
         ReferenceButton(
-          label: 'LOG OUT OF PREVIEW',
+          label: 'LOG OUT',
           outlined: true,
           foregroundColor: LearningColors.blue,
           onPressed: () => learningSheet<void>(
@@ -380,7 +383,7 @@ class SettingsScreen extends ConsumerWidget {
             title: 'Log out?',
             child: Column(
               children: [
-                const Text('Your preview progress stays in this session.'),
+                const Text('You can log in again to continue learning.'),
                 const SizedBox(height: 20),
                 ReferenceButton(
                   label: 'LOG OUT',
@@ -424,90 +427,240 @@ class EditProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _EditProfileState extends ConsumerState<EditProfileScreen> {
-  late final TextEditingController name, email;
+  late final TextEditingController first, last, username, email, phone;
   String? error;
   @override
   void initState() {
     super.initState();
-    final s = ref.read(previewControllerProvider);
-    name = TextEditingController(text: s.name);
+    final s = ref.read(profileEditorProvider);
+    first = TextEditingController(text: s.first);
+    last = TextEditingController(text: s.last);
+    username = TextEditingController(text: s.username);
     email = TextEditingController(text: s.email);
+    phone = TextEditingController(text: s.phone);
   }
 
   @override
   void dispose() {
-    name.dispose();
+    first.dispose();
+    last.dispose();
+    username.dispose();
     email.dispose();
+    phone.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => PreviewPage(
-    title: 'Profile',
-    children: [
-      const SizedBox(height: 15),
-      const Center(
-        child: ReferenceArt(LearningArt.avatar, width: 130, height: 133),
-      ),
-      const SizedBox(height: 25),
-      TextField(
-        controller: name,
-        maxLength: 60,
-        decoration: const InputDecoration(labelText: 'Name'),
-      ),
-      const SizedBox(height: 20),
-      TextField(
-        controller: email,
-        keyboardType: TextInputType.emailAddress,
-        maxLength: 254,
-        decoration: const InputDecoration(labelText: 'Email'),
-      ),
-      const SizedBox(height: 12),
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: const Text(
-          'Change password',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-        ),
-        trailing: const Icon(
-          Icons.chevron_right,
-          color: ReferenceColors.disabled,
-        ),
-        onTap: () => context.push('/settings/password'),
-      ),
-      if (error != null)
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            error!,
-            style: const TextStyle(color: LearningColors.red),
+  Widget build(BuildContext context) {
+    final avatar = ref.watch(avatarControllerProvider);
+    Widget field(
+      String id,
+      String label,
+      TextEditingController controller, {
+      int limit = 60,
+      TextInputType? type,
+    }) => Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: ReferenceColors.ink,
+            ),
           ),
-        ),
-      const SizedBox(height: 25),
-      ReferenceButton(
-        label: 'SAVE CHANGES',
-        onPressed: () {
-          final result = ref
-              .read(previewControllerProvider.notifier)
-              .saveProfile(name.text, email.text);
-          setState(() => error = result);
-          if (result == null) {
-            context.pop();
-          }
-        },
+          const SizedBox(height: 8),
+          TextField(
+            key: ValueKey('profile-$id'),
+            controller: controller,
+            maxLength: limit,
+            keyboardType: type,
+            textInputAction: TextInputAction.next,
+            style: const TextStyle(fontSize: 20, color: ReferenceColors.ink),
+            decoration: InputDecoration(
+              counterText: '',
+              filled: true,
+              fillColor: const Color(0xFFF7F7F7),
+              hintText: id == 'phone' ? 'Add phone number' : null,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 12,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: Color(0xFFE5E5E5),
+                  width: 2,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: Color(0xFF1CB0F6),
+                  width: 2,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-    ],
-  );
+    );
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        toolbarHeight: 49,
+        foregroundColor: ReferenceColors.ink,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.transparent,
+        centerTitle: true,
+        title: const Text(
+          'Profile',
+          style: TextStyle(fontWeight: FontWeight.w700),
+        ),
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(2),
+          child: Divider(height: 2, thickness: 2, color: Color(0xFFE5E5E5)),
+        ),
+      ),
+      body: ListView(
+        key: const ValueKey('profile-editor-scroll'),
+        padding: const EdgeInsets.fromLTRB(16, 24, 16, 34),
+        children: [
+          Center(
+            child: Semantics(
+              button: true,
+              label: 'Change avatar',
+              child: InkWell(
+                onTap: () => context.push('/settings/avatar'),
+                customBorder: const CircleBorder(),
+                child: Container(
+                  width: 96,
+                  height: 96,
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0xFF1CB0F6),
+                      width: 2,
+                    ),
+                  ),
+                  child: ClipOval(
+                    child: avatar.hasAvatar
+                        ? AvatarMotion(values: avatar.saved, animate: false)
+                        : const ReferenceArt(
+                            LearningArt.avatar,
+                            width: 86,
+                            height: 86,
+                          ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: () => context.push('/settings/avatar'),
+              child: const Text(
+                'CHANGE AVATAR',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1CB0F6),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          field('first', 'First name', first),
+          field('last', 'Last name', last),
+          field('username', 'Username', username, limit: 30),
+          const Text(
+            'Password',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 8),
+          Semantics(
+            button: true,
+            label: 'Change password',
+            child: InkWell(
+              key: const ValueKey('profile-password'),
+              onTap: () => context.push('/settings/password'),
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7F7F7),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 18),
+          field(
+            'email',
+            'Email',
+            email,
+            limit: 254,
+            type: TextInputType.emailAddress,
+          ),
+          field(
+            'phone',
+            'Phone number',
+            phone,
+            limit: 25,
+            type: TextInputType.phone,
+          ),
+          if (error != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Text(
+                error!,
+                style: const TextStyle(color: LearningColors.red),
+              ),
+            ),
+          const SizedBox(height: 25),
+          ReferenceButton(
+            label: 'SAVE CHANGES',
+            onPressed: () {
+              final result = ref
+                  .read(profileEditorProvider.notifier)
+                  .save(
+                    ProfileDetails(
+                      first: first.text,
+                      last: last.text,
+                      username: username.text,
+                      email: email.text,
+                      phone: phone.text,
+                    ),
+                  );
+              setState(() => error = result);
+              if (result == null) {
+                if (context.canPop()) context.pop();
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class ReminderScreen extends ConsumerStatefulWidget {
-  const ReminderScreen({super.key});
+  const ReminderScreen({this.permissionDenied = false, super.key});
+  final bool permissionDenied;
   @override
   ConsumerState<ReminderScreen> createState() => _ReminderState();
 }
 
 class _ReminderState extends ConsumerState<ReminderScreen> {
-  bool denied = false;
+  bool get denied => widget.permissionDenied;
   @override
   Widget build(BuildContext context) {
     final s = ref.watch(previewControllerProvider),
@@ -515,7 +668,7 @@ class _ReminderState extends ConsumerState<ReminderScreen> {
     return PreviewPage(
       title: 'Practice reminders',
       children: [
-        const SizedBox(height: 30),
+        const SizedBox(height: 24),
         const ReferenceArt(
           ReferenceArtRegions.writing,
           width: 145,
@@ -566,33 +719,31 @@ class _ReminderState extends ConsumerState<ReminderScreen> {
             style: const TextStyle(fontSize: 17),
           ),
         ),
-        const SizedBox(height: 20),
-        const Text(
-          'Preview preferences only. No operating-system notification is scheduled.',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: ReferenceColors.muted),
-        ),
-        const SizedBox(height: 20),
-        ReferenceButton(
-          label: denied
-              ? 'RESET PERMISSION PREVIEW'
-              : 'PREVIEW PERMISSION DENIED',
-          outlined: true,
-          onPressed: () => setState(() => denied = !denied),
-        ),
       ],
     );
   }
 }
 
 class SyncScreen extends ConsumerStatefulWidget {
-  const SyncScreen({super.key});
+  const SyncScreen({
+    this.initialOffline = false,
+    this.needsReview = false,
+    super.key,
+  });
+  final bool initialOffline, needsReview;
   @override
   ConsumerState<SyncScreen> createState() => _SyncState();
 }
 
 class _SyncState extends ConsumerState<SyncScreen> {
   bool offline = false, conflict = false;
+  @override
+  void initState() {
+    super.initState();
+    offline = widget.initialOffline;
+    conflict = widget.needsReview;
+  }
+
   @override
   Widget build(BuildContext context) => PreviewPage(
     title: 'Sync status',
@@ -609,7 +760,7 @@ class _SyncState extends ConsumerState<SyncScreen> {
             ? 'Review needed'
             : offline
             ? 'You’re offline'
-            : 'Preview is ready',
+            : 'Your progress is up to date',
         textAlign: TextAlign.center,
         style: headingStyle,
       ),
@@ -617,30 +768,18 @@ class _SyncState extends ConsumerState<SyncScreen> {
       LearningCard(
         child: Text(
           conflict
-              ? 'Sample retired content: your answer is preserved. Continue with a current lesson.'
-              : 'Local mock lessons and profile changes remain in this session. Cloud synchronization is not connected.',
+              ? 'Your answer is saved. Continue with a current lesson.'
+              : 'Keep learning to build your streak and reach your daily goal.',
           style: const TextStyle(fontSize: 18),
         ),
       ),
       const SizedBox(height: 20),
       ReferenceButton(
-        label: offline ? 'RECONNECT PREVIEW' : 'REFRESH PREVIEW',
+        label: offline ? 'RECONNECT' : 'REFRESH',
         onPressed: () => setState(() {
           offline = false;
           conflict = false;
         }),
-      ),
-      const SizedBox(height: 20),
-      ReferenceButton(
-        label: 'SIMULATE OFFLINE',
-        outlined: true,
-        onPressed: () => setState(() => offline = true),
-      ),
-      const SizedBox(height: 16),
-      ReferenceButton(
-        label: 'SIMULATE RETIRED CONTENT',
-        outlined: true,
-        onPressed: () => setState(() => conflict = true),
       ),
     ],
   );
@@ -663,15 +802,13 @@ class DeleteAccountScreen extends ConsumerWidget {
           ),
         const SizedBox(height: 25),
         Text(
-          requested ? 'Request preview complete' : 'Delete your account?',
+          requested ? 'Request received' : 'Delete your account?',
           textAlign: TextAlign.center,
           style: headingStyle,
         ),
         const SizedBox(height: 20),
         Text(
-          requested
-              ? 'This is a simulated receipt. Your account and data have been preserved. No email was sent.'
-              : 'Deleting a real account removes its profile and progress. You can review the confirmation here without deleting any data.',
+          requested ? 'Your account deletion request has been received.' : 'Deleting your account removes your profile and learning progress.',
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 19,
@@ -681,7 +818,7 @@ class DeleteAccountScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 35),
         ReferenceButton(
-          label: requested ? 'DONE' : 'PREVIEW DELETE REQUEST',
+          label: requested ? 'DONE' : 'DELETE ACCOUNT',
           backgroundColor: requested ? LearningColors.blue : LearningColors.red,
           edgeColor: requested
               ? LearningColors.blueDark
@@ -690,15 +827,15 @@ class DeleteAccountScreen extends ConsumerWidget {
               ? () => context.pop()
               : () => learningSheet<void>(
                   context,
-                  title: 'Confirm request preview?',
+                  title: 'Delete your account?',
                   child: Column(
                     children: [
                       const Text(
-                        'This confirmation only records a local preview receipt.',
+                        'Your profile and learning progress will be removed.',
                       ),
                       const SizedBox(height: 25),
                       ReferenceButton(
-                        label: 'CONFIRM PREVIEW',
+                        label: 'CONFIRM',
                         backgroundColor: LearningColors.red,
                         edgeColor: LearningColors.redDark,
                         onPressed: () {
@@ -722,18 +859,20 @@ class DeleteAccountScreen extends ConsumerWidget {
   }
 }
 
+enum RecoveryFailure { connection, signIn, rateLimited }
+
 class RecoveryScreen extends StatefulWidget {
-  const RecoveryScreen({super.key});
+  const RecoveryScreen({this.failure = RecoveryFailure.connection, super.key});
+  final RecoveryFailure failure;
   @override
   State<RecoveryScreen> createState() => _RecoveryState();
 }
 
 class _RecoveryState extends State<RecoveryScreen> {
-  String failure = 'timeout';
   bool recovered = false;
   @override
   Widget build(BuildContext context) => PreviewPage(
-    title: 'Connection and recovery',
+    title: 'Connection',
     children: [
       const SizedBox(height: 35),
       Icon(
@@ -745,9 +884,9 @@ class _RecoveryState extends State<RecoveryScreen> {
       Text(
         recovered
             ? 'You’re ready to continue'
-            : failure == '401'
+            : widget.failure == RecoveryFailure.signIn
             ? 'Sign in to continue'
-            : failure == '429'
+            : widget.failure == RecoveryFailure.rateLimited
             ? 'Let’s take a short break'
             : 'Something went wrong',
         textAlign: TextAlign.center,
@@ -755,31 +894,22 @@ class _RecoveryState extends State<RecoveryScreen> {
       ),
       const SizedBox(height: 18),
       const Text(
-        'Your answers and profile changes are preserved. This is a recovery-state preview.',
+        'Your answers are saved. Try again to continue learning.',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 18, color: ReferenceColors.muted),
       ),
       const SizedBox(height: 30),
       ReferenceButton(
-        label: failure == '401' && !recovered ? 'LOG IN' : 'RETRY',
-        onPressed: () => failure == '401' && !recovered
+        label: recovered
+            ? 'CONTINUE'
+            : widget.failure == RecoveryFailure.signIn
+            ? 'LOG IN'
+            : 'RETRY',
+        onPressed: () => recovered
+            ? context.go('/home')
+            : widget.failure == RecoveryFailure.signIn
             ? context.push('/login')
             : setState(() => recovered = true),
-      ),
-      const SizedBox(height: 20),
-      Wrap(
-        spacing: 8,
-        children: [
-          for (final code in ['timeout', '401', '429'])
-            ChoiceChip(
-              label: Text(code),
-              selected: failure == code,
-              onSelected: (_) => setState(() {
-                failure = code;
-                recovered = false;
-              }),
-            ),
-        ],
       ),
     ],
   );

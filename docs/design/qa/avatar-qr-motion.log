@@ -1,0 +1,83 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+00:01 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:01 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:01 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+Original avatar bounds: 1000.0x250.0
+00:02 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:02 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+00:02 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+00:02 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: original avatar rig exposes selectable states and triggers
+Original avatar inputs: default_avatar_bool:FFIBooleanInput, default_avatar_num:FFINumberInput, bounce_trig:FFITriggerInput, Headshape:FFINumberInput, HeadphonesColour:FFINumberInput, Headphones:FFINumberInput, ENG_ONLY_HeadFlip:FFIBooleanInput, ENG_ONLY_Zoom:FFINumberInput, ENG_ONLY_Animation:FFINumberInput, ENG_ONLY_XPBoost:FFINumberInput, SkinTone:FFINumberInput, Body:FFINumberInput, MainHairColor:FFINumberInput, MainHair:FFINumberInput, EyeColor:FFINumberInput, Expression:FFINumberInput, GlassesColor:FFINumberInput, Glasses:FFINumberInput, Wrinkles:FFINumberInput, Piercings:FFINumberInput, Nose Piercing:FFINumberInput, FacialHairColor:FFINumberInput, FacialHair:FFINumberInput, HeadwearColor:FFINumberInput, Headwear:FFINumberInput, ClothingColor:FFINumberInput, BackgroundColor:FFINumberInput
+00:02 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+00:02 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width360.0 text1.0 remain usable
+00:03 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width360.0 text2.0 remain usable
+00:03 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width430.0 text1.0 remain usable
+00:03 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width430.0 text2.0 remain usable
+00:04 +8: All tests passed!

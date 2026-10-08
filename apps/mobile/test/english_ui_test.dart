@@ -29,7 +29,7 @@ void main() {
         ),
       );
       await open(const ScoreScreen());
-      expect(find.text('English Score'), findsOneWidget);
+      expect(find.byTooltip('Share English Score'), findsOneWidget);
       await open(const UnitGuideScreen());
       await tester.pumpAndSettle();
       expect(find.text('Hello!'), findsWidgets);

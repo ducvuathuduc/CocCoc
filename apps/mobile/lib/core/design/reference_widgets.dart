@@ -55,6 +55,9 @@ class ReferenceButton extends StatefulWidget {
     this.edgeColor,
     this.foregroundColor,
     this.leading,
+    this.contentPadding,
+    this.minHeight,
+    this.cornerRadius = 14,
     super.key,
   });
   final String label;
@@ -64,6 +67,9 @@ class ReferenceButton extends StatefulWidget {
   final Color? edgeColor;
   final Color? foregroundColor;
   final Widget? leading;
+  final EdgeInsetsGeometry? contentPadding;
+  final double? minHeight;
+  final double cornerRadius;
   @override
   State<ReferenceButton> createState() => _ReferenceButtonState();
 }
@@ -106,7 +112,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
             curve: Curves.easeOutCubic,
             decoration: BoxDecoration(
               color: background,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(widget.cornerRadius),
               border: widget.outlined
                   ? Border.all(color: ReferenceColors.border, width: 2)
                   : null,
@@ -116,16 +122,21 @@ class _ReferenceButtonState extends State<ReferenceButton> {
             ),
             child: TextButton(
               style: TextButton.styleFrom(
-                minimumSize: Size(double.infinity, widget.outlined ? 40 : 44),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: widget.outlined
-                      ? widget.leading == null
-                            ? 10
-                            : 8
-                      : 12,
+                minimumSize: Size(
+                  double.infinity,
+                  widget.minHeight ?? (widget.outlined ? 40 : 44),
                 ),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding:
+                    widget.contentPadding ??
+                    EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: widget.outlined
+                          ? widget.leading == null
+                                ? 10
+                                : 8
+                          : 12,
+                    ),
                 foregroundColor: !enabled
                     ? ReferenceColors.disabled
                     : widget.foregroundColor != null
@@ -135,7 +146,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
                     : Colors.white,
                 disabledForegroundColor: ReferenceColors.disabled,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(widget.cornerRadius),
                 ),
                 textStyle: const TextStyle(
                   fontFamily: 'DuolingoSans',

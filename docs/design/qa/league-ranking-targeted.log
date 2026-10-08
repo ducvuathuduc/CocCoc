@@ -1,0 +1,57 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_ranking_test.dart
+00:00 +0: ranking is immutable, descending and assigns all eight ranks
+00:00 +1: learner XP re-ranks only me and keeps deterministic foreign ties
+00:00 +2: source ranking opens profiles and own avatar opens status
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.element (package:flutter_test/src/controller.dart:888:30)
+#2      WidgetController.ensureVisible (package:flutter_test/src/controller.dart:2389:32)
+#3      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_ranking_test.dart:133:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  source ranking opens profiles and own avatar opens status
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +2 -1: source ranking opens profiles and own avatar opens status [E]
+  Test failed. See exception logs above.
+  The test description was: source ranking opens profiles and own avatar opens status
+  
+00:01 +2 -1: ranking rows expand safely at 320 and text scale two
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.getSize (package:flutter_test/src/controller.dart:2178:47)
+#2      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_ranking_test.dart:176:14)
+<asynchronous suspension>
+#3      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#4      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  ranking rows expand safely at 320 and text scale two
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +2 -2: ranking rows expand safely at 320 and text scale two [E]
+  Test failed. See exception logs above.
+  The test description was: ranking rows expand safely at 320 and text scale two
+  
+00:01 +2 -2: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_ranking_test.dart: ranking rows expand safely at 320 and text scale two
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_ranking_test.dart: source ranking opens profiles and own avatar opens status

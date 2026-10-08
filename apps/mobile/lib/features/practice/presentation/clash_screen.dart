@@ -218,7 +218,7 @@ class _ClashScreenState extends ConsumerState<ClashScreen>
                     false,
                   ),
                   ClashStage.timeUp => _coach(
-                    'Time’s up! You earned ${s.correct * 2} XP in this mock clash.',
+                    'Time’s up! You earned ${s.correct * 2} XP in this clash.',
                     true,
                   ),
                   ClashStage.waiting => Column(

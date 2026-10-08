@@ -589,7 +589,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             const Icon(Icons.mic_rounded, color: LearningColors.blue, size: 90),
             const SizedBox(height: 20),
             const Text(
-              'Microphone practice is simulated. Use the text alternative to continue without an audio score.',
+              'Use the text alternative to continue practicing.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 17, color: ReferenceColors.muted),
             ),
@@ -661,7 +661,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       onPressed: () => showLearningNotice(
         context,
         'Listening alternative',
-        'Audio is not connected in this local preview. Read the prompt: $prompt',
+        'Audio is unavailable. Read the prompt: $prompt',
       ),
       icon: const Icon(Icons.volume_up_rounded, color: Colors.white, size: 28),
     ),
@@ -815,7 +815,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       await showLearningNotice(
         context,
         'Report queued',
-        'Your feedback is saved in this preview session. It has not been sent to a server.',
+        'Thanks for helping us improve this exercise.',
       );
     }
   }

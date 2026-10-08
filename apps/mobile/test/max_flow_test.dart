@@ -98,7 +98,7 @@ void main() {
       await tester.tap(find.text('START MY FREE WEEK'));
       await tester.pumpAndSettle();
       final c = ProviderScope.containerOf(
-        tester.element(find.text('Mock checkout')),
+        tester.element(find.byTooltip('Close checkout')),
       );
       expect(c.read(extendedControllerProvider).plan, isNull);
       await tester.tap(find.byTooltip('Close checkout'));
@@ -106,11 +106,11 @@ void main() {
       expect(c.read(maxControllerProvider).selectedPlan, 'max-family');
       await tester.tap(find.text('START MY FREE WEEK'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('CONFIRM PREVIEW'));
-      await tester.tap(find.text('CONFIRM PREVIEW'));
+      await tester.ensureVisible(find.text('CONFIRM'));
+      await tester.tap(find.text('CONFIRM'));
       await tester.pumpAndSettle();
       expect(c.read(extendedControllerProvider).plan, 'max-family');
-      expect(find.text('Your local preview is ready.'), findsOneWidget);
+      expect(find.text('Your plan is ready.'), findsOneWidget);
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('LET’S GO'));
@@ -130,7 +130,7 @@ void main() {
         await tester.tap(find.text('NEXT'));
         await tester.pumpAndSettle();
       }
-      expect(find.text('Your 7-day trial preview is ready!'), findsOneWidget);
+      expect(find.text('Your 7-day trial is ready!'), findsOneWidget);
       await tester.tap(find.text('LET’S GO'));
       await tester.pumpAndSettle();
       expect(find.text('SECTION 1, UNIT 1'), findsOneWidget);

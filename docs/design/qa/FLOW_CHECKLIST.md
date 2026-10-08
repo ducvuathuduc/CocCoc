@@ -1,6 +1,6 @@
 # English UI flow checklist
 
-Updated 2026-10-05. 148 scoped flows / 912 ordered screen occurrences.
+Updated 2026-10-08. 148 scoped flows / 912 ordered screen occurrences.
 
 This is the persistent completion register. ✅ means the scoped native mock UI was implemented and verified; exact pixel/motion and production gates remain separate. Existing families below are reused. A pending source variant does not authorize rebuilding its shared controller or screen.
 
@@ -15,7 +15,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ✅ | Original Duo motion | [analysis](../flows/03_DUO_MOTION.md) | Source variants and exact archived pixel/motion still require reconciliation. |
 | ✅ | English course/path | [analysis](../flows/04_COURSE_PATH.md) | Source variants and exact archived pixel/motion still require reconciliation. |
 | ✅ | Lesson/results | [analysis](../flows/05_LESSON_RESULTS.md) | Source variants and exact archived pixel/motion still require reconciliation. |
-| ✅ | Hubs/account baseline | [analysis](../flows/06_HUBS_ACCOUNT.md) | Source variants and exact archived pixel/motion still require reconciliation. |
+| ✅ | Hubs/account baseline | [analysis](../flows/06_HUBS_ACCOUNT.md) | Native locked/Welcome/joined League, profile/Back/status and deterministic ranking verified. Archived settlement/promotion/event variants, historical identities, exact pixel/motion and real progress service remain separate. |
 | ✅ | Registration/friends/speech baseline | [analysis](../flows/07_REGISTRATION_SOCIAL_SPEECH.md) | Source variants and exact archived pixel/motion still require reconciliation. |
 | ✅ | Words/sections/energy/Super | [analysis](../flows/08_ENGLISH_EXTENDED.md) | Source variants and exact archived pixel/motion still require reconciliation. |
 | ✅ | Story/radio/typed roleplay | [analysis](../flows/09_ENGLISH_STORY_RADIO_ROLEPLAY.md) | Source variants and exact archived pixel/motion still require reconciliation. |
@@ -32,7 +32,12 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ✅ | Course management/removal | [analysis](../flows/20_COURSE_MANAGEMENT.md) | English replaces archived French; Math/Music/Chess excluded. Existing Settings layout is reused. Crying Duo is original still;350ms local removal wait does not establish original timing. |
 | ✅ | Profile report/block and QR/copy | [analysis](../flows/21_PROFILE_ACTIONS.md) | Local fixture identity and existing profile layout differ from the archived profile. Report/block confirmation is explicitly local; nothing is sent. Cupertino action sheet uses bundled readable Duo font; exact iOS system typography remains open. QR and clipboard use identical local preview URL; source encoded contents and rounded eye geometry differ. Source profile fixture/layout and original QR dialog timing are not certified. |
 | ✅ | Saved-account management | [analysis](../flows/23_SAVED_ACCOUNT_MANAGEMENT.md) | Saved name/email are local demo fixtures. Native opaque popover replaces source liquid-glass compositing. Existing original Welcome/Login motion is reused; exact archived pose/frame timing remains unresolved. |
-| ✅ | Mock password change | [analysis](../flows/22_CHANGE_PASSWORD.md) | Source full profile editor includes name parts, username, phone and avatar choices; existing two-field entry/editor is not fully reconciled. Three-field password screen and local update/return are verified; full source profile contexts remain in progress. |
+| ✅ | Mock password change | [analysis](../flows/22_CHANGE_PASSWORD.md) | Full native Profile editor/password draft return verified locally. Real account updates and exact archived iOS route timing remain pending. |
+| ✅ | Original avatar customization | [analysis](../flows/24_AVATAR_ASSET_RESEARCH.md) | Original public rig/config/SVGs obtained; 8 categories/282 choices implemented. Archived item mappings, Profile variants and exact iOS timing remain separate. |
+| ✅ | Full Profile editor | [analysis](../flows/22_CHANGE_PASSWORD.md) | Native first/last/username/password/email/phone and saved avatar are implemented. Real account/email/phone updates remain pending; exact archived layout/timing certification is separate. |
+| ✅ | Native own Profile and lower sections | [analysis](../flows/25_PROFILE_SOURCE_RECONCILIATION.md) | Local English identity/progress/months adapted; original avatar and illustration regions integrated. Older Profile hierarchy, six-tab source shells and exact motion remain separate. |
+| ✅ | Profile Courses and Following/Followers lists | [analysis](../flows/25_PROFILE_SOURCE_RECONCILIATION.md) | Courses/Following/empty and populated Followers, guarded Follow back and return verified locally. Non-language subjects excluded; names/English counts adapted. Original individual portraits, archived pixel/motion timing and real social service writes remain separate. |
+| ✅ | English Score information and course popover | [analysis](../flows/26_ENGLISH_SCORE_INFORMATION.md) | Nine current inclusive bands, locked state, lifecycle and clipboard verified. Examples/audio/share are local fixtures; older range labels and device/pixel/motion proof remain separate. |
 
 ## Ordered source flows
 
@@ -40,7 +45,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | --- | --- | --- | --- |
 | ⬜ | [Energy](https://gummble.com/apps/duolingo-ios?tab=flows&flow=15d44bfd-9a78-4987-88e2-6c6fd020144c) · 15d44bfd-9a78-4987-88e2-6c6fd020144c | 0/3 | extended |
 | ⬜ | [Choosing a section](https://gummble.com/apps/duolingo-ios?tab=flows&flow=31460692-382a-4403-884b-847cc7dd715c) · 31460692-382a-4403-884b-847cc7dd715c | 0/2 | extended |
-| ⬜ | [Score information](https://gummble.com/apps/duolingo-ios?tab=flows&flow=d70eeb1a-cca9-47f3-b55d-1817937a4c6f) · d70eeb1a-cca9-47f3-b55d-1817937a4c6f | 0/3 | extended |
+| ✅ | [Score information](https://gummble.com/apps/duolingo-ios?tab=flows&flow=d70eeb1a-cca9-47f3-b55d-1817937a4c6f) · d70eeb1a-cca9-47f3-b55d-1817937a4c6f | 3/3 | extended, score-information, path |
 | ⬜ | [Widgets](https://gummble.com/apps/duolingo-ios?tab=flows&flow=3821440d-1a63-42dc-99f2-904cbd9edbbf) · 3821440d-1a63-42dc-99f2-904cbd9edbbf | 0/7 | New slice |
 | ⬜ | [Year in review](https://gummble.com/apps/duolingo-ios?tab=flows&flow=a9b398c8-70c7-42c4-9cbb-d2568cd0d40d) · a9b398c8-70c7-42c4-9cbb-d2568cd0d40d | 0/8 | New slice |
 | ⬜ | [Subscribing to Super Duolingo](https://gummble.com/apps/duolingo-ios?tab=flows&flow=26160ad7-fdd5-45e9-a82a-1062682414a9) · 26160ad7-fdd5-45e9-a82a-1062682414a9 | 0/14 | extended |
@@ -48,9 +53,9 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Completing a lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=068dbdc0-5d4a-4de2-a477-b0e5c8cdc3e8) · 068dbdc0-5d4a-4de2-a477-b0e5c8cdc3e8 | 0/22 | lessons |
 | ⬜ | [Friends](https://gummble.com/apps/duolingo-ios?tab=flows&flow=0876e919-b55d-4666-8bb5-a5a4f6bf968e) · 0876e919-b55d-4666-8bb5-a5a4f6bf968e | 0/4 | registration |
 | ⬜ | [Setting a status](https://gummble.com/apps/duolingo-ios?tab=flows&flow=0e653f8e-e529-4dd7-ba84-0589fd9b7b82) · 0e653f8e-e529-4dd7-ba84-0589fd9b7b82 | 0/4 | feed |
-| ⬜ | [More about score](https://gummble.com/apps/duolingo-ios?tab=flows&flow=0f480cf3-2057-412c-999a-fe9a54bed855) · 0f480cf3-2057-412c-999a-fe9a54bed855 | 0/4 | extended |
+| 🔄 | [More about score](https://gummble.com/apps/duolingo-ios?tab=flows&flow=0f480cf3-2057-412c-999a-fe9a54bed855) · 0f480cf3-2057-412c-999a-fe9a54bed855 | 0/4 | extended, score-information, path |
 | ⬜ | [Sorting words](https://gummble.com/apps/duolingo-ios?tab=flows&flow=1496a2ff-7640-4344-a30b-14543a5a4738) · 1496a2ff-7640-4344-a30b-14543a5a4738 | 0/3 | extended |
-| ⬜ | [User profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=14ea3a1f-8b70-41ec-ade1-d77617a3f149) · 14ea3a1f-8b70-41ec-ade1-d77617a3f149 | 0/4 | hubs |
+| 🔄 | [User profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=14ea3a1f-8b70-41ec-ade1-d77617a3f149) · 14ea3a1f-8b70-41ec-ade1-d77617a3f149 | 1/4 | hubs, profile-surface, profile-actions, achievements |
 | ⬜ | [Widgets](https://gummble.com/apps/duolingo-ios?tab=flows&flow=174e45d5-58e6-43b8-a5b1-465aa2f7a274) · 174e45d5-58e6-43b8-a5b1-465aa2f7a274 | 0/1 | New slice |
 | ⬜ | [Completing a story lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=1a403996-c169-410b-ab69-c28dbfd8a05b) · 1a403996-c169-410b-ab69-c28dbfd8a05b | 0/11 | journeys |
 | ⬜ | [Dynamic Island](https://gummble.com/apps/duolingo-ios?tab=flows&flow=21a86a2a-3d9e-4c93-a29b-c59ba6c16cee) · 21a86a2a-3d9e-4c93-a29b-c59ba6c16cee | 0/3 | New slice |
@@ -69,10 +74,10 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Completing a game lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=7343592e-fbc9-49a6-ba14-72fa2f5c238c) · 7343592e-fbc9-49a6-ba14-72fa2f5c238c | 0/13 | adventure |
 | ⬜ | [Run out of hearts](https://gummble.com/apps/duolingo-ios?tab=flows&flow=73c77dcb-bb8a-41fb-aac4-2dd03d5ded2e) · 73c77dcb-bb8a-41fb-aac4-2dd03d5ded2e | 0/3 | extended |
 | ⬜ | [Words](https://gummble.com/apps/duolingo-ios?tab=flows&flow=809cf666-d5a3-45ab-815d-684210cb8e95) · 809cf666-d5a3-45ab-815d-684210cb8e95 | 0/3 | extended |
-| ⬜ | [Profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=8836419b-926a-4a6e-b264-daff94628c88) · 8836419b-926a-4a6e-b264-daff94628c88 | 0/6 | hubs |
+| 🔎 | [Profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=8836419b-926a-4a6e-b264-daff94628c88) · 8836419b-926a-4a6e-b264-daff94628c88 | 0/6 | hubs, profile-surface |
 | ⬜ | [Customizing reminders](https://gummble.com/apps/duolingo-ios?tab=flows&flow=895e5cfc-9b69-4563-bd92-a2d666d52c37) · 895e5cfc-9b69-4563-bd92-a2d666d52c37 | 0/7 | hubs |
-| 🔎 | [Creating an avatar](https://gummble.com/apps/duolingo-ios?tab=flows&flow=8fa53138-ae46-4d6c-a7d3-75c0493dec5c) · 8fa53138-ae46-4d6c-a7d3-75c0493dec5c | 0/12 | New slice |
-| ⬜ | [Leaderboard](https://gummble.com/apps/duolingo-ios?tab=flows&flow=95cfcf38-001a-4432-b49e-b4282f9703a4) · 95cfcf38-001a-4432-b49e-b4282f9703a4 | 0/11 | hubs |
+| 🔄 | [Creating an avatar](https://gummble.com/apps/duolingo-ios?tab=flows&flow=8fa53138-ae46-4d6c-a7d3-75c0493dec5c) · 8fa53138-ae46-4d6c-a7d3-75c0493dec5c | 0/12 | avatar, profile-editor, hubs, profile-surface |
+| 🔄 | [Leaderboard](https://gummble.com/apps/duolingo-ios?tab=flows&flow=95cfcf38-001a-4432-b49e-b4282f9703a4) · 95cfcf38-001a-4432-b49e-b4282f9703a4 | 4/11 | hubs, profile-surface |
 | ⬜ | [Editing profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=9b66a0be-845f-427e-9e3f-9e7f491e2067) · 9b66a0be-845f-427e-9e3f-9e7f491e2067 | 0/7 | hubs |
 | ⬜ | [Duolingo for schools](https://gummble.com/apps/duolingo-ios?tab=flows&flow=a20f851f-87cc-4fd6-940e-74617680e61d) · a20f851f-87cc-4fd6-940e-74617680e61d | 0/4 | New slice |
 | ⬜ | [Logging in](https://gummble.com/apps/duolingo-ios?tab=flows&flow=ad65004b-d8d7-4b8a-b3fb-3a548882b2f9) · ad65004b-d8d7-4b8a-b3fb-3a548882b2f9 | 0/6 | New slice |
@@ -115,7 +120,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Feed](https://gummble.com/apps/duolingo-ios?tab=flows&flow=2b077547-fa9f-4d10-8e57-1a87d32e1745) · 2b077547-fa9f-4d10-8e57-1a87d32e1745 | 0/5 | feed |
 | ⬜ | [Achievements](https://gummble.com/apps/duolingo-ios?tab=flows&flow=2e5aac3c-9eb5-4126-9ab0-effa7cf75842) · 2e5aac3c-9eb5-4126-9ab0-effa7cf75842 | 0/4 | achievements |
 | ⬜ | [Home](https://gummble.com/apps/duolingo-ios?tab=flows&flow=2ea1d2e4-9fdf-4697-b2ba-e61dec4ca56a) · 2ea1d2e4-9fdf-4697-b2ba-e61dec4ca56a | 0/9 | path |
-| ⬜ | [Leaderboard](https://gummble.com/apps/duolingo-ios?tab=flows&flow=30488f3a-22f6-4c25-a883-db83e851d5cd) · 30488f3a-22f6-4c25-a883-db83e851d5cd | 0/6 | hubs |
+| 🔄 | [Leaderboard](https://gummble.com/apps/duolingo-ios?tab=flows&flow=30488f3a-22f6-4c25-a883-db83e851d5cd) · 30488f3a-22f6-4c25-a883-db83e851d5cd | 1/6 | hubs, profile-surface |
 | ✅ | [Copying a profile link](https://gummble.com/apps/duolingo-ios?tab=flows&flow=30b7b0ec-8359-4d2a-99c3-618a964a9833) · 30b7b0ec-8359-4d2a-99c3-618a964a9833 | 3/3 | hubs, profile-actions |
 | ⬜ | [Completing the first lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=364466ca-05eb-419b-8f47-095685a48cbd) · 364466ca-05eb-419b-8f47-095685a48cbd | 0/28 | path, lessons |
 | ⬜ | [Adding a status](https://gummble.com/apps/duolingo-ios?tab=flows&flow=3a8e4927-efd3-42b6-b471-845c2353e9a5) · 3a8e4927-efd3-42b6-b471-845c2353e9a5 | 0/3 | feed |
@@ -133,7 +138,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Searching users](https://gummble.com/apps/duolingo-ios?tab=flows&flow=583f187d-19b7-4420-98de-3d1d7de412f1) · 583f187d-19b7-4420-98de-3d1d7de412f1 | 0/3 | registration |
 | ⬜ | [Super Duolingo](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5930cea9-738f-4e27-9f53-0d78d27b9a70) · 5930cea9-738f-4e27-9f53-0d78d27b9a70 | 0/4 | extended |
 | ⬜ | [Manage a family plan](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5966780e-da37-499b-ae32-f9387d866b43) · 5966780e-da37-499b-ae32-f9387d866b43 | 0/2 | max |
-| 🔄 | [Changing password](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5985148c-6771-40a1-b8ff-648fad04a7eb) · 5985148c-6771-40a1-b8ff-648fad04a7eb | 2/4 | login, password-change |
+| ✅ | [Changing password](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5985148c-6771-40a1-b8ff-648fad04a7eb) · 5985148c-6771-40a1-b8ff-648fad04a7eb | 4/4 | login, password-change, profile-editor, avatar |
 | ⬜ | [Logging in (saved account)](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5a0502bf-5922-44f1-a529-70f3f03184c7) · 5a0502bf-5922-44f1-a529-70f3f03184c7 | 0/3 | login |
 | ⬜ | [Inviting a user to a family plan](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5a0c86dd-053f-481c-98b6-588b1ec116d1) · 5a0c86dd-053f-481c-98b6-588b1ec116d1 | 0/5 | max |
 | ⬜ | [Claiming a reward](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5c92b19b-239a-4e75-b9cd-45bfb1c5b4bd) · 5c92b19b-239a-4e75-b9cd-45bfb1c5b4bd | 0/3 | New slice |
@@ -155,7 +160,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Completing a game lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=87ed9414-90bd-40b5-8518-bd40b84e374a) · 87ed9414-90bd-40b5-8518-bd40b84e374a | 0/12 | adventure |
 | ⬜ | [Gift a Super Duolingo](https://gummble.com/apps/duolingo-ios?tab=flows&flow=9006b2f6-2538-45f7-a645-a3c0d343057c) · 9006b2f6-2538-45f7-a645-a3c0d343057c | 0/4 | extended |
 | ⬜ | [Downloading an image](https://gummble.com/apps/duolingo-ios?tab=flows&flow=931501de-1dce-46ad-a2ca-cbbcb25c5a0c) · 931501de-1dce-46ad-a2ca-cbbcb25c5a0c | 0/3 | New slice |
-| ⬜ | [Profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=95916d97-d6af-4824-ad39-3550430a319d) · 95916d97-d6af-4824-ad39-3550430a319d | 0/8 | hubs |
+| 🔄 | [Profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=95916d97-d6af-4824-ad39-3550430a319d) · 95916d97-d6af-4824-ad39-3550430a319d | 5/8 | hubs, profile-surface, avatar |
 | ⬜ | [Video call](https://gummble.com/apps/duolingo-ios?tab=flows&flow=95c7e3d9-961e-44b1-8865-03f62937cb1f) · 95c7e3d9-961e-44b1-8865-03f62937cb1f | 0/5 | registration, max |
 | ⬜ | [Sending a nudge](https://gummble.com/apps/duolingo-ios?tab=flows&flow=99bc37ea-e88d-405e-a60d-7181a540b8c1) · 99bc37ea-e88d-405e-a60d-7181a540b8c1 | 0/3 | streak |
 | ⬜ | [Completing a radio lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=9ff41a50-d527-4ba1-b886-dbc8a54f21c4) · 9ff41a50-d527-4ba1-b886-dbc8a54f21c4 | 0/14 | journeys |
@@ -178,13 +183,13 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Purchasing a timer boost](https://gummble.com/apps/duolingo-ios?tab=flows&flow=d3738966-0f4b-4bc8-bf81-750c2a5854b7) · d3738966-0f4b-4bc8-bf81-750c2a5854b7 | 0/5 | boost |
 | ⬜ | [Choose a plan](https://gummble.com/apps/duolingo-ios?tab=flows&flow=d3eaa48c-d39f-40fc-88ea-2a2bed4d193b) · d3eaa48c-d39f-40fc-88ea-2a2bed4d193b | 0/3 | New slice |
 | ⬜ | [Manage a subscription](https://gummble.com/apps/duolingo-ios?tab=flows&flow=dd362651-db4a-42ed-aff1-471015886f4c) · dd362651-db4a-42ed-aff1-471015886f4c | 0/3 | extended |
-| ⬜ | [Monthly badges](https://gummble.com/apps/duolingo-ios?tab=flows&flow=df71c72f-2817-4042-ba06-5a8047534ecf) · df71c72f-2817-4042-ba06-5a8047534ecf | 0/3 | achievements |
-| 🔄 | [Creating an avatar](https://gummble.com/apps/duolingo-ios?tab=flows&flow=e47219c8-2442-423f-95fe-6d34ad03841f) · e47219c8-2442-423f-95fe-6d34ad03841f | 0/15 | New slice |
+| ✅ | [Monthly badges](https://gummble.com/apps/duolingo-ios?tab=flows&flow=df71c72f-2817-4042-ba06-5a8047534ecf) · df71c72f-2817-4042-ba06-5a8047534ecf | 3/3 | achievements, profile-surface |
+| 🔄 | [Creating an avatar](https://gummble.com/apps/duolingo-ios?tab=flows&flow=e47219c8-2442-423f-95fe-6d34ad03841f) · e47219c8-2442-423f-95fe-6d34ad03841f | 1/15 | avatar, profile-editor, hubs, profile-surface |
 | ⬜ | [Skipping a unit](https://gummble.com/apps/duolingo-ios?tab=flows&flow=e5507c39-9c84-43a8-856c-8829498d35a6) · e5507c39-9c84-43a8-856c-8829498d35a6 | 0/8 | New slice |
 | ✅ | [Onboarding](https://gummble.com/apps/duolingo-ios?tab=flows&flow=e6ac09f7-6131-435e-8c21-dae693af84a7) · e6ac09f7-6131-435e-8c21-dae693af84a7 | 20/20 | onboarding |
-| ⬜ | [Friends](https://gummble.com/apps/duolingo-ios?tab=flows&flow=eec0c487-8831-4772-975f-84e8d1f6d3d4) · eec0c487-8831-4772-975f-84e8d1f6d3d4 | 0/4 | registration |
+| ✅ | [Friends](https://gummble.com/apps/duolingo-ios?tab=flows&flow=eec0c487-8831-4772-975f-84e8d1f6d3d4) · eec0c487-8831-4772-975f-84e8d1f6d3d4 | 4/4 | registration, profile-surface, profile-lists |
 | ⬜ | [Achievement detail](https://gummble.com/apps/duolingo-ios?tab=flows&flow=f42ff737-2a4b-4818-b1f7-5c6aed16ebe3) · f42ff737-2a4b-4818-b1f7-5c6aed16ebe3 | 0/3 | achievements |
 | ⬜ | [Subscribing to Duolingo Max Family](https://gummble.com/apps/duolingo-ios?tab=flows&flow=f87edc8e-f6da-469b-b407-5cbdab5adc35) · f87edc8e-f6da-469b-b407-5cbdab5adc35 | 0/12 | max |
-| ⬜ | [Courses (profile)](https://gummble.com/apps/duolingo-ios?tab=flows&flow=fe68d9ea-973e-45df-8db1-7dccb1e52c43) · fe68d9ea-973e-45df-8db1-7dccb1e52c43 | 0/2 | path, hubs |
+| ✅ | [Courses (profile)](https://gummble.com/apps/duolingo-ios?tab=flows&flow=fe68d9ea-973e-45df-8db1-7dccb1e52c43) · fe68d9ea-973e-45df-8db1-7dccb1e52c43 | 2/2 | path, hubs, profile-surface, profile-lists |
 
 Per-screen IDs, status, evidence and differences are stored in [FLOW_COVERAGE.json](FLOW_COVERAGE.json).

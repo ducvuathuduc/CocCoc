@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-08",
+  "url": "http://127.0.0.1:4173/preview.html",
+  "scope": "HTTP HEAD delivery only; no browser interaction or visual inspection",
+  "mainDartBytes": 4009560,
+  "mainDartSha256": "eb6931d075c7eb1c9e500096838e9e04d07b630bd3482812d04bf361e6208337",
+  "checks": [
+    {
+      "path": "/preview.html",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cache": "no-store"
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "cache": "no-store"
+    },
+    {
+      "path": "/main.dart.js",
+      "status": 200,
+      "type": "text/javascript",
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/avatar/avatar_builder_25_sept2025.riv",
+      "status": 200,
+      "type": "application/octet-stream",
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/profile-foreign-source.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/league-ranking-source.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/league-welcome-source.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/score-information.png",
+      "status": 200,
+      "type": "image/png",
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/fonts/MaterialIcons-Regular.otf",
+      "status": 200,
+      "type": "application/octet-stream",
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+      "status": 200,
+      "type": "font/ttf",
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm/rive_native.wasm",
+      "status": 200,
+      "type": "application/wasm",
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm_compatibility/rive_native.wasm",
+      "status": 200,
+      "type": "application/wasm",
+      "cache": "no-store"
+    }
+  ]
+}

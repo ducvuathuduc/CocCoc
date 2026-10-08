@@ -142,13 +142,13 @@ class TimerBoostOffer extends ConsumerWidget {
                     ),
                     const SizedBox(height: 6),
                     const Text(
-                      'Earn gems through lessons and quests, or try this purchase with a local demo balance.',
+                      'Earn gems through lessons and quests.',
                       textAlign: TextAlign.center,
                     ),
                     if (!balanceUsed)
                       TextButton(
-                        onPressed: vm.useDemoBalance,
-                        child: const Text('USE DEMO BALANCE'),
+                        onPressed: () => context.push('/shop'),
+                        child: const Text('GET GEMS'),
                       ),
                   ],
                 ],

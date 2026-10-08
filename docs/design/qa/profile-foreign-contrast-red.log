@@ -1,0 +1,76 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_header_test.dart
+00:00 +0: hero controls follow source light and dark background metadata
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: Color:<Color(alpha: 1.0000, red: 0.2941, green: 0.2941, blue: 0.2941, colorSpace:
+ColorSpace.sRGB)>
+  Actual: Color:<Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace:
+ColorSpace.sRGB)>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_header_test.dart:140:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_header_test.dart line 140
+The test description was:
+  hero controls follow source light and dark background metadata
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: hero controls follow source light and dark background metadata [E]
+  Test failed. See exception logs above.
+  The test description was: hero controls follow source light and dark background metadata
+  
+00:01 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_header_test.dart: hero controls follow source light and dark background metadata

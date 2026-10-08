@@ -483,15 +483,15 @@ class _MediaPractice extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          speaking ? 'Speech capture is simulated' : 'Audio is unavailable',
+          speaking ? 'Speaking practice' : 'Audio is unavailable',
           textAlign: TextAlign.center,
           style: headingStyle,
         ),
         const SizedBox(height: 10),
         Text(
           speaking
-              ? 'This preview does not access your microphone or score pronunciation.'
-              : 'This preview has no audible media. Continue with the same prompt as typed text.',
+              ? 'Read the sentence, then practice your response.'
+              : 'Continue with the same prompt as a written exercise.',
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: ReferenceColors.muted,
@@ -501,7 +501,7 @@ class _MediaPractice extends StatelessWidget {
         ),
         const SizedBox(height: 26),
         ReferenceButton(
-          label: 'USE TEXT SUBSTITUTE',
+          label: 'USE TYPED PRACTICE',
           backgroundColor: LearningColors.blue,
           edgeColor: LearningColors.blueDark,
           onPressed: () => _startTextSubstitute(context, ref, exercises),
@@ -509,7 +509,7 @@ class _MediaPractice extends StatelessWidget {
         if (speaking) ...[
           const SizedBox(height: 12),
           ReferenceButton(
-            label: 'OPEN SPEAKING PREVIEW',
+            label: 'PRACTICE SPEAKING',
             outlined: true,
             foregroundColor: ReferenceColors.blue,
             onPressed: () => context.push('/speaking/record'),
@@ -572,7 +572,7 @@ class _SpeakingRecordScreenState extends ConsumerState<SpeakingRecordScreen>
         child: Column(
           children: [
             LearningHeader(
-              title: 'Speaking preview',
+              title: 'Speaking',
               onClose: () => _closeToPractice(context),
             ),
             Expanded(
@@ -594,13 +594,13 @@ class _SpeakingRecordScreenState extends ConsumerState<SpeakingRecordScreen>
                         const SizedBox(height: 22),
                         if (state.capability == SpeechCapability.ready)
                           ReferenceButton(
-                            label: 'START MOCK RECORDING',
+                            label: 'TAP TO SPEAK',
                             backgroundColor: LearningColors.blue,
                             edgeColor: LearningColors.blueDark,
                             onPressed: controller.startMockRecording,
                           ),
                         if (state.capability == SpeechCapability.capturing)
-                          ReferenceButton(label: 'CAPTURING…'),
+                          ReferenceButton(label: 'LISTENING…'),
                         if (state.capability == SpeechCapability.unscored)
                           ReferenceButton(
                             label: 'CONTINUE TO CALL',
@@ -622,31 +622,11 @@ class _SpeakingRecordScreenState extends ConsumerState<SpeakingRecordScreen>
                           ),
                           const SizedBox(height: 12),
                           ReferenceButton(
-                            label: 'RESET PREVIEW',
+                            label: 'TRY AGAIN',
                             outlined: true,
                             onPressed: controller.resetCapability,
                           ),
                         ],
-                        const SizedBox(height: 26),
-                        const Text(
-                          'CAPABILITY SIMULATION',
-                          style: sectionStyle,
-                        ),
-                        const SizedBox(height: 10),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: [
-                            ActionChip(
-                              label: const Text('SIMULATE DENIED'),
-                              onPressed: controller.showPermissionDenied,
-                            ),
-                            ActionChip(
-                              label: const Text('SIMULATE UNSUPPORTED'),
-                              onPressed: controller.showUnsupported,
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
@@ -670,27 +650,27 @@ class _CapabilityPanel extends StatelessWidget {
     final (title, detail, icon) = switch (capability) {
       SpeechCapability.permissionDenied => (
         'Microphone permission denied',
-        'No microphone was accessed. Use typed practice or reset this simulation.',
+        'Allow microphone access or continue with typed practice.',
         Icons.mic_off_rounded,
       ),
       SpeechCapability.unsupported => (
         'Speech capture unsupported',
-        'This preview can continue with typed input.',
+        'Continue with typed practice on this device.',
         Icons.portable_wifi_off_rounded,
       ),
       SpeechCapability.capturing => (
-        'Capturing mock speech…',
-        'No audio is being recorded or uploaded.',
+        'Listening…',
+        'Read the sentence aloud.',
         Icons.graphic_eq_rounded,
       ),
       SpeechCapability.unscored => (
-        'Mock capture complete',
-        'Pronunciation is unscored because no recorded media exists.',
+        'Practice complete',
+        'Continue practicing with Lily.',
         Icons.check_circle_outline_rounded,
       ),
       SpeechCapability.ready => (
-        'Try a speaking prompt',
-        'Deterministic preview only. It does not request microphone permission.',
+        'Listen and repeat',
+        'Tap below to practice saying the sentence.',
         Icons.mic_none_rounded,
       ),
     };
@@ -801,16 +781,10 @@ class _SpeakingCallScreenState extends ConsumerState<SpeakingCallScreen>
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     child: ReferenceArt(_callLily, width: 520, height: 310),
                   ),
-                  const SizedBox(height: 14),
-                  const Text(
-                    'Static reference illustration · no lip-sync',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Color(0xFFB8C4CC), fontSize: 14),
-                  ),
                   const SizedBox(height: 18),
                   if (state.callStage == CallStage.idle)
                     ReferenceButton(
-                      label: 'START MOCK CALL',
+                      label: 'START CALL',
                       backgroundColor: LearningColors.blue,
                       edgeColor: LearningColors.blueDark,
                       onPressed: controller.startCall,
@@ -858,11 +832,6 @@ class _SpeakingCallScreenState extends ConsumerState<SpeakingCallScreen>
                           controller.sendTypedReply(_replyController.text);
                           _replyController.clear();
                         },
-                      ),
-                      const SizedBox(height: 10),
-                      TextButton(
-                        onPressed: controller.reconnect,
-                        child: const Text('SIMULATE RECONNECT'),
                       ),
                     ],
                     if (state.callStage != CallStage.ended) ...[
@@ -949,7 +918,7 @@ class SpeakingResultScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Unscored mock session · no recorded media',
+                    'Review your conversation',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Color(0xFFB8C4CC), fontSize: 16),
                   ),

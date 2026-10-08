@@ -1,0 +1,83 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  qr 3.0.2 (4.0.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  window_to_front 0.0.4 (1.0.0 available)
+Got dependencies!
+10 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart
+00:00 +0: original avatar rig exposes selectable states and triggers
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Unable to load asset: "assets/avatar/avatar_builder_25_sept2025.riv".
+The asset does not exist or has empty data.
+
+When the exception was thrown, this was the stack:
+#0      PlatformAssetBundle.load (package:flutter/src/services/asset_bundle.dart:340:7)
+#1      File.asset (package:rive_native/src/rive.dart:332:48)
+#2      main.<anonymous closure>.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart:6:51)
+#3      AutomatedTestWidgetsFlutterBinding.runAsync.<anonymous closure> (package:flutter_test/src/binding.dart:2308:17)
+#6      AutomatedTestWidgetsFlutterBinding.runAsync (package:flutter_test/src/binding.dart:2304:26)
+#7      WidgetTester.runAsync (package:flutter_test/src/widget_tester.dart:838:17)
+#8      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart:6:26)
+#9      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:29)
+<asynchronous suspension>
+#10     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: not null
+  Actual: <null>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart:10:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart line 10
+The test description was:
+  original avatar rig exposes selectable states and triggers
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -1: original avatar rig exposes selectable states and triggers [E]
+  Test failed. See exception logs above.
+  The test description was: original avatar rig exposes selectable states and triggers
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: original avatar rig exposes selectable states and triggers

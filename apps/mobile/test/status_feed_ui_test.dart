@@ -33,6 +33,16 @@ void main() {
     final c = await app(tester, '/league');
     c.read(previewControllerProvider.notifier).optIntoLeague();
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byTooltip('Set your status'),
+      180,
+      scrollable: find
+          .descendant(
+            of: find.byKey(const PageStorageKey('league')),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
     await tester.tap(find.byTooltip('Set your status'));
     await tester.pumpAndSettle();
     await tester.tap(find.bySemanticsLabel('Popcorn status'));
@@ -62,6 +72,16 @@ void main() {
       final c = await app(tester, '/league');
       c.read(previewControllerProvider.notifier).optIntoLeague();
       await tester.pumpAndSettle();
+      await tester.scrollUntilVisible(
+        find.byTooltip('Set your status'),
+        180,
+        scrollable: find
+            .descendant(
+              of: find.byKey(const PageStorageKey('league')),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
       await tester.tap(find.byTooltip('Set your status'));
       await tester.pumpAndSettle();
       await tester.tap(find.bySemanticsLabel('Cool Duo status, 500 gems'));

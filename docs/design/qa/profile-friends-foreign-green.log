@@ -1,0 +1,100 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_test.dart: every profile action fixture has an immutable display summary
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_test.dart: foreign profile metrics do not borrow learner progress
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_test.dart: foreign profile metrics do not borrow learner progress
+00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_test.dart: foreign profile metrics do not borrow learner progress
+00:00 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_test.dart: foreign profile metrics do not borrow learner progress
+00:00 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_test.dart: foreign profile metrics do not borrow learner progress
+00:00 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_profile_test.dart: foreign profile metrics do not borrow learner progress
+00:01 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+00:01 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:01 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+00:01 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+00:01 +11: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:01 +12: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile courses reflect enrollment; opening the list does not switch English
+00:02 +13: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile courses reflect enrollment; opening the list does not switch English
+00:02 +14: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile courses reflect enrollment; opening the list does not switch English
+00:02 +15: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: locked range, clipboard retry and narrow text2 remain usable
+00:02 +16: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: locked range, clipboard retry and narrow text2 remain usable
+00:02 +17: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +18: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +19: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +20: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +21: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +22: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +23: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +24: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+00:02 +25: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:02 +26: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: close returns to the prior profile route
+00:02 +27: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: populated followers follow back once and retain source state on return
+00:03 +28: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: populated followers follow back once and retain source state on return
+00:03 +29: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: close returns with the course popover still open
+00:03 +30: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: paid plan shows its original profile badge
+00:03 +31: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: 320 wide text scale 2 scrolls every profile section
+00:03 +32: All tests passed!

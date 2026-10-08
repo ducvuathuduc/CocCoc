@@ -1,0 +1,80 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: practice hub keeps source hierarchy at text scale two
+00:01 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: practice hub keeps source hierarchy at text scale two
+00:01 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/practice_flow_test.dart: practice hub keeps source hierarchy at text scale two
+00:01 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+00:02 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:02 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:03 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+Original avatar bounds: 1000.0x250.0
+00:03 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+00:03 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: routed mock checkout dismiss preserves selection and confirms only explicitly
+00:03 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: original avatar rig exposes selectable states and triggers
+Original avatar inputs: default_avatar_bool:FFIBooleanInput, default_avatar_num:FFINumberInput, bounce_trig:FFITriggerInput, Headshape:FFINumberInput, HeadphonesColour:FFINumberInput, Headphones:FFINumberInput, ENG_ONLY_HeadFlip:FFIBooleanInput, ENG_ONLY_Zoom:FFINumberInput, ENG_ONLY_Animation:FFINumberInput, ENG_ONLY_XPBoost:FFINumberInput, SkinTone:FFINumberInput, Body:FFINumberInput, MainHairColor:FFINumberInput, MainHair:FFINumberInput, EyeColor:FFINumberInput, Expression:FFINumberInput, GlassesColor:FFINumberInput, Glasses:FFINumberInput, Wrinkles:FFINumberInput, Piercings:FFINumberInput, Nose Piercing:FFINumberInput, FacialHairColor:FFINumberInput, FacialHair:FFINumberInput, HeadwearColor:FFINumberInput, Headwear:FFINumberInput, ClothingColor:FFINumberInput, BackgroundColor:FFINumberInput
+00:03 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: routed mock checkout dismiss preserves selection and confirms only explicitly
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+pumpAndSettle timed out
+
+When the exception was thrown, this was the stack:
+#0      WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:717:11)
+<asynchronous suspension>
+#1      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#2      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart:78:7)
+<asynchronous suspension>
+#3      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#4      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  routed mock checkout dismiss preserves selection and confirms only explicitly
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:31 +9 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: routed mock checkout dismiss preserves selection and confirms only explicitly [E]
+  Test failed. See exception logs above.
+  The test description was: routed mock checkout dismiss preserves selection and confirms only explicitly
+  
+00:31 +9 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 360.0 text 1.0
+00:33 +10 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 360.0 text 2.0
+00:33 +11 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 430.0 text 1.0
+00:34 +12 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 430.0 text 2.0
+00:35 +13 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: routed mock checkout dismiss preserves selection and confirms only explicitly

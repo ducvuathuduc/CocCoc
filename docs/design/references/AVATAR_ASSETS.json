@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-05",
+  "riveVersion": "avatar_builder_25_sept2025",
+  "assets": [
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_25_sept2025.riv",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_25_sept2025.riv",
+      "bytes": 1648636,
+      "sha256": "8eb0783dc4354204723e927bb987e6d3ad78397abf6ec200eab5007b83b306a7"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_body_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_body_selected.svg",
+      "bytes": 1956,
+      "sha256": "27d25aed00e661d21d0f17ef997911e03baebd3be3d62bff43a6060d95c2570a"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_body_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_body_unselected.svg",
+      "bytes": 1956,
+      "sha256": "be9270a19fd8821d8711877e19eb5cff804e88c8b2e183849ca210d2fed3e779"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_face_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_selected.svg",
+      "bytes": 1591,
+      "sha256": "706132a692c61dbff2cd00e9fac0b8050c901c2f27480b3911a314328b7e6484"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_face_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_unselected.svg",
+      "bytes": 1591,
+      "sha256": "2a55d9ee3cd67a72e54311f7b4c62fe50392474df2b57951e5b9434a4a0b09d6"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_hair_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_hair_selected.svg",
+      "bytes": 1725,
+      "sha256": "a118e2c07e802e438ba31a0dd5e8d14551f099a4f339fdbb232d41a62bcda835"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_hair_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_hair_unselected.svg",
+      "bytes": 1725,
+      "sha256": "30e82873e81c4d9d629ed6ef86200efcc6baa293b9ef9f2ba5483263d21067c0"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_face_details_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_details_selected.svg",
+      "bytes": 1515,
+      "sha256": "0ba2b4f03573a0e9cb90e830fbcb4aa2d8b9411d866326bbd420b9219347e671"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_face_details_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_details_unselected.svg",
+      "bytes": 1515,
+      "sha256": "f6c465056c2e122256eb76c25c19868753b369ad479bda0c0b14e7a1b8cd633e"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_facial_hair_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_facial_hair_selected.svg",
+      "bytes": 2722,
+      "sha256": "28af12422e091a530b3800b5acb6277d5412ee48dd2c602ed83dd1efca4dd0d7"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_facial_hair_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_facial_hair_unselected.svg",
+      "bytes": 2722,
+      "sha256": "c36bf184f79ade67238423730b75792505256b5f8ae83137ba93919068983f44"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_headwear_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_headwear_selected.svg",
+      "bytes": 2583,
+      "sha256": "2517c2bc002c76c197416758854bb5584f8227a602dec39b5d8b6ea796498d9b"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_headwear_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_headwear_unselected.svg",
+      "bytes": 2583,
+      "sha256": "3de084215fd49affddd09f19bc198469c87eefc0fa360518dd25351c94a2550c"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_tshirt_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_tshirt_selected.svg",
+      "bytes": 852,
+      "sha256": "f691ec540f3d5affd32d421cfa57e6e03ae8706e40da1045cea7fa90fb9e5fdc"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_tshirt_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_tshirt_unselected.svg",
+      "bytes": 852,
+      "sha256": "d9c1127fd061251838a2315e3cde13f6fc5628731c787daeef4dda915f486a72"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_background_selected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_background_selected.svg",
+      "bytes": 1643,
+      "sha256": "7d235a454f6c43791f9397681d37416c8e32e13eabc8410da9440ad0d6493482"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_background_unselected.svg",
+      "url": "https://avatars.duolingo.com/avatar-builder/avatar_builder_background_unselected.svg",
+      "bytes": 1643,
+      "sha256": "8bdcbb693e987d6cfdca0dd8c262b9d9092f9483176d99854b867a6bbe7d35e6"
+    },
+    {
+      "file": "apps/mobile/assets/avatar/avatar_builder_config.json",
+      "url": "https://github.com/wishflow/wishflow-tools/blob/master/apps/duolingo-avatar/assets/avatar_builder_config.json",
+      "bytes": 111335,
+      "sha256": "3951b034f4156395d8705446561231d9f4e074cd47021f5d4e92a2bcb0183817",
+      "note": "Public published configuration, default states only; no user-specific endpoint requested."
+    }
+  ]
+}

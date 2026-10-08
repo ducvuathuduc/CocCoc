@@ -12,8 +12,16 @@ import '../application/extended_controller.dart';
 import 'timer_boost_screen.dart';
 import 'social_screens.dart';
 import '../application/social_controller.dart';
-import '../application/profile_actions_controller.dart';
-import 'profile_actions.dart';
+import '../application/profile_summary_provider.dart';
+import 'profile_weekly_progress.dart';
+import 'foreign_profile_achievements.dart';
+import 'foreign_profile_header.dart';
+import 'own_profile_screen.dart';
+import 'score_information_screen.dart';
+import 'league_ranking.dart';
+import 'league_entry_surface.dart';
+import '../../account/application/avatar_controller.dart';
+import '../../account/presentation/avatar_motion.dart';
 
 class PreviewPage extends StatelessWidget {
   const PreviewPage({
@@ -383,178 +391,36 @@ class LeagueScreen extends ConsumerWidget {
     final progress = ref.watch(learningStateProvider),
         preview = ref.watch(previewControllerProvider);
     if (!preview.leagueOptIn) {
-      return Scaffold(
-        body: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.all(24),
-            children: [
-              const SizedBox(height: 20),
-              const Text(
-                'Leaderboards',
-                textAlign: TextAlign.center,
-                style: headingStyle,
-              ),
-              const SizedBox(height: 65),
-              const ReferenceArt(
-                LearningArt.leagueLocked,
-                width: 290,
-                height: 195,
-              ),
-              const SizedBox(height: 30),
-              const Text(
-                'A little friendly competition',
-                textAlign: TextAlign.center,
-                style: headingStyle,
-              ),
-              const SizedBox(height: 18),
-              Text(
-                progress.completedLessons < 1
-                    ? 'Finish a lesson to join the weekly leaderboard.'
-                    : 'You’re ready! Join the Bronze League and keep learning.',
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 19,
-                  color: ReferenceColors.muted,
-                  height: 1.45,
-                ),
-              ),
-              const SizedBox(height: 35),
-              ReferenceButton(
-                label: progress.completedLessons < 1
-                    ? 'START A LESSON'
-                    : 'JOIN LEAGUE',
-                onPressed: () => progress.completedLessons < 1
-                    ? context.go('/home')
-                    : ref
-                          .read(previewControllerProvider.notifier)
-                          .optIntoLeague(),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Preview rankings are sample data.',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: ReferenceColors.muted),
-              ),
-            ],
-          ),
-        ),
+      return LeagueEntrySurface(
+        remainingLessons: progress.completedLessons < 1 ? 1 : 0,
+        onStartLesson: () => context.go('/home'),
+        onContinue: () =>
+            ref.read(previewControllerProvider.notifier).optIntoLeague(),
       );
     }
-    final names = [
-      'Alex',
-      'Maria',
-      'You',
-      'Lucas',
-      'Anna',
-      'Samira',
-      'Noah',
-      'Emma',
-    ];
+    final avatar = ref.watch(avatarControllerProvider);
     return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          key: const PageStorageKey('league'),
-          children: [
-            const SizedBox(height: 16),
-            const Center(
-              child: ReferenceArt(
-                ArtRegion('status-league', Rect.fromLTWH(78, 501, 126, 229)),
-                width: 62,
-                height: 113,
-              ),
-            ),
-            const SizedBox(height: 14),
-            const Text(
-              'Bronze League',
-              textAlign: TextAlign.center,
-              style: headingStyle,
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Sample weekly ranking • 6 days left',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: ReferenceColors.muted),
-            ),
-            const SizedBox(height: 25),
-            for (var i = 0; i < names.length; i++)
-              Material(
-                color: i == 2 ? ReferenceColors.blueFill : null,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 8,
-                  ),
-                  leading: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 25,
-                        child: Text(
-                          '${i + 1}',
-                          style: TextStyle(
-                            fontSize: 19,
-                            color: i < 3
-                                ? LearningColors.green
-                                : ReferenceColors.muted,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-                      if (i == 2)
-                        Tooltip(
-                          message: 'Set your status',
-                          child: InkWell(
-                            onTap: () => showStatusPicker(context, ref),
-                            child: StatusAvatar(
-                              name: preview.name,
-                              status: ref
-                                  .watch(statusControllerProvider)
-                                  .selected,
-                              size: 44,
-                            ),
-                          ),
-                        )
-                      else
-                        PersonAvatar(
-                          name: names[i],
-                          color: i == 2
-                              ? LearningColors.blue
-                              : Colors.primaries[i],
-                        ),
-                    ],
-                  ),
-                  title: Text(
-                    i == 2 ? preview.name : names[i],
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  trailing: Text(
-                    '${i == 2 ? progress.xp : 100 - i * 11} XP',
-                    style: const TextStyle(
-                      color: ReferenceColors.muted,
-                      fontSize: 17,
-                    ),
-                  ),
-                  onTap: () =>
-                      context.push('/profile/${i == 2 ? 'me' : names[i]}'),
-                ),
-              ),
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'PROMOTION ZONE',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: LearningColors.green,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ],
+      body: LeagueRankingSurface(
+        ownAvatar: Tooltip(
+          message: 'Set your status',
+          excludeFromSemantics: true,
+          child: StatusAvatar(
+            name: preview.name,
+            status: ref.watch(statusControllerProvider).selected,
+            size: 45,
+            portrait: avatar.hasAvatar
+                ? AvatarMotion(
+                    key: const ValueKey('league-saved-avatar'),
+                    values: avatar.saved,
+                    width: 45,
+                    height: 45,
+                    animate: false,
+                  )
+                : null,
+          ),
         ),
+        onOpenProfile: (id) => context.push('/profile/$id'),
+        onSetStatus: () => showStatusPicker(context, ref),
       ),
     );
   }
@@ -588,255 +454,37 @@ class ProfileScreen extends ConsumerWidget {
   final String userId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preview = ref.watch(previewControllerProvider),
-        progress = ref.watch(learningStateProvider);
-    final own = userId == 'me';
-    if (!own && !sampleProfileIds.contains(userId)) {
+    if (userId == 'me') return const OwnProfileScreen();
+    final summary = ref.watch(profileSummaryProvider(userId));
+    if (summary == null) {
       return const PreviewPage(
         title: 'Profile unavailable',
-        children: [Text('This profile is not available in the local preview.')],
+        children: [Text('This profile is unavailable.')],
       );
     }
-    final blocked = ref.watch(profileActionsProvider).blocked.contains(userId);
-    final name = own
-        ? preview.name
-        : sampleProfileIds.contains(userId)
-        ? userId
-        : 'Alex';
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
+        top: false,
         child: ListView(
           key: PageStorageKey('profile-$userId'),
+          padding: EdgeInsets.zero,
           children: [
-            Container(
-              color: const Color(0xFFFFDFDF),
-              padding: const EdgeInsets.fromLTRB(20, 0, 16, 0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (!own)
-                        IconButton(
-                          tooltip: 'Back',
-                          onPressed: () => context.pop(),
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: ReferenceColors.muted,
-                          ),
-                        ),
-                      Expanded(
-                        child: Text(
-                          name,
-                          style: headingStyle.copyWith(fontSize: 28),
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: own ? 'Settings' : 'Profile options',
-                        onPressed: () => own
-                            ? context.push('/settings')
-                            : showProfileOptions(context, ref, userId),
-                        icon: Icon(
-                          own ? Icons.settings : Icons.more_horiz,
-                          color: ReferenceColors.muted,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const ReferenceArt(
-                    LearningArt.avatar,
-                    width: 145,
-                    height: 147,
-                  ),
-                ],
-              ),
-            ),
+            ForeignProfileHero(summary: summary),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (own)
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            tooltip: 'Profile link',
-                            onPressed: () => showProfileShare(
-                              context,
-                              userId: userId,
-                              name: name,
-                            ),
-                            icon: const Icon(
-                              Icons.qr_code,
-                              color: LearningColors.blue,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () => context.push('/settings/profile'),
-                            child: const Text(
-                              'EDIT',
-                              style: TextStyle(
-                                color: LearningColors.blue,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  Text(
-                    own
-                        ? '${preview.email.split('@').first} • Joined October 2026'
-                        : '${name.toLowerCase().replaceAll(' ', '.')}.learns • Sample profile',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: ReferenceColors.muted,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Wrap(
-                    spacing: 12,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      const ReferenceArt(
-                        LearningArt.english,
-                        width: 31,
-                        height: 24,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        own ? '${progress.xp} XP' : '120 XP',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: ReferenceColors.muted,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => context.push('/friends'),
-                        child: Text(
-                          '${preview.following.length} following',
-                          style: const TextStyle(color: LearningColors.blue),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 14),
-                  ReferenceButton(
-                    label: own
-                        ? 'ADD FRIENDS'
-                        : blocked
-                        ? 'UNBLOCK USER'
-                        : preview.following.contains(userId)
-                        ? 'FOLLOWING'
-                        : 'FOLLOW',
-                    outlined: true,
-                    foregroundColor: LearningColors.blue,
-                    onPressed: () => own
-                        ? context.push('/friends')
-                        : blocked
-                        ? ref
-                              .read(profileActionsProvider.notifier)
-                              .unblock(userId)
-                        : ref
-                              .read(previewControllerProvider.notifier)
-                              .follow(userId),
-                  ),
+                  ForeignProfileIdentity(summary: summary),
+                  const SizedBox(height: 24),
+                  ForeignProfileFollowActions(summary: summary),
                   const SizedBox(height: 28),
-                  const Text('Overview', style: headingStyle),
-                  const SizedBox(height: 16),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: [
-                      _overview(
-                        context,
-                        '${progress.streak}',
-                        'Day streak',
-                        LearningArt.flame,
-                      ),
-                      _overview(
-                        context,
-                        '${progress.xp}',
-                        'Total XP',
-                        LearningArt.gem,
-                      ),
-                      _overview(
-                        context,
-                        preview.leagueOptIn ? 'Bronze' : 'No league',
-                        'Current league',
-                        LearningArt.trophy,
-                      ),
-                      _overview(
-                        context,
-                        '${progress.completedLessons}',
-                        'Lessons',
-                        LearningArt.guide,
-                      ),
-                    ],
-                  ),
+                  ProfileWeeklyProgress(userId: userId),
                   const SizedBox(height: 28),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Text('Achievements', style: headingStyle),
-                      ),
-                      TextButton(
-                        onPressed: () => context.push('/achievements'),
-                        child: const Text(
-                          'VIEW ALL',
-                          style: TextStyle(
-                            color: LearningColors.blue,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  LearningCard(
-                    onTap: () => context.push('/achievements'),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.military_tech_rounded,
-                          size: 50,
-                          color: LearningColors.yellow,
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Wildfire', style: headingStyle),
-                              const SizedBox(height: 8),
-                              QuestProgress(
-                                value: progress.streak,
-                                target: 3,
-                                color: LearningColors.orange,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ReferenceButton(
-                    label: 'FRIENDS ACTIVITY',
-                    outlined: true,
-                    foregroundColor: LearningColors.blue,
-                    onPressed: () => context.push('/activity'),
-                  ),
-                  if (own && !preview.registered) ...[
-                    const SizedBox(height: 20),
-                    ReferenceButton(
-                      label: 'CREATE A PROFILE',
-                      onPressed: () => context.push('/auth/register'),
-                    ),
-                  ],
+                  ForeignProfileOverview(summary: summary),
+                  const SizedBox(height: 28),
+                  ForeignProfileAchievements(userId: userId),
                 ],
               ),
             ),
@@ -845,30 +493,6 @@ class ProfileScreen extends ConsumerWidget {
       ),
     );
   }
-
-  Widget _overview(
-    BuildContext context,
-    String value,
-    String label,
-    ArtRegion art,
-  ) => SizedBox(
-    width: (MediaQuery.sizeOf(context).width - 52) / 2,
-    child: LearningCard(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ReferenceArt(art, width: 28, height: 31),
-          const SizedBox(height: 8),
-          Text(value, style: headingStyle.copyWith(fontSize: 21)),
-          Text(
-            label,
-            style: const TextStyle(color: ReferenceColors.muted, fontSize: 15),
-          ),
-        ],
-      ),
-    ),
-  );
 }
 
 class FriendsScreen extends ConsumerStatefulWidget {
@@ -953,7 +577,7 @@ class _FriendsState extends ConsumerState<FriendsScreen> {
           ),
         const SizedBox(height: 24),
         const Text(
-          'Follows stay in this preview. No invitation is sent.',
+          'Find friends and learn together.',
           textAlign: TextAlign.center,
           style: TextStyle(color: ReferenceColors.muted),
         ),
@@ -1004,7 +628,7 @@ class ActivityScreen extends ConsumerWidget {
                     onPressed: () => showLearningNotice(
                       context,
                       'Celebrated!',
-                      'Your celebration is saved only in this preview.',
+                      'Cheer on your friends as they learn.',
                     ),
                     icon: const Icon(
                       Icons.celebration,
@@ -1173,9 +797,7 @@ class ShopScreen extends ConsumerWidget {
                           bought
                               ? 'Streak Freeze equipped!'
                               : 'Not enough gems',
-                          bought
-                              ? 'Your virtual freeze was added to this preview.'
-                              : 'You need 200 gems. Earn gems by finishing lessons and quests.',
+                          bought ? 'Your streak freeze is ready.' : 'You need 200 gems. Earn gems by finishing lessons and quests.',
                         );
                       },
               ),
@@ -1222,7 +844,9 @@ class CoursesScreen extends ConsumerWidget {
                 child: Column(
                   children: [
                     Text(
-                      names[i] == 'English' ? 'Continue your English course.' : 'Interactive lessons in this preview focus on English. This course is a reference choice.',
+                      names[i] == 'English'
+                          ? 'Continue your English course.'
+                          : 'Explore this language course.',
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20),
@@ -1260,7 +884,7 @@ class CoursesScreen extends ConsumerWidget {
           ),
         const SizedBox(height: 15),
         const Text(
-          'Changing the preview selection preserves your lesson progress.',
+          'Your progress is saved for each course.',
           style: TextStyle(color: ReferenceColors.muted),
         ),
         const SizedBox(height: 20),
@@ -1272,7 +896,7 @@ class CoursesScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         ReferenceButton(
-          label: 'TRY A DEMO LESSON',
+          label: 'START LESSON',
           outlined: true,
           foregroundColor: LearningColors.blue,
           onPressed: () => context.push('/onboarding/demo'),
@@ -1285,37 +909,6 @@ class CoursesScreen extends ConsumerWidget {
 class ScoreScreen extends ConsumerWidget {
   const ScoreScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final score = ref.watch(learningStateProvider).score;
-    return PreviewPage(
-      title: 'English Score',
-      children: [
-        const SizedBox(height: 30),
-        const ReferenceArt(LearningArt.scoreDuo, width: 135, height: 220),
-        const SizedBox(height: 22),
-        Text(
-          '$score',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 65,
-            fontWeight: FontWeight.w700,
-            color: LearningColors.blue,
-          ),
-        ),
-        const Text(
-          'Build your English skills',
-          textAlign: TextAlign.center,
-          style: headingStyle,
-        ),
-        const SizedBox(height: 30),
-        QuestProgress(value: score, target: 10, color: LearningColors.blue),
-        const SizedBox(height: 22),
-        const Text(
-          'Keep completing lessons to move toward your next milestone. This is local preview progress.',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18, color: ReferenceColors.muted),
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) =>
+      const ScoreInformationScreen();
 }

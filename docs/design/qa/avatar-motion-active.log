@@ -1,0 +1,40 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart
+00:00 +0: failed avatar does not poison new consumers and in-flight disposal is safe
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:02 +1: avatar renders source states and pauses while backgrounded
+Original avatar bounds: 1000.0x250.0
+00:03 +2: original avatar rig exposes selectable states and triggers
+Original avatar inputs: default_avatar_bool:FFIBooleanInput, default_avatar_num:FFINumberInput, bounce_trig:FFITriggerInput, Headshape:FFINumberInput, HeadphonesColour:FFINumberInput, Headphones:FFINumberInput, ENG_ONLY_HeadFlip:FFIBooleanInput, ENG_ONLY_Zoom:FFINumberInput, ENG_ONLY_Animation:FFINumberInput, ENG_ONLY_XPBoost:FFINumberInput, SkinTone:FFINumberInput, Body:FFINumberInput, MainHairColor:FFINumberInput, MainHair:FFINumberInput, EyeColor:FFINumberInput, Expression:FFINumberInput, GlassesColor:FFINumberInput, Glasses:FFINumberInput, Wrinkles:FFINumberInput, Piercings:FFINumberInput, Nose Piercing:FFINumberInput, FacialHairColor:FFINumberInput, FacialHair:FFINumberInput, HeadwearColor:FFINumberInput, Headwear:FFINumberInput, ClothingColor:FFINumberInput, BackgroundColor:FFINumberInput
+00:03 +3: All tests passed!

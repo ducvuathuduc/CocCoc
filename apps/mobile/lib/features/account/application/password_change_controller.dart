@@ -10,7 +10,7 @@ final passwordChangeWriterProvider =
       return (oldPassword, newPassword) async {
         if (repository is! MockAuthRepository) {
           throw const AuthFailure(
-            'Password changes are not connected in this preview.',
+            'Password changes are unavailable. Try again later.',
           );
         }
         await repository.changePassword(oldPassword, newPassword);

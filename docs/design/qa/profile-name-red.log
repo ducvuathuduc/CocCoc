@@ -1,0 +1,19 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_editor_test.dart
+00:00 +0: full name boundary rejects atomically with the canonical limit
+00:00 +0 -1: full name boundary rejects atomically with the canonical limit [E]
+  Expected: 'Use a full name of up to 60 characters.'
+    Actual: 'Enter a name between 1 and 60 characters.'
+     Which: is different.
+            Expected: Use a full ...
+              Actual: Enter a na ...
+                      ^
+             Differ at offset 0
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\profile_editor_test.dart 18:5                  main.<fn>
+  
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_editor_test.dart: full name boundary rejects atomically with the canonical limit

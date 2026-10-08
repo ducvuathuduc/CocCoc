@@ -1,6 +1,7 @@
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
 import 'package:cocenglish/features/learning/domain/learning_models.dart';
 import 'package:cocenglish/features/practice/presentation/practice_screens.dart';
+import 'package:cocenglish/features/practice/application/practice_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -80,8 +81,9 @@ void main() {
       ),
     );
 
-    await tester.ensureVisible(find.text('SIMULATE DENIED'));
-    await tester.tap(find.text('SIMULATE DENIED'));
+    expect(find.text('CAPABILITY SIMULATION'), findsNothing);
+    expect(find.text('SIMULATE DENIED'), findsNothing);
+    container.read(speakingControllerProvider.notifier).showPermissionDenied();
     await tester.pump();
     expect(find.text('Microphone permission denied'), findsOneWidget);
     await tester.tap(find.text('USE TYPED PRACTICE'));
@@ -100,18 +102,18 @@ void main() {
     await tester.pumpWidget(
       const ProviderScope(child: MaterialApp(home: SpeakingRecordScreen())),
     );
-    await tester.tap(find.text('START MOCK RECORDING'));
+    await tester.tap(find.text('TAP TO SPEAK'));
     await tester.pump();
-    expect(find.text('Capturing mock speech…'), findsOneWidget);
+    expect(find.text('Listening…'), findsOneWidget);
 
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
     await tester.pump(const Duration(seconds: 1));
-    expect(find.text('Capturing mock speech…'), findsOneWidget);
+    expect(find.text('Listening…'), findsOneWidget);
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pump();
-    expect(find.text('START MOCK RECORDING'), findsOneWidget);
+    expect(find.text('TAP TO SPEAK'), findsOneWidget);
 
-    await tester.tap(find.text('START MOCK RECORDING'));
+    await tester.tap(find.text('TAP TO SPEAK'));
     await tester.pump();
 
     await tester.pumpWidget(const SizedBox.shrink());
@@ -123,8 +125,9 @@ void main() {
     await tester.pumpWidget(
       const ProviderScope(child: MaterialApp(home: SpeakingCallScreen())),
     );
-    await tester.ensureVisible(find.text('START MOCK CALL'));
-    await tester.tap(find.text('START MOCK CALL'));
+    expect(find.text('SIMULATE RECONNECT'), findsNothing);
+    await tester.ensureVisible(find.text('START CALL'));
+    await tester.tap(find.text('START CALL'));
     await tester.pump(const Duration(milliseconds: 400));
     expect(find.text('Lily is waiting for your typed reply'), findsOneWidget);
 

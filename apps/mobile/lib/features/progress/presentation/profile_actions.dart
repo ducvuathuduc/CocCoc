@@ -7,7 +7,13 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../../account/application/avatar_controller.dart';
+import '../../account/data/avatar_assets.dart';
+import '../../account/application/profile_editor_controller.dart';
+import '../../account/presentation/avatar_motion.dart';
 import '../application/profile_actions_controller.dart';
+import '../application/profile_appearance_provider.dart';
+import '../application/profile_summary_provider.dart';
 
 Widget _iosPanel(Widget child) => CupertinoTheme(
   data: const CupertinoThemeData(
@@ -66,17 +72,33 @@ Future<void> showProfileOptions(
   );
   if (!context.mounted || result == null) return;
   if (result == 'block') {
-    final accepted = await _confirm(
-      context,
-      'Block $userId?',
-      'You can unblock this profile later.',
-      'BLOCK',
-    );
-    if (accepted && context.mounted) {
-      ref.read(profileActionsProvider.notifier).block(userId);
-    }
+    await showBlockUserFlow(context, ref, userId);
     return;
   }
+  await showReportUserFlow(context, ref, userId);
+}
+
+Future<void> showBlockUserFlow(
+  BuildContext context,
+  WidgetRef ref,
+  String userId,
+) async {
+  final accepted = await _confirm(
+    context,
+    'Block $userId?',
+    'You can unblock this profile later.',
+    'BLOCK',
+  );
+  if (accepted && context.mounted) {
+    ref.read(profileActionsProvider.notifier).block(userId);
+  }
+}
+
+Future<void> showReportUserFlow(
+  BuildContext context,
+  WidgetRef ref,
+  String userId,
+) async {
   final reason = await showCupertinoModalPopup<String>(
     context: context,
     builder: (sheet) => _iosPanel(
@@ -109,7 +131,7 @@ Future<void> showProfileOptions(
   final accepted = await _confirm(
     context,
     'Report and block $userId?',
-    'Reason: $reason\nPreview only',
+    'Reason: $reason',
     'REPORT',
   );
   if (accepted && context.mounted) {
@@ -225,6 +247,17 @@ class ProfileShareDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(profileActionsProvider);
     final url = profilePreviewUrl(userId);
+    final avatar = ref.watch(avatarControllerProvider);
+    final appearance = userId == 'me'
+        ? null
+        : ref.watch(profileAppearanceProvider(userId));
+    final catalog = appearance == null
+        ? null
+        : ref.watch(avatarCatalogProvider).asData?.value;
+    final username = userId == 'me'
+        ? ref.watch(profileEditorProvider).username
+        : ref.watch(profileSummaryProvider(userId))?.username ??
+              name.toLowerCase().replaceAll(' ', '');
     return Dialog(
       constraints: const BoxConstraints(maxWidth: 350),
       insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 28),
@@ -258,7 +291,7 @@ class ProfileShareDialog extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            '@${name.toLowerCase().replaceAll(' ', '')}',
+                            '@$username',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 16,
@@ -302,12 +335,19 @@ class ProfileShareDialog extends ConsumerWidget {
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
-                    child: const ClipOval(
-                      child: ReferenceArt(
-                        LearningArt.avatar,
-                        width: 38,
-                        height: 38,
-                      ),
+                    child: ClipOval(
+                      child: userId == 'me' && avatar.hasAvatar
+                          ? AvatarMotion(values: avatar.saved, animate: false)
+                          : appearance != null && catalog != null
+                          ? AvatarMotion(
+                              values: appearance.valuesFor(catalog),
+                              animate: false,
+                            )
+                          : const ReferenceArt(
+                              LearningArt.avatar,
+                              width: 38,
+                              height: 38,
+                            ),
                     ),
                   ),
                 ],

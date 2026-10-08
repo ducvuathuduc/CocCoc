@@ -39,4 +39,53 @@ The earlier201-file audit above is the published snapshot; the current audit is2
 The crying-Duo ROI includes the original rounded ground shadow, with native
 sheet copy/controls outside it. Its animation rig/timing remains unresolved.
 Profile QR reuses the existing avatar and logotype ROIs; QR modules, controls and
-copy receipt are native. No avatar-builder layers were fabricated.
+copy receipt are native.
+
+2026-10-05 avatar continuation: `assets/avatar/` bundles the byte-intact original
+Duolingo `avatar_builder_25_sept2025.riv`, 16 original category SVGs from
+`avatars.duolingo.com/avatar-builder/`, and the published default configuration
+discovered through `wishflow/wishflow-tools`. Exact URLs, byte counts and SHA-256
+are in `docs/design/references/AVATAR_ASSETS.json`; the source/input contract and
+282 configured choices are in `docs/design/flows/24_AVATAR_ASSET_RESEARCH.md`.
+Native controls render the actual original rig. Profile/editor/own QR share the
+saved configuration. No third-party app code or private avatar endpoint was copied
+or requested. These public assets do not establish historical iOS frame timing.
+
+2026-10-06 Profile source reconciliation adds byte-intact
+`reference_art/profile-score-source.png` from Gummble screen
+`sc_e3a715a73ff94c63a01613c03db9fe13`. Only original mascot/icon ROIs are reused;
+card copy, controls and overview rows are native widgets. The empty-avatar and
+complete-profile illustrations reuse the existing byte-identical `profile-04.png`.
+Friends Alex portrait reuses the existing `friends-02.png`. Current hashes/source
+receipts remain in `docs/design/qa/reference-assets.json`.
+
+2026-10-06 Score information adds byte-intact `score-information.png`
+(`sc_b0a8a3f37157451783e5135f760faa0f`) and `score-unavailable.png`
+(`sc_2a653020036145dca923b9a6629a92fb`). Only small original portraits/lock ROIs
+are reused; English/Vietnamese examples, tabs, speech bubbles and controls are
+native. These stills do not provide audio or viseme timelines.
+
+2026-10-08 lower foreign Profile adds byte-intact `profile-foreign-source.png`
+from archived Gummble screen `sc_9042f4fee7a6438e9757c1115227cc15`, source URL
+`https://storage.gummble.com/prod/content/app_screens/a51eefee-363f-4683-9dc4-8cdb5cc27682.png`.
+Only the three illustration regions above source tier numerals are painted;
+native owner counters, borders and actions remain independent. SHA-256:
+`896b82a21687bad5cdc32445b9206a7ebe4451f2c3c852f827337ed83fc30ba6`.
+Foreign hero/QR portraits use authored catalog choices with the same original
+Rive file, never another person's saved avatar. Original display metadata governs
+hero background/icon colors. These choices do not certify archived identities.
+# League ranking source — 2026-10-08
+
+`reference_art/league-ranking-source.png` is byte-identical to Gummble iOS screen
+`sc_720ee9469bde455f992879eb3973facf`, retrieved through the live Leaderboard MCP
+flow. Source: https://storage.gummble.com/prod/content/app_screens/647f99f5-07d0-431c-a492-dfae6a707c4e.png
+SHA256: `bde11536c47851613b08c6a317b31027071293c34539cc9be9926541ede961c4`.
+Only the three original rank medals are displayed; text, rows and interactions
+remain native. See `docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md` for crops,
+authored English fixtures and separately open archived variants.
+
+`reference_art/league-welcome-source.png` preserves the original podium Duo from
+screen `sc_98120696dc1a45b4a33fa1ebf0599891` in the same live MCP journey.
+Source: https://storage.gummble.com/prod/content/app_screens/66920d1d-b618-4b3c-96ee-85840c508aaf.png
+SHA256: `438027a97fbc2b7ce9155887e126551e499e39381bace604be067857bcc873b8`.
+It is a source still, not evidence of the original podium animation timeline.

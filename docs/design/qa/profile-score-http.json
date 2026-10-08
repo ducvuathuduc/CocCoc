@@ -1,0 +1,44 @@
+[
+  {
+    "path": "/preview.html",
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "cache": "no-store"
+  },
+  {
+    "path": "/",
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "cache": "no-store"
+  },
+  {
+    "path": "/main.dart.js",
+    "status": 200,
+    "type": "text/javascript",
+    "cache": "no-store"
+  },
+  {
+    "path": "/assets/assets/avatar/avatar_builder_25_sept2025.riv",
+    "status": 200,
+    "type": "application/octet-stream",
+    "cache": "no-store"
+  },
+  {
+    "path": "/assets/assets/reference_art/score-information.png",
+    "status": 200,
+    "type": "image/png",
+    "cache": "no-store"
+  },
+  {
+    "path": "/rive/wasm/rive_native.wasm",
+    "status": 200,
+    "type": "application/wasm",
+    "cache": "no-store"
+  },
+  {
+    "path": "/rive/wasm_compatibility/rive_native.wasm",
+    "status": 200,
+    "type": "application/wasm",
+    "cache": "no-store"
+  }
+]

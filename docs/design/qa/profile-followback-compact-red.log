@@ -1,0 +1,30 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart
+00:00 +0: populated followers follow back once and retain source state on return
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: Size:<Size(28.0, 28.0)>
+  Actual: _DebugSize:<Size(28.0, 20.0)>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart:203:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart line 203
+The test description was:
+  populated followers follow back once and retain source state on return
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: populated followers follow back once and retain source state on return [E]
+  Test failed. See exception logs above.
+  The test description was: populated followers follow back once and retain source state on return
+  
+00:01 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: populated followers follow back once and retain source state on return

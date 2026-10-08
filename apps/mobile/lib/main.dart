@@ -37,7 +37,10 @@ import 'features/practice/presentation/clash_screen.dart';
 import 'features/onboarding/presentation/login_entry_screen.dart';
 import 'features/onboarding/presentation/onboarding_flow.dart';
 import 'features/onboarding/presentation/splash_screen.dart';
+import 'features/account/presentation/avatar_builder_screen.dart';
 import 'features/onboarding/presentation/welcome_screen.dart';
+import 'features/progress/presentation/profile_lists_screen.dart';
+import 'features/progress/application/profile_lists_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -348,12 +351,15 @@ class _AppState extends ConsumerState<_App> {
         ),
         GoRoute(
           path: '/achievements',
-          builder: (context, state) => const AchievementsScreen(),
+          builder: (context, state) => AchievementsScreen(
+            profileId: state.uri.queryParameters['profile'],
+          ),
         ),
         GoRoute(
           path: '/achievements/:id',
           builder: (context, state) => AchievementDetailScreen(
             achievementId: state.pathParameters['id']!,
+            profileId: state.uri.queryParameters['profile'],
           ),
         ),
         GoRoute(
@@ -383,6 +389,18 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/feed/learning',
           builder: (context, state) => const FeedLearningScreen(),
+        ),
+        GoRoute(
+          path: '/profile/courses',
+          builder: (context, state) => const ProfileCoursesScreen(),
+        ),
+        GoRoute(
+          path: '/profile/friends',
+          builder: (context, state) => ProfileFriendsScreen(
+            initialTab: state.uri.queryParameters['tab'] == 'followers'
+                ? ProfileFriendsTab.followers
+                : ProfileFriendsTab.following,
+          ),
         ),
         GoRoute(
           path: '/profile/:userId',
@@ -452,6 +470,10 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/settings/profile',
           builder: (context, state) => const EditProfileScreen(),
+        ),
+        GoRoute(
+          path: '/settings/avatar',
+          builder: (context, state) => const AvatarBuilderScreen(),
         ),
         GoRoute(
           path: '/settings/password',

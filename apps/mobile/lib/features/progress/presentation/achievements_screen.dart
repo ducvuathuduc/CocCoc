@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,15 +9,40 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/application/learning_controller.dart';
 import '../application/achievements_controller.dart';
+import '../application/profile_achievements_provider.dart';
 import '../domain/achievement_models.dart';
 
 class AchievementsScreen extends ConsumerWidget {
-  const AchievementsScreen({super.key});
+  const AchievementsScreen({this.profileId, super.key});
+  final String? profileId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final achievements = ref.watch(achievementsControllerProvider).achievements;
-    final learning = ref.watch(learningStateProvider);
+    final foreign = profileId == null
+        ? null
+        : ref.watch(profileAchievementsProvider(profileId!));
+    if (profileId != null && foreign == null) {
+      return const Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              _AchievementHeader(title: 'Achievements'),
+              Expanded(child: Center(child: Text('Profile unavailable'))),
+            ],
+          ),
+        ),
+      );
+    }
+    final achievements =
+        foreign?.awards ??
+        ref.watch(achievementsControllerProvider).achievements;
+    final learning = profileId == null
+        ? ref.watch(learningStateProvider)
+        : null;
+    final currentXp = foreign?.profile.xp ?? learning!.xp;
+    final streak = foreign?.profile.streak ?? learning!.streak;
+    final lessons =
+        foreign?.profile.completedLessons ?? learning!.completedLessons;
     final scale = MediaQuery.textScalerOf(context).scale(1);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -24,17 +51,19 @@ class AchievementsScreen extends ConsumerWidget {
           children: [
             _AchievementHeader(
               title: 'Achievements',
-              trailing: IconButton(
-                tooltip: 'Monthly badges',
-                onPressed: () => GoRouter.maybeOf(context) != null
-                    ? context.push('/badges')
-                    : Navigator.of(context).push(
-                        MaterialPageRoute<void>(
-                          builder: (_) => const MonthlyBadgesScreen(),
-                        ),
-                      ),
-                icon: const Icon(Icons.calendar_month_outlined),
-              ),
+              trailing: profileId == null
+                  ? IconButton(
+                      tooltip: 'Monthly badges',
+                      onPressed: () => GoRouter.maybeOf(context) != null
+                          ? context.push('/badges')
+                          : Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                builder: (_) => const MonthlyBadgesScreen(),
+                              ),
+                            ),
+                      icon: const Icon(Icons.calendar_month_outlined),
+                    )
+                  : null,
             ),
             Expanded(
               child: ListView(
@@ -49,18 +78,21 @@ class AchievementsScreen extends ConsumerWidget {
                       children: [
                         _RecordCard(
                           art: AchievementArt.longestStreak,
-                          value: '${learning.streak}',
+                          value: '$streak',
                           label: 'Longest Streak',
+                          dateLabel: profileId == null ? 'Today' : null,
                         ),
                         _RecordCard(
                           art: AchievementArt.mostXp,
-                          value: '${learning.xp}',
+                          value: '$currentXp',
                           label: 'Most XP',
+                          dateLabel: profileId == null ? 'Today' : null,
                         ),
                         _RecordCard(
                           art: AchievementArt.perfectLessons,
-                          value: '${learning.completedLessons}',
+                          value: '$lessons',
                           label: 'Lessons Completed',
+                          dateLabel: profileId == null ? 'Today' : null,
                         ),
                       ],
                     ),
@@ -82,9 +114,16 @@ class AchievementsScreen extends ConsumerWidget {
                       final achievement = achievements[index];
                       return _AwardTile(
                         achievement: achievement,
-                        progress: achievement.progressFor(learning.xp),
+                        progress: achievement.progressFor(currentXp),
                         onTap: () => GoRouter.maybeOf(context) != null
-                            ? context.push('/achievements/${achievement.id}')
+                            ? context.push(
+                                Uri(
+                                  path: '/achievements/${achievement.id}',
+                                  queryParameters: profileId == null
+                                      ? null
+                                      : {'profile': profileId!},
+                                ).toString(),
+                              )
                             : Navigator.of(context).push(
                                 MaterialPageRoute<void>(
                                   settings: RouteSettings(
@@ -92,6 +131,7 @@ class AchievementsScreen extends ConsumerWidget {
                                   ),
                                   builder: (_) => AchievementDetailScreen(
                                     achievementId: achievement.id,
+                                    profileId: profileId,
                                   ),
                                 ),
                               ),
@@ -109,15 +149,29 @@ class AchievementsScreen extends ConsumerWidget {
 }
 
 class AchievementDetailScreen extends ConsumerWidget {
-  const AchievementDetailScreen({required this.achievementId, super.key});
+  const AchievementDetailScreen({
+    required this.achievementId,
+    this.profileId,
+    super.key,
+  });
 
   final String achievementId;
+  final String? profileId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(achievementsControllerProvider);
-    final controller = ref.read(achievementsControllerProvider.notifier);
-    final achievement = controller.find(achievementId);
+    final foreign = profileId == null
+        ? null
+        : ref.watch(profileAchievementsProvider(profileId!));
+    final state = profileId == null
+        ? ref.watch(achievementsControllerProvider)
+        : null;
+    final controller = profileId == null
+        ? ref.read(achievementsControllerProvider.notifier)
+        : null;
+    final achievement = profileId == null
+        ? controller!.find(achievementId)
+        : foreign?.find(achievementId);
     if (achievement == null) {
       return Scaffold(
         backgroundColor: Colors.white,
@@ -149,7 +203,7 @@ class AchievementDetailScreen extends ConsumerWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'This achievement is not part of the local preview.',
+                          'This achievement is unavailable.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 17,
@@ -167,10 +221,12 @@ class AchievementDetailScreen extends ConsumerWidget {
       );
     }
 
-    final currentXp = ref.watch(learningStateProvider).xp;
+    final currentXp = profileId == null
+        ? ref.watch(learningStateProvider).xp
+        : foreign!.profile.xp;
     final progress = achievement.progressFor(currentXp);
     final earned = achievement.isEarned(currentXp);
-    final claimed = state.claimedIds.contains(achievement.id);
+    final claimed = state?.claimedIds.contains(achievement.id) ?? false;
     final perfectWeek = achievement.id == 'perfect-week';
     final art = achievement.detailArt ?? achievement.art;
     return Scaffold(
@@ -180,12 +236,12 @@ class AchievementDetailScreen extends ConsumerWidget {
           children: [
             _AchievementHeader(
               title: achievement.title,
-              trailing: earned
+              trailing: earned && profileId == null
                   ? IconButton(
                       tooltip: 'Share',
                       onPressed: () => _showSharePreview(
                         context,
-                        controller.sharePreview(
+                        controller!.sharePreview(
                           achievement.id,
                           currentXp: currentXp,
                         ),
@@ -241,7 +297,7 @@ class AchievementDetailScreen extends ConsumerWidget {
                   Text(
                     achievement.description ??
                         (earned
-                            ? 'This archived preview achievement is complete.'
+                            ? 'Achievement complete!'
                             : 'Complete ${achievement.goal} steps to unlock this achievement.'),
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -253,24 +309,14 @@ class AchievementDetailScreen extends ConsumerWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  if (achievement.earnedOn == 'ARCHIVED FIXTURE') ...[
-                    const SizedBox(height: 12),
-                    const Text(
-                      'Archived fixture completion',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: ReferenceColors.muted,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: achievement.claimAvailable && earned
+      bottomNavigationBar:
+          profileId == null && achievement.claimAvailable && earned
           ? SafeArea(
               minimum: const EdgeInsets.fromLTRB(20, 10, 20, 16),
               child: ReferenceButton(
@@ -279,7 +325,7 @@ class AchievementDetailScreen extends ConsumerWidget {
                 edgeColor: const Color(0xFF1899D6),
                 onPressed: claimed
                     ? null
-                    : () => controller.claim(
+                    : () => controller!.claim(
                         achievement.id,
                         currentXp: currentXp,
                       ),
@@ -296,51 +342,72 @@ class MonthlyBadgesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final badges = ref.watch(monthlyBadgesProvider);
-    final scale = MediaQuery.textScalerOf(context).scale(1);
+    final years = badges.map((badge) => badge.year).toSet().toList()
+      ..sort((left, right) => right.compareTo(left));
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            const _AchievementHeader(title: 'Monthly Badges'),
+            const _AchievementHeader(title: 'Monthly Badges', minHeight: 49),
             Expanded(
               child: ListView(
+                key: const PageStorageKey('monthly-badges-scroll'),
                 padding: const EdgeInsets.fromLTRB(20, 26, 20, 36),
                 children: [
-                  for (final year in const [2025, 2024, 2023]) ...[
+                  for (final year in years) ...[
                     _SectionTitle('$year Badges'),
                     const SizedBox(height: 14),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: badges
-                          .where((badge) => badge.year == year)
-                          .length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 8,
-                        mainAxisSpacing: 14,
-                        mainAxisExtent: scale > 1.4 ? 240 : 142,
-                      ),
-                      itemBuilder: (context, index) {
-                        final badge = badges
-                            .where((candidate) => candidate.year == year)
-                            .elementAt(index);
-                        return _MonthlyBadgeTile(badge: badge);
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final yearBadges = badges
+                            .where((badge) => badge.year == year)
+                            .toList(growable: false);
+                        final columnWidth = (constraints.maxWidth - 16) / 3;
+                        final responsiveScale =
+                            columnWidth /
+                            _monthlyBaselineColumnWidth /
+                            _monthlySourcePixelRatio;
+                        final sourceFrameHeight =
+                            91 * columnWidth / _monthlyBaselineColumnWidth;
+                        final largestArtHeight = yearBadges.fold<double>(
+                          0,
+                          (height, badge) => math.max(
+                            height,
+                            badge.art.source.height * responsiveScale,
+                          ),
+                        );
+                        final largeText =
+                            MediaQuery.textScalerOf(context).scale(1) > 1.4;
+                        final imageHeight = largeText
+                            ? math.max(sourceFrameHeight, largestArtHeight)
+                            : sourceFrameHeight;
+                        final labelHeight = _monthlyLabelHeight(
+                          context,
+                          yearBadges,
+                          columnWidth,
+                        );
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: yearBadges.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 11,
+                                mainAxisExtent: imageHeight + 6 + labelHeight,
+                              ),
+                          clipBehavior: Clip.none,
+                          itemBuilder: (context, index) => _MonthlyBadgeTile(
+                            badge: yearBadges[index],
+                            imageEnvelopeHeight: imageHeight,
+                            artScale: responsiveScale,
+                          ),
+                        );
                       },
                     ),
-                    if (year == 2023) ...[
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Only three 2023 badges are visible in the archived source.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: ReferenceColors.muted,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 40),
                   ],
                 ],
               ),
@@ -352,15 +419,48 @@ class MonthlyBadgesScreen extends ConsumerWidget {
   }
 }
 
+const _monthlyBaselineColumnWidth = (390 - 40 - 16) / 3;
+const _monthlySourcePixelRatio = 1179 / 390;
+
+const _monthlyBadgeLabelStyle = TextStyle(
+  fontSize: 18,
+  height: 1.15,
+  fontWeight: FontWeight.w700,
+);
+
+double _monthlyLabelHeight(
+  BuildContext context,
+  List<MonthlyBadge> badges,
+  double width,
+) => badges.fold<double>(0, (height, badge) {
+  final painter = TextPainter(
+    text: TextSpan(
+      text: badge.month,
+      style: DefaultTextStyle.of(context).style.merge(_monthlyBadgeLabelStyle),
+    ),
+    textAlign: TextAlign.center,
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 2,
+    ellipsis: '…',
+  )..layout(maxWidth: width);
+  return math.max(height, painter.height);
+});
+
 class _AchievementHeader extends StatelessWidget {
-  const _AchievementHeader({required this.title, this.trailing});
+  const _AchievementHeader({
+    required this.title,
+    this.trailing,
+    this.minHeight = 64,
+  });
 
   final String title;
   final Widget? trailing;
+  final double minHeight;
 
   @override
   Widget build(BuildContext context) => Container(
-    constraints: const BoxConstraints(minHeight: 64),
+    constraints: BoxConstraints(minHeight: minHeight),
     decoration: const BoxDecoration(
       border: Border(
         bottom: BorderSide(color: ReferenceColors.border, width: 2),
@@ -420,11 +520,13 @@ class _RecordCard extends StatelessWidget {
     required this.art,
     required this.value,
     required this.label,
+    required this.dateLabel,
   });
 
   final ArtRegion art;
   final String value;
   final String label;
+  final String? dateLabel;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -459,13 +561,14 @@ class _RecordCard extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        const Text(
-          'Today',
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: ReferenceColors.muted, fontSize: 12),
-        ),
+        if (dateLabel case final date?)
+          Text(
+            date,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: ReferenceColors.muted, fontSize: 12),
+          ),
       ],
     ),
   );
@@ -572,26 +675,47 @@ class _AchievementProgress extends StatelessWidget {
 }
 
 class _MonthlyBadgeTile extends StatelessWidget {
-  const _MonthlyBadgeTile({required this.badge});
+  const _MonthlyBadgeTile({
+    required this.badge,
+    required this.imageEnvelopeHeight,
+    required this.artScale,
+  });
   final MonthlyBadge badge;
+  final double imageEnvelopeHeight;
+  final double artScale;
 
   @override
   Widget build(BuildContext context) => Semantics(
+    key: ValueKey('monthly-badge-${badge.year}-${badge.month}'),
     label:
-        '${badge.month} ${badge.year}, ${badge.earned ? 'earned fixture' : 'locked fixture'}',
+        '${badge.month} ${badge.year}, ${badge.earned ? 'earned' : 'locked'}',
+    excludeSemantics: true,
     child: Column(
       children: [
-        ReferenceArt(badge.art, width: 94, height: 94),
-        const SizedBox(height: 4),
+        SizedBox(
+          height: imageEnvelopeHeight,
+          child: OverflowBox(
+            alignment: Alignment.bottomCenter,
+            minWidth: 0,
+            minHeight: 0,
+            maxWidth: double.infinity,
+            maxHeight: double.infinity,
+            child: ReferenceArt(
+              badge.art,
+              key: ValueKey('monthly-art-${badge.year}-${badge.month}'),
+              width: badge.art.source.width * artScale,
+              height: badge.art.source.height * artScale,
+            ),
+          ),
+        ),
+        const SizedBox(height: 6),
         Text(
           badge.month,
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
+          style: _monthlyBadgeLabelStyle.copyWith(
             color: badge.earned ? ReferenceColors.ink : ReferenceColors.muted,
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
           ),
         ),
       ],
@@ -612,7 +736,7 @@ Future<void> _showSharePreview(BuildContext context, String? message) async {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Share preview',
+              'Share achievement',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: ReferenceColors.ink,

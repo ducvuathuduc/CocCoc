@@ -138,7 +138,7 @@ class MaxScreen extends ConsumerWidget {
                         s.stage == MaxStage.plans) ...[
                       Text(
                         s.stage == MaxStage.plans
-                            ? 'Local trial preview • no payment'
+                            ? 'Your free trial is active'
                             : 'Easy to cancel, no penalties or fees',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
@@ -211,7 +211,7 @@ class MaxScreen extends ConsumerWidget {
                 Row(
                   children: [
                     const Expanded(
-                      child: Text('Mock checkout', style: headingStyle),
+                      child: Text('Duolingo Max', style: headingStyle),
                     ),
                     IconButton(
                       tooltip: 'Close checkout',
@@ -262,7 +262,7 @@ class MaxScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'This confirmation changes only your local preview. No App Store purchase, renewal or charge.',
+                        'Practice with Video Call, Roleplay and personalized explanations.',
                         style: TextStyle(fontSize: 17, height: 1.4),
                       ),
                     ],
@@ -270,7 +270,7 @@ class MaxScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 24),
                 ReferenceButton(
-                  label: 'CONFIRM PREVIEW',
+                  label: 'CONFIRM',
                   backgroundColor: LearningColors.blue,
                   edgeColor: LearningColors.blueDark,
                   onPressed: () => Navigator.pop(sheetContext, true),
@@ -287,7 +287,7 @@ class MaxScreen extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('You’re all set.'),
-        content: const Text('Your local preview is ready.'),
+        content: const Text('Your plan is ready.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
@@ -571,7 +571,7 @@ class _MaxPlans extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         const Text(
-          'Archived reference prices. Local preview only.',
+          'Choose the plan that works for you.',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white70, fontSize: 14),
         ),
@@ -777,7 +777,7 @@ class MaxTourScreen extends ConsumerWidget {
                           height: 213,
                         ),
                       ] else if (complete) ...[
-                        _title('Your ', '7-day trial preview', ' is ready!'),
+                        _title('Your ', '7-day trial', ' is ready!'),
                         const SizedBox(height: 20),
                         Text(
                           'Reminder selected: ${s.reminderDays ?? 2} days before it ends.',
@@ -846,7 +846,7 @@ class MaxTourScreen extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 20),
                                 Semantics(
-                                  label: 'Max App Icon preview',
+                                  label: 'Max App Icon',
                                   child: Switch(
                                     value: s.appIcon,
                                     onChanged: vm.setAppIcon,

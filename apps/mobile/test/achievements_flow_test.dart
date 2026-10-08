@@ -50,7 +50,7 @@ void main() {
 
       await tester.tap(find.byTooltip('Share'));
       await tester.pumpAndSettle();
-      expect(find.text('Share preview'), findsOneWidget);
+      expect(find.text('Share achievement'), findsOneWidget);
       expect(find.textContaining('Perfect Week'), findsWidgets);
       await tester.tap(find.text('CLOSE'));
       await tester.pumpAndSettle();
@@ -127,6 +127,16 @@ void main() {
           await tester.tap(find.byTooltip('Monthly badges'));
           await tester.pumpAndSettle();
           expect(find.text('2025 Badges'), findsOneWidget);
+          await tester.scrollUntilVisible(
+            find.text('2024 Badges'),
+            350,
+            scrollable: find
+                .descendant(
+                  of: find.byKey(const PageStorageKey('monthly-badges-scroll')),
+                  matching: find.byType(Scrollable),
+                )
+                .first,
+          );
           expect(find.text('2024 Badges'), findsOneWidget);
           await tester.drag(find.byType(ListView).last, const Offset(0, -4000));
           await tester.pumpAndSettle();

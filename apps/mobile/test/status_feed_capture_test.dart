@@ -88,6 +88,16 @@ void main() {
       );
       await tester.pumpAndSettle();
       if (name.startsWith('status')) {
+        await tester.scrollUntilVisible(
+          find.byTooltip('Set your status'),
+          180,
+          scrollable: find
+              .descendant(
+                of: find.byKey(const PageStorageKey('league')),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        );
         await tester.tap(find.byTooltip('Set your status'));
         await tester.pumpAndSettle();
         if (name == 'status-premium') {

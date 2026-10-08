@@ -125,7 +125,7 @@ class PreviewController extends Notifier<PreviewState> {
       return 'Enter a valid email address.';
     }
     if (register && email.trim().toLowerCase() == 'demo@cocenglish.test') {
-      return 'This demo account already exists. Log in instead.';
+      return 'An account with this email already exists. Log in instead.';
     }
     state = state.copyWith(
       name: name.trim(),

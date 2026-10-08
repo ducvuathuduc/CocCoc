@@ -66,9 +66,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Super Duolingo'),
-          content: const Text(
-            'Explore the Super experience. No purchase is available in this preview.',
-          ),
+          content: const Text('Explore the Super experience.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),

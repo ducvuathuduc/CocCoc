@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-05",
+  "date": "2026-10-08",
   "families": [
     {
       "family": "call",
@@ -93,7 +93,7 @@
     }
   ],
   "sourceScreens": 951,
-  "bundledPngs": 202,
+  "bundledPngs": 208,
   "assets": [
     {
       "file": "achievement-awards-bottom.png",
@@ -586,6 +586,20 @@
       "references": [
         "catalog-cache/sc_fba2aafd1a9744689080f8d6648d7afd.png",
         "league/06.png"
+      ]
+    },
+    {
+      "file": "league-ranking-source.png",
+      "sha256": "bde11536c47851613b08c6a317b31027071293c34539cc9be9926541ede961c4",
+      "references": [
+        "catalog-cache/sc_720ee9469bde455f992879eb3973facf.png"
+      ]
+    },
+    {
+      "file": "league-welcome-source.png",
+      "sha256": "438027a97fbc2b7ce9155887e126551e499e39381bace604be067857bcc873b8",
+      "references": [
+        "catalog-cache/sc_98120696dc1a45b4a33fa1ebf0599891.png"
       ]
     },
     {
@@ -1109,6 +1123,20 @@
       ]
     },
     {
+      "file": "profile-foreign-source.png",
+      "sha256": "896b82a21687bad5cdc32445b9206a7ebe4451f2c3c852f827337ed83fc30ba6",
+      "references": [
+        "catalog-cache/sc_9042f4fee7a6438e9757c1115227cc15.png"
+      ]
+    },
+    {
+      "file": "profile-score-source.png",
+      "sha256": "8c0371fe713c262f9890d8b3833a0d661976838637753764b22098eb5f4536bd",
+      "references": [
+        "catalog-cache/sc_e3a715a73ff94c63a01613c03db9fe13.png"
+      ]
+    },
+    {
       "file": "quests-01.png",
       "sha256": "898b47241009e8e33d741637bfc0e951767ce07456d2c64606555fe81861b472",
       "references": [
@@ -1307,6 +1335,22 @@
       "sha256": "e2e62bfceaed0a9cb9280d3cdc24122db37db6ac81db8035f17d0dbd04a0e286",
       "references": [
         "catalog-cache/sc_f6468421670c4ba184c9712c76af5e38.png"
+      ]
+    },
+    {
+      "file": "score-information.png",
+      "sha256": "c9748d67343175875ea220ae40804fe57aaff8170bbd23e2ba3c97aae8d5bbfe",
+      "references": [
+        "catalog-cache/sc_b0a8a3f37157451783e5135f760faa0f.png",
+        "expanded/d70eeb1a-cca9-47f3-b55d-1817937a4c6f/02.png"
+      ]
+    },
+    {
+      "file": "score-unavailable.png",
+      "sha256": "e13da13af7ef00658ae059b2da35bcb150e66dce0ff92abeaec817497d7681a5",
+      "references": [
+        "catalog-cache/sc_2a653020036145dca923b9a6629a92fb.png",
+        "expanded/d70eeb1a-cca9-47f3-b55d-1817937a4c6f/03.png"
       ]
     },
     {

@@ -78,7 +78,7 @@ class CourseManagementController extends Notifier<CourseManagementState> {
     if (course.active) {
       state = state.copyWith(
         protectionMessage:
-            'English is your active mock course and cannot be removed.',
+            'English is your active course and cannot be removed.',
       );
       return false;
     }

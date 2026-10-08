@@ -1,0 +1,11 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_capture_test.dart: capture native social source states
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: Manage accounts opens full screen and Done preserves account
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+00:01 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+00:01 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+00:01 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+00:01 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile courses reflect enrollment; opening the list does not switch English
+00:02 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile friend tabs keep following identity and empty followers separate
+00:02 +9: All tests passed!

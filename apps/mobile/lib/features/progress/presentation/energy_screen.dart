@@ -202,7 +202,7 @@ class EnergyScreen extends ConsumerWidget {
           const SizedBox(height: 16),
         ],
         const Text(
-          'Energy is full in this preview.',
+          'Your energy is full.',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 15, color: ReferenceColors.muted),
         ),

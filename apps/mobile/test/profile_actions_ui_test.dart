@@ -1,12 +1,73 @@
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/progress/application/profile_actions_controller.dart';
+import 'package:cocenglish/features/progress/application/profile_appearance_provider.dart';
 import 'package:cocenglish/features/progress/presentation/profile_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:cocenglish/features/account/application/avatar_controller.dart';
+import 'package:cocenglish/features/account/data/avatar_assets.dart';
+import 'package:cocenglish/features/account/application/profile_editor_controller.dart';
+import 'package:cocenglish/features/account/presentation/avatar_motion.dart';
 
 void main() {
+  testWidgets(
+    'own profile QR uses saved avatar; foreign QR uses authored owner avatar',
+    (t) async {
+      final c = ProviderContainer();
+      final catalog = await t.runAsync(
+        () => c.read(avatarCatalogProvider.future),
+      );
+      final originalCatalog = catalog!;
+      final vm = c.read(avatarControllerProvider.notifier)
+        ..attachCatalog(originalCatalog);
+      vm.begin();
+      vm.select('Body', 3);
+      vm.save();
+      expect(
+        c
+            .read(profileEditorProvider.notifier)
+            .save(
+              const ProfileDetails(
+                first: 'Sam',
+                last: 'Lee',
+                username: 'sam.english',
+                email: 'sam@example.test',
+              ),
+            ),
+        isNull,
+      );
+      Widget share(String id) => UncontrolledProviderScope(
+        container: c,
+        child: MaterialApp(
+          theme: referenceTheme(),
+          home: ProfileShareDialog(userId: id, name: 'Sam Lee'),
+        ),
+      );
+      await t.pumpWidget(share('me'));
+      expect(find.text('@sam.english'), findsOneWidget);
+      final avatar = t.widget<AvatarMotion>(find.byType(AvatarMotion));
+      final learnerAvatar = c.read(avatarControllerProvider).saved;
+      expect(avatar.values, learnerAvatar);
+      expect(avatar.animate, isFalse);
+      await t.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
+      await t.pump();
+      await t.pumpWidget(share('Alex'));
+      final foreignAvatar = t.widget<AvatarMotion>(find.byType(AvatarMotion));
+      final foreignAppearance = c
+          .read(profileAppearanceProvider('Alex'))!
+          .valuesFor(originalCatalog);
+      expect(foreignAvatar.values, foreignAppearance);
+      expect(foreignAvatar.values, isNot(equals(learnerAvatar)));
+      expect(foreignAvatar.animate, isFalse);
+      await t.pumpWidget(const SizedBox.shrink());
+      c.dispose();
+      expect(t.takeException(), isNull);
+    },
+  );
   testWidgets(
     'QR data and copied link match; copy preserves dialog and can retry',
     (t) async {

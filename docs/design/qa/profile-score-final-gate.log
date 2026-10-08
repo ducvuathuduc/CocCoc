@@ -1,0 +1,585 @@
+
+> Blueprint validation
+{
+  "status": "PASS",
+  "files": 2155,
+  "markdown": 112,
+  "localLinks": 315,
+  "requirements": 39,
+  "nfr": 19,
+  "screens": 42,
+  "edgeCases": 39,
+  "tasks": 38,
+  "tables": 37,
+  "schemas": 94,
+  "paths": 41,
+  "operations": 42,
+  "refs": 680,
+  "adrs": 17,
+  "skills": 8,
+  "scope": "Phase0 structural consistency; no app build, account or device proof"
+}
+
+> Dart format check
+Formatted 161 files (0 changed) in 0.96 seconds.
+
+> Flutter analyze
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  cupertino_icons 1.0.9 (2.0.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  petitparser 7.0.2 (7.1.0 available)
+  qr 3.0.2 (4.0.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  window_to_front 0.0.4 (1.0.0 available)
+  xml 7.0.1 (7.1.0 available)
+Got dependencies!
+13 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing mobile...                                             
+No issues found! (ran in 15.9s)
+
+> Rive host test runtime
+[rive_native]   Starting Rive Native Setup...
+
+[rive_native]   rive_native libraries already present for windows. Not building/downloading libraries.
+[rive_native]   
+[rive_native]   To force a rebuild/download, run with `--clean`
+
+> Flutter test
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: airport wrong answer preserves choice; retry and reward are idempotent
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: claim accepts one earned fixture and rejects duplicate locked and invalid IDs
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: airport native panels fit 360.0 text 1.0
+00:01 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: source award opens matching detail, shares locally, and keeps claim across Back
+00:01 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: source award opens matching detail, shares locally, and keeps claim across Back
+00:01 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: airport native panels fit 430.0 text 1.0
+00:01 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: airport native panels fit 430.0 text 1.0
+00:01 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width360.0 text1.0
+00:01 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width360.0 text1.0
+00:01 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width360.0 text2.0
+00:02 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width430.0 text1.0
+00:02 +11: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width430.0 text2.0
+00:04 +12: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +13: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +14: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +15: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +16: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +17: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +18: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +19: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +20: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +21: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +22: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +23: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +24: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +25: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:05 +26: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_builder_test.dart: shows all current categories and saves a valid choice
+00:06 +27: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_builder_test.dart: shows all current categories and saves a valid choice
+00:06 +28: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_builder_test.dart: shows all current categories and saves a valid choice
+00:06 +29: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_builder_test.dart: shows all current categories and saves a valid choice
+00:06 +30: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_builder_test.dart: shows all current categories and saves a valid choice
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:07 +31: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: failed avatar does not poison new consumers and in-flight disposal is safe
+00:07 +32: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: failed avatar does not poison new consumers and in-flight disposal is safe
+00:08 +33: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: failed avatar does not poison new consumers and in-flight disposal is safe
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:12 +34: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft
+00:13 +34: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: avatar renders source states and pauses while backgrounded
+Original avatar bounds: 1000.0x250.0
+00:13 +35: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft
+00:14 +35: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_motion_test.dart: original avatar rig exposes selectable states and triggers
+Original avatar inputs: default_avatar_bool:FFIBooleanInput, default_avatar_num:FFINumberInput, bounce_trig:FFITriggerInput, Headshape:FFINumberInput, HeadphonesColour:FFINumberInput, Headphones:FFINumberInput, ENG_ONLY_HeadFlip:FFIBooleanInput, ENG_ONLY_Zoom:FFINumberInput, ENG_ONLY_Animation:FFINumberInput, ENG_ONLY_XPBoost:FFINumberInput, SkinTone:FFINumberInput, Body:FFINumberInput, MainHairColor:FFINumberInput, MainHair:FFINumberInput, EyeColor:FFINumberInput, Expression:FFINumberInput, GlassesColor:FFINumberInput, Glasses:FFINumberInput, Wrinkles:FFINumberInput, Piercings:FFINumberInput, Nose Piercing:FFINumberInput, FacialHairColor:FFINumberInput, FacialHair:FFINumberInput, HeadwearColor:FFINumberInput, Headwear:FFINumberInput, ClothingColor:FFINumberInput, BackgroundColor:FFINumberInput
+00:14 +36: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft
+00:23 +36: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/character_motion_test.dart: character reacts, pauses on background, and disposes its runtime
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:24 +36: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/avatar_route_test.dart: profile opens avatar and cancel preserves profile draft
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:24 +37: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/character_motion_test.dart: character reacts, pauses on background, and disposes its runtime
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+00:24 +38: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/character_motion_test.dart: original character files expose verified feedback state machines
+00:25 +39: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/character_motion_test.dart: character reduced motion and hidden routes preserve the fallback
+00:29 +40: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/clash_motion_test.dart: clash uses original coach and answer-driven Zari/Oscar state inputs
+00:36 +41: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/clash_runtime_capture_test.dart: actual Clash Rive actors render and character transition disposes safely
+00:41 +42: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/clash_test.dart: clash checks validated answer once and ends only after foreground sixty seconds
+00:41 +43: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/clash_test.dart: word bank retains order, can remove and retry wrong without extra score
+00:44 +44: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/course_management_route_test.dart: Settings courses entry opens management and back retains English learning
+00:46 +45: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:47 +46: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:47 +47: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:47 +48: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:47 +49: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +50: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +51: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +52: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +53: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +54: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +55: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +56: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:48 +57: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:48 +58: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:48 +59: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:48 +60: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:48 +61: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:48 +62: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:48 +63: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:48 +64: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:48 +65: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/course_management_ui_test.dart: sheet stays usable at width 360.0 and text scale 1.0
+00:49 +66: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text2.0
+00:49 +67: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text2.0
+00:49 +68: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text2.0
+00:49 +69: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:49 +70: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:49 +71: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:49 +72: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:49 +73: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:49 +74: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:50 +75: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:50 +76: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:50 +77: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:50 +78: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:51 +79: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:52 +80: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:53 +81: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:53 +82: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:54 +83: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:54 +84: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:54 +85: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:54 +86: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:54 +87: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:54 +88: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+00:54 +89: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+00:54 +90: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+00:54 +91: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+00:54 +92: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+00:54 +93: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +94: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +95: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +96: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +97: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +98: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +99: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +100: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +101: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +102: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +103: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +104: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text1.0
+01:00 +105: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/family_reaction_test.dart: reaction sends only once to an invited member of active family
+01:00 +106: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width360.0 text2.0
+01:00 +107: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width430.0 text1.0
+01:01 +108: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: extended screens fit width430.0 text2.0
+01:01 +109: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: plan checkout is local, selected, and cancellation clears unlimited energy
+01:01 +110: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: word sorting preserves recall and the current flashcard
+01:01 +111: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: family membership requires a family plan, deduplicates, and caps at six
+01:01 +112: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: native words opens sort sheet and renders reordered rows
+01:01 +113: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+01:05 +114: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 1.0
+01:06 +115: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: finished onboarding opens path and a selectable lesson
+01:06 +116: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:07 +117: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 1.0
+01:09 +118: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: visibility, retry and internal Back preserve form input
+01:09 +119: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:10 +120: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:10 +121: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:10 +122: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_flow_test.dart: recovery success opens dismissible sheet
+01:10 +123: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:10 +124: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:10 +125: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:10 +126: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:10 +127: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:10 +128: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:10 +129: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:10 +130: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:11 +131: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:11 +132: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:11 +133: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:11 +134: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:11 +135: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:11 +136: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: monthly quest introduction continues once into daily quests
+01:11 +137: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: capture analyzed frontend states with original fonts
+01:13 +138: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/login_visual_capture_test.dart: login reference fixtures render native inputs and artwork
+01:20 +139: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max requires reminder and checkout, keeps existing entitlement until confirmation
+01:20 +140: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max Family preserves family members, individual plans remove stale invites
+01:20 +141: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: routed mock checkout dismiss preserves selection and confirms only explicitly
+01:23 +142: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 360.0 text 1.0
+01:23 +143: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 360.0 text 2.0
+01:24 +144: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 430.0 text 1.0
+01:24 +145: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/max_flow_test.dart: Max states fit 430.0 text 2.0
+01:26 +146: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/mock_auth_repository_test.dart: demo sign-in stays asynchronous and remembers metadata only
+01:26 +147: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/mock_auth_repository_test.dart: wrong demo credentials fail generically and create no remembered account
+01:26 +148: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/mock_auth_repository_test.dart: social mock returns the demo fixture without creating a session
+01:26 +149: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/mock_auth_repository_test.dart: recovery and reset enforce local fixture inputs
+01:27 +150: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/motion_reference_capture_test.dart: inspect original Duo vector timeline frames
+01:29 +151: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: final step stays reviewable until its snapshot is saved successfully
+01:29 +152: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: required answers block Continue; Back retains language and level
+01:29 +153: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: reasons toggle independently and removing the last disables Continue
+01:29 +154: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: goal and denied reminder survive restart; scratch bypasses level confirmation
+01:29 +155: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: queued writes preserve latest selection while a prior save is blocked
+01:29 +156: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: save failure keeps input and retry clears the error
+01:29 +157: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_controller_test.dart: corrupt/unknown snapshots reset safely; missing earlier answer resumes there
+01:30 +158: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language requires a selection and Back retains it
+01:31 +159: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language requires a selection and Back retains it
+01:31 +160: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language requires a selection and Back retains it
+01:31 +161: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: language requires a selection and Back retains it
+01:31 +162: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: lower profile keeps its header and opens monthly badges
+01:31 +163: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: lower profile keeps its header and opens monthly badges
+01:31 +164: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: lower profile keeps its header and opens monthly badges
+01:31 +165: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:31 +166: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:31 +167: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:31 +168: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +169: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +170: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +171: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +172: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +173: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +174: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +175: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +176: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +177: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +178: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +179: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +180: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:32 +181: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:33 +182: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:33 +183: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_route_test.dart: profile password route closes back without losing profile draft
+01:33 +184: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +185: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +186: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +187: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +188: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +189: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +189: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/own_profile_screen_test.dart: saved avatar and score card use saved state and independent actions
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+01:33 +190: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +191: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +192: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +193: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +194: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +195: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +196: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +197: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +198: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/password_change_ui_test.dart: save validates, retains input on failure and returns after retry
+01:33 +199: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:33 +200: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:33 +201: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:33 +202: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:33 +203: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +204: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +205: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +206: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +207: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +208: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +209: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +210: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +211: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +212: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +213: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +214: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/product_surface_test.dart: badges and family invite keep engineering notes out of product copy
+01:34 +215: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +216: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +217: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +218: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +219: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +220: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +221: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +222: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +223: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +224: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +225: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +226: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +227: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:34 +228: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_route_test.dart: unknown profile is unavailable and cannot mutate social state
+01:35 +229: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +230: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +231: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +232: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +233: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +234: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +235: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +236: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +237: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +238: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:35 +239: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:36 +240: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+01:36 +241: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:37 +242: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:37 +243: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:37 +244: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:37 +245: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+01:37 +246: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: own profile QR uses saved avatar and username; other profiles do not
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+01:37 +247: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_editor_test.dart: full profile fields preserve draft on validation failure
+01:38 +248: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+01:38 +249: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+01:38 +250: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+01:38 +251: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: source lists scroll without clipping at 320 and text scale two
+01:38 +252: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width360.0 text2.0 remain usable
+01:38 +253: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width430.0 text1.0 remain usable
+01:38 +254: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile courses reflect enrollment; opening the list does not switch English
+01:38 +255: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile courses reflect enrollment; opening the list does not switch English
+01:39 +256: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile courses reflect enrollment; opening the list does not switch English
+01:39 +257: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: profile friend tabs keep following identity and empty followers separate
+01:39 +258: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_lists_route_test.dart: changing friend route query selects the requested tab in the reused page
+01:39 +259: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/reference_art_cache_test.dart: original illustration survives cache eviction and releases after navigation
+01:40 +260: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/reference_button_test.dart: tactile edge depresses on press and cancellation does not act
+01:42 +261: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/registration_controller_test.dart: registration preserves input on duplicate email and clears password after success
+01:42 +262: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/registration_controller_test.dart: invalid age does not advance and Back keeps existing names
+01:43 +263: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: Manage accounts opens full screen and Done preserves account
+01:44 +264: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: Manage accounts opens full screen and Done preserves account
+01:44 +265: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: Manage accounts opens full screen and Done preserves account
+01:44 +266: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: Manage accounts opens full screen and Done preserves account
+01:44 +267: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/saved_account_management_test.dart: Manage accounts opens full screen and Done preserves account
+01:44 +268: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: current high score scrolls its selected range into view
+01:44 +269: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: current high score scrolls its selected range into view
+01:44 +270: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: current high score scrolls its selected range into view
+01:44 +271: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: current high score scrolls its selected range into view
+01:45 +272: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: current high score scrolls its selected range into view
+01:45 +273: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: locked range, clipboard retry and narrow text2 remain usable
+01:45 +274: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: course panel derives score progress from learning state
+01:45 +275: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: playback pauses in background and timer is disposed safely
+01:45 +276: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: close returns to the prior profile route
+01:46 +277: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_capture_test.dart: capture native social source states
+01:46 +278: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/score_information_test.dart: close returns with the course popover still open
+01:46 +279: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: shield insufficient or repeated purchase never double spends wallet
+01:47 +280: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: real streak accept, cancel remove, confirm remove and invite retain Back state
+01:48 +281: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_capture_test.dart: capture native English feed and actual status overlay
+01:48 +282: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: real Family nudge dismiss preserves choice, send is local and once-only
+01:48 +283: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: actual clash pauses for sheet/background and resumes saved answer on Back
+01:49 +284: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: Family reaction choices expose labeled selected buttons
+01:49 +285: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: actual achievement navigation tracks detail routes and deep-link Back returns home
+01:49 +286: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: actual achievement navigation tracks detail routes and deep-link Back returns home
+01:49 +287: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: actual achievement navigation tracks detail routes and deep-link Back returns home
+01:49 +288: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: actual achievement navigation tracks detail routes and deep-link Back returns home
+01:49 +289: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: actual achievement navigation tracks detail routes and deep-link Back returns home
+01:50 +290: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: social layout width360.0 text1.0
+01:50 +291: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: social layout width360.0 text2.0
+01:50 +292: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: social layout width430.0 text1.0
+01:51 +293: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/social_route_test.dart: social layout width430.0 text2.0
+01:51 +294: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual league status sheet cancels draft, commits and clears
+01:52 +295: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual league status sheet cancels draft, commits and clears
+01:53 +296: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart: close and reopen a story restores its selected answer
+01:53 +297: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart: close and reopen a story restores its selected answer
+01:53 +298: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:53 +299: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:53 +300: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:53 +301: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:53 +302: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:53 +303: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:53 +304: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:53 +305: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:54 +306: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:54 +307: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: actual feed adds friends, profile identity and comment validation work
+01:54 +308: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width360.0 text1.0
+01:54 +309: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width360.0 text2.0
+01:54 +310: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width430.0 text1.0
+01:55 +311: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_ui_test.dart: feed and actual status modal width430.0 text2.0
+01:55 +312: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart: GET GEMS opens Shop without minting balance or losing the selected pack
+01:56 +313: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:56 +314: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:56 +315: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:56 +316: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:57 +317: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:57 +318: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:57 +319: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:57 +320: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:57 +321: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:58 +322: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:58 +323: All tests passed!

@@ -1,0 +1,83 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart
+00:00 +0: foreign View all retains owner through achievement list and Back
+
+Warning: A call to tap() with finder "Found 1 widget with text "VIEW ALL": [
+  Text("VIEW ALL", inherit: true, color: Color(alpha: 1.0000, red: 0.1098, green: 0.6902, blue: 0.9647, colorSpace: ColorSpace.sRGB), weight: 700, dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery, _ScrollableScope]),
+]" derived an Offset (Offset(711.6, 738.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(711.6, 738.0) is outside the bounds of the root of the render tree, Size(800.0, 600.0).
+The finder corresponds to this RenderBox: RenderParagraph#8ca32 relayoutBoundary=up20
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#3d328(_ReusableRenderView#d3e69), HitTestEntry<HitTestTarget>#f13bb(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart:27:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: 'Alex'
+  Actual: <null>
+   Which: not an <Instance of 'String'>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart:29:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart line 29
+The test description was:
+  foreign View all retains owner through achievement list and Back
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: foreign View all retains owner through achievement list and Back [E]
+  Test failed. See exception logs above.
+  The test description was: foreign View all retains owner through achievement list and Back
+  
+00:01 +0 -1: foreign detail cannot claim learner rewards; unknown owner fails safely
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: no matching candidates
+  Actual: _TextWidgetFinder:<Found 1 widget with text "CLAIM REWARD": [
+            Text("CLAIM REWARD", textAlign: center, dependencies: [DefaultSelectionStyle,
+DefaultTextStyle, MediaQuery]),
+          ]>
+   Which: means one was found but none were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart:48:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart line 48
+The test description was:
+  foreign detail cannot claim learner rewards; unknown owner fails safely
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -2: foreign detail cannot claim learner rewards; unknown owner fails safely [E]
+  Test failed. See exception logs above.
+  The test description was: foreign detail cannot claim learner rewards; unknown owner fails safely
+  
+00:01 +0 -2: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart: foreign View all retains owner through achievement list and Back
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/foreign_achievements_route_test.dart: foreign detail cannot claim learner rewards; unknown owner fails safely

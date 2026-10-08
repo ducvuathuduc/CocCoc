@@ -86,7 +86,7 @@ class StreakScreen extends ConsumerWidget {
                   ),
                   if (!s.showFriends)
                     IconButton(
-                      tooltip: 'Preview streak share',
+                      tooltip: 'Share streak',
                       onPressed: () => showStreakShare(context, ref),
                       icon: Icon(Icons.ios_share, size: 28, color: foreground),
                     )
@@ -172,7 +172,7 @@ void showStreakShare(BuildContext context, WidgetRef ref) {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Share preview',
+              'Share streak',
               style: TextStyle(fontSize: 18, color: streakGray),
             ),
             const SizedBox(height: 20),
@@ -540,7 +540,7 @@ class _PersonalStreak extends ConsumerWidget {
             const ReferenceArt(StreakArt.appIcons, width: 120, height: 123),
             const SizedBox(height: 12),
             const Text(
-              'Streak app icon preview',
+              'Streak app icon',
               style: headingStyle,
               textAlign: TextAlign.center,
             ),

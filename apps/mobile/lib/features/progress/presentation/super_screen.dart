@@ -315,7 +315,7 @@ class _SuperState extends ConsumerState<SuperScreen> {
                         ),
                         const SizedBox(height: 18),
                         const Text(
-                          'Reference prices from the archived UI. This local preview does not start billing or renew a subscription.',
+                          'Choose your plan and keep learning with Super Duolingo.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xFFCACBE5),
@@ -364,13 +364,13 @@ class _SuperState extends ConsumerState<SuperScreen> {
     child: Column(
       children: [
         const Text(
-          'Activate the selected plan in this local preview? No payment is taken.',
+          'Continue with your selected plan?',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 18),
         ),
         const SizedBox(height: 22),
         ReferenceButton(
-          label: 'ACTIVATE PREVIEW',
+          label: 'START FREE TRIAL',
           onPressed: () {
             ref.read(extendedControllerProvider.notifier).confirmPlan();
             Navigator.pop(context);
@@ -445,7 +445,7 @@ class _SuperTourState extends State<SuperTourScreen> {
       Rect.fromLTWH(45, 1075, 1050, 1140),
     ),
     (
-      'Your 7-day free trial preview has started!',
+      'Your 7-day free trial has started!',
       'super-13',
       Rect.fromLTWH(340, 1280, 510, 480),
     ),
@@ -547,7 +547,7 @@ class SubscriptionScreen extends ConsumerWidget {
               ? 'Individual Monthly'
               : state.unlimited
               ? 'Individual Annual'
-              : 'Try all Super features in this preview.',
+              : 'Try all Super features.',
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 19),
         ),
@@ -627,7 +627,7 @@ class SubscriptionScreen extends ConsumerWidget {
         ],
         const SizedBox(height: 26),
         const Text(
-          'Local preview subscription. No store or account has been charged.',
+          'Enjoy unlimited learning with Super Duolingo.',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 15, color: ReferenceColors.muted),
         ),
@@ -652,9 +652,7 @@ class _CancelSubscriptionState extends ConsumerState<CancelSubscriptionScreen> {
     children: [
       const SizedBox(height: 24),
       Text(
-        cancelled
-            ? 'Your preview plan is cancelled.'
-            : 'Why are you cancelling?',
+        cancelled ? 'Your plan is cancelled.' : 'Why are you cancelling?',
         style: headingStyle,
       ),
       const SizedBox(height: 16),
@@ -771,7 +769,7 @@ class _FamilyPlanState extends ConsumerState<FamilyPlanScreen> {
           ),
         const SizedBox(height: 16),
         ReferenceButton(
-          label: 'INVITE TO PREVIEW',
+          label: 'INVITE',
           onPressed: () {
             final result = ref
                 .read(extendedControllerProvider.notifier)
@@ -782,7 +780,7 @@ class _FamilyPlanState extends ConsumerState<FamilyPlanScreen> {
         ),
         const SizedBox(height: 16),
         const Text(
-          'Invitations stay in this preview. No message is sent.',
+          'Invite your family to learn together.',
           style: TextStyle(fontSize: 15, color: ReferenceColors.muted),
         ),
       ],

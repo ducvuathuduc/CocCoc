@@ -197,7 +197,7 @@ class MockAchievementsRepository implements AchievementsRepository {
     [460, 1321, 260, 264],
     [826, 1322, 250, 263],
     [95, 1694, 259, 281],
-    [465, 1619, 250, 356],
+    [465, 1673, 250, 302],
     [815, 1689, 272, 286],
   ];
   static const _monthly2024 = <List<double>>[

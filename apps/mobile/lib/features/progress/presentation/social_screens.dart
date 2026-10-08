@@ -7,6 +7,8 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../../account/application/avatar_controller.dart';
+import '../../account/presentation/avatar_motion.dart';
 import '../application/preview_controller.dart';
 import '../application/social_controller.dart';
 
@@ -44,11 +46,13 @@ class StatusAvatar extends StatelessWidget {
     required this.name,
     this.status,
     this.size = 60,
+    this.portrait,
     super.key,
   });
   final String name;
   final String? status;
   final double size;
+  final Widget? portrait;
   @override
   Widget build(BuildContext context) => SizedBox(
     width: size + 14,
@@ -68,14 +72,16 @@ class StatusAvatar extends StatelessWidget {
               border: Border.all(color: const Color(0xFFB0B0B0), width: 2),
             ),
             alignment: Alignment.center,
-            child: Text(
-              name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-              style: TextStyle(
-                fontSize: size * .47,
-                color: ReferenceColors.disabled,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            child: portrait == null
+                ? Text(
+                    name.isEmpty ? '?' : name.characters.first.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: size * .47,
+                      color: ReferenceColors.disabled,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )
+                : ClipOval(child: portrait),
           ),
         ),
         Positioned(
@@ -144,6 +150,7 @@ class StatusPickerSheet extends ConsumerWidget {
     final wallet = ref.watch(previewWalletProvider);
     final vm = ref.read(statusControllerProvider.notifier);
     final preview = ref.watch(previewControllerProvider);
+    final avatar = ref.watch(avatarControllerProvider);
     final textScale = MediaQuery.textScalerOf(context).scale(1);
     return SafeArea(
       top: false,
@@ -189,7 +196,19 @@ class StatusPickerSheet extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              StatusAvatar(name: preview.name, status: state.draft, size: 75),
+              StatusAvatar(
+                name: preview.name,
+                status: state.draft,
+                size: 75,
+                portrait: avatar.hasAvatar
+                    ? AvatarMotion(
+                        values: avatar.saved,
+                        width: 75,
+                        height: 75,
+                        animate: false,
+                      )
+                    : null,
+              ),
               const SizedBox(height: 20),
               LayoutBuilder(
                 builder: (context, constraints) {
@@ -802,7 +821,7 @@ class _PostActions extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      'Share preview',
+                      'Share',
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w700,

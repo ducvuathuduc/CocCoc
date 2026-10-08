@@ -5,8 +5,9 @@ Analyzed through live Gummble MCP on 2026-10-05 before feature code. Flow
 
 - `sc_198760c7ea104d109c8f52a26b96e152`: profile editor; password row opens
   the change screen. Source editor includes first/last name, username, email,
-  phone and avatar. Existing two-field editor is reused as an entry context;
-  reconciling the entire source editor is still pending.
+  phone and avatar. The native source form now includes those fields and the
+  original avatar entry. Password navigation preserves the unsaved Profile draft;
+  validation errors preserve input and profile updates are atomic locally.
 - `sc_7c2c392213fb445baf4c823cc5706781`: empty Password screen, left gray X,
   centered 20px bold title, 16px horizontal margins. Three 18px bold gray labels
   Old password / New password / Confirm password. Fields approximately48px high,

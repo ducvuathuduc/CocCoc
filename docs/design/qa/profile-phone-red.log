@@ -1,0 +1,15 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_editor_test.dart
+00:00 +0: profile save is atomic and rejects a phone with no digits
+00:00 +0 -1: profile save is atomic and rejects a phone with no digits [E]
+  Expected: not null
+    Actual: <null>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\profile_editor_test.dart 14:5                  main.<fn>
+  
+00:00 +0 -1: full profile fields preserve draft on validation failure
+00:00 +1 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_editor_test.dart: profile save is atomic and rejects a phone with no digits
