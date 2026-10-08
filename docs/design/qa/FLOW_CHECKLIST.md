@@ -1,6 +1,8 @@
 # English UI flow checklist
 
-Updated 2026-10-09. 148 scoped flows / 912 ordered screen occurrences.
+Updated 2026-10-09. Source archive: 148 reference journeys / 912 ordered screen occurrences.
+
+The archive includes repeated flows across app versions and supporting account, social, subscription and widget UI. This is not a count of independent English-learning product flows, and it does not expand implementation scope to other learning languages. Source screens may show French or other language labels; implemented lesson content is English.
 
 This is the persistent completion register. ✅ means the scoped native mock UI was implemented and verified; exact pixel/motion and production gates remain separate. Existing families below are reused. A pending source variant does not authorize rebuilding its shared controller or screen.
 

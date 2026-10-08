@@ -49,7 +49,8 @@ for (const family of ledger.families) {
 const symbol = { pending: '⬜', analyzed: '🔎', in_progress: '🔄', verified_mock: '✅' };
 const lines = [
   '# English UI flow checklist', '',
-  `Updated ${ledger.updated}. ${byId.size} scoped flows / ${steps} ordered screen occurrences.`, '',
+  `Updated ${ledger.updated}. Source archive: ${byId.size} reference journeys / ${steps} ordered screen occurrences.`, '',
+  'The archive includes repeated flows across app versions and supporting account, social, subscription and widget UI. This is not a count of independent English-learning product flows, and it does not expand implementation scope to other learning languages. Source screens may show French or other language labels; implemented lesson content is English.', '',
   'This is the persistent completion register. ✅ means the scoped native mock UI was implemented and verified; exact pixel/motion and production gates remain separate. Existing families below are reused. A pending source variant does not authorize rebuilding its shared controller or screen.', '',
   'Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/flow-coverage.mjs --write`. Regeneration reads existing marks; it does not reset them.', '',
   '## Existing reusable families', '',

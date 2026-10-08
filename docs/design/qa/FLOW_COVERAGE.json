@@ -1,6 +1,6 @@
 {
   "updated": "2026-10-09",
-  "scope": "English language/shared UI only. Verified mock is not pixel/motion or production certification.",
+  "scope": "English lesson content only. This ledger inventories archived reference journeys, including duplicates across versions and supporting account/social/subscription/widget UI; its 148 records are not 148 independent English-learning product flows. Reference language labels do not authorize another curriculum. Verified mock is not pixel/motion or production certification.",
   "families": [
     {
       "id": "onboarding",
