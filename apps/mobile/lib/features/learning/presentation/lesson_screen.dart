@@ -11,6 +11,7 @@ import '../../progress/application/preview_controller.dart';
 import '../domain/learning_models.dart';
 import 'learning_visuals.dart';
 import '../data/english_explanations.dart';
+import 'spoken_exercise.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({super.key});
@@ -116,8 +117,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       }
     });
     final exercise = state.current;
-    if (_exerciseId != exercise?.id) {
-      _exerciseId = exercise?.id;
+    final editorIdentity = exercise == null
+        ? null
+        : '${exercise.id}:${state.retryPass}';
+    if (_exerciseId != editorIdentity) {
+      _exerciseId = editorIdentity;
       _text.value = TextEditingValue(
         text: state.text,
         selection: TextSelection.collapsed(offset: state.text.length),
@@ -159,7 +163,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                           minHeight: 16,
                           borderRadius: BorderRadius.circular(16),
                           backgroundColor: ReferenceColors.border,
-                          color: LearningColors.green,
+                          color: state.correctStreak >= 5
+                              ? LearningColors.orange
+                              : LearningColors.green,
                         ),
                       ),
                     ),
@@ -210,6 +216,18 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            if (state.correctStreak >= 5)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: Text(
+                                  '${state.correctStreak} IN A ROW',
+                                  style: const TextStyle(
+                                    color: LearningColors.orange,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
                             if (state.isRetry)
                               const Padding(
                                 padding: EdgeInsets.only(bottom: 12),
@@ -272,9 +290,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                     ),
                   ),
                 ),
-              AnimatedSize(
-                duration: motionDuration(context, 220),
-                alignment: Alignment.bottomCenter,
+              _LessonFooterTransition(
                 child: feedback
                     ? _feedback(exercise!, state, controller)
                     : Padding(
@@ -310,7 +326,6 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                     {
                                       ExerciseKind.listenChoice,
                                       ExerciseKind.dictation,
-                                      ExerciseKind.speakRepeat,
                                     }.contains(exercise.kind))
                                   Flexible(
                                     child: TextButton(
@@ -318,10 +333,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                           ? null
                                           : controller.substituteMedia,
                                       child: Text(
-                                        exercise.kind ==
-                                                ExerciseKind.speakRepeat
-                                            ? 'CAN’T SPEAK NOW'
-                                            : 'CAN’T LISTEN NOW',
+                                        'CAN’T LISTEN NOW',
                                         style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -332,16 +344,40 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                   ),
                               ],
                             ),
-                            ReferenceButton(
-                              label: state.busy ? 'CHECKING…' : 'CHECK',
-                              backgroundColor: LearningColors.green,
-                              onPressed: state.canCheck
-                                  ? () {
-                                      FocusScope.of(context).unfocus();
-                                      controller.check();
-                                    }
-                                  : null,
-                            ),
+                            if (exercise != null &&
+                                !state.textAlternative &&
+                                {
+                                  ExerciseKind.dialogueTurn,
+                                  ExerciseKind.speakRepeat,
+                                }.contains(exercise.kind))
+                              SizedBox(
+                                width: double.infinity,
+                                height: 55,
+                                child: TextButton(
+                                  onPressed: state.busy
+                                      ? null
+                                      : controller.substituteMedia,
+                                  child: const Text(
+                                    "CAN'T SPEAK NOW",
+                                    style: TextStyle(
+                                      color: ReferenceColors.disabled,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else
+                              ReferenceButton(
+                                label: state.busy ? 'CHECKING…' : 'CHECK',
+                                backgroundColor: LearningColors.green,
+                                onPressed: state.canCheck
+                                    ? () {
+                                        FocusScope.of(context).unfocus();
+                                        controller.check();
+                                      }
+                                    : null,
+                              ),
                           ],
                         ),
                       ),
@@ -582,30 +618,35 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           ],
         );
       case ExerciseKind.speakRepeat:
-        return Column(
-          children: [
-            _prompt(exercise),
-            const SizedBox(height: 45),
-            const Icon(Icons.mic_rounded, color: LearningColors.blue, size: 90),
-            const SizedBox(height: 20),
-            const Text(
-              'Use the text alternative to continue practicing.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 17, color: ReferenceColors.muted),
-            ),
-            const SizedBox(height: 24),
-            ReferenceButton(
-              label: 'USE TEXT ALTERNATIVE',
-              backgroundColor: LearningColors.blue,
-              edgeColor: LearningColors.blueDark,
-              onPressed: controller.substituteMedia,
-            ),
-          ],
+        return SpeakingWordsExercise(
+          prompt: exercise.prompt,
+          availableHeight: availableHeight,
+          onSpeak: editable
+              ? () => showLearningNotice(
+                  context,
+                  'Speaking unavailable',
+                  'You can continue this exercise by typing your answer. Tap “CAN\'T SPEAK NOW” to continue.',
+                )
+              : null,
+        );
+      case ExerciseKind.dialogueTurn:
+        return LilyDialogueExercise(
+          exercise: exercise,
+          state: state,
+          textController: _text,
+          availableHeight: availableHeight,
+          onChanged: controller.updateText,
+          onListen: editable
+              ? () => showLearningNotice(
+                  context,
+                  'Audio unavailable',
+                  'Read Lily’s message and reply in English. You can use “CAN\'T SPEAK NOW” to type your answer.',
+                )
+              : null,
         );
       case ExerciseKind.textTranslation:
       case ExerciseKind.fillBlank:
       case ExerciseKind.dictation:
-      case ExerciseKind.dialogueTurn:
       case ExerciseKind.storyQuestion:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -767,6 +808,22 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             ),
             const SizedBox(height: 14),
           ],
+          if (correct && exercise.meaning != null) ...[
+            Text(
+              'Meaning:',
+              style: TextStyle(
+                color: color,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              exercise.meaning!,
+              style: TextStyle(color: color, fontSize: 20),
+            ),
+            const SizedBox(height: 14),
+          ],
           ReferenceButton(
             label: 'EXPLAIN MY ANSWER',
             outlined: true,
@@ -818,5 +875,20 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         'Thanks for helping us improve this exercise.',
       );
     }
+  }
+}
+
+class _LessonFooterTransition extends StatelessWidget {
+  const _LessonFooterTransition({required this.child});
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    final duration = motionDuration(context, 220);
+    if (duration == Duration.zero) return child;
+    return AnimatedSize(
+      duration: duration,
+      alignment: Alignment.bottomCenter,
+      child: child,
+    );
   }
 }

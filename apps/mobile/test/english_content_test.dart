@@ -74,7 +74,9 @@ void main() {
         'is',
         'here',
       ]);
-      expect(exercises[8].prompt, 'Sam: Hello!');
+      expect(exercises[8].title, 'Respond to Lily');
+      expect(exercises[8].prompt, 'Hello!');
+      expect(exercises[8].meaning, 'Xin chào!');
       expect(exercises[8].correctText, 'Hello');
       expect(exercises[9].prompt, 'Lea sees a cat. What does Lea see?');
       expect(exercises[9].correctText, 'a cat');

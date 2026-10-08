@@ -7,6 +7,7 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../application/learning_controller.dart';
 import 'learning_visuals.dart';
+import 'lesson_summary.dart';
 
 class LessonResults extends ConsumerWidget {
   const LessonResults({super.key});
@@ -36,7 +37,6 @@ class LessonResults extends ConsumerWidget {
       );
     }
     final step = lesson.resultStep;
-    final perfect = receipt.accuracy == 1;
     void next() {
       controller.nextResult();
     }
@@ -67,81 +67,11 @@ class LessonResults extends ConsumerWidget {
                             children: [
                               if (step == 0) ...[
                                 const SizedBox(height: 34),
-                                ReferenceArt(
-                                  perfect
-                                      ? LearningArt.medalDuo
-                                      : LearningArt.completed,
-                                  width: 245,
-                                  height: 245,
+                                LessonSummary(
+                                  receipt: receipt,
+                                  mistakeCount:
+                                      lesson.attempted - lesson.originalCorrect,
                                 ),
-                                const SizedBox(height: 22),
-                                Text(
-                                  perfect ? 'Flawless' : 'Lesson complete!',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: LearningColors.yellow,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(height: 17),
-                                Text(
-                                  perfect
-                                      ? '0 mistakes. You’re like a pristine,\nfreshwater pearl.'
-                                      : '${lesson.attempted - lesson.originalCorrect} mistakes reviewed. Keep up the great work!',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    height: 1.45,
-                                    color: ReferenceColors.muted,
-                                  ),
-                                ),
-                                const SizedBox(height: 40),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: _stat(
-                                        context,
-                                        'TOTAL XP',
-                                        '${receipt.xp}',
-                                        Icons.bolt_rounded,
-                                        LearningColors.yellow,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 14),
-                                    Expanded(
-                                      child: _stat(
-                                        context,
-                                        perfect ? 'AMAZING' : 'GREAT',
-                                        '${(receipt.accuracy * 100).round()}%',
-                                        Icons.track_changes_rounded,
-                                        LearningColors.green,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 14),
-                                    Expanded(
-                                      child: _stat(
-                                        context,
-                                        'QUICK',
-                                        '${receipt.elapsed.inMinutes}:${(receipt.elapsed.inSeconds % 60).toString().padLeft(2, '0')}',
-                                        Icons.timer_outlined,
-                                        LearningColors.blue,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                if (receipt.guest || receipt.placement)
-                                  const Padding(
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: Text(
-                                      'Practice complete · No ranked XP',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: ReferenceColors.muted,
-                                      ),
-                                    ),
-                                  ),
                               ] else if (step == 1) ...[
                                 const ReferenceArt(
                                   LearningArt.scoreDuo,
@@ -424,62 +354,6 @@ class LessonResults extends ConsumerWidget {
       ),
     );
   }
-
-  Widget _stat(
-    BuildContext context,
-    String label,
-    String value,
-    IconData icon,
-    Color color,
-  ) => Container(
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(16),
-    ),
-    padding: const EdgeInsets.all(3),
-    child: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 3),
-          decoration: BoxDecoration(
-            color: ReferenceColors.surface,
-            borderRadius: BorderRadius.circular(13),
-          ),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, color: color, size: 22),
-                const SizedBox(width: 3),
-                Text(
-                  value,
-                  style: TextStyle(
-                    color: color,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 
   Widget _week(bool practiced) => LearningCard(
     child: Row(

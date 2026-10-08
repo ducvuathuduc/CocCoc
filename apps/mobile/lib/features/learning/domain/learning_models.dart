@@ -35,6 +35,7 @@ class Exercise {
     this.correctText = '',
     this.pairs = const <String, String>{},
     this.hint,
+    this.meaning,
   });
 
   final String id;
@@ -47,6 +48,7 @@ class Exercise {
   final String correctText;
   final Map<String, String> pairs;
   final String? hint;
+  final String? meaning;
 
   Exercise copyWith({
     ExerciseKind? kind,
@@ -58,6 +60,7 @@ class Exercise {
     String? correctText,
     Map<String, String>? pairs,
     String? hint,
+    String? meaning,
   }) {
     return Exercise(
       id: id,
@@ -70,6 +73,7 @@ class Exercise {
       correctText: correctText ?? this.correctText,
       pairs: pairs ?? this.pairs,
       hint: hint ?? this.hint,
+      meaning: meaning ?? this.meaning,
     );
   }
 }
@@ -124,6 +128,8 @@ class LessonState {
     this.selectedPairLeft,
     this.correct,
     this.assisted = false,
+    this.textAlternative = false,
+    this.correctStreak = 0,
     this.busy = false,
     this.error,
     this.receipt,
@@ -152,6 +158,8 @@ class LessonState {
   final String? selectedPairLeft;
   final bool? correct;
   final bool assisted;
+  final bool textAlternative;
+  final int correctStreak;
   final bool busy;
   final String? error;
   final SessionReceipt? receipt;
@@ -218,6 +226,8 @@ class LessonState {
     bool? correct,
     bool clearCorrect = false,
     bool? assisted,
+    bool? textAlternative,
+    int? correctStreak,
     bool? busy,
     String? error,
     bool clearError = false,
@@ -254,6 +264,8 @@ class LessonState {
           : selectedPairLeft ?? this.selectedPairLeft,
       correct: clearCorrect ? null : correct ?? this.correct,
       assisted: assisted ?? this.assisted,
+      textAlternative: textAlternative ?? this.textAlternative,
+      correctStreak: correctStreak ?? this.correctStreak,
       busy: busy ?? this.busy,
       error: clearError ? null : error ?? this.error,
       receipt: clearReceipt ? null : receipt ?? this.receipt,

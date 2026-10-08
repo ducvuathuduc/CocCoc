@@ -51,9 +51,16 @@
       "status": "verified_mock",
       "evidence": [
         "docs/design/flows/05_LESSON_RESULTS.md",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/design/qa/github-preflight-gate.log",
+        "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
+        "docs/design/qa/ENGLISH_LESSON_REPORT.md",
+        "apps/mobile/test/english_spoken_lesson_test.dart",
+        "apps/mobile/test/lesson_summary_test.dart",
+        "docs/design/qa/english-lesson-gate.log",
+        "docs/design/qa/english-lesson-capture.log",
+        "docs/design/qa/english-lesson-motion.log"
       ],
-      "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
+      "openLimits": "Authored English/Vietnamese adaptation verified for Lily, text fallback and actual results. Original Lily reset/correct/incorrect runtime verified; live audio/speech and private motion timing are not certified by these mock tests."
     },
     {
       "id": "hubs",
@@ -4912,7 +4919,7 @@
       "flowId": "238c4339-7173-4257-89c5-2716a8a68c44",
       "flowName": "Completing a lesson",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=238c4339-7173-4257-89c5-2716a8a68c44",
-      "status": "pending",
+      "status": "in_progress",
       "reuseFamilies": [
         "lessons"
       ],
@@ -4921,16 +4928,34 @@
         {
           "position": 1,
           "screenId": "sc_bab6c64dec12434297fede3f7c0bef68",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "in_progress",
+          "evidence": [
+            "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
+            "docs/design/qa/ENGLISH_LESSON_REPORT.md",
+            "apps/mobile/test/english_spoken_lesson_test.dart",
+            "apps/mobile/test/lesson_summary_test.dart",
+            "docs/design/qa/english-lesson-gate.log",
+            "docs/design/qa/english-lesson-capture.log",
+            "docs/design/qa/english-lesson-motion.log"
+          ],
+          "motion": "not_reconciled",
+          "notes": "Actual streak counter/orange progress verified; source hard-exercise composition, 17-answer count and private PERFECT confetti timeline remain separate."
         },
         {
           "position": 2,
           "screenId": "sc_23afb65ade9a45f19dba4cf32e1fd5ab",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
+            "docs/design/qa/ENGLISH_LESSON_REPORT.md",
+            "apps/mobile/test/english_spoken_lesson_test.dart",
+            "apps/mobile/test/lesson_summary_test.dart",
+            "docs/design/qa/english-lesson-gate.log",
+            "docs/design/qa/english-lesson-capture.log",
+            "docs/design/qa/english-lesson-motion.log"
+          ],
+          "motion": "static_reference_native",
+          "notes": "Native summary with original medal Duo, actual receipt values, uniform cards; Accuracy/Time labels reflect metrics without invented thresholds. Native capture11."
         },
         {
           "position": 3,
@@ -6247,7 +6272,7 @@
       "flowId": "55608180-814c-4cfa-b79c-982af1c8a797",
       "flowName": "Starting a lesson",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=55608180-814c-4cfa-b79c-982af1c8a797",
-      "status": "pending",
+      "status": "in_progress",
       "reuseFamilies": [
         "path",
         "lessons"
@@ -6369,9 +6394,18 @@
         {
           "position": 17,
           "screenId": "sc_c7b79d960e9c48caabd606f79268d1cf",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
+            "docs/design/qa/ENGLISH_LESSON_REPORT.md",
+            "apps/mobile/test/english_spoken_lesson_test.dart",
+            "apps/mobile/test/lesson_summary_test.dart",
+            "docs/design/qa/english-lesson-gate.log",
+            "docs/design/qa/english-lesson-capture.log",
+            "docs/design/qa/english-lesson-motion.log"
+          ],
+          "motion": "original_runtime_verified_private_timing_unverified",
+          "notes": "Original Lily ready, English prompt and product speech fallback; native capture01 plus enabled idle frames."
         },
         {
           "position": 18,
@@ -6390,9 +6424,18 @@
         {
           "position": 20,
           "screenId": "sc_6d64b91d069a4a50a74981811fddb082",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
+            "docs/design/qa/ENGLISH_LESSON_REPORT.md",
+            "apps/mobile/test/english_spoken_lesson_test.dart",
+            "apps/mobile/test/lesson_summary_test.dart",
+            "docs/design/qa/english-lesson-gate.log",
+            "docs/design/qa/english-lesson-capture.log",
+            "docs/design/qa/english-lesson-motion.log"
+          ],
+          "motion": "original_runtime_verified_private_timing_unverified",
+          "notes": "Correct meaning and original Lily reaction, authored English/Vietnamese; native capture05 plus enabled correct frame."
         },
         {
           "position": 21,
@@ -6432,9 +6475,18 @@
         {
           "position": 26,
           "screenId": "sc_b52c1f93ecd7403fb6002fa837ff4056",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
+            "docs/design/qa/ENGLISH_LESSON_REPORT.md",
+            "apps/mobile/test/english_spoken_lesson_test.dart",
+            "apps/mobile/test/lesson_summary_test.dart",
+            "docs/design/qa/english-lesson-gate.log",
+            "docs/design/qa/english-lesson-capture.log",
+            "docs/design/qa/english-lesson-motion.log"
+          ],
+          "motion": "static_reference_native",
+          "notes": "Native stacked speaking cards and audio-wave action, English repeat sentence, defined text alternative; native captures07..09."
         },
         {
           "position": 27,
@@ -6481,9 +6533,18 @@
         {
           "position": 33,
           "screenId": "sc_bab6c64dec12434297fede3f7c0bef68",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "in_progress",
+          "evidence": [
+            "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
+            "docs/design/qa/ENGLISH_LESSON_REPORT.md",
+            "apps/mobile/test/english_spoken_lesson_test.dart",
+            "apps/mobile/test/lesson_summary_test.dart",
+            "docs/design/qa/english-lesson-gate.log",
+            "docs/design/qa/english-lesson-capture.log",
+            "docs/design/qa/english-lesson-motion.log"
+          ],
+          "motion": "not_reconciled",
+          "notes": "Actual streak counter/orange progress verified; source hard-exercise composition, 17-answer count and private PERFECT confetti timeline remain separate."
         }
       ]
     },

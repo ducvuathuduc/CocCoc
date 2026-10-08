@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-09",
+  "scope": "Native Flutter test renderer, 390 and 320/text2/reduced motion; not a physical device or browser capture",
+  "native": [
+    {
+      "file": "english-lesson-native/01-lily-ready.png",
+      "sha256": "14be03a77fccd3c439e64d77f723a329ca87c9fd07066a41b9a57e27451795da"
+    },
+    {
+      "file": "english-lesson-native/02-lily-audio-unavailable.png",
+      "sha256": "7c399dbcf97a8b681c6da4ca66c0acefeda484c3938ad43914c7d725861fe322"
+    },
+    {
+      "file": "english-lesson-native/03-lily-text.png",
+      "sha256": "3c118b74c475116f4d8c1dd20915e850453493f587fa90a4703464e5d941fb61"
+    },
+    {
+      "file": "english-lesson-native/04-lily-incorrect.png",
+      "sha256": "471c2c8853cf02abf8c65fdb281b8b5515bc3e7a1e4488d6e8878afb35d2ef50"
+    },
+    {
+      "file": "english-lesson-native/05-lily-correct-meaning.png",
+      "sha256": "7f2c16e2f530d303167043feebae3e70b7b126f098757bc8201c8ec6dd1c6b9c"
+    },
+    {
+      "file": "english-lesson-native/06-result-with-mistake.png",
+      "sha256": "511b58f824e7579d39f52c947b6a337332ea57975862453efac4be55bc0e9002"
+    },
+    {
+      "file": "english-lesson-native/07-speaking-ready.png",
+      "sha256": "dfb416b2329c450ff1eca357c627e5c60c0224bad0792e2fadb9de59b1c17a65"
+    },
+    {
+      "file": "english-lesson-native/08-speaking-unavailable.png",
+      "sha256": "7cd011155ac0fded2adb2ffc2a31ecd5a962b9e7e5b17ab2a27e509a1459cd3b"
+    },
+    {
+      "file": "english-lesson-native/09-speaking-text.png",
+      "sha256": "777dcd4a1b4efb095129ce48a97bd09b372e0530aff463e2513160fcd7723d25"
+    },
+    {
+      "file": "english-lesson-native/10-five-correct.png",
+      "sha256": "3b32dce69359a36cb80200a7860a70a2978d2c3df20eeaefdf5bd1c3ae88a02f"
+    },
+    {
+      "file": "english-lesson-native/11-flawless.png",
+      "sha256": "0feb3e5c1382cffd064a7f68ef7d15a816287a2d8e25f1fa1fac21f81e6021ee"
+    },
+    {
+      "file": "english-lesson-native/12-practice-result.png",
+      "sha256": "94f72563968fd4bb300156357cd43c27e05b11f2f2d94eafc6afa0808a7f9c95"
+    },
+    {
+      "file": "english-lesson-native/13-result-320-text2.png",
+      "sha256": "8886a6596653aac79b6856a78423473ebe24607a866ca7b72e329307dd14b7f5"
+    },
+    {
+      "file": "english-lesson-native/14-lily-320-text2.png",
+      "sha256": "54d293b5916361a7d6e95457fc9c63da893ac5967c9acc5cf57b7d6bfc173053"
+    },
+    {
+      "file": "english-lesson-native/15-speaking-320-text2.png",
+      "sha256": "c9fbe198623bba6feb8b6fad153e0f4880bdc12d5aec4276d59386ba4ec946f6"
+    }
+  ],
+  "motion": [
+    {
+      "file": "english-lesson-motion/lily-correct.png",
+      "sha256": "5cb187897becd88221cd2fe1249e18c7768c31e20c7d2af648dd2dcbb3c91712"
+    },
+    {
+      "file": "english-lesson-motion/lily-idle-a.png",
+      "sha256": "d436672074f344cc74a5054f0af2a7a0024909550d2885fa11a9366ab9f9c6af"
+    },
+    {
+      "file": "english-lesson-motion/lily-idle-b.png",
+      "sha256": "4edba172978cbe7bb7e9a0600a2055e1cde1b2cd9d288f496dd383a59373063a"
+    },
+    {
+      "file": "english-lesson-motion/lily-incorrect.png",
+      "sha256": "46a1d400207f52b4d9fc1d3b016ebe0f3b970c574be6580c9a338d75ba02208e"
+    },
+    {
+      "file": "english-lesson-motion/lily-reduced-motion.png",
+      "sha256": "3ba7f94e88ba63da73510a9d476717e7a1d21c903a9acb83319dd1da95443d6a"
+    }
+  ]
+}

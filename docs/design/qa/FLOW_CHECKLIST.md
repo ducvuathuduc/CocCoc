@@ -16,7 +16,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ✅ | Mock login/recovery | [analysis](../flows/02_LOGIN.md) | Source variants and exact archived pixel/motion still require reconciliation. |
 | ✅ | Original Duo motion | [analysis](../flows/03_DUO_MOTION.md) | Source variants and exact archived pixel/motion still require reconciliation. |
 | ✅ | English course/path | [analysis](../flows/04_COURSE_PATH.md) | Source variants and exact archived pixel/motion still require reconciliation. |
-| ✅ | Lesson/results | [analysis](../flows/05_LESSON_RESULTS.md) | Source variants and exact archived pixel/motion still require reconciliation. |
+| ✅ | Lesson/results | [analysis](../flows/05_LESSON_RESULTS.md) | Authored English/Vietnamese adaptation verified for Lily, text fallback and actual results. Original Lily reset/correct/incorrect runtime verified; live audio/speech and private motion timing are not certified by these mock tests. |
 | ✅ | Hubs/account baseline | [analysis](../flows/06_HUBS_ACCOUNT.md) | Native locked/Welcome/joined League, profile/Back/status and deterministic ranking verified. Archived settlement/promotion/event variants, historical identities, exact pixel/motion and real progress service remain separate. |
 | ✅ | Registration/friends/speech baseline | [analysis](../flows/07_REGISTRATION_SOCIAL_SPEECH.md) | Source variants and exact archived pixel/motion still require reconciliation. |
 | ✅ | Words/sections/energy/Super | [analysis](../flows/08_ENGLISH_EXTENDED.md) | Source variants and exact archived pixel/motion still require reconciliation. |
@@ -120,7 +120,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Reactions](https://gummble.com/apps/duolingo-ios?tab=flows&flow=1c824479-2031-4716-acc9-88acc101ef59) · 1c824479-2031-4716-acc9-88acc101ef59 | 0/2 | streak |
 | ⬜ | [Verifying a phone number](https://gummble.com/apps/duolingo-ios?tab=flows&flow=1df4ff54-d0aa-47cb-9694-2148a2776aae) · 1df4ff54-d0aa-47cb-9694-2148a2776aae | 0/6 | registration |
 | ⬜ | [Completing a video call lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=21e52565-b644-4e13-9b41-5d61ae271f35) · 21e52565-b644-4e13-9b41-5d61ae271f35 | 0/13 | registration, max |
-| ⬜ | [Completing a lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=238c4339-7173-4257-89c5-2716a8a68c44) · 238c4339-7173-4257-89c5-2716a8a68c44 | 0/13 | lessons |
+| 🔄 | [Completing a lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=238c4339-7173-4257-89c5-2716a8a68c44) · 238c4339-7173-4257-89c5-2716a8a68c44 | 1/13 | lessons |
 | ⬜ | [Adding a course (language)](https://gummble.com/apps/duolingo-ios?tab=flows&flow=26164d89-d419-472e-980b-2b6b3441d0a8) · 26164d89-d419-472e-980b-2b6b3441d0a8 | 0/12 | path |
 | ⬜ | [Join Duolingo for Schools](https://gummble.com/apps/duolingo-ios?tab=flows&flow=2980972d-1767-4f8a-91d3-e6ff1ba0c9f7) · 2980972d-1767-4f8a-91d3-e6ff1ba0c9f7 | 0/4 | New slice |
 | ⬜ | [Settings](https://gummble.com/apps/duolingo-ios?tab=flows&flow=2aeaad44-1638-4abe-b16c-cca1c42dfcaa) · 2aeaad44-1638-4abe-b16c-cca1c42dfcaa | 0/4 | hubs |
@@ -140,7 +140,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Logging out](https://gummble.com/apps/duolingo-ios?tab=flows&flow=45fa9f2f-727a-41db-90a1-4473b723f24e) · 45fa9f2f-727a-41db-90a1-4473b723f24e | 0/2 | hubs |
 | ⬜ | [Commenting on a post](https://gummble.com/apps/duolingo-ios?tab=flows&flow=4b22ef56-af26-4b3b-98c0-5474172cc614) · 4b22ef56-af26-4b3b-98c0-5474172cc614 | 0/5 | feed |
 | ✅ | [Section detail](https://gummble.com/apps/duolingo-ios?tab=flows&flow=4d849f99-ddfb-45e1-b14b-0cf990cce168) · 4d849f99-ddfb-45e1-b14b-0cf990cce168 | 4/4 | course-sections, path |
-| ⬜ | [Starting a lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=55608180-814c-4cfa-b79c-982af1c8a797) · 55608180-814c-4cfa-b79c-982af1c8a797 | 0/33 | path, lessons |
+| 🔄 | [Starting a lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=55608180-814c-4cfa-b79c-982af1c8a797) · 55608180-814c-4cfa-b79c-982af1c8a797 | 3/33 | path, lessons |
 | ⬜ | [Stories](https://gummble.com/apps/duolingo-ios?tab=flows&flow=57af8ed6-e170-4f16-95a7-bb11678eca75) · 57af8ed6-e170-4f16-95a7-bb11678eca75 | 0/2 | library |
 | ⬜ | [Searching users](https://gummble.com/apps/duolingo-ios?tab=flows&flow=583f187d-19b7-4420-98de-3d1d7de412f1) · 583f187d-19b7-4420-98de-3d1d7de412f1 | 0/3 | registration |
 | ⬜ | [Super Duolingo](https://gummble.com/apps/duolingo-ios?tab=flows&flow=5930cea9-738f-4e27-9f53-0d78d27b9a70) · 5930cea9-738f-4e27-9f53-0d78d27b9a70 | 0/4 | extended |

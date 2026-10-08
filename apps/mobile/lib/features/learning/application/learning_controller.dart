@@ -155,32 +155,35 @@ class LessonController extends Notifier<LessonState> {
   }
 
   void substituteMedia() {
-    if (!_editable) return;
+    if (!_editable || state.textAlternative) return;
     final current = state.current;
     if (current == null ||
         !<ExerciseKind>{
           ExerciseKind.listenChoice,
           ExerciseKind.dictation,
           ExerciseKind.speakRepeat,
+          ExerciseKind.dialogueTurn,
         }.contains(current.kind)) {
       return;
     }
-    final replacement = current.copyWith(
-      kind: ExerciseKind.textTranslation,
-      title: 'Type the sentence',
-      prompt: current.correctText,
-      choices: const <ExerciseChoice>[],
-      tokens: const <ExerciseChoice>[],
-      correctIds: const <String>[],
-    );
+    final replacement = current.kind == ExerciseKind.dialogueTurn
+        ? current
+        : current.copyWith(
+            kind: ExerciseKind.textTranslation,
+            title: 'Type the sentence',
+            prompt: current.correctText,
+            choices: const <ExerciseChoice>[],
+            tokens: const <ExerciseChoice>[],
+            correctIds: const <String>[],
+          );
     final exercises = <Exercise>[...state.exercises];
     exercises[state.index] = replacement;
     state = state.copyWith(
       exercises: exercises,
       assisted: true,
+      textAlternative: true,
       clearSelectedId: true,
       tokenIds: const <String>[],
-      text: '',
       matchedPairs: const <String, String>{},
       clearSelectedPairLeft: true,
       clearCorrect: true,
@@ -225,6 +228,7 @@ class LessonController extends Notifier<LessonState> {
         correct: correct,
         originalCorrect: originalCorrect,
         attempted: attempted,
+        correctStreak: correct ? state.correctStreak + 1 : 0,
         pendingMistakes: _mistakes,
         nextMistakes: _nextRetry,
       );
@@ -325,6 +329,7 @@ class LessonController extends Notifier<LessonState> {
       clearSelectedPairLeft: true,
       clearCorrect: true,
       assisted: false,
+      textAlternative: false,
       clearError: true,
     );
   }
@@ -345,6 +350,7 @@ class LessonController extends Notifier<LessonState> {
       clearSelectedPairLeft: true,
       clearCorrect: true,
       assisted: false,
+      textAlternative: false,
       clearError: true,
     );
   }

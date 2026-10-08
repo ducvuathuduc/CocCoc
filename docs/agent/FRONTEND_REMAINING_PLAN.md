@@ -19,6 +19,32 @@ the active learning course; Math/Music/Chess are outside implementation scope.
 
 ## Tasks
 
+Evidence for UI-LESSON-044..046: [English lesson report](../design/qa/ENGLISH_LESSON_REPORT.md),
+439-test gate, 31 scoped tests, 15 native states, 5 enabled Lily frames and current
+Flutter web release. Mock English lesson scope; previous completion marks retained.
+
+- [x] UI-LESSON-044: Root owns English spoken/dialogue lesson state, defined
+  audio/speech unavailable alternatives, translated feedback and actual answer
+  streak display. Preserve current grading, retry queues, pause and receipts.
+- [x] UI-LESSON-045: One isolated worker owns a native lesson-summary component
+  and focused layout/semantics tests, using the inspected Flawless/completed
+  source art and actual receipt metrics. Root owns existing result integration.
+- [x] UI-LESSON-QA-046: Root owns Gummble analysis/provenance, failing behavior
+  cases, serial Flutter checks, native captures, web rebuild and evidence marks.
+
+Implementation sequence for UI-LESSON-044 through UI-LESSON-QA-046:
+1. Inspect Starting a lesson and Completing a lesson references, then record
+   failing existing-screen behavior tests for Lily, speaking alternative and
+   translated feedback. Reuse the existing twelve-type lesson engine.
+2. Root owns learning_models.dart, learning_controller.dart, English fixtures,
+   lesson_screen.dart and result composition. New presentation widgets stay in
+   learning/presentation; the worker owns lesson_summary.dart and its test only.
+   No new package, route, backend, reward formula or foreign curriculum.
+3. Verify alternative input retention, answer-state isolation, reset/correct/
+   incorrect Rive bindings, actual receipt metrics, 320px/text2/reduced motion
+   and existing retry/exit flows. Capture native states, run mobile-check and
+   build the real Flutter web preview before marking this slice complete.
+
 - [x] UI-COURSE-040: Root owns English section catalog, source-shaped progress/
   jump/locked states and section detail/CEFR/grammar. Browsing keeps learning
   counters unchanged; validated local navigation projection is separate.

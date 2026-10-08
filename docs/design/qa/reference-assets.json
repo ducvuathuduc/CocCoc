@@ -93,7 +93,7 @@
     }
   ],
   "sourceScreens": 951,
-  "bundledPngs": 238,
+  "bundledPngs": 239,
   "assets": [
     {
       "file": "achievement-awards-bottom.png",
@@ -849,6 +849,13 @@
       "references": [
         "catalog-cache/sc_fef38287ef944c8aa64388e7b0b5d87f.png",
         "lesson/22.png"
+      ]
+    },
+    {
+      "file": "lesson-lily-source.png",
+      "sha256": "c099ab140786234050011c32332c71479e6ae20e0fc7d6c4fe4834570bc43579",
+      "references": [
+        "catalog-cache/sc_c7b79d960e9c48caabd606f79268d1cf.png"
       ]
     },
     {

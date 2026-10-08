@@ -65,6 +65,7 @@ flutter:
     - assets/reference_art/unit-skip-warning.png
     - assets/reference_art/unit-skip-failed.png
     - assets/reference_art/unit-skip-result.png
+    - assets/reference_art/lesson-lily-source.png
     - assets/motion/
     - assets/avatar/
   fonts:

@@ -221,9 +221,10 @@ const mockEnglishExercises = <Exercise>[
   Exercise(
     id: 'english-09-dialogue',
     kind: ExerciseKind.dialogueTurn,
-    title: 'Reply to the greeting',
-    prompt: 'Sam: Hello!',
+    title: 'Respond to Lily',
+    prompt: 'Hello!',
     correctText: 'Hello',
+    meaning: 'Xin chào!',
   ),
   Exercise(
     id: 'english-10-story',
@@ -248,5 +249,6 @@ const mockPracticeExercises = <Exercise>[
     title: 'Speak this sentence',
     prompt: 'Hello, I am Sam.',
     correctText: 'Hello, I am Sam.',
+    meaning: 'Xin chào, tôi là Sam.',
   ),
 ];

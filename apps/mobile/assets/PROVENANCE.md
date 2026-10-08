@@ -114,6 +114,17 @@ Seventeen byte-intact Gummble sources. Flutter paints only illustration regions;
 | widget-six.png | sc_4ff8cd48ef8f4473b5208256d2b77020 | 8fc0549a98222ec8434e96e8b8a6b82bd0532f7276f54f88b8c16132ba345ccd | [source](https://storage.gummble.com/prod/content/app_screens/0eec81aa-e3d3-43b6-a704-2db0f1845ac3.png) |
 | widget-seven.png | sc_808b0fa527354f1eb806ddbdd20e0c52 | b7d329a220b7363bf042182271dbe156b6b76935bb846489e56e7bb6b47b731a | [source](https://storage.gummble.com/prod/content/app_screens/67e38256-e03e-49ea-a0d5-3f93530945e8.png) |
 
+# English speaking source — 2026-10-09
+
+`reference_art/lesson-lily-source.png` is the untouched source screen
+`sc_c7b79d960e9c48caabd606f79268d1cf`, SHA-256
+`c099ab140786234050011c32332c71479e6ae20e0fc7d6c4fe4834570bc43579`.
+[Original](https://storage.gummble.com/prod/content/app_screens/598cc547-5ac1-4b9a-8a62-e594b6e2ec2a.png).
+Only the full-body Lily region is painted. Text and actions are native Flutter.
+Motion reuses the existing original `motion/character-lily.riv`, with its hash
+and verified exported inputs in `docs/design/qa/original-character-assets.json`.
+See [English lesson analysis](../../../docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md).
+
 # English section, guidebook and unit-check sources — 2026-10-09
 
 Thirteen byte-intact sources from five live Gummble language-learning flows. Native Flutter text and controls are drawn independently; only illustration regions use these originals. Still images do not establish private animation timelines. See [course analysis](../../../docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md).

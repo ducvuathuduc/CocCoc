@@ -59,9 +59,11 @@ void main() {
           case ExerciseKind.textTranslation ||
               ExerciseKind.fillBlank ||
               ExerciseKind.dictation ||
-              ExerciseKind.dialogueTurn ||
-              ExerciseKind.storyQuestion ||
-              ExerciseKind.speakRepeat:
+              ExerciseKind.storyQuestion:
+            await tester.enterText(find.byType(TextField), e.correctText);
+            await tester.pumpAndSettle();
+          case ExerciseKind.dialogueTurn || ExerciseKind.speakRepeat:
+            await tapText("CAN'T SPEAK NOW");
             await tester.enterText(find.byType(TextField), e.correctText);
             await tester.pumpAndSettle();
         }

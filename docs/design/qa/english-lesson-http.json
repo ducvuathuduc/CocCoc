@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-09",
+  "url": "http://127.0.0.1:4173/preview.html",
+  "scope": "HTTP delivery and latest-release code hash; separate from live browser/device interaction",
+  "mainDartSha256": "cb7050462570294aea9104ca5c8813219ef2390123fa38b8f50d9294dab8ca9d",
+  "checks": [
+    {
+      "path": "/preview.html",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/main.dart.js",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/lesson-lily-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/results-02.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/fonts/DuolingoSans.ttf",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/motion/character-lily.riv",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm/rive_native.wasm",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm_compatibility/rive_native.wasm",
+      "status": 200,
+      "cache": "no-store"
+    }
+  ]
+}

@@ -38,6 +38,8 @@ class CharacterMotion extends StatefulWidget {
     required this.fallback,
     this.reaction = CharacterReaction.reset,
     this.epoch = '',
+    this.contentScale = 1,
+    this.contentAlignment = Alignment.center,
     this.enabled = const bool.fromEnvironment(
       'ENABLE_MASCOT_MOTION',
       defaultValue: true,
@@ -47,6 +49,10 @@ class CharacterMotion extends StatefulWidget {
   final LessonCharacter character;
   final CharacterReaction reaction;
   final String epoch;
+
+  /// Compensates measured padding in an original exported artboard.
+  final double contentScale;
+  final Alignment contentAlignment;
   final double width, height;
   final Widget fallback;
   final bool enabled;
@@ -192,7 +198,14 @@ class _CharacterMotionState extends State<CharacterMotion>
       height: widget.height,
       child: !_allowed || _controller == null
           ? widget.fallback
-          : rive.RiveWidget(controller: _controller!, fit: rive.Fit.contain),
+          : Transform.scale(
+              scale: widget.contentScale,
+              alignment: widget.contentAlignment,
+              child: rive.RiveWidget(
+                controller: _controller!,
+                fit: rive.Fit.contain,
+              ),
+            ),
     ),
   );
 }
