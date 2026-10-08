@@ -19,6 +19,31 @@ the active learning course; Math/Music/Chess are outside implementation scope.
 
 ## Tasks
 
+- [x] UI-COURSE-040: Root owns English section catalog, source-shaped progress/
+  jump/locked states and section detail/CEFR/grammar. Browsing keeps learning
+  counters unchanged; validated local navigation projection is separate.
+- [x] UI-GUIDE-041: Root owns unit-specific English/Vietnamese guidebook content,
+  original character illustration, glossary/tips and defined audio fallback.
+- [x] UI-SKIP-042: One isolated worker owns typed local unit-skip challenge,
+  five-heart feedback/warning/failure/pass states and lifecycle/idempotency tests.
+  Root owns route/result integration; no client XP or server settlement writes.
+- [x] UI-COURSE-QA-043: Root owns RED receipts, real-router acceptance, source-sized
+  captures, full gate/web build, source provenance and preserved coverage marks.
+
+Implementation sequence for UI-COURSE-040 through UI-COURSE-QA-043:
+1. Root records failing router/catalog/guide behaviors before changing views.
+   Domain/course_catalog.dart owns authored English fixtures; application/
+   course_navigation_controller.dart owns immutable, bounded local targets.
+2. Replace sections_screen.dart, extract unit_guide_screen.dart and integrate
+   main.dart/learning_path.dart. Only a completed check changes the local target;
+   browsing, invalid links, closing and Back preserve learner/wallet counters.
+   Section checks name their section; unit checks name their unit. Audio has
+   the existing unavailable/retry product state until a native adapter is wired.
+3. Verify parent/worker tests, source-size captures, 320px/text2 and reduced
+   motion, then full mobile-check, source hash audits and release web build.
+   Add dated receipts and only close source IDs whose ordered states/actions
+   have evidence. Archived art is reused intact; no private animation guess.
+
 - [x] UI-LEAGUE-036: Root plus isolated League worker own result, promotion and
   reward-history acknowledgement; immutable fixtures, no learning/wallet writes,
   fresh-entry lifecycle, responsive native controls and original source artwork.
@@ -235,3 +260,5 @@ Current user request continues implementation. The already published GitHub
 snapshot remains historical; no automatic deployment or Release overwrite.
 
 Session finish evidence — 2026-10-08:394Flutter tests pass; fatal-info analyzer, blueprint, format and web release build pass.17native source-size states were captured.225bundled sourcePNG hashes and18avatar assets/282choices pass audits. New mock slices are closed with [receipts](../design/qa/SESSION_FINISH_REPORT.md); prior completion marks remain intact.
+
+English course continuation evidence — 2026-10-09: 424 Flutter tests, fatal-info analyzer, blueprint, format and release web build pass. 33 targeted tests produce 17 native states; a native Lin motion run inspects 5 more frames. 238 bundled PNGs and 282 avatar choices pass audits. 20 HTTP checks serve the exact latest release. The register preserves prior marks and records 33 families/14 complete mock flows/105 verified occurrences. [Course report](../design/qa/COURSE_FINISH_REPORT.md) distinguishes completed native slices from archived path/motion variants.

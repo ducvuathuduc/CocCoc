@@ -52,6 +52,19 @@ flutter:
     - assets/reference_art/widget-save.png
     - assets/reference_art/widget-six.png
     - assets/reference_art/widget-seven.png
+    - assets/reference_art/section-list-source.png
+    - assets/reference_art/section-more-source.png
+    - assets/reference_art/section-detail-source.png
+    - assets/reference_art/section-cefr-source.png
+    - assets/reference_art/section-grammar-source.png
+    - assets/reference_art/guide-header-source.png
+    - assets/reference_art/guide-phrases-source.png
+    - assets/reference_art/guide-tips-source.png
+    - assets/reference_art/unit-skip-intro.png
+    - assets/reference_art/unit-skip-exercise.png
+    - assets/reference_art/unit-skip-warning.png
+    - assets/reference_art/unit-skip-failed.png
+    - assets/reference_art/unit-skip-result.png
     - assets/motion/
     - assets/avatar/
   fonts:

@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-09",
+  "url": "http://127.0.0.1:4173/preview.html",
+  "scope": "HTTP delivery and exact latest-release code hash; native screenshot verification is separate from browser interaction.",
+  "mainDartBytes": 4102946,
+  "mainDartSha256": "9c9dbce221f07db794dbf2ee7e7c68768bb1d62a6e4e57318def0016d3543d6c",
+  "checks": [
+    {
+      "path": "/preview.html",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/main.dart.js",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/avatar/avatar_builder_25_sept2025.riv",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/motion/character-lin.riv",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm/rive_native.wasm",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm_compatibility/rive_native.wasm",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/section-list-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/section-more-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/section-detail-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/section-cefr-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/section-grammar-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/guide-header-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/guide-phrases-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/guide-tips-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/unit-skip-intro.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/unit-skip-exercise.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/unit-skip-warning.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/unit-skip-failed.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/unit-skip-result.png",
+      "status": 200,
+      "cache": "no-store"
+    }
+  ]
+}

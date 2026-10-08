@@ -1,5 +1,5 @@
 import 'package:cocenglish/core/design/reference_theme.dart';
-import 'package:cocenglish/features/learning/presentation/learning_path.dart';
+import 'package:cocenglish/features/learning/presentation/unit_guide_screen.dart';
 import 'package:cocenglish/features/progress/domain/preview_state.dart';
 import 'package:cocenglish/features/progress/application/preview_controller.dart';
 import 'package:cocenglish/features/progress/presentation/hub_screens.dart';
@@ -33,7 +33,13 @@ void main() {
       await open(const UnitGuideScreen());
       await tester.pumpAndSettle();
       expect(find.text('Hello!'), findsWidgets);
-      expect(find.text('Xin chào!'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(GuidePhraseBubble).first,
+          matching: find.text('Xin chào!'),
+        ),
+        findsOneWidget,
+      );
       expect(find.text('Bonjour !'), findsNothing);
     },
   );

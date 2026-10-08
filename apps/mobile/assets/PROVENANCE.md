@@ -113,3 +113,25 @@ Seventeen byte-intact Gummble sources. Flutter paints only illustration regions;
 | widget-save.png | sc_4dc34672e5184cd8944a853d5f0c0128 | e7224b72b0d13c117a25a9703bdb8e6b358e4d55cb92b26ecfbff86e1441741c | [source](https://storage.gummble.com/prod/content/app_screens/f161f33d-6018-4c65-b8a6-a4c3e531219b.png) |
 | widget-six.png | sc_4ff8cd48ef8f4473b5208256d2b77020 | 8fc0549a98222ec8434e96e8b8a6b82bd0532f7276f54f88b8c16132ba345ccd | [source](https://storage.gummble.com/prod/content/app_screens/0eec81aa-e3d3-43b6-a704-2db0f1845ac3.png) |
 | widget-seven.png | sc_808b0fa527354f1eb806ddbdd20e0c52 | b7d329a220b7363bf042182271dbe156b6b76935bb846489e56e7bb6b47b731a | [source](https://storage.gummble.com/prod/content/app_screens/67e38256-e03e-49ea-a0d5-3f93530945e8.png) |
+
+# English section, guidebook and unit-check sources — 2026-10-09
+
+Thirteen byte-intact sources from five live Gummble language-learning flows. Native Flutter text and controls are drawn independently; only illustration regions use these originals. Still images do not establish private animation timelines. See [course analysis](../../../docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md).
+
+Unit checks also activate the previously inspected original `character-lin.riv`, using its verified reset/correct/incorrect inputs. Its URL/hash remain in `docs/design/qa/original-character-assets.json`. New native frame evidence is in `docs/design/qa/course-finish-motion/`; the complete exported artboard preserves its own padding and does not certify every archived mascot-frame bound.
+
+| Bundle file | Source screen | SHA-256 | Source |
+| --- | --- | --- | --- |
+| section-list-source.png | sc_1c03dd48361a43689ca89bc28e5c3f5a | fab8f4f98c2ea3bcce87abf22548979cf2995440b69fabfcfff0c8fa42764de1 | [source](https://storage.gummble.com/prod/content/app_screens/8b76c60d-dbc2-4d70-b85e-a3b37e2cc35e.png) |
+| section-more-source.png | sc_74d81cafda0248b7bae7c3343f614438 | c5d9f83664c3501a8ad6834a076275e07fcbc0f691e6a1cee5bfe6fae4d04b30 | [source](https://storage.gummble.com/prod/content/app_screens/a5aefbbd-c080-4dcb-b5c4-b01dcd34a512.png) |
+| section-detail-source.png | sc_4be0b51beca84327bcdb1e06d8e32114 | 0c2030d7aab276a2afb902d3120ec1223833852b9bc00e1c3f9977491b3336d0 | [source](https://storage.gummble.com/prod/content/app_screens/9e05ae5d-a1ae-4376-9011-c9c92cac64ac.png) |
+| section-cefr-source.png | sc_9e00ad56c0c04a23908bdc68bbf8f539 | b587100b4ac99ac327400be3eb2333d43f2dbf830415496158b98e464c3fd335 | [source](https://storage.gummble.com/prod/content/app_screens/e68978f6-40a8-403b-a0ef-b418006f5481.png) |
+| section-grammar-source.png | sc_f3a5853ab0ff47b09ffe9503734be57d | 8e93d7c35c469c280c820490e5836e8bc79b8e29c5c0342df1055fa56451c805 | [source](https://storage.gummble.com/prod/content/app_screens/d8e1ecf0-5090-4ca3-9562-a8b90706072a.png) |
+| guide-header-source.png | sc_f28417a221944a5aa8982866a518d31c | 662cbbafc56ab7741ed8b7c3bd88d11da3d3dbdf73b55cb2fe433214af300cb3 | [source](https://storage.gummble.com/prod/content/app_screens/eecee649-8139-405f-ba2a-f2f497e67ae0.png) |
+| guide-phrases-source.png | sc_31d2548aeb9745718647676508480309 | fecfaa4a8756479385126b223870e7e52f726e15fb6ff0839ea7e38f206acff8 | [source](https://storage.gummble.com/prod/content/app_screens/d96a7b5c-df96-42d4-86bd-b93c812ba474.png) |
+| guide-tips-source.png | sc_f43473c096cf47bda671a5a2363c59bb | 4ce3a50c145efbdc6a6fedefbe0c7948ee97fa41a5384f87f57d435ca081a24f | [source](https://storage.gummble.com/prod/content/app_screens/244cb4e6-9fce-4842-b721-a27fc9365573.png) |
+| unit-skip-intro.png | sc_93b9780a134742a49ef9315b33c8b714 | e6588fb02cc0918544250f4943d98f480f8fe59bd6cc3c4b51ba01963b069456 | [source](https://storage.gummble.com/prod/content/app_screens/2fbd9993-28e4-4c9c-b0cb-6663c24bcfab.png) |
+| unit-skip-exercise.png | sc_c26c069dd4a84cbc8c0c030b9f436085 | e55836959a9503a2abb268f0bfbff825546811614b49da2f0279cd09460ebb6c | [source](https://storage.gummble.com/prod/content/app_screens/da1e2443-d0b1-4976-a0a2-8a1e36bef9ef.png) |
+| unit-skip-warning.png | sc_0e8d2cbe798c4f52bb675b1c196ce631 | d229d963d603b0f51f0bfabedd831ae1a4bad82ede36be57b3ac5c4980112159 | [source](https://storage.gummble.com/prod/content/app_screens/5b43adbe-b81e-46d7-975d-34ac7a053c86.png) |
+| unit-skip-failed.png | sc_8975ffca8e1f44cebb67878c4dcbd5cb | 1ed29ea7ce99d658617705bbd1461f1f967461d1ed34a4b55a68c82b6c10f23c | [source](https://storage.gummble.com/prod/content/app_screens/1ab882d5-337f-432d-8b78-7d3aeb32b354.png) |
+| unit-skip-result.png | sc_1b1f74944fc643ae966c450854f6f45d | edd2628a77ed0a731141f140c11035349b846494ae05bd1bd85bbdc9219aeb0f | [source](https://storage.gummble.com/prod/content/app_screens/f6fccedf-27ff-407b-835e-5db2a2bef4e8.png) |

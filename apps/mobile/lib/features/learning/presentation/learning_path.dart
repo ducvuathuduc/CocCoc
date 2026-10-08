@@ -9,11 +9,16 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../application/learning_controller.dart';
+import '../application/course_navigation_controller.dart';
+import '../domain/course_catalog.dart';
+import '../domain/course_review.dart';
 import '../domain/learning_models.dart';
 import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/domain/score_information.dart';
 import 'learning_visuals.dart';
+
+export 'unit_guide_screen.dart' show UnitGuideScreen;
 
 class LearningPath extends ConsumerStatefulWidget {
   const LearningPath({super.key});
@@ -24,11 +29,17 @@ class LearningPath extends ConsumerStatefulWidget {
 class _LearningPathState extends ConsumerState<LearningPath> {
   int? _selected;
   bool _courses = false;
+  CourseTarget get _active => ref.read(courseNavigationProvider).active;
+  bool get _review => _active != const CourseTarget(1, 1);
+  bool _pausedFor(int node, LessonState draft) =>
+      draft.stage == LessonStage.paused &&
+      draft.nodeId == courseNodeId(_active, node);
   @override
   Widget build(BuildContext context) {
     final progress = ref.watch(learningStateProvider);
     final draft = ref.watch(lessonControllerProvider);
     final energy = ref.watch(extendedControllerProvider);
+    final active = ref.watch(courseNavigationProvider).active;
     return Column(
       children: [
         Padding(
@@ -86,7 +97,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                   key: const PageStorageKey('learning-path'),
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 32),
                   children: [
-                    _unitBanner(context, 1, 'Use basic phrases'),
+                    _unitBanner(context, active.unit, unitGuide(active).title),
                     const SizedBox(height: 16),
                     LayoutBuilder(
                       builder: (context, constraints) {
@@ -171,20 +182,44 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                         );
                       },
                     ),
-                    _unitBanner(context, 2, 'Introduce yourself'),
-                    const SizedBox(height: 25),
-                    Center(
-                      child: PathNode(
-                        current: false,
-                        completed: false,
-                        icon: Icons.lock_rounded,
-                        onTap: () => showLearningNotice(
-                          context,
-                          'Keep learning!',
-                          'Complete Unit 1 to unlock this unit.',
+                    if (active.unit < 8) ...[
+                      _unitBanner(
+                        context,
+                        active.unit + 1,
+                        unitGuide(CourseTarget(active.section, active.unit + 1))
+                            .title,
+                      ),
+                      const SizedBox(height: 25),
+                      Center(
+                        child: Column(
+                          children: [
+                            const SpeechBubble(
+                              below: true,
+                              child: Text(
+                                'JUMP HERE?',
+                                style: TextStyle(
+                                  color: Color(0xFFBA4095),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            PathNode(
+                              current: false,
+                              completed: false,
+                              icon: Icons.fast_forward_rounded,
+                              color: const Color(0xFFBA4095),
+                              edgeColor: const Color(0xFF962877),
+                              tooltip: 'Jump to Unit ${active.unit + 1}',
+                              onTap: () => context.push(
+                                '/units/unit-${active.unit + 1}/skip?section=${active.section}',
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
@@ -247,10 +282,13 @@ class _LearningPathState extends ConsumerState<LearningPath> {
 
   Widget _unitBanner(BuildContext context, int unit, String title) => Container(
     decoration: BoxDecoration(
-      color: LearningColors.green,
+      color: unit == 2 ? const Color(0xFFBA4095) : LearningColors.green,
       borderRadius: BorderRadius.circular(16),
-      boxShadow: const [
-        BoxShadow(color: LearningColors.greenDark, offset: Offset(0, 4)),
+      boxShadow: [
+        BoxShadow(
+          color: unit == 2 ? const Color(0xFF962877) : LearningColors.greenDark,
+          offset: const Offset(0, 4),
+        ),
       ],
     ),
     child: Row(
@@ -262,11 +300,13 @@ class _LearningPathState extends ConsumerState<LearningPath> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'SECTION 1, UNIT $unit',
-                  style: const TextStyle(
+                  'SECTION ${ref.watch(courseNavigationProvider).active.section}, UNIT $unit',
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFFD7FFB8),
+                    color: unit == 2
+                        ? const Color(0xFFFFC9E9)
+                        : const Color(0xFFD7FFB8),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -284,15 +324,27 @@ class _LearningPathState extends ConsumerState<LearningPath> {
           ),
         ),
         Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
-              left: BorderSide(color: LearningColors.greenDark, width: 2),
+              left: BorderSide(
+                color: unit == 2
+                    ? const Color(0xFF962877)
+                    : LearningColors.greenDark,
+                width: 2,
+              ),
             ),
           ),
           child: IconButton(
             tooltip: 'Unit $unit guidebook',
-            onPressed: () => context.push('/units/unit-$unit/guide'),
-            icon: const ReferenceArt(LearningArt.guide, width: 30, height: 29),
+            onPressed: () => context.push(
+              '/units/unit-$unit/guide?section=${ref.read(courseNavigationProvider).active.section}',
+            ),
+            icon: unit == 2
+                ? const CustomPaint(
+                    size: Size(30, 29),
+                    painter: _GuideIconPainter(Color(0xFFBA4095)),
+                  )
+                : const ReferenceArt(LearningArt.guide, width: 30, height: 29),
             padding: const EdgeInsets.all(20),
           ),
         ),
@@ -308,8 +360,8 @@ class _LearningPathState extends ConsumerState<LearningPath> {
     double width,
   ) {
     const offsets = [.5, .36, .29, .36, .5, .65, .5, .36];
-    final current = i == progress.currentNode;
-    final completed = progress.completedNodes.contains('node-$i');
+    final current = i == (_review ? 0 : progress.currentNode);
+    final completed = !_review && progress.completedNodes.contains('node-$i');
     final centerX = width * offsets[i];
     return Positioned(
       left: centerX - 50,
@@ -327,22 +379,30 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                 border: Border.all(color: ReferenceColors.border, width: 2),
               ),
               child: Text(
-                draft.stage == LessonStage.paused
+                _pausedFor(i, draft)
                     ? 'RESUME'
-                    : progress.completedLessons > 0
+                    : !_review && progress.completedLessons > 0
                     ? 'CONTINUE'
                     : 'START',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: LearningColors.greenDark,
+                  color: _active.unit == 2
+                      ? const Color(0xFF962877)
+                      : LearningColors.greenDark,
                 ),
               ),
             ),
           PathNode(
             current: current,
             completed: completed,
-            progress: (progress.lessonInNode + 1) / 5,
+            color: current && _active.unit == 2
+                ? const Color(0xFFBA4095)
+                : null,
+            edgeColor: current && _active.unit == 2
+                ? const Color(0xFF962877)
+                : null,
+            progress: _review ? .2 : (progress.lessonInNode + 1) / 5,
             icon: i == 2
                 ? Icons.headphones_rounded
                 : i == 3
@@ -351,7 +411,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                 ? Icons.inventory_2_rounded
                 : Icons.star_rounded,
             tooltip: current
-                ? 'Start lesson ${progress.lessonInNode + 1}'
+                ? 'Start lesson ${_review ? 1 : progress.lessonInNode + 1}'
                 : completed
                 ? 'Replay lesson $i'
                 : 'Locked lesson $i',
@@ -386,9 +446,9 @@ class _LearningPathState extends ConsumerState<LearningPath> {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Use basic phrases',
-          style: TextStyle(
+        Text(
+          unitGuide(ref.watch(courseNavigationProvider).active).title,
+          style: const TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.w700,
             color: Colors.white,
@@ -396,26 +456,25 @@ class _LearningPathState extends ConsumerState<LearningPath> {
         ),
         const SizedBox(height: 8),
         Text(
-          'Lesson ${progress.lessonInNode + 1} of 5',
+          _review
+              ? 'Practice key phrases'
+              : 'Lesson ${progress.lessonInNode + 1} of 5',
           style: const TextStyle(fontSize: 18, color: Colors.white),
         ),
         const SizedBox(height: 16),
         ReferenceButton(
-          label: draft.stage == LessonStage.paused
+          label: _pausedFor(i, draft)
               ? 'RESUME LESSON'
+              : _review
+              ? 'START'
               : 'START +20 XP',
           backgroundColor: Colors.white,
           edgeColor: const Color(0xFFD7FFB8),
           foregroundColor: LearningColors.green,
           onPressed: () {
-            final controller = ref.read(lessonControllerProvider.notifier);
-            if (draft.stage == LessonStage.paused) {
-              controller.resume();
-            } else {
-              controller.start(nodeId: 'node-$i');
-            }
+            ref.read(courseNavigationProvider.notifier).startLesson(i);
             setState(() => _selected = null);
-            context.push('/lesson/node-$i');
+            context.push('/lesson/${courseNodeId(_active, i)}');
           },
         ),
       ],
@@ -558,6 +617,8 @@ class PathNode extends StatelessWidget {
     required this.onTap,
     this.progress = .25,
     this.tooltip = 'Lesson',
+    this.color,
+    this.edgeColor,
     super.key,
   });
   final bool current, completed;
@@ -565,6 +626,8 @@ class PathNode extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
   final String tooltip;
+  final Color? color;
+  final Color? edgeColor;
   @override
   Widget build(BuildContext context) => Tooltip(
     message: tooltip,
@@ -585,26 +648,30 @@ class PathNode extends StatelessWidget {
                   duration: motionDuration(context, 450),
                   builder: (context, value, _) => CustomPaint(
                     size: const Size(98, 87),
-                    painter: _NodeRing(value),
+                    painter: _NodeRing(value, color ?? LearningColors.green),
                   ),
                 ),
               Container(
                 width: 70,
                 height: 62,
                 decoration: BoxDecoration(
-                  color: current || completed
-                      ? completed
-                            ? LearningColors.yellow
-                            : LearningColors.green
-                      : ReferenceColors.border,
+                  color:
+                      color ??
+                      (current || completed
+                          ? completed
+                                ? LearningColors.yellow
+                                : LearningColors.green
+                          : ReferenceColors.border),
                   borderRadius: BorderRadius.circular(40),
                   boxShadow: [
                     BoxShadow(
-                      color: current || completed
-                          ? completed
-                                ? const Color(0xFFE5A400)
-                                : LearningColors.greenDark
-                          : const Color(0xFFBCBABC),
+                      color:
+                          edgeColor ??
+                          (current || completed
+                              ? completed
+                                    ? const Color(0xFFE5A400)
+                                    : LearningColors.greenDark
+                              : const Color(0xFFBCBABC)),
                       offset: const Offset(0, 7),
                     ),
                   ],
@@ -612,7 +679,7 @@ class PathNode extends StatelessWidget {
                 child: Icon(
                   completed ? Icons.check_rounded : icon,
                   size: 36,
-                  color: current || completed
+                  color: color != null || current || completed
                       ? Colors.white
                       : ReferenceColors.disabled,
                 ),
@@ -626,8 +693,9 @@ class PathNode extends StatelessWidget {
 }
 
 class _NodeRing extends CustomPainter {
-  _NodeRing(this.progress);
+  _NodeRing(this.progress, this.color);
   final double progress;
+  final Color color;
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Rect.fromLTWH(4, 3, size.width - 8, size.height - 7);
@@ -637,131 +705,43 @@ class _NodeRing extends CustomPainter {
       ..strokeWidth = 8
       ..strokeCap = StrokeCap.round;
     canvas.drawOval(rect, paint);
-    paint.color = LearningColors.green;
+    paint.color = color;
     canvas.drawArc(rect, -math.pi / 2, math.pi * 2 * progress, false, paint);
   }
 
   @override
-  bool shouldRepaint(_NodeRing oldDelegate) => oldDelegate.progress != progress;
+  bool shouldRepaint(_NodeRing oldDelegate) =>
+      oldDelegate.progress != progress || oldDelegate.color != color;
 }
 
-class UnitGuideScreen extends StatelessWidget {
-  const UnitGuideScreen({super.key});
+class _GuideIconPainter extends CustomPainter {
+  const _GuideIconPainter(this.color);
+  final Color color;
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(
-      child: Column(
-        children: [
-          LearningHeader(
-            title: 'SECTION 1, UNIT 1',
-            onClose: () => context.pop(),
-          ),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.only(bottom: 24),
-              children: [
-                const SizedBox(height: 22),
-                const Center(
-                  child: ReferenceArt(
-                    LearningArt.guideCharacter,
-                    width: 145,
-                    height: 197,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Use basic phrases',
-                  textAlign: TextAlign.center,
-                  style: headingStyle,
-                ),
-                const SizedBox(height: 28),
-                const Divider(thickness: 2),
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    'KEY PHRASES',
-                    style: TextStyle(
-                      color: LearningColors.blue,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                for (final phrase in const [
-                  ('Hello!', 'Xin chào!'),
-                  ('Thank you very much.', 'Cảm ơn bạn rất nhiều.'),
-                  ('Goodbye.', 'Tạm biệt.'),
-                  ('Nice to meet you.', 'Rất vui được gặp bạn.'),
-                ])
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 6, 20, 12),
-                    child: SpeechBubble(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          IconButton(
-                            tooltip: 'Listen to ${phrase.$1}',
-                            onPressed: () => showLearningNotice(
-                              context,
-                              'Audio unavailable',
-                              'Audio isn’t available right now. You can still review the phrase below.',
-                            ),
-                            icon: const Icon(
-                              Icons.volume_up_rounded,
-                              color: LearningColors.blue,
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  phrase.$1,
-                                  style: const TextStyle(fontSize: 20),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  phrase.$2,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    color: ReferenceColors.disabled,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                Container(
-                  color: ReferenceColors.blueFill,
-                  padding: const EdgeInsets.all(20),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'TIP',
-                        style: TextStyle(
-                          color: LearningColors.blue,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Text('Hello!', style: headingStyle),
-                      SizedBox(height: 12),
-                      Text(
-                        'Use hello to greet someone. You can also say good morning, good afternoon or good evening.',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+  void paint(Canvas canvas, Size size) {
+    final paper = Paint()..color = Colors.white;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(7, 2, 22, 25),
+        const Radius.circular(3),
       ),
-    ),
-  );
+      paper,
+    );
+    final ink = Paint()..color = color;
+    for (final y in [8.0, 14.0, 20.0]) {
+      canvas.drawCircle(Offset(8, y), 2.5, ink);
+      canvas.drawCircle(Offset(4, y), 1.5, paper);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(14, y - 1.5, 9, 3),
+          const Radius.circular(1.5),
+        ),
+        ink,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_GuideIconPainter oldDelegate) =>
+      oldDelegate.color != color;
 }

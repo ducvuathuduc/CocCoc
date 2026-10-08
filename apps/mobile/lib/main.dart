@@ -10,6 +10,10 @@ import 'features/onboarding/data/onboarding_repository.dart';
 import 'features/onboarding/domain/onboarding_state.dart';
 import 'features/learning/presentation/learning_path.dart';
 import 'features/learning/presentation/sections_screen.dart';
+import 'features/learning/presentation/unit_skip_screen.dart';
+import 'features/learning/application/unit_skip_controller.dart';
+import 'features/learning/application/course_navigation_controller.dart';
+import 'features/learning/domain/course_catalog.dart';
 import 'features/progress/presentation/energy_screen.dart';
 import 'features/progress/presentation/super_screen.dart';
 import 'features/progress/presentation/max_screen.dart';
@@ -289,7 +293,47 @@ class _AppState extends ConsumerState<_App> {
         ),
         GoRoute(
           path: '/units/:id/guide',
-          builder: (context, state) => const UnitGuideScreen(),
+          builder: (context, state) => UnitGuideScreen(
+            target: guideTarget(
+              state.pathParameters['id'] ?? '',
+              state.uri.queryParameters['section'],
+            ),
+          ),
+        ),
+        GoRoute(
+          path: '/units/:id/skip',
+          builder: (context, state) {
+            final target = guideTarget(
+              state.pathParameters['id'] ?? '',
+              state.uri.queryParameters['section'],
+            );
+            if (target == null ||
+                target.unit < 2 ||
+                !ref
+                    .watch(courseNavigationProvider)
+                    .sectionUnlocked(target.section)) {
+              return const CourseUnavailableScreen();
+            }
+            return UnitSkipScreen(
+              unit: target.unit,
+              section: target.section,
+              onClose: () =>
+                  context.canPop() ? context.pop() : context.go('/home'),
+              onPassed: () {
+                final result = ref.read(
+                  unitSkipControllerProvider(
+                    target.unit,
+                    section: target.section,
+                  ),
+                );
+                if (ref
+                    .read(courseNavigationProvider.notifier)
+                    .acceptCompletedCheck(target, result)) {
+                  context.go('/home');
+                }
+              },
+            );
+          },
         ),
         GoRoute(
           path: '/score',
@@ -302,9 +346,40 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/sections/:section',
           builder: (context, state) => SectionDetailScreen(
-            section: (int.tryParse(state.pathParameters['section'] ?? '') ?? 1)
-                .clamp(1, 4),
+            section: (int.tryParse(state.pathParameters['section'] ?? '') ?? 0),
           ),
+        ),
+        GoRoute(
+          path: '/sections/:section/check',
+          builder: (context, state) {
+            final section =
+                int.tryParse(state.pathParameters['section'] ?? '') ?? 0;
+            if (section < 2 || section > 8) {
+              return const CourseUnavailableScreen();
+            }
+            return UnitSkipScreen(
+              unit: section,
+              section: section,
+              sectionCheck: true,
+              targetLabel: 'Section $section',
+              onClose: () =>
+                  context.canPop() ? context.pop() : context.go('/home'),
+              onPassed: () {
+                final result = ref.read(
+                  unitSkipControllerProvider(
+                    section,
+                    section: section,
+                    sectionCheck: true,
+                  ),
+                );
+                if (ref
+                    .read(courseNavigationProvider.notifier)
+                    .acceptCompletedCheck(CourseTarget(section, 1), result)) {
+                  context.go('/home');
+                }
+              },
+            );
+          },
         ),
         GoRoute(
           path: '/energy',

@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-08",
+  "date": "2026-10-09",
   "families": [
     {
       "family": "call",
@@ -93,7 +93,7 @@
     }
   ],
   "sourceScreens": 951,
-  "bundledPngs": 225,
+  "bundledPngs": 238,
   "assets": [
     {
       "file": "achievement-awards-bottom.png",
@@ -527,6 +527,30 @@
     },
     {
       "file": "guide-04.png",
+      "sha256": "4ce3a50c145efbdc6a6fedefbe0c7948ee97fa41a5384f87f57d435ca081a24f",
+      "references": [
+        "catalog-cache/sc_f43473c096cf47bda671a5a2363c59bb.png",
+        "guide/04.png"
+      ]
+    },
+    {
+      "file": "guide-header-source.png",
+      "sha256": "662cbbafc56ab7741ed8b7c3bd88d11da3d3dbdf73b55cb2fe433214af300cb3",
+      "references": [
+        "catalog-cache/sc_f28417a221944a5aa8982866a518d31c.png",
+        "guide/02.png"
+      ]
+    },
+    {
+      "file": "guide-phrases-source.png",
+      "sha256": "fecfaa4a8756479385126b223870e7e52f726e15fb6ff0839ea7e38f206acff8",
+      "references": [
+        "catalog-cache/sc_31d2548aeb9745718647676508480309.png",
+        "guide/03.png"
+      ]
+    },
+    {
+      "file": "guide-tips-source.png",
       "sha256": "4ce3a50c145efbdc6a6fedefbe0c7948ee97fa41a5384f87f57d435ca081a24f",
       "references": [
         "catalog-cache/sc_f43473c096cf47bda671a5a2363c59bb.png",
@@ -1375,6 +1399,42 @@
       ]
     },
     {
+      "file": "section-cefr-source.png",
+      "sha256": "b587100b4ac99ac327400be3eb2333d43f2dbf830415496158b98e464c3fd335",
+      "references": [
+        "catalog-cache/sc_9e00ad56c0c04a23908bdc68bbf8f539.png"
+      ]
+    },
+    {
+      "file": "section-detail-source.png",
+      "sha256": "0c2030d7aab276a2afb902d3120ec1223833852b9bc00e1c3f9977491b3336d0",
+      "references": [
+        "catalog-cache/sc_4be0b51beca84327bcdb1e06d8e32114.png"
+      ]
+    },
+    {
+      "file": "section-grammar-source.png",
+      "sha256": "8e93d7c35c469c280c820490e5836e8bc79b8e29c5c0342df1055fa56451c805",
+      "references": [
+        "catalog-cache/sc_f3a5853ab0ff47b09ffe9503734be57d.png"
+      ]
+    },
+    {
+      "file": "section-list-source.png",
+      "sha256": "fab8f4f98c2ea3bcce87abf22548979cf2995440b69fabfcfff0c8fa42764de1",
+      "references": [
+        "catalog-cache/sc_1c03dd48361a43689ca89bc28e5c3f5a.png",
+        "expanded/31460692-382a-4403-884b-847cc7dd715c/01.png"
+      ]
+    },
+    {
+      "file": "section-more-source.png",
+      "sha256": "c5d9f83664c3501a8ad6834a076275e07fcbc0f691e6a1cee5bfe6fae4d04b30",
+      "references": [
+        "catalog-cache/sc_74d81cafda0248b7bae7c3343f614438.png"
+      ]
+    },
+    {
       "file": "sections-01.png",
       "sha256": "fab8f4f98c2ea3bcce87abf22548979cf2995440b69fabfcfff0c8fa42764de1",
       "references": [
@@ -1750,6 +1810,41 @@
       "sha256": "9c3ac897501ad043fb919d39c363b20406caeda28a895946b317317f464de2e8",
       "references": [
         "catalog-cache/sc_bbd3e1204a6548d99ef34308b47c4b3b.png"
+      ]
+    },
+    {
+      "file": "unit-skip-exercise.png",
+      "sha256": "e55836959a9503a2abb268f0bfbff825546811614b49da2f0279cd09460ebb6c",
+      "references": [
+        "catalog-cache/sc_c26c069dd4a84cbc8c0c030b9f436085.png"
+      ]
+    },
+    {
+      "file": "unit-skip-failed.png",
+      "sha256": "1ed29ea7ce99d658617705bbd1461f1f967461d1ed34a4b55a68c82b6c10f23c",
+      "references": [
+        "catalog-cache/sc_8975ffca8e1f44cebb67878c4dcbd5cb.png"
+      ]
+    },
+    {
+      "file": "unit-skip-intro.png",
+      "sha256": "e6588fb02cc0918544250f4943d98f480f8fe59bd6cc3c4b51ba01963b069456",
+      "references": [
+        "catalog-cache/sc_93b9780a134742a49ef9315b33c8b714.png"
+      ]
+    },
+    {
+      "file": "unit-skip-result.png",
+      "sha256": "edd2628a77ed0a731141f140c11035349b846494ae05bd1bd85bbdc9219aeb0f",
+      "references": [
+        "catalog-cache/sc_1b1f74944fc643ae966c450854f6f45d.png"
+      ]
+    },
+    {
+      "file": "unit-skip-warning.png",
+      "sha256": "d229d963d603b0f51f0bfabedd831ae1a4bad82ede36be57b3ac5c4980112159",
+      "references": [
+        "catalog-cache/sc_0e8d2cbe798c4f52bb675b1c196ce631.png"
       ]
     },
     {

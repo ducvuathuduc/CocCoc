@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08",
+  "updated": "2026-10-09",
   "scope": "English language/shared UI only. Verified mock is not pixel/motion or production certification.",
   "families": [
     {
@@ -395,6 +395,54 @@
         "apps/mobile/test/streak_widgets_test.dart"
       ],
       "openLimits": "Native in-app gallery/guidance; no OS widget extension or launcher reconstruction."
+    },
+    {
+      "id": "course-sections",
+      "name": "Eight English sections and CEFR/grammar details",
+      "openLimits": "Authored English samples and local targets; middle-section poses, archived complete-path variants and full curriculum are not certified.",
+      "status": "verified_mock",
+      "evidence": [
+        "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+        "docs/design/qa/COURSE_FINISH_REPORT.md",
+        "docs/design/qa/course-finish-gate.log",
+        "docs/design/qa/course-finish-captures.log",
+        "docs/design/qa/course-finish-motion.log",
+        "apps/mobile/test/course_flow_test.dart",
+        "apps/mobile/test/unit_skip_test.dart",
+        "apps/mobile/test/course_motion_capture_test.dart"
+      ]
+    },
+    {
+      "id": "unit-guidebooks",
+      "name": "Unit-specific English guidebook, tips and translation",
+      "openLimits": "Eight authored sample units; unavailable audio fallback. Source French/advanced unit99 path is not reconstructed.",
+      "status": "verified_mock",
+      "evidence": [
+        "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+        "docs/design/qa/COURSE_FINISH_REPORT.md",
+        "docs/design/qa/course-finish-gate.log",
+        "docs/design/qa/course-finish-captures.log",
+        "docs/design/qa/course-finish-motion.log",
+        "apps/mobile/test/course_flow_test.dart",
+        "apps/mobile/test/unit_skip_test.dart",
+        "apps/mobile/test/course_motion_capture_test.dart"
+      ]
+    },
+    {
+      "id": "unit-checks",
+      "name": "Five-heart English unit/section checks and Lin reactions",
+      "openLimits": "Local three-question fixtures and destination projection; original Lin Rive input binding is verified, private archived Duo timelines and server settlement are not certified.",
+      "status": "verified_mock",
+      "evidence": [
+        "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+        "docs/design/qa/COURSE_FINISH_REPORT.md",
+        "docs/design/qa/course-finish-gate.log",
+        "docs/design/qa/course-finish-captures.log",
+        "docs/design/qa/course-finish-motion.log",
+        "apps/mobile/test/course_flow_test.dart",
+        "apps/mobile/test/unit_skip_test.dart",
+        "apps/mobile/test/course_motion_capture_test.dart"
+      ]
     }
   ],
   "flows": [
@@ -435,25 +483,48 @@
       "flowId": "31460692-382a-4403-884b-847cc7dd715c",
       "flowName": "Choosing a section",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=31460692-382a-4403-884b-847cc7dd715c",
-      "status": "pending",
+      "status": "in_progress",
       "reuseFamilies": [
-        "extended"
+        "course-sections",
+        "path"
       ],
-      "differences": [],
+      "differences": [
+        "English/Vietnamese authored fixtures replace archived French copy and historical counters.",
+        "Existing five-tab learning path is reused. Advanced/complete source-path composition and source-specific node/character arrangements stay open.",
+        "Native original illustration crops and interactions are verified; original private mascot timing, full curriculum and server rewards are separate acceptance scope."
+      ],
       "screens": [
         {
           "position": 1,
           "screenId": "sc_1c03dd48361a43689ca89bc28e5c3f5a",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 2,
           "screenId": "sc_f5771701b2a9477d85f8d74ed611e4e8",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "in_progress",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         }
       ]
     },
@@ -6095,39 +6166,80 @@
       "flowId": "4d849f99-ddfb-45e1-b14b-0cf990cce168",
       "flowName": "Section detail",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=4d849f99-ddfb-45e1-b14b-0cf990cce168",
-      "status": "pending",
+      "status": "verified_mock",
       "reuseFamilies": [
-        "extended"
+        "course-sections",
+        "path"
       ],
-      "differences": [],
+      "differences": [
+        "English/Vietnamese authored fixtures replace archived French copy and historical counters.",
+        "Existing five-tab learning path is reused. Advanced/complete source-path composition and source-specific node/character arrangements stay open.",
+        "Native original illustration crops and interactions are verified; original private mascot timing, full curriculum and server rewards are separate acceptance scope."
+      ],
       "screens": [
         {
           "position": 1,
           "screenId": "sc_1c03dd48361a43689ca89bc28e5c3f5a",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 2,
           "screenId": "sc_4be0b51beca84327bcdb1e06d8e32114",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 3,
           "screenId": "sc_9e00ad56c0c04a23908bdc68bbf8f539",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 4,
           "screenId": "sc_f3a5853ab0ff47b09ffe9503734be57d",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         }
       ]
     },
@@ -7359,39 +7471,80 @@
       "flowId": "831dee9f-9353-42ad-ad79-2c81a1cad5ad",
       "flowName": "Unit guidebook",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=831dee9f-9353-42ad-ad79-2c81a1cad5ad",
-      "status": "pending",
+      "status": "in_progress",
       "reuseFamilies": [
-        "extended"
+        "unit-guidebooks",
+        "path"
       ],
-      "differences": [],
+      "differences": [
+        "English/Vietnamese authored fixtures replace archived French copy and historical counters.",
+        "Existing five-tab learning path is reused. Advanced/complete source-path composition and source-specific node/character arrangements stay open.",
+        "Native original illustration crops and interactions are verified; original private mascot timing, full curriculum and server rewards are separate acceptance scope."
+      ],
       "screens": [
         {
           "position": 1,
           "screenId": "sc_28609e32a15f4b3a96a5607c40c81d87",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "in_progress",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 2,
           "screenId": "sc_f28417a221944a5aa8982866a518d31c",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 3,
           "screenId": "sc_31d2548aeb9745718647676508480309",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 4,
           "screenId": "sc_f43473c096cf47bda671a5a2363c59bb",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         }
       ]
     },
@@ -8180,32 +8333,64 @@
       "flowId": "b3ad8692-1624-4e6d-9e56-7bdda74127ae",
       "flowName": "Sections",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=b3ad8692-1624-4e6d-9e56-7bdda74127ae",
-      "status": "pending",
+      "status": "in_progress",
       "reuseFamilies": [
-        "extended"
+        "course-sections",
+        "path"
       ],
-      "differences": [],
+      "differences": [
+        "English/Vietnamese authored fixtures replace archived French copy and historical counters.",
+        "Existing five-tab learning path is reused. Advanced/complete source-path composition and source-specific node/character arrangements stay open.",
+        "Native original illustration crops and interactions are verified; original private mascot timing, full curriculum and server rewards are separate acceptance scope."
+      ],
       "screens": [
         {
           "position": 1,
           "screenId": "sc_28609e32a15f4b3a96a5607c40c81d87",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "in_progress",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 2,
           "screenId": "sc_1c03dd48361a43689ca89bc28e5c3f5a",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 3,
           "screenId": "sc_74d81cafda0248b7bae7c3343f614438",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         }
       ]
     },
@@ -8963,65 +9148,144 @@
       "flowId": "e5507c39-9c84-43a8-856c-8829498d35a6",
       "flowName": "Skipping a unit",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e5507c39-9c84-43a8-856c-8829498d35a6",
-      "status": "pending",
-      "reuseFamilies": [],
-      "differences": [],
+      "status": "in_progress",
+      "reuseFamilies": [
+        "unit-checks",
+        "path"
+      ],
+      "differences": [
+        "English/Vietnamese authored fixtures replace archived French copy and historical counters.",
+        "Existing five-tab learning path is reused. Advanced/complete source-path composition and source-specific node/character arrangements stay open.",
+        "Native original illustration crops and interactions are verified; original private mascot timing, full curriculum and server rewards are separate acceptance scope."
+      ],
       "screens": [
         {
           "position": 1,
           "screenId": "sc_fb3272d39e5b4d0584b6d8002ca1e2cf",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "in_progress",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 2,
           "screenId": "sc_93b9780a134742a49ef9315b33c8b714",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 3,
           "screenId": "sc_c26c069dd4a84cbc8c0c030b9f436085",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "original_rive_binding_archived_timing_open"
         },
         {
           "position": 4,
           "screenId": "sc_18bb1543717c45178162e449c6d4ebda",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "original_rive_binding_archived_timing_open"
         },
         {
           "position": 5,
           "screenId": "sc_0e8d2cbe798c4f52bb675b1c196ce631",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 6,
           "screenId": "sc_8975ffca8e1f44cebb67878c4dcbd5cb",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 7,
           "screenId": "sc_1b1f74944fc643ae966c450854f6f45d",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         },
         {
           "position": 8,
           "screenId": "sc_b802e03017114c28a5ab20eccc471e23",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "in_progress",
+          "evidence": [
+            "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
+            "docs/design/qa/COURSE_FINISH_REPORT.md",
+            "docs/design/qa/course-finish-gate.log",
+            "docs/design/qa/course-finish-captures.log",
+            "docs/design/qa/course-finish-motion.log",
+            "apps/mobile/test/course_flow_test.dart",
+            "apps/mobile/test/unit_skip_test.dart",
+            "apps/mobile/test/course_motion_capture_test.dart"
+          ],
+          "motion": "native_transitions_source_still_archived_timing_open"
         }
       ]
     },
