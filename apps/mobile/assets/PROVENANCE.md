@@ -89,3 +89,27 @@ screen `sc_98120696dc1a45b4a33fa1ebf0599891` in the same live MCP journey.
 Source: https://storage.gummble.com/prod/content/app_screens/66920d1d-b618-4b3c-96ee-85840c508aaf.png
 SHA256: `438027a97fbc2b7ce9155887e126551e499e39381bace604be067857bcc873b8`.
 It is a source still, not evidence of the original podium animation timeline.
+
+# League history, Year in Review and widgets — 2026-10-08
+
+Seventeen byte-intact Gummble sources. Flutter paints only illustration regions; copy/controls are native. Source hashes are independently audited.
+
+| Bundle file | Source screen | SHA-256 | Source |
+| --- | --- | --- | --- |
+| league-result-source.png | sc_8218b579af9644988b58eabc20dd1501 | dec962ed3a3da97b82099c509b09050cc8b61f283b503711accc4869962ca711 | [source](https://storage.gummble.com/prod/content/app_screens/c1348dee-2409-42c7-80be-b127950a6756.png) |
+| league-promotion-source.png | sc_66df6038334b48a4b752bd9d9e9a0eb4 | 500f7b113ad93a0f8f0ca006a5e0f2d21343367b852d0038d2a4cf21745a9214 | [source](https://storage.gummble.com/prod/content/app_screens/4f2640e5-c6b0-4ea3-953c-f00f5d3b86b6.png) |
+| league-reward-source.png | sc_859527b88dda4524aa4131de8fa2a9aa | b34ddb9c09bcecb99bc8a3688af766e1562a67d4395b677bb03d0c204b81300a | [source](https://storage.gummble.com/prod/content/app_screens/8f72de48-0a04-424b-b110-6c9227df13eb.png) |
+| year-review-intro.png | sc_47217322c3cb414b8783db58808b8c14 | 8977d6673a166047734e96029edbff214655308f4a2388e6e8abdbe901510d46 | [source](https://storage.gummble.com/prod/content/app_screens/3177234c-7dbf-4d0b-8d1b-ffe15713086c.png) |
+| year-review-lessons.png | sc_1c9cf548ba4143b1a71215cddda6500f | dc3579311bb100b85324e88b198f54dcfa669d1a512fc93dad871b4bbb6fa5b9 | [source](https://storage.gummble.com/prod/content/app_screens/138b2836-7e4a-4330-9754-334c1d5b7d6a.png) |
+| year-review-xp.png | sc_8343646f584e43e2a005c09f96ecfcc7 | 7e99925f0967440995ffa1b713a3aa30edf4a21d3b23911c3084597496675d80 | [source](https://storage.gummble.com/prod/content/app_screens/25ca31e5-9bcc-430d-9a1e-6757e45b4bb2.png) |
+| year-review-league.png | sc_128197cbf369407e85334a3bacb480c9 | 48f7d6b36f43e965957231d3cc92b2d5535261c2439b18d937a640fa422493fc | [source](https://storage.gummble.com/prod/content/app_screens/e93dc85b-77c0-4031-89fc-7e1c7c3f8404.png) |
+| year-review-gate.png | sc_97eda01c4d2f4865874939d203d937a9 | dd9f204a6b7986bc697ace61ab4135f07589c340c5ff8d46fac326b708063515 | [source](https://storage.gummble.com/prod/content/app_screens/95884c30-5c17-49da-8050-f02287d8408f.png) |
+| year-review-student.png | sc_41d083b87dc1495d9016c28db9380714 | e244ab5ce934e3f9d33a64bbfc3a74ea2f19c0e37fdc40e63c89c51c28ee83b9 | [source](https://storage.gummble.com/prod/content/app_screens/103d1580-950d-4d08-828c-6a3f5dad5630.png) |
+| year-review-summary.png | sc_d7a91cc434dc4de89b68b045621ece32 | c6bb583a74482db28704f253f461efdd206c4c1165698a54c496cee8406e1f7b | [source](https://storage.gummble.com/prod/content/app_screens/06ffd6da-bfac-45ec-9d27-0df2e7aa5d36.png) |
+| widget-ready.png | sc_62f2ea4ee11a4a7dac490720619ddd52 | 33c6b152ff1e20cdffcb5bfd5cce5c9af1e8f7704f20a49749ff1674f51ce5ef | [source](https://storage.gummble.com/prod/content/app_screens/f3e6449c-4b62-487f-9996-dcda83b33d26.png) |
+| widget-early.png | sc_34f5bed1fed74391a676815ac4845015 | 918ed4c8679aa6f4dae81786880807ff1891b00257d116164164455129da48ab | [source](https://storage.gummble.com/prod/content/app_screens/eafd781d-9640-4a80-a2de-e54e44e39b13.png) |
+| widget-practice.png | sc_ad6b6bf61f8f47ba89554c805037fcc5 | fe32cf367742876e8c7042cab7860f39eacacad5d284af67e0f4c4fc599062ef | [source](https://storage.gummble.com/prod/content/app_screens/d2179a32-6faa-45a3-9465-762cc7ac2bb8.png) |
+| widget-last-chance.png | sc_3a7f89d1de424653861d828ac8ee3166 | 28ff0b164b52678f7d3fae20acea5237b617f6bb96c94f3a3b70ade0e0feb029 | [source](https://storage.gummble.com/prod/content/app_screens/cd0a1d09-fe82-4a3d-8e09-8e48c571b854.png) |
+| widget-save.png | sc_4dc34672e5184cd8944a853d5f0c0128 | e7224b72b0d13c117a25a9703bdb8e6b358e4d55cb92b26ecfbff86e1441741c | [source](https://storage.gummble.com/prod/content/app_screens/f161f33d-6018-4c65-b8a6-a4c3e531219b.png) |
+| widget-six.png | sc_4ff8cd48ef8f4473b5208256d2b77020 | 8fc0549a98222ec8434e96e8b8a6b82bd0532f7276f54f88b8c16132ba345ccd | [source](https://storage.gummble.com/prod/content/app_screens/0eec81aa-e3d3-43b6-a704-2db0f1845ac3.png) |
+| widget-seven.png | sc_808b0fa527354f1eb806ddbdd20e0c52 | b7d329a220b7363bf042182271dbe156b6b76935bb846489e56e7bb6b47b731a | [source](https://storage.gummble.com/prod/content/app_screens/67e38256-e03e-49ea-a0d5-3f93530945e8.png) |

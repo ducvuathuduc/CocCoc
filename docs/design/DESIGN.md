@@ -48,4 +48,10 @@ Success/error sound≤300ms bundled and respects user toggle/system audio; hapti
 
 ## Visual QA gate
 
+The current English mock frontend extends the core inventory with
+[League history](flows/27_LEAGUE_SOURCE_RECONCILIATION.md) and
+[Year in Review/widget looks](flows/28_YEAR_REVIEW_WIDGETS.md).
+Their source mappings, state fixtures, deliberate adaptations and final receipts
+live in those analyses and [the finish report](qa/SESSION_FINISH_REPORT.md).
+
 For every major screen: reference date/version/OS/course/plan → component decomposition → project token mapping → fixture for all interactive states → screenshot on narrow/wide + text scale2 → diff → intentional deviation recorded. Font rasterization differences require one pinned Linux golden environment; platform-native font/permission/audio QA is separate. No exact pixel similarity score claimed until measured.

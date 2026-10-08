@@ -365,6 +365,36 @@
       ],
       "openLimits": "Nine current inclusive bands, locked state, lifecycle and clipboard verified. Examples/audio/share are local fixtures; older range labels and device/pixel/motion proof remain separate.",
       "status": "verified_mock"
+    },
+    {
+      "id": "year-review",
+      "name": "Historical English Year in Review",
+      "status": "verified_mock",
+      "evidence": [
+        "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+        "docs/design/qa/SESSION_FINISH_REPORT.md",
+        "docs/design/qa/session-finish-gate.log",
+        "docs/design/qa/session-finish-captures.log",
+        "apps/mobile/test/session_finish_routing_test.dart",
+        "apps/mobile/test/session_finish_capture_test.dart",
+        "apps/mobile/test/year_review_test.dart"
+      ],
+      "openLimits": "Source stills and authored transitions; original private timeline and live analytics are separate."
+    },
+    {
+      "id": "streak-widgets",
+      "name": "Seven original Duo widget looks",
+      "status": "verified_mock",
+      "evidence": [
+        "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+        "docs/design/qa/SESSION_FINISH_REPORT.md",
+        "docs/design/qa/session-finish-gate.log",
+        "docs/design/qa/session-finish-captures.log",
+        "apps/mobile/test/session_finish_routing_test.dart",
+        "apps/mobile/test/session_finish_capture_test.dart",
+        "apps/mobile/test/streak_widgets_test.dart"
+      ],
+      "openLimits": "Native in-app gallery/guidance; no OS widget extension or launcher reconstruction."
     }
   ],
   "flows": [
@@ -486,58 +516,118 @@
       "flowId": "3821440d-1a63-42dc-99f2-904cbd9edbbf",
       "flowName": "Widgets",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3821440d-1a63-42dc-99f2-904cbd9edbbf",
-      "status": "pending",
-      "reuseFamilies": [],
-      "differences": [],
+      "status": "verified_mock",
+      "reuseFamilies": [
+        "streak-widgets"
+      ],
+      "differences": [
+        "Seven archived widget looks reproduced as native medium/small cards in an in-app gallery, using original illustration regions and immutable weekday fixtures. Live local count/native English copy replace historical source counters/French. Gallery selection and genericOSguidance do not install an OSextension."
+      ],
       "screens": [
         {
           "position": 1,
           "screenId": "sc_62f2ea4ee11a4a7dac490720619ddd52",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/streak_widgets_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 2,
           "screenId": "sc_34f5bed1fed74391a676815ac4845015",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/streak_widgets_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 3,
           "screenId": "sc_ad6b6bf61f8f47ba89554c805037fcc5",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/streak_widgets_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 4,
           "screenId": "sc_3a7f89d1de424653861d828ac8ee3166",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/streak_widgets_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 5,
           "screenId": "sc_4dc34672e5184cd8944a853d5f0c0128",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/streak_widgets_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 6,
           "screenId": "sc_4ff8cd48ef8f4473b5208256d2b77020",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/streak_widgets_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 7,
           "screenId": "sc_808b0fa527354f1eb806ddbdd20e0c52",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/streak_widgets_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         }
       ]
     },
@@ -545,65 +635,133 @@
       "flowId": "a9b398c8-70c7-42c4-9cbb-d2568cd0d40d",
       "flowName": "Year in review",
       "gummbleUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=a9b398c8-70c7-42c4-9cbb-d2568cd0d40d",
-      "status": "pending",
-      "reuseFamilies": [],
-      "differences": [],
+      "status": "verified_mock",
+      "reuseFamilies": [
+        "year-review"
+      ],
+      "differences": [
+        "Historical English-only2025 fixture. Existing Home is reused; entry is Profile/Settings. Seven native swipe/tap pages replace the archived10page counter. Clipboard share does not send messages or credit rewards. Original still art, source aspect/fullbleed and small edge blending; private animation is not certified."
+      ],
       "screens": [
         {
           "position": 1,
           "screenId": "sc_28609e32a15f4b3a96a5607c40c81d87",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 2,
           "screenId": "sc_47217322c3cb414b8783db58808b8c14",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 3,
           "screenId": "sc_1c9cf548ba4143b1a71215cddda6500f",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 4,
           "screenId": "sc_8343646f584e43e2a005c09f96ecfcc7",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 5,
           "screenId": "sc_128197cbf369407e85334a3bacb480c9",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 6,
           "screenId": "sc_97eda01c4d2f4865874939d203d937a9",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 7,
           "screenId": "sc_41d083b87dc1495d9016c28db9380714",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 8,
           "screenId": "sc_d7a91cc434dc4de89b68b045621ece32",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/year_review_test.dart"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         }
       ]
     },
@@ -2675,7 +2833,8 @@
         "profile-surface"
       ],
       "differences": [
-        "Locked, eligible Welcome and joined rankings use measured original art/native controls. Existing mock one-lesson prerequisite replaces archived8/9lesson gates; Continue joins once without XP/rewards. Immutable English identities/Bronze tier replace archived Silver/history. Profile return retains scroll, reordering preserves mounted avatar State, own status is separate, semantics and narrow/short/text2 layouts tested. Five-tab shell and still podium art are explicit adaptations. Weekly settlement, promotions, gem rewards, Diamond/events and original motion remain open; do not mark the full ordered flow complete."
+        "Locked, eligible Welcome and joined rankings use measured original art/native controls. Existing mock one-lesson prerequisite replaces archived8/9lesson gates; Continue joins once without XP/rewards. Immutable English identities/Bronze tier replace archived Silver/history. Profile return retains scroll, reordering preserves mounted avatar State, own status is separate, semantics and narrow/short/text2 layouts tested. Five-tab shell and still podium art are explicit adaptations. Weekly settlement, promotions, gem rewards, Diamond/events and original motion remain open; do not mark the full ordered flow complete.",
+        "Result/Silver promotion/40gem history acknowledgement is native and verified; replay/Close/systemBack leave learner XP/streak/wallet/membership unchanged. Server settlement and remaining archived event variants are separate."
       ],
       "screens": [
         {
@@ -2720,23 +2879,50 @@
         {
           "position": 4,
           "screenId": "sc_8218b579af9644988b58eabc20dd1501",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/league_result_test.dart",
+            "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 5,
           "screenId": "sc_66df6038334b48a4b752bd9d9e9a0eb4",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/league_result_test.dart",
+            "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 6,
           "screenId": "sc_859527b88dda4524aa4131de8fa2a9aa",
-          "status": "pending",
-          "evidence": [],
-          "motion": "not_reconciled"
+          "status": "verified_mock",
+          "evidence": [
+            "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
+            "docs/design/qa/SESSION_FINISH_REPORT.md",
+            "docs/design/qa/session-finish-gate.log",
+            "docs/design/qa/session-finish-captures.log",
+            "apps/mobile/test/session_finish_routing_test.dart",
+            "apps/mobile/test/session_finish_capture_test.dart",
+            "apps/mobile/test/league_result_test.dart",
+            "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md"
+          ],
+          "motion": "native_state_verified_archived_timing_unverified"
         },
         {
           "position": 7,

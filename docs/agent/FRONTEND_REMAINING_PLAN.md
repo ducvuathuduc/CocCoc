@@ -19,6 +19,18 @@ the active learning course; Math/Music/Chess are outside implementation scope.
 
 ## Tasks
 
+- [x] UI-LEAGUE-036: Root plus isolated League worker own result, promotion and
+  reward-history acknowledgement; immutable fixtures, no learning/wallet writes,
+  fresh-entry lifecycle, responsive native controls and original source artwork.
+- [x] UI-REVIEW-037: Isolated worker owns seven Year in Review pages, English-only
+  historical fixture, swipe/tap/back, reduced motion, clipboard failure and
+  cancellation; root owns route integration, assets, captures and release build.
+- [x] UI-WIDGETS-038: Root owns seven original Duo widget looks, ratio-preserving
+  medium/small cards, immutable selection and generic OS widget guidance. This
+  frontend gallery does not create Android/iOS widget extensions.
+- [x] UI-QA-039: Root owns navigation acceptance, native source-size captures,
+  all-test/analyzer/blueprint gate, asset hashes, web build and completion ledger.
+
 - [x] UI-TRACK-011: Create a persistent coverage ledger for all148 scoped flows
   and912 ordered screen occurrences. Record existing mock families with evidence,
   independently track source variants and motion gaps. Validate IDs/paths and
@@ -221,3 +233,5 @@ persistent coverage ledger; mock verification is not production certification.
 
 Current user request continues implementation. The already published GitHub
 snapshot remains historical; no automatic deployment or Release overwrite.
+
+Session finish evidence — 2026-10-08:394Flutter tests pass; fatal-info analyzer, blueprint, format and web release build pass.17native source-size states were captured.225bundled sourcePNG hashes and18avatar assets/282choices pass audits. New mock slices are closed with [receipts](../design/qa/SESSION_FINISH_REPORT.md); prior completion marks remain intact.

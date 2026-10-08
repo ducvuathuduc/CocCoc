@@ -22,6 +22,9 @@ import 'features/learning/presentation/session_entry.dart';
 import 'features/progress/presentation/hub_screens.dart';
 import 'features/progress/presentation/learning_shell.dart';
 import 'features/progress/presentation/streak_screen.dart';
+import 'features/progress/presentation/streak_widgets_screen.dart';
+import 'features/progress/presentation/year_review_screen.dart';
+import 'features/progress/presentation/league_result_screen.dart';
 import 'features/progress/presentation/family_subscription_screen.dart';
 import 'features/progress/presentation/achievements_screen.dart';
 import 'features/progress/presentation/social_screens.dart';
@@ -344,6 +347,21 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/streak',
           builder: (context, state) => const StreakScreen(),
+        ),
+        GoRoute(
+          path: '/streak/widgets',
+          builder: (context, state) => const StreakWidgetsScreen(),
+        ),
+        GoRoute(
+          path: '/year-review',
+          builder: (context, state) => const YearReviewScreen(),
+        ),
+        GoRoute(
+          path: '/league/results',
+          builder: (context, state) => LeagueResultScreen(
+            onFinished: () =>
+                context.canPop() ? context.pop() : context.go('/league'),
+          ),
         ),
         GoRoute(
           path: '/streak/invite',

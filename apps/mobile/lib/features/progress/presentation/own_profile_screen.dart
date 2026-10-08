@@ -152,6 +152,12 @@ class OwnProfileScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 30),
                     const OwnProfileSections(),
+                    const SizedBox(height: 16),
+                    ReferenceButton(
+                      label: '2025 YEAR IN REVIEW',
+                      outlined: true,
+                      onPressed: () => context.push('/year-review'),
+                    ),
                     if (!preview.registered) ...[
                       const SizedBox(height: 20),
                       ReferenceButton(

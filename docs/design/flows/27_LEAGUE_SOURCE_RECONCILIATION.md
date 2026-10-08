@@ -1,5 +1,20 @@
 # League ranking — 2026-10-08
 
+Continuation UI-LEAGUE-036 adds the source historical result, Silver promotion
+and 40-gem acknowledgement. The fixture is immutable; acknowledgement does not
+promote current membership, credit gems or rewrite learner XP. Result → promotion
+→ reward → return is bounded/idempotent; closing, system Back and reopening are
+tested through the real router. Missing results and no-promotion/no-reward,
+demotion and Diamond fixtures are handled separately. Auto-disposed view state
+starts at the result when history is reopened.
+
+Original source artwork remains byte-identical. The source-sized result frame
+uses a 370-logical minimum on roomy phones, Silver art preserves 1179:1010,
+Close overlays the safe area and Continue stays pinned while text2 content
+scrolls. Three native state captures and the final behavior/analyzer gate are
+recorded in [the finish report](../qa/SESSION_FINISH_REPORT.md). These historical
+UI variants do not implement server settlement or the private trophy timeline.
+
 Assigned slices: UI-LEAGUE-034 and UI-LEAGUE-035 in
 [continuation plan](../../agent/FRONTEND_REMAINING_PLAN.md). Canonical design and
 state contracts remain [DESIGN](../DESIGN.md) and

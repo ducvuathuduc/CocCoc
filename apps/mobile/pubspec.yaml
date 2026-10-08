@@ -35,6 +35,23 @@ flutter:
     - assets/reference_art/profile-foreign-source.png
     - assets/reference_art/league-ranking-source.png
     - assets/reference_art/league-welcome-source.png
+    - assets/reference_art/league-result-source.png
+    - assets/reference_art/league-promotion-source.png
+    - assets/reference_art/league-reward-source.png
+    - assets/reference_art/year-review-intro.png
+    - assets/reference_art/year-review-lessons.png
+    - assets/reference_art/year-review-xp.png
+    - assets/reference_art/year-review-league.png
+    - assets/reference_art/year-review-gate.png
+    - assets/reference_art/year-review-student.png
+    - assets/reference_art/year-review-summary.png
+    - assets/reference_art/widget-ready.png
+    - assets/reference_art/widget-early.png
+    - assets/reference_art/widget-practice.png
+    - assets/reference_art/widget-last-chance.png
+    - assets/reference_art/widget-save.png
+    - assets/reference_art/widget-six.png
+    - assets/reference_art/widget-seven.png
     - assets/motion/
     - assets/avatar/
   fonts:

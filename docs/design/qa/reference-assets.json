@@ -93,7 +93,7 @@
     }
   ],
   "sourceScreens": 951,
-  "bundledPngs": 208,
+  "bundledPngs": 225,
   "assets": [
     {
       "file": "achievement-awards-bottom.png",
@@ -589,10 +589,31 @@
       ]
     },
     {
+      "file": "league-promotion-source.png",
+      "sha256": "500f7b113ad93a0f8f0ca006a5e0f2d21343367b852d0038d2a4cf21745a9214",
+      "references": [
+        "catalog-cache/sc_66df6038334b48a4b752bd9d9e9a0eb4.png"
+      ]
+    },
+    {
       "file": "league-ranking-source.png",
       "sha256": "bde11536c47851613b08c6a317b31027071293c34539cc9be9926541ede961c4",
       "references": [
         "catalog-cache/sc_720ee9469bde455f992879eb3973facf.png"
+      ]
+    },
+    {
+      "file": "league-result-source.png",
+      "sha256": "dec962ed3a3da97b82099c509b09050cc8b61f283b503711accc4869962ca711",
+      "references": [
+        "catalog-cache/sc_8218b579af9644988b58eabc20dd1501.png"
+      ]
+    },
+    {
+      "file": "league-reward-source.png",
+      "sha256": "b34ddb9c09bcecb99bc8a3688af766e1562a67d4395b677bb03d0c204b81300a",
+      "references": [
+        "catalog-cache/sc_859527b88dda4524aa4131de8fa2a9aa.png"
       ]
     },
     {
@@ -1732,10 +1753,108 @@
       ]
     },
     {
+      "file": "widget-early.png",
+      "sha256": "918ed4c8679aa6f4dae81786880807ff1891b00257d116164164455129da48ab",
+      "references": [
+        "catalog-cache/sc_34f5bed1fed74391a676815ac4845015.png"
+      ]
+    },
+    {
+      "file": "widget-last-chance.png",
+      "sha256": "28ff0b164b52678f7d3fae20acea5237b617f6bb96c94f3a3b70ade0e0feb029",
+      "references": [
+        "catalog-cache/sc_3a7f89d1de424653861d828ac8ee3166.png"
+      ]
+    },
+    {
+      "file": "widget-practice.png",
+      "sha256": "fe32cf367742876e8c7042cab7860f39eacacad5d284af67e0f4c4fc599062ef",
+      "references": [
+        "catalog-cache/sc_ad6b6bf61f8f47ba89554c805037fcc5.png"
+      ]
+    },
+    {
+      "file": "widget-ready.png",
+      "sha256": "33c6b152ff1e20cdffcb5bfd5cce5c9af1e8f7704f20a49749ff1674f51ce5ef",
+      "references": [
+        "catalog-cache/sc_62f2ea4ee11a4a7dac490720619ddd52.png"
+      ]
+    },
+    {
+      "file": "widget-save.png",
+      "sha256": "e7224b72b0d13c117a25a9703bdb8e6b358e4d55cb92b26ecfbff86e1441741c",
+      "references": [
+        "catalog-cache/sc_4dc34672e5184cd8944a853d5f0c0128.png"
+      ]
+    },
+    {
+      "file": "widget-seven.png",
+      "sha256": "b7d329a220b7363bf042182271dbe156b6b76935bb846489e56e7bb6b47b731a",
+      "references": [
+        "catalog-cache/sc_808b0fa527354f1eb806ddbdd20e0c52.png"
+      ]
+    },
+    {
+      "file": "widget-six.png",
+      "sha256": "8fc0549a98222ec8434e96e8b8a6b82bd0532f7276f54f88b8c16132ba345ccd",
+      "references": [
+        "catalog-cache/sc_4ff8cd48ef8f4473b5208256d2b77020.png"
+      ]
+    },
+    {
       "file": "words-02.png",
       "sha256": "913e2c2542b2103884891cc77ba26a3c687f27c8607926df905a77e96e203db9",
       "references": [
         "catalog-cache/sc_eacc4756d32f4b959d66cd9d79859f16.png"
+      ]
+    },
+    {
+      "file": "year-review-gate.png",
+      "sha256": "dd9f204a6b7986bc697ace61ab4135f07589c340c5ff8d46fac326b708063515",
+      "references": [
+        "catalog-cache/sc_97eda01c4d2f4865874939d203d937a9.png"
+      ]
+    },
+    {
+      "file": "year-review-intro.png",
+      "sha256": "8977d6673a166047734e96029edbff214655308f4a2388e6e8abdbe901510d46",
+      "references": [
+        "catalog-cache/sc_47217322c3cb414b8783db58808b8c14.png"
+      ]
+    },
+    {
+      "file": "year-review-league.png",
+      "sha256": "48f7d6b36f43e965957231d3cc92b2d5535261c2439b18d937a640fa422493fc",
+      "references": [
+        "catalog-cache/sc_128197cbf369407e85334a3bacb480c9.png"
+      ]
+    },
+    {
+      "file": "year-review-lessons.png",
+      "sha256": "dc3579311bb100b85324e88b198f54dcfa669d1a512fc93dad871b4bbb6fa5b9",
+      "references": [
+        "catalog-cache/sc_1c9cf548ba4143b1a71215cddda6500f.png"
+      ]
+    },
+    {
+      "file": "year-review-student.png",
+      "sha256": "e244ab5ce934e3f9d33a64bbfc3a74ea2f19c0e37fdc40e63c89c51c28ee83b9",
+      "references": [
+        "catalog-cache/sc_41d083b87dc1495d9016c28db9380714.png"
+      ]
+    },
+    {
+      "file": "year-review-summary.png",
+      "sha256": "c6bb583a74482db28704f253f461efdd206c4c1165698a54c496cee8406e1f7b",
+      "references": [
+        "catalog-cache/sc_d7a91cc434dc4de89b68b045621ece32.png"
+      ]
+    },
+    {
+      "file": "year-review-xp.png",
+      "sha256": "7e99925f0967440995ffa1b713a3aa30edf4a21d3b23911c3084597496675d80",
+      "references": [
+        "catalog-cache/sc_8343646f584e43e2a005c09f96ecfcc7.png"
       ]
     }
   ],

@@ -1,0 +1,242 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart
+test/league_result_test.dart:5:8: Error: Error when reading 'lib/features/progress/application/league_result_controller.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/application/league_result_controller.dart';
+       ^
+test/league_result_test.dart:6:8: Error: Error when reading 'lib/features/progress/domain/league_result.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/domain/league_result.dart';
+       ^
+test/league_result_test.dart:7:8: Error: Error when reading 'lib/features/progress/presentation/league_result_screen.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/presentation/league_result_screen.dart';
+       ^
+test/league_result_test.dart:17:36: Error: Undefined name 'leagueResultFixtureProvider'.
+    final fixture = container.read(leagueResultFixtureProvider);
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:22:27: Error: Undefined name 'leagueResultControllerProvider'.
+    expect(container.read(leagueResultControllerProvider).stage,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:23:9: Error: Undefined name 'LeagueResultStage'.
+        LeagueResultStage.result);
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:26:24: Error: Undefined name 'leagueResultControllerProvider'.
+        container.read(leagueResultControllerProvider.notifier);
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:28:27: Error: Undefined name 'leagueResultControllerProvider'.
+    expect(container.read(leagueResultControllerProvider).stage,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:29:9: Error: Undefined name 'LeagueResultStage'.
+        LeagueResultStage.promotion);
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:31:27: Error: Undefined name 'leagueResultControllerProvider'.
+    expect(container.read(leagueResultControllerProvider).stage,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:32:9: Error: Undefined name 'LeagueResultStage'.
+        LeagueResultStage.reward);
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:34:27: Error: Undefined name 'leagueResultControllerProvider'.
+    expect(container.read(leagueResultControllerProvider).stage,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:35:9: Error: Undefined name 'LeagueResultStage'.
+        LeagueResultStage.complete);
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:37:27: Error: Undefined name 'leagueResultControllerProvider'.
+    expect(container.read(leagueResultControllerProvider).stage,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:38:9: Error: Undefined name 'LeagueResultStage'.
+        LeagueResultStage.complete);
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:43:21: Error: Undefined name 'LeagueTier'.
+      previousTier: LeagueTier.silver,
+                    ^^^^^^^^^^
+test/league_result_test.dart:44:20: Error: Undefined name 'LeagueTier'.
+      currentTier: LeagueTier.silver,
+                   ^^^^^^^^^^
+test/league_result_test.dart:45:23: Error: 'LeagueResultEntry' isn't a type.
+      entries: const <LeagueResultEntry>[
+                      ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:46:9: Error: Method not found: 'LeagueResultEntry'.
+        LeagueResultEntry(name: 'Sam', xp: 622, rank: 4, isLearner: true),
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:42:21: Error: Method not found: 'LeagueResultFixture'.
+    final fixture = LeagueResultFixture(
+                    ^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:50:19: Error: Undefined name 'leagueResultFixtureProvider'.
+      overrides: [leagueResultFixtureProvider.overrideWithValue(fixture)],
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:55:24: Error: Undefined name 'leagueResultControllerProvider'.
+        container.read(leagueResultControllerProvider.notifier);
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:57:27: Error: Undefined name 'leagueResultControllerProvider'.
+    expect(container.read(leagueResultControllerProvider).stage,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:58:9: Error: Undefined name 'LeagueResultStage'.
+        LeagueResultStage.complete);
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:69:17: Error: Method not found: 'LeagueResultScreen'.
+          home: LeagueResultScreen(onFinished: () => finishes++),
+                ^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:76:34: Error: Undefined name 'LeagueResultScreen'.
+      tester.element(find.byType(LeagueResultScreen)),
+                                 ^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:124:20: Error: Undefined name 'leagueResultControllerProvider'.
+    container.read(leagueResultControllerProvider.notifier).advance();
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:136:21: Error: Undefined name 'LeagueTier'.
+      previousTier: LeagueTier.obsidian,
+                    ^^^^^^^^^^
+test/league_result_test.dart:137:20: Error: Undefined name 'LeagueTier'.
+      currentTier: LeagueTier.diamond,
+                   ^^^^^^^^^^
+test/league_result_test.dart:139:23: Error: 'LeagueResultEntry' isn't a type.
+      entries: const <LeagueResultEntry>[
+                      ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:140:9: Error: Method not found: 'LeagueResultEntry'.
+        LeagueResultEntry(name: 'Sam', xp: 1420, rank: 2, isLearner: true),
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:135:21: Error: Method not found: 'LeagueResultFixture'.
+    final fixture = LeagueResultFixture(
+                    ^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:145:21: Error: Undefined name 'leagueResultFixtureProvider'.
+        overrides: [leagueResultFixtureProvider.overrideWithValue(fixture)],
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:147:17: Error: Method not found: 'LeagueResultScreen'.
+          home: LeagueResultScreen(onFinished: () => finishes++),
+                ^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:176:17: Error: Method not found: 'LeagueResultScreen'.
+          home: LeagueResultScreen(onFinished: () => closes++),
+                ^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:183:34: Error: Undefined name 'LeagueResultScreen'.
+      tester.element(find.byType(LeagueResultScreen)),
+                                 ^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:190:27: Error: Undefined name 'leagueResultControllerProvider'.
+    expect(container.read(leagueResultControllerProvider).stage,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:191:9: Error: Undefined name 'LeagueResultStage'.
+        LeagueResultStage.result);
+        ^^^^^^^^^^^^^^^^^
+test/league_result_test.dart:214:17: Error: Method not found: 'LeagueResultScreen'.
+          home: LeagueResultScreen(onFinished: () {}),
+                ^^^^^^^^^^^^^^^^^^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: test/league_result_test.dart:5:8: Error: Error when reading 'lib/features/progress/application/league_result_controller.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/application/league_result_controller.dart';
+         ^
+  test/league_result_test.dart:6:8: Error: Error when reading 'lib/features/progress/domain/league_result.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/domain/league_result.dart';
+         ^
+  test/league_result_test.dart:7:8: Error: Error when reading 'lib/features/progress/presentation/league_result_screen.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/presentation/league_result_screen.dart';
+         ^
+  test/league_result_test.dart:17:36: Error: Undefined name 'leagueResultFixtureProvider'.
+      final fixture = container.read(leagueResultFixtureProvider);
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:22:27: Error: Undefined name 'leagueResultControllerProvider'.
+      expect(container.read(leagueResultControllerProvider).stage,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:23:9: Error: Undefined name 'LeagueResultStage'.
+          LeagueResultStage.result);
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:26:24: Error: Undefined name 'leagueResultControllerProvider'.
+          container.read(leagueResultControllerProvider.notifier);
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:28:27: Error: Undefined name 'leagueResultControllerProvider'.
+      expect(container.read(leagueResultControllerProvider).stage,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:29:9: Error: Undefined name 'LeagueResultStage'.
+          LeagueResultStage.promotion);
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:31:27: Error: Undefined name 'leagueResultControllerProvider'.
+      expect(container.read(leagueResultControllerProvider).stage,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:32:9: Error: Undefined name 'LeagueResultStage'.
+          LeagueResultStage.reward);
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:34:27: Error: Undefined name 'leagueResultControllerProvider'.
+      expect(container.read(leagueResultControllerProvider).stage,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:35:9: Error: Undefined name 'LeagueResultStage'.
+          LeagueResultStage.complete);
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:37:27: Error: Undefined name 'leagueResultControllerProvider'.
+      expect(container.read(leagueResultControllerProvider).stage,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:38:9: Error: Undefined name 'LeagueResultStage'.
+          LeagueResultStage.complete);
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:43:21: Error: Undefined name 'LeagueTier'.
+        previousTier: LeagueTier.silver,
+                      ^^^^^^^^^^
+  test/league_result_test.dart:44:20: Error: Undefined name 'LeagueTier'.
+        currentTier: LeagueTier.silver,
+                     ^^^^^^^^^^
+  test/league_result_test.dart:45:23: Error: 'LeagueResultEntry' isn't a type.
+        entries: const <LeagueResultEntry>[
+                        ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:46:9: Error: Method not found: 'LeagueResultEntry'.
+          LeagueResultEntry(name: 'Sam', xp: 622, rank: 4, isLearner: true),
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:42:21: Error: Method not found: 'LeagueResultFixture'.
+      final fixture = LeagueResultFixture(
+                      ^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:50:19: Error: Undefined name 'leagueResultFixtureProvider'.
+        overrides: [leagueResultFixtureProvider.overrideWithValue(fixture)],
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:55:24: Error: Undefined name 'leagueResultControllerProvider'.
+          container.read(leagueResultControllerProvider.notifier);
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:57:27: Error: Undefined name 'leagueResultControllerProvider'.
+      expect(container.read(leagueResultControllerProvider).stage,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:58:9: Error: Undefined name 'LeagueResultStage'.
+          LeagueResultStage.complete);
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:69:17: Error: Method not found: 'LeagueResultScreen'.
+            home: LeagueResultScreen(onFinished: () => finishes++),
+                  ^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:76:34: Error: Undefined name 'LeagueResultScreen'.
+        tester.element(find.byType(LeagueResultScreen)),
+                                   ^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:124:20: Error: Undefined name 'leagueResultControllerProvider'.
+      container.read(leagueResultControllerProvider.notifier).advance();
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:136:21: Error: Undefined name 'LeagueTier'.
+        previousTier: LeagueTier.obsidian,
+                      ^^^^^^^^^^
+  test/league_result_test.dart:137:20: Error: Undefined name 'LeagueTier'.
+        currentTier: LeagueTier.diamond,
+                     ^^^^^^^^^^
+  test/league_result_test.dart:139:23: Error: 'LeagueResultEntry' isn't a type.
+        entries: const <LeagueResultEntry>[
+                        ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:140:9: Error: Method not found: 'LeagueResultEntry'.
+          LeagueResultEntry(name: 'Sam', xp: 1420, rank: 2, isLearner: true),
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:135:21: Error: Method not found: 'LeagueResultFixture'.
+      final fixture = LeagueResultFixture(
+                      ^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:145:21: Error: Undefined name 'leagueResultFixtureProvider'.
+          overrides: [leagueResultFixtureProvider.overrideWithValue(fixture)],
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:147:17: Error: Method not found: 'LeagueResultScreen'.
+            home: LeagueResultScreen(onFinished: () => finishes++),
+                  ^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:176:17: Error: Method not found: 'LeagueResultScreen'.
+            home: LeagueResultScreen(onFinished: () => closes++),
+                  ^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:183:34: Error: Undefined name 'LeagueResultScreen'.
+        tester.element(find.byType(LeagueResultScreen)),
+                                   ^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:190:27: Error: Undefined name 'leagueResultControllerProvider'.
+      expect(container.read(leagueResultControllerProvider).stage,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:191:9: Error: Undefined name 'LeagueResultStage'.
+          LeagueResultStage.result);
+          ^^^^^^^^^^^^^^^^^
+  test/league_result_test.dart:214:17: Error: Method not found: 'LeagueResultScreen'.
+            home: LeagueResultScreen(onFinished: () {}),
+                  ^^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart

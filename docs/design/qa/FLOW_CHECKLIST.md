@@ -38,6 +38,8 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ✅ | Native own Profile and lower sections | [analysis](../flows/25_PROFILE_SOURCE_RECONCILIATION.md) | Local English identity/progress/months adapted; original avatar and illustration regions integrated. Older Profile hierarchy, six-tab source shells and exact motion remain separate. |
 | ✅ | Profile Courses and Following/Followers lists | [analysis](../flows/25_PROFILE_SOURCE_RECONCILIATION.md) | Courses/Following/empty and populated Followers, guarded Follow back and return verified locally. Non-language subjects excluded; names/English counts adapted. Original individual portraits, archived pixel/motion timing and real social service writes remain separate. |
 | ✅ | English Score information and course popover | [analysis](../flows/26_ENGLISH_SCORE_INFORMATION.md) | Nine current inclusive bands, locked state, lifecycle and clipboard verified. Examples/audio/share are local fixtures; older range labels and device/pixel/motion proof remain separate. |
+| ✅ | Historical English Year in Review | [analysis](../flows/28_YEAR_REVIEW_WIDGETS.md) | Source stills and authored transitions; original private timeline and live analytics are separate. |
+| ✅ | Seven original Duo widget looks | [analysis](../flows/28_YEAR_REVIEW_WIDGETS.md) | Native in-app gallery/guidance; no OS widget extension or launcher reconstruction. |
 
 ## Ordered source flows
 
@@ -46,8 +48,8 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | ⬜ | [Energy](https://gummble.com/apps/duolingo-ios?tab=flows&flow=15d44bfd-9a78-4987-88e2-6c6fd020144c) · 15d44bfd-9a78-4987-88e2-6c6fd020144c | 0/3 | extended |
 | ⬜ | [Choosing a section](https://gummble.com/apps/duolingo-ios?tab=flows&flow=31460692-382a-4403-884b-847cc7dd715c) · 31460692-382a-4403-884b-847cc7dd715c | 0/2 | extended |
 | ✅ | [Score information](https://gummble.com/apps/duolingo-ios?tab=flows&flow=d70eeb1a-cca9-47f3-b55d-1817937a4c6f) · d70eeb1a-cca9-47f3-b55d-1817937a4c6f | 3/3 | extended, score-information, path |
-| ⬜ | [Widgets](https://gummble.com/apps/duolingo-ios?tab=flows&flow=3821440d-1a63-42dc-99f2-904cbd9edbbf) · 3821440d-1a63-42dc-99f2-904cbd9edbbf | 0/7 | New slice |
-| ⬜ | [Year in review](https://gummble.com/apps/duolingo-ios?tab=flows&flow=a9b398c8-70c7-42c4-9cbb-d2568cd0d40d) · a9b398c8-70c7-42c4-9cbb-d2568cd0d40d | 0/8 | New slice |
+| ✅ | [Widgets](https://gummble.com/apps/duolingo-ios?tab=flows&flow=3821440d-1a63-42dc-99f2-904cbd9edbbf) · 3821440d-1a63-42dc-99f2-904cbd9edbbf | 7/7 | streak-widgets |
+| ✅ | [Year in review](https://gummble.com/apps/duolingo-ios?tab=flows&flow=a9b398c8-70c7-42c4-9cbb-d2568cd0d40d) · a9b398c8-70c7-42c4-9cbb-d2568cd0d40d | 8/8 | year-review |
 | ⬜ | [Subscribing to Super Duolingo](https://gummble.com/apps/duolingo-ios?tab=flows&flow=26160ad7-fdd5-45e9-a82a-1062682414a9) · 26160ad7-fdd5-45e9-a82a-1062682414a9 | 0/14 | extended |
 | ✅ | [Removing a course](https://gummble.com/apps/duolingo-ios?tab=flows&flow=02681cdc-5d55-4755-a529-9e6c7ecaf5c9) · 02681cdc-5d55-4755-a529-9e6c7ecaf5c9 | 5/5 | path, course-management |
 | ⬜ | [Completing a lesson](https://gummble.com/apps/duolingo-ios?tab=flows&flow=068dbdc0-5d4a-4de2-a477-b0e5c8cdc3e8) · 068dbdc0-5d4a-4de2-a477-b0e5c8cdc3e8 | 0/22 | lessons |
@@ -77,7 +79,7 @@ Edit FLOW_COVERAGE.json after checking evidence, then run `node tools/scripts/fl
 | 🔎 | [Profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=8836419b-926a-4a6e-b264-daff94628c88) · 8836419b-926a-4a6e-b264-daff94628c88 | 0/6 | hubs, profile-surface |
 | ⬜ | [Customizing reminders](https://gummble.com/apps/duolingo-ios?tab=flows&flow=895e5cfc-9b69-4563-bd92-a2d666d52c37) · 895e5cfc-9b69-4563-bd92-a2d666d52c37 | 0/7 | hubs |
 | 🔄 | [Creating an avatar](https://gummble.com/apps/duolingo-ios?tab=flows&flow=8fa53138-ae46-4d6c-a7d3-75c0493dec5c) · 8fa53138-ae46-4d6c-a7d3-75c0493dec5c | 0/12 | avatar, profile-editor, hubs, profile-surface |
-| 🔄 | [Leaderboard](https://gummble.com/apps/duolingo-ios?tab=flows&flow=95cfcf38-001a-4432-b49e-b4282f9703a4) · 95cfcf38-001a-4432-b49e-b4282f9703a4 | 4/11 | hubs, profile-surface |
+| 🔄 | [Leaderboard](https://gummble.com/apps/duolingo-ios?tab=flows&flow=95cfcf38-001a-4432-b49e-b4282f9703a4) · 95cfcf38-001a-4432-b49e-b4282f9703a4 | 7/11 | hubs, profile-surface |
 | ⬜ | [Editing profile](https://gummble.com/apps/duolingo-ios?tab=flows&flow=9b66a0be-845f-427e-9e3f-9e7f491e2067) · 9b66a0be-845f-427e-9e3f-9e7f491e2067 | 0/7 | hubs |
 | ⬜ | [Duolingo for schools](https://gummble.com/apps/duolingo-ios?tab=flows&flow=a20f851f-87cc-4fd6-940e-74617680e61d) · a20f851f-87cc-4fd6-940e-74617680e61d | 0/4 | New slice |
 | ⬜ | [Logging in](https://gummble.com/apps/duolingo-ios?tab=flows&flow=ad65004b-d8d7-4b8a-b3fb-3a548882b2f9) · ad65004b-d8d7-4b8a-b3fb-3a548882b2f9 | 0/6 | New slice |
