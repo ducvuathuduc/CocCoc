@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,6 +7,7 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/character_motion.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../../core/design/lesson_motion.dart';
 import '../application/learning_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../domain/learning_models.dart';
@@ -111,6 +113,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     final state = ref.watch(lessonControllerProvider);
     final controller = ref.read(lessonControllerProvider.notifier);
     ref.listen(lessonControllerProvider, (previous, next) {
+      if (next.stage == LessonStage.feedback &&
+          previous?.stage == LessonStage.checking) {
+        if (next.correct == true) {
+          HapticFeedback.lightImpact();
+        } else {
+          HapticFeedback.mediumImpact();
+        }
+      }
       if (next.stage == LessonStage.completed &&
           previous?.stage != LessonStage.completed) {
         context.replace('/results/${next.receipt!.id}');
@@ -136,164 +146,187 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
-          child: Column(
+          bottom: false,
+          child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 7, 15, 4),
-                child: Row(
-                  children: [
-                    IconButton(
-                      tooltip: 'Exit lesson',
-                      onPressed: state.busy ? null : _exit,
-                      icon: const Icon(
-                        Icons.close_rounded,
-                        size: 32,
-                        color: ReferenceColors.disabled,
-                      ),
-                    ),
-                    Expanded(
-                      child: TweenAnimationBuilder<double>(
-                        tween: Tween(
-                          begin: 0,
-                          end: state.isRetry ? 1 : state.progress + .02,
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 7, 15, 4),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          tooltip: 'Exit lesson',
+                          onPressed: state.busy ? null : _exit,
+                          icon: const Icon(
+                            Icons.close_rounded,
+                            size: 32,
+                            color: ReferenceColors.disabled,
+                          ),
                         ),
-                        duration: motionDuration(context, 300),
-                        builder: (context, value, _) => LinearProgressIndicator(
-                          value: value.clamp(0, 1),
-                          minHeight: 16,
-                          borderRadius: BorderRadius.circular(16),
-                          backgroundColor: ReferenceColors.border,
-                          color: state.correctStreak >= 5
-                              ? LearningColors.orange
-                              : LearningColors.green,
+                        Expanded(
+                          child: LessonProgressBar(
+                            value: state.isRetry ? 1 : state.progress + .02,
+                            color: state.correctStreak >= 5
+                                ? LearningColors.orange
+                                : LearningColors.green,
+                            shineColor: state.correctStreak >= 5
+                                ? LessonMotionTokens.orangeShine
+                                : LessonMotionTokens.greenShine,
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    const ReferenceArt(
-                      LearningArt.heart,
-                      width: 26,
-                      height: 24,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${(5 - (state.attempted - state.originalCorrect)).clamp(0, 5)}',
-                      style: const TextStyle(
-                        color: LearningColors.red,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (exercise == null)
-                Expanded(
-                  child: Center(
-                    child: state.busy
-                        ? const CircularProgressIndicator()
-                        : Column(
+                        const SizedBox(width: 16),
+                        LessonHeartCounter(
+                          hearts:
+                              (5 - (state.attempted - state.originalCorrect))
+                                  .clamp(0, 5),
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(state.error ?? 'Choose a lesson to start.'),
-                              TextButton(
-                                onPressed: () => controller.start(),
-                                child: const Text('TRY AGAIN'),
+                              const ReferenceArt(
+                                LearningArt.heart,
+                                width: 26,
+                                height: 24,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '${(5 - (state.attempted - state.originalCorrect)).clamp(0, 5)}',
+                                style: const TextStyle(
+                                  color: LearningColors.red,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ],
                           ),
-                  ),
-                )
-              else
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) => SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: constraints.maxHeight - 26,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (state.correctStreak >= 5)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: Text(
-                                  '${state.correctStreak} IN A ROW',
-                                  style: const TextStyle(
-                                    color: LearningColors.orange,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                      ],
+                    ),
+                  ),
+                  if (exercise == null)
+                    Expanded(
+                      child: Center(
+                        child: state.busy
+                            ? const CircularProgressIndicator()
+                            : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    state.error ?? 'Choose a lesson to start.',
                                   ),
-                                ),
-                              ),
-                            if (state.isRetry)
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 12),
-                                child: Text(
-                                  'LET’S CORRECT YOUR MISTAKES',
-                                  style: TextStyle(
-                                    color: LearningColors.orange,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                  TextButton(
+                                    onPressed: () => controller.start(),
+                                    child: const Text('TRY AGAIN'),
                                   ),
-                                ),
+                                ],
                               ),
-                            if (exercise.kind == ExerciseKind.imageChoice)
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 15),
-                                child: Row(
+                      ),
+                    )
+                  else
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) =>
+                            SingleChildScrollView(
+                              padding: const EdgeInsets.fromLTRB(
+                                16,
+                                10,
+                                16,
+                                16,
+                              ),
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: constraints.maxHeight - 26,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Icon(
-                                      Icons.auto_awesome_rounded,
-                                      color: LearningColors.purple,
-                                      size: 23,
-                                    ),
-                                    SizedBox(width: 10),
+                                    if (state.correctStreak >= 5)
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 12,
+                                        ),
+                                        child: Text(
+                                          '${state.correctStreak} IN A ROW',
+                                          style: const TextStyle(
+                                            color: LearningColors.orange,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    if (state.isRetry)
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 12),
+                                        child: Text(
+                                          'LET’S CORRECT YOUR MISTAKES',
+                                          style: TextStyle(
+                                            color: LearningColors.orange,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    if (exercise.kind ==
+                                        ExerciseKind.imageChoice)
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 15),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.auto_awesome_rounded,
+                                              color: LearningColors.purple,
+                                              size: 23,
+                                            ),
+                                            SizedBox(width: 10),
+                                            Text(
+                                              'NEW WORD',
+                                              style: TextStyle(
+                                                color: LearningColors.purple,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     Text(
-                                      'NEW WORD',
-                                      style: TextStyle(
-                                        color: LearningColors.purple,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
+                                      exercise.title,
+                                      style: headingStyle.copyWith(
+                                        fontSize: 23,
                                       ),
                                     ),
+                                    const SizedBox(height: 19),
+                                    _renderer(
+                                      exercise,
+                                      state,
+                                      controller,
+                                      constraints.maxHeight,
+                                    ),
+                                    if (state.error != null)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: Text(
+                                          state.error!,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: LearningColors.red,
+                                          ),
+                                        ),
+                                      ),
                                   ],
                                 ),
                               ),
-                            Text(
-                              exercise.title,
-                              style: headingStyle.copyWith(fontSize: 23),
                             ),
-                            const SizedBox(height: 19),
-                            _renderer(
-                              exercise,
-                              state,
-                              controller,
-                              constraints.maxHeight,
-                            ),
-                            if (state.error != null)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: Text(
-                                  state.error!,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: LearningColors.red,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
                       ),
                     ),
-                  ),
-                ),
-              _LessonFooterTransition(
-                child: feedback
-                    ? _feedback(exercise!, state, controller)
-                    : Padding(
+                  Visibility(
+                    visible: !feedback,
+                    maintainSize: true,
+                    maintainState: true,
+                    maintainAnimation: true,
+                    child: SafeArea(
+                      top: false,
+                      child: Padding(
                         padding: const EdgeInsets.fromLTRB(16, 5, 16, 15),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -381,7 +414,20 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                ],
               ),
+              if (feedback)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: LessonFeedbackEntrance(
+                    key: ValueKey('${exercise!.id}:${state.retryPass}'),
+                    child: _feedback(exercise, state, controller),
+                  ),
+                ),
             ],
           ),
         ),
@@ -766,7 +812,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     return Container(
       width: double.infinity,
       color: correct ? LearningColors.correct : LearningColors.incorrect,
-      padding: const EdgeInsets.fromLTRB(16, 13, 16, 16),
+      padding: EdgeInsets.fromLTRB(
+        16,
+        13,
+        16,
+        16 + MediaQuery.paddingOf(context).bottom,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -824,12 +875,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             ),
             const SizedBox(height: 14),
           ],
-          ReferenceButton(
-            label: 'EXPLAIN MY ANSWER',
-            outlined: true,
-            foregroundColor: const Color(0xFF20AFAF),
-            onPressed: () => context.push('/explanation'),
-          ),
+          if (!correct)
+            ReferenceButton(
+              label: 'EXPLAIN MY ANSWER',
+              outlined: true,
+              foregroundColor: const Color(0xFF20AFAF),
+              onPressed: () => context.push('/explanation'),
+            ),
           const SizedBox(height: 12),
           if (state.error != null)
             Text(state.error!, style: TextStyle(color: color, fontSize: 16)),
@@ -875,20 +927,5 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         'Thanks for helping us improve this exercise.',
       );
     }
-  }
-}
-
-class _LessonFooterTransition extends StatelessWidget {
-  const _LessonFooterTransition({required this.child});
-  final Widget child;
-  @override
-  Widget build(BuildContext context) {
-    final duration = motionDuration(context, 220);
-    if (duration == Duration.zero) return child;
-    return AnimatedSize(
-      duration: duration,
-      alignment: Alignment.bottomCenter,
-      child: child,
-    );
   }
 }

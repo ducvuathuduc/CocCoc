@@ -1,0 +1,125 @@
+# UI fidelity work log
+
+## 2026-10-09 — core lesson feedback/header claim
+
+Owner: root. Assigned area: UI-FIDELITY-001 / UI-EXTENDED-QA-010,
+`apps/mobile/lib/core/design/lesson_motion.dart`, existing lesson presentation,
+targeted tests and `test/goldens/ui_master/`. Mock data only. Owner's
+2026-10-10 decision accepts B01–B07 for this UI work; three-service architecture
+remains final. No backend, contracts, Appwrite or dependency changes.
+
+Read the required plans, skills and ordered index before implementation. Live
+Gummble pattern search returned no lesson-feedback family; exact Duolingo flow
+search succeeded. Fetched all 33 Starting a lesson steps and all 22 Completing
+a lesson steps (55 ordered metadata entries, not 55 visually inspected screens).
+Deep-inspected these archived iOS references before changes:
+
+- [Selected image / highlight](https://gummble.com/screens/sc_b7f6add9477e4c57ba0ed0bc101a37d9),
+  Completing a lesson step 5.
+- [Correct feedback](https://gummble.com/screens/sc_925a41252ecb4262a3c24780ef20f885),
+  step 6: green overlay covers lower choices without resizing the exercise.
+- [Incorrect feedback](https://gummble.com/screens/sc_3b88d8f19d7e4f3597bdce7d3ea169b7),
+  step 9: red correction, explanation and Got it; heart count is four.
+- [Streak progress](https://gummble.com/screens/sc_bab6c64dec12434297fede3f7c0bef68),
+  Starting a lesson step 33: orange fill with lighter inset highlight.
+
+Source dimensions: 1179/1180 × 2556. Existing catalog identifies these as
+archived iOS captures; no current installed-app or source-animation claim.
+Measured target: rounded 16px progress track with inset highlight. Current gaps:
+plain linear fill, resizing feedback, no outcome haptic or heart-loss shake.
+Preserve authored English/Vietnamese content, existing explanation/report actions,
+routes, grading and retry state. Reuse bundled illustrations only.
+
+Motion fallback research:
+[Duolingo character animation](https://blog.duolingo.com/building-character/)
+and [streak animation](https://blog.duolingo.com/streak-milestone-design-animation/).
+These explain celebratory animation intent, not exact UI durations. The owner's
+100ms press / 250ms feedback request supplies timing targets; progress ease-out
+and heart shake remain explicitly authored approximations until recordings exist.
+
+Validation and final artifacts will be appended after the slice passes.
+
+### UI-MASTER-01 lesson slice acceptance
+
+- [x] Correct/incorrect feedback overlays choices without changing their
+  illustration viewport; correct feedback has one primary Continue action.
+- [x] 250ms upward entrance, semantic live region and bottom safe-inset color.
+- [x] 16px rounded progress with inset shine and 300ms ease-out fill.
+- [x] One haptic per graded answer; duplicate checks do not replay it.
+- [x] Heart decrease shakes once, settles, stops on background and does not
+  replay on resume; reduced motion is immediate and still.
+- [x] 390×844 ready/selected/correct/incorrect goldens and eight 360/430 ×
+  text1/2 correct/incorrect goldens; decoded bundled illustrations asserted.
+
+Additional deep inspection:
+[Lily meaning feedback](https://gummble.com/screens/sc_6d64b91d069a4a50a74981811fddb082),
+Starting a lesson step 20. Correct feedback removes the extra explanation CTA;
+incorrect feedback preserves the existing explanation route and identifier.
+
+RED evidence: all three initial behavior cases failed before implementation:
+choice rectangle moved upward by 26px, feedback did not slide, and no haptic
+was emitted. A separate compact-feedback case failed while the extra correct
+explanation CTA was still visible. The original RED commands used the same
+proxy-free test invocation below with `test/lesson_fidelity_test.dart`.
+The first test harness needed authored exercises to avoid awaiting a mock timer
+inside fake time; that harness issue was corrected before the RED receipt.
+
+Commands from `apps/mobile`, after `. /workspace/tools/env.sh`:
+
+```sh
+env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u all_proxy NO_PROXY=127.0.0.1,localhost no_proxy=127.0.0.1,localhost flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/lesson_fidelity_test.dart test/lesson_ui_master_golden_test.dart test/learning_flow_test.dart test/english_spoken_lesson_test.dart test/explanation_test.dart
+flutter analyze --fatal-infos
+env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u all_proxy NO_PROXY=127.0.0.1,localhost no_proxy=127.0.0.1,localhost flutter test --update-goldens --dart-define=ENABLE_MASCOT_MOTION=false test/lesson_ui_master_golden_test.dart
+```
+
+Results: 37 targeted tests pass, analyzer reports no issues, and all 12 golden
+generation/responsive cases pass. Golden files:
+`apps/mobile/test/goldens/ui_master/core_lesson_image_{ready,selected,correct,incorrect}.png`
+(390×844), and `core_feedback_{correct,incorrect}_{360,430}_text{1,2}.png`.
+Opened correct/incorrect native goldens plus 360/text2 incorrect and 430/text2
+correct; compared hierarchy, clipped lower choices, highlight and safe inset
+against the live Gummble stills. Goldens pin Flutter rendering, not source
+pixel equivalence. Fonts and icons load from the existing bundled assets.
+
+Known remaining differences: authored English choices/illustrations and course
+content differ from the French reference; existing art crops retain white
+backgrounds on selected cards; archived share-toolbar and explanation-decoration
+variants remain unclosed. No new artwork, dependency, route or backend changes.
+Exact motion requires source recordings. Haptic calls are tested with Flutter's
+platform-channel mock; physical device feel is unverified. No browser tool is
+available, so UI-BROWSER-026 and UI-QA-014 retain their live browser requirement.
+UI-CATALOG-008, UI-EXTENDED-009 and whole-app UI-FIDELITY-001 /
+UI-EXTENDED-QA-010 remain open beyond this slice. Next priority: path/intro,
+remaining exercise state variants, completion counters/celebration, then stats
+and tab/section details before secondary families.
+
+Repository checks initially could not start because `node_modules` was absent.
+`pnpm install --frozen-lockfile` restored the existing tools (56.3s, no lock
+change).
+
+Full repository commands, after restoring dependencies:
+
+```sh
+pnpm backend:verify
+pnpm backend:smoke
+pnpm contracts:check
+pnpm api:lint
+pnpm audit:check
+env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u all_proxy NO_PROXY=127.0.0.1,localhost no_proxy=127.0.0.1,localhost pnpm verify
+dart run rive_native:setup --verbose --clean --platform linux
+```
+
+Backend verify/smoke, contracts (94 schemas / 30 fixture cases), API lint and
+audit pass. `pnpm verify` passes blueprint, all-file format and analyzer, then
+records **454 passing tests and 5 failures** (3m21s test run). All five failures
+are native rig-loading tests: three in `avatar_motion_test.dart` and two in
+`character_motion_test.dart`. This host reports `aarch64`; `file` identifies
+the downloaded `librive_native.so` as x86-64. Clean official Rive setup succeeds
+but supplies the same incompatible architecture. This is an unresolved host
+capability limit; the full gate is not green. No tests are deleted or disabled.
+The UI slice's 37 targeted cases and 12 golden cases pass on this host.
+
+`flutter build web --release` is compiling at the first slice commit; its receipt
+will be appended when it finishes. Flutter's automatic dependency resolution
+rewrote hosted URLs/transitive entries in `pubspec.lock`; those incidental
+changes were restored to HEAD bytes. No lock change is included in this task.

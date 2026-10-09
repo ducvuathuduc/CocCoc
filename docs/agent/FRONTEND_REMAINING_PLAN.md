@@ -119,6 +119,12 @@ UI-QA-014 awaits the final refreshed web/browser check. The avatar assets are no
 obtained; the continuation below adds the native editor. Do not rebuild completed
 families while reconciling source variants.
 
+2026-10-09 UI-MASTER-01: the core lesson header/feedback slice adds 390×844
+goldens and 360/430 × text1/2 feedback captures without replacing completed
+flows. See the [master log](../design/qa/UI_MASTER_LOG.md). UI-QA-014 and
+UI-BROWSER-026 remain open: this session exposes no browser inspection tool;
+native goldens do not establish browser or device success.
+
 ## Clean product surface and original avatar continuation (2026-10-05)
 
 Owner: parent; one isolated child owns only web shell HTML. Frozen mock-data
