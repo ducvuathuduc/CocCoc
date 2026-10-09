@@ -154,6 +154,40 @@
         "providerInferenceCalls": 0
       },
       "remaining": "teacher rubric/account entitlement; full schema/curriculum; actual JWT/transaction/permissions/outbox; Drift; native voice/assessment benchmark; physical Android/iOS; live billing/push/backup/CI run"
+    },
+    {
+      "taskId": "P2-DES-001",
+      "phase": "Phase A authorized mock UI refinement",
+      "owner": "W1-design / root review",
+      "branch": "master",
+      "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/repo",
+      "dependencyGateReceipts": [
+        "docs/agent/FRONTEND_FLOW_PLAN.md",
+        "docs/design/qa/UI_MASTER_LOG.md"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/core/design/reference_widgets.dart",
+        "apps/mobile/lib/core/design/lesson_motion.dart",
+        "apps/mobile/test/reference_button_test.dart",
+        "apps/mobile/test/design_ui_master_golden_test.dart"
+      ],
+      "requirements": [
+        "SC17",
+        "CHECKdisabled",
+        "reducedmotion",
+        "text2",
+        "semantics"
+      ],
+      "interfaces": [
+        "ReferenceButton",
+        "LessonMotionTokens"
+      ],
+      "testCommand": "flutter analyze --no-pub --fatal-infos; proxy-free flutter test --no-pub test/reference_button_test.dart test/design_ui_master_golden_test.dart",
+      "status": "CLAIMED",
+      "evidence": [
+        "docs/design/qa/TEAM_STATE.md"
+      ],
+      "remaining": "Scoped tactile slice first; whole P2-DES acceptance remains open."
     }
   ]
 }
