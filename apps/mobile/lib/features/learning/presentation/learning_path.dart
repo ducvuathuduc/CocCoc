@@ -8,6 +8,7 @@ import '../../../core/design/duo_motion.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../../core/design/path_motion.dart';
 import '../application/learning_controller.dart';
 import '../application/course_navigation_controller.dart';
 import '../domain/course_catalog.dart';
@@ -609,7 +610,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
   }
 }
 
-class PathNode extends StatelessWidget {
+class PathNode extends StatefulWidget {
   const PathNode({
     required this.current,
     required this.completed,
@@ -629,67 +630,123 @@ class PathNode extends StatelessWidget {
   final Color? color;
   final Color? edgeColor;
   @override
-  Widget build(BuildContext context) => Tooltip(
-    message: tooltip,
-    child: Semantics(
-      button: true,
-      label: tooltip,
-      child: GestureDetector(
-        onTap: onTap,
-        child: SizedBox(
-          width: 100,
-          height: 90,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (current)
+  State<PathNode> createState() => _PathNodeState();
+}
+
+class _PathNodeState extends State<PathNode> {
+  bool _pressed = false;
+
+  void _press(bool pressed) {
+    if (mounted && _pressed != pressed) setState(() => _pressed = pressed);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final current = widget.current;
+    final completed = widget.completed;
+    final progress = widget.progress;
+    final color = widget.color;
+    final edgeColor = widget.edgeColor;
+    final icon = widget.icon;
+    final tooltip = widget.tooltip;
+    final reduced = MediaQuery.disableAnimationsOf(context);
+    return Tooltip(
+      message: tooltip,
+      child: Semantics(
+        button: true,
+        label: tooltip,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          onTapDown: (_) => _press(true),
+          onTapUp: (_) => _press(false),
+          onTapCancel: () => _press(false),
+          child: SizedBox(
+            width: 100,
+            height: 90,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (current)
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: progress),
+                    duration: motionDuration(context, 450),
+                    builder: (context, value, _) => CustomPaint(
+                      size: const Size(98, 87),
+                      painter: _NodeRing(value, color ?? LearningColors.green),
+                    ),
+                  ),
                 TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0, end: progress),
-                  duration: motionDuration(context, 450),
-                  builder: (context, value, _) => CustomPaint(
-                    size: const Size(98, 87),
-                    painter: _NodeRing(value, color ?? LearningColors.green),
+                  tween: Tween(
+                    begin: 0,
+                    end: _pressed ? PathMotionTokens.depth : 0,
+                  ),
+                  duration: reduced
+                      ? Duration.zero
+                      : PathMotionTokens.pressDuration,
+                  curve: PathMotionTokens.pressCurve,
+                  builder: (context, displacement, child) =>
+                      Transform.translate(
+                        offset: Offset(0, displacement),
+                        child: child,
+                      ),
+                  child: AnimatedScale(
+                    scale: _pressed ? PathMotionTokens.pressedScale : 1,
+                    duration: reduced
+                        ? Duration.zero
+                        : _pressed
+                        ? PathMotionTokens.pressDuration
+                        : PathMotionTokens.releaseDuration,
+                    curve: _pressed
+                        ? PathMotionTokens.pressCurve
+                        : PathMotionTokens.releaseCurve,
+                    child: AnimatedContainer(
+                      duration: reduced
+                          ? Duration.zero
+                          : PathMotionTokens.pressDuration,
+                      width: 70,
+                      height: 62,
+                      decoration: BoxDecoration(
+                        color:
+                            color ??
+                            (current || completed
+                                ? completed
+                                      ? LearningColors.yellow
+                                      : LearningColors.green
+                                : ReferenceColors.border),
+                        borderRadius: BorderRadius.circular(40),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                edgeColor ??
+                                (current || completed
+                                    ? completed
+                                          ? const Color(0xFFE5A400)
+                                          : LearningColors.greenDark
+                                    : const Color(0xFFBCBABC)),
+                            offset: Offset(
+                              0,
+                              _pressed ? 0 : PathMotionTokens.depth,
+                            ),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        completed ? Icons.check_rounded : icon,
+                        size: 36,
+                        color: color != null || current || completed
+                            ? Colors.white
+                            : ReferenceColors.disabled,
+                      ),
+                    ),
                   ),
                 ),
-              Container(
-                width: 70,
-                height: 62,
-                decoration: BoxDecoration(
-                  color:
-                      color ??
-                      (current || completed
-                          ? completed
-                                ? LearningColors.yellow
-                                : LearningColors.green
-                          : ReferenceColors.border),
-                  borderRadius: BorderRadius.circular(40),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          edgeColor ??
-                          (current || completed
-                              ? completed
-                                    ? const Color(0xFFE5A400)
-                                    : LearningColors.greenDark
-                              : const Color(0xFFBCBABC)),
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  completed ? Icons.check_rounded : icon,
-                  size: 36,
-                  color: color != null || current || completed
-                      ? Colors.white
-                      : ReferenceColors.disabled,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _NodeRing extends CustomPainter {

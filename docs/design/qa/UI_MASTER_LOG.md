@@ -123,3 +123,48 @@ The UI slice's 37 targeted cases and 12 golden cases pass on this host.
 will be appended when it finishes. Flutter's automatic dependency resolution
 rewrote hosted URLs/transitive entries in `pubspec.lock`; those incidental
 changes were restored to HEAD bytes. No lock change is included in this task.
+
+### Path-node press slice claim (after ea2ff75)
+
+Area: existing `PathNode`, core motion tokens, focused press/cancellation tests
+and home/lesson-intro goldens. Fresh Gummble path search returned an unrelated
+goal flow; reused the exact Completing a lesson flow already fetched above.
+Deep-inspected steps 1 and 2:
+[path](https://gummble.com/screens/sc_e793f7fdfb3349cc8a32a78d9648ee07) and
+[lesson intro](https://gummble.com/screens/sc_59c6c255ba9e4d26b6dfd59922951d8a).
+Keep the current English course, stats, node placement and routes. The static
+node has a 7px base but no press collapse/release bounce. Requested 100ms press
+and authored 250ms release are motion targets; the public animation sources
+above do not establish a measured native node timeline.
+
+The first web compile finished successfully in 135.8s. That command proves
+compilation only; the next build explicitly supplies the existing mock-auth
+and bundled Rive-host defines required for the local preview.
+
+### Path-node slice acceptance
+
+- [x] 100ms face depression and 7px base collapse; ring geometry stays fixed.
+- [x] 250ms release scale overshoot; cancellation restores without navigation.
+- [x] Reduced motion uses zero-duration transitions; disposal has no queued tap.
+- [x] Existing native path → intro → English exercise route remains working.
+- [x] 390×844 `core_path.png` and `core_lesson_intro.png` goldens generated and
+  opened against the two live source steps. Current English/energy/top-bar and
+  five-tab variants remain; this press slice does not close their fidelity gaps.
+
+RED: the baseline face stayed at its original Y while held; the regression
+expected +7px. After implementation the focused route/cancellation/scale and
+existing course/lesson tests all pass (17 cases). Analyzer reports no issues.
+Commands from `apps/mobile` (same proxy-free prefix as above):
+
+```sh
+flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false test/path_node_fidelity_test.dart
+flutter test --no-pub --update-goldens --dart-define=ENABLE_MASCOT_MOTION=false test/path_node_fidelity_test.dart test/path_ui_master_golden_test.dart test/course_flow_test.dart test/learning_flow_test.dart
+flutter analyze --no-pub --fatal-infos
+flutter build web --no-pub --no-wasm-dry-run --release --dart-define=USE_MOCK_AUTH=true --dart-define=RIVE_NATIVE_WASM_HOST=rive/
+```
+
+Path tokens live in `core/design/path_motion.dart`; no new package, artwork,
+provider or route. The full gate's five native host failures above remain.
+The mock release rebuild is running at this small commit; append its outcome
+before any browser/preview claim. Tests/goldens verify widgets and routes, not
+physical haptics, native motion parity or browser delivery.
