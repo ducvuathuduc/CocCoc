@@ -57,6 +57,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
 
     await tester.pumpWidget(_harness(_receipt()));
+    await tester.pumpAndSettle();
 
     expect(find.text('Flawless'), findsOneWidget);
     expect(

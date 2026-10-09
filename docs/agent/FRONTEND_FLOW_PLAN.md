@@ -33,6 +33,8 @@ supersedes earlier239-test frontend evidence for current course/account/profile 
   [master log](../design/qa/UI_MASTER_LOG.md). Whole-app fidelity stays open.
   A second small slice adds tactile path-node depression/release bounce and
   home/intro goldens with 17 passing focused cases; remaining variants stay open.
+  Completion motion adds receipt/streak count-up, finite confetti, three result
+  goldens and 25 passing focused cases. Full source/motion equivalence is open.
 - [x] UI-LEARNING-002: native course/path/node/guide → ten original exercises/12 renderers → correct/error/hint/local report/exit/retry → seven results/score/gems/streak/quest update → path. Guest/placement/replay isolation and receipt idempotency tested. SC07,12–22; local fixtures only.
 - [x] UI-PRACTICE-003: native hub, words, mistakes, listening substitution, speaking/record/call/results with explicit simulated capability states and lifecycle cancellation. SC23–30; no real mic/audio/scoring.
 - [x] UI-PROGRESS-004: native first-entry quests/hub, league, profile, friends/activity, shop and local receipt states. SC31–37; fixture social/reward data only.

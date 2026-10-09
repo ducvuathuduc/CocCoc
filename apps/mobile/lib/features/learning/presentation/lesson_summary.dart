@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
+import '../../../core/design/reward_motion.dart';
 import '../domain/learning_models.dart';
 import 'learning_visuals.dart';
 
@@ -27,6 +28,7 @@ class LessonSummary extends StatelessWidget {
         label: 'TOTAL XP',
         semanticLabel: 'Total XP, ${receipt.xp}',
         value: '${receipt.xp}',
+        animatedValue: receipt.xp,
         icon: Icons.bolt_rounded,
         color: LearningColors.yellow,
       ),
@@ -35,6 +37,8 @@ class LessonSummary extends StatelessWidget {
         label: 'ACCURACY',
         semanticLabel: 'Accuracy, ${(receipt.accuracy * 100).round()} percent',
         value: '${(receipt.accuracy * 100).round()}%',
+        animatedValue: (receipt.accuracy * 100).round(),
+        suffix: '%',
         icon: Icons.track_changes_rounded,
         color: LearningColors.green,
       ),
@@ -48,65 +52,68 @@ class LessonSummary extends StatelessWidget {
       ),
     ];
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ReferenceArt(
-            perfect ? LearningArt.medalDuo : LearningArt.completed,
-            width: perfect ? 245 : 245 * 404 / 545,
-            height: 245,
-          ),
-          const SizedBox(height: 22),
-          Text(
-            practice
-                ? 'Practice complete'
-                : perfect
-                ? 'Flawless'
-                : 'Lesson complete!',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: LearningColors.yellow,
-              fontSize: 32,
-              fontWeight: FontWeight.w700,
+    return LessonCelebration(
+      key: ValueKey(receipt.id),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ReferenceArt(
+              perfect ? LearningArt.medalDuo : LearningArt.completed,
+              width: perfect ? 245 : 245 * 404 / 545,
+              height: 245,
             ),
-          ),
-          if (!practice) ...[
-            const SizedBox(height: 17),
+            const SizedBox(height: 22),
             Text(
-              perfect
-                  ? '0 mistakes. You’re like a pristine, freshwater pearl.'
-                  : _mistakeDescription(mistakeCount),
+              practice
+                  ? 'Practice complete'
+                  : perfect
+                  ? 'Flawless'
+                  : 'Lesson complete!',
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 20,
-                height: 1.45,
-                color: ReferenceColors.muted,
+                color: LearningColors.yellow,
+                fontSize: 32,
+                fontWeight: FontWeight.w700,
               ),
             ),
+            if (!practice) ...[
+              const SizedBox(height: 17),
+              Text(
+                perfect
+                    ? '0 mistakes. You’re like a pristine, freshwater pearl.'
+                    : _mistakeDescription(mistakeCount),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 20,
+                  height: 1.45,
+                  color: ReferenceColors.muted,
+                ),
+              ),
+            ],
+            const SizedBox(height: 40),
+            if (compact)
+              Column(
+                children: [
+                  for (var index = 0; index < stats.length; index++) ...[
+                    SizedBox(width: double.infinity, child: stats[index]),
+                    if (index != stats.length - 1) const SizedBox(height: 12),
+                  ],
+                ],
+              )
+            else
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var index = 0; index < stats.length; index++) ...[
+                    Expanded(child: stats[index]),
+                    if (index != stats.length - 1) const SizedBox(width: 12),
+                  ],
+                ],
+              ),
           ],
-          const SizedBox(height: 40),
-          if (compact)
-            Column(
-              children: [
-                for (var index = 0; index < stats.length; index++) ...[
-                  SizedBox(width: double.infinity, child: stats[index]),
-                  if (index != stats.length - 1) const SizedBox(height: 12),
-                ],
-              ],
-            )
-          else
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (var index = 0; index < stats.length; index++) ...[
-                  Expanded(child: stats[index]),
-                  if (index != stats.length - 1) const SizedBox(width: 12),
-                ],
-              ],
-            ),
-        ],
+        ),
       ),
     );
   }
@@ -119,6 +126,8 @@ class _SummaryStat extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.color,
+    this.animatedValue,
+    this.suffix = '',
     super.key,
   });
 
@@ -127,6 +136,8 @@ class _SummaryStat extends StatelessWidget {
   final String value;
   final IconData icon;
   final Color color;
+  final int? animatedValue;
+  final String suffix;
 
   @override
   Widget build(BuildContext context) => Semantics(
@@ -178,16 +189,27 @@ class _SummaryStat extends StatelessWidget {
                     children: [
                       Icon(icon, color: color, size: 22),
                       const SizedBox(width: 3),
-                      Text(
-                        value,
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: color,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                      if (animatedValue != null)
+                        RewardCount(
+                          value: animatedValue!,
+                          suffix: suffix,
+                          style: TextStyle(
+                            color: color,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )
+                      else
+                        Text(
+                          value,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: color,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),

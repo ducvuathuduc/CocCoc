@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../../core/design/reward_motion.dart';
 import '../application/learning_controller.dart';
 import 'learning_visuals.dart';
 import 'lesson_summary.dart';
@@ -134,13 +135,17 @@ class LessonResults extends ConsumerWidget {
                                   width: 125,
                                   height: 220,
                                 ),
-                                Text(
-                                  '${progress.streak}',
-                                  style: const TextStyle(
-                                    fontSize: 112,
-                                    color: LearningColors.orange,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.1,
+                                Semantics(
+                                  label: 'Streak, ${progress.streak} days',
+                                  excludeSemantics: true,
+                                  child: RewardCount(
+                                    value: progress.streak,
+                                    style: const TextStyle(
+                                      fontSize: 112,
+                                      color: LearningColors.orange,
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.1,
+                                    ),
                                   ),
                                 ),
                                 const Text(

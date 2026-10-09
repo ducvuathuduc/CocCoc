@@ -168,3 +168,64 @@ provider or route. The full gate's five native host failures above remain.
 The mock release rebuild is running at this small commit; append its outcome
 before any browser/preview claim. Tests/goldens verify widgets and routes, not
 physical haptics, native motion parity or browser delivery.
+
+### 2026-10-09 continuation — completion motion claim
+
+The prior mock rebuild was terminated during compilation (exit 143) at the
+process limit. It is retried with the same mock-auth/local-Rive flags; no build
+success is claimed for the terminated invocation. Continue from `a446a08`.
+The resumed invocation completed successfully in 45.4s with mock auth and the
+bundled Rive web host; no lock changes (`--no-pub`). This compilation covers
+the two committed slices, not the later completion changes or browser QA.
+
+Area: existing lesson summary and streak result, core count/celebration widgets,
+focused tests and completion/streak goldens. Fresh live Gummble Completing a
+lesson search resolves both 22-step and 13-step variants. Fetch the entire
+13-step flow `238c4339-7173-4257-89c5-2716a8a68c44`; deep inspect
+[Flawless](https://gummble.com/screens/sc_23afb65ade9a45f19dba4cf32e1fd5ab),
+[older completion](https://gummble.com/screens/sc_a022c38e7b314af6a1b26f7f3ecea43e)
+and [streak](https://gummble.com/screens/sc_80524686d64f4b2ca387b31023436c15).
+Observed: yellow completion heading, bundled celebratory illustration/sparkles,
+three bordered metric cells and blue bottom CTA; large orange streak numeral.
+Current numerals are static. Animate actual immutable receipt XP/accuracy and
+existing mock streak; never modify receipts or award from an animation callback.
+Use authored geometric confetti consistent with inspected lesson celebration
+stills, existing colors and the public motion references above. Exact particle
+trajectories/timing remain authored approximations, not archived motion proof.
+
+### Completion slice acceptance
+
+- [x] XP and accuracy count to actual receipt values in 500ms; streak counts to
+  the existing mock value. Rebuilding does not restart a finished counter.
+- [x] Screen-reader labels expose final data throughout the interpolation.
+- [x] 600ms geometric confetti ends, never blocks Continue, stops on background
+  and does not replay on resume; reduced motion has final counts and no particles.
+- [x] Animation never claims XP or modifies the receipt/progress provider.
+- [x] Three 390×844 goldens: `core_completion.png`,
+  `core_completion_celebrating.png` (150ms) and `core_streak.png`. All opened and
+  compared with live result/streak references. Source labels AMAZING/BLAZING,
+  exact illustration/layout variants and calendar history remain unclosed;
+  this motion slice preserves existing metric labels and authored fixture data.
+- [x] 360/430 × text1/2 reduced-motion cases keep Claim XP reachable.
+
+RED: static XP was already 20 on the first frame, and no confetti layer existed.
+New acceptance cases failed before implementing the widgets. A semantics handle
+in the test harness was then moved to `try/finally` cleanup. The existing summary
+test now waits for the finite count animation before asserting its final values;
+its artwork/layout/receipt assertions are preserved.
+
+Commands from `apps/mobile`, with the same documented proxy-free prefix:
+
+```sh
+flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false test/completion_fidelity_test.dart
+flutter test --no-pub --update-goldens --dart-define=ENABLE_MASCOT_MOTION=false test/completion_fidelity_test.dart test/completion_ui_master_golden_test.dart test/lesson_summary_test.dart test/learning_flow_test.dart test/english_spoken_lesson_test.dart
+flutter analyze --no-pub --fatal-infos
+```
+
+25 targeted cases pass, including full mock claim/return and speaking/retry
+flows; analyzer reports no issues. Tokens and lifecycle handling are in
+`core/design/reward_motion.dart`. No route, dependency, reward formula,
+backend write or new artwork file. Full `pnpm verify` and a mock/local-Rive web
+build were started again after this slice; results will be appended separately.
+Total UI master goldens so far: 17. All six top-level frontend task IDs remain
+open pending their full acceptance, source-variant reconciliation and browser QA.

@@ -57,6 +57,13 @@ haptic. Reduced motion displays the final state; backgrounding stops heart
 motion without replay. The timing values are authored UI targets; archived
 Gummble stills do not prove exact iOS timing. [Evidence](qa/UI_MASTER_LOG.md).
 
+The completion mock uses `RewardMotionTokens` for a 500ms ease-out count and
+600ms finite geometric confetti. It interpolates immutable receipt XP/accuracy
+and existing mock streak values without awarding from animation callbacks.
+Semantics retain final metrics. Reduced motion displays final counts; confetti
+stops on background and leaves Continue actionable. Original bundled character
+art is unchanged. Particle paths are authored motion approximations.
+
 ## Visual QA gate
 
 The current English mock frontend extends the core inventory with
