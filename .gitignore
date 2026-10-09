@@ -41,6 +41,21 @@ coverage/
 tmp/
 **/tmp/
 
+# Editor/OS debris and disposable backup files
+temp/
+**/temp/
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
 # Ephemeral captures and private exports. Reference and QA artifacts elsewhere stay tracked.
 .screenshots/
 **/.screenshots/

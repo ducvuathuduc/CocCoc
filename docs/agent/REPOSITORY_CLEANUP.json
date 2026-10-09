@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-09",
+  "status": "PASS",
+  "scope": "Ignored generated/temp state removed using preflighted native PowerShell literal paths; no tracked file was deleted.",
+  "baseCommit": "49f9097378ebc7b2b8dd30eb3a67217fb3f2fc35",
+  "scannedFiles": 11465,
+  "scannedBytes": 3713979548,
+  "removed": [
+    {
+      "path": ".cache",
+      "files": 79,
+      "bytes": 3303308
+    },
+    {
+      "path": "apps/mobile/build",
+      "files": 8862,
+      "bytes": 3262436672
+    },
+    {
+      "path": "apps/mobile/.dart_tool",
+      "files": 143,
+      "bytes": 261710096
+    },
+    {
+      "path": "apps/mobile/android/build",
+      "files": 1,
+      "bytes": 133110
+    },
+    {
+      "path": "apps/mobile/android/.gradle",
+      "files": 16,
+      "bytes": 21426805
+    },
+    {
+      "path": "apps/mobile/ios/Flutter/ephemeral",
+      "files": 5,
+      "bytes": 2508
+    },
+    {
+      "path": "apps/mobile/.flutter-plugins-dependencies",
+      "files": 1,
+      "bytes": 13182
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java",
+      "files": 1,
+      "bytes": 2558
+    },
+    {
+      "path": "apps/mobile/ios/Runner/GeneratedPluginRegistrant.h",
+      "files": 1,
+      "bytes": 378
+    },
+    {
+      "path": "apps/mobile/ios/Runner/GeneratedPluginRegistrant.m",
+      "files": 1,
+      "bytes": 2049
+    },
+    {
+      "path": "apps/mobile/ios/Flutter/Generated.xcconfig",
+      "files": 1,
+      "bytes": 640
+    },
+    {
+      "path": "apps/mobile/ios/Flutter/flutter_export_environment.sh",
+      "files": 1,
+      "bytes": 679
+    }
+  ],
+  "removedFiles": 9112,
+  "removedBytes": 3549031985,
+  "protectedTrackedFiles": 2346,
+  "protectedVerification": "All currently tracked file contents have identical SHA-256 before/after deletion.",
+  "preserved": [
+    "source",
+    "canonical documentation",
+    "lockfiles",
+    "platform scripts",
+    "original PNG/Rive/fonts",
+    "linked QA receipts",
+    "local SDK settings and IDE preferences",
+    ".git history"
+  ],
+  "previewWasRunning": false,
+  "regeneration": "flutter pub get; pnpm verify; pnpm build:web; pnpm preview:web",
+  "schemaValidation": {
+    "status": "PASS",
+    "fixtureCases": 30,
+    "compiledSchemas": 94,
+    "scope": "Contract fixtures only; no backend runtime certification"
+  },
+  "auxiliarySchemaVerifier": {
+    "location": "Windows Temp, outside repository",
+    "status": "retained_by_policy",
+    "reason": "Automatic approval review rejected recursive removal: blocked by policy",
+    "includedInGit": false
+  },
+  "checks": {
+    "blueprint": "PASS",
+    "compiledSchemas": 94,
+    "contractFixtures": 30,
+    "sourcePngs": 951,
+    "bundledPngs": 239,
+    "referenceHashes": "PASS",
+    "completionEvidence": "PASS",
+    "gitDiffWhitespace": "PASS",
+    "ignoreRuleSamples": "PASS"
+  }
+}

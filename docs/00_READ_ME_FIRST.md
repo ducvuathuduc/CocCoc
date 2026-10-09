@@ -4,6 +4,10 @@ This package is the V1 specification, checked 2026-10-03. Normative project deci
 
 Current implementation entry (2026-10-04): [Flutter module](../apps/mobile/README.md), [authorized frontend task](agent/FRONTEND_FLOW_PLAN.md), and [full mock frontend verification](design/qa/FULL_FRONTEND_REPORT.md). Onboarding/login and the remaining planned learning/practice/progress/account UI families are implemented against local fixtures after Gummble analysis. The user authorized original Duolingo reference styling and mock data first. Exact fidelity and complete production phase gates remain required.
 
+For teammate onboarding and the current backend implementation boundary, use
+the [developer handoff](agent/DEVELOPER_HANDOFF.md). Generated build/cache cleanup
+is recorded separately from application verification.
+
 1. [Blueprint and executive decision](ARCHITECTURE_BLUEPRINT_V1.md).
 2. [Audit](research/DOCUMENTATION_AUDIT.md), [evidence](research/RESEARCH_EVIDENCE.md), [assumptions](ASSUMPTIONS.md).
 3. [SRS](product/SRS.md), [feature research](product/FEATURE_MATRIX.md), [flows](product/USER_FLOWS.md), [screens](product/SCREEN_INVENTORY.md), [edge cases](product/EDGE_CASE_MATRIX.md).
