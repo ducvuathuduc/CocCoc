@@ -1,0 +1,10 @@
+{
+  "eventId": "00000000-0000-4000-8000-000000000001",
+  "type": "lesson.completed.v1",
+  "schemaVersion": 1,
+  "producer": "learning",
+  "aggregateId": "fixture-completion",
+  "occurredAt": "2026-10-09T12:00:00Z",
+  "requestId": "00000000-0000-4000-8000-000000000002",
+  "payload": { "completionId": "fixture-completion", "userId": "fixture-user", "courseId": "vi_en", "lessonVersion": "fixture-v1", "rewardIdentity": "fixture-lesson", "source": "ONLINE", "mode": "LESSON", "originalCount": 10, "originalCorrect": 8, "assisted": false }
+}

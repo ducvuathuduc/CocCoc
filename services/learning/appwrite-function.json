@@ -1,0 +1,11 @@
+{
+  "functionId": "coc-learning",
+  "runtime": "node-22",
+  "entrypoint": "dist/function.mjs",
+  "buildCommand": "",
+  "execute": [],
+  "timeout": 30,
+  "scopes": [],
+  "enabled": false,
+  "note": "Review/setup descriptor, not an imported CLI schema. Upload bundled artifact after admitted auth/persistence gate; no deployment performed."
+}

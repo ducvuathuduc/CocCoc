@@ -8,7 +8,7 @@ const check=(ok,message)=>{if(!ok)errors.push(message);};
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 function files(dir=''){
  return fs.readdirSync(path.join(root,dir),{withFileTypes:true}).flatMap(e=>{
-  if(['.git','node_modules','build','.dart_tool'].includes(e.name))return [];
+  if(['.git','node_modules','build','dist','.dart_tool','.gradle','.kotlin','.cache','.pnpm-store','Pods'].includes(e.name)||e.isSymbolicLink())return [];
   const p=path.posix.join(dir,e.name);
   return e.isDirectory()?files(p):[p];
  });

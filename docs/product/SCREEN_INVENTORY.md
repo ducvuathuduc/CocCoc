@@ -1,5 +1,7 @@
 # Screen inventory
 
+Source audit: these 42 IDs describe V1 contracts, not the count of actual routes/widgets. Current evidence is in [UI gap](../audit/UI_IMPLEMENTATION_GAP.md) and [behavior map](SCREEN_BEHAVIOR_MAP.md); main.dart owns the existing router. Preserve finished mock flows; reconcile routes before adding/moving screens.
+
 Each screen implements loading/content/error/empty/offline as applicable, with retry preserving entered data. Common tokens and states live in [DESIGN](../design/DESIGN.md) and [COMPONENT_STATES](../design/COMPONENT_STATES.md). Routes are frozen; API operation IDs are in OpenAPI. “Local” means no network command.
 
 | ID | Route / screen | ViewModel command / data | Special states / exit |

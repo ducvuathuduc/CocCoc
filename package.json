@@ -1,15 +1,41 @@
 {
   "name": "cocenglish",
   "private": true,
+  "packageManager": "pnpm@10.15.0",
   "scripts": {
     "blueprint:check": "node tools/blueprint/validate.mjs",
     "mobile:verify": "node tools/scripts/mobile-check.mjs",
     "build:web": "node tools/scripts/mobile-web-build.mjs",
     "preview:web": "node tools/scripts/mobile-preview.mjs",
     "build:android": "node tools/scripts/mobile-check.mjs --build-android",
-    "verify": "node tools/scripts/mobile-check.mjs --with-blueprint"
+    "verify": "node tools/scripts/mobile-check.mjs --with-blueprint",
+    "backend:build": "node tools/scripts/backend-check.mjs --build",
+    "backend:verify": "node tools/scripts/backend-check.mjs",
+    "backend:smoke": "node tools/scripts/backend-smoke.mjs",
+    "contracts:generate": "openapi-typescript docs/api/openapi.yaml -o packages/api_contracts/generated.ts",
+    "contracts:check": "node tools/blueprint/validate-schemas.mjs",
+    "api:lint": "redocly lint docs/api/openapi.yaml",
+    "audit:check": "node tools/audit/validate.mjs",
+    "schema:plan": "node appwrite/scripts/schema.mjs",
+    "seed:check": "node appwrite/scripts/seed.mjs"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3",
+    "node-appwrite": "29.2.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "@redocly/cli": "2.62.1",
+    "openapi-typescript": "7.13.0",
+    "eslint": "10.12.0",
+    "typescript-eslint": "8.71.1",
+    "prettier": "3.9.9",
+    "yaml": "2.9.1",
+    "mermaid": "12.1.0",
+    "jsdom": "30.1.2",
+    "esbuild": "0.28.2"
   }
 }

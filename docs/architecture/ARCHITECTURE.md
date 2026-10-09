@@ -1,5 +1,7 @@
 # System architecture
 
+Current audit: [evidence](../audit/RESEARCH_EVIDENCE.md), [consistency contract](CONSISTENCY.md), [conditional freeze](../ARCHITECTURE_FREEZE_REPORT.md). Three service deploy artifacts exist locally; cloud/domain adapters are disabled. The managed platform is not counted as a bespoke service.
+
 Status: V1 specification frozen; runtime capability gates remain in [assumptions](../ASSUMPTIONS.md). Decisions are project prescriptions. Vendor behavior evidence: [R01–R12](../research/RESEARCH_EVIDENCE.md).
 
 ## C4 context

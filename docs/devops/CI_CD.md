@@ -1,5 +1,7 @@
 # Toolchain, environments and CI/CD specification
 
+2026-10-09–10 implementation supplement: actual mobile workflow and new backend workflow exist; deterministic local gates are in [receipt](../audit/VALIDATION.md). No GitHub run/deploy/signing success is inferred from these files. Root pnpm lock now resolves backend tools; cloud adapter/schema/permission and release credentials remain admitted gates.
+
 This phase0 package specifies pipelines. It does not deploy services, initialize cloud projects, install SDKs, or publish apps. Actual workflow files are created by P1 after pinning toolchain and secrets. [Stack](../architecture/STACK.md) owns versions; [costs](COST_MODEL.md) owns allowances.
 
 ## Environments

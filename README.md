@@ -1,5 +1,7 @@
 # CocEnglish — Flutter frontend
 
+Architecture audit and local backend foundation refreshed 2026-10-09–10: [current entry](docs/00_START_HERE.md), [freeze report](docs/ARCHITECTURE_FREEZE_REPORT.md), [Windows commands](docs/devops/LOCAL_SETUP_WINDOWS.md). Three separately bundled service scaffolds and fake async tests exist; hosted business integration remains disabled and unproven.
+
 Research baseline: **2026-10-03**. Current frontend snapshot: **2026-10-09, Asia/Saigon**.
 
 New collaborator: start with the [developer handoff](docs/agent/DEVELOPER_HANDOFF.md)

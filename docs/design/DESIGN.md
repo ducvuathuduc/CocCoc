@@ -1,5 +1,7 @@
 # CocEnglish design system
 
+Current audit preserves actual tokens/fonts/components/assets and UI. This is the project's engineering specification derived from references, not an official downloadable Duolingo DESIGN.md. [UI gaps](../audit/UI_IMPLEMENTATION_GAP.md), [behavior map](../product/SCREEN_BEHAVIOR_MAP.md) and existing QA receipts separate source/capture evidence from fresh device proof.
+
 This is **our engineering DESIGN.md**, derived from public [Duolingo brand colors](https://design.duolingo.com/identity/color), [typography guidance](https://design.duolingo.com/identity/typography), and inspected [Gummble references](GUMMBLE_RESEARCH.md). No official downloadable Duolingo engineering DESIGN.md was established. Exact app spacing/radii below are our chosen tokens, not extracted source constants.
 
 2026-10-04 frontend override: the user explicitly chose the original Duolingo screenshot appearance for onboarding/login, including Duo, icons, fonts and tactile controls. The active implementation uses locally bundled DuolingoSans/Feather, archived illustration regions, and measured reference-specific tokens in `apps/mobile/lib/core/design/`. [Onboarding](flows/01_ONBOARDING.md) and [login](flows/02_LOGIN.md) own screen deconstruction; [asset provenance](../../apps/mobile/assets/PROVENANCE.md) owns input sources. The adaptation tokens below remain the planned product baseline, not the active reference-reproduction palette. Reference fidelity is not a contrast certification or proof of identical motion.

@@ -1,5 +1,7 @@
 # AI / speech evidence (checked 2026-10-03, Asia/Saigon)
 
+Historical snapshot retained. [Current evidence](../audit/RESEARCH_EVIDENCE.md) and [provider benchmark](../ai/PROVIDER_BENCHMARK.md) supersede changing model/eligibility/price claims; old IDs/quotas are not operational defaults or current account guarantees.
+
 Scope: official vendor documentation only. Cost classes use `FREE_FOREVER`, `FREE_TIER`, `STUDENT_BENEFIT`, `PROMOTIONAL_CREDIT`, `TRIAL`, or `PAID_ONLY`; “free” is never treated as unlimited. Scores are engineering judgments for this Flutter Android/iOS + TypeScript/Appwrite university demo, not benchmarks. No architecture choice is final until synthesis.
 
 | Claim | Verdict | Exact field/default | Source | Checked on |

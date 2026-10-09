@@ -1,5 +1,7 @@
 # Assumptions and validation register
 
+Current blockers and deadlines are in [open decisions](audit/OPEN_DECISIONS.md). This historical register remains rationale; current public node-22 support, Education enforcement, model retirement and actual mock/journal gaps are corrected in [changelog](audit/CHANGELOG.md). Account/device facts still require their gates.
+
 Checked 2026-10-03. An unresolved entitlement never silently enables spending.
 
 | ID | Class | Assumption / decision | Validation and safe behavior |

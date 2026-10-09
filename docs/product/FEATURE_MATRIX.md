@@ -1,5 +1,7 @@
 # Current Duolingo feature matrix and V1 scope
 
+Current implementation order: preserve [existing mock UI](../audit/UI_IMPLEMENTATION_GAP.md). **MUST FOR COURSE DEMO:** onboarding/course/goal/placement, guest/auth/recovery, path/session/deterministic exercises, feedback/XP/streak/profile/settings/practice/basic listening/speaking and reliability. **SHOULD:** mistakes/SRS/adaptive placement/goals/quests/local reminders/speech replay/explanations/cached lessons. **LATER:** richer social/story/video-like conversation, live premium billing, teacher tooling and other disciplines unless rubric mandates them. Realtime voice proof remains engineering gate P8 even when advanced conversation UX is later. Existing mock extension screens are retained; no full parity claim.
+
 Checked 2026-10-03. **Confirmed** means source documents the feature, not universal account availability. **Observed** means an inspected Dec 2025 iOS Gummble capture. **UNVERIFIED** means current exact behavior was not established. This matrix separates competitor evidence from our prescriptive behavior. Sources R13–R22 are in [research register](../research/RESEARCH_EVIDENCE.md).
 
 | Area / current feature | Evidence / availability / confidence | CocEnglish V1 / phase |

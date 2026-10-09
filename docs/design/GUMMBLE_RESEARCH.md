@@ -1,5 +1,7 @@
 # Gummble research and connection workflow
 
+Fresh 2026-10-09 check: real `gummble_search_apps(q=duolingo,platform=ios,limit=1)` returned the existing app ID/slug. Official Codex command `codex mcp add gummble --url https://mcp.gummble.com/mcp` matches local `codex mcp add --help`; no duplicate registration was performed. Claude command remains documented externally, but local help reports missing AgentRouter auth, so its execution is not certified. Runtime/CI do not depend on MCP entitlement. [Current evidence](../audit/RESEARCH_EVIDENCE.md).
+
 Implementation update2026-10-04: live MCP connected and ordered local references now cover150 screens across16 selected flow families. [Full frontend receipt](qa/FULL_FRONTEND_REPORT.md) records native UI coverage,127 byte-identical bundled illustration sources, builds and remaining fidelity gaps. User explicitly chose original Duolingo art/style for this local reproduction, overriding the earlier mascot/color adaptation described below. The catalog remains an archived reference, not a current installed app or source-animation exporter.
 
 Checked 2026-10-03; configured MCP succeeded. Official [MCP offer](https://gummble.com/mcp) requires paid access or an eligible active trial. Category PAID_ONLY / TRIAL; no “free tool” claim. Runtime app and CI do not depend on it.

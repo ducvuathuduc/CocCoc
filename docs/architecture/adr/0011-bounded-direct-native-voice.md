@@ -22,6 +22,8 @@ Avoids extra hosting and raw-audio Function limits while retaining conditional l
 
 ## Consequences
 
+Refresh 2026-10-09: [current provider benchmark](../../ai/PROVIDER_BENCHMARK.md) gives the replacement candidate and legacy model earliest retirement. Model/config change stays within this adapter decision; native capability remains disabled until actual token-bound and physical-device proof. Appwrite cannot enforce socket termination.
+
 Provider expiry/config enforcement must pass; ambiguous mint consumes budget and never remints; Appwrite cannot terminate the direct socket.
 
 ## Revisit triggers
@@ -29,4 +31,3 @@ Provider expiry/config enforcement must pass; ambiguous mint consumes budget and
 If provider bounds fail disable native; server relay needs justified hosting/security/cost ADR.
 
 Canonical specification: [owner](../../ai/AI_ARCHITECTURE.md).
-

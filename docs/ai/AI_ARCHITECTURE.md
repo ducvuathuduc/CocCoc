@@ -1,50 +1,18 @@
 # AI, listening and speech architecture
 
-Vendor facts/model status/quotas are canonical in [AI evidence](../research/AI_EVIDENCE.md); cost controls in [COST_MODEL](../devops/COST_MODEL.md). This document defines implementation decisions. No provider latency/accuracy benchmark has been run.
+Current facts/model status/prices are in [provider benchmark](PROVIDER_BENCHMARK.md) and [current research](../audit/RESEARCH_EVIDENCE.md); historical [AI evidence](../research/AI_EVIDENCE.md) retains its date; cost controls in [COST_MODEL](../devops/COST_MODEL.md). This document defines implementation decisions. No provider latency/accuracy benchmark has been run.
 
 ## Decisions and model routing
 
-Text tutor primary: Gemini gemini-2.5-flash-lite (documented stable/free-tier candidate). Native voice primary: Gemini gemini-2.5-flash-native-audio-preview-12-2025 (documented free candidate, preview), enabled only after current availability and v1beta token/device probes. Token guide examples name other models: never substitute an example model without checking availability/pricing. IDs are allowlisted configuration, not embedded Flutter UI logic.
+Text primary candidate: gemini-3.5-flash-lite, authored correction first. Native Live candidate: gemini-3.8-live, disabled until account/v1beta credential/native-device probes. Existing eligible 2.5 text remains fallback; legacy native-audio preview has earliest retirement 2026-11-17. Token guide examples name other models: never substitute an example model without checking availability/pricing. IDs are allowlisted configuration, not embedded Flutter UI logic.
 
-Fallback A: turn-based Groq whisper-large-v3-turbo STT → Gemini text → installed device TTS or bundled reply audio. Fallback B: Cloudflare @cf/openai/whisper STT under Neurons allowance → authored scenario response/bundled audio; no additional Worker gateway needed, server calls configured API. Deepgram is an optional credit-backed streaming alternative; not part of baseline. OpenAI gpt-realtime-2.1-mini is a documented paid technical fallback only with separately authorized API funds, disabled by default. Google Cloud STT/TTS monthly billing-enabled quotas are compared but unnecessary defaults. Dedicated pronunciation uses Azure assessment behind an actual entitlement test; F0 assessment availability remains UNVERIFIED, enhanced prosody disabled unless confirmed allocation.
+Fallback A: turn-based Groq whisper-large-v3-turbo STT → Gemini text → installed device TTS or bundled reply audio. Fallback B: Cloudflare @cf/openai/whisper STT under Neurons allowance → authored scenario response/bundled audio; no additional Worker gateway needed, server calls configured API. Deepgram is an optional credit-backed streaming alternative; not part of baseline. OpenAI gpt-realtime/gpt-realtime-mini are paid candidates only with separately authorized API funds, disabled by default; current GA credential contract must be verified rather than inherited from beta docs. Google Cloud STT/TTS monthly billing-enabled quotas are compared but unnecessary defaults. Dedicated pronunciation uses Azure assessment behind an actual entitlement test; F0 assessment availability remains UNVERIFIED, enhanced prosody disabled unless confirmed allocation.
 
 Offline guaranteed mode: reference audio + record/replay shadowing + typed answer; no numerical pronunciation score. OS dictation/TTS only if installed/available; whisper.cpp is a later ADR candidate because model downloads/native integration add device cost. No Python service needed.
 
-## Quantitative provider comparison
+## Capability comparison and admission
 
-Scores1–10 are engineering suitability judgments; latency/quality are capability-informed estimates awaiting benchmark, not measured rankings. Numeric quota facts remain in evidence. “Cost” scores affordability.
-
-| Provider | Quality | Latency fit | Free quota | Cost | Realtime | STT | Pronunciation | TTS |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Gemini text + native Live | 8 | 9 | 8 | 9 | 9 | 7 | 2 | 8 |
-| Google Cloud STT/TTS | 8 | 7 | 6 | 6 | 7 | 8 | 2 | 8 |
-| OpenAI Realtime/audio | 9 | 9 | 1 | 2 | 9 | 8 | 2 | 9 |
-| Azure Speech/assessment | 8 | 7 | 5 | 5 | 7 | 8 | 10 | 8 |
-| Deepgram STT/TTS | 8 | 8 | 4 | 5 | 9 | 8 | 2 | 8 |
-| Groq Whisper | 8 | 8 | 7 | 8 | 3 | 8 | 1 | 1 |
-| Cloudflare Whisper | 7 | 6 | 8 | 8 | 3 | 7 | 1 | 1 |
-| whisper.cpp / device | 6 | 5 | 10 | 10 | 4 | 6 | 1 | 1 |
-
-| Provider | Vietnamese | English | Multilingual | Flutter fit | Concurrency | Rate limits fit | Availability | SDK | Operational simplicity | Fallback |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Gemini | 8 | 9 | 9 | 7 | 5 | 6 | 6 | 8 | 8 | 8 |
-| Google Cloud | 8 | 9 | 9 | 7 | 6 | 6 | 8 | 9 | 6 | 7 |
-| OpenAI | 8 | 9 | 9 | 7 | 7 | 6 | 8 | 9 | 7 | 5 |
-| Azure | 7 | 9 | 8 | 6 | 5 | 5 | 8 | 8 | 6 | 7 |
-| Deepgram | 5 | 9 | 7 | 7 | 6 | 6 | 8 | 8 | 7 | 7 |
-| Groq | 7 | 9 | 8 | 8 | 5 | 5 | 7 | 8 | 8 | 8 |
-| Cloudflare | 7 | 8 | 8 | 8 | 5 | 5 | 7 | 7 | 7 | 8 |
-| Device | 5 | 7 | 6 | 5 | 4 | 10 | 10 | 5 | 4 | 10 |
-
-Vietnamese/other language scores describe usefulness to our bilingual experience, not documented pronunciation-language parity. Azure English pronunciation is a distinct capability; no general Vietnamese phoneme assessment promise.
-
-| Architecture | Latency fit | Grading | Cost fit | Implementation simplicity | Observe/control | Fallback |
-|---|---:|---:|---:|---:|---:|---:|
-| A native speech-to-speech | 9 | 3 | 8 with free candidate | 7 | 5 | 5 |
-| B STT→LLM→TTS + optional assessment | 6 | 9 with assessor | 8 bounded/free device TTS | 6 | 9 | 9 |
-
-Winner A for realtime conversation, B for recorded/graded speech and fallback. They are modes of the same AI service, not extra microservices. A alone cannot claim phoneme scores.
-
+[Provider benchmark](PROVIDER_BENCHMARK.md) owns primary/fallback choices, protocol, model IDs, pricing and pending measurements. Previous 1–10 subjective rankings were removed: they were not empirical quality/latency/concurrency evidence. Native speech-to-speech is the gated conversation mode; batch STT/text/TTS plus a separate dedicated assessor is the recorded/graded mode. Both remain within AI ownership. Neither transcript similarity nor conversational fluency proves phoneme accuracy. Vietnamese learner accents require an actual English reference dataset; vi-VN assessment availability does not imply Vietnamese prosody.
 ## Adapter contracts
 
 Backend TextTutor.generate(reference, learnerText, level, locale, requestId)→validated TutorResult. Transcriber.transcribe(wav, locale)→final transcript/confidence|null. PronunciationAssessor.assess(wav, reference, locale)→Assessment with nullable metrics and scoreState. Synthesizer.selectAssetOrGenerate(text,voice,speed,locale)→versioned audio asset or device directive. LiveIssuer.issue(userId,scenarioId,reservation)→single-use constrained VoiceLease.
@@ -53,9 +21,9 @@ Flutter SpeechSessionController owns lifecycle; SpeechTransport exposes connect/
 
 ## Secure Live reservation and credentials
 
-Use POST Gemini v1beta/auth_tokens via server credential, with uses=1; newSessionExpireTime=issuedAt+60s; expireTime=issuedAt+180s; model pinned and liveConnectConstraints pin AUDIO modality, allowed system/scenario instructions, audio/transcription configuration, no arbitrary tools/config. [Official ephemeral-token guide](https://ai.google.dev/gemini-api/docs/ephemeral-tokens) describes expireTime as the time allowed to send messages over the connection; client implementation must verify enforcement on a live expired socket before native mode is enabled. Lock full security-sensitive configuration using current SDK/reference fields. No automatic context compression or post-expiry resumption.
+Use POST Gemini v1beta/auth_tokens via server credential, with uses=1; newSessionExpireTime=issuedAt+60s; request expireTime=issuedAt+180s as a project lease policy, not a documented provider maximum. Pin model and liveConnectConstraints to AUDIO modality, allowed system/scenario instructions and audio/transcription configuration, without arbitrary tools/config. [Official ephemeral-token guide](https://ai.google.dev/gemini-api/docs/live-api/ephemeral-tokens) documents a 30-minute default and refers field constraints to the API reference; P8 must prove the shorter requested bound on an active socket before enablement. Lock all security-sensitive configuration using current SDK/reference fields. No automatic context compression or post-expiry resumption.
 
-Appwrite transaction reserves180s and claims deterministic a_active_slots(userId) before mint; daily rule used+reserved+180≤600 seconds and at most2native grants/day. On successful mint, charge the entire reservation as consumed. Client close/heartbeat cannot refund budget or prove vendor usage. If mint outcome is ambiguous, consume budget conservatively. A lost token delivery returns VOICE_TOKEN_DELIVERY_UNCERTAIN until original lease expiry; do not issue a replacement token under the same reservation. Reconnect uses the same credential/provider-supported resumption only within original expiry and only if P8 proves one-session constraints. Otherwise switch to TURN.
+Appwrite transaction reserves180s and claims deterministic a_active_slots(userId) before mint; daily rule used+reserved+180≤600 seconds and at most2native grants/day are project policies independent of vendor quotas. On successful mint, charge the entire reservation as consumed. Client close/heartbeat cannot refund budget or prove vendor usage. If mint outcome is ambiguous, consume budget conservatively. A lost token delivery returns VOICE_TOKEN_DELIVERY_UNCERTAIN until original lease expiry; do not issue a replacement token under the same reservation. Reconnect uses the same credential/provider-supported resumption only within original expiry and only if P8 proves one-session constraints. Otherwise switch to TURN.
 
 Server/provider enforcement and reservation accounting are distinct. Appwrite cannot close a direct socket. If provider expiry/config restrictions fail device/security probes, **nativeLive=false** and use TURN until a server-controlled relay has a justified hosting ADR. UI timer≤180s is usability, not security. Key is a no-billing/free allocation by default; provider quotas and hard spend control contain residual usage. Tokens, resumption handles and raw audio never logged. Only allowlisted model configuration can mint a grant.
 

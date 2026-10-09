@@ -1,5 +1,7 @@
 # Reading order and canonical ownership
 
+Current audit/research/foundation refresh (2026-10-09–10): start with [00_START_HERE](00_START_HERE.md). [Current evidence](audit/RESEARCH_EVIDENCE.md) supersedes changing vendor/model/account assumptions in the dated V1 snapshot. Source, UI and contracts are preserved; local backend fixtures do not pass cloud/device phase gates.
+
 This package is the V1 specification, checked 2026-10-03. Normative project decisions, limits, and target budgets are engineering choices, not vendor guarantees or measured benchmarks.
 
 Current implementation entry (2026-10-04): [Flutter module](../apps/mobile/README.md), [authorized frontend task](agent/FRONTEND_FLOW_PLAN.md), and [full mock frontend verification](design/qa/FULL_FRONTEND_REPORT.md). Onboarding/login and the remaining planned learning/practice/progress/account UI families are implemented against local fixtures after Gummble analysis. The user authorized original Duolingo reference styling and mock data first. Exact fidelity and complete production phase gates remain required.

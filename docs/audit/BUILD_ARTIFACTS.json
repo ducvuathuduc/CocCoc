@@ -1,0 +1,49 @@
+{
+  "recordedDate": "2026-10-10",
+  "timezone": "Asia/Saigon",
+  "baselineCommit": "8b64cdcff3365e0ae4c5401bf2e799abd3dca649",
+  "sourcesChanged": "backend/docs only; mobile source/lock/assets unchanged",
+  "published": false,
+  "artifacts": [
+    {
+      "label": "Android debug APK",
+      "path": "apps/mobile/build/app/outputs/flutter-apk/app-debug.apk",
+      "bytes": 219852134,
+      "sha256": "0145cde59bf861f2828a916cee31ba7065cf2d5bf09b7e53eed1a2c84b9bcaa9",
+      "lastModifiedUtc": "2026-10-09T17:33:08.671Z",
+      "scope": "COMPILE_PASS_FRESH_GRADLE_HOME_NO_DEVICE_PROOF"
+    },
+    {
+      "label": "Flutter release web",
+      "path": "apps/mobile/build/web/main.dart.js",
+      "bytes": 4109141,
+      "sha256": "cb7050462570294aea9104ca5c8813219ef2390123fa38b8f50d9294dab8ca9d",
+      "lastModifiedUtc": "2026-10-09T17:00:47.872Z",
+      "scope": "COMPILE_PASS_NO_BROWSER_DEVICE_PROOF"
+    },
+    {
+      "label": "learning Function scaffold",
+      "path": "services/learning/dist/function.mjs",
+      "bytes": 1228,
+      "sha256": "9d45cb7a7a43766fa2b8484fa9d2697672244da7ce0a72231d97e8c40eb2769f",
+      "lastModifiedUtc": "2026-10-09T17:15:59.008Z",
+      "scope": "BUNDLED_DISABLED_BUSINESS_ADAPTERS"
+    },
+    {
+      "label": "progress Function scaffold",
+      "path": "services/progress/dist/function.mjs",
+      "bytes": 1228,
+      "sha256": "cbdc3f1e91715575223cdad092070de75916a8b4ad8f05a9105a008a6b8ffb73",
+      "lastModifiedUtc": "2026-10-09T17:15:59.348Z",
+      "scope": "BUNDLED_DISABLED_BUSINESS_ADAPTERS"
+    },
+    {
+      "label": "ai Function scaffold",
+      "path": "services/ai/dist/function.mjs",
+      "bytes": 1216,
+      "sha256": "2a1e594e513a9a9f5b8250745f810d50a3c140e2b6992a78800b35307e0b3ed8",
+      "lastModifiedUtc": "2026-10-09T17:15:59.537Z",
+      "scope": "BUNDLED_DISABLED_BUSINESS_ADAPTERS"
+    }
+  ]
+}

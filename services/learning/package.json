@@ -1,0 +1,14 @@
+{
+  "name": "@cocenglish/learning",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ../../tools/scripts/backend-check.mjs --build learning",
+    "test": "node --test test/*.test.mjs",
+    "start": "node ../../tools/scripts/service-local.mjs learning"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

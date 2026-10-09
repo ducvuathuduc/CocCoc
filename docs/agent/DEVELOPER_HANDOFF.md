@@ -8,11 +8,12 @@ Read [project instructions](../../AGENTS.md) and
 - Runnable Flutter frontend in `apps/mobile`: feature-first manual Riverpod
   MVVM, English lessons and local mock repositories. Latest recorded frontend
   checks: [English lesson report](../design/qa/ENGLISH_LESSON_REPORT.md).
-- Backend design contracts exist. `services/learning`, `services/progress` and
-  `services/ai` currently contain ownership instructions, not runnable handlers.
-  There is no backend package lock, Appwrite schema migration or backend CI gate
-  proving a production implementation. Frontend mock results are not server
-  authority or production authentication.
+- Backend design contracts and local foundations now exist in `services/learning`,
+  `services/progress` and `services/ai`: separate packages, Function artifacts,
+  strict TS/test tooling and a fake completion-to-reward workflow. Hosted business
+  adapters remain disabled. A four-table schema dry-run and starter catalog seed
+  do not complete the 37-table integration or curriculum. [Refresh evidence](../audit/VALIDATION.md).
+  Frontend mock results are not server authority or production authentication.
 
 ## Backend documentation map
 
@@ -51,8 +52,8 @@ allowlists and ownership tests. Do not infer cross-service write permission.
 ## Run the frontend after a clean clone
 
 Use the pinned Flutter/Dart baseline and pnpm from the toolchain manifest.
-Node 22 is the frozen CI/backend target; the recorded local frontend toolchain
-used Node 24.16.0. Service package versions and backend locks remain a P1 task.
+Node 22 is the frozen CI/backend target; local refresh checks used Node 24.16.0.
+Backend dependency versions are pinned in the new pnpm lock; Node22 cloud execution remains a P1 gate.
 
 From the repository root:
 

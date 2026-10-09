@@ -1,7 +1,7 @@
 {
-  "updated": "2026-10-04",
+  "updated": "2026-10-10",
   "project": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
-  "phaseGateState": "Full P1/P2/P3 remain pending; user-authorized frontend slice verified separately",
+  "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
     {
       "taskId": "UI-ONBOARDING-LOGIN-SLICE",
@@ -113,6 +113,47 @@
       "evidence": [
         "docs/design/qa/FULL_FRONTEND_REPORT.md"
       ]
+    },
+    {
+      "taskId": "RESEARCH-REFRESH-20261009",
+      "phase": "user-authorized research and local foundation refresh",
+      "owner": "root",
+      "branch": "main",
+      "baselineCommit": "8b64cdcff3365e0ae4c5401bf2e799abd3dca649",
+      "worktree": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
+      "status": "PASSED",
+      "requirementCoverage": "research/document/scaffold/local compilation only; existing UI preserved; full production phase gates remain pending",
+      "exclusivePaths": [
+        "docs/audit",
+        "docs/agent/RESEARCH_REFRESH_PLAN.md",
+        "services",
+        "appwrite",
+        "packages/api_contracts",
+        "tools/audit",
+        "tools/evals",
+        "tools/scripts/backend*.mjs",
+        "package.json",
+        "pnpm-lock.yaml",
+        ".github/workflows/backend.yml"
+      ],
+      "evidence": [
+        "docs/audit/VALIDATION.md",
+        "docs/audit/DOCS_MANIFEST.md",
+        "docs/audit/BUILD_ARTIFACTS.json",
+        "docs/ARCHITECTURE_FREEZE_REPORT.md"
+      ],
+      "freshChecks": {
+        "node": "22.23.3",
+        "backendTests": 16,
+        "flutterTests": 439,
+        "schemas": 94,
+        "schemaFixtureCases": 30,
+        "webCompile": "PASS",
+        "androidDebugCompile": "PASS with fresh repo-local Gradle user home",
+        "cloudDeployment": "NOT_RUN",
+        "providerInferenceCalls": 0
+      },
+      "remaining": "teacher rubric/account entitlement; full schema/curriculum; actual JWT/transaction/permissions/outbox; Drift; native voice/assessment benchmark; physical Android/iOS; live billing/push/backup/CI run"
     }
   ]
 }

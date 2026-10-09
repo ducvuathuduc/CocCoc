@@ -1,5 +1,7 @@
 # Approved repository tree
 
+Historical target layout below is retained as design rationale; it is not the current disk tree. [Actual refresh manifest](../audit/DOCS_MANIFEST.md) and [input inventory](../audit/INPUT_INVENTORY.json) own observed paths. Existing mobile router is main.dart, design is core/design, domain folders are preserved; never regenerate to match this sample. Appwrite foundation scripts are in appwrite/, backend wire types in packages/api_contracts and shared transport in services/shared. Remaining full schema/domain/cloud integration is phase-gated.
+
 Phase0 exists now: all docs below, root/nested instructions, skills/reviewer definitions, hooks/validators, PR/MCP/environment examples. Application/backend/build/content paths below are **approved future paths**, created in their assigned phase; no empty placeholder application code, fake successful pipeline, or unused layer was generated. [IMPLEMENTATION_PLAN](IMPLEMENTATION_PLAN.md) owns timing. Generated SDK platform files follow pinned flutter create; the tree fixes ownership/modules rather than listing every generated Gradle/Xcode file.
 
 ~~~text

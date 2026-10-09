@@ -1,5 +1,7 @@
 # Software requirements specification
 
+Current directive supplement: [demo priorities](FEATURE_MATRIX.md), [formal transitions](STATE_MACHINES.md), [real control seams](SCREEN_BEHAVIOR_MAP.md), [typed content/normalization](CONTENT_MODEL.md), [future billing lifecycle](MONETIZATION.md). Existing FR IDs/wire/storage ownership remain stable. Simulations are not authoritative completion.
+
 Version 1, 2026-10-03. Product scope: English learning for Vietnamese-speaking university users, Flutter Android/iOS, three business services, course author CLI, offline unit practice, free-first guided speech. P0 = gate requirement; P1 = core enhancement; P2 = bounded extension. Requirement IDs never change when wording changes.
 
 Normative rules here are our design, not undocumented Duolingo behavior. “AC” means acceptance criteria. API operation IDs appear in [OpenAPI](../api/openapi.yaml). Nonfunctional requirements and test budgets are canonical in [NFR](../architecture/NFR.md).
@@ -70,4 +72,4 @@ Timezone command chooses effectiveAt=00:00:00Z on the UTC date immediately after
 
 ## Scope exclusions and capability gates
 
-No full translation catalog, payments/ads, live camera video, chat messaging, math/music/chess, automatic semantic grading, public-store distribution, or claimed production capacity at10,000 connections. V1 includes honest UI states for unavailable services. Cloud live/phoneme scoring becomes enabled only after P8 physical-device and account tests; the required baseline remains recorded/typed/shadowing speaking plus cached listening.
+No full translation catalog, live payments/ads, live camera video, chat messaging, math/music/chess, automatic semantic grading, public-store distribution, or claimed production capacity at10,000 connections. Commercialization design and fake payment states are included; live billing is separately gated. Cloud live/phoneme scoring requires P8 physical-device/account tests; recorded/typed/shadowing and cached listening are safe fallbacks, not proof the coursework realtime requirement was fulfilled.

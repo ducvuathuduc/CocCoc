@@ -1,6 +1,6 @@
 # CocEnglish project instructions
 
-Read docs/00_READ_ME_FIRST.md, the assigned task in docs/agent/IMPLEMENTATION_PLAN.md, and nearest nested AGENTS.md before changing code. The original checkout was Phase0 specification. The current user-authorized frontend implementation task is docs/agent/FRONTEND_FLOW_PLAN.md: reference onboarding, mock login, Duo motion and a local web preview. Full phase gates remain pending.
+Read docs/00_START_HERE.md, the assigned task in docs/agent/IMPLEMENTATION_PLAN.md, and nearest nested AGENTS.md before changing code. Current authorized architecture audit/research/scaffold task: docs/agent/RESEARCH_REFRESH_PLAN.md. Existing frontend work in docs/agent/FRONTEND_FLOW_PLAN.md is preserved. Full cloud/device/production phase gates remain pending.
 
 Frozen: Flutter Android/iOS; feature-first Riverpod MVVM; TypeScript/Node22; three services Learning/Progress/AI; Appwrite Auth/TablesDB/Storage; REST/OpenAPI; service-owned writes; Drift journal. Change architecture only through docs/agent/TASK_PROTOCOL.md ADR procedure. Do not default to Python or add broker/cluster/cache/gateway products.
 
@@ -14,4 +14,4 @@ For behavior changes, write a meaningful failing test, implement, run targeted c
 
 No deploy, publish, merge, reset/delete, force-push or new paid plan without explicit request. Research/scaffold permission does not authorize those actions.
 
-Phase0 check: node tools/blueprint/validate.mjs. P1 supplies application build/test commands. Before ending, update only assigned task evidence and canonical docs affected by actual decisions.
+Checks: pnpm backend:verify; pnpm backend:smoke; pnpm contracts:check; pnpm api:lint; pnpm audit:check; pnpm verify. See docs/devops/LOCAL_SETUP_WINDOWS.md. Mock stores never power cloud entrypoints; readiness fails closed until actual adapters are admitted. Before ending, update only assigned task evidence and canonical docs affected by actual decisions.

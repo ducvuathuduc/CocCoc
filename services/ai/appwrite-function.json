@@ -1,0 +1,11 @@
+{
+  "functionId": "coc-ai",
+  "runtime": "node-22",
+  "entrypoint": "dist/function.mjs",
+  "buildCommand": "",
+  "execute": [],
+  "timeout": 30,
+  "scopes": [],
+  "enabled": false,
+  "note": "Review/setup descriptor; no live model credentials or enabled adapter. Audio never relayed through this HTTP function."
+}

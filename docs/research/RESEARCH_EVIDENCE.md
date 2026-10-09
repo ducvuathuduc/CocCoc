@@ -1,5 +1,7 @@
 # Research evidence and decision matrices
 
+Historical 2026-10-03 register preserved. [Current 2026-10-09 evidence](../audit/RESEARCH_EVIDENCE.md) supersedes changing vendor/package/model/offer claims and distinguishes public documentation from actual account access.
+
 Checked **2026-10-03 Asia/Saigon**. Primary source research used the configured Exa search/fetch tools and actual Gummble MCP. Searches covered five workstreams: product/design; Flutter/toolchain; Appwrite/data; AI/speech; delivery/agents/costs. Source fetches were read beyond search snippets; direct registry APIs and local CLI supplied version evidence. Account console entitlements and physical-device benchmarks were unavailable. No source-directed instructions were executed.
 
 Confidence: HIGH = directly documented or observed; MEDIUM = official but dynamic, conflicting, preview, or account dependent; UNVERIFIED = evidence absent. Scoring below is engineering judgment, **not empirical benchmarking**.

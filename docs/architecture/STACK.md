@@ -1,5 +1,7 @@
 # Frozen stack and package research
 
+Resolved supplement 2026-10-09–10: mobile lock preserved; root pnpm-lock.yaml pins TypeScript5.9.3, node-appwrite29.2.0, ESLint10.12.0/typescript-eslint8.71.1, Prettier3.9.9, AJV8.20.0, Redocly2.62.1 and openapi-typescript7.13.0. [Compatibility receipt](../audit/VALIDATION.md): latest TS7 was incompatible with generator/parser. Backend16 tests/smoke/audit also passed under verified portable Node22.23.3; CI pins that version. Drift/http/DTO generation below remain planned mobile integrations; Cloud runtime is still an account gate.
+
 Research snapshot2026-10-03; final validation2026-10-04. Version numbers below came from **pub.dev package API** and npm registry, not memory. Local command confirmed Flutter3.47.0/Dart3.13.0, Node24.16.0, Codex0.153.4. Latest Flutter patch is not established from official rendered archive; pin known stable3.47.0 until approved update. Backend runtime baseline Node22; installed Node24 is not assumed to match Cloud Functions.
 
 Flutter architecture: feature-first MVVM + manual Riverpod Notifier/AsyncNotifier + typed repositories; go_router; SDK for Account, http for business REST; Drift SQLite for durable journal. Use json_serializable for DTOs and Drift code generation, with one build_runner command; no Freezed or Riverpod generation. Domain model validation stays explicit.

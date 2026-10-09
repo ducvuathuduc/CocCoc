@@ -1,5 +1,7 @@
 # Architecture Blueprint V1 — CocEnglish
 
+Current 2026-10-09–10 [conditional freeze](ARCHITECTURE_FREEZE_REPORT.md) and [research](audit/RESEARCH_EVIDENCE.md) supersede changing vendor/model/tooling/status assumptions below. Historical rationale/IDs remain preserved. Legacy Live retirement and 2.5 text eligibility require current gated profiles; mock builds do not establish production readiness.
+
 Research snapshot2026-10-03; final review2026-10-04, Asia/Saigon. This is the Phase0 handoff package requested by the master directive. Normative product/platform choices are frozen; current account, runtime and device capabilities require the named implementation gates. All technical documents use one concise English source; this executive decision is Vietnamese.
 
 ## PART A — Executive Engineering Decision

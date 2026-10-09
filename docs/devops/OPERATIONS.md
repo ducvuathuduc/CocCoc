@@ -1,5 +1,28 @@
 # Observability, load testing and operational runbook
 
+Current admission/receipt: [Appwrite setup](APPWRITE_SETUP.md), [fresh validation](../audit/VALIDATION.md), [demo](../quality/DEMO_PLAYBOOK.md). Runbooks below are procedures and required recovery tests, not fabricated incident drills.
+
+## Explicit failure-to-recovery contract
+
+| Symptom / detection | Likely cause / user feedback | Retry or compensation / exact recovery gate |
+|---|---|---|
+| Auth401/403, refresh overlap, OAuth callback absent | expired/revoked session, endpoint/platform mismatch; preserve email and route intent, no private access | single-flight refresh; one restore; AUTH-revoke/refresh-race/callback fixture then actual P3 receipt |
+| Provider429/5xx, empty/malformed tutor or locale mismatch | quota/outage/schema; authored explanation and typed/shadowing mode | honor Retry-After, breaker, no blind ambiguous paid retry; AI-invalid/quota/locale eval |
+| Education disabled / spend cap hit | term/plan/resource mismatch; cached demo remains available | export/restore/downgrade admission; local three-service fallback; account receipt before cloud enablement |
+| Migration partial / index pending / conflict | additive schema not ready; stop new writer, retain prior version | wait statuses; match checksum; re-stage transaction; schema-conflict/no-partial/outbox fixture and live P1 probe |
+| Outbox stuck/missing/duplicate, league stale | failed consumer/ack/lease; reward pending and league settling | retain event, lease retry/dead letter; owner requeue dry-run; ledger+watermark converge; P6 event recovery gate |
+| Cache schema/corruption/storage full / queue stuck | old bundle/journal damaged; preserve quarantined data and explain repeat/export | no destructive silent reset; free space/re-download full hash-valid bundle; SYNC-corrupt/diskfull/reject/upgrade P5/P10 |
+| Other account/device switched or app killed during sync | invalid cache identity/in-flight epoch; old user data inaccessible | invalidate callbacks, scoped encrypted journal, same receipt replays after same-account restore; cross-account/kill tests |
+| Mic denied/restricted/disconnected, call/Bluetooth change, no audio/noise | OS permission/audio focus/device; explicit typed/record-replay option | stop capture/playback, clear buffers, settings action for permanent denial; actual device P8 lifecycle matrix |
+| VAD false start/late transcript, voice expired/back/cancel | stale provider epoch/network; do not replay old audio or show fabricated score | cancel/dispose, discard stale events, new TURN session; token/epoch/cancel/interruption eval |
+| Assessment unsupported locale/absent prosody | provider capability/entitlement; score null | reference locale validation, nonnumeric feedback; scorer-separation P8 |
+| Purchase killed/pending/refunded, duplicate RTDN | vendor state not reconciled; free access and verification pending | fetch vendor current state, dedupe, restore; sandbox purchase lifecycle gate in MONETIZATION |
+| Notifications disabled/token expired | OS preference/provider registration; no misleading sent banner | update/remove own device token, settings prompt once; permission/token-rotation tests P9 |
+| CI secret/minutes/signing missing; unsigned iOS artifact | configuration/quota/team; visible blocked capability | deterministic no-secret checks still run; signing never faked; macOS/signed-device evidence separate |
+| Red deployment / vendor outage / rollback | incompatible revision or config; safe cached behavior | select prior compatible artifact, additive schema retained; ownership/smoke/duplicate checks and measured restore drill |
+
+Logs contain only safe code, owner, request/correlation ID, revision, attempt, duration and outcome; no raw JWT, provider credentials, learner audio, purchase token or full model prompt. Required alerts use actual configured platform capabilities after admission, not imaginary monitoring services.
+
 ## Telemetry and dashboards
 
 Minimum stack: structured JSON through Appwrite function context log/error; OpenTelemetry-compatible trace/request IDs; bounded Grafana Free export; optional Sentry Flutter crash capture. Local demo writes NDJSON and can export using local process lifetime. Do not assume a serverless background exporter survives response return. Cloud export, if enabled, is awaited with150ms best-effort budget; failure never rolls back business transaction. Always emit local context log before response. Traces/log export is sampled and redacted.

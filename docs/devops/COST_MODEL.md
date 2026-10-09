@@ -1,5 +1,22 @@
 # Cost classification and zero-spend operation
 
+Current 2026-10-09 external prices/offer changes are in [evidence](../audit/RESEARCH_EVIDENCE.md) and [provider benchmark](../ai/PROVIDER_BENCHMARK.md). Historical numeric allowances below are planning observations, not account guarantees. Current Education enforcement and account expiry must be resolved before cloud admission; no new paid signup or spend occurred.
+
+## Four design scenarios and accounting formulas
+
+Illustrative assumptions, not measurements: two lessons/person/day, ten answers/lesson; 25 business requests/day including bootstrap; 60 DB reads/20 row operations/day; 0.6 MB uncached media/day; one tutor request/day at 600 input/120 output tokens; optional two audio minutes/day. Usage varies with cache, retries, content and transaction staging. Do not count database reads/writes as equivalent Function executions or assume every free ceiling can be used simultaneously.
+
+| Cohort / scenario | Daily requests / DB reads / row operations | Daily uncached media | Daily tutor input/output tokens | Optional audio minutes |
+|---|---|---|---|---|
+| 1 tester | 25 / 60 / 20 | 0.6 MB | 600 / 120 | 2 |
+| 10 testers | 250 / 600 / 200 | 6 MB | 6,000 / 1,200 | 20 |
+| 100 DAU | 2,500 / 6,000 / 2,000 | 60 MB | 60,000 / 12,000 | 200 |
+| 1,000 DAU | 25,000 / 60,000 / 20,000 | 600 MB | 600,000 / 120,000 | 2,000 |
+
+For N active people and D days: text list cost = N×D×(600×inputRate +120×outputRate)/1,000,000; Live = admitted inputMinutes×inputMinuteRate + outputMinutes×outputMinuteRate; storage/transfer/compute/read/write use their distinct measured units and current plan rates after included allowances. CI = billable runner minutes×current OS rate + accumulated artifact/cache storage. Apply actual remaining credit, expiration and account quotas afterward; do not invent a final VND invoice or conversion rate. Optional paid adapters and overage stay off. Hard project/provider quota may reject requests before these design ceilings; ordinary cached learning still works.
+
+Classes: local tools are software with existing hardware cost; recurring free tiers are bounded; Education/trials expire; one-time redeemed credits have actual balances/deadlines; strictly paid store/signing/API resources need separate authorization. Current DigitalOcean balance/expiry and Azure credit eligibility are ACCOUNT-DEPENDENT. Check actual dashboard, never infer them from historical Student Pack offers. Free cloud fallback may not satisfy a rubric requiring three deployed services.
+
 Checked2026-10-03; reviewed2026-10-04. Exact categories: FREE_FOREVER (software/no metered hosted dependency), FREE_TIER (ongoing bounded hosted allocation), STUDENT_BENEFIT, PROMOTIONAL_CREDIT, TRIAL, PAID_ONLY. No hosted service is promised permanently unlimited. Card/account entitlement marked UNVERIFIED when public source does not establish it.
 
 | Capability | Provider / product or model | Category / free forever? | Free monthly or other quota | Student benefit | Trial/credit | Card? | Limits / recommendation |
@@ -18,8 +35,8 @@ Checked2026-10-03; reviewed2026-10-04. Exact categories: FREE_FOREVER (software/
 | iOS simulator tools | Xcode / simulator on included macOS runner | FREE_TIER hosted / FREE_FOREVER software | runner allowance | none needed | none | runner policy | default unsigned simulator proof, no local Windows Xcode |
 | Signed device/TestFlight/store | Apple Developer Program | PAID_ONLY unless existing eligible team/waiver | no claimed free distribution quota | university eligibility must be verified | no assumed credit | membership account | optional; cloud build does not supply signing membership |
 | Android demo | local APK side-load | FREE_FOREVER software | no store quota | none | none | no | selected; public Play publishing excluded/paid account requirement |
-| Text tutoring | Gemini2.5Flash-Lite | FREE_TIER, no | token/RPM/RPD depend on account; amount UNVERIFIED | no assumed student API benefit | no credits relied upon | no billing activation default; regional eligibility verified | selected capped100requests/user/day; vendor lower limit wins |
-| Native voice | Gemini2.5Flash native audio preview12-2025 | FREE_TIER, no | free pricing row; actual session concurrency/rate account-dependent | none assumed | preview not a trial claim | no billing activation default; verify account | gated default;2grants/user/day×180s admission; no paid auto-fallback |
+| Text tutoring | current gated Gemini text profile | FREE_TIER, no | token/RPM/RPD depend on account; amount UNVERIFIED | no assumed student API benefit | no credits relied upon | no billing activation default; regional eligibility verified | selected capped100requests/user/day; vendor lower limit wins |
+| Native voice | current gated Gemini Live profile | FREE_TIER, no | free pricing row; actual session concurrency/rate account-dependent | none assumed | preview not a trial claim | no billing activation default; verify account | gated default;2grants/user/day×180s admission; no paid auto-fallback |
 | Turn STT | Groq Whisper-large-v3-turbo | FREE_TIER, no | base20RPM/2K RPD;7.2K audio sec/hour,28.8K/day;25MB free upload | none | none relied upon | UNVERIFIED from fetched docs | selected bounded15s clips; actual Limits page authoritative |
 | Turn STT backup | Cloudflare Workers AI Whisper | FREE_TIER, no |10,000Neurons/day; platform Worker allowance separate100Krequests/day/10msCPU | none | none | no paid upgrade default; verify setup | selected optional backup; no unlimited minutes claim |
 | Streaming STT/TTS optional | Deepgram | PROMOTIONAL_CREDIT, no | no monthly recurring free allowance asserted | none |$200signup credit, no expiration documented | no card documented | not baseline; disappears when consumed |

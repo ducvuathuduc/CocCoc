@@ -1,5 +1,7 @@
 # Architecture freeze review
 
+Historical 2026-10-04 review retained. Current [freeze report](ARCHITECTURE_FREEZE_REPORT.md), [audit](audit/CHANGELOG.md) and [fresh validation](audit/VALIDATION.md) supersede implementation/vendor status assumptions, without advancing cloud/device gates.
+
 Review2026-10-04. Scope: complete Phase0 specification and agent handoff. Application code, actual cloud entitlement, generated dependency locks, deployed runtime, load/device evidence and signed distribution remain future gated work. [ASSUMPTIONS](ASSUMPTIONS.md) and [IMPLEMENTATION_PLAN](agent/IMPLEMENTATION_PLAN.md) define those probes and deterministic fallbacks.
 
 ## Eight-role adversarial review

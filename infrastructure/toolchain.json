@@ -3,6 +3,7 @@
   "dart": "3.13.0",
   "nodeCiAndBackend": "22",
   "nodeVerifiedLocal": "24.16.0",
+  "backendNodeVerifiedLocal": "22.23.3",
   "pnpmVerifiedLocal": "10.15.0",
   "androidGradlePlugin": "9.1.0",
   "gradle": "9.3.1",
@@ -11,5 +12,6 @@
   "androidTargetSdk": 36,
   "androidEmulatorVerifiedApi": 34,
   "iosBuildVerified": false,
-  "scope": "user-authorized onboarding and mock-login frontend slice"
+  "scope": "existing mock Flutter frontend and local three-service backend foundation; cloud/device and full phase gates pending",
+  "freshVerificationReceipt": "docs/audit/VALIDATION.md"
 }

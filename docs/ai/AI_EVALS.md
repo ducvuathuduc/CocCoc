@@ -1,5 +1,11 @@
 # AI evals and enablement gates
 
+Current runnable metadata/aggregation harness: `node tools/evals/voice-harness.mjs`, then `--report <measured-results.json>` for actual samples. Default fixture reports null p50/p95; it is not a benchmark. Natural Vietnamese-accent recordings/human labels are **MISSING SOURCE — USER ACTION NEEDED** before empirical quality claims. [Provider benchmark](PROVIDER_BENCHMARK.md) owns current candidates/prices.
+
+## Prompt registry
+
+[Versioned prompt fixtures](../../tools/evals/prompts.json) own three concise templates: explanation.v1 (authored answer/key immutable, bounded explanation), conversation.v1 (A1 scenario/one question per turn/no autonomous tools), assessment-feedback.v1 (describe supplied dedicated metrics; missing metrics null). Inputs are JSON-encoded learner data, locale/level/reference IDs and schema version. Output must match OpenAPI TutorResult/Assessment-derived presentation; reject malformed/truncated/off-topic/unsupported locale and select authored feedback. Model output cannot grant XP, change a key, fetch arbitrary URLs, choose a model or fabricate phoneme/prosody scores. Version/hash accompanies eval receipts; prompts are not a private cross-user memory store.
+
 Normal CI uses deterministic fixtures/fake adapters. Live evals are manually triggered, quota-previewed, isolated from PR CI, and run only within existing authorized free/student allocation. Targets are in [NFR](../architecture/NFR.md); no empirical results yet.
 
 | Eval | Dataset / assertion | Failure behavior |

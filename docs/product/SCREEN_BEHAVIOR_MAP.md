@@ -1,0 +1,30 @@
+# Real controls and implementation handoff
+
+[Exhaustive source callback inventory](../audit/SCREEN_CONTROLS.json) records every onPressed/onTap/onChanged/onSubmitted/onSelected/onLongPress declaration, real file/line, seven-line source context and observed command names. Reusable controls and dialog states are counted as declarations, not claimed unique screens. It is an audit aid; semantic wiring/accessible labels at runtime still need P2 tests. [Screen inventory](SCREEN_INVENTORY.md) owns design IDs/states; [traceability](../quality/TRACEABILITY.md) owns FR/API/table/event/test phase mapping.
+
+| User action / actual source under apps/mobile/lib | ViewModel → repository / current effect | Future authoritative contract / feedback / retry / test |
+|---|---|---|
+| Start/back/choose course/goal; onboarding/presentation/onboarding_flow.dart | onboardingControllerProvider advance/choice state; PreferencesOnboardingRepository | FR-ONB-001/002; persisted local step, offline guest; onboarding_controller_test/onboarding_flow_test; no cloud XP |
+| Login; auth/presentation/login_flow.dart | authControllerProvider.signIn; AuthRepository.signIn | FR-AUTH-002; Appwrite Account/session then Progress initialize; busy single-flight, input retained; auth_controller_test/mock_auth_repository_test; live P3 |
+| Forgot/reset; auth/presentation/login_flow.dart | recover/reset through sendRecovery/resetPassword | FR-AUTH-002 recovery extension; expiry/link error safe help; same nonsensitive email; never log reset secret; auth_controller_test |
+| OAuth/saved-account chooser | social/initialize/forgetAccount; AuthRepository | FR-AUTH-003; cancellation returns origin; device account management is not revoking all cloud sessions; live P3 |
+| Node/guide/course/section; learning/presentation | course navigation + learning providers; MockLearningRepository | FR-COURSE-001/002, FR-PATH-001; startSession after lock checks; no optimistic live frontier; learning_flow_test/section tests |
+| Choose/type/reorder/pair; learning/presentation/lesson_screen.dart | lessonControllerProvider select/answer edits; local state | FR-LESSON-002; no per-tap API; keyboard/semantics; shape-invalid CHECK disabled; learning_controller_test |
+| CHECK; lesson_screen.dart | controller.check → LearningRepository.grade | FR-LESSON-003; production submitAnswer/revision/key, server feedback; selection retained on error; duplicate/different-body tests |
+| CONTINUE; lesson_screen.dart | controller.next; original/mistake reducer | FR-LESSON-004; no second CHECK request; lesson queue bounded; learning_controller_test |
+| Hint / can't listen / can't speak / explain / report | local assisted/media alternate + authored explanation; preview report fixture | FR-LESSON-005/FR-AI-001; production report/tutor jobs optional; failure cannot block core answer; English spoken/explanation tests |
+| Exit/pause/resume; lesson_screen.dart | pause + LearningRepository.saveDraft | FR-LESSON-004/007; current memory only; future Drift snapshot/journal; preserve draft on network error; process-kill proof P5 |
+| Finish/results; lesson_results.dart | complete with local counts; receipt displays mock XP | FR-LESSON-006/FR-GAME-001; future expectedRevision only, Learning outbox then Progress inbox/ledger; pending/retry same operation; learning_flow_test + backend fixture tests |
+| Words/mistakes/listen/speak; practice/presentation | practiceControllerProvider; MockPracticeRepository | FR-PRACTICE-001/002, FR-LISTEN-001/FR-SPEECH-001; empty offers replay; cloud capability label; practice_flow_test |
+| Record/call/stop/back; practice_screens.dart | local practice speech simulation | FR-SPEECH-001/002/003; real permission/lease/upload/provider/native I/O gated P8; cancel/dispose clears queues; no numeric transcript score |
+| Story/radio/roleplay/adventure/challenge | journey/adventure/clash controllers and mock repositories | optional course-specific flows; no live AI/paid authority implied; adventure/journey/clash tests preserve input/rewards once |
+| Quest claim/freeze/shop/streak/league | preview/extended/league controllers; local fixtures | FR-GAME/FR-SOCIAL; Progress owned transactions, wallet/settlement error; no optimistic live money/XP; quests/league/streak tests plus P6/P9 |
+| Profile/follow/feed/achievements | profile/family/social providers; mock visibility | FR-SOCIAL-001; own/public projections, blocked user generic error; source profile/friends/achievement tests; cross-user P9 |
+| Settings/profile/avatar/password/course management | account controllers and preferences; some Appwrite Auth adapter code | authenticated owner commands; preserve input on error; no key/email public projection; password/course/avatar tests; live P3 |
+| Reminders/sync/delete/recovery | account fixture controllers/UI | permission/device registration, journal reconciliation, tombstone/purge receipt; no immediate remote success; P3/P10 |
+| Super/Max/trial/family/cancel/restore | subscription/max fixtures | [billing lifecycle](MONETIZATION.md); preview not entitlement; no platform charge; P9/later sandbox task |
+| Motion/sound/accessibility controls | core/design components/providers | [design](../design/DESIGN.md); reduced motion, text2, labels/focus, audio route interruption; fresh device P2/P7/P8 |
+
+For every enabled critical control, implementation must record USER ACTION → ViewModel command → injectable repository → API/service → owning table/transaction/event → returned state → accessible feedback → same-key retry/compensation → named acceptance test. The local repository method is an integration seam; mock signatures that accept client counts are not blindly reused as production DTOs.
+
+Common states: loading preserves geometry and labels; empty offers a relevant action; error keeps input and announces safe reason/request ID; success is text+icon; disabled reason is discoverable; offline shows cached/provisional versus blocked operations. Back/cancel stops work and rejects stale callbacks. Exact pixel instructions for finished screens remain in existing design references rather than duplicated here.
