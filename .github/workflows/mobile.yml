@@ -1,0 +1,114 @@
+name: Mobile frontend
+
+on:
+  pull_request:
+    paths:
+      - "apps/mobile/**"
+      - "tools/blueprint/**"
+      - "tools/scripts/mobile-check.mjs"
+      - "package.json"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/mobile.yml"
+  push:
+    paths:
+      - "apps/mobile/**"
+      - "tools/blueprint/**"
+      - "tools/scripts/mobile-check.mjs"
+      - "package.json"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/mobile.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: 3.47.0
+
+jobs:
+  linux:
+    name: Verify and build Android
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: Install pinned Flutter SDK
+        shell: bash
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "FLUTTER_ROOT=$RUNNER_TEMP/flutter" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+
+      - name: Prepare Flutter dependencies
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          flutter config --no-analytics
+          flutter precache --android
+          flutter pub get
+
+      - name: Verify frontend and build debug APK
+        run: node tools/scripts/mobile-check.mjs --with-blueprint --build-android
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cocenglish-debug-apk
+          path: apps/mobile/build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 3
+
+  macos-simulator:
+    name: Build unsigned iOS simulator app
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: Install pinned Flutter SDK
+        shell: bash
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "FLUTTER_ROOT=$RUNNER_TEMP/flutter" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+
+      - name: Prepare Flutter dependencies
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          flutter config --no-analytics
+          flutter precache --ios
+          flutter pub get
+
+      - name: Verify frontend
+        run: node tools/scripts/mobile-check.mjs --with-blueprint
+
+      - name: Build unsigned simulator app
+        working-directory: apps/mobile
+        run: flutter build ios --simulator --no-codesign
+
+      - name: Upload simulator app
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cocenglish-ios-simulator
+          path: apps/mobile/build/ios/iphonesimulator/Runner.app
+          if-no-files-found: error
+          retention-days: 3

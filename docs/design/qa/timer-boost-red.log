@@ -1,0 +1,282 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart
+test/timer_boost_test.dart:4:8: Error: Error when reading 'lib/features/progress/application/timer_boost_controller.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/application/timer_boost_controller.dart';
+       ^
+test/timer_boost_test.dart:5:8: Error: Error when reading 'lib/features/progress/presentation/timer_boost_screen.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/presentation/timer_boost_screen.dart';
+       ^
+test/timer_boost_test.dart:14:23: Error: Undefined name 'timerBoostControllerProvider'.
+    final vm = c.read(timerBoostControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:16:19: Error: Undefined name 'timerBoostControllerProvider'.
+    expect(c.read(timerBoostControllerProvider).pack, 5);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:21:19: Error: Undefined name 'timerBoostControllerProvider'.
+    expect(c.read(timerBoostControllerProvider).pack, 1);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:22:19: Error: Undefined name 'timerBoostControllerProvider'.
+    expect(c.read(timerBoostControllerProvider).error, isNotNull);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:24:19: Error: Undefined name 'previewWalletProvider'.
+    expect(c.read(previewWalletProvider), 1035);
+                  ^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:27:19: Error: Undefined name 'previewWalletProvider'.
+    expect(c.read(previewWalletProvider), 585);
+                  ^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:30:19: Error: Undefined name 'previewWalletProvider'.
+    expect(c.read(previewWalletProvider), 585);
+                  ^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:33:19: Error: Undefined name 'timerBoostControllerProvider'.
+    expect(c.read(timerBoostControllerProvider).pack, 1);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:34:19: Error: Undefined name 'timerBoostControllerProvider'.
+    expect(c.read(timerBoostControllerProvider).error, isNull);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:45:19: Error: Undefined name 'previewWalletProvider'.
+    expect(c.read(previewWalletProvider), 585);
+                  ^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:80:16: Error: Undefined name 'timerBoostControllerProvider'.
+        c.read(timerBoostControllerProvider.notifier).begin();
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:88:60: Error: Method not found: 'TimerBoostOffer'.
+        await tester.pumpWidget(frame(const Scaffold(body: TimerBoostOffer())));
+                                                           ^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:93:23: Error: Undefined name 'timerBoostControllerProvider'.
+        expect(c.read(timerBoostControllerProvider).pack, 1);
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:104:45: Error: Couldn't find constructor 'TimerBoostSuccessScreen'.
+        await tester.pumpWidget(frame(const TimerBoostSuccessScreen()));
+                                            ^^^^^^^^^^^^^^^^^^^^^^^
+test/timer_boost_test.dart:19:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+ - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+    expect(c.read(previewControllerProvider).timerBoosts, 0);
+                                             ^^^^^^^^^^^
+test/timer_boost_test.dart:23:48: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+    c.read(previewControllerProvider.notifier).useDemoBalance();
+                                               ^^^^^^^^^^^^^^
+test/timer_boost_test.dart:28:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+ - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+    expect(c.read(previewControllerProvider).timerBoosts, 1);
+                                             ^^^^^^^^^^^
+test/timer_boost_test.dart:29:48: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+    c.read(previewControllerProvider.notifier).useDemoBalance();
+                                               ^^^^^^^^^^^^^^
+test/timer_boost_test.dart:40:8: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+    vm.useDemoBalance();
+       ^^^^^^^^^^^^^^
+test/timer_boost_test.dart:41:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+    expect(vm.buyTimerBoost('receipt-a', 99), isFalse);
+              ^^^^^^^^^^^^^
+test/timer_boost_test.dart:42:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+    expect(vm.buyTimerBoost('receipt-a', 1), isTrue);
+              ^^^^^^^^^^^^^
+test/timer_boost_test.dart:43:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+    expect(vm.buyTimerBoost('receipt-a', 1), isFalse);
+              ^^^^^^^^^^^^^
+test/timer_boost_test.dart:44:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+    expect(vm.buyTimerBoost('receipt-b', 5), isFalse);
+              ^^^^^^^^^^^^^
+test/timer_boost_test.dart:46:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+ - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+    expect(c.read(previewControllerProvider).timerBoosts, 1);
+                                             ^^^^^^^^^^^
+test/timer_boost_test.dart:53:12: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+    ledger.useDemoBalance();
+           ^^^^^^^^^^^^^^
+test/timer_boost_test.dart:54:12: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+    ledger.buyTimerBoost('owned', 1);
+           ^^^^^^^^^^^^^
+test/timer_boost_test.dart:55:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+ - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+    expect(rapid.useTimerBoost(), isFalse);
+                 ^^^^^^^^^^^^^
+test/timer_boost_test.dart:60:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+ - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+    expect(rapid.useTimerBoost(), isTrue);
+                 ^^^^^^^^^^^^^
+test/timer_boost_test.dart:65:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+ - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+    expect(c.read(previewControllerProvider).timerBoosts, 0);
+                                             ^^^^^^^^^^^
+test/timer_boost_test.dart:66:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+ - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+    expect(rapid.useTimerBoost(), isFalse);
+                 ^^^^^^^^^^^^^
+test/timer_boost_test.dart:68:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+ - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+    expect(rapid.useTimerBoost(), isFalse);
+                 ^^^^^^^^^^^^^
+test/timer_boost_test.dart:83:37: Error: The argument type 'ThemeData Function()' can't be assigned to the parameter type 'ThemeData?'.
+ - 'ThemeData' is from 'package:flutter/src/material/theme_data.dart' ('/C:/flutter/packages/flutter/lib/src/material/theme_data.dart').
+          child: MaterialApp(theme: referenceTheme, home: MediaQuery(
+                                    ^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart: test/timer_boost_test.dart:4:8: Error: Error when reading 'lib/features/progress/application/timer_boost_controller.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/application/timer_boost_controller.dart';
+         ^
+  test/timer_boost_test.dart:5:8: Error: Error when reading 'lib/features/progress/presentation/timer_boost_screen.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/presentation/timer_boost_screen.dart';
+         ^
+  test/timer_boost_test.dart:14:23: Error: Undefined name 'timerBoostControllerProvider'.
+      final vm = c.read(timerBoostControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:16:19: Error: Undefined name 'timerBoostControllerProvider'.
+      expect(c.read(timerBoostControllerProvider).pack, 5);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:21:19: Error: Undefined name 'timerBoostControllerProvider'.
+      expect(c.read(timerBoostControllerProvider).pack, 1);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:22:19: Error: Undefined name 'timerBoostControllerProvider'.
+      expect(c.read(timerBoostControllerProvider).error, isNotNull);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:24:19: Error: Undefined name 'previewWalletProvider'.
+      expect(c.read(previewWalletProvider), 1035);
+                    ^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:27:19: Error: Undefined name 'previewWalletProvider'.
+      expect(c.read(previewWalletProvider), 585);
+                    ^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:30:19: Error: Undefined name 'previewWalletProvider'.
+      expect(c.read(previewWalletProvider), 585);
+                    ^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:33:19: Error: Undefined name 'timerBoostControllerProvider'.
+      expect(c.read(timerBoostControllerProvider).pack, 1);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:34:19: Error: Undefined name 'timerBoostControllerProvider'.
+      expect(c.read(timerBoostControllerProvider).error, isNull);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:45:19: Error: Undefined name 'previewWalletProvider'.
+      expect(c.read(previewWalletProvider), 585);
+                    ^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:80:16: Error: Undefined name 'timerBoostControllerProvider'.
+          c.read(timerBoostControllerProvider.notifier).begin();
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:88:60: Error: Method not found: 'TimerBoostOffer'.
+          await tester.pumpWidget(frame(const Scaffold(body: TimerBoostOffer())));
+                                                             ^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:93:23: Error: Undefined name 'timerBoostControllerProvider'.
+          expect(c.read(timerBoostControllerProvider).pack, 1);
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:104:45: Error: Couldn't find constructor 'TimerBoostSuccessScreen'.
+          await tester.pumpWidget(frame(const TimerBoostSuccessScreen()));
+                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:19:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+   - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+      expect(c.read(previewControllerProvider).timerBoosts, 0);
+                                               ^^^^^^^^^^^
+  test/timer_boost_test.dart:23:48: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+      c.read(previewControllerProvider.notifier).useDemoBalance();
+                                                 ^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:28:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+   - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+      expect(c.read(previewControllerProvider).timerBoosts, 1);
+                                               ^^^^^^^^^^^
+  test/timer_boost_test.dart:29:48: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+      c.read(previewControllerProvider.notifier).useDemoBalance();
+                                                 ^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:40:8: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+      vm.useDemoBalance();
+         ^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:41:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+      expect(vm.buyTimerBoost('receipt-a', 99), isFalse);
+                ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:42:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+      expect(vm.buyTimerBoost('receipt-a', 1), isTrue);
+                ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:43:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+      expect(vm.buyTimerBoost('receipt-a', 1), isFalse);
+                ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:44:15: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+      expect(vm.buyTimerBoost('receipt-b', 5), isFalse);
+                ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:46:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+   - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+      expect(c.read(previewControllerProvider).timerBoosts, 1);
+                                               ^^^^^^^^^^^
+  test/timer_boost_test.dart:53:12: Error: The method 'useDemoBalance' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useDemoBalance'.
+      ledger.useDemoBalance();
+             ^^^^^^^^^^^^^^
+  test/timer_boost_test.dart:54:12: Error: The method 'buyTimerBoost' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'buyTimerBoost'.
+      ledger.buyTimerBoost('owned', 1);
+             ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:55:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+   - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+      expect(rapid.useTimerBoost(), isFalse);
+                   ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:60:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+   - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+      expect(rapid.useTimerBoost(), isTrue);
+                   ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:65:46: Error: The getter 'timerBoosts' isn't defined for the type 'PreviewState'.
+   - 'PreviewState' is from 'package:cocenglish/features/progress/domain/preview_state.dart' ('lib/features/progress/domain/preview_state.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'timerBoosts'.
+      expect(c.read(previewControllerProvider).timerBoosts, 0);
+                                               ^^^^^^^^^^^
+  test/timer_boost_test.dart:66:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+   - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+      expect(rapid.useTimerBoost(), isFalse);
+                   ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:68:18: Error: The method 'useTimerBoost' isn't defined for the type 'JourneyController'.
+   - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'useTimerBoost'.
+      expect(rapid.useTimerBoost(), isFalse);
+                   ^^^^^^^^^^^^^
+  test/timer_boost_test.dart:83:37: Error: The argument type 'ThemeData Function()' can't be assigned to the parameter type 'ThemeData?'.
+   - 'ThemeData' is from 'package:flutter/src/material/theme_data.dart' ('/C:/flutter/packages/flutter/lib/src/material/theme_data.dart').
+            child: MaterialApp(theme: referenceTheme, home: MediaQuery(
+                                      ^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart

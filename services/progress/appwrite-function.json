@@ -1,0 +1,11 @@
+{
+  "functionId": "coc-progress",
+  "runtime": "node-22",
+  "entrypoint": "dist/function.mjs",
+  "buildCommand": "",
+  "execute": [],
+  "timeout": 30,
+  "scopes": [],
+  "enabled": false,
+  "note": "Review/setup descriptor; provider secrets remain isolated per function. Scheduled/event entrypoint not enabled yet."
+}

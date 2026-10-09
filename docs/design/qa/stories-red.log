@@ -1,0 +1,72 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart
+test/stories_library_test.dart:2:8: Error: Error when reading 'lib/features/practice/data/stories_repository.dart': The system cannot find the file specified
+import 'package:cocenglish/features/practice/data/stories_repository.dart';
+       ^
+test/stories_library_test.dart:4:8: Error: Error when reading 'lib/features/practice/presentation/story_library.dart': The system cannot find the file specified
+import 'package:cocenglish/features/practice/presentation/story_library.dart';
+       ^
+test/stories_library_test.dart:15:25: Error: Undefined name 'englishStoryLibrary'.
+    for (final story in englishStoryLibrary.values) {
+                        ^^^^^^^^^^^^^^^^^^^
+test/stories_library_test.dart:44:24: Error: Couldn't find constructor 'StoryLibraryScreen'.
+          child: const StoryLibraryScreen()))));
+                       ^^^^^^^^^^^^^^^^^^
+test/stories_library_test.dart:16:17: Error: The method 'pickStory' isn't defined for the type 'JourneyController'.
+ - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'pickStory'.
+      expect(vm.pickStory(story.id), isTrue);
+                ^^^^^^^^^
+test/stories_library_test.dart:18:17: Error: The getter 'story' isn't defined for the type 'JourneyController'.
+ - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'story'.
+      expect(vm.story.title, story.title);
+                ^^^^^
+test/stories_library_test.dart:20:17: Error: The method 'pickStory' isn't defined for the type 'JourneyController'.
+ - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'pickStory'.
+      expect(vm.pickStory('missing'), isFalse);
+                ^^^^^^^^^
+test/stories_library_test.dart:21:57: Error: The getter 'storyId' isn't defined for the type 'JourneyState'.
+ - 'JourneyState' is from 'package:cocenglish/features/practice/domain/journey_models.dart' ('lib/features/practice/domain/journey_models.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'storyId'.
+      expect(c.read(journeyControllerProvider('story')).storyId, story.id);
+                                                        ^^^^^^^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart: test/stories_library_test.dart:2:8: Error: Error when reading 'lib/features/practice/data/stories_repository.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/practice/data/stories_repository.dart';
+         ^
+  test/stories_library_test.dart:4:8: Error: Error when reading 'lib/features/practice/presentation/story_library.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/practice/presentation/story_library.dart';
+         ^
+  test/stories_library_test.dart:15:25: Error: Undefined name 'englishStoryLibrary'.
+      for (final story in englishStoryLibrary.values) {
+                          ^^^^^^^^^^^^^^^^^^^
+  test/stories_library_test.dart:44:24: Error: Couldn't find constructor 'StoryLibraryScreen'.
+            child: const StoryLibraryScreen()))));
+                         ^^^^^^^^^^^^^^^^^^
+  test/stories_library_test.dart:16:17: Error: The method 'pickStory' isn't defined for the type 'JourneyController'.
+   - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'pickStory'.
+        expect(vm.pickStory(story.id), isTrue);
+                  ^^^^^^^^^
+  test/stories_library_test.dart:18:17: Error: The getter 'story' isn't defined for the type 'JourneyController'.
+   - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'story'.
+        expect(vm.story.title, story.title);
+                  ^^^^^
+  test/stories_library_test.dart:20:17: Error: The method 'pickStory' isn't defined for the type 'JourneyController'.
+   - 'JourneyController' is from 'package:cocenglish/features/practice/application/journey_controller.dart' ('lib/features/practice/application/journey_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'pickStory'.
+        expect(vm.pickStory('missing'), isFalse);
+                  ^^^^^^^^^
+  test/stories_library_test.dart:21:57: Error: The getter 'storyId' isn't defined for the type 'JourneyState'.
+   - 'JourneyState' is from 'package:cocenglish/features/practice/domain/journey_models.dart' ('lib/features/practice/domain/journey_models.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'storyId'.
+        expect(c.read(journeyControllerProvider('story')).storyId, story.id);
+                                                          ^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/stories_library_test.dart

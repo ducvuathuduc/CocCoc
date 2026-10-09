@@ -1,0 +1,26 @@
+
+> Blueprint validation
+{
+  "status": "PASS",
+  "files": 2154,
+  "markdown": 112,
+  "localLinks": 315,
+  "requirements": 39,
+  "nfr": 19,
+  "screens": 42,
+  "edgeCases": 39,
+  "tasks": 38,
+  "tables": 37,
+  "schemas": 94,
+  "paths": 41,
+  "operations": 42,
+  "refs": 680,
+  "adrs": 17,
+  "skills": 8,
+  "scope": "Phase0 structural consistency; no app build, account or device proof"
+}
+
+> Dart format check
+Changed test\score_information_test.dart
+Formatted 161 files (1 changed) in 1.72 seconds.
+Dart format check failed with exit code 1.

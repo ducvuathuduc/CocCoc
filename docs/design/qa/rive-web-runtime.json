@@ -1,0 +1,30 @@
+{
+  "package": "rive_native 0.1.11",
+  "wasmVersion": "44.0.0",
+  "records": [
+    {
+      "file": "wasm/rive_native.js",
+      "url": "https://cdn.jsdelivr.net/npm/@rive-app/flutter-native-wasm@44.0.0/wasm/rive_native.js",
+      "bytes": 226241,
+      "sha256": "db221a02b4fdfe85976303776e98d1301d596685799d70234397d38cbecf998b"
+    },
+    {
+      "file": "wasm/rive_native.wasm",
+      "url": "https://cdn.jsdelivr.net/npm/@rive-app/flutter-native-wasm@44.0.0/wasm/rive_native.wasm",
+      "bytes": 2856401,
+      "sha256": "f3fe662b36b1d263096a67b3f84d4aa35f8895c79b45ac80978ff395b0e05dd8"
+    },
+    {
+      "file": "wasm_compatibility/rive_native.js",
+      "url": "https://cdn.jsdelivr.net/npm/@rive-app/flutter-native-wasm@44.0.0/wasm_compatibility/rive_native.js",
+      "bytes": 231539,
+      "sha256": "7204f341f793eba005cbbab8a5109dd25952b892b7fb0d3118650c7e624a85df"
+    },
+    {
+      "file": "wasm_compatibility/rive_native.wasm",
+      "url": "https://cdn.jsdelivr.net/npm/@rive-app/flutter-native-wasm@44.0.0/wasm_compatibility/rive_native.wasm",
+      "bytes": 2734405,
+      "sha256": "f7b5d0bcc4af94bd2cf43ff246b34c31f7514852ca1777f7d9a7ecbf32485d0a"
+    }
+  ]
+}

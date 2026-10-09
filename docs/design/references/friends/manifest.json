@@ -1,0 +1,47 @@
+{
+  "flowId": "eec0c487-8831-4772-975f-84e8d1f6d3d4",
+  "source": "Gummble MCP Duolingo iOS",
+  "inspected": "2026-10-04",
+  "screens": [
+    {
+      "id": "sc_4dda25e955744c808ff9faf4702732ca",
+      "publicId": "sc_4dda25e955744c808ff9faf4702732ca",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/98aed6c2-4476-44d6-903d-4c82f14f2692.png",
+      "width": 1179,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_4dda25e955744c808ff9faf4702732ca?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85OGFlZDZjMi00NDc2LTQ0ZDYtOTAzZC00YzgyZjE0ZjI2OTIucG5n",
+      "file": "01.png"
+    },
+    {
+      "id": "sc_49d8dc1cf346406193c856b9c60bcc08",
+      "publicId": "sc_49d8dc1cf346406193c856b9c60bcc08",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/1472dd7c-ea67-4350-9928-dd7d5dd3c4c5.png",
+      "width": 1179,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_49d8dc1cf346406193c856b9c60bcc08?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xNDcyZGQ3Yy1lYTY3LTQzNTAtOTkyOC1kZDdkNWRkM2M0YzUucG5n",
+      "file": "02.png"
+    },
+    {
+      "id": "sc_c6be8a8e5dba4a22b625c53ad1966f1c",
+      "publicId": "sc_c6be8a8e5dba4a22b625c53ad1966f1c",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/58051c2e-ac64-4296-94e9-a71145e43359.png",
+      "width": 1179,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_c6be8a8e5dba4a22b625c53ad1966f1c?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ODA1MWMyZS1hYzY0LTQyOTYtOTRlOS1hNzExNDVlNDMzNTkucG5n",
+      "file": "03.png"
+    },
+    {
+      "id": "sc_980cf097f47b4178b649f6a0b8fdddf6",
+      "publicId": "sc_980cf097f47b4178b649f6a0b8fdddf6",
+      "screenUrl": "https://storage.gummble.com/prod/content/app_screens/e673596a-bcb2-49c6-a996-63441e018ded.png",
+      "width": 1179,
+      "height": 2556,
+      "webUrl": "https://gummble.com/screens/sc_980cf097f47b4178b649f6a0b8fdddf6?source=mcp_result&utm_source=mcp&utm_medium=mcp_tool&utm_campaign=screen_result",
+      "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lNjczNTk2YS1iY2IyLTQ5YzYtYTk5Ni02MzQ0MWUwMThkZWQucG5n",
+      "file": "04.png"
+    }
+  ]
+}

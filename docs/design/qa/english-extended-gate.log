@@ -1,0 +1,263 @@
+
+> Blueprint validation
+{
+  "status": "PASS",
+  "files": 1718,
+  "markdown": 91,
+  "localLinks": 233,
+  "requirements": 39,
+  "nfr": 19,
+  "screens": 42,
+  "edgeCases": 39,
+  "tasks": 38,
+  "tables": 37,
+  "schemas": 94,
+  "paths": 41,
+  "operations": 42,
+  "refs": 680,
+  "adrs": 17,
+  "skills": 8,
+  "scope": "Phase0 structural consistency; no app build, account or device proof"
+}
+
+> Dart format check
+Formatted 86 files (0 changed) in 0.48 seconds.
+
+> Flutter analyze
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  window_to_front 0.0.4 (1.0.0 available)
+Got dependencies!
+9 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing mobile...                                             
+No issues found! (ran in 4.9s)
+
+> Rive host test runtime
+[rive_native]   Starting Rive Native Setup...
+
+[rive_native]   rive_native libraries already present for windows. Not building/downloading libraries.
+[rive_native]   
+[rive_native]   To force a rebuild/download, run with `--clean`
+
+> Flutter test
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: airport wrong answer preserves choice; retry and reward are idempotent
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: airport native panels fit 360.0 text 1.0
+00:01 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/adventure_test.dart: airport native panels fit 360.0 text 2.0
+00:01 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:01 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:01 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/app_test.dart: welcome exposes both reference entry actions
+00:07 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:07 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:07 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:07 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:07 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +11: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +12: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +13: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +14: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +15: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +16: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +17: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +18: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +19: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +20: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +21: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +22: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:08 +23: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/bootstrap_test.dart: storage read failure cannot overwrite saved answers; Retry restores them
+00:10 +24: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: practice opens Roleplay, submits native input, and reviews the actual replies
+00:12 +25: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: English journey states fit width360.0 text1.0
+00:12 +26: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: English journey states fit width360.0 text2.0
+00:13 +27: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: English journey states fit width430.0 text1.0
+00:13 +28: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: English journey states fit width430.0 text2.0
+00:13 +29: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: story preserves a wrong selection through feedback and finishes once
+00:13 +30: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: radio cannot check half a pair, and transcript picks are editable
+00:13 +31: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_journey_test.dart: roleplay preserves draft on validation, resumes, and resets deliberately
+00:15 +32: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_ui_test.dart: reference course choices do not change the interactive English course
+00:15 +33: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_ui_test.dart: new local learners start with English
+00:15 +34: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_ui_test.dart: English score and guide expose English with Vietnamese meanings
+00:16 +35: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: all original motion assets parse into compositions
+00:19 +36: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/explanation_test.dart: explanation back retains wrong selection and feedback without advancing
+00:20 +37: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:20 +38: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:20 +39: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:20 +40: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:20 +41: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:20 +42: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: original path jump advances and honors reduced motion
+00:24 +43: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: playing advances the painted source frame
+00:24 +44: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: disabled and reduced motion render the static fallback
+00:24 +45: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: removal disposes ticker without asynchronous state errors
+00:24 +46: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: switching assets while disabled cannot install stale composition
+00:24 +47: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/duo_motion_test.dart: app lifecycle pauses and resumes looping motion
+00:29 +48: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:30 +49: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:38 +50: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:38 +51: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:39 +52: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:39 +53: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:39 +54: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:39 +55: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:39 +56: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid clock pauses in background and on hidden routes
+00:39 +57: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/extended_flow_test.dart: native words opens sort sheet and renders reordered rows
+00:39 +58: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text1.0
+00:40 +59: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width360.0 text2.0
+00:40 +60: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width430.0 text1.0
+00:40 +61: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge states fit width430.0 text2.0
+00:41 +62: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: rapid countdown expires, preserves input, and retry starts a fresh clock
+00:41 +63: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: challenge wrong answer retries the same exercise and completion freezes time
+00:41 +64: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/challenge_test.dart: Legendary has no ticking clock and does not advance on wrong feedback
+00:41 +65: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/character_motion_test.dart: character reacts, pauses on background, and disposes its runtime
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+01:00 +66: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/character_motion_test.dart: character reacts, pauses on background, and disposes its runtime
+═════════════════════════════════════════════════════════════════════════════════════════
+[31m[1m  Rive Native: Failed to open dynamic library[0m
+[33m  Library: rive_native.dll[0m      
+
+  To fix this issue, run the following command:     
+[36m[1m    dart run rive_native:setup --verbose --clean --platform windows[0m           
+  
+  See the troubleshooting section in the docs for more information:
+[36m[1m    https://rive.app/docs/runtimes/flutter/rive-native#troubleshooting[0m
+═════════════════════════════════════════════════════════════════════════════════════════
+
+01:00 +67: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +68: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +69: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +70: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +71: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +72: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +73: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +74: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +75: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +76: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +77: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +78: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:01 +79: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:02 +80: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 360 / text 2.0
+01:02 +81: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +82: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +83: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +84: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +85: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +86: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +87: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +88: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +89: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +90: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +91: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +92: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:03 +93: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:04 +94: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:04 +95: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:04 +96: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:04 +97: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:04 +98: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +99: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +100: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +101: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +102: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +103: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +104: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +105: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +106: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +107: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +108: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +109: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +110: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +111: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +112: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +113: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +114: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +115: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +116: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +117: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +118: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +119: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +120: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +121: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +122: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +123: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +124: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +125: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:05 +126: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:06 +127: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:06 +128: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:06 +129: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/learning_flow_test.dart: complete the native lesson, claim once, return to the unlocked path
+01:06 +130: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +131: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +132: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +133: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +134: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +135: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +136: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +137: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +138: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:06 +139: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:07 +140: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:07 +141: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: all frontend states render at 430 / text 2.0
+01:07 +142: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:07 +143: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:07 +144: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:07 +145: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:07 +146: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/visual_capture_test.dart: all 20 reference states render with bundled fonts at original resolution
+01:07 +147: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +148: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +149: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +150: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +151: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +152: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +153: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +154: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +155: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +156: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +157: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +158: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:07 +159: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:08 +160: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:08 +161: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:08 +162: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:08 +163: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: five tabs preserve path, words reveal, and shop rejects insufficient funds
+01:08 +164: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reasons fits width 430.0 with text scale 2
+01:08 +165: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: monthly quest introduction continues once into daily quests
+01:08 +166: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart: monthly quest introduction continues once into daily quests
+01:08 +167: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: goal fits width 430.0 with text scale 2
+01:08 +168: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: goal fits width 430.0 with text scale 2
+01:08 +169: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: promise fits width 430.0 with text scale 2
+01:08 +170: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: reminder fits width 430.0 with text scale 2
+01:08 +171: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: widget fits width 430.0 with text scale 2
+01:08 +172: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: benefits fits width 430.0 with text scale 2
+01:08 +173: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: plan fits width 430.0 with text scale 2
+01:08 +174: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: startPoint fits width 430.0 with text scale 2
+01:08 +175: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: levelConfirmation fits width 430.0 with text scale 2
+01:08 +176: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/onboarding_flow_test.dart: lessonEntry fits width 430.0 with text scale 2
+01:08 +177: All tests passed!

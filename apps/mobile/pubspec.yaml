@@ -1,0 +1,81 @@
+name: cocenglish
+description: "Flutter language learning interface"
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  appwrite: 27.0.0
+  cupertino_icons: 1.0.9
+  flutter:
+    sdk: flutter
+  flutter_riverpod: 3.4.3
+  flutter_svg: 2.3.0
+  go_router: 18.0.2
+  lottie: 3.6.1
+  qr_flutter: 4.1.0
+  rive: 0.14.11
+  shared_preferences: 2.5.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    # Original illustration ROIs for English journeys, Stories, Max and Timer Boost.
+    - assets/reference_art/
+    - assets/reference_art/course-remove.png
+    - assets/reference_art/profile-foreign-source.png
+    - assets/reference_art/league-ranking-source.png
+    - assets/reference_art/league-welcome-source.png
+    - assets/reference_art/league-result-source.png
+    - assets/reference_art/league-promotion-source.png
+    - assets/reference_art/league-reward-source.png
+    - assets/reference_art/year-review-intro.png
+    - assets/reference_art/year-review-lessons.png
+    - assets/reference_art/year-review-xp.png
+    - assets/reference_art/year-review-league.png
+    - assets/reference_art/year-review-gate.png
+    - assets/reference_art/year-review-student.png
+    - assets/reference_art/year-review-summary.png
+    - assets/reference_art/widget-ready.png
+    - assets/reference_art/widget-early.png
+    - assets/reference_art/widget-practice.png
+    - assets/reference_art/widget-last-chance.png
+    - assets/reference_art/widget-save.png
+    - assets/reference_art/widget-six.png
+    - assets/reference_art/widget-seven.png
+    - assets/reference_art/section-list-source.png
+    - assets/reference_art/section-more-source.png
+    - assets/reference_art/section-detail-source.png
+    - assets/reference_art/section-cefr-source.png
+    - assets/reference_art/section-grammar-source.png
+    - assets/reference_art/guide-header-source.png
+    - assets/reference_art/guide-phrases-source.png
+    - assets/reference_art/guide-tips-source.png
+    - assets/reference_art/unit-skip-intro.png
+    - assets/reference_art/unit-skip-exercise.png
+    - assets/reference_art/unit-skip-warning.png
+    - assets/reference_art/unit-skip-failed.png
+    - assets/reference_art/unit-skip-result.png
+    - assets/reference_art/lesson-lily-source.png
+    - assets/motion/
+    - assets/avatar/
+  fonts:
+    - family: DuolingoSans
+      fonts:
+        - asset: assets/fonts/DuolingoSans.ttf
+          weight: 400
+        - asset: assets/fonts/DuolingoSans-Bold.ttf
+          weight: 700
+    - family: Feather
+      fonts:
+        - asset: assets/fonts/Feather.ttf
+          weight: 700

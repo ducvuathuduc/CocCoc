@@ -1,0 +1,124 @@
+{
+  "captured": "2026-10-04",
+  "mappingSource": "https://d35aaqx5ub95lt.cloudfront.net/js/app-0de7c4e4.js",
+  "artboard": "character",
+  "stateMachine": "character_statemachine",
+  "inputs": [
+    "correct_trig",
+    "incorrect_trig",
+    "reset_trig",
+    "darkmode_bool",
+    "rtl_bool"
+  ],
+  "records": [
+    {
+      "character": "bea",
+      "file": "character-bea.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/1c03e97b411efbf320a858b8c2e0248e.riv",
+      "bytes": 288845,
+      "sha256": "82725e3a36949edba9262f5d877fbc680573084fb3e6c2ad0ca35e8de67f12dc"
+    },
+    {
+      "character": "eddy",
+      "file": "character-eddy.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/70270dae679a0c2e5e3062b080e26a4a.riv",
+      "bytes": 236733,
+      "sha256": "eb9eac9f5724ef9af410eeb552549c695f1f35c630803945ffee1886055abffa"
+    },
+    {
+      "character": "falstaff",
+      "file": "character-falstaff.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/51478562013d6926fbdfcbd72d8d8399.riv",
+      "bytes": 252250,
+      "sha256": "8786b873115e5b79b98a5d76b62849f3e713e3b26241aa0d14f27e598f47e02a"
+    },
+    {
+      "character": "junior",
+      "file": "character-junior.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/00e65775b63084cf1756d3529fa4899e.riv",
+      "bytes": 236839,
+      "sha256": "6f2b2c46ab964025707e9fd762a6b9341c87f27cb312faa218f02e201b0f1a41"
+    },
+    {
+      "character": "lily",
+      "file": "character-lily.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/9a1302daf4ccfb8e58e91fe60bf609be.riv",
+      "bytes": 189677,
+      "sha256": "b7a1c1c4aa6ebaa52674842e57e8e4a9401ffe437fe72353e4e5f0c61b373640"
+    },
+    {
+      "character": "lin",
+      "file": "character-lin.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/e1e20f0934a4b03f0a9ec5c056c6ab2e.riv",
+      "bytes": 300966,
+      "sha256": "c47e42bcec34efea33de36432d6c53aeb0a4d87a0367cf177afe8dfa7ada7d54"
+    },
+    {
+      "character": "lucy",
+      "file": "character-lucy.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/06bd889a26cd059e826cee3fe0b1a656.riv",
+      "bytes": 316377,
+      "sha256": "5df7f98516005387275de392d7cdffd3f9d30da8c4805840565e372ab9bb7af0"
+    },
+    {
+      "character": "oscar",
+      "file": "character-oscar.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/e18abc5a6264d3e62ac2a3490b7d050e.riv",
+      "bytes": 198405,
+      "sha256": "eee2ae28e66fd47d54d84bf7bb96c4942661c3ed3392f209f31c8fc359c00a2f"
+    },
+    {
+      "character": "vikram",
+      "file": "character-vikram.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/201fc4b2342fb3a92f46aa205a29d80a.riv",
+      "bytes": 277617,
+      "sha256": "aea76319b266881fc2271f42268c831bf9bcf0e64284f8025bdd636ea72b3d9d"
+    },
+    {
+      "character": "zari",
+      "file": "character-zari.riv",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/rive/makerInLesson/839a2259471208630a70624e340dbba9.riv",
+      "bytes": 379540,
+      "sha256": "238a21c4e391da91efadacfcdeb3ebfcfbeee8bcfb15056fc4ae5adb7a161245"
+    },
+    {
+      "pose": "DUO_WHISTLING",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/lottie/pathCharacters/9eaf4990aaf1c6a96ea3960cf159c787.json",
+      "file": "duo-whistling.json",
+      "bytes": 137946,
+      "sha256": "3a5794df6ef4b66a9a54cc2baa3e56d871c21570fc2c19da590f48408016230b",
+      "width": 1080,
+      "height": 1080,
+      "fps": 60,
+      "start": 0,
+      "end": 300,
+      "layers": 4
+    },
+    {
+      "pose": "DUO_HEADPHONES",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/lottie/pathCharacters/db2060dfa323f5380a5aad451b089ae8.json",
+      "file": "duo-headphones.json",
+      "bytes": 93482,
+      "sha256": "5728cd17d3b4a6c05d71f7cce1ebbfa51fb848e45c4523e74b3cbf2ab50da846",
+      "width": 1080,
+      "height": 1080,
+      "fps": 60,
+      "start": 0,
+      "end": 322,
+      "layers": 3
+    },
+    {
+      "pose": "BEA_SMORES",
+      "url": "https://d35aaqx5ub95lt.cloudfront.net/lottie/pathCharacters/1607e4d7d34a90b7801f1c47d6f9c6ea.json",
+      "file": "bea-smores.json",
+      "bytes": 139769,
+      "sha256": "05f41c6e014341563a5311c2899d5a7524b8072019b41a463951950bb3b8dad3",
+      "width": 1080,
+      "height": 1080,
+      "fps": 60,
+      "start": 0,
+      "end": 440,
+      "layers": 25
+    }
+  ]
+}

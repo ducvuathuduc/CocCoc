@@ -1,0 +1,120 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart
+test/status_feed_test.dart:1:8: Error: Error when reading 'lib/features/progress/application/social_controller.dart': The system cannot find the file specified
+import 'package:cocenglish/features/progress/application/social_controller.dart';
+       ^
+test/status_feed_test.dart:10:23: Error: Undefined name 'statusControllerProvider'.
+    final vm = c.read(statusControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:14:19: Error: Undefined name 'statusControllerProvider'.
+    expect(c.read(statusControllerProvider).selected, isNull);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:15:19: Error: Undefined name 'statusControllerProvider'.
+    expect(c.read(statusControllerProvider).draft, isNull);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:19:19: Error: Undefined name 'statusControllerProvider'.
+    expect(c.read(statusControllerProvider).draft, 'popcorn');
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:23:19: Error: Undefined name 'statusControllerProvider'.
+    expect(c.read(statusControllerProvider).selected, 'popcorn');
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:25:19: Error: Undefined name 'statusControllerProvider'.
+    expect(c.read(statusControllerProvider).draft, 'popcorn');
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:27:19: Error: Undefined name 'statusControllerProvider'.
+    expect(c.read(statusControllerProvider).selected, isNull);
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:32:23: Error: Undefined name 'statusControllerProvider'.
+    final vm = c.read(statusControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:37:19: Error: Undefined name 'statusControllerProvider'.
+    expect(c.read(statusControllerProvider).draft, 'cool');
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:58:23: Error: Undefined name 'feedControllerProvider'.
+    final vm = c.read(feedControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:63:19: Error: Undefined name 'feedControllerProvider'.
+    expect(c.read(feedControllerProvider).selectedSuggestions, {'Alex', 'Sam Lee'});
+                  ^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:71:23: Error: Undefined name 'feedControllerProvider'.
+    final vm = c.read(feedControllerProvider.notifier);
+                      ^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:73:19: Error: Undefined name 'feedControllerProvider'.
+    expect(c.read(feedControllerProvider).liked, {'stores'});
+                  ^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:76:19: Error: Undefined name 'feedControllerProvider'.
+    expect(c.read(feedControllerProvider).liked, isEmpty);
+                  ^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:78:19: Error: Undefined name 'feedControllerProvider'.
+    expect(c.read(feedControllerProvider).comments['first-friend'], ['Great job!']);
+                  ^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:82:19: Error: Undefined name 'feedControllerProvider'.
+    expect(c.read(feedControllerProvider).comments['first-friend'], ['Great job!']);
+                  ^^^^^^^^^^^^^^^^^^^^^^
+test/status_feed_test.dart:52:19: Error: The method 'buyStatusIcon' isn't defined for the type 'PreviewController'.
+ - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+Try correcting the name to the name of an existing method, or defining a method named 'buyStatusIcon'.
+    expect(wallet.buyStatusIcon('invalid'), isFalse);
+                  ^^^^^^^^^^^^^
+00:00 +0 -1: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart [E]
+  Failed to load "C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart":
+  Compilation failed for testPath=C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart: test/status_feed_test.dart:1:8: Error: Error when reading 'lib/features/progress/application/social_controller.dart': The system cannot find the file specified
+  import 'package:cocenglish/features/progress/application/social_controller.dart';
+         ^
+  test/status_feed_test.dart:10:23: Error: Undefined name 'statusControllerProvider'.
+      final vm = c.read(statusControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:14:19: Error: Undefined name 'statusControllerProvider'.
+      expect(c.read(statusControllerProvider).selected, isNull);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:15:19: Error: Undefined name 'statusControllerProvider'.
+      expect(c.read(statusControllerProvider).draft, isNull);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:19:19: Error: Undefined name 'statusControllerProvider'.
+      expect(c.read(statusControllerProvider).draft, 'popcorn');
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:23:19: Error: Undefined name 'statusControllerProvider'.
+      expect(c.read(statusControllerProvider).selected, 'popcorn');
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:25:19: Error: Undefined name 'statusControllerProvider'.
+      expect(c.read(statusControllerProvider).draft, 'popcorn');
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:27:19: Error: Undefined name 'statusControllerProvider'.
+      expect(c.read(statusControllerProvider).selected, isNull);
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:32:23: Error: Undefined name 'statusControllerProvider'.
+      final vm = c.read(statusControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:37:19: Error: Undefined name 'statusControllerProvider'.
+      expect(c.read(statusControllerProvider).draft, 'cool');
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:58:23: Error: Undefined name 'feedControllerProvider'.
+      final vm = c.read(feedControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:63:19: Error: Undefined name 'feedControllerProvider'.
+      expect(c.read(feedControllerProvider).selectedSuggestions, {'Alex', 'Sam Lee'});
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:71:23: Error: Undefined name 'feedControllerProvider'.
+      final vm = c.read(feedControllerProvider.notifier);
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:73:19: Error: Undefined name 'feedControllerProvider'.
+      expect(c.read(feedControllerProvider).liked, {'stores'});
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:76:19: Error: Undefined name 'feedControllerProvider'.
+      expect(c.read(feedControllerProvider).liked, isEmpty);
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:78:19: Error: Undefined name 'feedControllerProvider'.
+      expect(c.read(feedControllerProvider).comments['first-friend'], ['Great job!']);
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:82:19: Error: Undefined name 'feedControllerProvider'.
+      expect(c.read(feedControllerProvider).comments['first-friend'], ['Great job!']);
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  test/status_feed_test.dart:52:19: Error: The method 'buyStatusIcon' isn't defined for the type 'PreviewController'.
+   - 'PreviewController' is from 'package:cocenglish/features/progress/application/preview_controller.dart' ('lib/features/progress/application/preview_controller.dart').
+  Try correcting the name to the name of an existing method, or defining a method named 'buyStatusIcon'.
+      expect(wallet.buyStatusIcon('invalid'), isFalse);
+                    ^^^^^^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/status_feed_test.dart

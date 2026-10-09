@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-08",
+  "url": "http://127.0.0.1:4173/preview.html",
+  "scope": "HTTP delivery and exact latest-release code hash; native screenshot verification is separate from browser interaction.",
+  "mainDartBytes": 4062664,
+  "mainDartSha256": "c33017c712a3d5ecc69ce7ccf76e8174cc8acc285de8d5bb48703095c9388535",
+  "checks": [
+    {
+      "path": "/preview.html",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/main.dart.js",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/avatar/avatar_builder_25_sept2025.riv",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm/rive_native.wasm",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/rive/wasm_compatibility/rive_native.wasm",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/league-result-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/league-promotion-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/league-reward-source.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/year-review-intro.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/year-review-lessons.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/year-review-xp.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/year-review-league.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/year-review-gate.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/year-review-student.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/year-review-summary.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/widget-ready.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/widget-early.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/widget-practice.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/widget-last-chance.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/widget-save.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/widget-six.png",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/assets/assets/reference_art/widget-seven.png",
+      "status": 200,
+      "cache": "no-store"
+    }
+  ]
+}

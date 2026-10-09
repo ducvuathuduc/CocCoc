@@ -1,0 +1,61 @@
+{
+  "frame": "Per-screen dimensions below; 1179 or 1180 × 2556",
+  "logicalWidth": 390,
+  "excludeSystemInsets": [
+    59,
+    34
+  ],
+  "colorTolerance": 12,
+  "foregroundDefinition": "Either image has any RGB channel below 240",
+  "note": "Diagnostics, not a pixel-perfect score. White space can inflate whole-body similarity. Font/renderer differences remain.",
+  "screens": [
+    {
+      "screen": 2,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 11.178,
+      "foregroundMaeRgb": 102.497,
+      "pixelsBeyondTolerance": 238243,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 278226
+    },
+    {
+      "screen": 4,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 15.936,
+      "foregroundMaeRgb": 80.029,
+      "pixelsBeyondTolerance": 472266,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 505174
+    },
+    {
+      "screen": 6,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 14.103,
+      "foregroundMaeRgb": 88.737,
+      "pixelsBeyondTolerance": 374264,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 408709
+    },
+    {
+      "screen": 9,
+      "frame": [
+        1180,
+        2556
+      ],
+      "bodyMaeRgb": 12.123,
+      "foregroundMaeRgb": 103.221,
+      "pixelsBeyondTolerance": 268012,
+      "comparedPixels": 2683320,
+      "foregroundPixels": 299648
+    }
+  ]
+}

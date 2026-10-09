@@ -1,0 +1,37 @@
+name: Backend foundation
+on:
+  pull_request:
+    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+  push:
+    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: backend-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deterministic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22.23.3
+      - run: npm install --global pnpm@10.15.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm backend:verify
+      - run: pnpm backend:smoke
+      - run: pnpm contracts:check
+      - run: pnpm api:lint
+      - run: pnpm schema:plan
+      - run: pnpm seed:check
+      - run: pnpm audit:check
+      - run: node tools/evals/voice-harness.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: independent-function-scaffolds
+          path: services/*/dist/function.mjs
+          if-no-files-found: error
+          retention-days: 3

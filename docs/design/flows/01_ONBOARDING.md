@@ -1,0 +1,48 @@
+# Flow01 — Duolingo onboarding reference analysis
+
+Analyzed2026-10-04 **before feature UI implementation**. User selected original Duolingo appearance. Source: Gummble iOS [20-step flow](https://gummble.com/apps/duolingo-ios?tab=flows&flow=e6ac09f7-6131-435e-8c21-dae693af84a7), captured Dec2025; all20screens were fetched and visually inspected. [Manifest](../references/onboarding/manifest.json) fixes IDs/order/original1180×2556 dimensions; local images preserve the evidence. This is one flow with repeated selection states, not20independent routes. The prior42entry inventory includes sheets and future screens.
+
+## Frame and common anatomy
+
+Reference ratio1180/2556; comparison canvas390×844.78 logical px. iOS system chrome is excluded from cross-platform similarity; golden fixtures use top59/bottom34 insets. Actual Android uses real OS insets, no fake9:41/statusbar. Body gutter≈16; back target48; top progress16 high with rounded track; header question combines90px owl + flexible speech bubble, body copy20–21px. Choice cards2px border + lower edge, radius14, min54px; vertical gap12–14. Selected pale blue fill/bright blue border/text; only one language/level/goal/plan/start option, multiple reasons.
+
+Bottom CTA is fixed above safe inset, full body width, min48px +4px edge,14pxradius, uppercase bold≈16px with tracking; disabled grey. Scroll content ends above footer divider. Continue remains disabled until valid required selection; Back preserves prior selections. Welcome has two stacked actions. Intro screens have centered owl/bubble and ample white space. No generic dashboard/card grid substitutes these layouts.
+
+Reference dominant sampled RGB: surface#FFFDFE, text#4D4B4E, border#E7E5E7, green#5BCD05; selected state sampled separately. Pixel colors from the actual PNG are distinguished from published brand#58CC02. Bundle public-web font assets with provenance; never fetch fonts at runtime. [Official typography](https://design.duolingo.com/identity/typography) distinguishes bespoke fonts and Nunito substitute; current public-web DuolingoSans/Feather are inspected separately from the2025app screenshot and font equivalence is not assumed.
+
+## Every captured screen
+
+| Step / local reference | Layout/copy | State and action | Flutter ownership / validation |
+|---|---|---|---|
+| 01 [splash](../references/onboarding/01.png) sc_057cfe7c098d4552bd9c2a51ef0a25ec | green full canvas; face centered; white logo near bottom | transient launch→welcome; reduced motion supported | Splash; fixed asset regions only, bootstrap restores session |
+| 02 [welcome](../references/onboarding/02.png) sc_6b0fe96d8c1f4448a9ef2eba9f75b489 | owl/shadow at≈240y; logo≈395y; “Learn for free. Forever.”; two bottom buttons | GET STARTED→intro; account button→login entry | Welcome; two real buttons, logo/illustration only raster art |
+| 03 [greeting](../references/onboarding/03.png) sc_b6afbc174ee74ab094726a99a01ed023 | centered tail bubble “Hi there! I’m Duo!”, waving owl, back/Continue | Continue→seven questions; Back→welcome | CenteredIntro; responsive vertical centering |
+| 04 [seven questions](../references/onboarding/04.png) sc_b3491998f1c84fcd9b08ccc2771afbe7 | “Just **7 quick questions** before we start your first lesson!”, excited owl | Continue→language | CenteredIntro; bold span; no form yet |
+| 05 [language empty](../references/onboarding/05.png) sc_1a4379317bae4b43ace742888008c2ee | owl with notebook/pencil; “What would you like to learn?”; For English speakers; flags/list | no selection→disabled Continue; tap language | Language; scroll list, flag+text semantics, expandable heading |
+| 06 [French selected](../references/onboarding/06.png) sc_64b33c55ef6c4df182281936f358fa53 | same; French blue filled/outlined card | selection enables Continue; changing selection replaces old | Language selected fixture; no navigation on tap alone |
+| 07 [course building](../references/onboarding/07.png) sc_95df6305f3cc4219aa4e374085a29091 | owl/books; COURSE BUILDING…; “7 million people … learning French” | bounded local interstitial→knowledge question | Building; captured illustrative copy, no live population/data claim |
+| 08 [knowledge](../references/onboarding/08.png) sc_09575ce47d754a4b9df44ea3b0474d0d | “How much French do you know?”;5bar-icon choices; second selected | one level; required Continue; Back language retained | Knowledge; selected bars/text/shape, not color-only |
+| 09 [reasons empty](../references/onboarding/09.png) sc_0286d58ba3ac45d5a7e2c3e5ed50ed06 | why learning;7icon rows; trailing unchecked squares | multi-select; disabled until≥1reason | Reasons; labels with actual check state |
+| 10 [reasons selected](../references/onboarding/10.png) sc_834940da606a4b9d9b624774c176e7de | reasons fun/productive/connect highlighted; bubble “Let’s prepare you for conversations!” | toggle independently; Continue→routine | Reasons; dynamic bubble; scrolling preserves chosen items |
+| 11 [routine intro](../references/onboarding/11.png) sc_81bcd2f1cfe241b383f225b8269b7e62 | header/bubble “Let’s set up a learning routine!”; empty body | Continue→goal | Routine; intentional blank space, no invented content |
+| 12 [goal](../references/onboarding/12.png) sc_39e0009cd8534661a9d38e19c6225527 | “What’s your daily learning goal?”;5/10/15/20min, Casual/Regular/Serious/Intense |10default selected; I’M COMMITTED→promise | Goal;20min is reference UI only until backend product contract changes |
+| 13 [word promise](../references/onboarding/13.png) sc_8cbe33f9d47744f097b67fd59e7e4487 | “That’s **50 words** in your first week!” purple span; empty body | Continue→reminder guide | WordPromise; reference illustrative estimate, no fabricated measured outcome |
+| 14 [reminder guide](../references/onboarding/14.png) sc_5853ad05ee754c91acf70d14bce1ab67 | owl/bubble; illustrated native permission example, blue upward arrow; REMIND ME TO PRACTICE | CTA opens permission-choice preview; allow/deny both proceed | Reminder; tutorial remains app content; real OS scheduling is separate later capability |
+| 15 [widget](../references/onboarding/15.png) sc_8cfb425ae0964bcf8e5520871dfd7322 | phone illustration purple streak widget; ADD WIDGET; NOT NOW | both proceed; chosen preference persisted; installation not falsely reported | WidgetGuide; native widgets future platform gate |
+| 16 [benefits](../references/onboarding/16.png) sc_b1d9c7312213454e8ad7f61fde91919b |3months heading;3icon+title+body rows | Continue→plan choice | Benefits; native rows, matched wrapping |
+| 17 [plan empty](../references/onboarding/17.png) sc_86d7f36aa2e8469a83ef8293764ab8bd | Super Duolingo recommended badge; Learn for free; subtitles | no selection disabled; selecting card only changes state | Plan; visual demo only, no payment/ads/subscription provisioning |
+| 18 [free selected](../references/onboarding/18.png) sc_9a395db03764461f84d9ef1ff73b52b9 | free blue; “Awesome! You can upgrade anytime.” | Continue→start choice; Super shows preview without charge | Plan; reference text retained, no paid action |
+| 19 [start point](../references/onboarding/19.png) sc_0fb77701b40646c584163a456ece239d | book1card; compass Find my level recommended; second selected | scratch/level single choice; Continue branches to intro/placement | StartPoint; local demo choice, eventual real placement via Learning |
+| 20 [level confirmation](../references/onboarding/20.png) sc_3d39077227ad4435bee957e43b3e49ac | centered “Since you know a few words, let’s start at **Score10!**”; writing owl | Continue→first lesson flow boundary | LevelConfirmation; retained state; next flow analyzed separately before implementation |
+
+## Native implementation contract
+
+OnboardingState: ordered step, selected language/knowledge/reason IDs, goal, notification choice, widget preference, plan, start point. Controller owns selection/advance/back; repository saves one versioned local snapshot with serialized writes so late saves cannot overwrite newer state. Restore clamps unknown versions/invalid enums to a safe welcome and preserves valid input. No Appwrite/JWT/rewards are simulated as real authority.
+
+Question data/options are typed local reference fixtures. French is the captured selection; other options remain visual/demo choices without claiming seeded cloud curriculum. Language copy follows selected option. Bubble/card text wraps at2×scale; body scrolls and footer stays reachable. Selection semantics expose checked/selected; disabled CTAs do not fire. Hardware Back follows step reducer and preserves input; local preview modal Back dismisses only the modal.
+
+Graphics may use documented image-atlas source rectangles from reference files for **illustrations/logotype/icons only**; title, options, buttons, forms, progress and all interactions are real Flutter widgets. Never render a screenshot as the screen UI. Exact source rectangles/provenance are recorded alongside assets. Comparison excludes system chrome and labels missing source-font/animation differences rather than claiming unmeasured pixel-perfect results.
+
+## Required checks before next flow
+
+Controller tests: invalid Continue, selection/back restore, multi-toggle, goal, persistence ordering/restart/corruption, branch finish. Widget tests: labels/CTA disabled then enabled, full20state fixtures, no overflow390/360/430 and text2. Load actual fonts before screenshots; compare native render with the same reference aspect/insets. Build Android debug; run on emulator; follow complete onboarding then Back/resume. iOS platform files generated but compilation requires macOS CI; simulator and physical device remain separate evidence.

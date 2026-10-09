@@ -1,0 +1,15 @@
+# English Story, Radio and Roleplay
+
+Analyzed2026-10-04 before native implementation. Gummble MCP ordered sources are in the [complete index](../references/ORDERED_FLOW_INDEX.json), with original PNGs and checksums in the [cache receipt](../references/catalog-cache/manifest.json). Adapted English/Vietnamese text is authored mock content, not the archived French exercise or a verified translation of it.
+
+| Journey | Source flow | Source states and native interpretation |
+| --- | --- | --- |
+| Story | 3ca0e3af-c517-4051-9d07-ad097aa1af51,14steps | Red node popup Review/Legendary; close/progress/energy header; portrait/bubble dialogue; true/false comprehension; select highlighted word; complete missing phrase with wrong/correct states; ordered native word chips; Duo completion and three result cards. Inspected steps4,6,9,11,13,14 individually. |
+| Radio | 9ff41a50-d527-4ba1-b886-dbc8a54f21c4,14steps | Red entry popup; Lily host at desk; smaller desk above native two-column word pairs; host/caller composition above select-two-word chips; two answer rows for comprehension; replay/pause controls; completion. Inspected steps4,6,10,13 individually. Recorded English audio is unavailable; native transcript substitute must be explicit. Desk/caller assets are still illustrations until the original animation/audio alignment is found. |
+| Roleplay | 45b5806b-d844-44ae-b277-22da5a3e70ca,19steps | Green entry popup and MAX marker; black intro; turquoise progress; Lily restaurant scene; speech bubble with Translate toggle; native bottom typed/mic input; recording variant; sequential turns; completion and feedback review with takeaway, transcript, feedback votes. Inspected steps4,6,7,11,16,19 individually. Deterministic text practice preserves submitted answers; unavailable audio/network must not erase input or impersonate live AI. |
+
+Shared390logical-width tokens:16outer inset,44tap targets, rounded2px neutral borders,24–28bold prompt,19–21 dialogue/options,52primaryCTA with4bottom edge. Main reading body scrolls independently of fixed header/footer. Native selections use cyan or green fill; wrong answers use red; word chips remain editable before submission. Close offers keep-learning versus end; a session draft survives returning to the entry. Retry starts a fresh local session only after explicit start.
+
+Mascot mapping is position specific: Story completion can use verified original Duo celebration; dialogue portrait illustrations retain exact source ROIs. Radio desk/caller and restaurant scene retain exact illustration regions and do not receive a generic bob. Original makerInLesson Rive character reactions are validated separately and may be used only after their viewport/pose matches the intended role. All motion obeys reduced motion, app lifecycle and hidden-route ticker state. Pixel/timing acceptance remains open until comparisons exist.
+
+These previews do not write authoritative XP, spend gems, call a paid model, send microphone data, or grant a real subscription. The shared mock preview shows capability status once at entry rather than implementation details inside every exercise.

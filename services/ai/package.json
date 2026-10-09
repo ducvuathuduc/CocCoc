@@ -1,0 +1,14 @@
+{
+  "name": "@cocenglish/ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ../../tools/scripts/backend-check.mjs --build ai",
+    "test": "node --test test/*.test.mjs",
+    "start": "node ../../tools/scripts/service-local.mjs ai"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

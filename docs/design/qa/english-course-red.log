@@ -1,0 +1,35 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  window_to_front 0.0.4 (1.0.0 available)
+Got dependencies!
+9 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_ui_test.dart
+00:00 +0: reference course choices do not change the interactive English course
+00:00 +0 -1: reference course choices do not change the interactive English course [E]
+  Expected: 'English'
+    Actual: 'French'
+     Which: is different.
+            Expected: English
+              Actual: French
+                      ^
+             Differ at offset 0
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\english_ui_test.dart 14:5                      main.<fn>
+  
+00:00 +0 -1: new local learners start with English
+00:00 +1 -1: English score and guide expose English with Vietnamese meanings
+00:00 +2 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/english_ui_test.dart: reference course choices do not change the interactive English course

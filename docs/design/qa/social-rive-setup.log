@@ -1,0 +1,5 @@
+[rive_native]   Starting Rive Native Setup...
+
+[rive_native]   rive_native libraries already present for windows. Not building/downloading libraries.
+[rive_native]   
+[rive_native]   To force a rebuild/download, run with `--clean`

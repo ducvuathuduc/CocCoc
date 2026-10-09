@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CocEnglish</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{width:100%;height:100%;margin:0;overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center;background:#f1f2f4}
+  .phone{position:relative;width:390px;height:844px;overflow:hidden}
+  iframe{position:absolute;inset:0;width:390px;height:844px;background:#fff;border:0;transform-origin:top left}
+  @media(max-width:440px){
+    body{display:block;background:#fff}
+    .phone{width:100vw;height:100vh;height:100dvh}
+    iframe{position:static;width:100%;height:100%;transform:none}
+  }
+</style>
+<div class="phone"><iframe src="/" title="Ứng dụng CocEnglish"></iframe></div>
+<script>
+const phone=document.querySelector('.phone'), frame=document.querySelector('iframe');
+function fitPhone(){
+  if(matchMedia('(max-width:440px)').matches){
+    phone.style.width='100vw';phone.style.height='100dvh';frame.style.transform='none';return;
+  }
+  const scale=Math.min(1,innerWidth/390,innerHeight/844);
+  phone.style.width=`${390*scale}px`;phone.style.height=`${844*scale}px`;frame.style.transform=`scale(${scale})`;
+}
+addEventListener('resize',fitPhone);fitPhone();
+</script>
+</html>

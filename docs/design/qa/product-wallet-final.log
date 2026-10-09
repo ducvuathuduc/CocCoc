@@ -1,0 +1,12 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart
+00:00 +0: GET GEMS opens Shop without minting balance or losing the selected pack
+00:02 +1: boost purchase preserves insufficient selection, then spends once from demo balance
+00:02 +2: ledger validates boost pack and duplicate receipt without trusting a supplied price
+00:02 +3: one owned boost resumes only expired rapid question and preserves answer
+00:02 +4: real modal retains dismissed choice and purchase returns to paused rapid question
+00:03 +5: Shop modal at width360 text2 purchases and Home shows the same wallet
+00:04 +6: boost offer and success render width360.0 text1.0
+00:04 +7: boost offer and success render width360.0 text2.0
+00:05 +8: boost offer and success render width430.0 text1.0
+00:05 +9: boost offer and success render width430.0 text2.0
+00:05 +10: All tests passed!

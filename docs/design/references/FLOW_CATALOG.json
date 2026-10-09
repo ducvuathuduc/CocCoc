@@ -1,0 +1,3894 @@
+{
+  "captured": "2026-10-04",
+  "app": "Duolingo iOS",
+  "pages": 4,
+  "total": 160,
+  "englishScope": "English-learning adaptation plus all shared language/account/social flows; music/math/chess omitted by user request",
+  "flows": [
+    {
+      "id": "02681cdc-5d55-4755-a529-9e6c7ecaf5c9",
+      "name": "Removing a course",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=02681cdc-5d55-4755-a529-9e6c7ecaf5c9",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_1cd2b55d47c740caa6b492a5c1ba3d33",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMWFmM2YyNS1kZDdhLTRjMzUtOGM5Mi0zYzExYzRiM2FjMGIucG5n"
+        },
+        {
+          "id": "sc_0d857b5fe2bd4edfb9f3bb5ca390f21d",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZjIxODQ4Ny1kOWM3LTQ3ZTYtYTg3NC1mZWRkMTQzMWZmYjEucG5n"
+        },
+        {
+          "id": "sc_39a18bbd6e52469ea53842c8e2f55829",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zODg3OGIzZC0zNzg3LTQ4NTYtYTNkNy01NzJjZWE5NWU4ZTYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "068dbdc0-5d4a-4de2-a477-b0e5c8cdc3e8",
+      "name": "Completing a lesson",
+      "screenCount": 22,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=068dbdc0-5d4a-4de2-a477-b0e5c8cdc3e8",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_e793f7fdfb3349cc8a32a78d9648ee07",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZDVkZDc4Zi1iYzQ5LTQ2NzUtOWY4NC04YTAxODU5MWUzMmIucG5n"
+        },
+        {
+          "id": "sc_59c6c255ba9e4d26b6dfd59922951d8a",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNWQ5MmQyOS1lYWJjLTQ4NDAtYjMxOC1hZmEwZDgxZjI4ZTkucG5n"
+        },
+        {
+          "id": "sc_8e2fccfd6cda45758daa5c66fac16099",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOWQyMzBhMC1lZTUzLTQxMGMtYTkxMC02MGQwMDFiNzgxMDQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "0876e919-b55d-4666-8bb5-a5a4f6bf968e",
+      "name": "Friends",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=0876e919-b55d-4666-8bb5-a5a4f6bf968e",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f93312c9e2964abfa7a55ae8f9495fed",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xYWY1OTcxMC1iM2I2LTRmM2UtYTE5ZC05NmUyNzBiZWVlMzIucG5n"
+        },
+        {
+          "id": "sc_e66d4ee4077f48b6b39bab8247af44fa",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hYzEyOGZlZC0yZjUwLTQ0M2MtYjcwOC1iYzNjODY0MjY3MTYucG5n"
+        },
+        {
+          "id": "sc_1b5cfcb423684a05868a7da5fedeccc5",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kOTJjODI1ZS05NTQwLTRhNDgtYWI1NC1lZmQxMTM4ZDMxZGMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "0e653f8e-e529-4dd7-ba84-0589fd9b7b82",
+      "name": "Setting a status",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=0e653f8e-e529-4dd7-ba84-0589fd9b7b82",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c6e694401b1c414c8fdfcbaf01f34428",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMjgyNWZmZC04ZTU5LTRlM2ItOTg1YS1kMWVjNzNjMGNjMGYucG5n"
+        },
+        {
+          "id": "sc_26810b55b72e4cf8bc77980a286ac892",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84YjZlZTlmNi0xZWYxLTRkYjAtYmU4Yi01ZDg5NTMwYmE2NWMucG5n"
+        },
+        {
+          "id": "sc_a00463fd98c346f3a4b4327335eb5cae",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yNjE2N2I1OC04NzVhLTRmMzUtOWJhNy02M2QxOTYyNDBmOTUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "0f480cf3-2057-412c-999a-fe9a54bed855",
+      "name": "More about score",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=0f480cf3-2057-412c-999a-fe9a54bed855",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_85f3a7500b9944fca769b66210f54cb3",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85MzFkYzM4MC1hMmE5LTRjNDQtYjBkMi01ZTgwZTlkOWM3MmQucG5n"
+        },
+        {
+          "id": "sc_0895ee1476f34af7a71806b9ff98f8ba",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xOGQ1YzU0ZS1hYjhkLTQyOTQtYjMyMC0xOWM2YjNmMTlkYWIucG5n"
+        },
+        {
+          "id": "sc_efa15d6466184fcf9e02dd2ce46624a0",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MDcyZTBiMC0yNDhmLTRmYjMtOTBiMi01ZDAwNWEwZWMzM2YucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1496a2ff-7640-4344-a30b-14543a5a4738",
+      "name": "Sorting words",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1496a2ff-7640-4344-a30b-14543a5a4738",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_6817305c8be341dbae5641f736207b13",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xNDA5YTE5NS05ZjBlLTQwZGEtOTg3YS05NmNjY2ZhNDNmNDcucG5n"
+        },
+        {
+          "id": "sc_bffb16b5dc8f46b09de07198dcfb00f2",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNDEzOTgxNi0xNGI3LTQ2ZGEtODFkOS00MjFiY2ZhN2NjNTIucG5n"
+        },
+        {
+          "id": "sc_c990562aa3ba4d5d8859d30b7dce9780",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZGVkMzY0ZS1iZTFhLTQyMzAtYjIzMC04NDhlNTUyYzFjOGUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "14ea3a1f-8b70-41ec-ade1-d77617a3f149",
+      "name": "User profile",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=14ea3a1f-8b70-41ec-ade1-d77617a3f149",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c6e694401b1c414c8fdfcbaf01f34428",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMjgyNWZmZC04ZTU5LTRlM2ItOTg1YS1kMWVjNzNjMGNjMGYucG5n"
+        },
+        {
+          "id": "sc_4e2872a67f974c9e8dbe148c85e6e6ec",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NmUzYzE3ZS04NDYwLTRiZmUtOTAyYi1jN2MzMWVmYjBmMDEucG5n"
+        },
+        {
+          "id": "sc_684712174d024d9d89ea3919e4b0db7e",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84NDQyMWU0ZS00ODg2LTRjYzktYTgzNC1jMTJkNWFkM2ViNDgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "174e45d5-58e6-43b8-a5b1-465aa2f7a274",
+      "name": "Widgets",
+      "screenCount": 1,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=174e45d5-58e6-43b8-a5b1-465aa2f7a274",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_1df26fb694b24a2c8f3a95192c4d7531",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84YjcxZTVhYS02NTdmLTQ5YTctYTY0Ny0yOGVmZWJhYTA5ZTgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1a403996-c169-410b-ab69-c28dbfd8a05b",
+      "name": "Completing a story lesson",
+      "screenCount": 11,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1a403996-c169-410b-ab69-c28dbfd8a05b",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_e2f0a9442f3e4e8d80c9096ae830ffd1",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xMDVjMWU5Mi1kZmM5LTQyYTktOGQ2Yi00NDRkMzUwNzg2MzgucG5n"
+        },
+        {
+          "id": "sc_2c7cf61679cb42a790eca05f5a55c0de",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNGQ0MDViZi0wYzRiLTQ2NWYtOTVlNi0yNjgyNDM0YTZiMmQucG5n"
+        },
+        {
+          "id": "sc_9b034380e43f4266b61f73235c7fe788",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xM2Q2MDQxMi1jODVlLTQ1MzctYWU2MS1jZTk4MjllNWQ0MjYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "21a86a2a-3d9e-4c93-a29b-c59ba6c16cee",
+      "name": "Dynamic Island",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=21a86a2a-3d9e-4c93-a29b-c59ba6c16cee",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_91ce2f0575e541209656de20ceaaa6d0",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zZTNhOTMyNi05NTZhLTRjNjUtOGI0My1iNjZlMGFiNzUzZTMucG5n"
+        },
+        {
+          "id": "sc_62d09ee369b64622afc4abb857b931ad",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82NmNlOTljMy04MTRhLTQ0ZmMtODIxMy1lOWEzZmZiMDljNDUucG5n"
+        },
+        {
+          "id": "sc_898294db35d04788a51d463ba7c33073",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZmNiZDA0MS1iNTZjLTRkOTctODYxOS00OTU4ZTdmYzQ2YzkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "2893d5ba-2e72-4ae4-9b39-cc83ae1bb6a4",
+      "name": "Manage subscription",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=2893d5ba-2e72-4ae4-9b39-cc83ae1bb6a4",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_8e99e0e057d642418718572e3a548bed",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MDJlMzVhZS1iYjFmLTQ5OTctOTI0OS1jNDc5MDI0MzgyOGQucG5n"
+        },
+        {
+          "id": "sc_8bc0e1654ea34850963e8be4261d2510",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iNTAyOWIwNC0yZDZkLTQxNmUtYWZlOS0yNGE0M2FkM2I4Y2UucG5n"
+        },
+        {
+          "id": "sc_12b3fd7981464afb985b66ae25b86055",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83M2FiNDkzMS03YzIzLTRkZDUtOGIyYi02YTc5MzY2Y2RhZmEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "38c6ac2e-4911-4563-ac9a-4401973f138c",
+      "name": "No connection",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=38c6ac2e-4911-4563-ac9a-4401973f138c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_e793f7fdfb3349cc8a32a78d9648ee07",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZDVkZDc4Zi1iYzQ5LTQ2NzUtOWY4NC04YTAxODU5MWUzMmIucG5n"
+        },
+        {
+          "id": "sc_12b09a6c23464ff6a5ae32474fdf377b",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNzg5YjMwYS0yZTc4LTRlMDctYmJiYy0xOTkxMTE1MjkxYjYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "3a0319c2-f139-4958-9792-4e20328e80ff",
+      "name": "Course",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3a0319c2-f139-4958-9792-4e20328e80ff",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c8b0756fed214429b7ac2b6866526d19",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOWM3NjU0Ny1hNDJlLTRmMGMtODg5Yi05MDAxY2U4ZmIzMjAucG5n"
+        },
+        {
+          "id": "sc_f341424777e540bb8fe58088d1145a96",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NzViZjNjZi04MTAwLTQ2ZjMtYTRlZi1lYzI5NzBkNTljMWYucG5n"
+        },
+        {
+          "id": "sc_85f3a7500b9944fca769b66210f54cb3",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85MzFkYzM4MC1hMmE5LTRjNDQtYjBkMi01ZTgwZTlkOWM3MmQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "3ad07107-91dc-48aa-af39-0344879eefc7",
+      "name": "Delete an account",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3ad07107-91dc-48aa-af39-0344879eefc7",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_9802549ab180451ebf50527dccc59794",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZDg2NDZhOC01YjUyLTQzODYtYTI4OC05MTlkMjk5MWM4NTYucG5n"
+        },
+        {
+          "id": "sc_ab2390bc3fe84032bc05ab39f429af0f",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jYjZkMmY5ZC00ZWNmLTQ0YjItYTU1ZC1iOTM2NzYxYjZmZTIucG5n"
+        },
+        {
+          "id": "sc_c5be7652bc214f92aa5f660d3f9ce7cd",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xZDNhMTJhZi00OTliLTQ3NzctOGI5MC05NGJhY2ZiOGIxYjIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "4091dc46-49a2-4f13-b036-efd9da4416d3",
+      "name": "Nudging a friend",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=4091dc46-49a2-4f13-b036-efd9da4416d3",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_a69a706cd3c54ece9e383f019a16c20b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNjU2MGVkMS02NzFkLTQ3ZjEtOWM5OS02NDA1ZTNmODliOTAucG5n"
+        },
+        {
+          "id": "sc_ffbc71d9d95f44c28bdfe2f909630041",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xOGIzZTk0My0xYjEwLTQ5YmUtYjhkNy04MjBiMDgwMzZlMWUucG5n"
+        },
+        {
+          "id": "sc_954622a5c9344062ae02879ae53bc8c3",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yY2UyMjc0OS0zMWE1LTQ3ZjQtYTlmMy0xYWY5MjdhYWI2YmYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "48f7489f-ed2c-4cf3-98e8-b8254482cc99",
+      "name": "Creating a profile",
+      "screenCount": 18,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=48f7489f-ed2c-4cf3-98e8-b8254482cc99",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c0f27dfb98464cdbac4cf2cdd602a926",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NmMzMTg1MC1lMDJlLTQ5ZmItODMyYS1jNjZjZGFkYmUzNGQucG5n"
+        },
+        {
+          "id": "sc_d280422918b84f74b30c3403fe866310",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zMTczOTdlNC00ZjMyLTQ5ZDYtYWFlOS1kYWUzYTFjYzIwNTcucG5n"
+        },
+        {
+          "id": "sc_7426fc0e4c5641d99e76bd42699e22db",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83YTNlZjBkMi00YzIzLTQ3M2UtYjE3Mi0zMGIwYjA0OWYwNjIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "521f5c00-cf33-4324-82c7-197dd1badfd6",
+      "name": "Roleplay",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=521f5c00-cf33-4324-82c7-197dd1badfd6",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ee033ce7f4b4469aa567008bc6131bb9",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNThiMmQyYy00NGIxLTQxODAtOTg2NC0zZGRjMDljMjRjZWUucG5n"
+        },
+        {
+          "id": "sc_11921ed1366b411b9c207ad3b55da913",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMWQ1Nzc0Mi1iMTg2LTQyYzAtYTRiNS1iNDY2NGMwZmUyOTkucG5n"
+        },
+        {
+          "id": "sc_908f1711d7ee49729fcdd1599b076e90",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNmE3NDJmYy1jZmUwLTRjZjQtYWY2OS0zYTlhZDZjOTc2Y2QucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5a848dfe-cacb-4319-b5a3-7a2a2a982980",
+      "name": "Settings",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5a848dfe-cacb-4319-b5a3-7a2a2a982980",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f93312c9e2964abfa7a55ae8f9495fed",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xYWY1OTcxMC1iM2I2LTRmM2UtYTE5ZC05NmUyNzBiZWVlMzIucG5n"
+        },
+        {
+          "id": "sc_1cd2b55d47c740caa6b492a5c1ba3d33",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMWFmM2YyNS1kZDdhLTRjMzUtOGM5Mi0zYzExYzRiM2FjMGIucG5n"
+        },
+        {
+          "id": "sc_8a626ded83514b5aa58db9339863c8e8",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80ODNjODM0ZS0xODUzLTRhMWQtYjMyOS00MWEzYzJiMTgxZjEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "68cd5891-7c55-4e5c-b166-546e9277928c",
+      "name": "Practicing to get a heart",
+      "screenCount": 10,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=68cd5891-7c55-4e5c-b166-546e9277928c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_fb07ca98996940ea955abc02ad8f9f35",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83NWIyNDVmYi1mZTU5LTQwYmQtYjdhZS02MTU2MmNhN2FhM2EucG5n"
+        },
+        {
+          "id": "sc_116ec1289f3b497db5c131868e96fd2f",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xZjRjZGFmNi01MGIxLTQ5NjYtOGEzMy0zMTFiZTBhZDVkNTIucG5n"
+        },
+        {
+          "id": "sc_ead39d211c0c496998a0807eb08ebb85",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMWExZTI0Yy0yYWZmLTRjODItYmQyNC1iODZkOTcwNTVlMTMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "6f109b71-92ba-4bb7-8342-35ac82af3420",
+      "name": "Starting a roleplay session",
+      "screenCount": 22,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=6f109b71-92ba-4bb7-8342-35ac82af3420",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_11921ed1366b411b9c207ad3b55da913",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMWQ1Nzc0Mi1iMTg2LTQyYzAtYTRiNS1iNDY2NGMwZmUyOTkucG5n"
+        },
+        {
+          "id": "sc_a2348f43179f41bc99c601844d36eedb",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNWZkZWU3YS0wYjQxLTRjY2ItYjI1NS1iMTQ3MWI0NDRmOWYucG5n"
+        },
+        {
+          "id": "sc_64908f66321249c0a3b87916b831780c",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kYmE5NzUzZS02MmFkLTQ4ZDgtYTZhMS1lNjhkMmZjN2NmMzkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "6f140793-7376-4497-8a35-0b8274bcdff4",
+      "name": "Subscribing to Max",
+      "screenCount": 14,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=6f140793-7376-4497-8a35-0b8274bcdff4",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_12b3fd7981464afb985b66ae25b86055",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83M2FiNDkzMS03YzIzLTRkZDUtOGIyYi02YTc5MzY2Y2RhZmEucG5n"
+        },
+        {
+          "id": "sc_b0cba3fc2f924160bf42c8563616dd30",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hYzY3MDhkZC1mMjA4LTRkOTItOGI2ZS1iZjc5MGIwYTQ2ODIucG5n"
+        },
+        {
+          "id": "sc_0e0faa8be90f4b528684d8f9b7f5c7db",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZTZkNGI2NS02NGQ0LTRhMmEtYWMwYS0zN2ZmMTA5OGY3MGYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "72b6566a-dc44-4280-b8ce-39488925dfb5",
+      "name": "Hearts",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=72b6566a-dc44-4280-b8ce-39488925dfb5",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_e793f7fdfb3349cc8a32a78d9648ee07",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZDVkZDc4Zi1iYzQ5LTQ2NzUtOWY4NC04YTAxODU5MWUzMmIucG5n"
+        },
+        {
+          "id": "sc_901080ed9f0f4cbdbca9b02d2ad19b29",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82Y2YyNTQ5OS1lNTQ0LTQ0N2QtYjRjZi1hMzI0NjI4NWNhYmIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "7343592e-fbc9-49a6-ba14-72fa2f5c238c",
+      "name": "Completing a game lesson",
+      "screenCount": 13,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=7343592e-fbc9-49a6-ba14-72fa2f5c238c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_b97b070db88d4962b78debb6c9cc4555",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MzU5OTdkYi1iNTc2LTRmN2QtOTZkMC03YjMwY2EyNGRjZDYucG5n"
+        },
+        {
+          "id": "sc_4656d7e8f99b4636b7f2daeaefd5aa72",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iNGMyMTM4Yi03MzE1LTRiZjUtYTZlZC1mZTE5MTMzYjMxMzgucG5n"
+        },
+        {
+          "id": "sc_1421e947287040c184208ce9d653adf8",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kMWU1ZWM5My1iMzkyLTRlODItYTg4Mi0xN2M5ODNjZDJkMmQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "73c77dcb-bb8a-41fb-aac4-2dd03d5ded2e",
+      "name": "Run out of hearts",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=73c77dcb-bb8a-41fb-aac4-2dd03d5ded2e",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ceb894f17ed14dd08762802759a22ced",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yMDBmYWQyYi0xMDIwLTRjNTEtODZjYy05OWYwYjQ5MWVhMjkucG5n"
+        },
+        {
+          "id": "sc_1ae5ddcf960a4ee6953d1242f77845dc",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xNjJlZjY5My1mMGMyLTQ0MDgtOGI4NS0zOGY4NjFjOTVlOTUucG5n"
+        },
+        {
+          "id": "sc_fb07ca98996940ea955abc02ad8f9f35",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83NWIyNDVmYi1mZTU5LTQwYmQtYjdhZS02MTU2MmNhN2FhM2EucG5n"
+        }
+      ]
+    },
+    {
+      "id": "809cf666-d5a3-45ab-815d-684210cb8e95",
+      "name": "Words",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=809cf666-d5a3-45ab-815d-684210cb8e95",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_cf33e2edea8b4c1d9094ea8c676f6bbd",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wODA2NTE4Yi1mOTc1LTQyZjgtYmFjZi0zYzNmZmFlYTU4MzMucG5n"
+        },
+        {
+          "id": "sc_6817305c8be341dbae5641f736207b13",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xNDA5YTE5NS05ZjBlLTQwZGEtOTg3YS05NmNjY2ZhNDNmNDcucG5n"
+        },
+        {
+          "id": "sc_cfa790a339fc45c788dd3b1c2383650e",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hOGIxMjJiOC1mMjU3LTQ1YjUtOWViNC1lYjRlNjBjMjk3NjUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "8836419b-926a-4a6e-b264-daff94628c88",
+      "name": "Profile",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=8836419b-926a-4a6e-b264-daff94628c88",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c8b0756fed214429b7ac2b6866526d19",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOWM3NjU0Ny1hNDJlLTRmMGMtODg5Yi05MDAxY2U4ZmIzMjAucG5n"
+        },
+        {
+          "id": "sc_07c8a11a54404fd4ad9606c4fdd8ad9c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iODA2ZGQ2YS1iMzBlLTQ3MTgtODkyMC01ZjM3MGE5OTRjZTgucG5n"
+        },
+        {
+          "id": "sc_f93312c9e2964abfa7a55ae8f9495fed",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xYWY1OTcxMC1iM2I2LTRmM2UtYTE5ZC05NmUyNzBiZWVlMzIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "895e5cfc-9b69-4563-bd92-a2d666d52c37",
+      "name": "Customizing reminders",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=895e5cfc-9b69-4563-bd92-a2d666d52c37",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_1cd2b55d47c740caa6b492a5c1ba3d33",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMWFmM2YyNS1kZDdhLTRjMzUtOGM5Mi0zYzExYzRiM2FjMGIucG5n"
+        },
+        {
+          "id": "sc_9c94859db075438cb8c4a6e65cf93416",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82NDk2NTk5ZS1iNzcwLTQ3MzMtOGNmYS00ZTI1NTYyN2Q0Y2IucG5n"
+        },
+        {
+          "id": "sc_8c28bbc42ff74296adf06f804355fef9",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85MDY1ZTk0OC1iY2FjLTQzZTQtYmQ4Ny0wODI5MzE5MWQ1NmQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "8fa53138-ae46-4d6c-a7d3-75c0493dec5c",
+      "name": "Creating an avatar",
+      "screenCount": 12,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=8fa53138-ae46-4d6c-a7d3-75c0493dec5c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f93312c9e2964abfa7a55ae8f9495fed",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xYWY1OTcxMC1iM2I2LTRmM2UtYTE5ZC05NmUyNzBiZWVlMzIucG5n"
+        },
+        {
+          "id": "sc_03dcd1ed8e1e45d88174ddbc567f7f87",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xYjUxZjM5Ni00ZjBlLTQyZDQtYTM3NS1iMWU1MWUzODU1MWMucG5n"
+        },
+        {
+          "id": "sc_789baa8d9dd246f38e938e0749136f81",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80YTFkY2ZiMy0yZDgyLTQ0ZGYtODg3NS0yYWYxZDlhYzIxOTEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "95cfcf38-001a-4432-b49e-b4282f9703a4",
+      "name": "Leaderboard",
+      "screenCount": 11,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=95cfcf38-001a-4432-b49e-b4282f9703a4",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c8b0756fed214429b7ac2b6866526d19",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOWM3NjU0Ny1hNDJlLTRmMGMtODg5Yi05MDAxY2U4ZmIzMjAucG5n"
+        },
+        {
+          "id": "sc_259ab70b5de5483191ff40b507c9b8f0",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hN2ViODk2Mi1hYzNmLTRkOTgtYjY1Zi1hZTI4ZmEwOGY2ZmYucG5n"
+        },
+        {
+          "id": "sc_98120696dc1a45b4a33fa1ebf0599891",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82NjkyMGQxZC1iNjE4LTRiM2MtOTZlZS04NTg0MGM1MDhhYWYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "9b66a0be-845f-427e-9e3f-9e7f491e2067",
+      "name": "Editing profile",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=9b66a0be-845f-427e-9e3f-9e7f491e2067",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_1cd2b55d47c740caa6b492a5c1ba3d33",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMWFmM2YyNS1kZDdhLTRjMzUtOGM5Mi0zYzExYzRiM2FjMGIucG5n"
+        },
+        {
+          "id": "sc_780fd45a5c1648e7aab8b70333f384db",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZjYyNzk4MS1hM2ZmLTQzNDQtYjQ0NS0wOTdlNjdjZTQyMDkucG5n"
+        },
+        {
+          "id": "sc_0f977bd7e0b94a7bbe76697f8c748a26",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xN2NjNTEzYi1hODMzLTQxYTktYWM0OS0xNTY4NWMyNjQwODgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "a20f851f-87cc-4fd6-940e-74617680e61d",
+      "name": "Duolingo for schools",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=a20f851f-87cc-4fd6-940e-74617680e61d",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_1cd2b55d47c740caa6b492a5c1ba3d33",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMWFmM2YyNS1kZDdhLTRjMzUtOGM5Mi0zYzExYzRiM2FjMGIucG5n"
+        },
+        {
+          "id": "sc_800ef5355b0d4635892cd6afef68de82",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mYTliNDQ2My1mZGU4LTQ5NTQtYTc3YS1hY2MzOWY2YjY3ZTcucG5n"
+        },
+        {
+          "id": "sc_360dbe0f7c9e4829b92cfce8153b4216",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMzkxNjlhYi1iMmIwLTRkMzEtOTRkZC1mOWZkNjg5MzdjMTIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "ad65004b-d8d7-4b8a-b3fb-3a548882b2f9",
+      "name": "Logging in",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=ad65004b-d8d7-4b8a-b3fb-3a548882b2f9",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_6c7cc25cc0d0485d84246dacc7f7523e",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84Njk5NzAxMy1lMjk2LTQwYTktODQ5Yy1lZTFkYzE1YzY4NGIucG5n"
+        },
+        {
+          "id": "sc_197c5c66505542f0afb6c4b175c89105",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84NzE4NmY0MC03NDA0LTQzYWUtODVkNC0wYTM2NTU0MDdhODMucG5n"
+        },
+        {
+          "id": "sc_15b95c615f084fd1b01fad4dc1993d6f",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNzU2M2ZmYS1lMDExLTRkZmQtOTZmNi0wYTRlZGVkNTJiODIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "aed68339-c522-4abd-9159-ea981cfdd03e",
+      "name": "Practice hub",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=aed68339-c522-4abd-9159-ea981cfdd03e",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c8b0756fed214429b7ac2b6866526d19",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOWM3NjU0Ny1hNDJlLTRmMGMtODg5Yi05MDAxY2U4ZmIzMjAucG5n"
+        },
+        {
+          "id": "sc_149288273fd9444bbbeab4216118e96c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82NGJiNzA0YS0wZGYwLTQ0YWQtODZjMy00YmNlMzk2MzRlMTUucG5n"
+        },
+        {
+          "id": "sc_cd4129fa89544d849a9351e6290ee66f",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hYmIyMTg1ZS05NTQ4LTQ3MjktOTM0OC1iODM4YjE0MmNmY2YucG5n"
+        }
+      ]
+    },
+    {
+      "id": "b16ffb11-e472-467e-b078-9aaa1b56a949",
+      "name": "Mistakes",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=b16ffb11-e472-467e-b078-9aaa1b56a949",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_cf33e2edea8b4c1d9094ea8c676f6bbd",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wODA2NTE4Yi1mOTc1LTQyZjgtYmFjZi0zYzNmZmFlYTU4MzMucG5n"
+        },
+        {
+          "id": "sc_b9b6c20a62334b4d80e61599b640597b",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMmQzZGYxMS0yYzQ0LTRkM2UtYmUwMy01MDQxYmY1N2JkZDIucG5n"
+        },
+        {
+          "id": "sc_c19175e5be574302a226c3d1af4a8c92",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yOGJhYmZiYi1kYmM4LTRlNmQtOGZkZS01ZmE1YjZhZmIwYmQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "bb0d8a5f-ea93-473d-b241-052b75dd92a1",
+      "name": "Stories",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=bb0d8a5f-ea93-473d-b241-052b75dd92a1",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_cf33e2edea8b4c1d9094ea8c676f6bbd",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wODA2NTE4Yi1mOTc1LTQyZjgtYmFjZi0zYzNmZmFlYTU4MzMucG5n"
+        },
+        {
+          "id": "sc_a86450f7f1dd43c8999180c514804d4a",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MTY2ZTc2Ni1jODlmLTRjMmUtYTEyNS05YTBmZTZlYTMxYTQucG5n"
+        },
+        {
+          "id": "sc_66dde1d5f9fe43c1ab40fdd959dc870f",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lYTgzMGQ2MS03ZDlhLTRmNmYtYjU4My01Njc3OTc5NGIxNjUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "befb4bf3-6322-44f7-a9c2-f610f16ebbb1",
+      "name": "Super",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=befb4bf3-6322-44f7-a9c2-f610f16ebbb1",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_b0fdbf8674a64fa78c4602ebacacff11",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMzFjOWU1Yi0xMGY0LTRjNzctYjUyNS0wMDliMjAyNmQ0YjMucG5n"
+        },
+        {
+          "id": "sc_b6c59b8f4270406e8902489ca2385d65",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMTIzMGE2Ni03YjNkLTRjYWItYjljZC00OGEyMzYwMzM1ODIucG5n"
+        },
+        {
+          "id": "sc_8258fa0768504546a6ce98efddf48f12",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hYmY3MzlkZC0yNWRlLTQ3MjYtOGJlMC01NGJkYzI0NWVkYjgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "c285c7c3-6692-40b7-8750-8b9380946f39",
+      "name": "Following a user",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=c285c7c3-6692-40b7-8750-8b9380946f39",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_4e2872a67f974c9e8dbe148c85e6e6ec",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NmUzYzE3ZS04NDYwLTRiZmUtOTAyYi1jN2MzMWVmYjBmMDEucG5n"
+        },
+        {
+          "id": "sc_154d676eb1a249ad9f14d1824c0a731b",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81MzkzYTQ5NC0yNmYxLTRiZWUtYTc3Mi01YmE0ODRjYjIwNWUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "c9e8cdbd-6149-4523-a73b-7fa5c5395e14",
+      "name": "Unit guidebook",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=c9e8cdbd-6149-4523-a73b-7fa5c5395e14",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_b0fdbf8674a64fa78c4602ebacacff11",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMzFjOWU1Yi0xMGY0LTRjNzctYjUyNS0wMDliMjAyNmQ0YjMucG5n"
+        },
+        {
+          "id": "sc_e6fd7c476afa46ae962c22f559e47625",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MTEzNzdjMS1iNTYwLTRlMzEtYjU4OC0xZDQ3Nzk5MDUzZjEucG5n"
+        },
+        {
+          "id": "sc_29858d57468d42bab29a1d246fdc9302",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wYzg3YTAzNi03OGMwLTQ5YWEtODkyZC04MjljODkzOWUxYjkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "cefa75a7-5e7e-4dc6-9e35-b61a113feedf",
+      "name": "Completing a legendary level",
+      "screenCount": 15,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=cefa75a7-5e7e-4dc6-9e35-b61a113feedf",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_e1d2eb4a28cb42b0a41c061a0c289a65",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yNTYzOWZmZi01ZDVmLTQ2MTQtYWRlYS03ZDgwN2EwYzViYTgucG5n"
+        },
+        {
+          "id": "sc_367cbb5d08f8437bb03987dce9e408d5",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNjZkNjg5ZC1iNDgwLTRiMGMtOWQzNy1kYzUxYjVhNmJhM2YucG5n"
+        },
+        {
+          "id": "sc_ba174c2311ce41139d47499170cd2374",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xMmMwMTY1NC1mMjg0LTQ2ZjktOTc0Yi0xOWVmOTAzMWFmNDYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "cf0df5e8-6036-4bd0-b72e-37ecbc17157c",
+      "name": "Live Activities",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=cf0df5e8-6036-4bd0-b72e-37ecbc17157c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_8db9b46f3ce34530ab305f344c3e0313",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80OTA3ZWZiNy0xMTBmLTQwNWItODRjOC0yMjdmZGViMTQ1MGIucG5n"
+        },
+        {
+          "id": "sc_777ca7cd32f2424b905254c100d86ea8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85ZTVkZjNlYi0wOGUxLTRiYzEtYjFjYy03YmI0Mzc4Y2RjNTkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "d5ed9067-1ab6-4e60-af09-99e6ecee262f",
+      "name": "Shop",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=d5ed9067-1ab6-4e60-af09-99e6ecee262f",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_c8b0756fed214429b7ac2b6866526d19",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOWM3NjU0Ny1hNDJlLTRmMGMtODg5Yi05MDAxY2U4ZmIzMjAucG5n"
+        },
+        {
+          "id": "sc_68dd8cff5e8245e9b122d2606b7fca02",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NDE2YTllZC0zNDc4LTQ3MmEtYTJjZi04ZDgxN2I2ZWY2OTIucG5n"
+        },
+        {
+          "id": "sc_0c5431b325134b9996376754cda834b6",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mYTgwMDZmOS02ZjY5LTRhNjgtYjZlMi1iMDY5ZDI3MDJjZWQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "de439dd6-fe0d-4fdd-85a9-95dd3f9d9cf9",
+      "name": "Completing a video call lesson",
+      "screenCount": 10,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=de439dd6-fe0d-4fdd-85a9-95dd3f9d9cf9",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f58b504bfcc64016beeecf62671ef005",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MGQ5YTNiYi1mNWZiLTQ0ZDgtOTExZS0yYzEwODIwNTZlZDkucG5n"
+        },
+        {
+          "id": "sc_9b41633c08e24f17881574c5005298c9",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNjRiYWJkOS04N2ZkLTRlMzEtOThhYy0wODVkZDcyYmJkZDgucG5n"
+        },
+        {
+          "id": "sc_f2cdd134c23c41669158f992c1a19240",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lYzIwNDM1Yi1iOGFiLTRjYTMtOTlmOS1iNjAwMWFjOWFkYjgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "dec2ad50-d44c-4b6a-af95-b644f99c83fd",
+      "name": "Completing a radio lesson",
+      "screenCount": 18,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=dec2ad50-d44c-4b6a-af95-b644f99c83fd",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_342f33bd520f401e8c7f0e68a83bbdaf",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yZTc1NjBmMi01MmJiLTQyYTgtODkwMS1lOTdiZDE0M2VmOWEucG5n"
+        },
+        {
+          "id": "sc_6aebc5107ed841e5805713ed75572285",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80OTY0NzM4Ny0zOTFhLTRjYzgtYWI4Ni1kMjc0ZjExNmRmZWUucG5n"
+        },
+        {
+          "id": "sc_a8f5dda7615944989fc6c1ede0756a4d",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YTRmMGNiMS0zMDY4LTRhMTMtOTA3ZC0yYzY3NDllM2RmYTIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "df57517c-845f-4cd4-b910-eea2fb965672",
+      "name": "Reporting a user",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=df57517c-845f-4cd4-b910-eea2fb965672",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_9042f4fee7a6438e9757c1115227cc15",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNTFlZWZlZS0zNjNmLTQ2ODMtOWRjNC04Y2RiNWNjMjc2ODIucG5n"
+        },
+        {
+          "id": "sc_869490f9091b4610841aa22ef3c192c4",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNzdkOTE2Ni02MjExLTQwOWYtOGNhZS1mNTg4MGM2ODZiN2IucG5n"
+        },
+        {
+          "id": "sc_b84c09f0db8c4f74be1f0506c6b1e928",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YzFhY2RhOS01ZjU2LTQxYmMtODkwNS1kNzY2NWVmMjlhZmMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "dfc2c435-3094-4fb1-8d6a-f09d489a1824",
+      "name": "Music",
+      "screenCount": 19,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=dfc2c435-3094-4fb1-8d6a-f09d489a1824",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_85f3a7500b9944fca769b66210f54cb3",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85MzFkYzM4MC1hMmE5LTRjNDQtYjBkMi01ZTgwZTlkOWM3MmQucG5n"
+        },
+        {
+          "id": "sc_5b209ac1aee84972aa2569881ea3cdcd",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNDM0NzI3ZS03NzBiLTRhZWQtOTcxNS05ZjEzZjhiOGVlZTAucG5n"
+        },
+        {
+          "id": "sc_825b8442a5a84f2bb4d4d6c019bf4bd9",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85MjVkY2FkZS05YTA4LTRhZjktYjE3Yy1iNjU0MjBiZTk4YjcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "e2d3c01a-02c5-422a-a9d4-bd115805979c",
+      "name": "Share an achievement",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e2d3c01a-02c5-422a-a9d4-bd115805979c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_6d63fde693454f2c9d4ecf7590caad52",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84MWRmZWZhZi03YjIzLTQ0ZjgtOGI3ZS0wNTg3OGJmODQ0YmUucG5n"
+        },
+        {
+          "id": "sc_3d9a17148a6a49d8aecc6b251876fd69",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iY2RkMzk5MS1mNzhjLTQ1MzMtODlkMS01MmIxMDEwNzAyOTQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "e61ea8df-b1fa-4059-b929-dc0cf9770359",
+      "name": "Verify phone number",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e61ea8df-b1fa-4059-b929-dc0cf9770359",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_780fd45a5c1648e7aab8b70333f384db",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZjYyNzk4MS1hM2ZmLTQzNDQtYjQ0NS0wOTdlNjdjZTQyMDkucG5n"
+        },
+        {
+          "id": "sc_2896e4908941468d9bae6e09fe28b23e",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMzU4MDI4OC01ZDM2LTQzZjQtYTA0OC1hODM5NmU2YmYyZDcucG5n"
+        },
+        {
+          "id": "sc_edd2fc562d6446c5aeae427a53c16f12",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yYTAwNmFlYy1mNDE4LTQ2OTQtODA4Ny1hNDUyY2JhZTJmMzEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "e84cce2a-186d-4e44-9ae2-351b3def1c99",
+      "name": "Starting friends clash",
+      "screenCount": 8,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e84cce2a-186d-4e44-9ae2-351b3def1c99",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_eaa77f4401e54a02a265679829070ed1",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZDVmNmVlOS05ZTY3LTQ0N2EtOTFhNC0zMmEyZjQyODc1OTkucG5n"
+        },
+        {
+          "id": "sc_3655a39c0bff43c0b516585536e2be8a",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80OGNjMmFmMy1kNGRiLTRhMzQtODg5YS1mODBlZWM1MmU2MGYucG5n"
+        },
+        {
+          "id": "sc_c417d97e38504055b87408cce950a109",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80NzlmNzA0NC03N2ZjLTQ0ZmItOGY1YS1lMTI2ZmQ4YjgzM2QucG5n"
+        }
+      ]
+    },
+    {
+      "id": "ed313877-29a2-4ce0-a018-fb002e256243",
+      "name": "Saving an image",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=ed313877-29a2-4ce0-a018-fb002e256243",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_3d9a17148a6a49d8aecc6b251876fd69",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iY2RkMzk5MS1mNzhjLTQ1MzMtODlkMS01MmIxMDEwNzAyOTQucG5n"
+        },
+        {
+          "id": "sc_0c381c42934d4578a6b7d683b5db5942",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85Yzc0NDcxZS04MDI5LTRlNzEtOTlkNy03NDIxNTNlODdlYzAucG5n"
+        },
+        {
+          "id": "sc_14110dd732804426b22b47a01b64c725",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80M2Q5MjZiOC00MGQ4LTQ1MTktYjA2MS1iNjI5MWYxODM0NDMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "ee1aa797-8f02-4783-8a3f-7b4ab2c594c8",
+      "name": "Courses",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=ee1aa797-8f02-4783-8a3f-7b4ab2c594c8",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f93312c9e2964abfa7a55ae8f9495fed",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xYWY1OTcxMC1iM2I2LTRmM2UtYTE5ZC05NmUyNzBiZWVlMzIucG5n"
+        },
+        {
+          "id": "sc_e1a4ac9c5c844a82842a0f64927fda23",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xMDhiYWUyMi00Y2Q0LTRkYTUtYWUzNC1mNDkxMWI1NGRiZmMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "f6869640-633e-4ee9-84b4-20b8a09a8e68",
+      "name": "Claiming a reward",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=f6869640-633e-4ee9-84b4-20b8a09a8e68",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_44f6d405d763440698033b6f67dbd541",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hYjUzNzlkMy1lZTBjLTQzMDgtODk3MC0wYzMxMWZlNzdmZjkucG5n"
+        },
+        {
+          "id": "sc_2d4d47d6369f4114b3adcd476f5f2429",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMWI2ZDdkOC05MTkzLTQ5NjEtOWQ3MS1kYjFhNDIyOTE3N2QucG5n"
+        },
+        {
+          "id": "sc_269d6ffb746046afacdee3d2d9bf09d5",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jYmUyM2VhZS03ZmY0LTQ5NDQtOGRjOC0yNDU5M2JhNDNmZjAucG5n"
+        }
+      ]
+    },
+    {
+      "id": "0276babb-6d63-4e14-ae34-955d8921c34f",
+      "name": "Roleplay",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=0276babb-6d63-4e14-ae34-955d8921c34f",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_91b84d58edd540a2b25acdf485dd8c74",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jY2RlY2NiZS1kMTA5LTRkYzUtYWVjYS1kMDIxNGRhOTY4YWYucG5n"
+        },
+        {
+          "id": "sc_500b0e9616fd4b8c8b16bde7bd88ca5f",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNGZkNTJhNi05MzMyLTRhY2EtOGEwYy02YjAzY2M1YzA5YzMucG5n"
+        },
+        {
+          "id": "sc_3c8d1a36e3264317a0d37345bcc61154",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NzY1ZGZjOS05NTI4LTRlZjQtOWZkZS00MTY4NWI5ZjUzMzEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "058f0f08-23f2-4f21-be14-f2c4eda78320",
+      "name": "Completing a profile",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=058f0f08-23f2-4f21-be14-f2c4eda78320",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_a2c9a2f79a89405996750b266f7d8cfe",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84ODc1NTYzMC00ZTcwLTQ4NWItYTNhYi04MThkNDI0Y2ZjYTUucG5n"
+        },
+        {
+          "id": "sc_d4523724d384487badd813e30922d17d",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81MjA3MTBlZC0xNDUzLTQ2OTUtYmU1Ny1jNTI4NGFmMzJhZGEucG5n"
+        },
+        {
+          "id": "sc_177abc6f418e4ea5a0df5915489dc67c",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hY2RmYTcyMi05ZDljLTRlMGItYTBjOS0yNTFiMDE0ZGNlNWMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "07e46f2b-1d07-4b78-b5e6-ad65c5253014",
+      "name": "Completing a song lesson",
+      "screenCount": 9,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=07e46f2b-1d07-4b78-b5e6-ad65c5253014",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_76418e09fdd34253aab9d7f8fd2a8cfc",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wMDYwNzdlMS1kNDRmLTQzYTItODY2MS03Yzg0ZWVmMGRjMTgucG5n"
+        },
+        {
+          "id": "sc_ed74403ec01b471e844e8dbf12e2335c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wMzI2NTczYi00YzlhLTRmOGQtYTkxYS01OTZmYzQ1YjE5YmEucG5n"
+        },
+        {
+          "id": "sc_e03c504b97564d0b90d65eec25ba0861",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MTMwMTYwMy1kOWM2LTRlY2UtYmM5MS1mYThhODg3MWRlODYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "0af60068-885c-4d3b-a091-5527ec45a56a",
+      "name": "Chess",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=0af60068-885c-4d3b-a091-5527ec45a56a",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_b77f2cd860ba42beba67a79ccdaa31ad",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wM2FlOTEyMi00YzZhLTQwYzMtOTcyZi04ZWVlZTJjY2E1MDIucG5n"
+        },
+        {
+          "id": "sc_7349c9072442415f8d73d39b126007e2",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kMmI3OTdlNC1jMjM3LTQ0ZmUtOTdjNi1mZjRmMmZjZDBjODgucG5n"
+        },
+        {
+          "id": "sc_6112ba511ff24bd0aa7f2e87f8ccb6d6",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZWI3YjRhOC0zMzM1LTRmOGQtYjYwOS0xMTY4NGUwN2RlMTQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1320dade-dca0-48cc-ac06-28573d375d6b",
+      "name": "Courses",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1320dade-dca0-48cc-ac06-28573d375d6b",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_339df6e67ecc4c5d9b5de7996d7d73a8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zMmVjZDc1Yi01N2EyLTQ4ZjAtYWRiZi00N2IxNWUwOGI2MzAucG5n"
+        },
+        {
+          "id": "sc_b77f2cd860ba42beba67a79ccdaa31ad",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wM2FlOTEyMi00YzZhLTQwYzMtOTcyZi04ZWVlZTJjY2E1MDIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "15d44bfd-9a78-4987-88e2-6c6fd020144c",
+      "name": "Energy",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=15d44bfd-9a78-4987-88e2-6c6fd020144c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_365781ef5eb74a1b93a6dd472006b367",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zOTg4YzZmYi1mYjQ5LTRiOGEtYTM4OS03YTExY2RiMTUyYjQucG5n"
+        },
+        {
+          "id": "sc_619ed3a4f84143268ab1744208a4b433",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MTQ4ZjZlZi1lODEwLTQ4ZmUtYWIwZC1iOWRkNWYxMjI5NWIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "16e51c8c-fa3e-41a3-aac9-47d0bcdd3f1e",
+      "name": "Turning off notifications",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=16e51c8c-fa3e-41a3-aac9-47d0bcdd3f1e",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_bda3ffabb68448f78eb2ffce79ffdeb9",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTg1MjgwYS04NTk1LTQ4YmUtODE2Ni04NTE1NzVkMzA2NmEucG5n"
+        },
+        {
+          "id": "sc_7bd66f4ac0dd43a1812c18ca4a1236f9",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jODk3YmJmYi1jYTJkLTQyNzMtODYyZC01MWMxNzE2MWUwZTYucG5n"
+        },
+        {
+          "id": "sc_9b06860b268f4d86a9d4987bae055829",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xZWIzZDVhYi1lNGM2LTRiZTgtOTY5Yi00YjllYmYyZjRlN2QucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1725f154-1903-4677-a72a-cfaca3aa293d",
+      "name": "Following a user",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1725f154-1903-4677-a72a-cfaca3aa293d",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_58377b1b7d3544c7b74016badf8d6a71",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83NDMyOGQwOC0yNjE0LTQ5NWEtYjk4Mi1kMGFlZDgyZmZkYTEucG5n"
+        },
+        {
+          "id": "sc_b696c7133b794ba18b3819e6a9b175e7",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84OThlNzU4OS0zYWJmLTRhMWItYTA3NS1mMDU2Yzk2YWUxMjIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "175e506f-5eaa-4065-b76a-cd3c41ac4a91",
+      "name": "Reporting an issue",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=175e506f-5eaa-4065-b76a-cd3c41ac4a91",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_598cd836726949809b975284df6dcb8b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YmI2MjI4Ni0xYzE1LTRlMjAtOGU5NS1jZWU2OWUyZjM5YjYucG5n"
+        },
+        {
+          "id": "sc_f2f569c1af7346f4a9d836214581a6d8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81OGIyZmNkZC02OTY3LTRlNmEtYjYxNC05ZjBhZDAyNTFiNjcucG5n"
+        },
+        {
+          "id": "sc_2082f9ab273a4da283cfc3f905b7acdb",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80Nzk5MmUzNC1kNzYwLTQ2NjctYjM2YS02MjBlMGM2MjNiODIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "18f074a6-e85d-4e3b-b312-c35ab4cb4d93",
+      "name": "Completing a legendary level",
+      "screenCount": 10,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=18f074a6-e85d-4e3b-b312-c35ab4cb4d93",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f5771701b2a9477d85f8d74ed611e4e8",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MzI0OTE2OS1lMGZjLTQ0OTMtYjcxOC1lYmY2YWQ1MThlMzMucG5n"
+        },
+        {
+          "id": "sc_db649193971a4132a015370873bbbce2",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84NzRjODRmMC1hNWUyLTRiYTUtODVkZS0xNzVhZjdiMjgxOTcucG5n"
+        },
+        {
+          "id": "sc_ce019c55a5f7428ea93244f882f21991",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xNmFiNzNmNC0zN2NiLTRmYmUtYWQ5ZS1lOGU4NjEzZDZjZmEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1988d4b7-1dea-4ee2-9756-ebac439ca59a",
+      "name": "Profile (settings)",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1988d4b7-1dea-4ee2-9756-ebac439ca59a",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_bda3ffabb68448f78eb2ffce79ffdeb9",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTg1MjgwYS04NTk1LTQ4YmUtODE2Ni04NTE1NzVkMzA2NmEucG5n"
+        },
+        {
+          "id": "sc_198760c7ea104d109c8f52a26b96e152",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNDlkMDFhZS02ZGYwLTRjODYtYmVmYi1jMWEyNGE4MzlkNjYucG5n"
+        },
+        {
+          "id": "sc_b1101354544945b89b495cfed8e95334",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZjBhMTVmMC1iOGYwLTQwYTAtYmU4Mi01ZDBlNjU3YjQ3ZjMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "19bb5168-05ff-4e8f-80af-8a80a82368c5",
+      "name": "Deleting an account",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=19bb5168-05ff-4e8f-80af-8a80a82368c5",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_0ef5a2fa9f7a4132b8806903efacff24",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yYTBmNGM5My05MDcwLTRlZWItODE0YS1jZjZjZDY5YmJiNmUucG5n"
+        },
+        {
+          "id": "sc_a1e45756d6b344e69690b42c899e2b56",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82YTQxZTE4ZC1jMjczLTRkMGMtOTJiMS00YzJiYWMwZDAzZDgucG5n"
+        },
+        {
+          "id": "sc_e393f351eea74e7fa89937301b6b4a27",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNDI0NWRjZC1kMmY0LTRlZmUtYjJkOS1hYTZkZmM1MmQxMzAucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1af0050f-582d-4ce3-b1f4-9a02b01179df",
+      "name": "Quests",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1af0050f-582d-4ce3-b1f4-9a02b01179df",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_42932250c6b24d0988b0615e0cd0cb48",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MmI0ZWZjZC0zYzBjLTQ0MjEtYjZjOS1hMTM3YzI2OGQxNGMucG5n"
+        },
+        {
+          "id": "sc_e15c494bec0b43a5b89bf5fb4689c830",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80NDE0N2JmMC05M2MwLTQ5MDItYTcxYS1hMjZjM2ZkMjkyMDYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1bc25485-ebf2-45f8-aedf-120dbeb48d01",
+      "name": "Personal streak",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1bc25485-ebf2-45f8-aedf-120dbeb48d01",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_fba839b06477434e91c3e16609dd03df",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84MzVhZjBhYS1kNDhmLTQ2NDYtOTRkMy1lMWJiY2EzM2FjM2QucG5n"
+        },
+        {
+          "id": "sc_e8b67989a3f6456ab405950703a95360",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yMDNiZTk2Ni1kNmUzLTRiYjctYTJkNC1mNThmODAxZmYzYmUucG5n"
+        },
+        {
+          "id": "sc_a0915444e670464db1cf694e1e4b2250",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kMzJlNDRiMy1iODhhLTRmNWQtYjhlMy04ODU1NDM2NmFiZGIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1c824479-2031-4716-acc9-88acc101ef59",
+      "name": "Reactions",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1c824479-2031-4716-acc9-88acc101ef59",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ead208b0c4d64fba981dc7c50c2d58d0",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lM2MzZTAwMC01YTc4LTQwMjgtOTkzZS1iYzE3OTM1MjBhZjcucG5n"
+        },
+        {
+          "id": "sc_13acf311ba764dc4a28c18b0160f2c88",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMDk2ZjYxNS03OTRmLTRkNjAtODIzOS1kZWU5ZjNmODFkNzAucG5n"
+        }
+      ]
+    },
+    {
+      "id": "1df4ff54-d0aa-47cb-9694-2148a2776aae",
+      "name": "Verifying a phone number",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=1df4ff54-d0aa-47cb-9694-2148a2776aae",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_b1101354544945b89b495cfed8e95334",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZjBhMTVmMC1iOGYwLTQwYTAtYmU4Mi01ZDBlNjU3YjQ3ZjMucG5n"
+        },
+        {
+          "id": "sc_5f1f1459c18a42deab6304932ef14b91",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mYWNkODNjNy05MWYxLTRiYzEtYTcwMi01YzdlZTJmYWVmYjUucG5n"
+        },
+        {
+          "id": "sc_430f6e69abea46b4ae541db66a7a208f",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lNDcyMTEyZS1kMGRlLTQzODQtOTg0My04NWMzZjEyMTRjZGUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "21e52565-b644-4e13-9b41-5d61ae271f35",
+      "name": "Completing a video call lesson",
+      "screenCount": 13,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=21e52565-b644-4e13-9b41-5d61ae271f35",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f7517c7557584972a6c4ecdd60051431",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yNjQ2Njg2NC1iYmJlLTQ3NjItYjkyZC1lNmRjNmY1Mzk1Y2UucG5n"
+        },
+        {
+          "id": "sc_65b5d5502bc0489fa12d6ea175e1d432",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yMGI3NzYxMS1lM2U1LTRiNWItYTMyNS02ODhkY2Y0YmUxNDQucG5n"
+        },
+        {
+          "id": "sc_e0dfcd2ce1244bbead6faae4b7305e5d",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yZGJmM2JiZS1iOWU4LTRiMTAtYWEzMS02N2YyZWQ2ZGY4NDUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "238c4339-7173-4257-89c5-2716a8a68c44",
+      "name": "Completing a lesson",
+      "screenCount": 13,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=238c4339-7173-4257-89c5-2716a8a68c44",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_bab6c64dec12434297fede3f7c0bef68",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xODk5ZGM2ZS1iNTY0LTQwNjktODcwNS1mNjc1OWZiZTJjNjgucG5n"
+        },
+        {
+          "id": "sc_23afb65ade9a45f19dba4cf32e1fd5ab",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kZGY4N2E5Ni1jODE4LTQ4ZjAtOTc1OC03ZDQ4OTBlMWU2MWUucG5n"
+        },
+        {
+          "id": "sc_3dbac870c7ff43b098c0d2ab535f5663",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNjQ0YzQwMC02YmRiLTQwMzctYmIzZC03ZWZiNjg5YjE2MzgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "26160ad7-fdd5-45e9-a82a-1062682414a9",
+      "name": "Subscribing to Super Duolingo",
+      "screenCount": 14,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=26160ad7-fdd5-45e9-a82a-1062682414a9",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_74b158aafcbe4e608f91001f2044e365",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zMjgwMDZlMy05YjJhLTQwOTYtODRhYi0wYzA5Yzg2MmI5YTMucG5n"
+        },
+        {
+          "id": "sc_c63f0b2f30f84f5eb150b9b55b39e8a8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83YWYyNDgwMy02NTEyLTRkNTktOTU1Ni0xODlhZGVjZTAxNTQucG5n"
+        },
+        {
+          "id": "sc_46990cb29675494d8033da3211b8fa39",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZDNlNDJiOC02YjQyLTQ1OWUtOWQwNS04NTk2NDY4YWZlMTIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "26164d89-d419-472e-980b-2b6b3441d0a8",
+      "name": "Adding a course (language)",
+      "screenCount": 12,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=26164d89-d419-472e-980b-2b6b3441d0a8",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_339df6e67ecc4c5d9b5de7996d7d73a8",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zMmVjZDc1Yi01N2EyLTQ4ZjAtYWRiZi00N2IxNWUwOGI2MzAucG5n"
+        },
+        {
+          "id": "sc_f2941b6b5fef4901b49462c950f24693",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hZDIwZjM4YS1jMDg5LTQwZjQtYWMxNC03MzczYjgwZTU4NTAucG5n"
+        },
+        {
+          "id": "sc_04e4c6d59bcb4a579e82b2743fdcab72",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wZDE4Zjc0Zi0wMThmLTQ3MmUtYThhMi01ZTczNGRjM2NhYjUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "2980972d-1767-4f8a-91d3-e6ff1ba0c9f7",
+      "name": "Join Duolingo for Schools",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=2980972d-1767-4f8a-91d3-e6ff1ba0c9f7",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_bda3ffabb68448f78eb2ffce79ffdeb9",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTg1MjgwYS04NTk1LTQ4YmUtODE2Ni04NTE1NzVkMzA2NmEucG5n"
+        },
+        {
+          "id": "sc_d524f243a78b4818854b48e656726186",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YjJlZjc4Zi1hMTlkLTQ0MTItOGVmYi01ZWE5ZTUwMWUyM2EucG5n"
+        },
+        {
+          "id": "sc_7e0d894c289d4cc8b226c822c111f5e0",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MmY0MWMzNi02MzgyLTQxZjYtYTA2Mi1hYWFiNzVjNzk5ODUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "2aeaad44-1638-4abe-b16c-cca1c42dfcaa",
+      "name": "Settings",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=2aeaad44-1638-4abe-b16c-cca1c42dfcaa",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_4dda25e955744c808ff9faf4702732ca",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85OGFlZDZjMi00NDc2LTQ0ZDYtOTAzZC00YzgyZjE0ZjI2OTIucG5n"
+        },
+        {
+          "id": "sc_3e7aebf00b124f999d9a32243aaa8acf",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MWU1MjFmNy0yYjI4LTQ3OTctODJiMy05YWZhNjFiMDczMDkucG5n"
+        },
+        {
+          "id": "sc_bda3ffabb68448f78eb2ffce79ffdeb9",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTg1MjgwYS04NTk1LTQ4YmUtODE2Ni04NTE1NzVkMzA2NmEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "2b077547-fa9f-4d10-8e57-1a87d32e1745",
+      "name": "Feed",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=2b077547-fa9f-4d10-8e57-1a87d32e1745",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_545c0af64c0d4c5ea1071c765ce53367",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNGRjYTkzNy05YmY0LTQ3M2YtYmFhZi0xMzRiYzlhZjljODQucG5n"
+        },
+        {
+          "id": "sc_defc6fb35f614adba0b09b2d1fcd871f",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNjczZjg5NS0yNmFhLTQ5NzQtOTEzMS01YmU2NmYxMGE5YTcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "2cfa4aee-3e00-46f3-88d2-45c7cf5e2d29",
+      "name": "Math",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=2cfa4aee-3e00-46f3-88d2-45c7cf5e2d29",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_b77f2cd860ba42beba67a79ccdaa31ad",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wM2FlOTEyMi00YzZhLTQwYzMtOTcyZi04ZWVlZTJjY2E1MDIucG5n"
+        },
+        {
+          "id": "sc_e8d282e53e4b4e80aabf71483b4f2af4",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lMjY5ZGUwNi02NDljLTQ5NGQtODIyYy1kNTgzMjMyNTQ4YzgucG5n"
+        },
+        {
+          "id": "sc_395d604949e346ca986c9ea5249bfadf",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jYTcxMTkwOS0zNjIwLTQ1YjItODRlZS1kMjYzMmIwOTMzZGIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "2e5aac3c-9eb5-4126-9ab0-effa7cf75842",
+      "name": "Achievements",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=2e5aac3c-9eb5-4126-9ab0-effa7cf75842",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ec2d4ba8ea744a61adce2cc3362cf9da",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kOTk2MjNmMS05ZWZlLTRjNzYtOGNjMi00MmNiNjk1Mjk0ZjEucG5n"
+        },
+        {
+          "id": "sc_d278c7bb57e24404b1c329bc70ae7538",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZWIzNGEzYy0wODViLTQyMjMtOTY4NC1jMTNlZmIzOGFjNGIucG5n"
+        },
+        {
+          "id": "sc_63db961aee1548789e61d02a278d2dbe",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85ZGNjYTFhYS0zZDdjLTQyY2ItODUwZS04MWVjZDc1MzA1MGEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "2ea1d2e4-9fdf-4697-b2ba-e61dec4ca56a",
+      "name": "Home",
+      "screenCount": 9,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=2ea1d2e4-9fdf-4697-b2ba-e61dec4ca56a",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_88548d318a744e2fbb7e96ed70c7381b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iY2EyNDZlNi0yZGJjLTRhMjMtOTBhZC1iZGIzNWRlMzE5YjEucG5n"
+        },
+        {
+          "id": "sc_d911cb57f23c4494bdc6880e5a013ab1",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOWJiYmMyYy04ZWEyLTQ3YmUtYTMzZi1mN2Q4NTg4MjZhYzgucG5n"
+        },
+        {
+          "id": "sc_62a63379ba4048baa277a323e545ce99",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85NmEzMWRjYy0wMDNiLTRiOWItYWRkNC05NzRhYTljZGU4N2MucG5n"
+        }
+      ]
+    },
+    {
+      "id": "30488f3a-22f6-4c25-a883-db83e851d5cd",
+      "name": "Leaderboard",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=30488f3a-22f6-4c25-a883-db83e851d5cd",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_8852c8a028b046a3bfa9383fa20623e3",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kODM1MzkyNy02N2YxLTRhMWYtYjNjYy0zZTljYWQzZWIxOWUucG5n"
+        },
+        {
+          "id": "sc_8754ce0bac1540359a114a17578447c0",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lZTA5MTBjMC05ODk1LTQ5OTMtYWFhNy1hYmU4ZjRjNDllNGYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "30b7b0ec-8359-4d2a-99c3-618a964a9833",
+      "name": "Copying a profile link",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=30b7b0ec-8359-4d2a-99c3-618a964a9833",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_4dda25e955744c808ff9faf4702732ca",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85OGFlZDZjMi00NDc2LTQ0ZDYtOTAzZC00YzgyZjE0ZjI2OTIucG5n"
+        },
+        {
+          "id": "sc_ca5e8f65569347e0b706ed65036796f7",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mZmIyNjYyYy0wNzMwLTQ1MzEtYjE2Yy05NTBlMWM3OWQ0Y2QucG5n"
+        },
+        {
+          "id": "sc_1a8c95e2a8214aaaab55752c0004f486",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zOTM4YTY5Zi1kNWI5LTQ4ZmUtYTg3ZS0zNjY1Yzg2YzhkMTkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "31460692-382a-4403-884b-847cc7dd715c",
+      "name": "Choosing a section",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=31460692-382a-4403-884b-847cc7dd715c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_1c03dd48361a43689ca89bc28e5c3f5a",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84Yjc2YzYwZC1kYmMyLTRkNzAtYjg1ZS1hM2IzN2UyY2MzNWUucG5n"
+        },
+        {
+          "id": "sc_f5771701b2a9477d85f8d74ed611e4e8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MzI0OTE2OS1lMGZjLTQ0OTMtYjcxOC1lYmY2YWQ1MThlMzMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "364466ca-05eb-419b-8f47-095685a48cbd",
+      "name": "Completing the first lesson",
+      "screenCount": 28,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=364466ca-05eb-419b-8f47-095685a48cbd",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_3d39077227ad4435bee957e43b3e49ac",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNjExMGFkZC03ZjhkLTRkOGQtOWY1Mi1kYTJiM2VmN2I5NTUucG5n"
+        },
+        {
+          "id": "sc_cf9f421b479e48f5b82e894eab9ac9e1",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lN2QwZDNkMC1kOTI1LTQyMzktYjM2Ny04N2EzN2ExYWIxNTEucG5n"
+        },
+        {
+          "id": "sc_495af7965714439fb73df003d50101a7",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yZTZhNGNhOC1lMWYxLTQ4MDktYjY2YS1hMjI0YWY3YTYxNzUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "36c3782e-42f7-49e1-ae78-a6b87057af0e",
+      "name": "Completing a lesson (music)",
+      "screenCount": 10,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=36c3782e-42f7-49e1-ae78-a6b87057af0e",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_76418e09fdd34253aab9d7f8fd2a8cfc",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wMDYwNzdlMS1kNDRmLTQzYTItODY2MS03Yzg0ZWVmMGRjMTgucG5n"
+        },
+        {
+          "id": "sc_3e918675c30841028e92ce1df99a2b00",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ODM4ZDU1ZS00YjU2LTQzN2MtODI4NC1mMGExMWY0YWNlMTkucG5n"
+        },
+        {
+          "id": "sc_af8d4cefeec64372a3e733e1005fb5b3",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NGJlNzNmOS1iYWNhLTRlMjgtYjdiOS0zYmM1MmM0OWFjNjAucG5n"
+        }
+      ]
+    },
+    {
+      "id": "3821440d-1a63-42dc-99f2-904cbd9edbbf",
+      "name": "Widgets",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3821440d-1a63-42dc-99f2-904cbd9edbbf",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_62f2ea4ee11a4a7dac490720619ddd52",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mM2U2NDQ5Yy00YjYyLTQ4N2YtOTk5Ni1kY2RhODNiMzNkMjYucG5n"
+        },
+        {
+          "id": "sc_34f5bed1fed74391a676815ac4845015",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lYWZkNzgxZC05NjQwLTRhODAtYTJkZS1lNTRlNDRlMzliMTMucG5n"
+        },
+        {
+          "id": "sc_ad6b6bf61f8f47ba89554c805037fcc5",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kMjE3OWEzMi02ZmFhLTQ1YTMtOTQ2NS03NjJjYzdhYzJiYjgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "3a8e4927-efd3-42b6-b471-845c2353e9a5",
+      "name": "Adding a status",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3a8e4927-efd3-42b6-b471-845c2353e9a5",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_96a979e4ce8d49a59a22f5f1513fff68",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jY2JjOGM0My1hZWEzLTQ0MmUtOGMxNC0zYTBiODY2ZjY5ZGQucG5n"
+        },
+        {
+          "id": "sc_bab2062a58b2442998924dd6618c5442",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84M2Y4ODE1Ni1mYTRlLTQ1N2UtOTEwNi1jZWU3YWQ1MDU2Y2MucG5n"
+        },
+        {
+          "id": "sc_b4959eab28de4c909618d3ae49fb9c36",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wODI2MzkwYy04N2NjLTQxMzAtODQzMy1mYTA5OWU5YzM1MDQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "3b649d91-2d55-41c1-9621-9ebe42f510d6",
+      "name": "Changing app icon",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3b649d91-2d55-41c1-9621-9ebe42f510d6",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_98eb0925cc9a44adbf5c20d82f1cbe43",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jZTFlNDJmOS1lNjIzLTRiOWMtOWY5Zi03ZDRlMWI4YmQwMDUucG5n"
+        },
+        {
+          "id": "sc_eb5d3a230aed4f60b02951d2a8407916",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YTU3YjM3Zi0xYTAzLTQ0ZWYtOGJlMS1lNmEzZTVhMmNlZDAucG5n"
+        },
+        {
+          "id": "sc_e4f987e2c82648479336ee50b3b1d5b3",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81YmM1NDNlNS0wM2ZkLTQ5OGItOWVhMC1jMGVjNjAwMDhjNmQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "3be81d97-2407-4362-b1ae-d2b53cc4e5b4",
+      "name": "Upgrade to Super Family",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3be81d97-2407-4362-b1ae-d2b53cc4e5b4",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_d907270211b042f78b83855fdda2f972",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNTRlMjM5OS0xYzE3LTRmYzItYTdmMC0wMmE1NTYzZjFmODIucG5n"
+        },
+        {
+          "id": "sc_e43c2e990db8450c9e74b899ca0b7784",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MGNmOGQ0Ny00YWI4LTQ1OWItOWM4Ny1mOTFlZDc1YjljZGYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "3ca0e3af-c517-4051-9d07-ad097aa1af51",
+      "name": "Completing a story lesson",
+      "screenCount": 14,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=3ca0e3af-c517-4051-9d07-ad097aa1af51",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ba6c1aab4fb24109a6485fa3d375f58c",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZmUyZDgzNC02MDY4LTQwZTItYjZhZi1mNDUxMTFlZWFjNTEucG5n"
+        },
+        {
+          "id": "sc_fcef686f72064d7592e951c879f84385",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMzJjNjU3My0zNDEzLTRmYWItOTllNy1mYjc2ZmM1NGE1ZDgucG5n"
+        },
+        {
+          "id": "sc_f4c01bd63d9a47ed886f40131a90cdd5",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MDA1Mjk2Zi01ZWQyLTQwMzgtOWI1Yi01ZWI0YzZjYWU5NzcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "44028dbd-e044-467b-a923-6bba91b94669",
+      "name": "Topic detail",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=44028dbd-e044-467b-a923-6bba91b94669",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_500b0e9616fd4b8c8b16bde7bd88ca5f",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNGZkNTJhNi05MzMyLTRhY2EtOGEwYy02YjAzY2M1YzA5YzMucG5n"
+        },
+        {
+          "id": "sc_327444e456014b0290640fea8c74e3dc",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNTBjMmQ5OC1kZDhlLTRjZTktYjhhYi03YWQ5MjBiODhhYTEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "4516901e-0cbe-4511-8f1c-b917a305914a",
+      "name": "Removing a friend streak",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=4516901e-0cbe-4511-8f1c-b917a305914a",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_00ddbc77ac1e4495b7cbf58cc1cdf19c",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ODU5ZjhlNC05NWE4LTRkNTgtOGUxZi0wMjRlN2EyMjlhOGIucG5n"
+        },
+        {
+          "id": "sc_d1e771e680444aeeb1e46802cc3d70d0",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85NmQxMWU5OC03Nzg1LTQ0N2EtYWMyYS00NzY1Zjk0Y2NjMDcucG5n"
+        },
+        {
+          "id": "sc_430aae46434d45968acfb7b3f70e10b2",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84OTVjZDRjMS1iNDQ5LTQzM2YtYWVhMC1jYWI1MzcyYzM2YmQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "45b5806b-d844-44ae-b277-22da5a3e70ca",
+      "name": "Completing a roleplay lesson",
+      "screenCount": 19,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=45b5806b-d844-44ae-b277-22da5a3e70ca",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f7517c7557584972a6c4ecdd60051431",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yNjQ2Njg2NC1iYmJlLTQ3NjItYjkyZC1lNmRjNmY1Mzk1Y2UucG5n"
+        },
+        {
+          "id": "sc_d79c81e4b3084856b276e5836dcbec23",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNTBiMTNkMi0yZDZjLTQ5MjUtOTI4NC0yNTI0OWMwNjAwNGMucG5n"
+        },
+        {
+          "id": "sc_4aefc0b3f2a9433d8add4880e815f5d1",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lMTEyZWM1MS1hZjcyLTQwNDctYTdjNC0xMGFlOTQ4ZGFhN2UucG5n"
+        }
+      ]
+    },
+    {
+      "id": "45fa9f2f-727a-41db-90a1-4473b723f24e",
+      "name": "Logging out",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=45fa9f2f-727a-41db-90a1-4473b723f24e",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_51e14a9f5be84cec973a280d096eb341",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MzgxNjUwMi02M2Q0LTRhZGMtYTZjNi03MzY1ZmVkZmE1NzYucG5n"
+        },
+        {
+          "id": "sc_19578555f1df45fda7a65c3c0e866dda",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTRhZjE5Zi1hNmU4LTQ3MjQtYTNjOC04NzM2NDYzODBiZGIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "4b22ef56-af26-4b3b-98c0-5474172cc614",
+      "name": "Commenting on a post",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=4b22ef56-af26-4b3b-98c0-5474172cc614",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_3693b963fca048e0899964e3c3a7b526",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80YWQzZWE3ZC1iYjY5LTQ1ZWEtYWI4MS1jNGI1MzA3M2M1NDUucG5n"
+        },
+        {
+          "id": "sc_33c13c0fe3b14aaf8ccf33dcff15cd31",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kZDc5MTZjMC1lYzZhLTQxNTEtOTI0NC1kNDNmYzA5NjJiZjQucG5n"
+        },
+        {
+          "id": "sc_dd06a8d362d34533bd67e65c2c626ed7",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xMjhhYjVlYy01N2E5LTQ0MzgtOTU1MS1mNDNmNDg5Yzg1OGIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "4d849f99-ddfb-45e1-b14b-0cf990cce168",
+      "name": "Section detail",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=4d849f99-ddfb-45e1-b14b-0cf990cce168",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_1c03dd48361a43689ca89bc28e5c3f5a",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84Yjc2YzYwZC1kYmMyLTRkNzAtYjg1ZS1hM2IzN2UyY2MzNWUucG5n"
+        },
+        {
+          "id": "sc_4be0b51beca84327bcdb1e06d8e32114",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85ZTA1YWU1ZC1hMWFlLTQzNzYtOTAxMS1jOWM5MmNhYzY0YWMucG5n"
+        },
+        {
+          "id": "sc_9e00ad56c0c04a23908bdc68bbf8f539",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lNjg5NzhmNi00MGE4LTQwM2ItYTBlZi1iNDE4MDA2ZjU0ODEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "55608180-814c-4cfa-b79c-982af1c8a797",
+      "name": "Starting a lesson",
+      "screenCount": 33,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=55608180-814c-4cfa-b79c-982af1c8a797",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_88548d318a744e2fbb7e96ed70c7381b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iY2EyNDZlNi0yZGJjLTRhMjMtOTBhZC1iZGIzNWRlMzE5YjEucG5n"
+        },
+        {
+          "id": "sc_c7bf8c3988a144dfa63179a9974ef128",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kMDhhNTc0Yi03ODlmLTRhMDUtOWQxZS02OWU4OGNiZTlmZjMucG5n"
+        },
+        {
+          "id": "sc_4bf12ba234b045e984e323ebf41d07d7",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jZmY2YzY5Ny05NmU0LTRjNTktYWJmMi02MWQ1OTMxYWE2MmUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "57af8ed6-e170-4f16-95a7-bb11678eca75",
+      "name": "Stories",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=57af8ed6-e170-4f16-95a7-bb11678eca75",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_a3608de42227453094ca9fd85a64fe5b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMDhkN2RjMy03OTU1LTRlOWUtOTBhZC1kMTU5YmE1OTU4YzgucG5n"
+        },
+        {
+          "id": "sc_6563f3187b1e41dda4027fbad1cb65c9",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNjVhN2NlNi00ZGI1LTRiMWUtOTU5Zi00ZTJlZjQwNTcyYjMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "583f187d-19b7-4420-98de-3d1d7de412f1",
+      "name": "Searching users",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=583f187d-19b7-4420-98de-3d1d7de412f1",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_4dda25e955744c808ff9faf4702732ca",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85OGFlZDZjMi00NDc2LTQ0ZDYtOTAzZC00YzgyZjE0ZjI2OTIucG5n"
+        },
+        {
+          "id": "sc_fcc2cc36cef34aa8aac342d8e60b1517",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNzI5Mjk0Mi0wMTM0LTQ2MzAtOGFlMy1kZDk3MTQ0Njk1MTQucG5n"
+        },
+        {
+          "id": "sc_920763dcd0864336885d6d32bfbaae40",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84NmEyZDgyOS04OGU2LTRjMTgtOGE2Ni1jM2FmOTQxZWY3ZGIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5930cea9-738f-4e27-9f53-0d78d27b9a70",
+      "name": "Super Duolingo",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5930cea9-738f-4e27-9f53-0d78d27b9a70",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_d907270211b042f78b83855fdda2f972",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNTRlMjM5OS0xYzE3LTRmYzItYTdmMC0wMmE1NTYzZjFmODIucG5n"
+        },
+        {
+          "id": "sc_b668c45c030143abb9df491002896ae6",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MTJkNGNiNC1lYWZhLTRjOTEtODBkNC1jMDMwMDQ2ZTkyMzIucG5n"
+        },
+        {
+          "id": "sc_9af3d15dd5a947e4bdf53485f1581b5b",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lODExMTM5Ni0zNzg0LTQ3ODctOWZjYi04NjQ5MzIzMGU4NTcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5966780e-da37-499b-ae32-f9387d866b43",
+      "name": "Manage a family plan",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5966780e-da37-499b-ae32-f9387d866b43",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_7ae48603fb34447093f9a1e4e3d96935",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZGNlMGIxMS1kMjA2LTQ5ZDEtYmFiMC1iODU0OTNkZDk0MjgucG5n"
+        },
+        {
+          "id": "sc_1adf86fdae6f490daaea02f52762db0e",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lZDRiYTQxOS05ZjMyLTQ1NzQtYjUyYS00ZTc2OTEwZjM5ZTUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5985148c-6771-40a1-b8ff-648fad04a7eb",
+      "name": "Changing password",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5985148c-6771-40a1-b8ff-648fad04a7eb",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_198760c7ea104d109c8f52a26b96e152",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNDlkMDFhZS02ZGYwLTRjODYtYmVmYi1jMWEyNGE4MzlkNjYucG5n"
+        },
+        {
+          "id": "sc_7c2c392213fb445baf4c823cc5706781",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iY2QzYmRhNi05OTdjLTRlZTMtOWY4Ni04NThlZGZmYzJmNjkucG5n"
+        },
+        {
+          "id": "sc_24d188fef2c04aa3b15e83003cb3d8a1",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNmNiMDY1MS1iNjA0LTQzZTQtYTc3ZS0zODNmNWUxNWEzYWEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5a0502bf-5922-44f1-a529-70f3f03184c7",
+      "name": "Logging in (saved account)",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5a0502bf-5922-44f1-a529-70f3f03184c7",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_19578555f1df45fda7a65c3c0e866dda",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTRhZjE5Zi1hNmU4LTQ3MjQtYTNjOC04NzM2NDYzODBiZGIucG5n"
+        },
+        {
+          "id": "sc_5affeb93a4b9429887579ed6c0d67464",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mYzAxN2QzOS1iZmJmLTQ0MjQtYWFiYS04N2NjYTQwNDJjZWMucG5n"
+        },
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5a0c86dd-053f-481c-98b6-588b1ec116d1",
+      "name": "Inviting a user to a family plan",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5a0c86dd-053f-481c-98b6-588b1ec116d1",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_94a495af570643c8a6d53ff651dc8f09",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80OTk5ZGM3NS0xYzYzLTQyNzAtYjdhMi1jZjIxZjdlOTc5MDQucG5n"
+        },
+        {
+          "id": "sc_e4f438a82cb040b6a2851cb2fbe9f39c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NTkwZmE2OC1jNWQxLTQ3MjQtYmJmZi00YWQ4OTcyNWI2YzMucG5n"
+        },
+        {
+          "id": "sc_a049a170e46f49c8b91ce8745fedb3a5",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83YjhjZDU4ZC1hNjI0LTQ2MmMtOTY3MC1mNThhNjk4Y2JjMTMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5c92b19b-239a-4e75-b9cd-45bfb1c5b4bd",
+      "name": "Claiming a reward",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5c92b19b-239a-4e75-b9cd-45bfb1c5b4bd",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_eed5e94d679c43699d6c34f3a25650e1",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81YzhmMWE3Ny01MWU3LTQyZTAtOTliMS1jYjE4MmQxNzM1YWQucG5n"
+        },
+        {
+          "id": "sc_b4ac42c6cd574eebb5b6c48260b9aff0",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMzVkOGY0ZS01MWMxLTQwZjEtOTk1Zi1mYzVjMDE1NmRhNjAucG5n"
+        },
+        {
+          "id": "sc_cc5cd1e5754b4fb99212cbf4970f3e71",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMTg4ZjVjYi1iYzkwLTQwYzktYTJiZC0xNjE1MzgzYmVhMGYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "5ec96595-b9d7-4ac6-b158-ef61c28da027",
+      "name": "Filtering practice songs",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=5ec96595-b9d7-4ac6-b158-ef61c28da027",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_3a10636e4afd40c39c4c6c7974b32a2d",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iNDk5NGRmMy0zMmJiLTQxYTItODdkZC02NTBiMzdkMThkOWEucG5n"
+        },
+        {
+          "id": "sc_c00df5a2d86543069d83d95aa155d594",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMzEzY2NjNC00NTFlLTQwY2YtOWIyZi03OTZhYWQ1MzBkNGIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "60a33cad-5a9c-4875-a93d-03c656a0c500",
+      "name": "Creating a profile",
+      "screenCount": 16,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=60a33cad-5a9c-4875-a93d-03c656a0c500",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f055c7e9f60e439fa9cf2f37a0e4184a",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zN2UyNzliZS1mOWZiLTQxM2ItYWIxMS02YmYyZGQ1MDllMjMucG5n"
+        },
+        {
+          "id": "sc_2446dae554d54a05acc35d67bc0b1b33",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mYjVjMWE0OS1lOTAzLTQ0OTctOWY3Zi0yODNiMzg3ZjVlOGIucG5n"
+        },
+        {
+          "id": "sc_dda61bc254564376b60aee04672c3469",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wOWZiYzJjNC1lYTNiLTQzMDEtYmUxYi00Y2Y0ZDMxNjMxNTcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "60ba5691-dcd7-4e3f-98d3-3424eb0bbaa9",
+      "name": "Giving feedback",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=60ba5691-dcd7-4e3f-98d3-3424eb0bbaa9",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_9c51b432c5be474c889f04fdf66f9c98",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNDc5MDVkNS05NmUyLTQ0NmQtOTk1NS0xYTIwNzNlOTUyNTAucG5n"
+        },
+        {
+          "id": "sc_adef21a26ecf4512933800431dc71eac",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kYzZjOWI5NC1lMjBmLTRjZjEtYWIxOC1lNDUzNmM2YzgwNmIucG5n"
+        },
+        {
+          "id": "sc_7fd26a3226ae4e549a242b808393bce2",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNzdhZThjOS0wYjg1LTRlMWQtYTFjOC0wYTg2Y2VlZTExNTEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "6b16fc47-4c83-434b-9c4d-6879c9e2480d",
+      "name": "Playing chess with Oscar",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=6b16fc47-4c83-434b-9c4d-6879c9e2480d",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_6112ba511ff24bd0aa7f2e87f8ccb6d6",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZWI3YjRhOC0zMzM1LTRmOGQtYjYwOS0xMTY4NGUwN2RlMTQucG5n"
+        },
+        {
+          "id": "sc_56ba76c3745d4c889544c75f7df9b198",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MTcxMWI2ZS0yNGUxLTQ1YzctYTE5Yi1iZjcyMTgwOGQwM2MucG5n"
+        },
+        {
+          "id": "sc_3b4a516585e14bf69f069cd4584a0221",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lYTMwYTEwOC05MjhlLTRmZTMtOGRmMi1lMTFiYWRlZWEwNzQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "6b9da1c4-5399-40aa-a175-b1bc1364309b",
+      "name": "Practice",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=6b9da1c4-5399-40aa-a175-b1bc1364309b",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ef58a15f3f754bba808ae9c2709a2ea5",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NDdjM2Y0MS1lZTk2LTQ5MmQtOTE3Ny01MDYyZmQzMzRhYTIucG5n"
+        },
+        {
+          "id": "sc_91b84d58edd540a2b25acdf485dd8c74",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jY2RlY2NiZS1kMTA5LTRkYzUtYWVjYS1kMDIxNGRhOTY4YWYucG5n"
+        },
+        {
+          "id": "sc_a3608de42227453094ca9fd85a64fe5b",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMDhkN2RjMy03OTU1LTRlOWUtOTBhZC1kMTU5YmE1OTU4YzgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "6f0f24b2-dc14-43b6-8ce1-2c470d0e096a",
+      "name": "Completing a lesson (chess)",
+      "screenCount": 8,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=6f0f24b2-dc14-43b6-8ce1-2c470d0e096a",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_7349c9072442415f8d73d39b126007e2",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kMmI3OTdlNC1jMjM3LTQ0ZmUtOTdjNi1mZjRmMmZjZDBjODgucG5n"
+        },
+        {
+          "id": "sc_055fa1c416e14a31a83f505b3ed911b1",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84NTFiMzYxZS02MmNjLTQ0ZTItYWE2Ny1mZjQ5MmUzZjNkZjIucG5n"
+        },
+        {
+          "id": "sc_3c0cc52b87df4d3287e8b67b8428d716",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yYzY3ZTgwNi0zYTQ2LTQxYzAtYjEwYS0yZTdhMGRhMjE2M2IucG5n"
+        }
+      ]
+    },
+    {
+      "id": "6fe40fee-e6b1-495b-b943-6705bcd60b6d",
+      "name": "Courses (settings)",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=6fe40fee-e6b1-495b-b943-6705bcd60b6d",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_bda3ffabb68448f78eb2ffce79ffdeb9",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTg1MjgwYS04NTk1LTQ4YmUtODE2Ni04NTE1NzVkMzA2NmEucG5n"
+        },
+        {
+          "id": "sc_b32886379efe4db5958417bf90ba1288",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNmVlOWVmNi1hMjBiLTQ4YTgtYTJmMy0wYjE4ODZiMGM0ZGQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "73709a51-1140-482c-996d-515c3009dd1d",
+      "name": "Accepting a streak request",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=73709a51-1140-482c-996d-515c3009dd1d",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28026f713ae34068a4964ca0a054aa93",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NTM0NzJjZi00ZDQxLTQxMGUtYjVlNS1jOGRkOWQzOGFkMzMucG5n"
+        },
+        {
+          "id": "sc_00ddbc77ac1e4495b7cbf58cc1cdf19c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ODU5ZjhlNC05NWE4LTRkNTgtOGUxZi0wMjRlN2EyMjlhOGIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "7418dd7b-75de-494f-931e-ab7d47a87ec1",
+      "name": "Editing profile",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=7418dd7b-75de-494f-931e-ab7d47a87ec1",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_198760c7ea104d109c8f52a26b96e152",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNDlkMDFhZS02ZGYwLTRjODYtYmVmYi1jMWEyNGE4MzlkNjYucG5n"
+        },
+        {
+          "id": "sc_3c85ac2760e848b39d1e3ee4e0db8dbc",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZTUzMjY2My1kZmYxLTQwYTMtYjIxMi02ZWQ5OWY0NTA5MGYucG5n"
+        },
+        {
+          "id": "sc_58c17db03c34403f8d4b8c0a6b712c6d",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wMDIxNzUyZC1iMjcxLTQyNWQtODkxNi00ZmI0YjZmNjJlZDIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "758476da-0933-4371-bea9-835a17abec26",
+      "name": "Shop",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=758476da-0933-4371-bea9-835a17abec26",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_680b08c181ae4fb7965b3d5167439773",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zY2ZhN2EwYi1lOGMwLTQ0OWMtYmQ1OS04Mjk4MGMyYmQ3NjcucG5n"
+        },
+        {
+          "id": "sc_3090b39d7eec48e69a1aa1e3cb64dd40",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMDM0YjZjNi04ZDYwLTQyYmUtYWUzMy0xZDg3OWI5NTM3N2MucG5n"
+        }
+      ]
+    },
+    {
+      "id": "7aa5ea5a-3f7d-4065-9c30-773a9b056750",
+      "name": "Choosing a learning goal",
+      "screenCount": 9,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=7aa5ea5a-3f7d-4065-9c30-773a9b056750",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_a1f73b3c00fb4699bce81ebcf4fa675b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85OTE0MWVlNi1lY2FjLTRhZjctYTVmZC1iYTFiZGYzNGQ1NDUucG5n"
+        },
+        {
+          "id": "sc_2df796036bfb43f3ba3fad49fd3c3b4c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84M2Q5NTIxOC1hY2NlLTRhMDMtYTI5ZS04NjcwNmM1MzBkNGMucG5n"
+        },
+        {
+          "id": "sc_905d5cb32dc84bb080c1a81431dfb9f7",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xOWRmMmY1Zi1iOWY0LTQ3ODQtYjQ2OC0wZThkMDgzZjhiNmQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "7bc9966b-d6e3-499e-a138-4ece4beedd37",
+      "name": "Completing a rapid review lesson",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=7bc9966b-d6e3-499e-a138-4ece4beedd37",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_eaf97681333b42358bc2079dce537747",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85NDI1MTRmYS0wOWEyLTRkMDgtODlhMS01YzBkYzdhMjhlNjYucG5n"
+        },
+        {
+          "id": "sc_af082f882e394dba98935fb45da04cf5",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mMmIyYmM4OS1jZjdkLTQxZDktOWIxYy0wZDMwOTQ5ZWUyOWIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "7f823279-b5f5-46df-91a4-982c7f915182",
+      "name": "Removing a saved account",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=7f823279-b5f5-46df-91a4-982c7f915182",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_19578555f1df45fda7a65c3c0e866dda",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTRhZjE5Zi1hNmU4LTQ3MjQtYTNjOC04NzM2NDYzODBiZGIucG5n"
+        },
+        {
+          "id": "sc_e062370e3afc454ab40d27be92f5a05a",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNWVhNmMzMy1mMjIzLTRmN2ItOTJhNC02YWM0Njg4Yzk1MDUucG5n"
+        },
+        {
+          "id": "sc_229da631786e4c809e6ca42c72aa6f84",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNzc3NDYxZS1lZjZlLTQ4ZDgtYTE5Yy1mZDVkNGIzMmIyMjIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "80a70211-7d97-4806-9843-db071f4e16b4",
+      "name": "Resetting password",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=80a70211-7d97-4806-9843-db071f4e16b4",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_9221dd146625464996e5d0d7cf90117e",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wZDYzMmUwZC1kNDE4LTRhZjMtYmI2MS04NmJhYjUyYmVjNWEucG5n"
+        },
+        {
+          "id": "sc_8095cf8ed73949aa90d3b098889e552e",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zZTliMDRkOC01MTQzLTQwMzQtODMzNS03ZGM5ZGNhZTYxMGEucG5n"
+        },
+        {
+          "id": "sc_b1924125b2f24e63890cf21c90ba0821",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zOTMwYjZkMS1hOWU3LTRkYTctYTZmZS1mNjFhYzA2YWNkODMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "80e393ec-e5d5-4c86-b5b4-5b18b1aed7f7",
+      "name": "Add a widget",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=80e393ec-e5d5-4c86-b5b4-5b18b1aed7f7",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_8cfb425ae0964bcf8e5520871dfd7322",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85NDVlNDE4NS02ZWVhLTQ1MmYtODkyNC0zMGM4ODBkZDZmYTIucG5n"
+        },
+        {
+          "id": "sc_bdb859ac692d4033a4eb435ff374238a",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82YTZjZTMxNy03NjNlLTRkNWYtYmYzZS1kMTczNzkzNTNjZWYucG5n"
+        },
+        {
+          "id": "sc_996c04c3b8724fcf9bd31fafa1e37712",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jYzE3MGRiZi01YWFlLTQxMGQtYTJlZS0xNTNjYWNlY2RlZTUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "81442ef4-fa5c-4185-86ce-6fa53f860167",
+      "name": "Deleting a course",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=81442ef4-fa5c-4185-86ce-6fa53f860167",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_b32886379efe4db5958417bf90ba1288",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNmVlOWVmNi1hMjBiLTQ4YTgtYTJmMy0wYjE4ODZiMGM0ZGQucG5n"
+        },
+        {
+          "id": "sc_e224808241cb4eae96ed39000119e052",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80NThiN2FjNC0yM2E3LTRjNmUtYWJiZi0zYjkyNmU3NGJlMzYucG5n"
+        },
+        {
+          "id": "sc_55109331f5ec4fe1ad8cec271afb6112",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNTNjNWVjMS04ZGJjLTRhMTItYTJmMC1jMTY5MDc3NWFlNmUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "831dee9f-9353-42ad-ad79-2c81a1cad5ad",
+      "name": "Unit guidebook",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=831dee9f-9353-42ad-ad79-2c81a1cad5ad",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_f28417a221944a5aa8982866a518d31c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lZWNlZTY0OS04MTM5LTQwNWYtYmEyYS1mMmY0OTdlNjdhZTAucG5n"
+        },
+        {
+          "id": "sc_31d2548aeb9745718647676508480309",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kOTZhN2I1Yy1kZjk2LTQyZDQtODZiZC1iOTNjODEyYmE0NzQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "84534454-89e9-4177-81a6-222f79a9509e",
+      "name": "Music",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=84534454-89e9-4177-81a6-222f79a9509e",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_a45f17c88e6c4928980f7f85f9c41617",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85ZDZhMmZhNC03YWNiLTRiMjUtYjA4MS0wNTk1MjU0MTZmOGMucG5n"
+        },
+        {
+          "id": "sc_76418e09fdd34253aab9d7f8fd2a8cfc",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wMDYwNzdlMS1kNDRmLTQzYTItODY2MS03Yzg0ZWVmMGRjMTgucG5n"
+        },
+        {
+          "id": "sc_53f5e28aedba422aa54fcc76279c09ff",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83MzBjZjA4YS1jZDhmLTRiYzAtYThhZi0zMWQwZjVmNjkwZWIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "85a30736-0e4c-4f18-804d-fcdd611a1faa",
+      "name": "Logging in (new account)",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=85a30736-0e4c-4f18-804d-fcdd611a1faa",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_19578555f1df45fda7a65c3c0e866dda",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMTRhZjE5Zi1hNmU4LTQ3MjQtYTNjOC04NzM2NDYzODBiZGIucG5n"
+        },
+        {
+          "id": "sc_589015c7880043f6aca28b06e42c916f",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNDZlODc4MS0zNjc2LTQxOGItYTBmNi1lYmNkNGZkNDRmM2IucG5n"
+        },
+        {
+          "id": "sc_c0bfc2e566d542c0bc5b2e802885c282",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lOGQyNWNhNS1hMzhjLTQ5Y2YtYjMxMC1iYjQyNWQzNmM2NGEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "87ed9414-90bd-40b5-8518-bd40b84e374a",
+      "name": "Completing a game lesson",
+      "screenCount": 12,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=87ed9414-90bd-40b5-8518-bd40b84e374a",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f7517c7557584972a6c4ecdd60051431",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yNjQ2Njg2NC1iYmJlLTQ3NjItYjkyZC1lNmRjNmY1Mzk1Y2UucG5n"
+        },
+        {
+          "id": "sc_d359c5b3c5f84cf0b1308bce5fd52228",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTc2ZDhkMi1kMGM4LTQzMWQtODA3Mi0wMjYzMzU0ZjdhMWUucG5n"
+        },
+        {
+          "id": "sc_14dee5c222f942a8b551e48ec7a1b45e",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85NDI3YWY3Ni1hM2M3LTQyZWEtYmY2YS0zYTFhOTFiZWI2NzIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "9006b2f6-2538-45f7-a645-a3c0d343057c",
+      "name": "Gift a Super Duolingo",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=9006b2f6-2538-45f7-a645-a3c0d343057c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f1725bad93614bb686455a605644a51f",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNmI5ODNlOS00ZDA4LTRmNDMtOGFlYy0zYTVmMjkxNjdiOWYucG5n"
+        },
+        {
+          "id": "sc_6d5bcdefe1f7422b84f5882f1022e0a5",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wZmI3N2MwNS01OTM2LTQ1ZTYtYWExNi03ZDM1MWM2YWIyODgucG5n"
+        },
+        {
+          "id": "sc_8d6fd9401b8143b48847ba6d4f56129e",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZDE4OTk3NS0zZTBhLTRmYTUtYjVkNi0yMjI2MTFkYmMwNjQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "931501de-1dce-46ad-a2ca-cbbcb25c5a0c",
+      "name": "Downloading an image",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=931501de-1dce-46ad-a2ca-cbbcb25c5a0c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_598cd836726949809b975284df6dcb8b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YmI2MjI4Ni0xYzE1LTRlMjAtOGU5NS1jZWU2OWUyZjM5YjYucG5n"
+        },
+        {
+          "id": "sc_4fb915e443a7403880e47f4ec44ac918",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MTAxZTkzNy05ZDIxLTQ0NjAtYTBiOC0yYzczNWU3YWNiZWQucG5n"
+        },
+        {
+          "id": "sc_9093abfde1a64432b783771f0a76e995",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yNmU3NGM3NC1iYjU0LTQ4NDQtYThhYS1iNTIwZmY2YWQwZDMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "95916d97-d6af-4824-ad39-3550430a319d",
+      "name": "Profile",
+      "screenCount": 8,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=95916d97-d6af-4824-ad39-3550430a319d",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_ef58a15f3f754bba808ae9c2709a2ea5",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NDdjM2Y0MS1lZTk2LTQ5MmQtOTE3Ny01MDYyZmQzMzRhYTIucG5n"
+        },
+        {
+          "id": "sc_7d594c1a3c714e978bf5a41b0485fdf0",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85NDdiYjQ4YS1kMThhLTQ0NjItOGNjMy0yMjJkZGM5NGUyN2YucG5n"
+        }
+      ]
+    },
+    {
+      "id": "95c7e3d9-961e-44b1-8865-03f62937cb1f",
+      "name": "Video call",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=95c7e3d9-961e-44b1-8865-03f62937cb1f",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ef58a15f3f754bba808ae9c2709a2ea5",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NDdjM2Y0MS1lZTk2LTQ5MmQtOTE3Ny01MDYyZmQzMzRhYTIucG5n"
+        },
+        {
+          "id": "sc_cb7325e3520d43d0bf99d62694bc8098",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNDllZGVmNy1iZGNhLTRhZjktYjU0NS01OWQzMzE5OWZkMjcucG5n"
+        },
+        {
+          "id": "sc_fa6f38ae3bd4464f852f2f69b126aeda",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xZjM3YjMyMS04YmFiLTQ3MGItYjAwOS0yMjcyODdiNTYwNjEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "99bc37ea-e88d-405e-a60d-7181a540b8c1",
+      "name": "Sending a nudge",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=99bc37ea-e88d-405e-a60d-7181a540b8c1",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_7ae48603fb34447093f9a1e4e3d96935",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZGNlMGIxMS1kMjA2LTQ5ZDEtYmFiMC1iODU0OTNkZDk0MjgucG5n"
+        },
+        {
+          "id": "sc_0178a7eaf3cf4a5f814c9febd0d768b8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xZTY5Nzk5OC0wMmUzLTRhN2QtOTg3OS1hZTFhNDIxMjJkY2UucG5n"
+        },
+        {
+          "id": "sc_08e43a3123aa4359850857a2309fed92",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mOWFjOWFiNi00YzMyLTRiYTQtYjJhMS01NmEwNjFkNTY1MWUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "9ff41a50-d527-4ba1-b886-dbc8a54f21c4",
+      "name": "Completing a radio lesson",
+      "screenCount": 14,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=9ff41a50-d527-4ba1-b886-dbc8a54f21c4",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ba6c1aab4fb24109a6485fa3d375f58c",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZmUyZDgzNC02MDY4LTQwZTItYjZhZi1mNDUxMTFlZWFjNTEucG5n"
+        },
+        {
+          "id": "sc_78786de76bed4577a456688969d6390b",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82NmU3ZWUxOS0yMDk2LTRhYjgtYWY4My1hOTAyZjk5MDNlY2UucG5n"
+        },
+        {
+          "id": "sc_d96579d75ee8485aa4844a00924e1ed7",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zZWI5YTEwMy1kN2E1LTQyOTgtYmUyNC1kNWNiOWQzZGYyNzQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "a102a0d0-637d-4b8a-a6b2-3bcfbc6ae47f",
+      "name": "Words",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=a102a0d0-637d-4b8a-a6b2-3bcfbc6ae47f",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_a3608de42227453094ca9fd85a64fe5b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMDhkN2RjMy03OTU1LTRlOWUtOTBhZC1kMTU5YmE1OTU4YzgucG5n"
+        },
+        {
+          "id": "sc_eacc4756d32f4b959d66cd9d79859f16",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNDM0ZGRhMi03ZjNmLTQ5NDktYjJhMC0xMjFmYTk3ODY5ODcucG5n"
+        },
+        {
+          "id": "sc_c4b478662de2496085b91a9bac43b02f",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zMzA3YmI3Yy0xYmYwLTQxYmMtOTkxZi03ZjVkYmRmNTZjYTMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "a9b398c8-70c7-42c4-9cbb-d2568cd0d40d",
+      "name": "Year in review",
+      "screenCount": 8,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=a9b398c8-70c7-42c4-9cbb-d2568cd0d40d",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_47217322c3cb414b8783db58808b8c14",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zMTc3MjM0Yy03ZGJmLTRkMGItOGQxYi1mZmUxNTcxMzA4NmMucG5n"
+        },
+        {
+          "id": "sc_1c9cf548ba4143b1a71215cddda6500f",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xMzhiMjgzNi03ZTRhLTQzMzAtOTc1NC0zMzRjMWQ1YjdkNmEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "abf76af4-3ac1-4227-ad85-255e9339b169",
+      "name": "Inviting a friend to start new streak",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=abf76af4-3ac1-4227-ad85-255e9339b169",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_80f36aec078a4dfcae3184d6b3ece951",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lNTBhNDg3NS05MmI0LTRkOGItYjgyYS0xYzg4YTM1MWNlZDcucG5n"
+        },
+        {
+          "id": "sc_564d5197841c42ce845d7dca0cac6ffc",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kYTlkOTA2Mi04ZmFkLTQxMzktYjdhMi1kYTNjMzA5OGQyNjEucG5n"
+        },
+        {
+          "id": "sc_4ecae775bec240ec9daf1c98cab3fee9",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yYjFiNTlmOC01ZDY0LTRkNTktYWI0MC0zYzFlZjc2YTAwMDkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "accff897-6688-4fbd-85fe-4b537e03c46d",
+      "name": "Canceling a subscription",
+      "screenCount": 7,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=accff897-6688-4fbd-85fe-4b537e03c46d",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f888bed9b87b49ff8c320e2bec870ae9",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zYjczMmI0NC1jNjVjLTQ3N2QtOTM0ZC01MmVmYTlmZjE2ZTQucG5n"
+        },
+        {
+          "id": "sc_8c625d607332446bbf84bb998c4db04b",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yMWE4OWMzNS0wMGVmLTRlMmUtODE4MC04MjhlZDcxZGE2NTcucG5n"
+        },
+        {
+          "id": "sc_26d8f87d56a04644aea8c65bb5803d28",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hOGEyYzE4Ni04NmVhLTRmNGItYmM1ZC1mYzQ0NGVhYmVlMTgucG5n"
+        }
+      ]
+    },
+    {
+      "id": "adb0ba3c-8ce4-4485-a0e6-3298a17e0ee5",
+      "name": "Dynamic Island",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=adb0ba3c-8ce4-4485-a0e6-3298a17e0ee5",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_6092a9c7c3e241598960f102bd4f1447",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82NjNjODgwYi0wNTY2LTQ2YTMtOWM2My1kOGM3ODZmN2U1ZGEucG5n"
+        },
+        {
+          "id": "sc_7615bb0ff8eb4032857aa4b8356153aa",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NmZlYmIzNC1mOGM4LTQ4YzktODI4Ni01MTNiNTc1ZjIxZDAucG5n"
+        },
+        {
+          "id": "sc_1642bb17b80a4120a9da89363641bf70",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kM2RhOGRhZS03NGI4LTQxZjktOTRiOS1hMGE1OWRjOTRjNGYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "b141657c-4b72-4df8-a85c-a4063dcd59b7",
+      "name": "Live Activities",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=b141657c-4b72-4df8-a85c-a4063dcd59b7",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_f8a1142cb28d48978e07692c29da72fe",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MGQ3ODRjYy03NGJkLTQzN2YtOWNiNi1jMjQyNTc1YzVlZWIucG5n"
+        },
+        {
+          "id": "sc_efdbc04a4c0a471ab5e8bbc0458e62cc",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zNzM1NmNjZS00NDUwLTQ0ZWYtYjZkYS1iYmZlMzcwNGQ3MmMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "b2dac0c0-1634-4512-b0d3-5e29b315a392",
+      "name": "Playing a game",
+      "screenCount": 6,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=b2dac0c0-1634-4512-b0d3-5e29b315a392",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_395d604949e346ca986c9ea5249bfadf",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jYTcxMTkwOS0zNjIwLTQ1YjItODRlZS1kMjYzMmIwOTMzZGIucG5n"
+        },
+        {
+          "id": "sc_0103d4acea1b4196a64b0490aa049fcb",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ZWVkZjI2Ni01Y2Y3LTRlMzItYmU2NS1hZTk2OWY0Nzc4ZWIucG5n"
+        },
+        {
+          "id": "sc_8a3029cc6400474cb23b0c6ad4d3b263",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yODM5OGFlYy03NjRhLTQ1ZjQtYjIxNS1mYjY5ZjhjZWExMGYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "b3ad8692-1624-4e6d-9e56-7bdda74127ae",
+      "name": "Sections",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=b3ad8692-1624-4e6d-9e56-7bdda74127ae",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_1c03dd48361a43689ca89bc28e5c3f5a",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84Yjc2YzYwZC1kYmMyLTRkNzAtYjg1ZS1hM2IzN2UyY2MzNWUucG5n"
+        },
+        {
+          "id": "sc_74d81cafda0248b7bae7c3343f614438",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hNWFlZmJiZC1jMDgwLTRkY2ItYjVjNC1iMDFkY2QzNGE1MTIucG5n"
+        }
+      ]
+    },
+    {
+      "id": "b785531d-a744-4730-94e6-fa1800b727f8",
+      "name": "Mistakes",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=b785531d-a744-4730-94e6-fa1800b727f8",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_a3608de42227453094ca9fd85a64fe5b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hMDhkN2RjMy03OTU1LTRlOWUtOTBhZC1kMTU5YmE1OTU4YzgucG5n"
+        },
+        {
+          "id": "sc_c49e60d7aed44f33999c42580c0be45f",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hYWMwY2NiMy0wNzMyLTRhY2MtOTQ5ZS0zMzY1MzA5N2I2NTMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "ba3db644-fbff-4f64-a04f-59d6862576d1",
+      "name": "Share a year in review",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=ba3db644-fbff-4f64-a04f-59d6862576d1",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_d7a91cc434dc4de89b68b045621ece32",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNmZmZDZkYS1iZmFjLTQ1ZWMtOWQyNy0wZGYyZTdhYTVkMzYucG5n"
+        },
+        {
+          "id": "sc_1b9b4d993f6741b8bc17fa135b9dbef3",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNWU4ODJiMy0xNzgwLTRmN2QtYmY0YS1kNGE5NTY5ZmE5MjIucG5n"
+        },
+        {
+          "id": "sc_94134d73b61b4709a6c468913f2e1b6b",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kNDJiNWI3Ny1iZGNlLTRiMzItOWM1My0wNmQ4NTEzZjE2ZjQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "bb7802f4-8e89-4626-b28d-aa51425d212f",
+      "name": "Liking a post",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=bb7802f4-8e89-4626-b28d-aa51425d212f",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_b044186d4e544e50918dd23ce1a8f5e1",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82Y2I5NGFjYy0yYmMyLTRiOTItYWY1Yy01ZjdkMDkyZDg0NWMucG5n"
+        },
+        {
+          "id": "sc_8a9fefd75f19456b8e2c465eb49dece8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83NDE2MTZhZi0yY2I5LTRhYTgtOWY1MC1jNjE1OTUxMjEyNzgucG5n"
+        },
+        {
+          "id": "sc_ead208b0c4d64fba981dc7c50c2d58d0",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lM2MzZTAwMC01YTc4LTQwMjgtOTkzZS1iYzE3OTM1MjBhZjcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "bd28e203-718a-4938-bc9a-505c1c559381",
+      "name": "User profile",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=bd28e203-718a-4938-bc9a-505c1c559381",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_920763dcd0864336885d6d32bfbaae40",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84NmEyZDgyOS04OGU2LTRjMTgtOGE2Ni1jM2FmOTQxZWY3ZGIucG5n"
+        },
+        {
+          "id": "sc_58377b1b7d3544c7b74016badf8d6a71",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83NDMyOGQwOC0yNjE0LTQ5NWEtYjk4Mi1kMGFlZDgyZmZkYTEucG5n"
+        },
+        {
+          "id": "sc_bdb89146a8bc4c6289c72db9226ed1fa",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MDY4ZWJiYi01OWUyLTQxNTYtOTg5OC0yMjE2YzUwNDAzZGEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "c0faa1a7-462d-4303-ab15-c4bfcdc55957",
+      "name": "Streak",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=c0faa1a7-462d-4303-ab15-c4bfcdc55957",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_fba839b06477434e91c3e16609dd03df",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84MzVhZjBhYS1kNDhmLTQ2NDYtOTRkMy1lMWJiY2EzM2FjM2QucG5n"
+        },
+        {
+          "id": "sc_977f1317d2114180b3a0ac187ac3628e",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kMzFiOTQzYy03NGM2LTRkN2MtOTdjOS0yNTQ2NWZlZDE5NmYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "c678e04c-d7fa-4db5-8853-b542f4e34009",
+      "name": "Subscription",
+      "screenCount": 10,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=c678e04c-d7fa-4db5-8853-b542f4e34009",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_28609e32a15f4b3a96a5607c40c81d87",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jNTNjMDRjZS0wNTRlLTRhMGMtYjczYy1kOTAzYjNiN2E3ZTEucG5n"
+        },
+        {
+          "id": "sc_74b158aafcbe4e608f91001f2044e365",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zMjgwMDZlMy05YjJhLTQwOTYtODRhYi0wYzA5Yzg2MmI5YTMucG5n"
+        },
+        {
+          "id": "sc_799523b842d5435190ca0b4c05d8c4b5",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZjQ4ZGFhNy0yNmQzLTRkYzktYTU2Ny1lYmExODZmN2E1YmEucG5n"
+        }
+      ]
+    },
+    {
+      "id": "cd7f559e-57e5-4975-bf65-b9c37fa6b598",
+      "name": "Friend streaks",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=cd7f559e-57e5-4975-bf65-b9c37fa6b598",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_2679fa680e7a4e0fb5c6b24cd35c2519",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yMjcyYmQzOC1kMzA1LTQwMDEtODMzYy1jYTJhZjVlNDJiNWYucG5n"
+        },
+        {
+          "id": "sc_28026f713ae34068a4964ca0a054aa93",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81NTM0NzJjZi00ZDQxLTQxMGUtYjVlNS1jOGRkOWQzOGFkMzMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "cf9868c6-2516-4188-86b3-1859148661c3",
+      "name": "Explain my answer",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=cf9868c6-2516-4188-86b3-1859148661c3",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_598cd836726949809b975284df6dcb8b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85YmI2MjI4Ni0xYzE1LTRlMjAtOGU5NS1jZWU2OWUyZjM5YjYucG5n"
+        },
+        {
+          "id": "sc_aa20a538b06f406c814f22507f36ccab",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84MTg1YzVmYy01NWI2LTQyYTgtOTM3MS0wY2Y2YTRhZWExZjUucG5n"
+        },
+        {
+          "id": "sc_9c51b432c5be474c889f04fdf66f9c98",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wNDc5MDVkNS05NmUyLTQ0NmQtOTk1NS0xYTIwNzNlOTUyNTAucG5n"
+        }
+      ]
+    },
+    {
+      "id": "cfa1edff-f4e2-41e3-b05d-507703ec0e07",
+      "name": "Reporting a user",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=cfa1edff-f4e2-41e3-b05d-507703ec0e07",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_bdb89146a8bc4c6289c72db9226ed1fa",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy80MDY4ZWJiYi01OWUyLTQxNTYtOTg5OC0yMjE2YzUwNDAzZGEucG5n"
+        },
+        {
+          "id": "sc_188a5d3e2cdd42f982d9defa4abbb975",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hODNhYjg0Ni1lZTYwLTRiYWItYjk5ZS1hYzJhMGQwMTliYmEucG5n"
+        },
+        {
+          "id": "sc_71ccc07a311a49d787dd160cc4123a2c",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9mNzg0MDJiZS1hMDM3LTQxZTUtOTQxNy05OTM4ZWRlODE5ZjMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "d3738966-0f4b-4bc8-bf81-750c2a5854b7",
+      "name": "Purchasing a timer boost",
+      "screenCount": 5,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=d3738966-0f4b-4bc8-bf81-750c2a5854b7",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_3090b39d7eec48e69a1aa1e3cb64dd40",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMDM0YjZjNi04ZDYwLTQyYmUtYWUzMy0xZDg3OWI5NTM3N2MucG5n"
+        },
+        {
+          "id": "sc_f41ad70e7d79482f93efcbabc88cbe96",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xNjUyYWU1Yy1jZDQ1LTRmNTMtYmMzNy0xMzVkYjMxMDNlZTQucG5n"
+        },
+        {
+          "id": "sc_8f2ba5a12fd948d980df540dae6da970",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82ZTNiZGNlYS1kNTcwLTQ4MzQtOThiOC04ZmMxZmMxZGQxZjUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "d3eaa48c-d39f-40fc-88ea-2a2bed4d193b",
+      "name": "Choose a plan",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=d3eaa48c-d39f-40fc-88ea-2a2bed4d193b",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_014d0ebdc92b4e2681c543a90b2a210e",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yYzllMzc0Ni02MjY4LTRmMjEtYmQ1OS04NjhmYTgyMzZkMTIucG5n"
+        },
+        {
+          "id": "sc_b98dcf52a3ed404fb4aa14dc518b2515",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lYzk0NWU5OC1hYjlmLTQ1ZGItOGQwYi1kY2Y2NGNiODc4Y2UucG5n"
+        },
+        {
+          "id": "sc_0236fb1c9ad24ae185bb4c0421c6148a",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zOWQ0ZDcwYS1hOWM1LTQ2N2EtOWY1MC01ZTFlM2M0ODFiZDcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "d70eeb1a-cca9-47f3-b55d-1817937a4c6f",
+      "name": "Score information",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=d70eeb1a-cca9-47f3-b55d-1817937a4c6f",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_b77f2cd860ba42beba67a79ccdaa31ad",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wM2FlOTEyMi00YzZhLTQwYzMtOTcyZi04ZWVlZTJjY2E1MDIucG5n"
+        },
+        {
+          "id": "sc_b0a8a3f37157451783e5135f760faa0f",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82MDMzZWIxOC1hMTY5LTRlZmQtYTc0ZC0xNWJlODUyZjQ0M2IucG5n"
+        },
+        {
+          "id": "sc_2a653020036145dca923b9a6629a92fb",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84ZTFkZGM2Yi05NDQ4LTQ2ZjUtYWIxMi04NjFjZjBhYzE5ZDkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "dd362651-db4a-42ed-aff1-471015886f4c",
+      "name": "Manage a subscription",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=dd362651-db4a-42ed-aff1-471015886f4c",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_9af3d15dd5a947e4bdf53485f1581b5b",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lODExMTM5Ni0zNzg0LTQ3ODctOWZjYi04NjQ5MzIzMGU4NTcucG5n"
+        },
+        {
+          "id": "sc_3fe8524df22f48869cc70e9bddca4046",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8wYzQ0NDIwNi1hYTRjLTRmN2YtODBhNC0xZTU4Mjg4ZDkxYWYucG5n"
+        },
+        {
+          "id": "sc_f888bed9b87b49ff8c320e2bec870ae9",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zYjczMmI0NC1jNjVjLTQ3N2QtOTM0ZC01MmVmYTlmZjE2ZTQucG5n"
+        }
+      ]
+    },
+    {
+      "id": "df71c72f-2817-4042-ba06-5a8047534ecf",
+      "name": "Monthly badges",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=df71c72f-2817-4042-ba06-5a8047534ecf",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_ec2d4ba8ea744a61adce2cc3362cf9da",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kOTk2MjNmMS05ZWZlLTRjNzYtOGNjMi00MmNiNjk1Mjk0ZjEucG5n"
+        },
+        {
+          "id": "sc_dfb14f8da11740a78ca9c30e121d25c8",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jOTZhNTZhNS02YzNlLTQxZGMtODEzNS00Mzc5MDNhNDZjNWQucG5n"
+        },
+        {
+          "id": "sc_45f09d0c864c41afb2ba12597a3d8c13",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lNTUxNzk2MS1mMWJlLTQ5MmItODM0ZC00ZjZlY2Q4ZjMxNDMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "e47219c8-2442-423f-95fe-6d34ad03841f",
+      "name": "Creating an avatar",
+      "screenCount": 15,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e47219c8-2442-423f-95fe-6d34ad03841f",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_a2c9a2f79a89405996750b266f7d8cfe",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84ODc1NTYzMC00ZTcwLTQ4NWItYTNhYi04MThkNDI0Y2ZjYTUucG5n"
+        },
+        {
+          "id": "sc_24be8a4c10d7439bbcdbe88b73590b2c",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82OTQ3M2QxMy03NDE0LTQ0NWQtOGMwZi02ZDlkNjA3ODg3ODkucG5n"
+        },
+        {
+          "id": "sc_c52cebcf5ad144038e1d00f365b264a1",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy82YzljYzQ1MC1jNzE5LTQyMzItYmQ0OC1mOTU5N2VmZDI5ZTUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "e5507c39-9c84-43a8-856c-8829498d35a6",
+      "name": "Skipping a unit",
+      "screenCount": 8,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e5507c39-9c84-43a8-856c-8829498d35a6",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_fb3272d39e5b4d0584b6d8002ca1e2cf",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMmVjMzIxNy1hNDEyLTQ3MmEtOGRjNi05MjgxODhjMWUwOWUucG5n"
+        },
+        {
+          "id": "sc_93b9780a134742a49ef9315b33c8b714",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yZmJkOTk5My0yOGU0LTRjOWMtYjBjYi02NjYzYzI0YmNmYWIucG5n"
+        },
+        {
+          "id": "sc_c26c069dd4a84cbc8c0c030b9f436085",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kYTFlMjQ0My1kMGIxLTQ5NzYtYTBhMi04YTFlMzZiZWY5ZWYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "e6ac09f7-6131-435e-8c21-dae693af84a7",
+      "name": "Onboarding",
+      "screenCount": 20,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e6ac09f7-6131-435e-8c21-dae693af84a7",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_057cfe7c098d4552bd9c2a51ef0a25ec",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jMjJmOWRmNi04NjMyLTRmYjctYmFhNS02NGU1Mzk3ODAyNjgucG5n"
+        },
+        {
+          "id": "sc_6b0fe96d8c1f4448a9ef2eba9f75b489",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy84YWY0NTIzZC02NWI2LTQ3YjYtYTY3NC1jZWJmNzJlZDc2ODIucG5n"
+        },
+        {
+          "id": "sc_b6afbc174ee74ab094726a99a01ed023",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9kZDUxOWVhMy1iZjQ4LTQzZTktYjY5YS0wYzI3MjFiM2U3ZjcucG5n"
+        }
+      ]
+    },
+    {
+      "id": "e99c2d1e-135d-4c28-94f0-9a83383c4233",
+      "name": "Searching practice songs",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=e99c2d1e-135d-4c28-94f0-9a83383c4233",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_3a10636e4afd40c39c4c6c7974b32a2d",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iNDk5NGRmMy0zMmJiLTQxYTItODdkZC02NTBiMzdkMThkOWEucG5n"
+        },
+        {
+          "id": "sc_b544ee6778174228bdf062210fc04716",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8zODZhOWRjZi1lNjc0LTRmZmUtYTZmMS0yYWUwOGVlOTE5ZWMucG5n"
+        },
+        {
+          "id": "sc_e2a1aec940c44d4fa76f20f000d68a57",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ODY2MDI2ZS02NzgyLTQ5OTItYWZmNy03NWY1ZDcwZWI0MzMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "ec3e30d5-0fd8-42ef-9958-325299496a7b",
+      "name": "Playing chess with a person",
+      "screenCount": 9,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=ec3e30d5-0fd8-42ef-9958-325299496a7b",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_6112ba511ff24bd0aa7f2e87f8ccb6d6",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZWI3YjRhOC0zMzM1LTRmOGQtYjYwOS0xMTY4NGUwN2RlMTQucG5n"
+        },
+        {
+          "id": "sc_bc685a5a78d249fab16c153ae6fb0aef",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85Zjc2MjZkYy02ODhlLTRkNjktODgzYy0yNzdiZjNlMjlmODcucG5n"
+        },
+        {
+          "id": "sc_5ba94ba9dad94f5daa4a453e9893db59",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8yZGQzMWIyMy1lZjQ1LTQxYjMtYmVkMS01MmRhNmVlNTg4ZmYucG5n"
+        }
+      ]
+    },
+    {
+      "id": "eec0c487-8831-4772-975f-84e8d1f6d3d4",
+      "name": "Friends",
+      "screenCount": 4,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=eec0c487-8831-4772-975f-84e8d1f6d3d4",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_4dda25e955744c808ff9faf4702732ca",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85OGFlZDZjMi00NDc2LTQ0ZDYtOTAzZC00YzgyZjE0ZjI2OTIucG5n"
+        },
+        {
+          "id": "sc_49d8dc1cf346406193c856b9c60bcc08",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xNDcyZGQ3Yy1lYTY3LTQzNTAtOTkyOC1kZDdkNWRkM2M0YzUucG5n"
+        },
+        {
+          "id": "sc_c6be8a8e5dba4a22b625c53ad1966f1c",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy81ODA1MWMyZS1hYzY0LTQyOTYtOTRlOS1hNzExNDVlNDMzNTkucG5n"
+        }
+      ]
+    },
+    {
+      "id": "f42ff737-2a4b-4818-b1f7-5c6aed16ebe3",
+      "name": "Achievement detail",
+      "screenCount": 3,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=f42ff737-2a4b-4818-b1f7-5c6aed16ebe3",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_63db961aee1548789e61d02a278d2dbe",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85ZGNjYTFhYS0zZDdjLTQyY2ItODUwZS04MWVjZDc1MzA1MGEucG5n"
+        },
+        {
+          "id": "sc_bdc76f3293a64150b4d6fb0e9e3a7a6b",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy8xMWZmYjBjMy1iNjNhLTRiZWYtOWY1Ni1mYzk5ZmYyYmFmMjAucG5n"
+        },
+        {
+          "id": "sc_bda51f8df2464c75bee4cf75027ef528",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy83MTY5OTIwYS02YTcwLTQ1ZDQtOTRlZC1hYjJhMGVlZjk3NDMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "f87edc8e-f6da-469b-b407-5cbdab5adc35",
+      "name": "Subscribing to Duolingo Max Family",
+      "screenCount": 12,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=f87edc8e-f6da-469b-b407-5cbdab5adc35",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_799523b842d5435190ca0b4c05d8c4b5",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iZjQ4ZGFhNy0yNmQzLTRkYzktYTU2Ny1lYmExODZmN2E1YmEucG5n"
+        },
+        {
+          "id": "sc_e6604ad351714404b71082a3a5730811",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lNWZjMTVjZi04M2JkLTRjNGYtOGIxYS05MzY4MWExMTE1OWQucG5n"
+        },
+        {
+          "id": "sc_c385319a0f204267be142edeee5b9b13",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jN2U3NzYzMi0yZDRlLTRkNGUtYWJhYy1mMjllZjkxZGQxZTUucG5n"
+        }
+      ]
+    },
+    {
+      "id": "fd0c51f6-cfef-4f14-8b2e-3928d0cd3f38",
+      "name": "Adding a course (math)",
+      "screenCount": 16,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=fd0c51f6-cfef-4f14-8b2e-3928d0cd3f38",
+      "inScope": false,
+      "status": "outside-English-scope",
+      "previewScreens": [
+        {
+          "id": "sc_f2941b6b5fef4901b49462c950f24693",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9hZDIwZjM4YS1jMDg5LTQwZjQtYWMxNC03MzczYjgwZTU4NTAucG5n"
+        },
+        {
+          "id": "sc_823c9c07824f4289b603dea9c9626cee",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9iMDdjY2YwNi04NGI2LTQyNzItOWVhZS0wYWViMjIyNTFmOTAucG5n"
+        },
+        {
+          "id": "sc_946576bdff394068b2b912a6a937f71a",
+          "position": 3,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9lNjk1YTA0My01MGRhLTQ1MGMtYTdjNy1lNTczZDRiYTRlOGMucG5n"
+        }
+      ]
+    },
+    {
+      "id": "fe68d9ea-973e-45df-8db1-7dccb1e52c43",
+      "name": "Courses (profile)",
+      "screenCount": 2,
+      "sourceUrl": "https://gummble.com/apps/duolingo-ios?tab=flows&flow=fe68d9ea-973e-45df-8db1-7dccb1e52c43",
+      "inScope": true,
+      "status": "catalogued",
+      "previewScreens": [
+        {
+          "id": "sc_4dda25e955744c808ff9faf4702732ca",
+          "position": 1,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy85OGFlZDZjMi00NDc2LTQ0ZDYtOTAzZC00YzgyZjE0ZjI2OTIucG5n"
+        },
+        {
+          "id": "sc_5139f3e8c97a46b087f1b73ab3253a26",
+          "position": 2,
+          "imageUrl": "https://gummble.com/mcp-preview/aHR0cHM6Ly9zdG9yYWdlLmd1bW1ibGUuY29tL3Byb2QvY29udGVudC9hcHBfc2NyZWVucy9jYWExYTQ1OS1kYjY3LTRjMDYtYWJjZi1iMTc0Mjk1MGMzNTIucG5n"
+        }
+      ]
+    }
+  ]
+}

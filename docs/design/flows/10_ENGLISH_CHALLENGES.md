@@ -1,0 +1,11 @@
+# English Rapid Review and Legendary
+
+Analyzed2026-10-04 from ordered Gummble MCP journeys: Rapid Review `7bc9966b-d6e3-499e-a138-4ece4beedd37` (7screens), Legendary `18f074a6-e85d-4e3b-b312-c35ab4cb4d93` (10screens). [Ordered sources and IDs](../references/ORDERED_FLOW_INDEX.json); [original PNG receipts](../references/catalog-cache/manifest.json). Inspected Rapid2,4,5,6 and Legendary3,5,7,8. English/Vietnamese questions remain authored fixtures.
+
+Rapid: native close/title; three-star introduction, original Bea campfire illustration, level2/3 and20XP cells, blue PLAY. Session uses purple105second countdown;5/10/20 milestone bar; Oscar prompt/translation choices; cyan selected/green correct cards; fixed native feedback/footer. Completion shows Bea/two stars/20XP and Continue. The captured flow does not establish expired/boost states: local expiry/retry is an explicit accessibility/recovery adaptation and requires additional reference verification.
+
+Legendary: black introduction with original gold Duo/glow, white two-line explanation, gold START+40XP, Maybe Later. Session uses gold20/40 milestone progress and original Junior in word-bank exercises. At halfway, original Duo/star illustration and native20XP speech bubble; final high-scorer/result cards then claim. These fixtures never spend real gems or send a client clock/XP score to a service.
+
+Mascot geometry is checked separately from UI: original makerInLesson Rive renders of Oscar and Junior were opened and compared with the exercise references; inputs are verified correct/incorrect/reset, with native lifecycle/reduced-motion behavior. Original Bea s'mores Lottie is1080×1080,60fps,frames0–440, identified in the first-party path character map. Gold Duo and completion poses remain still source ROIs until their actual timelines are found. Motion timing is not inferred from screenshots.
+
+Countdown counts foreground elapsed time in this local preview and stops for hidden routes/background. Restart is explicit; wrong selections remain visible until feedback is dismissed; only correct answers advance the challenge. Native state tests cover incomplete selection, wrong retry, expiry/no further input, fresh retry, and completion before expiry. Layout checks use360/430logical width and text1/2.

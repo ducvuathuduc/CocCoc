@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import Ajv from 'ajv/dist/2020.js';
+import formats from 'ajv-formats';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const api = JSON.parse(fs.readFileSync(path.join(root, 'docs/api/openapi.yaml'), 'utf8'));
+const seed = JSON.parse(fs.readFileSync(path.join(root, 'appwrite/seeds/catalog.json'), 'utf8'));
+const ajv = new Ajv({ strict: false }); formats(ajv);
+ajv.addSchema({ $id: 'https://cocenglish.example.invalid/schema', components: api.components });
+const validate = ajv.compile({ $ref: 'https://cocenglish.example.invalid/schema#/components/schemas/Course' });
+if (!validate(seed)) throw new Error(JSON.stringify(validate.errors));
+if (seed.available) throw new Error('Starter catalog must stay unavailable until lesson/media publication is proven.');
+console.log(JSON.stringify({ status: 'PASS', scope: 'typed catalog seed only; not published', courseId: seed.courseId, fullCurriculum: 'NOT_STARTED P4', networkWrites: 0 }));

@@ -1,0 +1,14 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart: incoming accept is validated, once-only and reserves one slot
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart: declining frees candidate, invitation and removal cannot duplicate
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/family_reaction_test.dart: reaction sends only once to an invited member of active family
+00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/family_reaction_test.dart: reaction sends only once to an invited member of active family
+00:00 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/family_reaction_test.dart: reaction sends only once to an invited member of active family
+00:00 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: claim accepts one earned fixture and rejects duplicate locked and invalid IDs
+00:00 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: source award opens matching detail, shares locally, and keeps claim across Back
+00:01 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: locked XP and invalid ID render safe native details
+00:01 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width360.0 text1.0
+00:01 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width360.0 text2.0
+00:01 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width430.0 text1.0
+00:01 +11: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/achievements_flow_test.dart: achievement and monthly source grids render width430.0 text2.0
+00:01 +12: All tests passed!

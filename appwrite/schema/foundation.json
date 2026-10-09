@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "databaseId": "cocenglish",
+  "scope": "Initial owned tables only; remaining canonical tables and live transaction adapters are gated P1/P4/P6. All direct client writes denied.",
+  "tables": [
+    { "id": "l_courses", "owner": "learning", "columns": [
+      { "key": "courseId", "type": "string", "size": 36 }, { "key": "sourceLocale", "type": "string", "size": 16 }, { "key": "targetLocale", "type": "string", "size": 16 }, { "key": "title", "type": "string", "size": 120 }, { "key": "publishedVersion", "type": "string", "size": 36 }, { "key": "status", "type": "string", "size": 16 }, { "key": "manifestFileId", "type": "string", "size": 36 }
+    ], "indexes": [{ "key": "course_locale", "type": "unique", "columns": ["sourceLocale", "targetLocale"] }, { "key": "course_status", "type": "key", "columns": ["status", "courseId"] }] },
+    { "id": "l_outbox", "owner": "learning", "columns": [
+      { "key": "eventId", "type": "string", "size": 36 }, { "key": "type", "type": "string", "size": 64 }, { "key": "schemaVersion", "type": "integer" }, { "key": "aggregateId", "type": "string", "size": 36 }, { "key": "occurredAt", "type": "datetime" }, { "key": "payloadJson", "type": "string", "size": 16384 }, { "key": "attempt", "type": "integer" }, { "key": "nextAttemptAt", "type": "datetime" }, { "key": "leaseOwner", "type": "string", "size": 64, "required": false }, { "key": "leaseUntil", "type": "datetime", "required": false }, { "key": "status", "type": "string", "size": 16 }, { "key": "ackAt", "type": "datetime", "required": false }
+    ], "indexes": [{ "key": "outbox_event", "type": "unique", "columns": ["eventId"] }, { "key": "outbox_due", "type": "key", "columns": ["status", "nextAttemptAt"] }, { "key": "outbox_watermark", "type": "key", "columns": ["status", "occurredAt"] }] },
+    { "id": "p_inbox", "owner": "progress", "columns": [
+      { "key": "eventId", "type": "string", "size": 36 }, { "key": "type", "type": "string", "size": 64 }, { "key": "bodyHash", "type": "string", "size": 64 }, { "key": "appliedAt", "type": "datetime" }, { "key": "resultJson", "type": "string", "size": 2048 }
+    ], "indexes": [{ "key": "inbox_event", "type": "unique", "columns": ["eventId"] }] },
+    { "id": "p_reward_ledger", "owner": "progress", "columns": [
+      { "key": "eventId", "type": "string", "size": 36 }, { "key": "completionId", "type": "string", "size": 36 }, { "key": "userId", "type": "string", "size": 36 }, { "key": "rewardIdentity", "type": "string", "size": 36 }, { "key": "kind", "type": "string", "size": 16 }, { "key": "studyXpDelta", "type": "integer" }, { "key": "leagueXpDelta", "type": "integer" }, { "key": "gemsDelta", "type": "integer" }, { "key": "learningDay", "type": "string", "size": 10 }, { "key": "leagueWeek", "type": "string", "size": 10 }, { "key": "occurredAt", "type": "datetime" }, { "key": "capped", "type": "boolean" }
+    ], "indexes": [{ "key": "ledger_event_kind", "type": "unique", "columns": ["eventId", "kind"] }, { "key": "ledger_completion", "type": "unique", "columns": ["userId", "completionId", "kind"] }, { "key": "ledger_day", "type": "key", "columns": ["userId", "learningDay"] }] }
+  ]
+}

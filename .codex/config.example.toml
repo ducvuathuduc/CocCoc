@@ -1,0 +1,3 @@
+# Optional trusted-project endpoint. Inspect existing user registration first.
+[mcp_servers.gummble]
+url = "https://mcp.gummble.com/mcp"

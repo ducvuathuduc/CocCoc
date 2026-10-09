@@ -1,0 +1,159 @@
+{
+  "updated": "2026-10-10",
+  "project": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
+  "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
+  "records": [
+    {
+      "taskId": "UI-ONBOARDING-LOGIN-SLICE",
+      "phase": "frontend slice",
+      "owner": "root",
+      "branch": "codex/flutter-onboarding-login",
+      "worktree": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
+      "dependencyGateReceipts": [
+        "docs/agent/FRONTEND_FLOW_PLAN.md",
+        "docs/design/flows/01_ONBOARDING.md",
+        "docs/design/flows/02_LOGIN.md",
+        "docs/design/flows/03_DUO_MOTION.md"
+      ],
+      "exclusivePaths": [
+        "apps/mobile",
+        "tools/scripts",
+        "infrastructure/toolchain.json",
+        ".github/workflows/mobile.yml",
+        "docs/design/qa",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": [
+        "FR-ONB-001",
+        "FR-AUTH-002",
+        "FR-AUTH-003"
+      ],
+      "requirementCoverage": "UI/local fixtures only; no complete production requirement sign-off",
+      "interfaces": [
+        "OnboardingRepository",
+        "AuthRepository",
+        "DuoMotion"
+      ],
+      "testCommand": "pnpm verify",
+      "status": "DONE",
+      "evidence": [
+        "docs/design/qa/REPORT.md",
+        "docs/design/references/onboarding/manifest.json",
+        "docs/design/references/login/manifest.json"
+      ]
+    },
+    {
+      "taskId": "UI-FIDELITY-001",
+      "phase": "frontend slice",
+      "owner": "root",
+      "branch": "codex/flutter-onboarding-login",
+      "status": "VERIFYING",
+      "evidence": [
+        "docs/design/qa/onboarding/metrics.json",
+        "docs/design/qa/login/metrics.json"
+      ],
+      "remaining": "User review and measured layout refinement; exact motion for special login poses needs a matching original timeline/video. No 100% equivalence asserted."
+    },
+    {
+      "taskId": "UI-LEARNING-002",
+      "phase": "frontend slice",
+      "owner": "root",
+      "status": "DONE",
+      "remaining": "Scoped mock implementation verified; exact fidelity, real server ledger, durable learning journal and complete production edge cases remain gated.",
+      "exclusivePaths": [
+        "apps/mobile/lib/features/learning",
+        "apps/mobile/lib/main.dart",
+        "apps/mobile/lib/core/design",
+        "apps/mobile/test/learning*",
+        "docs/design/flows/04_COURSE_PATH.md",
+        "docs/design/flows/05_LESSON_RESULTS.md"
+      ],
+      "evidence": [
+        "docs/design/qa/FULL_FRONTEND_REPORT.md",
+        "docs/design/qa/full-verify.log",
+        "docs/design/qa/frontend-capture.log"
+      ]
+    },
+    {
+      "taskId": "UI-PRACTICE-003",
+      "phase": "frontend slice",
+      "owner": "root",
+      "status": "DONE",
+      "requirementCoverage": "Scoped mock baseline only; exact fidelity and full production phase gates pending",
+      "evidence": [
+        "docs/design/qa/FULL_FRONTEND_REPORT.md"
+      ]
+    },
+    {
+      "taskId": "UI-PROGRESS-004",
+      "phase": "frontend slice",
+      "owner": "root",
+      "status": "DONE",
+      "requirementCoverage": "Scoped mock baseline only; exact fidelity and full production phase gates pending",
+      "evidence": [
+        "docs/design/qa/FULL_FRONTEND_REPORT.md"
+      ]
+    },
+    {
+      "taskId": "UI-ACCOUNT-005",
+      "phase": "frontend slice",
+      "owner": "root",
+      "status": "DONE",
+      "requirementCoverage": "Scoped mock baseline only; exact fidelity and full production phase gates pending",
+      "evidence": [
+        "docs/design/qa/FULL_FRONTEND_REPORT.md"
+      ]
+    },
+    {
+      "taskId": "UI-FULL-QA-006",
+      "phase": "frontend slice",
+      "owner": "root",
+      "status": "DONE",
+      "requirementCoverage": "Scoped mock baseline only; exact fidelity and full production phase gates pending",
+      "evidence": [
+        "docs/design/qa/FULL_FRONTEND_REPORT.md"
+      ]
+    },
+    {
+      "taskId": "RESEARCH-REFRESH-20261009",
+      "phase": "user-authorized research and local foundation refresh",
+      "owner": "root",
+      "branch": "main",
+      "baselineCommit": "8b64cdcff3365e0ae4c5401bf2e799abd3dca649",
+      "worktree": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
+      "status": "PASSED",
+      "requirementCoverage": "research/document/scaffold/local compilation only; existing UI preserved; full production phase gates remain pending",
+      "exclusivePaths": [
+        "docs/audit",
+        "docs/agent/RESEARCH_REFRESH_PLAN.md",
+        "services",
+        "appwrite",
+        "packages/api_contracts",
+        "tools/audit",
+        "tools/evals",
+        "tools/scripts/backend*.mjs",
+        "package.json",
+        "pnpm-lock.yaml",
+        ".github/workflows/backend.yml"
+      ],
+      "evidence": [
+        "docs/audit/VALIDATION.md",
+        "docs/audit/DOCS_MANIFEST.md",
+        "docs/audit/BUILD_ARTIFACTS.json",
+        "docs/ARCHITECTURE_FREEZE_REPORT.md"
+      ],
+      "freshChecks": {
+        "node": "22.23.3",
+        "backendTests": 16,
+        "flutterTests": 439,
+        "schemas": 94,
+        "schemaFixtureCases": 30,
+        "webCompile": "PASS",
+        "androidDebugCompile": "PASS with fresh repo-local Gradle user home",
+        "cloudDeployment": "NOT_RUN",
+        "providerInferenceCalls": 0
+      },
+      "remaining": "teacher rubric/account entitlement; full schema/curriculum; actual JWT/transaction/permissions/outbox; Drift; native voice/assessment benchmark; physical Android/iOS; live billing/push/backup/CI run"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  cupertino_icons 1.0.9 (2.0.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  petitparser 7.0.2 (7.1.0 available)
+  qr 3.0.2 (4.0.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  window_to_front 0.0.4 (1.0.0 available)
+  xml 7.0.1 (7.1.0 available)
+Got dependencies!
+13 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: settlement advances once through authored eligible stages
+00:00 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: ineligible authored stages are skipped without inventing rewards
+00:00 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored reward can be acknowledged without a promotion
+00:00 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: fixture rejects invalid learner, rank, XP and reward data
+00:00 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: historical fixture is English-only and remains dated 2025
+00:00 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: historical fixture is English-only and remains dated 2025
+00:00 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: historical fixture is English-only and remains dated 2025
+00:00 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: a fresh history entry replays without changing learner balances
+00:00 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: controller navigation is bounded and restart returns to intro
+00:00 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored result promotes to Silver and acknowledges 40 gems
+00:00 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored result promotes to Silver and acknowledges 40 gems
+00:00 +11: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored result promotes to Silver and acknowledges 40 gems
+00:00 +12: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored result promotes to Silver and acknowledges 40 gems
+00:00 +13: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored result promotes to Silver and acknowledges 40 gems
+00:00 +14: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored result promotes to Silver and acknowledges 40 gems
+00:00 +15: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: authored result promotes to Silver and acknowledges 40 gems
+00:00 +16: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: seven native pages keep English copy and expose tap navigation
+00:00 +17: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: seven native pages keep English copy and expose tap navigation
+00:00 +18: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: seven native pages keep English copy and expose tap navigation
+00:01 +18: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: source-sized result expands its card and overlays close
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: <0>
+  Actual: <1.0>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart:373:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart line 373
+The test description was:
+  source-sized result expands its card and overlays close
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +19: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_widgets_test.dart: gallery keeps selected portrait, count, and platform instructions
+00:01 +19 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_widgets_test.dart: gallery keeps selected portrait, count, and platform instructions
+00:01 +19 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: source-sized result expands its card and overlays close [E]
+  Test failed. See exception logs above.
+  The test description was: source-sized result expands its card and overlays close
+
+00:01 +20 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_widgets_test.dart: gallery keeps selected portrait, count, and platform instructions
+00:01 +21 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_widgets_test.dart: gallery keeps selected portrait, count, and platform instructions
+00:01 +22 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_widgets_test.dart: gallery keeps selected portrait, count, and platform instructions
+00:01 +23 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_widgets_test.dart: gallery keeps selected portrait, count, and platform instructions
+00:01 +24 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: 320 wide text scale two can reach every action without overflow
+00:01 +25 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_widgets_test.dart: all widget moods keep text separate from undistorted Duo at narrow sizes
+00:01 +26 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: clipboard failure remains on summary and retry reports copied
+00:01 +27 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/year_review_test.dart: clipboard failure remains on summary and retry reports copied
+00:06 +28 -1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/session_finish_routing_test.dart: settings opens all new histories and preserves learner progress
+00:09 +29 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/league_result_test.dart: source-sized result expands its card and overlays close

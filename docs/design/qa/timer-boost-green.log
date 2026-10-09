@@ -1,0 +1,24 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  window_to_front 0.0.4 (1.0.0 available)
+Got dependencies!
+9 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/timer_boost_test.dart
+00:00 +0: boost purchase preserves insufficient selection, then spends once from demo balance
+00:00 +1: ledger validates boost pack and duplicate receipt without trusting a supplied price
+00:00 +2: one owned boost resumes only expired rapid question and preserves answer
+00:00 +3: real modal retains dismissed choice and purchase returns to paused rapid question
+00:01 +4: boost offer and success render width360.0 text1.0
+00:01 +5: boost offer and success render width360.0 text2.0
+00:01 +6: boost offer and success render width430.0 text1.0
+00:01 +7: boost offer and success render width430.0 text2.0
+00:01 +8: All tests passed!

@@ -1,0 +1,56 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart
+00:00 +0: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/course_management_ui_test.dart: shows scoped languages and explains protected English
+00:01 +1: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+00:02 +2: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+00:02 +3: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+00:02 +4: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+00:03 +5: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+00:03 +6: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: QR data and copied link match; copy preserves dialog and can retry
+
+Warning: A call to tap() with finder "Found 1 widget with widget matching predicate: [
+  RawTooltip-[LabeledGlobalKey<RawTooltipState>#a7380]("Close profile link", hover delay: 0:00:00.000000, touch delay: 0:00:01.500000, dismiss delay: 0:00:00.100000, triggerMode: TooltipTriggerMode.longPress, enableFeedback: true, positionDelegate: Closure: (TooltipPositionContext) => Offset from Function '_getDefaultPositionDelegate@674220820':., state: RawTooltipState#bea0b(ticker inactive)),
+]" derived an Offset (Offset(269.0, -6.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(269.0, -6.0) is outside the bounds of the root of the render tree, Size(800.0, 600.0).
+The finder corresponds to this RenderBox: _RenderLayoutSurrogateProxyBox#bb2b1 relayoutBoundary=up26
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fc1e9(_ReusableRenderView#d58bd), HitTestEntry<HitTestTarget>#8d4c7(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart:61:15)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to tap() with finder "Found 1 widget with text "OPEN": [
+  Text("OPEN", dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+]" derived an Offset (Offset(40.2, 24.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderParagraph#567b7 relayoutBoundary=up13
+The hit test result at that offset is: HitTestResult(_RenderColoredBox#fa7d7@Offset(40.2, 24.0), RenderConstrainedBox#8577a@Offset(40.2, 24.0), RenderMouseRegion#2c265@Offset(40.2, 24.0), RenderSemanticsAnnotations#7c203@Offset(40.2, 24.0), RenderPointerListener#b355d@Offset(40.2, 24.0), RenderSemanticsGestureHandler#b734c@Offset(40.2, 24.0), RenderExcludeSemantics#1dd4f@Offset(40.2, 24.0), RenderBlockSemantics#06b88@Offset(40.2, 24.0), RenderIgnorePointer#f5242@Offset(40.2, 24.0), RenderSemanticsAnnotations#057a2@Offset(40.2, 24.0), _RenderTheater#b7c59@Offset(40.2, 24.0), RenderAbsorbPointer#f365c@Offset(40.2, 24.0), RenderPointerListener#a345a@Offset(40.2, 24.0), RenderSemanticsAnnotations#ff966@Offset(40.2, 24.0), RenderCustomPaint#f86a5@Offset(40.2, 24.0), RenderSemanticsAnnotations#a6c38@Offset(40.2, 24.0), RenderSemanticsAnnotations#a1803@Offset(40.2, 24.0), RenderSemanticsAnnotations#cd23b@Offset(40.2, 24.0), RenderTapRegionSurface#5826e@Offset(40.2, 24.0), RenderSemanticsAnnotations#5cb70@Offset(40.2, 24.0), RenderSemanticsAnnotations#a8a8e@Offset(40.2, 24.0), HitTestEntry<HitTestTarget>#b77be(_ReusableRenderView#d58bd), HitTestEntry<HitTestTarget>#4d74d(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart:63:15)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:04 +7: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width360.0 text1.0 remain usable
+00:07 +8: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width360.0 text2.0 remain usable
+00:07 +9: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width430.0 text1.0 remain usable
+00:07 +10: C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/profile_actions_ui_test.dart: profile share controls width430.0 text2.0 remain usable
+00:07 +11: All tests passed!
