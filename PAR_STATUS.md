@@ -22,14 +22,22 @@ owned by path/menu slices.
 - lib: application/profile_controller.dart (Notifier variant + active profile)
 - lib: presentation/profile_tab_page.dart (ConsumerWidget page)
 - test: +2 Max/family visibility tests, +page/controller switch test
+- QA FIX (lead QA 05:05 vs 03.png): bust-silhouette empty avatar w/ full-contour
+  dashed outline + white plus (150x180, open at header edge); avatar area 147->210
+  bottom-aligned; flag chip deep tones #1C6FA1/#A3302D; avatar-sheet goldens added
+  (ensureVisible for textScale 2)
+- test: new test/features/profile/profile_avatar_sheet_golden_test.dart (4 goldens)
 
 ## Evidence
 - `flutter analyze --no-pub --fatal-infos` -> No issues found
-- `flutter test --no-pub test/features/profile` -> All tests passed (18: 10 widget + 8 golden)
+- `flutter test --no-pub test/features/profile` -> All tests passed (22: 10 widget + 12 golden)
 - Goldens: apps/mobile/test/goldens/ui_master/profile_{new,rich}_{360,430}_text{1,2}.png
+  + profile_avatar_sheet_{360,430}_text{1,2}.png
 - textScale 2: bounded ellipsis, no exceptions, ADD FRIENDS/COMPLETE PROFILE reachable
 
 ## QA FIX REQUIRED
-(none)
+(resolved 05:05 items 1-5: bust placeholder + header proportions + avatar-sheet
+goldens + deep flag tones; header hero stays light-blue per 04.png — the muted
+tone in 03.png is the modal scrim over the same header)
 
 TICKET DONE

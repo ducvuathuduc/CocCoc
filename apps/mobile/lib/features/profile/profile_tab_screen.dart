@@ -180,14 +180,14 @@ class _Hero extends StatelessWidget {
                 child: _MaxBadge(),
               ),
             SizedBox(
-              height: 147,
+              height: 210,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: profile.hasAvatar
                     ? _AvatarFace(
                         initial: profile.avatarInitial,
                         color: profile.avatarColor,
-                        size: 120,
+                        size: 132,
                       )
                     : const _EmptyAvatarPlaceholder(),
               ),
@@ -238,37 +238,80 @@ class _EmptyAvatarPlaceholder extends StatelessWidget {
     child: CustomPaint(
       painter: _DashedOutlinePainter(),
       child: const SizedBox(
-        width: 110,
-        height: 130,
+        width: 150,
+        height: 180,
         child: Center(
-          child: Icon(Icons.add_rounded, color: Colors.white, size: 40),
+          child: Icon(Icons.add_rounded, color: Colors.white, size: 44),
         ),
       ),
     ),
   );
 }
 
+/// Duo-style bust silhouette (ref 04.png): filled bust, dashed outline
+/// around the full head+shoulders contour (open at the header edge),
+/// white plus centered on the face.
 class _DashedOutlinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final fill = Paint()..color = const Color(0xFF7CC4F2);
-    final path = Path()
-      ..addOval(Rect.fromCircle(center: Offset(size.width / 2, 52), radius: 44))
-      ..addRect(Rect.fromLTWH(size.width / 2 - 30, 80, 60, 50));
-    canvas.drawPath(path, fill);
+    // Bust outline in 150x180 space, bottom open (cut at header edge).
+    final outline = Path()
+      ..moveTo(size.width * 0.25, size.height)
+      ..lineTo(size.width * 0.31, size.height * 0.71)
+      ..cubicTo(
+        size.width * 0.13,
+        size.height * 0.64,
+        size.width * 0.14,
+        size.height * 0.44,
+        size.width * 0.27,
+        size.height * 0.33,
+      )
+      ..cubicTo(
+        size.width * 0.32,
+        size.height * 0.16,
+        size.width * 0.45,
+        size.height * 0.05,
+        size.width * 0.5,
+        size.height * 0.05,
+      )
+      ..cubicTo(
+        size.width * 0.55,
+        size.height * 0.05,
+        size.width * 0.68,
+        size.height * 0.16,
+        size.width * 0.73,
+        size.height * 0.33,
+      )
+      ..cubicTo(
+        size.width * 0.86,
+        size.height * 0.44,
+        size.width * 0.87,
+        size.height * 0.64,
+        size.width * 0.69,
+        size.height * 0.71,
+      )
+      ..lineTo(size.width * 0.75, size.height);
+
+    // Fill: same contour closed along the bottom edge.
+    final fillPath = Path.from(outline)
+      ..lineTo(size.width * 0.25, size.height)
+      ..close();
+    canvas.drawPath(fillPath, Paint()..color = const Color(0xFF7CC4F2));
+
+    // Dashed stroke around the open contour.
+    const dash = 9.0;
+    const gap = 7.0;
     final dashed = Paint()
       ..color = const Color(0xFF1CB0F6)
-      ..strokeWidth = 3
-      ..style = PaintingStyle.stroke;
-    final center = Offset(size.width / 2, 52);
-    for (var a = 0.0; a < math.pi * 2; a += 0.42) {
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: 50),
-        a,
-        0.26,
-        false,
-        dashed,
-      );
+      ..strokeWidth = 4
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+    for (final metric in outline.computeMetrics()) {
+      var dist = 0.0;
+      while (dist < metric.length) {
+        canvas.drawPath(metric.extractPath(dist, dist + dash), dashed);
+        dist += dash + gap;
+      }
     }
   }
 
@@ -407,9 +450,10 @@ class _FrenchFlag extends StatelessWidget {
       child: const Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(child: ColoredBox(color: Color(0xFF1CB0F6))),
+          // Deep flag tones per ref 03/04.png (rounded chip).
+          Expanded(child: ColoredBox(color: Color(0xFF1C6FA1))),
           Expanded(child: ColoredBox(color: Colors.white)),
-          Expanded(child: ColoredBox(color: Color(0xFFFF4B4B))),
+          Expanded(child: ColoredBox(color: Color(0xFFA3302D))),
         ],
       ),
     ),
