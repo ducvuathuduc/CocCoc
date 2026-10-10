@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/features/profile/presentation/friends_screen.dart';
-import 'package:mobile/features/profile/data/friends_repository.dart';
-import 'package:mobile/features/profile/application/friends_provider.dart';
+import 'package:cocenglish/features/profile/presentation/friends_screen.dart';
+import 'package:cocenglish/features/profile/data/friends_repository.dart';
+import 'package:cocenglish/features/profile/application/friends_provider.dart';
 
 void main() {
   testWidgets('FriendsScreen matches golden', (tester) async {

@@ -1,3 +1,4 @@
+import 'package:flutter/painting.dart';
 import '../domain/friend.dart';
 
 abstract class FriendsRepository {

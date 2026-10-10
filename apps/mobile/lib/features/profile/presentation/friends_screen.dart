@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/design/reference_theme.dart';
-import '../../../core/design/reference_widgets.dart';
 import '../application/friends_provider.dart';
 import '../domain/friend.dart';
 
