@@ -1,3 +1,4 @@
+import 'package:cocenglish/features/progress/application/streak_controller.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/progress/presentation/streak_widgets_screen.dart';
 import 'package:cocenglish/features/progress/presentation/streak_screen.dart';
@@ -51,6 +52,15 @@ void main() {
 
         await tester.pumpWidget(
           ProviderScope(
+            overrides: [
+              streakFixtureProvider.overrideWithValue(
+                StreakFixture(
+                  days: 12,
+                  month: DateTime(2026, 10),
+                  practiced: {for (var d = 1; d <= 11; d++) d},
+                ),
+              ),
+            ],
             child: MaterialApp(
               theme: referenceTheme(),
               builder: (context, child) => MediaQuery(
@@ -69,7 +79,10 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        await tester.ensureVisible(find.text('CHANGE APP ICON').first);
+        await tester.tap(find.byTooltip('Share streak'));
+        await tester.pumpAndSettle();
+        await tester.drag(find.text('Streak Society'), const Offset(0, -600));
+        await tester.pumpAndSettle();
         await tester.tap(find.text('CHANGE APP ICON').first);
         await tester.pumpAndSettle();
 
