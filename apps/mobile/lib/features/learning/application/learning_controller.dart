@@ -44,6 +44,7 @@ class LessonController extends Notifier<LessonState> {
   bool _disposed = false;
   bool _commandActive = false;
   int _revision = 0;
+  int _pairRevision = 0;
   int _originalTotal = 0;
   List<Exercise> _mistakes = <Exercise>[];
   List<Exercise> _nextRetry = <Exercise>[];
@@ -131,21 +132,48 @@ class LessonController extends Notifier<LessonState> {
   }
 
   void selectPairLeft(String id) {
-    if (!_editable || state.current?.pairs.containsKey(id) != true) return;
+    if (!_editable ||
+        state.pairAttempt != null ||
+        state.current?.pairs.containsKey(id) != true ||
+        state.matchedPairs.containsKey(id)) {
+      return;
+    }
     state = state.copyWith(selectedPairLeft: id, clearError: true);
+    _resolvePair();
   }
 
   void selectPairRight(String id) {
-    if (!_editable || state.selectedPairLeft == null) return;
-    final left = state.selectedPairLeft!;
-    if (state.current?.pairs[left] == id) {
-      state = state.copyWith(
-        matchedPairs: <String, String>{...state.matchedPairs, left: id},
-        clearSelectedPairLeft: true,
-        clearError: true,
-      );
-    } else {
-      state = state.copyWith(clearSelectedPairLeft: true);
+    if (!_editable ||
+        state.pairAttempt != null ||
+        state.current?.pairs.containsValue(id) != true ||
+        state.matchedPairs.containsValue(id)) {
+      return;
+    }
+    state = state.copyWith(selectedPairRight: id, clearError: true);
+    _resolvePair();
+  }
+
+  void _resolvePair() {
+    final left = state.selectedPairLeft;
+    final right = state.selectedPairRight;
+    if (left == null || right == null) return;
+    final matched = state.current!.pairs[left] == right;
+    state = state.copyWith(
+      matchedPairs: matched ? {...state.matchedPairs, left: right} : null,
+      clearSelectedPairLeft: true,
+      clearSelectedPairRight: true,
+      pairAttempt: PairAttempt(
+        leftId: left,
+        rightId: right,
+        outcome: matched ? PairOutcome.matched : PairOutcome.mismatched,
+        revision: ++_pairRevision,
+      ),
+    );
+  }
+
+  void finishPairAttempt(int revision) {
+    if (!_disposed && state.pairAttempt?.revision == revision) {
+      state = state.copyWith(clearPairAttempt: true);
     }
   }
 
@@ -186,6 +214,8 @@ class LessonController extends Notifier<LessonState> {
       tokenIds: const <String>[],
       matchedPairs: const <String, String>{},
       clearSelectedPairLeft: true,
+      clearSelectedPairRight: true,
+      clearPairAttempt: true,
       clearCorrect: true,
       clearError: true,
     );
@@ -280,7 +310,11 @@ class LessonController extends Notifier<LessonState> {
         state.busy) {
       return;
     }
-    state = state.copyWith(stage: LessonStage.paused, resumeStage: state.stage);
+    state = state.copyWith(
+      stage: LessonStage.paused,
+      resumeStage: state.stage,
+      clearPairAttempt: true,
+    );
     _repository.saveDraft(state);
   }
 
@@ -327,6 +361,8 @@ class LessonController extends Notifier<LessonState> {
       text: '',
       matchedPairs: const <String, String>{},
       clearSelectedPairLeft: true,
+      clearSelectedPairRight: true,
+      clearPairAttempt: true,
       clearCorrect: true,
       assisted: false,
       textAlternative: false,
@@ -348,6 +384,8 @@ class LessonController extends Notifier<LessonState> {
       text: '',
       matchedPairs: const <String, String>{},
       clearSelectedPairLeft: true,
+      clearSelectedPairRight: true,
+      clearPairAttempt: true,
       clearCorrect: true,
       assisted: false,
       textAlternative: false,

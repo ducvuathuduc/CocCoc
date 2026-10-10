@@ -14,6 +14,8 @@ import '../domain/learning_models.dart';
 import 'learning_visuals.dart';
 import '../data/english_explanations.dart';
 import 'spoken_exercise.dart';
+import 'image_choice.dart';
+import 'match_pairs.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({super.key});
@@ -127,6 +129,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       }
     });
     final exercise = state.current;
+    final i1 =
+        exercise?.kind == ExerciseKind.imageChoice ||
+        exercise?.kind == ExerciseKind.matchPairs;
     final editorIdentity = exercise == null
         ? null
         : '${exercise.id}:${state.retryPass}';
@@ -144,6 +149,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         if (!didPop) _exit();
       },
       child: Scaffold(
+        backgroundColor: exercise?.kind == ExerciseKind.matchPairs
+            ? MatchTileTokens.surface
+            : i1
+            ? ExerciseTileTokens.surface
+            : null,
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           bottom: false,
@@ -173,6 +183,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                             shineColor: state.correctStreak >= 5
                                 ? LessonMotionTokens.orangeShine
                                 : LessonMotionTokens.greenShine,
+                            trackColor:
+                                exercise?.kind == ExerciseKind.matchPairs
+                                ? MatchTileTokens.border
+                                : i1
+                                ? ExerciseTileTokens.border
+                                : ReferenceColors.border,
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -267,7 +283,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                         ),
                                       ),
                                     if (exercise.kind ==
-                                        ExerciseKind.imageChoice)
+                                            ExerciseKind.imageChoice &&
+                                        exercise.isNewWord)
                                       const Padding(
                                         padding: EdgeInsets.only(bottom: 15),
                                         child: Row(
@@ -293,6 +310,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                       exercise.title,
                                       style: headingStyle.copyWith(
                                         fontSize: 23,
+                                        color:
+                                            exercise.kind ==
+                                                ExerciseKind.imageChoice
+                                            ? ExerciseTileTokens.ink
+                                            : exercise.kind ==
+                                                  ExerciseKind.matchPairs
+                                            ? MatchTileTokens.ink
+                                            : null,
                                       ),
                                     ),
                                     const SizedBox(height: 19),
@@ -402,6 +427,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                               )
                             else
                               ReferenceButton(
+                                key: const Key('lesson_check_button'),
+                                palette:
+                                    exercise?.kind == ExerciseKind.matchPairs
+                                    ? ReferenceButtonPalette.textMatch
+                                    : i1
+                                    ? ReferenceButtonPalette.lesson
+                                    : ReferenceButtonPalette.legacy,
                                 label: state.busy ? 'CHECKING…' : 'CHECK',
                                 backgroundColor: LearningColors.green,
                                 onPressed: state.canCheck
@@ -444,82 +476,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     final editable = state.stage == LessonStage.answering && !state.busy;
     switch (exercise.kind) {
       case ExerciseKind.imageChoice:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                _audio(exercise.prompt),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    exercise.prompt,
-                    style: const TextStyle(
-                      color: LearningColors.purple,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            LayoutBuilder(
-              builder: (context, c) => Wrap(
-                spacing: 20,
-                runSpacing: 16,
-                children: exercise.choices.map((option) {
-                  final width = (c.maxWidth - 20) / 2;
-                  final artHeight = (availableHeight * .22).clamp(82.0, 145.0);
-                  final art = LearningArt.character(option.art);
-                  final factor = ((width - 30) / art.source.width).clamp(
-                    0.0,
-                    artHeight / art.source.height,
-                  );
-                  return SizedBox(
-                    width: width,
-                    child: LearningCard(
-                      selected: state.selectedId == option.id,
-                      correct: state.stage == LessonStage.feedback
-                          ? state.correct
-                          : null,
-                      onTap: editable
-                          ? () => controller.select(option.id)
-                          : null,
-                      padding: const EdgeInsets.fromLTRB(12, 17, 12, 13),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: artHeight,
-                            child: Center(
-                              child: ReferenceArt(
-                                art,
-                                width: art.source.width * factor,
-                                height: art.source.height * factor,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 13),
-                          Text(
-                            option.text,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 19,
-                              color: state.selectedId == option.id
-                                  ? state.correct == true
-                                        ? LearningColors.greenDark
-                                        : LearningColors.blue
-                                  : ReferenceColors.ink,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
+        return ImageChoiceExercise(
+          exercise: exercise,
+          state: state,
+          availableHeight: availableHeight,
+          onSelect: editable ? controller.select : null,
+          audio: _audio(exercise.prompt),
         );
       case ExerciseKind.choice:
       case ExerciseKind.listenChoice:
@@ -606,62 +568,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           ],
         );
       case ExerciseKind.matchPairs:
-        return Column(
-          children: [
-            const SizedBox(height: 55),
-            for (final pair in exercise.pairs.entries)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 18),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: AnimatedOpacity(
-                        duration: motionDuration(context),
-                        opacity: state.matchedPairs.containsKey(pair.key)
-                            ? .3
-                            : 1,
-                        child: LearningCard(
-                          selected: state.selectedPairLeft == pair.key,
-                          onTap:
-                              editable &&
-                                  !state.matchedPairs.containsKey(pair.key)
-                              ? () => controller.selectPairLeft(pair.key)
-                              : null,
-                          child: Center(
-                            child: Text(
-                              pair.key,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: AnimatedOpacity(
-                        duration: motionDuration(context),
-                        opacity: state.matchedPairs.containsValue(pair.value)
-                            ? .3
-                            : 1,
-                        child: LearningCard(
-                          onTap:
-                              editable &&
-                                  !state.matchedPairs.containsValue(pair.value)
-                              ? () => controller.selectPairRight(pair.value)
-                              : null,
-                          child: Center(
-                            child: Text(
-                              pair.value,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
+        return MatchPairsExercise(
+          key: ValueKey('${exercise.id}:${state.retryPass}'),
+          exercise: exercise,
+          state: state,
+          onLeft: editable ? controller.selectPairLeft : null,
+          onRight: editable ? controller.selectPairRight : null,
+          onFinish: controller.finishPairAttempt,
         );
       case ExerciseKind.speakRepeat:
         return SpeakingWordsExercise(
@@ -808,10 +721,17 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     LessonController controller,
   ) {
     final correct = state.correct == true;
+    final i1 =
+        exercise.kind == ExerciseKind.imageChoice ||
+        exercise.kind == ExerciseKind.matchPairs;
     final color = correct ? LearningColors.greenDark : LearningColors.redDark;
     return Container(
       width: double.infinity,
-      color: correct ? LearningColors.correct : LearningColors.incorrect,
+      color: correct
+          ? i1
+                ? ExerciseTileTokens.correctFill
+                : LearningColors.correct
+          : LearningColors.incorrect,
       padding: EdgeInsets.fromLTRB(
         16,
         13,
@@ -887,6 +807,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             Text(state.error!, style: TextStyle(color: color, fontSize: 16)),
           ReferenceButton(
             label: correct ? 'CONTINUE' : 'GOT IT',
+            palette:
+                exercise.kind == ExerciseKind.imageChoice ||
+                    exercise.kind == ExerciseKind.matchPairs
+                ? ReferenceButtonPalette.lesson
+                : ReferenceButtonPalette.legacy,
             backgroundColor: correct
                 ? LearningColors.green
                 : LearningColors.red,

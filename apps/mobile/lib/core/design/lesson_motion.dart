@@ -6,6 +6,10 @@ import 'reference_theme.dart';
 
 /// Geometry from the archived lesson captures; timings from the UI task.
 abstract final class LessonMotionTokens {
+  static const pressDuration = Duration(milliseconds: 100);
+  static const matchFlash = Duration(milliseconds: 150);
+  static const matchSettle = Duration(milliseconds: 200);
+  static const mismatchShake = Duration(milliseconds: 300);
   static const progressDuration = Duration(milliseconds: 300);
   static const feedbackDuration = Duration(milliseconds: 250);
   static const heartDuration = Duration(milliseconds: 300);
@@ -25,12 +29,14 @@ class LessonProgressBar extends StatelessWidget {
     required this.value,
     required this.color,
     required this.shineColor,
+    this.trackColor = ReferenceColors.border,
     super.key,
   });
 
   final double value;
   final Color color;
   final Color shineColor;
+  final Color trackColor;
 
   @override
   Widget build(BuildContext context) => Semantics(
@@ -53,9 +59,7 @@ class LessonProgressBar extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  const Positioned.fill(
-                    child: ColoredBox(color: ReferenceColors.border),
-                  ),
+                  Positioned.fill(child: ColoredBox(color: trackColor)),
                   Positioned(
                     left: 0,
                     top: 0,

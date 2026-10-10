@@ -229,3 +229,14 @@ backend write or new artwork file. Full `pnpm verify` and a mock/local-Rive web
 build were started again after this slice; results will be appended separately.
 Total UI master goldens so far: 17. All six top-level frontend task IDs remain
 open pending their full acceptance, source-variant reconciliation and browser QA.
+
+
+## 20-team-phaseA I1 local commit gate — 2026-10-10
+
+ImageChoice/MatchPairs source corrections, typed state and16 new goldens are
+locally verified;12 affected legacy image/feedback goldens are regenerated and
+compared without tolerance changes. Analyzer0; targeted45/45; lesson regression
+71/71; palette0 NEW against68 legacy baseline colors. Latest user authorization
+permits this scoped commit with remaining visual/global/full gates explicit.
+[Review, exact commands and known art/source gaps](I1_COMMIT_RECEIPT.md).
+Whole ticket stays open; no device/browser/native/production claim.

@@ -58,6 +58,7 @@ class ReferenceButton extends StatefulWidget {
     this.contentPadding,
     this.minHeight,
     this.cornerRadius = 14,
+    this.palette = ReferenceButtonPalette.legacy,
     super.key,
   });
   final String label;
@@ -70,6 +71,7 @@ class ReferenceButton extends StatefulWidget {
   final EdgeInsetsGeometry? contentPadding;
   final double? minHeight;
   final double cornerRadius;
+  final ReferenceButtonPalette palette;
   @override
   State<ReferenceButton> createState() => _ReferenceButtonState();
 }
@@ -79,15 +81,16 @@ class _ReferenceButtonState extends State<ReferenceButton> {
   @override
   Widget build(BuildContext context) {
     final enabled = widget.onPressed != null;
+    final palette = widget.palette;
     final background = !enabled
         ? widget.outlined
-              ? ReferenceColors.surface
-              : ReferenceColors.border
+              ? palette.surface
+              : palette.border
         : widget.outlined
-        ? ReferenceColors.surface
-        : widget.backgroundColor ?? ReferenceColors.green;
+        ? palette.surface
+        : widget.backgroundColor ?? palette.green;
     final edge = widget.outlined
-        ? ReferenceColors.border
+        ? palette.border
         : widget.edgeColor ?? ReferenceColors.greenEdge;
     return Semantics(
       button: true,
@@ -114,7 +117,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
               color: background,
               borderRadius: BorderRadius.circular(widget.cornerRadius),
               border: widget.outlined
-                  ? Border.all(color: ReferenceColors.border, width: 2)
+                  ? Border.all(color: palette.border, width: 2)
                   : null,
               boxShadow: enabled && !_pressed
                   ? [BoxShadow(color: edge, offset: const Offset(0, 4))]
@@ -138,21 +141,21 @@ class _ReferenceButtonState extends State<ReferenceButton> {
                           : 12,
                     ),
                 foregroundColor: !enabled
-                    ? ReferenceColors.disabled
+                    ? palette.disabled
                     : widget.foregroundColor != null
                     ? widget.foregroundColor!
                     : widget.outlined
-                    ? ReferenceColors.green
+                    ? palette.green
                     : Colors.white,
-                disabledForegroundColor: ReferenceColors.disabled,
+                disabledForegroundColor: palette.disabled,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(widget.cornerRadius),
                 ),
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontFamily: 'DuolingoSans',
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  letterSpacing: 0.8,
+                  letterSpacing: palette.labelTracking,
                   height: 1.1,
                 ),
               ),

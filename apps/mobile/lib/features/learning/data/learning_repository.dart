@@ -132,6 +132,7 @@ String _normalize(String value) =>
 const mockEnglishExercises = <Exercise>[
   Exercise(
     id: 'english-01-image',
+    isNewWord: true,
     kind: ExerciseKind.imageChoice,
     title: 'Select the correct image',
     prompt: 'the woman',

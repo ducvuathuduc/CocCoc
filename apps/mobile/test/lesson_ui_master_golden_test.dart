@@ -18,7 +18,12 @@ void main() {
     await (FontLoader(
       'MaterialIcons',
     )..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))).load();
-    await ReferenceArt.preloadFiles(['lesson-01', 'lesson-03']);
+    await ReferenceArt.preloadFiles([
+      'lesson-01',
+      'lesson-03',
+      'lesson-05',
+      'lesson-06',
+    ]);
   });
 
   for (final state in ['ready', 'selected', 'correct', 'incorrect']) {

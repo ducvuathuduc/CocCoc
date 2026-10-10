@@ -78,3 +78,14 @@ Root reviews diff, repeats targeted checks and commits:
 Read this file first; inspect git status and live agents. Recover unfinished
 worker changes and tests before respawning. Update statuses/evidence after each
 slice, commit early. Never report TICKET DONE while scope/gates remain open.
+
+
+## I1 committed-slice gate — 2026-10-10
+
+Root claims the I1 local commit under the latest user-authorized targeted gate.
+Analyzer zero;45/45 I1/golden and71/71 lesson regression tests PASS; palette
+68 baseline/68 current/0 NEW. Shared button staging contains palette support
+only; pending design interactions/tests are preserved outside the commit.
+[Exact commands, source review and limits](I1_COMMIT_RECEIPT.md). Whole ticket
+20-team-phaseA and P2-FE-001 remain IN_PROGRESS; visual/full/native and I2/I3/Q
+gates remain open. Protected features and dependency locks untouched.

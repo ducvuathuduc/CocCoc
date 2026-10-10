@@ -294,3 +294,11 @@ snapshot remains historical; no automatic deployment or Release overwrite.
 Session finish evidence — 2026-10-08:394Flutter tests pass; fatal-info analyzer, blueprint, format and web release build pass.17native source-size states were captured.225bundled sourcePNG hashes and18avatar assets/282choices pass audits. New mock slices are closed with [receipts](../design/qa/SESSION_FINISH_REPORT.md); prior completion marks remain intact.
 
 English course continuation evidence — 2026-10-09: 424 Flutter tests, fatal-info analyzer, blueprint, format and release web build pass. 33 targeted tests produce 17 native states; a native Lin motion run inspects 5 more frames. 238 bundled PNGs and 282 avatar choices pass audits. 20 HTTP checks serve the exact latest release. The register preserves prior marks and records 33 families/14 complete mock flows/105 verified occurrences. [Course report](../design/qa/COURSE_FINISH_REPORT.md) distinguishes completed native slices from archived path/motion variants.
+
+
+20-team-phaseA I1 local commit (2026-10-10): imageChoice/matchPairs scoped
+analysis,45 targeted/golden checks and71 lesson checks PASS; palette adds0 NEW
+unmatched colors (68 legacy baseline/current). Latest user authorizes this
+local slice commit. [Receipt](../design/qa/I1_COMMIT_RECEIPT.md) lists source
+adaptations, unresolved art/full/native/global gates and preserved design WIP.
+P2-FE-001 and the whole ticket remain IN_PROGRESS; I2/I3/Q remain unfinished.

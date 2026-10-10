@@ -15,6 +15,20 @@ enum ExerciseKind {
 
 enum LessonStage { idle, answering, checking, feedback, completed, paused }
 
+enum PairOutcome { matched, mismatched }
+
+class PairAttempt {
+  const PairAttempt({
+    required this.leftId,
+    required this.rightId,
+    required this.outcome,
+    required this.revision,
+  });
+  final String leftId, rightId;
+  final PairOutcome outcome;
+  final int revision;
+}
+
 class ExerciseChoice {
   const ExerciseChoice({required this.id, required this.text, this.art});
 
@@ -36,6 +50,7 @@ class Exercise {
     this.pairs = const <String, String>{},
     this.hint,
     this.meaning,
+    this.isNewWord = false,
   });
 
   final String id;
@@ -49,6 +64,7 @@ class Exercise {
   final Map<String, String> pairs;
   final String? hint;
   final String? meaning;
+  final bool isNewWord;
 
   Exercise copyWith({
     ExerciseKind? kind,
@@ -61,6 +77,7 @@ class Exercise {
     Map<String, String>? pairs,
     String? hint,
     String? meaning,
+    bool? isNewWord,
   }) {
     return Exercise(
       id: id,
@@ -74,6 +91,7 @@ class Exercise {
       pairs: pairs ?? this.pairs,
       hint: hint ?? this.hint,
       meaning: meaning ?? this.meaning,
+      isNewWord: isNewWord ?? this.isNewWord,
     );
   }
 }
@@ -126,6 +144,8 @@ class LessonState {
     this.text = '',
     this.matchedPairs = const <String, String>{},
     this.selectedPairLeft,
+    this.selectedPairRight,
+    this.pairAttempt,
     this.correct,
     this.assisted = false,
     this.textAlternative = false,
@@ -156,6 +176,8 @@ class LessonState {
   final String text;
   final Map<String, String> matchedPairs;
   final String? selectedPairLeft;
+  final String? selectedPairRight;
+  final PairAttempt? pairAttempt;
   final bool? correct;
   final bool assisted;
   final bool textAlternative;
@@ -192,6 +214,7 @@ class LessonState {
       ExerciseKind.sentenceOrder => tokenIds.isNotEmpty,
       ExerciseKind.matchPairs =>
         exercise.pairs.isNotEmpty &&
+            pairAttempt == null &&
             matchedPairs.length == exercise.pairs.length,
       ExerciseKind.textTranslation ||
       ExerciseKind.fillBlank ||
@@ -223,6 +246,10 @@ class LessonState {
     Map<String, String>? matchedPairs,
     String? selectedPairLeft,
     bool clearSelectedPairLeft = false,
+    String? selectedPairRight,
+    bool clearSelectedPairRight = false,
+    PairAttempt? pairAttempt,
+    bool clearPairAttempt = false,
     bool? correct,
     bool clearCorrect = false,
     bool? assisted,
@@ -262,6 +289,10 @@ class LessonState {
       selectedPairLeft: clearSelectedPairLeft
           ? null
           : selectedPairLeft ?? this.selectedPairLeft,
+      selectedPairRight: clearSelectedPairRight
+          ? null
+          : selectedPairRight ?? this.selectedPairRight,
+      pairAttempt: clearPairAttempt ? null : pairAttempt ?? this.pairAttempt,
       correct: clearCorrect ? null : correct ?? this.correct,
       assisted: assisted ?? this.assisted,
       textAlternative: textAlternative ?? this.textAlternative,

@@ -3,6 +3,136 @@ import 'package:flutter/material.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../../core/design/lesson_motion.dart';
+
+/// Current I1 capture samples; keep older shared ReferenceColors unchanged.
+abstract final class ExerciseTileTokens {
+  static const surface = Color(0xFFFFFFFF);
+  static const border = Color(0xFFE5E5E5);
+  static const ink = Color(0xFF4B4B4B);
+  static const selectedFill = Color(0xFFDDF4FF);
+  static const selectedBorder = Color(0xFF84D7FF);
+  static const selectedInk = Color(0xFF1CB0F6);
+  static const correctFill = Color(0xFFD6FFB8);
+  static const correctBorder = Color(0xFFA5ED6E);
+  static const correctInk = Color(0xFF58A700);
+  static const incorrectFill = Color(0xFFFFDFE0);
+  static const incorrectInk = Color(0xFFEA2B2B);
+  static const edge = 4.0;
+}
+
+/// Original image reference measures:510×664px cards and64px gutters at3x.
+abstract final class ImageChoiceGeometry {
+  static const sourceCardWidth = 510.0;
+  static const cardAspect = 664 / sourceCardWidth;
+  static const artHeightRatio = 427 / sourceCardWidth;
+  static const gap = 64 / 3;
+}
+
+/// Older text-pair source sc_5b3164cb; never substitute modern image roles.
+abstract final class MatchTileTokens {
+  static const surface = Color(0xFFFEFCFE);
+  static const border = Color(0xFFE7E5E7);
+  static const ink = Color(0xFF4D4B4E);
+  static const correctFill = Color(0xFFDBFFBB);
+  static const correctBorder = Color(0xFFA9EE73);
+  static const correctInk = Color(0xFF61A513);
+}
+
+class ExerciseTile extends StatefulWidget {
+  const ExerciseTile({
+    required this.label,
+    required this.child,
+    required this.fill,
+    required this.border,
+    this.onTap,
+    this.selected = false,
+    this.settled = false,
+    this.radius = 14,
+    this.padding = const EdgeInsets.all(12),
+    super.key,
+  });
+  final String label;
+  final Widget child;
+  final Color fill, border;
+  final VoidCallback? onTap;
+  final bool selected, settled;
+  final double radius;
+  final EdgeInsets padding;
+
+  @override
+  State<ExerciseTile> createState() => _ExerciseTileState();
+}
+
+class _ExerciseTileState extends State<ExerciseTile> {
+  bool _pressed = false;
+  bool _focused = false;
+
+  @override
+  void didUpdateWidget(ExerciseTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.onTap == null) _pressed = false;
+  }
+
+  void _press(bool value) {
+    if (_pressed != value) setState(() => _pressed = value);
+  }
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    label: widget.label,
+    button: true,
+    enabled: widget.onTap != null,
+    selected: widget.selected,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: ExerciseTileTokens.edge),
+      child: AnimatedContainer(
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : LessonMotionTokens.pressDuration,
+        curve: Curves.easeOut,
+        transform: Matrix4.translationValues(
+          0,
+          _pressed ? ExerciseTileTokens.edge : 0,
+          0,
+        ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: widget.fill,
+            borderRadius: BorderRadius.circular(widget.radius),
+            border: Border.all(color: widget.border, width: _focused ? 3 : 2),
+            boxShadow: _pressed || widget.settled
+                ? null
+                : [
+                    BoxShadow(
+                      color: widget.border,
+                      offset: const Offset(0, ExerciseTileTokens.edge),
+                    ),
+                  ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(widget.radius),
+              splashFactory: NoSplash.splashFactory,
+              highlightColor: Colors.transparent,
+              onFocusChange: (value) => setState(() => _focused = value),
+              onTapDown: widget.onTap == null ? null : (_) => _press(true),
+              onTapCancel: () => _press(false),
+              onTap: widget.onTap == null
+                  ? null
+                  : () {
+                      _press(false);
+                      widget.onTap!();
+                    },
+              child: Padding(padding: widget.padding, child: widget.child),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
 abstract final class LearningColors {
   static const green = Color(0xFF58CC02);

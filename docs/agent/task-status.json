@@ -188,6 +188,46 @@
         "docs/design/qa/TEAM_STATE.md"
       ],
       "remaining": "Scoped tactile slice first; whole P2-DES acceptance remains open."
+    },
+    {
+      "taskId": "P2-FE-001",
+      "phase": "Phase A authorized mock UI refinement",
+      "owner": "root I1 local commit; remaining Phase A scope open",
+      "branch": "master",
+      "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/repo",
+      "status": "IN_PROGRESS",
+      "dependencyGateReceipts": [
+        "docs/design/qa/TEAM_STATE.md",
+        "docs/agent/FRONTEND_FLOW_PLAN.md"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/features/learning/domain/learning_models.dart",
+        "apps/mobile/lib/features/learning/application/learning_controller.dart",
+        "apps/mobile/lib/features/learning/presentation/lesson_screen.dart",
+        "apps/mobile/lib/features/learning/presentation/learning_visuals.dart",
+        "apps/mobile/lib/features/learning/presentation/image_choice.dart",
+        "apps/mobile/lib/features/learning/presentation/match_pairs.dart",
+        "apps/mobile/lib/features/learning/data/learning_repository.dart",
+        "apps/mobile/test/features/learning/exercises_i1_test.dart",
+        "apps/mobile/test/exercises_i1_ui_master_golden_test.dart"
+      ],
+      "requirements": [
+        "SC17",
+        "imageChoice",
+        "matchPairs"
+      ],
+      "interfaces": [
+        "Exercise",
+        "LessonState",
+        "LessonController"
+      ],
+      "testCommand": "flutter analyze --no-pub --fatal-infos; proxy-free I1/golden tests (45 PASS), lesson regressions (71 PASS); python3 tool/palette_check.py (68 legacy, 0 NEW)",
+      "evidence": [
+        "docs/design/qa/I1_COMMIT_RECEIPT.md",
+        "docs/design/qa/exercises_i1.qa.md",
+        "specs/exercises-i1.md"
+      ],
+      "remaining": "I1 scoped commit authorized by latest user gate. Wrong-boy art/source-state gaps, pending design semantics/full/native/global gates and I2/I3/Q remain open. Whole 20-team-phaseA not done."
     }
   ]
 }
