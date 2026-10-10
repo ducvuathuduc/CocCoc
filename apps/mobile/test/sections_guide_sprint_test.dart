@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import "package:cocenglish/features/learning/domain/learning_models.dart";
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
-import 'package:cocenglish/features/learning/application/course_navigation_controller.dart';
 import 'package:cocenglish/features/learning/domain/course_catalog.dart';
 import 'package:cocenglish/features/learning/presentation/sections_screen.dart';
 import 'package:cocenglish/features/learning/presentation/unit_guide_screen.dart';
