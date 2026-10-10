@@ -1,9 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/quests_mock_data.dart';
+import '../data/quests_repository.dart';
 import '../domain/quest_models.dart';
 import '../../learning/application/learning_controller.dart';
 import '../../progress/application/preview_controller.dart';
+
+final questsRepositoryProvider = Provider<QuestsRepository>(
+  (ref) => const MockQuestsRepository(),
+);
 
 final questsControllerProvider =
     NotifierProvider<QuestsController, QuestsTabState>(QuestsController.new);
@@ -11,13 +15,15 @@ final questsControllerProvider =
 class QuestsController extends Notifier<QuestsTabState> {
   @override
   QuestsTabState build() {
+    final initial = ref.watch(questsRepositoryProvider).loadQuests();
     final preview = ref.watch(previewControllerProvider);
     final learning = ref.watch(learningStateProvider);
     final introSeen = preview.questIntroSeen;
     final claims = preview.claims;
 
-    final initialDaily = QuestsMockData.defaultDailyQuests.map((q) {
-      final claimed = claims.contains(q.id) ||
+    final initialDaily = initial.dailyQuests.map((q) {
+      final claimed =
+          claims.contains(q.id) ||
           (q.id == 'daily-score' && claims.contains('daily-xp'));
       if (q.id == 'daily-2') {
         return q.copyWith(
@@ -28,14 +34,7 @@ class QuestsController extends Notifier<QuestsTabState> {
       return q.copyWith(isClaimed: claimed);
     }).toList();
 
-    return QuestsTabState(
-      introSeen: introSeen,
-      sectionType: QuestSectionType.friends,
-      monthlyChallenge: QuestsMockData.defaultMonthlyChallenge,
-      friendsQuest: QuestsMockData.inProgressFriendsQuest,
-      weekendQuest: QuestsMockData.defaultWeekendQuest,
-      dailyQuests: initialDaily,
-    );
+    return initial.copyWith(introSeen: introSeen, dailyQuests: initialDaily);
   }
 
   void dismissIntro() {
@@ -44,17 +43,13 @@ class QuestsController extends Notifier<QuestsTabState> {
   }
 
   void setSectionType(QuestSectionType type) {
-    if (type == QuestSectionType.weekend) {
-      state = state.copyWith(
-        sectionType: type,
-        monthlyChallenge: QuestsMockData.weekendMonthlyChallenge,
-      );
-    } else {
-      state = state.copyWith(
-        sectionType: type,
-        monthlyChallenge: QuestsMockData.defaultMonthlyChallenge,
-      );
-    }
+    final quests = ref
+        .read(questsRepositoryProvider)
+        .loadQuests(sectionType: type);
+    state = state.copyWith(
+      sectionType: type,
+      monthlyChallenge: quests.monthlyChallenge,
+    );
   }
 
   void nudge() {
@@ -102,10 +97,9 @@ class QuestsController extends Notifier<QuestsTabState> {
 
     // Call through to previewController
     final previewId = id == 'daily-score' ? 'daily-xp' : id;
-    final success = ref.read(previewControllerProvider.notifier).claimQuest(
-          previewId,
-          eligible: quest.isCompleted,
-        );
+    final success = ref
+        .read(previewControllerProvider.notifier)
+        .claimQuest(previewId, eligible: quest.isCompleted);
 
     // Update state to mark claimed
     final updatedList = List<DailyQuest>.from(state.dailyQuests);

@@ -1,7 +1,9 @@
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/quests/application/quests_controller.dart';
-import 'package:cocenglish/features/quests/data/quests_mock_data.dart';
+import 'package:cocenglish/features/quests/data/quests_repository.dart';
+import 'package:cocenglish/features/progress/application/preview_controller.dart';
+import 'package:cocenglish/features/progress/domain/preview_state.dart';
 import 'package:cocenglish/features/quests/domain/quest_models.dart';
 import 'package:cocenglish/features/quests/presentation/quests_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +19,9 @@ void main() {
           ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
           ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
         .load();
-    await (FontLoader('MaterialIcons')
-          ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf')))
-        .load();
+    await (FontLoader(
+      'MaterialIcons',
+    )..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))).load();
     await ReferenceArt.preloadFiles([
       'quests-02',
       'quests-03',
@@ -37,17 +39,20 @@ void main() {
     return ProviderScope(
       overrides: [
         if (initialState != null)
-          questsControllerProvider.overrideWith(
-            () => _TestQuestsController(initialState),
+          questsRepositoryProvider.overrideWithValue(
+            _TestQuestsRepository(initialState),
+          ),
+        if (initialState != null)
+          previewControllerProvider.overrideWith(
+            () => _TestPreviewController(initialState.introSeen),
           ),
       ],
       child: MaterialApp(
         theme: referenceTheme(),
         debugShowCheckedModeBanner: false,
         builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.linear(scale),
-          ),
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: TextScaler.linear(scale)),
           child: child!,
         ),
         home: RepaintBoundary(
@@ -67,7 +72,10 @@ void main() {
             tester.view.physicalSize = Size(width, 844);
             tester.view.devicePixelRatio = 1;
             tester.view.padding = const FakeViewPadding(top: 59, bottom: 34);
-            tester.view.viewPadding = const FakeViewPadding(top: 59, bottom: 34);
+            tester.view.viewPadding = const FakeViewPadding(
+              top: 59,
+              bottom: 34,
+            );
             addTearDown(tester.view.resetPhysicalSize);
             addTearDown(tester.view.resetDevicePixelRatio);
             addTearDown(tester.view.resetPadding);
@@ -76,7 +84,9 @@ void main() {
             await tester.pumpWidget(
               buildQuestsApp(
                 scale: scale,
-                initialState: const QuestsTabState(introSeen: false),
+                initialState: const MockQuestsRepository()
+                    .loadQuests()
+                    .copyWith(introSeen: false),
               ),
             );
             await tester.pumpAndSettle();
@@ -96,7 +106,10 @@ void main() {
             tester.view.physicalSize = Size(width, 844);
             tester.view.devicePixelRatio = 1;
             tester.view.padding = const FakeViewPadding(top: 59, bottom: 34);
-            tester.view.viewPadding = const FakeViewPadding(top: 59, bottom: 34);
+            tester.view.viewPadding = const FakeViewPadding(
+              top: 59,
+              bottom: 34,
+            );
             addTearDown(tester.view.resetPhysicalSize);
             addTearDown(tester.view.resetDevicePixelRatio);
             addTearDown(tester.view.resetPadding);
@@ -105,11 +118,12 @@ void main() {
             await tester.pumpWidget(
               buildQuestsApp(
                 scale: scale,
-                initialState: const QuestsTabState(
-                  introSeen: true,
-                  sectionType: QuestSectionType.friends,
-                  friendsQuest: QuestsMockData.inProgressFriendsQuest,
-                ),
+                initialState: const MockQuestsRepository()
+                    .loadQuests()
+                    .copyWith(
+                      introSeen: true,
+                      sectionType: QuestSectionType.friends,
+                    ),
               ),
             );
             await tester.pumpAndSettle();
@@ -129,7 +143,10 @@ void main() {
             tester.view.physicalSize = Size(width, 844);
             tester.view.devicePixelRatio = 1;
             tester.view.padding = const FakeViewPadding(top: 59, bottom: 34);
-            tester.view.viewPadding = const FakeViewPadding(top: 59, bottom: 34);
+            tester.view.viewPadding = const FakeViewPadding(
+              top: 59,
+              bottom: 34,
+            );
             addTearDown(tester.view.resetPhysicalSize);
             addTearDown(tester.view.resetDevicePixelRatio);
             addTearDown(tester.view.resetPadding);
@@ -138,11 +155,16 @@ void main() {
             await tester.pumpWidget(
               buildQuestsApp(
                 scale: scale,
-                initialState: const QuestsTabState(
-                  introSeen: true,
-                  sectionType: QuestSectionType.friends,
-                  friendsQuest: QuestsMockData.completedFriendsQuest,
-                ),
+                initialState: const MockQuestsRepository()
+                    .loadQuests()
+                    .copyWith(
+                      introSeen: true,
+                      sectionType: QuestSectionType.friends,
+                      friendsQuest: const MockQuestsRepository()
+                          .loadQuests()
+                          .friendsQuest
+                          .copyWith(userLessons: 23, isHighFived: true),
+                    ),
               ),
             );
             await tester.pumpAndSettle();
@@ -162,7 +184,10 @@ void main() {
             tester.view.physicalSize = Size(width, 844);
             tester.view.devicePixelRatio = 1;
             tester.view.padding = const FakeViewPadding(top: 59, bottom: 34);
-            tester.view.viewPadding = const FakeViewPadding(top: 59, bottom: 34);
+            tester.view.viewPadding = const FakeViewPadding(
+              top: 59,
+              bottom: 34,
+            );
             addTearDown(tester.view.resetPhysicalSize);
             addTearDown(tester.view.resetDevicePixelRatio);
             addTearDown(tester.view.resetPadding);
@@ -171,12 +196,15 @@ void main() {
             await tester.pumpWidget(
               buildQuestsApp(
                 scale: scale,
-                initialState: const QuestsTabState(
-                  introSeen: true,
-                  sectionType: QuestSectionType.weekend,
-                  monthlyChallenge: QuestsMockData.weekendMonthlyChallenge,
-                  weekendQuest: QuestsMockData.defaultWeekendQuest,
-                ),
+                initialState: const MockQuestsRepository()
+                    .loadQuests()
+                    .copyWith(
+                      introSeen: true,
+                      sectionType: QuestSectionType.weekend,
+                      monthlyChallenge: const MockQuestsRepository()
+                          .loadQuests(sectionType: QuestSectionType.weekend)
+                          .monthlyChallenge,
+                    ),
               ),
             );
             await tester.pumpAndSettle();
@@ -194,25 +222,30 @@ void main() {
   });
 
   group('QuestsScreen Widget & Interaction Tests', () {
-    testWidgets('tapping CONTINUE dismisses intro screen and shows quests list', (tester) async {
-      await tester.pumpWidget(
-        buildQuestsApp(
-          initialState: const QuestsTabState(introSeen: false),
-        ),
-      );
-      await tester.pumpAndSettle();
+    testWidgets(
+      'tapping CONTINUE dismisses intro screen and shows quests list',
+      (tester) async {
+        await tester.pumpWidget(
+          buildQuestsApp(
+            initialState: const MockQuestsRepository().loadQuests().copyWith(
+              introSeen: false,
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
 
-      expect(find.text('CONTINUE'), findsOneWidget);
-      expect(find.text('December Quest'), findsNothing);
+        expect(find.text('CONTINUE'), findsOneWidget);
+        expect(find.text('December Quest'), findsNothing);
 
-      await tester.tap(find.text('CONTINUE'));
-      await tester.pumpAndSettle();
+        await tester.tap(find.text('CONTINUE'));
+        await tester.pumpAndSettle();
 
-      expect(find.text('CONTINUE'), findsNothing);
-      expect(find.text('December Quest'), findsOneWidget);
-      expect(find.text('FRIENDS QUEST'), findsOneWidget);
-      expect(find.text('DAILY QUESTS'), findsOneWidget);
-    });
+        expect(find.text('CONTINUE'), findsNothing);
+        expect(find.text('December Quest'), findsOneWidget);
+        expect(find.text('FRIENDS QUEST'), findsOneWidget);
+        expect(find.text('DAILY QUESTS'), findsOneWidget);
+      },
+    );
 
     testWidgets('tapping NUDGE triggers nudge state update', (tester) async {
       tester.view.physicalSize = const Size(390, 844);
@@ -222,7 +255,9 @@ void main() {
 
       await tester.pumpWidget(
         buildQuestsApp(
-          initialState: const QuestsTabState(introSeen: true),
+          initialState: const MockQuestsRepository().loadQuests().copyWith(
+            introSeen: true,
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -246,7 +281,9 @@ void main() {
 
       await tester.pumpWidget(
         buildQuestsApp(
-          initialState: const QuestsTabState(introSeen: true),
+          initialState: const MockQuestsRepository().loadQuests().copyWith(
+            introSeen: true,
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -262,7 +299,9 @@ void main() {
       expect(find.text('GIFT'), findsOneWidget);
     });
 
-    testWidgets('claimQuest claims eligible daily quest and marks claimed', (tester) async {
+    testWidgets('claimQuest claims eligible daily quest and marks claimed', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -270,9 +309,9 @@ void main() {
 
       await tester.pumpWidget(
         buildQuestsApp(
-          initialState: const QuestsTabState(
+          initialState: const MockQuestsRepository().loadQuests().copyWith(
             introSeen: true,
-            dailyQuests: [
+            dailyQuests: const [
               DailyQuest(
                 id: 'daily-score',
                 title: 'Score 90% in 1 lesson',
@@ -303,10 +342,20 @@ void main() {
   });
 }
 
-class _TestQuestsController extends QuestsController {
-  _TestQuestsController(this._initial);
+class _TestQuestsRepository implements QuestsRepository {
+  _TestQuestsRepository(this._initial);
   final QuestsTabState _initial;
 
   @override
-  QuestsTabState build() => _initial;
+  QuestsTabState loadQuests({
+    QuestSectionType sectionType = QuestSectionType.friends,
+  }) => _initial;
+}
+
+class _TestPreviewController extends PreviewController {
+  _TestPreviewController(this._introSeen);
+  final bool _introSeen;
+
+  @override
+  PreviewState build() => PreviewState(questIntroSeen: _introSeen);
 }

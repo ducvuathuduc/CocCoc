@@ -55,11 +55,11 @@ class MonthlyChallenge {
   final String badgeName;
 
   const MonthlyChallenge({
-    this.title = 'December Quest',
-    this.daysRemaining = '15 DAYS',
-    this.currentPoints = 15,
-    this.targetPoints = 15,
-    this.badgeName = 'December Badge',
+    required this.title,
+    required this.daysRemaining,
+    required this.currentPoints,
+    required this.targetPoints,
+    required this.badgeName,
   });
 
   bool get isCompleted => currentPoints >= targetPoints;
@@ -91,12 +91,12 @@ class FriendsQuest {
   final bool isHighFived;
 
   const FriendsQuest({
-    this.title = 'Complete 25 lessons',
-    this.timeRemaining = '2D',
-    this.target = 25,
-    this.userLessons = 14,
-    this.friendLessons = 2,
-    this.friendName = 'Alex',
+    required this.title,
+    required this.timeRemaining,
+    required this.target,
+    required this.userLessons,
+    required this.friendLessons,
+    required this.friendName,
     this.isNudged = false,
     this.isGifted = false,
     this.isHighFived = false,
@@ -135,10 +135,10 @@ class WeekendQuest {
   final int targetXp;
 
   const WeekendQuest({
-    this.title = 'Earn 100 XP',
-    this.timeRemaining = '2D',
-    this.currentXp = 8,
-    this.targetXp = 100,
+    required this.title,
+    required this.timeRemaining,
+    required this.currentXp,
+    required this.targetXp,
   });
 
   bool get isCompleted => currentXp >= targetXp;
@@ -169,33 +169,11 @@ class QuestsTabState {
   const QuestsTabState({
     this.introSeen = false,
     this.sectionType = QuestSectionType.friends,
-    this.monthlyChallenge = const MonthlyChallenge(),
-    this.friendsQuest = const FriendsQuest(),
-    this.weekendQuest = const WeekendQuest(),
-    this.dailyQuests = const [
-      DailyQuest(
-        id: 'daily-2',
-        title: 'Complete your next 2 lessons',
-        current: 0,
-        target: 2,
-        chestType: QuestChestType.bronze,
-      ),
-      DailyQuest(
-        id: 'daily-score',
-        title: 'Score 90% in 1 lesson',
-        current: 1,
-        target: 1,
-        chestType: QuestChestType.silver,
-      ),
-      DailyQuest(
-        id: 'daily-xp',
-        title: 'Get 10 in a row in 2 lessons',
-        current: 0,
-        target: 2,
-        chestType: QuestChestType.gold,
-      ),
-    ],
-    this.dailyTimeRemaining = '5H',
+    required this.monthlyChallenge,
+    required this.friendsQuest,
+    required this.weekendQuest,
+    required this.dailyQuests,
+    required this.dailyTimeRemaining,
     this.feedbackMessage,
   });
 
