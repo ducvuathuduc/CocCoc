@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import 'shop_widgets.dart';
-import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';

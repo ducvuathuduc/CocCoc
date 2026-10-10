@@ -4,7 +4,7 @@ import '../../../core/design/reference_art.dart';
 
 abstract final class ShopArt {
   static const referenceScale = 1179 / 430;
-  static const maxLogo = ArtRegion('shop-02', Rect.fromLTWH(84, 411, 204, 72));
+  static const maxLogo = ArtRegion('shop-02', Rect.fromLTWH(84, 415, 203, 70));
   // Max subscriber banner
   static const maxBanner = ArtRegion(
     'shop-02',
