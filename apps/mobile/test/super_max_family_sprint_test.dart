@@ -38,7 +38,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('super-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_super_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_super_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
 
@@ -71,7 +73,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('max-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_max_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_max_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
 
@@ -104,7 +108,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('family-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_family_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_family_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
     }

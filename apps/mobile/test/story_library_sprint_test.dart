@@ -7,7 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   for (final width in [360.0, 430.0]) {
     for (final scale in [1.0, 2.0]) {
-      testWidgets('story library screen $width text$scale golden', (tester) async {
+      testWidgets('story library screen $width text$scale golden', (
+        tester,
+      ) async {
         tester.view.physicalSize = Size(width, width == 430 ? 932 : 800);
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.resetPhysicalSize);
@@ -36,7 +38,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('story-library-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_story_library_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_story_library_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
     }

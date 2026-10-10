@@ -36,7 +36,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('settings-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_settings_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_settings_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
     }

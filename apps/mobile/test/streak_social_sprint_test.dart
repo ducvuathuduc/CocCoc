@@ -37,7 +37,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('streak-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_streak_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_streak_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
 
@@ -70,7 +72,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('feed-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_feed_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_feed_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
     }

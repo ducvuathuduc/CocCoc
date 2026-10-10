@@ -19,7 +19,9 @@ void main() {
 
         final container = ProviderContainer(
           overrides: [
-            learningStateProvider.overrideWith(() => _MockLearningStateController(20)),
+            learningStateProvider.overrideWith(
+              () => _MockLearningStateController(20),
+            ),
           ],
         );
         addTearDown(container.dispose);
@@ -48,7 +50,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('sections-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_sections_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_sections_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
 
@@ -79,7 +83,9 @@ void main() {
 
         await expectLater(
           find.byKey(const ValueKey('guide-master-screen')),
-          matchesGoldenFile('goldens/ui_master/sprint_guide_${width.toInt()}_text${scale.toInt()}.png'),
+          matchesGoldenFile(
+            'goldens/ui_master/sprint_guide_${width.toInt()}_text${scale.toInt()}.png',
+          ),
         );
       });
     }

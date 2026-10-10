@@ -318,7 +318,15 @@ class SettingsScreen extends ConsumerWidget {
         title,
         style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
       ),
-      subtitle: subtitle != null ? Text(subtitle, style: const TextStyle(fontSize: 16, color: ReferenceColors.disabled)) : null,
+      subtitle: subtitle != null
+          ? Text(
+              subtitle,
+              style: const TextStyle(
+                fontSize: 16,
+                color: ReferenceColors.disabled,
+              ),
+            )
+          : null,
       trailing: const Icon(
         Icons.chevron_right,
         color: ReferenceColors.disabled,
@@ -353,10 +361,14 @@ class SettingsScreen extends ConsumerWidget {
         row('Privacy settings', '/settings/privacy'),
         const Divider(),
         const SizedBox(height: 25),
-        
+
         const Text('SUBSCRIPTION', style: sectionStyle),
         const SizedBox(height: 10),
-        row('Manage Subscription', '/subscription', subtitle: 'Super Duolingo 12 months'),
+        row(
+          'Manage Subscription',
+          '/subscription',
+          subtitle: 'Super Duolingo 12 months',
+        ),
         const SizedBox(height: 16),
         ReferenceButton(
           label: 'RESTORE SUBSCRIPTION',
@@ -404,7 +416,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 35),
-        
+
         textLink('TERMS'),
         textLink('PRIVACY POLICY'),
         textLink('ACKNOWLEDGEMENTS'),

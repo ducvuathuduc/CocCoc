@@ -9,59 +9,70 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final exercises = {
-    'word_bank': mockEnglishExercises.firstWhere((e) => e.kind == ExerciseKind.wordBank),
-    'listen_choice': mockEnglishExercises.firstWhere((e) => e.kind == ExerciseKind.listenChoice),
-    'speak_repeat': mockPracticeExercises.firstWhere((e) => e.kind == ExerciseKind.speakRepeat),
+    'word_bank': mockEnglishExercises.firstWhere(
+      (e) => e.kind == ExerciseKind.wordBank,
+    ),
+    'listen_choice': mockEnglishExercises.firstWhere(
+      (e) => e.kind == ExerciseKind.listenChoice,
+    ),
+    'speak_repeat': mockPracticeExercises.firstWhere(
+      (e) => e.kind == ExerciseKind.speakRepeat,
+    ),
   };
 
   for (final width in [360.0, 430.0]) {
     for (final scale in [1.0, 2.0]) {
       for (final entry in exercises.entries) {
-        testWidgets('exercise ${entry.key} ${width}x${width == 430 ? 932 : 800} text$scale golden', (tester) async {
-          tester.view.physicalSize = Size(width, width == 430 ? 932 : 800);
-          tester.view.devicePixelRatio = 1;
-          addTearDown(tester.view.resetPhysicalSize);
-          addTearDown(tester.view.resetDevicePixelRatio);
+        testWidgets(
+          'exercise ${entry.key} ${width}x${width == 430 ? 932 : 800} text$scale golden',
+          (tester) async {
+            tester.view.physicalSize = Size(width, width == 430 ? 932 : 800);
+            tester.view.devicePixelRatio = 1;
+            addTearDown(tester.view.resetPhysicalSize);
+            addTearDown(tester.view.resetDevicePixelRatio);
 
-          final container = ProviderContainer(
-            overrides: [
-              learningRepositoryProvider.overrideWithValue(
-                MockLearningRepository(delay: Duration.zero),
-              ),
-            ],
-          );
-          addTearDown(container.dispose);
-
-          final vm = container.read(lessonControllerProvider.notifier);
-          await vm.start(exercises: [entry.value]);
-
-          await tester.pumpWidget(
-            UncontrolledProviderScope(
-              container: container,
-              child: MaterialApp(
-                theme: referenceTheme(),
-                builder: (context, child) => MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    disableAnimations: true,
-                    textScaler: TextScaler.linear(scale),
-                    padding: const EdgeInsets.only(top: 59, bottom: 34),
-                  ),
-                  child: RepaintBoundary(
-                    key: const ValueKey('exercise-master-screen'),
-                    child: child!,
-                  ),
+            final container = ProviderContainer(
+              overrides: [
+                learningRepositoryProvider.overrideWithValue(
+                  MockLearningRepository(delay: Duration.zero),
                 ),
-                home: const LessonScreen(),
-              ),
-            ),
-          );
-          await tester.pumpAndSettle();
+              ],
+            );
+            addTearDown(container.dispose);
 
-          await expectLater(
-            find.byKey(const ValueKey('exercise-master-screen')),
-            matchesGoldenFile('goldens/ui_master/sprint_exercise_${entry.key}_${width.toInt()}_text${scale.toInt()}.png'),
-          );
-        });
+            final vm = container.read(lessonControllerProvider.notifier);
+            await vm.start(exercises: [entry.value]);
+
+            await tester.pumpWidget(
+              UncontrolledProviderScope(
+                container: container,
+                child: MaterialApp(
+                  theme: referenceTheme(),
+                  builder: (context, child) => MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                      disableAnimations: true,
+                      textScaler: TextScaler.linear(scale),
+                      padding: const EdgeInsets.only(top: 59, bottom: 34),
+                    ),
+                    child: RepaintBoundary(
+                      key: const ValueKey('exercise-master-screen'),
+                      child: child!,
+                    ),
+                  ),
+                  home: const LessonScreen(),
+                ),
+              ),
+            );
+            await tester.pumpAndSettle();
+
+            await expectLater(
+              find.byKey(const ValueKey('exercise-master-screen')),
+              matchesGoldenFile(
+                'goldens/ui_master/sprint_exercise_${entry.key}_${width.toInt()}_text${scale.toInt()}.png',
+              ),
+            );
+          },
+        );
       }
     }
   }
