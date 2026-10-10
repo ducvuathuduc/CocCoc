@@ -3,6 +3,7 @@ import 'package:cocenglish/core/design/reward_motion.dart';
 import 'package:cocenglish/features/learning/domain/learning_models.dart';
 import 'package:cocenglish/features/learning/presentation/lesson_summary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const receipt = SessionReceipt(
@@ -16,13 +17,15 @@ const receipt = SessionReceipt(
   placement: false,
 );
 
-Widget summary({bool reduced = false}) => MaterialApp(
-  theme: referenceTheme(),
-  home: MediaQuery(
-    data: MediaQueryData(disableAnimations: reduced),
-    child: const Scaffold(
-      body: SingleChildScrollView(
-        child: LessonSummary(receipt: receipt, mistakeCount: 0),
+Widget summary({bool reduced = false}) => ProviderScope(
+  child: MaterialApp(
+    theme: referenceTheme(),
+    home: MediaQuery(
+      data: MediaQueryData(disableAnimations: reduced),
+      child: const Scaffold(
+        body: SingleChildScrollView(
+          child: LessonSummary(receipt: receipt, mistakeCount: 0),
+        ),
       ),
     ),
   ),

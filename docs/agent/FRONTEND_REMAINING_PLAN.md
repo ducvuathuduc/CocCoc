@@ -19,6 +19,13 @@ the active learning course; Math/Music/Chess are outside implementation scope.
 
 ## Tasks
 
+- [x] UI-SPRINT-I-COMPLETION: archived completion/streak fidelity and repository
+  seam.29focused tests pass, analyzer0issues; independent QA accepts small
+  differences under ticket40 SPEED FIRST. Whole-sprint/full-suite gate remains
+  open. Previous feature-completion receipts are preserved. New evidence:
+  [UI master log](../design/qa/UI_MASTER_LOG.md),
+  [source specification](../../specs/lesson-complete.md).
+
 Evidence for UI-LESSON-044..046: [English lesson report](../design/qa/ENGLISH_LESSON_REPORT.md),
 439-test gate, 31 scoped tests, 15 native states, 5 enabled Lily frames and current
 Flutter web release. Mock English lesson scope; previous completion marks retained.

@@ -229,3 +229,65 @@ backend write or new artwork file. Full `pnpm verify` and a mock/local-Rive web
 build were started again after this slice; results will be appended separately.
 Total UI master goldens so far: 17. All six top-level frontend task IDs remain
 open pending their full acceptance, source-variant reconciliation and browser QA.
+
+### UI sprint I — completion reference/data refinement (2026-10-10)
+
+Claim UI-SPRINT-I-COMPLETION, branch int/phaseA, base c666beb. Saved Gummble
+results/02 (sc_23afb65ade9a45f19dba4cf32e1fd5ab), lesson/12
+(sc_a022c38e7b314af6a1b26f7f3ecea43e), lesson/18
+(sc_80524686d64f4b2ca387b31023436c15); live MCP unavailable.
+Specification: [lesson-complete](../../../specs/lesson-complete.md).
+
+Introduced CompletionRepository/MockCompletionRepository/Riverpod seam for
+summary and streak copy, metrics and archived calendar; widget overrides verify
+replacement without changing receipt settlement. Native source labels, correct
+illustration proportions, graphics-only stat icons, metric gaps/type, source
+colors and responsive CTA. Streak now has the archived Wed→Tue calendar, two
+checks, Thursday highlight and one outlined calendar/description card. Existing
+counts/celebration/reduced-motion/lifecycle semantics remain exercised.
+
+Independent completion_qa reviews found and drove fixes for spacing/type, the
+calendar/card/background, 360dp minimum button height and few-pixel alignment.
+Final updated golden/comparison review and full-suite comparison are pending;
+this record does not close the screen or the entire sprint. Source OS indicators
+are retained on the reference side and absent from Flutter widget captures.
+
+G-COLOR: restored the missing palette/checker byte-identically from ../../repo.
+New feature tokens are sampled results/02: (130,1840) #FFCA02, (800,1850)
+#1DB2FB, (80,2400) #1A9AD8; lesson/18: (285,1882) #787878 and (581,1010)
+#FFB423. The checker still reports the identical74pre-existing unmatched colors;
+there are no added unmatched colors. Shared color tokens were not changed.
+Shared ReferenceButton accepts an optional text style; default rendering remains
+covered by its existing press/cancel/reduced-motion behavior.
+
+RED: AMAZING absent; 430 illustration had245dp dimensions rather than measured
+source proportions; two-day calendar began Mo instead of We. Later QA introduced
+360/430 button-size assertions and text2 scrolling checks. Only this feature's
+goldens have been regenerated, never another feature's goldens.
+
+Early full run without ENABLE_MASCOT_MOTION=false:485pass/36fail, before final
+refinements. Canonical full run reached358pass/8fail then lost its compiler;
+not a completed suite. Failures observed:5native Rive tests and3quest tests
+(two text2 overflows plus monthly copy mismatch). These are observations, not
+a proven baseline attribution. Pre-change baseline attempts and an isolated
+c666beb retry suffered compiler termination; a final serial comparison is
+required. No tests were removed, skipped or weakened.
+
+Final comparison review, completion_qa + root: no obvious blockers under
+ticket40's updated SPEED FIRST owner rule. Remaining small differences: glyph
+rasterization, streak numeral shape and approximately1–2px art/card alignment.
+Both430comparison PNGs were regenerated from the final source-copy goldens;
+source OS indicators are intentionally outside widget captures.29focused cases
+passed the final own-feature golden run; no other feature goldens updated.
+The final analyzer was terminated143 without a result; retry/no-update checks
+remain necessary before the local screen commit. Whole-sprint/full-suite gates
+remain open and are not implied by this per-screen review.
+
+Final per-screen receipt: no-update targeted run29/29pass (16s),
+`/workspace/tools/ui-sprint-completion-current-targeted.log`; final analyzer
+0issues (117.6s), `/workspace/tools/ui-sprint-completion-current-analyze-retry.log`.
+Palette output is byte-identical to the74legacy-mismatch baseline; every new
+feature token is sourced. QA accepts the small differences described above
+under ticket40 SPEED FIRST. Scoped completion flow is DONE; full suite, entire
+sprint and production/device gates remain open. ARM native library now links
+and identifies as aarch64; runtime compatibility has not yet been tested.

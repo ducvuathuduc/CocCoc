@@ -1,5 +1,7 @@
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
+import 'package:cocenglish/features/learning/application/completion_providers.dart';
+import 'package:cocenglish/features/learning/data/completion_repository.dart';
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
 import 'package:cocenglish/features/learning/domain/learning_models.dart';
 import 'package:cocenglish/features/learning/presentation/lesson_results.dart';
@@ -20,12 +22,13 @@ const resultReceipt = SessionReceipt(
 );
 
 class _ResultFixture extends LessonController {
-  _ResultFixture(this.step);
+  _ResultFixture(this.step, this.fixtureReceipt);
   final int step;
+  final SessionReceipt fixtureReceipt;
   @override
   LessonState build() => LessonState(
     stage: LessonStage.completed,
-    receipt: resultReceipt,
+    receipt: fixtureReceipt,
     resultStep: step,
     attempted: 10,
     originalCorrect: 10,
@@ -42,15 +45,22 @@ Future<ProviderContainer> openResult(
   int step = 0,
   bool reduced = false,
   double width = 390,
+  double height = 844,
   double scale = 1,
+  CompletionRepository? completionRepository,
+  SessionReceipt receipt = resultReceipt,
 }) async {
-  tester.view.physicalSize = Size(width, 844);
+  tester.view.physicalSize = Size(width, height);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
   final container = ProviderContainer(
     overrides: [
-      lessonControllerProvider.overrideWith(() => _ResultFixture(step)),
+      if (completionRepository != null)
+        completionRepositoryProvider.overrideWithValue(completionRepository),
+      lessonControllerProvider.overrideWith(
+        () => _ResultFixture(step, receipt),
+      ),
       learningStateProvider.overrideWith(_ProgressFixture.new),
     ],
   );
