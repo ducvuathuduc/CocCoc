@@ -63,7 +63,7 @@ void main() {
         await t.pumpAndSettle();
         expect(find.text('1035'), findsOneWidget);
         expect(find.text('x2'), findsOneWidget);
-        expect(find.text('MAX'), findsNothing);
+        expect(find.text('MAX'), findsOneWidget);
         final gem = find.byWidgetPredicate(
           (w) => w is ReferenceArt && w.region == LearningArt.gem,
         );
