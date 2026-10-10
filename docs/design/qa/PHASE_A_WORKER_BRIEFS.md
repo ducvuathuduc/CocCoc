@@ -16,10 +16,11 @@ existing file is 14-exercises-Q.md, not an I4 implementation ticket.
 
 Exact allowed files for I1:
 
+- apps/mobile/lib/features/learning/data/learning_repository.dart (authored isNewWord metadata only)
 - apps/mobile/lib/features/learning/domain/learning_models.dart
 - apps/mobile/lib/features/learning/application/learning_controller.dart
 - apps/mobile/lib/features/learning/presentation/lesson_screen.dart
-- apps/mobile/lib/features/learning/presentation/learning_widgets.dart
+- apps/mobile/lib/features/learning/presentation/learning_visuals.dart
 - apps/mobile/lib/features/learning/presentation/image_choice.dart (new if useful)
 - apps/mobile/lib/features/learning/presentation/match_pairs.dart (new if useful)
 - apps/mobile/test/features/learning/exercises_i1_test.dart
@@ -88,3 +89,52 @@ and docs/design/qa. Full goldens cannot establish browser/device success.
 
 W3 tabs and W4 extended receive concrete allowlists after their gap audit;
 reuse completed canonical families and plan order, no speculative rewrite.
+
+Fresh baseline before I1:466passed/5existing native loading failures; analyzer0.
+Root recorded exact receipt in TEAM_STATE. Per latest QUALITY_GATES, shared
+core/design tokens and router are lead-only; each new test increases required
+full pass count. No removal/skip/weakening; no commit before QA delta/full gate.
+
+## Mandatory owner rules, verbatim for each worker above
+
+# QUALITY GATES — Phase A (owner order 2026-10-10: "fast AND correct, break NOTHING")
+
+These gates are law for the lead and every worker. Speed comes from parallel workers, never from skipping a gate.
+
+## 0. Never break what works
+- Before any change, record baseline: `flutter analyze` result + full `flutter test` pass count (write it in TEAM_STATE.md "Baseline").
+- No commit may lower the pass count, add an analyzer warning/error, or delete/skip/weaken an existing test or golden to make it pass.
+- Never delete a screen, route, widget, provider or feature that exists. Refactors only when a test proves behaviour is kept.
+- Never touch services/, appwrite/, packages/api_contracts/, CI secrets, pubspec dependency versions (adding a dep needs a written reason in TEAM_STATE.md and must be pure-Dart/Flutter, no native setup).
+- Router/main.dart and shared design tokens: lead only. Workers stay inside their EXCLUSIVE_CHANGE_AREA; a worker needing a file outside it asks the lead.
+- No `git push`, `reset --hard`, `rebase`, force, `clean -fd`, branch deletion. Commit locally only.
+
+## 1. Per slice loop (each worker)
+1. Read the Gummble reference(s) via gummble MCP; write the exact spec (sizes, colors as tokens, spacing, radius, shadow/3D offset, copy, states, motion timings/curves) in specs/<slice>.md. Unknown = mark UNKNOWN + web research Duolingo with URL; never invent.
+2. Write failing widget test(s) first: layout/state/interaction (tap, disabled, correct, wrong, retry, empty, loading, error, reduced-motion).
+3. Implement with existing design tokens/components; no hard-coded hex/magic numbers if a token exists.
+4. Motion: use the documented durations/curves; every animation respects reduced motion (MediaQuery.disableAnimations) and has a test that pumps through it without exceptions; no jank: no rebuilding whole screens per frame, dispose controllers.
+5. Goldens 360 and 430 width × text scale 1.0 and 2.0 (light theme) in test/goldens/ui_master/. Check text overflow, clipping, RTL-safe paddings, tap targets ≥ 48dp, semantics labels.
+6. `flutter analyze` (0 issues) + targeted tests + goldens green.
+
+## 2. Lead review gate (before every commit)
+- Read the full diff. Reject: invented UI, TODO stubs on user paths, dead buttons, print/debug code, unrelated edits, copied Duolingo binary assets.
+- Run FULL `flutter test` (not only targeted). Pass count ≥ baseline + new tests.
+- QA agent compares each new golden with its Gummble screenshot side by side and lists deltas in docs/design/qa/UI_MASTER_LOG.md; any visible delta in layout/color/spacing/copy = fix before commit.
+- Commit message: `UI: <slice> — <task id> — Gummble <id>`; update docs/agent/task-status.json + plan docs per TASK_PROTOCOL; update TEAM_STATE.md.
+
+## 3. End-to-end flow gate (A→Z, mock data)
+Integration/widget flow tests that run the real router with mock repositories:
+onboarding → placement/path → lesson (every exercise type, correct + wrong + hearts loss) → completion/celebration → back to path with progress → Practice, Stories, League, Quests, Profile/Friends, Shop/Super → settings. Every button on these screens must navigate or act; no crash, no red screen, no overflow warnings in logs.
+
+## 4. Done definition
+All scope task IDs closed by their repo acceptance text; analyze 0 issues; full suite green; goldens committed; flow tests green; UI_MASTER_LOG lists remaining known deltas (must be empty or explicitly accepted by the owner). Never write "pixel-perfect"/"production-ready" without this evidence.
+
+## 5. If stuck
+Same failure twice → stop that slice, write the exact error + what was tried in TEAM_STATE.md "Blocked", move to the next slice. Never "fix" by deleting tests.
+
+## W2 lesson — PM I2 resumed
+
+Execute [I2 exact brief](I2_WORKER_BRIEF.md), which includes current owner rules
+verbatim including G-COLOR and G-DATA. I1 committed d438218; I2 is released by
+latest continuation. Preserve all older WIP and whole-ticket gates.

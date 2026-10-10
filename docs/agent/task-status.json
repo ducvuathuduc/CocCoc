@@ -158,7 +158,7 @@
     {
       "taskId": "P2-DES-001",
       "phase": "Phase A authorized mock UI refinement",
-      "owner": "W1-design / root review",
+      "owner": "root shared design; isolated QA rotation",
       "branch": "master",
       "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/repo",
       "dependencyGateReceipts": [
@@ -169,7 +169,8 @@
         "apps/mobile/lib/core/design/reference_widgets.dart",
         "apps/mobile/lib/core/design/lesson_motion.dart",
         "apps/mobile/test/reference_button_test.dart",
-        "apps/mobile/test/design_ui_master_golden_test.dart"
+        "apps/mobile/test/design_ui_master_golden_test.dart",
+        "apps/mobile/lib/core/design/reference_theme.dart"
       ],
       "requirements": [
         "SC17",
@@ -183,16 +184,17 @@
         "LessonMotionTokens"
       ],
       "testCommand": "flutter analyze --no-pub --fatal-infos; proxy-free flutter test --no-pub test/reference_button_test.dart test/design_ui_master_golden_test.dart",
-      "status": "CLAIMED",
+      "status": "BLOCKED",
       "evidence": [
-        "docs/design/qa/TEAM_STATE.md"
+        "docs/design/qa/TEAM_STATE.md",
+        "docs/design/qa/PHASE_A_WORKER_BRIEFS.md"
       ],
-      "remaining": "Scoped tactile slice first; whole P2-DES acceptance remains open."
+      "remaining": "Restored shared button Semantics boundary: existing3routed failures now PASS,8control behavior PASS. New adjacent Share learner label regression failed twice; stopped under QUALITY_GATES5 with assertions preserved.17pass/1fail targeted. Full/visual/G-COLOR/native gates still hold feature commit. Baseline466pass/5native; full floor increases with new tests."
     },
     {
       "taskId": "P2-FE-001",
       "phase": "Phase A authorized mock UI refinement",
-      "owner": "root I1 local commit; remaining Phase A scope open",
+      "owner": "root lead; isolated w2_i2 worker",
       "branch": "master",
       "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/repo",
       "status": "IN_PROGRESS",
@@ -201,20 +203,23 @@
         "docs/agent/FRONTEND_FLOW_PLAN.md"
       ],
       "exclusivePaths": [
-        "apps/mobile/lib/features/learning/domain/learning_models.dart",
-        "apps/mobile/lib/features/learning/application/learning_controller.dart",
+        "apps/mobile/lib/features/learning/presentation/word_bank.dart",
+        "apps/mobile/lib/features/learning/presentation/listening_exercise.dart",
         "apps/mobile/lib/features/learning/presentation/lesson_screen.dart",
-        "apps/mobile/lib/features/learning/presentation/learning_visuals.dart",
-        "apps/mobile/lib/features/learning/presentation/image_choice.dart",
-        "apps/mobile/lib/features/learning/presentation/match_pairs.dart",
+        "apps/mobile/lib/features/learning/application/learning_controller.dart",
         "apps/mobile/lib/features/learning/data/learning_repository.dart",
-        "apps/mobile/test/features/learning/exercises_i1_test.dart",
-        "apps/mobile/test/exercises_i1_ui_master_golden_test.dart"
+        "apps/mobile/lib/features/learning/data/lesson_audio_repository.dart",
+        "apps/mobile/test/features/learning/exercises_i2_test.dart",
+        "apps/mobile/test/exercises_i2_ui_master_golden_test.dart"
       ],
       "requirements": [
         "SC17",
-        "imageChoice",
-        "matchPairs"
+        "wordBank",
+        "sentenceOrder",
+        "dictation",
+        "input retention",
+        "reduced motion",
+        "text2"
       ],
       "interfaces": [
         "Exercise",
@@ -225,9 +230,10 @@
       "evidence": [
         "docs/design/qa/I1_COMMIT_RECEIPT.md",
         "docs/design/qa/exercises_i1.qa.md",
-        "specs/exercises-i1.md"
+        "specs/exercises-i1.md",
+        "docs/design/qa/I2_WORKER_BRIEF.md"
       ],
-      "remaining": "I1 scoped commit authorized by latest user gate. Wrong-boy art/source-state gaps, pending design semantics/full/native/global gates and I2/I3/Q remain open. Whole 20-team-phaseA not done."
+      "remaining": "I1 committed d438218; I2 claimed under latest targeted-commit authorization. Pending design semantics, full/native/global palette and I3/Q/visual/whole-scope gates remain open."
     }
   ]
 }

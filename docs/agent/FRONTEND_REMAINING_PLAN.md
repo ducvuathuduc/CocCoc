@@ -19,6 +19,13 @@ the active learning course; Math/Music/Chess are outside implementation scope.
 
 ## Tasks
 
+Phase A continuation (2026-10-09): [team state](../design/qa/TEAM_STATE.md) owns
+the live one-child worker/review sequence and [worker briefs](../design/qa/PHASE_A_WORKER_BRIEFS.md)
+own exact slice allowlists. Shared tactile controls have12new light component
+goldens at360/430 × text1/text2,4RED regressions and17passing worker checks.
+The requested P2 tasks and open fidelity/catalog/extended/QA IDs retain their
+full acceptance; no phase or browser gate is inferred from this control slice.
+
 Evidence for UI-LESSON-044..046: [English lesson report](../design/qa/ENGLISH_LESSON_REPORT.md),
 439-test gate, 31 scoped tests, 15 native states, 5 enabled Lily frames and current
 Flutter web release. Mock English lesson scope; previous completion marks retained.
@@ -295,6 +302,29 @@ Session finish evidence — 2026-10-08:394Flutter tests pass; fatal-info analyze
 
 English course continuation evidence — 2026-10-09: 424 Flutter tests, fatal-info analyzer, blueprint, format and release web build pass. 33 targeted tests produce 17 native states; a native Lin motion run inspects 5 more frames. 238 bundled PNGs and 282 avatar choices pass audits. 20 HTTP checks serve the exact latest release. The register preserves prior marks and records 33 families/14 complete mock flows/105 verified occurrences. [Course report](../design/qa/COURSE_FINISH_REPORT.md) distinguishes completed native slices from archived path/motion variants.
 
+Phase A resume 2026-10-09 21:01 UTC: recovered I1 four RED acceptance cases;
+image/match typed VM and renderer integration are saved but not verified GREEN.
+Design-only analyzer is clean; interrupted full-suite and independent golden
+QA still hold feature commits. Whole candidate floor is 510 passes. All
+requested task IDs retain their acceptance; see TEAM_STATE and UI_MASTER_LOG.
+
+Phase A recovery 2026-10-10: fresh full candidate completed469passes/37failures;
+final minimum is513passes after19design/28I1additions. Independent QA
+reviewed16actual I1renders and12controls; source-role improvements are measured,
+but geometry/art/matching-source and global G-COLOR gates hold the commit.
+Missing test-theme import is repaired; follow-up20behavior checks pass and
+analyzer0issues(60s), with final recheck after new harness separately recorded.
+I2 preparation is saved/read-only; protected league/quests/shop/
+profile remain unchanged. Scope IDs remain open in TEAM_STATE/task-status.
+
+
+20-team-phaseA source correction continuation: [team state](../design/qa/TEAM_STATE.md)
+records restoration of the three routed button labels and the held adjacent
+share-label regression, source-specific I1 RED/GREEN receipts, and five actual
+per-screen palette admissions. I2 references are prepared only. Native runtime,
+G-COLOR, full suite and visual gates remain open; protected parallel feature
+areas are preserved and no task ID is closed from these scoped checks.
+
 
 20-team-phaseA I1 local commit (2026-10-10): imageChoice/matchPairs scoped
 analysis,45 targeted/golden checks and71 lesson checks PASS; palette adds0 NEW
@@ -302,3 +332,7 @@ unmatched colors (68 legacy baseline/current). Latest user authorizes this
 local slice commit. [Receipt](../design/qa/I1_COMMIT_RECEIPT.md) lists source
 adaptations, unresolved art/full/native/global gates and preserved design WIP.
 P2-FE-001 and the whole ticket remain IN_PROGRESS; I2/I3/Q remain unfinished.
+
+I2 continuation: word-bank flight/listening claimed after I1 commit, with exact
+[worker scope](../design/qa/I2_WORKER_BRIEF.md). Whole task remains open; latest
+owner targeted commit gate does not close full/native/global/visual acceptance.
