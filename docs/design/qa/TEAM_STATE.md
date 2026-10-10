@@ -481,3 +481,24 @@ are preserved. No repeated blocked native/global repair or protected-tab edits.
 References freshly fetched4/4via MCP. Next: I2 RED→implementation→targeted
 GREEN/analyzer/palette differential→independent child QA→local verified commit.
 Whole ticket remains IN_PROGRESS.
+
+
+## I2 RED runner and token checkpoint
+
+Claim/docs checkpoint committed c2e752c. Child w2_i2 authored four public
+behavior tests in exercises_i2_test.dart before implementation. First invocation
+failed before discovery: FileSystemException readInto generated .dart_tool/
+hooks_runner/objective_c/0c894306e9/input.json, errno5. Root authorized only
+reversible generated-cache repair; child moved unreadable original outside repo,
+then retry reached compilation/test loading. Actual assertion RED is pending;
+no I2 renderer code or golden exists yet. Root added uncommitted named PM250ms
+wordFlight token and isolated exercise_tiles.dart colors/geometry.
+
+Root fresh palette differential using git archive c2e752c:68baseline/68current/
+0NEW, logs /workspace/tools/coc-i2-palette-{baseline,current}.log. Global checker
+exit1 remains explicit. pnpm audit:check PASS:83JSON/4YAML/876links/13Mermaid.
+Opened original listening/assembled-translation references and contact sheets
+of bundled lesson/practice and blue-heavy artwork; no exact turtle art found.
+Worker may verify functional slow dispatch with explicit art delta; exact source
+fidelity remains open. No Flutter concurrency, native retry, lock or protected
+feature edits. Worker RED log /workspace/tools/coc-i2-red.log.
