@@ -130,7 +130,7 @@ class ShopScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const ReferenceArt(ShopArt.maxBanner, width: 80, height: 80),
+                ReferenceArt(ShopArt.maxBanner, width: ShopArt.maxBanner.source.width / 3, height: ShopArt.maxBanner.source.height / 3),
               ],
             ),
             const SizedBox(height: 20),
@@ -178,7 +178,7 @@ class ShopScreen extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ReferenceArt(art, width: 60, height: 80),
+          ReferenceArt(art, width: art.source.width / 3, height: art.source.height / 3),
           const SizedBox(height: 12),
           Text(
             title,
@@ -333,7 +333,7 @@ class ShopScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                ReferenceArt(art, width: 56, height: 56),
+                ReferenceArt(art, width: art.source.width / 3, height: art.source.height / 3),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
