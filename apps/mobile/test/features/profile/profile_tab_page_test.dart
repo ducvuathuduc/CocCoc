@@ -35,9 +35,9 @@ void main() {
     expect(find.text('Finish your profile!'), findsOneWidget);
     expect(find.text('MAX FAMILY'), findsNothing);
 
-    captured.read(profileTabControllerProvider.notifier).select(
-      ProfileVariant.rich,
-    );
+    captured
+        .read(profileTabControllerProvider.notifier)
+        .select(ProfileVariant.rich);
     await tester.pumpAndSettle();
 
     expect(find.text('@SLMOBBIN · JOINED 2025'), findsOneWidget);

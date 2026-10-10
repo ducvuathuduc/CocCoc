@@ -145,15 +145,47 @@ const profileMockNew = ProfileMock(
       icon: Icons.mic_rounded,
       earned: true,
     ),
-    MonthlyBadgeMock(label: 'November 2025, locked', color: Color(0xFFE5E5E5), icon: Icons.lock_rounded),
-    MonthlyBadgeMock(label: 'December 2025, locked', color: Color(0xFFE5E5E5), icon: Icons.lock_rounded),
-    MonthlyBadgeMock(label: 'January 2026, locked', color: Color(0xFFE5E5E5), icon: Icons.lock_rounded),
+    MonthlyBadgeMock(
+      label: 'November 2025, locked',
+      color: Color(0xFFE5E5E5),
+      icon: Icons.lock_rounded,
+    ),
+    MonthlyBadgeMock(
+      label: 'December 2025, locked',
+      color: Color(0xFFE5E5E5),
+      icon: Icons.lock_rounded,
+    ),
+    MonthlyBadgeMock(
+      label: 'January 2026, locked',
+      color: Color(0xFFE5E5E5),
+      icon: Icons.lock_rounded,
+    ),
   ],
   achievements: [
-    AchievementMock(title: 'Comeback, locked', count: 100, color: Color(0xFFFFC800), icon: Icons.sports_mma_rounded),
-    AchievementMock(title: 'Painter, locked', count: 10, color: Color(0xFFFF9600), icon: Icons.brush_rounded),
-    AchievementMock(title: 'Early bird, locked', count: 1, color: Color(0xFF1CB0F6), icon: Icons.wb_sunny_rounded),
-    AchievementMock(title: 'Chatterbox, locked', count: 5, color: Color(0xFFCE82AF), icon: Icons.chat_bubble_rounded),
+    AchievementMock(
+      title: 'Comeback, locked',
+      count: 100,
+      color: Color(0xFFFFC800),
+      icon: Icons.sports_mma_rounded,
+    ),
+    AchievementMock(
+      title: 'Painter, locked',
+      count: 10,
+      color: Color(0xFFFF9600),
+      icon: Icons.brush_rounded,
+    ),
+    AchievementMock(
+      title: 'Early bird, locked',
+      count: 1,
+      color: Color(0xFF1CB0F6),
+      icon: Icons.wb_sunny_rounded,
+    ),
+    AchievementMock(
+      title: 'Chatterbox, locked',
+      count: 5,
+      color: Color(0xFFCE82AF),
+      icon: Icons.chat_bubble_rounded,
+    ),
   ],
 );
 
@@ -178,28 +210,77 @@ const profileMockRich = ProfileMock(
   showFinishCard: false,
   showMaxBadge: true,
   showFamily: true,
-  familyMembers: [
-    FamilyMemberMock(name: 'Mia', color: Color(0xFFFF86C2)),
-  ],
+  familyMembers: [FamilyMemberMock(name: 'Mia', color: Color(0xFFFF86C2))],
   friendStreaks: [
-    FriendStreakMock(name: 'Alex', color: Color(0xFFCE82AF), days: 342, active: true),
+    FriendStreakMock(
+      name: 'Alex',
+      color: Color(0xFFCE82AF),
+      days: 342,
+      active: true,
+    ),
     FriendStreakMock(name: 'Maria', color: Color(0xFF1CB0F6), days: 458),
     FriendStreakMock(name: 'Lucas', color: Color(0xFF58CC02), days: 106),
     FriendStreakMock(name: 'Anna', color: Color(0xFFB0AEB0), days: 38),
   ],
   monthlyBadges: [
-    MonthlyBadgeMock(label: 'September 2025, earned', color: Color(0xFF00C2A8), icon: Icons.campaign_rounded, earned: true),
-    MonthlyBadgeMock(label: 'October 2025, earned', color: Color(0xFFFF86C2), icon: Icons.fastfood_rounded, earned: true),
-    MonthlyBadgeMock(label: 'November 2025, earned', color: Color(0xFF9861FF), icon: Icons.sports_esports_rounded, earned: true),
-    MonthlyBadgeMock(label: 'December 2025, earned', color: Color(0xFF4D4B4E), icon: Icons.mic_rounded, earned: true),
+    MonthlyBadgeMock(
+      label: 'September 2025, earned',
+      color: Color(0xFF00C2A8),
+      icon: Icons.campaign_rounded,
+      earned: true,
+    ),
+    MonthlyBadgeMock(
+      label: 'October 2025, earned',
+      color: Color(0xFFFF86C2),
+      icon: Icons.fastfood_rounded,
+      earned: true,
+    ),
+    MonthlyBadgeMock(
+      label: 'November 2025, earned',
+      color: Color(0xFF9861FF),
+      icon: Icons.sports_esports_rounded,
+      earned: true,
+    ),
+    MonthlyBadgeMock(
+      label: 'December 2025, earned',
+      color: Color(0xFF4D4B4E),
+      icon: Icons.mic_rounded,
+      earned: true,
+    ),
   ],
   achievements: [
-    AchievementMock(title: 'Comeback, earned', count: 30, color: Color(0xFFFFC800), icon: Icons.sports_mma_rounded, earned: true, isNew: true),
-    AchievementMock(title: 'Painter, earned', count: 750, color: Color(0xFFFF9600), icon: Icons.brush_rounded, earned: true),
-    AchievementMock(title: 'Early bird, earned', count: 200, color: Color(0xFF1CB0F6), icon: Icons.wb_sunny_rounded, earned: true),
-    AchievementMock(title: 'Chatterbox, earned', count: 200, color: Color(0xFFCE82AF), icon: Icons.chat_bubble_rounded, earned: true),
+    AchievementMock(
+      title: 'Comeback, earned',
+      count: 30,
+      color: Color(0xFFFFC800),
+      icon: Icons.sports_mma_rounded,
+      earned: true,
+      isNew: true,
+    ),
+    AchievementMock(
+      title: 'Painter, earned',
+      count: 750,
+      color: Color(0xFFFF9600),
+      icon: Icons.brush_rounded,
+      earned: true,
+    ),
+    AchievementMock(
+      title: 'Early bird, earned',
+      count: 200,
+      color: Color(0xFF1CB0F6),
+      icon: Icons.wb_sunny_rounded,
+      earned: true,
+    ),
+    AchievementMock(
+      title: 'Chatterbox, earned',
+      count: 200,
+      color: Color(0xFFCE82AF),
+      icon: Icons.chat_bubble_rounded,
+      earned: true,
+    ),
   ],
 );
 
 /// Local share URL for a profile id (mock only, never networked).
-String profileShareUrl(String userId) => 'https://cocenglish.test/profile/$userId';
+String profileShareUrl(String userId) =>
+    'https://cocenglish.test/profile/$userId';

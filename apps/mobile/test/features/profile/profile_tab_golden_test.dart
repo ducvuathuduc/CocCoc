@@ -42,9 +42,7 @@ void main() {
                   ),
                 ),
                 home: ProfileTabScreen(
-                  profile: variant == 'new'
-                      ? profileMockNew
-                      : profileMockRich,
+                  profile: variant == 'new' ? profileMockNew : profileMockRich,
                 ),
               ),
             );

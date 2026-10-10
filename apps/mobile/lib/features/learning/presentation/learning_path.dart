@@ -14,9 +14,9 @@ import '../application/course_navigation_controller.dart';
 import '../domain/course_catalog.dart';
 import '../domain/course_review.dart';
 import '../domain/learning_models.dart';
-import '../../progress/application/extended_controller.dart';
-import '../../progress/application/preview_controller.dart';
 import '../../progress/domain/score_information.dart';
+import '../../shell/domain/app_shell_models.dart';
+import '../../shell/presentation/app_stats_bar.dart';
 import 'learning_visuals.dart';
 
 export 'unit_guide_screen.dart' show UnitGuideScreen;
@@ -39,55 +39,22 @@ class _LearningPathState extends ConsumerState<LearningPath> {
   Widget build(BuildContext context) {
     final progress = ref.watch(learningStateProvider);
     final draft = ref.watch(lessonControllerProvider);
-    final energy = ref.watch(extendedControllerProvider);
     final active = ref.watch(courseNavigationProvider).active;
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: SizedBox(
-            width: double.infinity,
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              spacing: 10,
-              children: [
-                _status(
-                  'Courses',
-                  ReferenceArt(LearningArt.english, width: 30, height: 24),
-                  progress.score == 0 ? '' : '${progress.score}',
-                  ReferenceColors.ink,
-                  () => setState(() => _courses = !_courses),
-                ),
-                _status(
-                  'Streak',
-                  const ReferenceArt(LearningArt.flame, width: 24, height: 28),
-                  '${progress.streak}',
-                  LearningColors.orange,
-                  () => context.push('/streak'),
-                ),
-                _status(
-                  'Shop',
-                  const ReferenceArt(LearningArt.gem, width: 23, height: 26),
-                  '${ref.watch(previewWalletProvider)}',
-                  LearningColors.blue,
-                  () => context.push('/shop'),
-                ),
-                _status(
-                  'Energy',
-                  const ReferenceArt(
-                    ArtRegion('energy-02', Rect.fromLTWH(977, 350, 160, 110)),
-                    width: 30,
-                    height: 23,
-                  ),
-                  energy.unlimited ? '∞' : '${energy.energy}',
-                  energy.unlimited
-                      ? const Color(0xFFBD4CF5)
-                      : const Color(0xFFFF80CE),
-                  () => context.push('/energy'),
-                ),
-              ],
-            ),
-          ),
+        AppStatsBar(
+          onSelected: (kind) {
+            switch (kind) {
+              case AppStatKind.course:
+                setState(() => _courses = !_courses);
+              case AppStatKind.streak:
+                context.push('/streak');
+              case AppStatKind.gems:
+                context.push('/shop');
+              case AppStatKind.energy:
+                context.push('/energy');
+            }
+          },
         ),
         Expanded(
           child: Stack(
@@ -244,42 +211,6 @@ class _LearningPathState extends ConsumerState<LearningPath> {
       ],
     );
   }
-
-  Widget _status(
-    String label,
-    Widget art,
-    String value,
-    Color color,
-    VoidCallback action,
-  ) => Semantics(
-    label: label,
-    button: true,
-    child: Tooltip(
-      message: label,
-      child: InkWell(
-        onTap: action,
-        borderRadius: BorderRadius.circular(10),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              art,
-              const SizedBox(width: 7),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                  color: color,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
 
   Widget _unitBanner(BuildContext context, int unit, String title) => Container(
     decoration: BoxDecoration(

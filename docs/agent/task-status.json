@@ -234,6 +234,45 @@
         "/workspace/tools/ui-sprint-completion-current-palette.log"
       ],
       "remaining": "Scoped screen DONE under ticket40 SPEED FIRST rule:29focused tests pass; analyzer0issues; QA accepts small glyph/numeral/1\u20132px alignment differences. OS indicators outside widget captures. Whole-sprint/full-suite gate remains open;74legacy palette mismatches unchanged."
+    },
+    {
+      "taskId": "UI-SPRINT-I-SHELL",
+      "phase": "Phase A authorized mock UI refinement",
+      "owner": "root; completion_qa read-only review",
+      "branch": "int/phaseA",
+      "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/wt/int",
+      "dependencyGateReceipts": [
+        "../../tickets/queue/40-ui-sprint-I.md",
+        "docs/design/flows/04_COURSE_PATH.md",
+        "34c66b9"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/features/shell",
+        "apps/mobile/lib/features/learning/presentation/learning_path.dart",
+        "apps/mobile/lib/features/progress/presentation/learning_shell.dart",
+        "apps/mobile/test/app_shell_sprint_test.dart",
+        "apps/mobile/test/path_ui_master_golden_test.dart"
+      ],
+      "requirements": [
+        "G-DATA",
+        "G-COLOR",
+        "430 golden",
+        "text2",
+        "48dp",
+        "preserve five router branches",
+        "reduced motion"
+      ],
+      "interfaces": [
+        "AppShellRepository",
+        "MockAppShellRepository",
+        "appShellRepositoryProvider"
+      ],
+      "testCommand": "proxy-free focused flutter tests; flutter analyze --no-pub --fatal-infos; python3 tool/palette_check.py",
+      "status": "DONE",
+      "evidence": [
+        "specs/top-bar-bottom-nav.md"
+      ],
+      "remaining": "Implement typed shell content, preserve icon proportions and \u226548dp stats; verify repository overrides, tab state, motion, 360/430 text1/2, compare and commit."
     }
   ]
 }

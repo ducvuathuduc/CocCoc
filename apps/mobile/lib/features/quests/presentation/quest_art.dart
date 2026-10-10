@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/design/reference_art.dart';
 
 abstract final class QuestArt {
@@ -27,16 +28,10 @@ abstract final class QuestArt {
   );
 
   /// Waving hand icon from quests-03 NUDGE button
-  static const nudge = ArtRegion(
-    'quests-03',
-    Rect.fromLTWH(185, 1903, 82, 84),
-  );
+  static const nudge = ArtRegion('quests-03', Rect.fromLTWH(185, 1903, 82, 84));
 
   /// Gift box icon from quests-03 GIFT button
-  static const gift = ArtRegion(
-    'quests-03',
-    Rect.fromLTWH(754, 1908, 84, 75),
-  );
+  static const gift = ArtRegion('quests-03', Rect.fromLTWH(754, 1908, 84, 75));
 
   /// High five hand icon from quests-04 HIGH FIVED ALEX! button
   static const highFive = ArtRegion(

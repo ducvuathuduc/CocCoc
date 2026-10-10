@@ -10,10 +10,7 @@ import '../domain/quest_models.dart';
 import 'quest_art.dart';
 
 class QuestsScreen extends ConsumerWidget {
-  const QuestsScreen({
-    super.key,
-    this.sectionType,
-  });
+  const QuestsScreen({super.key, this.sectionType});
 
   final QuestSectionType? sectionType;
 
@@ -167,214 +164,17 @@ class QuestsScreen extends ConsumerWidget {
             ),
           ),
 
-            // Content body
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (activeSection == QuestSectionType.friends) ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('FRIENDS QUEST', style: sectionStyle),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.timer_outlined,
-                              color: ReferenceColors.disabled,
-                              size: 16,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              questState.friendsQuest.timeRemaining,
-                              style: sectionStyle,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: AspectRatio(
-                        aspectRatio: 1030 / 376,
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => ReferenceArt(
-                            questState.friendsQuest.isCompleted
-                                ? QuestArt.friendsBannerCompleted
-                                : QuestArt.friendsBanner,
-                            width: constraints.maxWidth,
-                            height: constraints.maxHeight,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    Text(
-                      questState.friendsQuest.title,
-                      style: headingStyle,
-                    ),
-                    const SizedBox(height: 12),
-                    QuestProgress(
-                      value: questState.friendsQuest.userLessons,
-                      secondaryValue: questState.friendsQuest.friendLessons,
-                      target: questState.friendsQuest.target,
-                      color: const Color(0xFFBC418A),
-                      secondaryColor: const Color(0xFF75214A),
-                    ),
-                    const SizedBox(height: 18),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 6,
-                              backgroundColor: Color(0xFFBC418A),
-                            ),
-                            SizedBox(width: 12),
-                            Text('You', style: headingStyle),
-                          ],
-                        ),
-                        Text(
-                          '${questState.friendsQuest.userLessons} lessons',
-                          style: const TextStyle(
-                            fontSize: 19,
-                            color: ReferenceColors.disabled,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const CircleAvatar(
-                              radius: 6,
-                              backgroundColor: Color(0xFF75214A),
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              questState.friendsQuest.friendName,
-                              style: headingStyle,
-                            ),
-                          ],
-                        ),
-                        Text(
-                          '${questState.friendsQuest.friendLessons} lessons',
-                          style: const TextStyle(
-                            fontSize: 19,
-                            color: ReferenceColors.disabled,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    if (questState.friendsQuest.isCompleted)
-                      ReferenceButton(
-                        label: 'HIGH FIVED ${questState.friendsQuest.friendName.toUpperCase()}!',
-                        outlined: true,
-                        foregroundColor: ReferenceColors.disabled,
-                        leading: const ReferenceArt(
-                          QuestArt.highFive,
-                          width: 24,
-                          height: 19,
-                        ),
-                        onPressed: null,
-                      )
-                    else
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ReferenceButton(
-                              label: 'NUDGE',
-                              outlined: true,
-                              foregroundColor: const Color(0xFF4B4B4B),
-                              leading: const ReferenceArt(
-                                QuestArt.nudge,
-                                width: 22,
-                                height: 22,
-                              ),
-                              onPressed: controller.nudge,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: ReferenceButton(
-                              label: 'GIFT',
-                              outlined: true,
-                              foregroundColor: const Color(0xFF4B4B4B),
-                              leading: const ReferenceArt(
-                                QuestArt.gift,
-                                width: 22,
-                                height: 20,
-                              ),
-                              onPressed: controller.gift,
-                            ),
-                          ),
-                        ],
-                      ),
-                  ] else ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('WEEKEND QUEST', style: sectionStyle),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.timer_outlined,
-                              color: ReferenceColors.disabled,
-                              size: 16,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              questState.weekendQuest.timeRemaining,
-                              style: sectionStyle,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: AspectRatio(
-                        aspectRatio: 1035 / 430,
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => ReferenceArt(
-                            QuestArt.weekendBanner,
-                            width: constraints.maxWidth,
-                            height: constraints.maxHeight,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    Text(
-                      questState.weekendQuest.title,
-                      style: headingStyle,
-                    ),
-                    const SizedBox(height: 12),
-                    QuestProgress(
-                      value: questState.weekendQuest.currentXp,
-                      target: questState.weekendQuest.targetXp,
-                      color: const Color(0xFFBC418A),
-                    ),
-                  ],
-
-                  const SizedBox(height: 32),
-                  const Divider(color: ReferenceColors.border, thickness: 2),
-                  const SizedBox(height: 24),
-
+          // Content body
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (activeSection == QuestSectionType.friends) ...[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('DAILY QUESTS', style: sectionStyle),
+                      const Text('FRIENDS QUEST', style: sectionStyle),
                       Row(
                         children: [
                           const Icon(
@@ -384,35 +184,224 @@ class QuestsScreen extends ConsumerWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            questState.dailyTimeRemaining,
+                            questState.friendsQuest.timeRemaining,
                             style: sectionStyle,
                           ),
                         ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-
-                  for (final quest in questState.dailyQuests)
-                    _DailyQuestTile(
-                      quest: quest,
-                      onClaim: () => controller.claimQuest(quest.id),
+                  const SizedBox(height: 16),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: AspectRatio(
+                      aspectRatio: 1030 / 376,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => ReferenceArt(
+                          questState.friendsQuest.isCompleted
+                              ? QuestArt.friendsBannerCompleted
+                              : QuestArt.friendsBanner,
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                        ),
+                      ),
                     ),
+                  ),
+                  const SizedBox(height: 18),
+                  Text(questState.friendsQuest.title, style: headingStyle),
+                  const SizedBox(height: 12),
+                  QuestProgress(
+                    value: questState.friendsQuest.userLessons,
+                    secondaryValue: questState.friendsQuest.friendLessons,
+                    target: questState.friendsQuest.target,
+                    color: const Color(0xFFBC418A),
+                    secondaryColor: const Color(0xFF75214A),
+                  ),
+                  const SizedBox(height: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 6,
+                            backgroundColor: Color(0xFFBC418A),
+                          ),
+                          SizedBox(width: 12),
+                          Text('You', style: headingStyle),
+                        ],
+                      ),
+                      Text(
+                        '${questState.friendsQuest.userLessons} lessons',
+                        style: const TextStyle(
+                          fontSize: 19,
+                          color: ReferenceColors.disabled,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 6,
+                            backgroundColor: Color(0xFF75214A),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            questState.friendsQuest.friendName,
+                            style: headingStyle,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '${questState.friendsQuest.friendLessons} lessons',
+                        style: const TextStyle(
+                          fontSize: 19,
+                          color: ReferenceColors.disabled,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  if (questState.friendsQuest.isCompleted)
+                    ReferenceButton(
+                      label:
+                          'HIGH FIVED ${questState.friendsQuest.friendName.toUpperCase()}!',
+                      outlined: true,
+                      foregroundColor: ReferenceColors.disabled,
+                      leading: const ReferenceArt(
+                        QuestArt.highFive,
+                        width: 24,
+                        height: 19,
+                      ),
+                      onPressed: null,
+                    )
+                  else
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ReferenceButton(
+                            label: 'NUDGE',
+                            outlined: true,
+                            foregroundColor: const Color(0xFF4B4B4B),
+                            leading: const ReferenceArt(
+                              QuestArt.nudge,
+                              width: 22,
+                              height: 22,
+                            ),
+                            onPressed: controller.nudge,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ReferenceButton(
+                            label: 'GIFT',
+                            outlined: true,
+                            foregroundColor: const Color(0xFF4B4B4B),
+                            leading: const ReferenceArt(
+                              QuestArt.gift,
+                              width: 22,
+                              height: 20,
+                            ),
+                            onPressed: controller.gift,
+                          ),
+                        ),
+                      ],
+                    ),
+                ] else ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('WEEKEND QUEST', style: sectionStyle),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.timer_outlined,
+                            color: ReferenceColors.disabled,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            questState.weekendQuest.timeRemaining,
+                            style: sectionStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: AspectRatio(
+                      aspectRatio: 1035 / 430,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => ReferenceArt(
+                          QuestArt.weekendBanner,
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  Text(questState.weekendQuest.title, style: headingStyle),
+                  const SizedBox(height: 12),
+                  QuestProgress(
+                    value: questState.weekendQuest.currentXp,
+                    target: questState.weekendQuest.targetXp,
+                    color: const Color(0xFFBC418A),
+                  ),
                 ],
-              ),
+
+                const SizedBox(height: 32),
+                const Divider(color: ReferenceColors.border, thickness: 2),
+                const SizedBox(height: 24),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('DAILY QUESTS', style: sectionStyle),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.timer_outlined,
+                          color: ReferenceColors.disabled,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          questState.dailyTimeRemaining,
+                          style: sectionStyle,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+
+                for (final quest in questState.dailyQuests)
+                  _DailyQuestTile(
+                    quest: quest,
+                    onClaim: () => controller.claimQuest(quest.id),
+                  ),
+              ],
             ),
-            SizedBox(height: bottomInset + 20),
-          ],
-        ),
-      );
-    }
+          ),
+          SizedBox(height: bottomInset + 20),
+        ],
+      ),
+    );
   }
+}
 
 class _DailyQuestTile extends StatelessWidget {
-  const _DailyQuestTile({
-    required this.quest,
-    required this.onClaim,
-  });
+  const _DailyQuestTile({required this.quest, required this.onClaim});
 
   final DailyQuest quest;
   final VoidCallback onClaim;
@@ -473,10 +462,7 @@ class _DailyQuestTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 14),
-              Opacity(
-                opacity: isClaimed ? 0.45 : 1.0,
-                child: chestArt,
-              ),
+              Opacity(opacity: isClaimed ? 0.45 : 1.0, child: chestArt),
             ],
           ),
         ),

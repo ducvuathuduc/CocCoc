@@ -51,7 +51,9 @@ class ProfileTabScreen extends StatelessWidget {
         child: CustomScrollView(
           key: const PageStorageKey('profile-tab'),
           slivers: [
-            SliverToBoxAdapter(child: _Hero(profile: p, onSettings: onSettings)),
+            SliverToBoxAdapter(
+              child: _Hero(profile: p, onSettings: onSettings),
+            ),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
@@ -136,9 +138,10 @@ class _Hero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topInset = MediaQuery.paddingOf(context).top;
-    final headerHeight = MediaQuery.textScalerOf(
-      context,
-    ).scale(28 * 1.25).clamp(49.0, 120.0).toDouble();
+    final headerHeight = MediaQuery.textScalerOf(context)
+        .scale(28 * 1.25)
+        .clamp(49.0, 120.0)
+        .toDouble();
     return ColoredBox(
       color: profile.heroColor,
       child: Padding(
@@ -175,10 +178,7 @@ class _Hero extends StatelessWidget {
               ),
             ),
             if (profile.showMaxBadge)
-              const Align(
-                alignment: Alignment.centerRight,
-                child: _MaxBadge(),
-              ),
+              const Align(alignment: Alignment.centerRight, child: _MaxBadge()),
             SizedBox(
               height: 210,
               child: Align(
@@ -483,9 +483,10 @@ class _Counter extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.textScalerOf(
-              context,
-            ).scale(25).clamp(25, 50).toDouble(),
+            height: MediaQuery.textScalerOf(context)
+                .scale(25)
+                .clamp(25, 50)
+                .toDouble(),
             child: Align(alignment: Alignment.centerLeft, child: value),
           ),
           const SizedBox(height: 5),
@@ -606,8 +607,7 @@ class _FinishProfileCard extends StatelessWidget {
           label: 'COMPLETE PROFILE',
           backgroundColor: const Color(0xFF1CB0F6),
           edgeColor: const Color(0xFF1899D6),
-          onPressed:
-              onPressed ?? () => showAvatarCreateSheet(context),
+          onPressed: onPressed ?? () => showAvatarCreateSheet(context),
         ),
       ],
     ),
@@ -943,10 +943,7 @@ class _FamilyMemberAvatar extends StatelessWidget {
       child: Container(
         width: 52,
         height: 52,
-        decoration: BoxDecoration(
-          color: member.color,
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: member.color, shape: BoxShape.circle),
         alignment: Alignment.center,
         child: Text(
           member.name.characters.first.toUpperCase(),
@@ -1068,10 +1065,7 @@ class _MonthlyBadgeCell extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFF0F0F0),
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: const Color(0xFFE5E5E5),
-                  width: 2,
-                ),
+                border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
                 boxShadow: const [
                   BoxShadow(color: Color(0xFFD7D7D7), offset: Offset(0, 4)),
                 ],
@@ -1110,10 +1104,7 @@ class _AchievementCell extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: achievement.color.withValues(alpha: .25),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: achievement.color,
-                      width: 3,
-                    ),
+                    border: Border.all(color: achievement.color, width: 3),
                   ),
                   child: Icon(
                     achievement.icon,
@@ -1165,9 +1156,8 @@ class _AchievementCell extends StatelessWidget {
 }
 
 void _showMessage(BuildContext context, String label) {
-  ScaffoldMessenger.of(
-    context,
-  ).showSnackBar(SnackBar(content: Text('$label (mock)')));
+  ScaffoldMessenger.of(context)
+      .showSnackBar(SnackBar(content: Text('$label (mock)')));
 }
 
 /// Share-link sheet: QR placeholder + copy action (refs 21_PROFILE_ACTIONS).
@@ -1335,9 +1325,7 @@ class _AvatarChoice extends StatelessWidget {
     decoration: BoxDecoration(
       color: color,
       shape: BoxShape.circle,
-      border: selected
-          ? Border.all(color: Colors.white, width: 4)
-          : null,
+      border: selected ? Border.all(color: Colors.white, width: 4) : null,
     ),
     alignment: Alignment.center,
     child: Text(

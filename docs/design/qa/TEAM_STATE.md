@@ -158,3 +158,9 @@ feature token is sourced. QA accepts the small differences described above
 under ticket40 SPEED FIRST. Scoped completion flow is DONE; full suite, entire
 sprint and production/device gates remain open. ARM native library now links
 and identifies as aarch64; runtime compatibility has not yet been tested.
+
+Next claim UI-SPRINT-I-SHELL, after completion commit34c66b9. Shell feature
+domain/data/providers/presentation, learning_path top row, learning_shell nav
+and focused shell/path tests only. Existing five router branches stay frozen.
+Current baseline: analyzer0issues (117.6s),29completion-focused passes; full
+suite baseline remains unresolved. No other feature golden will be updated.

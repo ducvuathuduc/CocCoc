@@ -4,16 +4,15 @@ import 'package:cocenglish/features/profile/profile_tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Widget _pump(ProfileMock profile, {double textScale = 1}) =>
-    MaterialApp(
-      theme: referenceTheme(),
-      home: MediaQuery(
-        data: const MediaQueryData().copyWith(
-          textScaler: TextScaler.linear(textScale),
-        ),
-        child: ProfileTabScreen(profile: profile),
-      ),
-    );
+Widget _pump(ProfileMock profile, {double textScale = 1}) => MaterialApp(
+  theme: referenceTheme(),
+  home: MediaQuery(
+    data: const MediaQueryData().copyWith(
+      textScaler: TextScaler.linear(textScale),
+    ),
+    child: ProfileTabScreen(profile: profile),
+  ),
+);
 
 void main() {
   testWidgets('new profile header, stats and finish card render', (
@@ -113,7 +112,9 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('rich profile shows Max badge and family section', (tester) async {
+  testWidgets('rich profile shows Max badge and family section', (
+    tester,
+  ) async {
     await tester.pumpWidget(_pump(profileMockRich));
     await tester.pumpAndSettle();
 
@@ -124,9 +125,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('new profile hides Max badge and family section', (
-    tester,
-  ) async {
+  testWidgets('new profile hides Max badge and family section', (tester) async {
     await tester.pumpWidget(_pump(profileMockNew));
     await tester.pumpAndSettle();
 
