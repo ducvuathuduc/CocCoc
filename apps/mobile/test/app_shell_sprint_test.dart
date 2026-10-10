@@ -39,7 +39,7 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 2));
     for (final label in ['Courses', 'Streak', 'Shop', 'Energy']) {
       final control = find.descendant(
         of: find.byTooltip(label),
