@@ -81,3 +81,22 @@ assertion was removed, weakened or skipped. Full-suite/native/browser/device,
 whole global-palette and production gates remain open. League/quests/shop/
 profile, build/ and pubspec.lock are excluded. I2/I3/Q and other ticket scope
 remain unfinished; no TICKET DONE claim.
+
+## Post-commit repository gates
+
+I1 implementation commit: d438218a214570589b89da86e2505cf51d3b8562.
+`pnpm backend:verify` PASS (16 tests), `pnpm backend:smoke` PASS,
+`pnpm contracts:check` PASS (94 schemas/30 fixtures), `pnpm api:lint` PASS,
+`pnpm audit:check` PASS (873 links/13 Mermaid diagrams).
+Logs are /workspace/tools/coc-i1-commit-{backend-verify,backend-smoke,
+contracts-check,api-lint,audit-check}.log.
+
+The initial `pnpm verify` found a nonportable external PM link in the imported
+I1 spec. Corrected it to committed repository brief/review links;
+`pnpm blueprint:check` PASS. The rerun passed blueprint, formatting230files
+(no changes), and analysis0issues, then entered full tests and reproduced
+five known native/runtime failures. Stopped that failing broad run after the
+partial result; no full-suite success/count claimed. Exact log:
+/workspace/tools/coc-i1-commit-verify.log. The automatic pubspec.lock refresh
+was saved outside the repository and restored byte-for-byte from HEAD;
+no lockfile change is included. Pending design WIP is restored and uncommitted.

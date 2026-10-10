@@ -1,6 +1,6 @@
 # Exercises I1 implementation spec
 
-Task IDs P2-FE-001 (SC17), UI-FIDELITY-001, UI-CATALOG-008, UI-EXTENDED-QA-010. PM ticket: [11-exercises-I1](../tickets/briefs/11-exercises-I1.md). Research reused: [exercises.md](exercises.md). Baseline before implementation supplied by lead:466passed/5existing Rive native failures, analyzer0issues. Shared core tokens/router/locks belong to lead.
+Task IDs P2-FE-001 (SC17), UI-FIDELITY-001, UI-CATALOG-008, UI-EXTENDED-QA-010. PM ticket11-exercises-I1 scope: [repo worker brief](../docs/design/qa/PHASE_A_WORKER_BRIEFS.md). Reference research: [I1 review](../docs/design/qa/exercises_i1.qa.md). Baseline before implementation supplied by lead:466passed/5existing Rive native failures, analyzer0issues. Shared core tokens/router/locks belong to lead.
 
 Acceptance: “SC01–22 and12exercise typedfake flows; close state/guard/exit/feedback gaps without screen rewrite”; “12 registered renderers, feedback, retry queue”; “selected blue stroke+check”; “tap updates stable choiceId locally, no network; CHECK validates selection; preserve on timeout”; “one left/right selected, matched disabled; mismatch panel”; “select pair locally; submit full pair set when done; matching correctness rendered from deterministic rule in cached mode and authoritative result online”.
 
