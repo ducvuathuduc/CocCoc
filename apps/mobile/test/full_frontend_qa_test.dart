@@ -18,6 +18,7 @@ import 'package:cocenglish/features/progress/presentation/hub_screens.dart';
 import 'package:cocenglish/features/progress/presentation/streak_screen.dart';
 import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';

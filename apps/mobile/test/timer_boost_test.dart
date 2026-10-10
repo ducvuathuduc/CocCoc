@@ -5,11 +5,11 @@ import 'package:cocenglish/features/progress/application/timer_boost_controller.
 import 'package:cocenglish/features/progress/presentation/timer_boost_screen.dart';
 import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cocenglish/features/progress/presentation/hub_screens.dart';
 
 void main() {
   testWidgets(
