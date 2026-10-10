@@ -31,41 +31,48 @@ class AppStatsBar extends ConsumerWidget {
                 child: PressableIcon(
                   radius: 10,
                   onTap: () => onSelected(stat.kind),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 4,
+                  child: Container(
+                    constraints: const BoxConstraints(
+                      minWidth: 48,
+                      minHeight: 48,
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _art(stat),
-                        if (stat.value.isNotEmpty) ...[
-                          const SizedBox(width: 7),
-                          ExcludeSemantics(
-                            child: Text(
-                              stat.value,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: switch (stat.kind) {
-                                  AppStatKind.course => ReferenceColors.ink,
-                                  AppStatKind.streak =>
-                                    stat.active
-                                        ? LearningColors.orange
-                                        : ReferenceColors.disabled,
-                                  AppStatKind.gems => LearningColors.blue,
-                                  AppStatKind.energy =>
-                                    stat.unlimited
-                                        ? ReferenceColors.purple
-                                        // Energy/02 flat battery (1070,380).
-                                        : const Color(0xFFFF86CD),
-                                },
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 4,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _art(stat),
+                          if (stat.value.isNotEmpty) ...[
+                            const SizedBox(width: 7),
+                            ExcludeSemantics(
+                              child: Text(
+                                stat.value,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: switch (stat.kind) {
+                                    AppStatKind.course => ReferenceColors.ink,
+                                    AppStatKind.streak =>
+                                      stat.active
+                                          ? LearningColors.orange
+                                          : ReferenceColors.disabled,
+                                    AppStatKind.gems => LearningColors.blue,
+                                    AppStatKind.energy =>
+                                      stat.unlimited
+                                          ? ReferenceColors.purple
+                                          // Energy/02 flat battery (1070,380).
+                                          : const Color(0xFFFF86CD),
+                                  },
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
                 ),

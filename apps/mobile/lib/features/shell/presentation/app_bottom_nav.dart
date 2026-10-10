@@ -82,11 +82,17 @@ class AppBottomNav extends ConsumerWidget {
       AppTabKind.league => LearningArt.league,
       AppTabKind.profile => LearningArt.profile,
     };
-    final aspect = region.source.width / region.source.height;
-    return ReferenceArt(
-      region,
-      width: aspect >= 1 ? 38 : 38 * aspect,
-      height: aspect >= 1 ? 38 / aspect : 38,
+    return SizedBox(
+      width: 38,
+      height: 38,
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: ReferenceArt(
+          region,
+          width: region.source.width,
+          height: region.source.height,
+        ),
+      ),
     );
   }
 }
