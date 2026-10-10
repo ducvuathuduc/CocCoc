@@ -312,88 +312,80 @@ class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final s = ref.watch(previewControllerProvider),
-        vm = ref.read(previewControllerProvider.notifier);
-    Widget row(String title, String route) => ListTile(
+    Widget row(String title, String route, {String? subtitle}) => ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(
         title,
         style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
       ),
+      subtitle: subtitle != null ? Text(subtitle, style: const TextStyle(fontSize: 16, color: ReferenceColors.disabled)) : null,
       trailing: const Icon(
         Icons.chevron_right,
         color: ReferenceColors.disabled,
       ),
       onTap: () => context.push(route),
     );
+
+    Widget textLink(String text) => Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: LearningColors.blue,
+          fontWeight: FontWeight.w700,
+          fontSize: 15,
+          letterSpacing: 0.8,
+        ),
+      ),
+    );
+
     return PreviewPage(
       title: 'Settings',
       children: [
         const Text('ACCOUNT', style: sectionStyle),
         const SizedBox(height: 10),
+        row('Preferences', '/settings/preferences'),
         row('Profile', '/settings/profile'),
+        row('Notifications', '/settings/notifications'),
+        row('Courses', '/settings/courses'),
+        row('Duolingo for Schools', '/settings/schools'),
+        row('Social accounts', '/settings/social'),
+        row('Privacy settings', '/settings/privacy'),
         const Divider(),
-        row('Verify email', '/auth/verify'),
-        const Divider(),
-        row('My courses', '/settings/courses'),
-        const Divider(),
-        row('Password', '/settings/password'),
         const SizedBox(height: 25),
-        const Text('PREFERENCES', style: sectionStyle),
+        
+        const Text('SUBSCRIPTION', style: sectionStyle),
         const SizedBox(height: 10),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text(
-            'Sound effects',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-          ),
-          value: s.sound,
-          onChanged: vm.setSound,
-          activeThumbColor: LearningColors.green,
-        ),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text(
-            'Private profile',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-          ),
-          value: s.private,
-          onChanged: vm.setPrivate,
-          activeThumbColor: LearningColors.green,
-        ),
-        row('Practice reminders', '/settings/reminders'),
-        const Divider(),
-        row('Streak widgets', '/streak/widgets'),
-        const Divider(),
-        row('Super Duolingo', '/super'),
-        const Divider(),
-        row('Duolingo Max', '/max'),
-        const Divider(),
-        row('Manage subscription', '/subscription'),
-        const Divider(),
-        row('Sync status', '/sync'),
-        const SizedBox(height: 25),
-        const Text('PROGRESS', style: sectionStyle),
-        row('2025 Year in Review', '/year-review'),
-        const Divider(),
-        row('League history', '/league/results'),
-        const SizedBox(height: 25),
-        const Text('HELP', style: sectionStyle),
-        row('Connection and recovery', '/recovery'),
-        const SizedBox(height: 25),
+        row('Manage Subscription', '/subscription', subtitle: 'Super Duolingo 12 months'),
+        const SizedBox(height: 16),
         ReferenceButton(
-          label: 'LOG OUT',
+          label: 'RESTORE SUBSCRIPTION',
+          outlined: true,
+          foregroundColor: LearningColors.blue,
+          onPressed: () {},
+        ),
+        const SizedBox(height: 25),
+        const Divider(),
+        const SizedBox(height: 25),
+
+        const Text('SUPPORT', style: sectionStyle),
+        const SizedBox(height: 10),
+        row('Help Center', '/support/help'),
+        row('Feedback', '/support/feedback'),
+        const SizedBox(height: 16),
+        ReferenceButton(
+          label: 'SIGN OUT',
           outlined: true,
           foregroundColor: LearningColors.blue,
           onPressed: () => learningSheet<void>(
             context,
-            title: 'Log out?',
+            title: 'Sign out?',
             child: Column(
               children: [
                 const Text('You can log in again to continue learning.'),
                 const SizedBox(height: 20),
                 ReferenceButton(
-                  label: 'LOG OUT',
+                  label: 'SIGN OUT',
                   backgroundColor: LearningColors.blue,
                   edgeColor: LearningColors.blueDark,
                   onPressed: () {
@@ -411,17 +403,12 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(height: 24),
-        TextButton(
-          onPressed: () => context.push('/account/delete'),
-          child: const Text(
-            'DELETE ACCOUNT',
-            style: TextStyle(
-              color: LearningColors.red,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
+        const SizedBox(height: 35),
+        
+        textLink('TERMS'),
+        textLink('PRIVACY POLICY'),
+        textLink('ACKNOWLEDGEMENTS'),
+        const SizedBox(height: 40),
       ],
     );
   }
