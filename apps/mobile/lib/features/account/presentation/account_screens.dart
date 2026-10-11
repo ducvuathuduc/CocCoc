@@ -15,6 +15,8 @@ import '../application/avatar_controller.dart';
 import '../application/settings_extras_controller.dart';
 import '../data/settings_repository.dart';
 import '../../notifications/presentation/notification_screens.dart';
+import '../../phone/application/phone_verification_controller.dart';
+import '../../phone/presentation/phone_verification_screens.dart';
 import 'avatar_motion.dart';
 
 export 'delete_account_screen.dart';
@@ -409,13 +411,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
             limit: 254,
             type: TextInputType.emailAddress,
           ),
-          field(
-            'phone',
-            'Phone number',
-            phone,
-            limit: 25,
-            type: TextInputType.phone,
-          ),
+          _PhoneRow(fallback: phone.text),
           if (error != null)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -436,7 +432,12 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                       last: last.text,
                       username: username.text,
                       email: email.text,
-                      phone: phone.text,
+                      phone:
+                          ref
+                              .read(phoneVerificationControllerProvider)
+                              .verified
+                              ?.e164 ??
+                          phone.text,
                     ),
                   );
               setState(() => error = result);
@@ -454,6 +455,67 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                 style: TextStyle(
                   color: LearningColors.red,
                   fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Profile "Phone number" row: opens the SMS verification flow and shows the
+/// verified number masked, as in Duolingo.
+class _PhoneRow extends ConsumerWidget {
+  const _PhoneRow({required this.fallback});
+  final String fallback;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final verified = ref.watch(phoneVerificationControllerProvider).verified;
+    final value = verified?.masked ?? fallback;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Phone number',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: ReferenceColors.ink,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Semantics(
+            button: true,
+            label: value.isEmpty ? 'Add phone number' : 'Phone number $value',
+            child: InkWell(
+              key: const ValueKey('profile-phone'),
+              onTap: () {
+                ref.read(phoneVerificationControllerProvider.notifier).begin();
+                context.push(phoneRoute);
+              },
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                height: 50,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7F7F7),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
+                ),
+                child: Text(
+                  value.isEmpty ? 'Add phone number' : value,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: value.isEmpty
+                        ? PhoneColors.hint
+                        : ReferenceColors.ink,
+                  ),
                 ),
               ),
             ),
