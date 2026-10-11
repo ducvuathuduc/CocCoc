@@ -16,6 +16,7 @@ import '../domain/journey_models.dart';
 import 'story_library.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/timer_boost_screen.dart';
+import '../../roleplay/presentation/roleplay_session.dart';
 
 const _mom = ArtRegion('story-portrait', Rect.fromLTWH(48, 410, 125, 156));
 const _melissa = ArtRegion('story-portrait', Rect.fromLTWH(48, 652, 125, 166));
@@ -44,7 +45,10 @@ class JourneyEntryScreen extends ConsumerWidget {
       'roleplay' => 'Dine at a Restaurant',
       _ => 'A Big Family',
     };
-    final resumed = state.started && !state.complete;
+    final resumed =
+        state.started &&
+        !state.complete &&
+        (kind != 'roleplay' || state.scenarioId == null);
     final color = kind == 'roleplay'
         ? LearningColors.green
         : LearningColors.red;
@@ -115,12 +119,32 @@ class JourneyEntryScreen extends ConsumerWidget {
                     : LearningColors.redDark,
                 onPressed: () {
                   if (!resumed) {
-                    ref.read(journeyControllerProvider(kind).notifier).start();
+                    final vm = ref.read(
+                      journeyControllerProvider(kind).notifier,
+                    );
+                    if (kind == 'roleplay') vm.pickScenario(null);
+                    vm.start();
                   }
                   context.push('/journeys/$kind/session');
                 },
               ),
             ),
+            if (kind == 'roleplay')
+              Padding(
+                padding: const EdgeInsets.only(bottom: 14),
+                child: TextButton(
+                  onPressed: () => context.push('/roleplay'),
+                  child: const Text(
+                    'SEE ALL ROLEPLAYS',
+                    style: TextStyle(
+                      color: LearningColors.blue,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: .8,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -230,6 +254,11 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
     ref.listen(journeyControllerProvider(kind), (_, _) => syncClock());
     syncClock();
     if (!state.started) return JourneyEntryScreen(kind: kind);
+    // Scenarios picked from the Roleplay library play in the generalized
+    // scenario view; the practice-hub restaurant keeps the original layout.
+    if (kind == 'roleplay' && state.scenarioId != null) {
+      return RoleplaySessionView(onExit: exit);
+    }
     if (state.complete) return _JourneyComplete(kind: kind, state: state);
     if (state.expired) {
       return Scaffold(
@@ -349,7 +378,9 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
                     child: LinearProgressIndicator(
                       value:
                           (state.step + .25) /
-                          (roleplay ? 3 : vm.questions.length),
+                          (roleplay
+                              ? vm.roleplayLines.length
+                              : vm.questions.length),
                       color: color,
                       backgroundColor: ReferenceColors.border,
                       minHeight: 16,
@@ -377,7 +408,9 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                child: roleplay ? _roleplay(state) : _question(q, state, vm),
+                child: roleplay
+                    ? _roleplay(state, vm)
+                    : _question(q, state, vm),
               ),
             ),
             if (roleplay)
@@ -689,7 +722,7 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
       ),
     ],
   );
-  Widget _roleplay(JourneyState state) => Column(
+  Widget _roleplay(JourneyState state, JourneyController vm) => Column(
     children: [
       const SizedBox(height: 16),
       SpeechBubble(
@@ -698,7 +731,7 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              englishRoleplay[state.step].$1,
+              vm.roleplayLines[state.step].prompt,
               style: const TextStyle(fontSize: 21, height: 1.5),
             ),
             TextButton(
@@ -707,7 +740,7 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
             ),
             if (translation)
               Text(
-                englishRoleplay[state.step].$2,
+                vm.roleplayLines[state.step].translation,
                 style: const TextStyle(fontSize: 17),
               ),
           ],
@@ -897,6 +930,7 @@ class _FeedbackState extends ConsumerState<RoleplayFeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(journeyControllerProvider('roleplay'));
+    if (state.scenarioId != null) return const RoleplayScenarioFeedback();
     return Scaffold(
       body: SafeArea(
         child: Column(
