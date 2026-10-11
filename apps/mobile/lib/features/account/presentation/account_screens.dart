@@ -7,10 +7,13 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../auth/application/auth_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/hub_screens.dart';
 import '../application/profile_editor_controller.dart';
 import '../application/avatar_controller.dart';
+import '../application/settings_extras_controller.dart';
+import '../data/settings_repository.dart';
 import 'avatar_motion.dart';
 
 export 'delete_account_screen.dart';
@@ -150,7 +153,16 @@ class SettingsScreen extends ConsumerWidget {
           label: 'RESTORE SUBSCRIPTION',
           outlined: true,
           foregroundColor: LearningColors.blue,
-          onPressed: () {},
+          onPressed: () {
+            final active = ref.read(extendedControllerProvider).unlimited;
+            showLearningNotice(
+              context,
+              active ? 'Subscription restored' : 'No subscription found',
+              active
+                  ? 'Your subscription is active on this account.'
+                  : 'We couldn’t find a purchase to restore for this account.',
+            );
+          },
         ),
         const SizedBox(height: 25),
         const Divider(),
@@ -538,6 +550,242 @@ class HelpCenterScreen extends StatelessWidget {
       _settingsLink(context, 'Sync status', '/sync'),
     ],
   );
+}
+
+InputDecoration _settingsFieldDecoration({String? hint, String? error}) =>
+    InputDecoration(
+      counterText: '',
+      filled: true,
+      fillColor: const Color(0xFFF7F7F7),
+      hintText: hint,
+      errorText: error,
+      errorMaxLines: 3,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFE5E5E5), width: 2),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: LearningColors.blue, width: 2),
+      ),
+    );
+
+const _fieldLabelStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+  color: ReferenceColors.ink,
+);
+
+/// Settings > Duolingo for Schools: join a teacher's classroom by code.
+class SchoolsSettingsScreen extends ConsumerStatefulWidget {
+  const SchoolsSettingsScreen({super.key});
+  @override
+  ConsumerState<SchoolsSettingsScreen> createState() => _SchoolsState();
+}
+
+class _SchoolsState extends ConsumerState<SchoolsSettingsScreen> {
+  final code = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    code.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    code.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final copy = ref.watch(settingsRepositoryProvider).schools,
+        s = ref.watch(settingsExtrasControllerProvider),
+        vm = ref.read(settingsExtrasControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Duolingo for Schools',
+      children: [
+        Text(copy.heading, style: headingStyle),
+        const SizedBox(height: 12),
+        Text(
+          copy.body,
+          style: const TextStyle(fontSize: 17, color: ReferenceColors.muted),
+        ),
+        const SizedBox(height: 24),
+        if (s.classroom != null) ...[
+          Text(
+            '${copy.joinedPrefix} ${s.classroom}',
+            key: const ValueKey('schools-joined'),
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w700,
+              color: LearningColors.greenDark,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ReferenceButton(
+            label: copy.leaveLabel,
+            outlined: true,
+            foregroundColor: LearningColors.red,
+            onPressed: vm.leaveClassroom,
+          ),
+        ] else ...[
+          Text(copy.codeLabel, style: _fieldLabelStyle),
+          const SizedBox(height: 8),
+          TextField(
+            key: const ValueKey('schools-code'),
+            controller: code,
+            maxLength: 6,
+            textCapitalization: TextCapitalization.characters,
+            style: const TextStyle(fontSize: 20, color: ReferenceColors.ink),
+            decoration: _settingsFieldDecoration(
+              hint: copy.codeHint,
+              error: s.joinError,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ReferenceButton(
+            label: copy.joinLabel,
+            backgroundColor: LearningColors.blue,
+            edgeColor: LearningColors.blueDark,
+            onPressed: code.text.trim().isEmpty || s.joining
+                ? null
+                : () => vm.joinClassroom(code.text),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Settings > Social accounts: link or unlink sign-in providers.
+class SocialAccountsScreen extends ConsumerWidget {
+  const SocialAccountsScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accounts = ref.watch(settingsRepositoryProvider).socialAccounts,
+        s = ref.watch(settingsExtrasControllerProvider),
+        vm = ref.read(settingsExtrasControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Social accounts',
+      children: [
+        for (var i = 0; i < accounts.length; i++) ...[
+          if (i > 0) const Divider(),
+          _settingsSwitch(
+            accounts[i].name,
+            s.connected.contains(accounts[i].id),
+            (on) => vm.setSocial(accounts[i].id, on),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Settings > Feedback: pick a topic, describe it, submit.
+class FeedbackScreen extends ConsumerStatefulWidget {
+  const FeedbackScreen({super.key});
+  @override
+  ConsumerState<FeedbackScreen> createState() => _FeedbackState();
+}
+
+class _FeedbackState extends ConsumerState<FeedbackScreen> {
+  final message = TextEditingController();
+  int topic = 0;
+  @override
+  void initState() {
+    super.initState();
+    message.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    message.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit(FeedbackContent copy) async {
+    final sent = await ref
+        .read(settingsExtrasControllerProvider.notifier)
+        .sendFeedback(copy.topics[topic], message.text);
+    if (!sent || !mounted) return;
+    await showLearningNotice(context, copy.thanksTitle, copy.thanksBody);
+    if (mounted && context.canPop()) context.pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final copy = ref.watch(settingsRepositoryProvider).feedback,
+        sending = ref.watch(settingsExtrasControllerProvider).sending;
+    return PreviewPage(
+      title: 'Feedback',
+      children: [
+        Text(copy.topicLabel, style: _fieldLabelStyle),
+        const SizedBox(height: 12),
+        for (var i = 0; i < copy.topics.length; i++)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Semantics(
+              selected: i == topic,
+              button: true,
+              child: InkWell(
+                key: ValueKey('feedback-topic-$i'),
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => setState(() => topic = i),
+                child: Container(
+                  constraints: const BoxConstraints(minHeight: 52),
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: i == topic ? ReferenceColors.blueFill : null,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: i == topic
+                          ? ReferenceColors.blueBorder
+                          : ReferenceColors.border,
+                      width: 2,
+                    ),
+                  ),
+                  child: Text(
+                    copy.topics[i],
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: i == topic
+                          ? LearningColors.blue
+                          : ReferenceColors.ink,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        const SizedBox(height: 14),
+        Text(copy.messageLabel, style: _fieldLabelStyle),
+        const SizedBox(height: 8),
+        TextField(
+          key: const ValueKey('feedback-message'),
+          controller: message,
+          minLines: 4,
+          maxLines: 8,
+          maxLength: 1000,
+          style: const TextStyle(fontSize: 18, color: ReferenceColors.ink),
+          decoration: _settingsFieldDecoration(hint: copy.messageHint),
+        ),
+        const SizedBox(height: 20),
+        ReferenceButton(
+          label: copy.submitLabel,
+          backgroundColor: LearningColors.blue,
+          edgeColor: LearningColors.blueDark,
+          onPressed: message.text.trim().isEmpty || sending
+              ? null
+              : () => _submit(copy),
+        ),
+      ],
+    );
+  }
 }
 
 class ReminderScreen extends ConsumerStatefulWidget {

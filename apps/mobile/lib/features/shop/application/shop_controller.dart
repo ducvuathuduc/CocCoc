@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../data/shop_repository.dart';
 
 class ShopOffer {
@@ -6,14 +7,18 @@ class ShopOffer {
     required this.id,
     required this.title,
     this.actionLabel,
-        this.price,
+    this.price,
     this.popular = false,
+    this.rewardGems,
   });
   final String id;
   final String title;
   final String? actionLabel;
-    final int? price;
+  final int? price;
   final bool popular;
+
+  /// Gems granted when a CLAIM offer is opened (mock data until the API).
+  final int? rewardGems;
 }
 
 class ShopState {
@@ -46,13 +51,15 @@ class ShopController extends Notifier<AsyncValue<ShopState>> {
     final timerBoosts = await repository.getTimerBoosts();
     final specialOffers = await repository.getSpecialOffers();
     final timerBoostOffers = await repository.getTimerBoostOffers();
-    state = AsyncData(ShopState(
-      wallet: wallet,
-      freezes: freezes,
-      timerBoosts: timerBoosts,
-      specialOffers: specialOffers,
-      timerBoostOffers: timerBoostOffers,
-    ));
+    state = AsyncData(
+      ShopState(
+        wallet: wallet,
+        freezes: freezes,
+        timerBoosts: timerBoosts,
+        specialOffers: specialOffers,
+        timerBoostOffers: timerBoostOffers,
+      ),
+    );
   }
 
   Future<bool> buyItem(String id, int cost) async {
@@ -65,4 +72,5 @@ class ShopController extends Notifier<AsyncValue<ShopState>> {
   }
 }
 
-final shopControllerProvider = NotifierProvider<ShopController, AsyncValue<ShopState>>(ShopController.new);
+final shopControllerProvider =
+    NotifierProvider<ShopController, AsyncValue<ShopState>>(ShopController.new);

@@ -39,11 +39,33 @@ class MockShopRepository implements ShopRepository {
   @override
   Future<List<ShopOffer>> getSpecialOffers() async {
     return const [
-      ShopOffer(id: 'friends-chest', title: 'Friends Chest', actionLabel: 'CLAIM'),
-      ShopOffer(id: 'widget-reward', title: 'Widget Reward', actionLabel: 'CLAIM'),
-      ShopOffer(id: 'genshin-reward', title: 'Genshin Impact\nReward', actionLabel: 'CLAIM'),
-      ShopOffer(id: 'early-bird', title: 'Early Bird Chest', actionLabel: 'LOCKED'),
-      ShopOffer(id: 'night-owl', title: 'Night Owl Chest', actionLabel: 'LOCKED'),
+      ShopOffer(
+        id: 'friends-chest',
+        title: 'Friends Chest',
+        actionLabel: 'CLAIM',
+        rewardGems: 20,
+      ),
+      ShopOffer(
+        id: 'widget-reward',
+        title: 'Widget Reward',
+        actionLabel: 'CLAIM',
+      ),
+      ShopOffer(
+        id: 'genshin-reward',
+        title: 'Genshin Impact\nReward',
+        actionLabel: 'CLAIM',
+        rewardGems: 50,
+      ),
+      ShopOffer(
+        id: 'early-bird',
+        title: 'Early Bird Chest',
+        actionLabel: 'LOCKED',
+      ),
+      ShopOffer(
+        id: 'night-owl',
+        title: 'Night Owl Chest',
+        actionLabel: 'LOCKED',
+      ),
     ];
   }
 

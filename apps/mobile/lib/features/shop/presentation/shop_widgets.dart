@@ -97,3 +97,68 @@ class _ManagePainter extends CustomPainter {
   @override
   bool shouldRepaint(_ManagePainter oldDelegate) => false;
 }
+
+/// Reward reveal for a claimed Shop chest: the chest art pops in, then the
+/// gem total counts up. Static when the platform asks for reduced motion.
+class ShopRewardReveal extends StatelessWidget {
+  const ShopRewardReveal({
+    required this.art,
+    required this.gem,
+    required this.gems,
+    super.key,
+  });
+  final Widget art;
+  final Widget gem;
+  final int gems;
+
+  static const popDuration = Duration(milliseconds: 450);
+  static const countDuration = Duration(milliseconds: 700);
+
+  @override
+  Widget build(BuildContext context) {
+    final still = MediaQuery.of(context).disableAnimations;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TweenAnimationBuilder<double>(
+          key: const ValueKey('shop-reward-pop'),
+          tween: Tween(begin: still ? 1 : .4, end: 1),
+          duration: still ? Duration.zero : popDuration,
+          curve: Curves.elasticOut,
+          builder: (context, scale, child) =>
+              Transform.scale(scale: scale, child: child),
+          child: art,
+        ),
+        const SizedBox(height: 18),
+        TweenAnimationBuilder<double>(
+          tween: Tween(
+            begin: still ? gems.toDouble() : 0,
+            end: gems.toDouble(),
+          ),
+          duration: still ? Duration.zero : countDuration,
+          curve: Curves.easeOutCubic,
+          builder: (context, value, _) => Semantics(
+            label: '$gems gems',
+            excludeSemantics: true,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                gem,
+                const SizedBox(width: 8),
+                Text(
+                  '+${value.round()}',
+                  key: const ValueKey('shop-reward-amount'),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                    color: ShopColors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

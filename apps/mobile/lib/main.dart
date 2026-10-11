@@ -612,6 +612,18 @@ class _AppState extends ConsumerState<_App> {
           builder: (context, state) => const HelpCenterScreen(),
         ),
         GoRoute(
+          path: '/settings/schools',
+          builder: (context, state) => const SchoolsSettingsScreen(),
+        ),
+        GoRoute(
+          path: '/settings/social',
+          builder: (context, state) => const SocialAccountsScreen(),
+        ),
+        GoRoute(
+          path: '/support/feedback',
+          builder: (context, state) => const FeedbackScreen(),
+        ),
+        GoRoute(
           path: '/settings/reminders',
           builder: (context, state) => const ReminderScreen(),
         ),

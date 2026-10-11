@@ -10,6 +10,8 @@ import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/timer_boost_screen.dart';
 import '../application/shop_controller.dart';
+import '../../../core/design/reference_widgets.dart';
+import '../../progress/domain/preview_state.dart';
 
 import 'shop_visuals.dart';
 
@@ -60,15 +62,20 @@ class ShopScreen extends ConsumerWidget {
                   const SizedBox(height: 44),
                   _buildSectionTitle('My Items'),
                   const SizedBox(height: 18),
-                  _buildMyItems(context, ref, freezes: owned.freezes, timerBoosts: owned.timerBoosts),
+                  _buildMyItems(
+                    context,
+                    ref,
+                    freezes: owned.freezes,
+                    timerBoosts: owned.timerBoosts,
+                  ),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Subscriptions'),
                   const SizedBox(height: 18),
-                  _buildSubscriptions(),
+                  _buildSubscriptions(context),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Special Offers'),
                   const SizedBox(height: 18),
-                  _buildSpecialOffers(context, state),
+                  _buildSpecialOffers(context, ref, state, owned),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Timer Boost'),
                   const SizedBox(height: 18),
@@ -76,7 +83,7 @@ class ShopScreen extends ConsumerWidget {
                   const SizedBox(height: 64),
                   _buildSectionTitle('Streak Freeze'),
                   const SizedBox(height: 18),
-                  _buildStreakFreeze(context, ref, wallet),
+                  _buildStreakFreeze(context, ref, wallet, owned.freezes),
                   const SizedBox(height: 64),
                 ],
               ),
@@ -120,9 +127,15 @@ class ShopScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 1,
+                        ),
                         decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xFF14DAEB), width: 2.2),
+                          border: Border.all(
+                            color: const Color(0xFF14DAEB),
+                            width: 2.2,
+                          ),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: const Text(
@@ -266,7 +279,11 @@ class ShopScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (title == 'XP Boost') ...[
-                  Icon(Icons.access_time_filled, size: 18, color: subtitleColor),
+                  Icon(
+                    Icons.access_time_filled,
+                    size: 18,
+                    color: subtitleColor,
+                  ),
                   const SizedBox(width: 4),
                 ],
                 Text(
@@ -285,7 +302,7 @@ class ShopScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSubscriptions() {
+  Widget _buildSubscriptions(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: _buildListItem(
@@ -293,29 +310,41 @@ class ShopScreen extends ConsumerWidget {
         title: 'Max Family Plan',
         actionLabel: 'UPGRADE',
         actionColor: ShopColors.blue,
-        onAction: () {},
+        // Upgrade goes to the existing Family plan picker.
+        onAction: () => context.push('/subscription/family'),
       ),
     );
   }
 
-  Widget _buildSpecialOffers(BuildContext context, ShopState state) {
+  Widget _buildSpecialOffers(
+    BuildContext context,
+    WidgetRef ref,
+    ShopState state,
+    PreviewState owned,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
         children: state.specialOffers.map((offer) {
+          final claimed = owned.claims.contains(
+            '${PreviewController.shopClaimPrefix}${offer.id}',
+          );
+          final claimable = offer.actionLabel == 'CLAIM' && !claimed;
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: _buildListItem(
               art: _getArtForOffer(offer.id),
               title: offer.title,
-              actionLabel: offer.actionLabel,
-              actionColor: offer.actionLabel == 'CLAIM' ? ShopColors.blue : ReferenceColors.muted,
-              onAction: offer.actionLabel != 'CLAIM'
+              actionLabel: claimed ? 'CLAIMED' : offer.actionLabel,
+              actionColor: claimable ? ShopColors.blue : ReferenceColors.muted,
+              onAction: !claimable
                   ? null
                   : offer.id == 'widget-reward'
                   // The widget reward is claimed by adding the streak widget.
                   ? () => context.push('/streak/widgets')
-                  : () {},
+                  : offer.rewardGems == null
+                  ? null
+                  : () => _claimOffer(context, ref, offer),
             ),
           );
         }).toList(),
@@ -323,17 +352,56 @@ class ShopScreen extends ConsumerWidget {
     );
   }
 
+  void _claimOffer(BuildContext context, WidgetRef ref, ShopOffer offer) {
+    final gems = offer.rewardGems!;
+    final ok = ref
+        .read(previewControllerProvider.notifier)
+        .claimShopReward(offer.id, gems);
+    if (!ok) return;
+    final art = _getArtForOffer(offer.id);
+    learningSheet<void>(
+      context,
+      title: 'You earned $gems gems!',
+      illustration: ShopRewardReveal(
+        art: ReferenceArt(
+          art,
+          width: art.source.width / ShopArt.referenceScale * 1.6,
+          height: art.source.height / ShopArt.referenceScale * 1.6,
+        ),
+        gem: const ReferenceArt(LearningArt.gem, width: 26, height: 30),
+        gems: gems,
+      ),
+      child: Builder(
+        builder: (sheet) => ReferenceButton(
+          label: 'CONTINUE',
+          backgroundColor: LearningColors.blue,
+          edgeColor: LearningColors.blueDark,
+          onPressed: () => Navigator.pop(sheet),
+        ),
+      ),
+    );
+  }
+
   ArtRegion _getArtForOffer(String id) {
     switch (id) {
-      case 'friends-chest': return ShopArt.friendsChest;
-      case 'widget-reward': return ShopArt.widgetReward;
-      case 'genshin-reward': return ShopArt.genshinReward;
-      case 'early-bird': return ShopArt.earlyBirdChest;
-      case 'night-owl': return ShopArt.nightOwlChest;
-      case 'timer-single': return ShopArt.timerBoostSingle;
-      case 'timer-5': return ShopArt.timerBoost5Pack;
-      case 'timer-15': return ShopArt.timerBoost15Pack;
-      default: return ShopArt.friendsChest;
+      case 'friends-chest':
+        return ShopArt.friendsChest;
+      case 'widget-reward':
+        return ShopArt.widgetReward;
+      case 'genshin-reward':
+        return ShopArt.genshinReward;
+      case 'early-bird':
+        return ShopArt.earlyBirdChest;
+      case 'night-owl':
+        return ShopArt.nightOwlChest;
+      case 'timer-single':
+        return ShopArt.timerBoostSingle;
+      case 'timer-5':
+        return ShopArt.timerBoost5Pack;
+      case 'timer-15':
+        return ShopArt.timerBoost15Pack;
+      default:
+        return ShopArt.friendsChest;
     }
   }
 
@@ -386,14 +454,36 @@ class ShopScreen extends ConsumerWidget {
     _ => null,
   };
 
-  Widget _buildStreakFreeze(BuildContext context, WidgetRef ref, int wallet) {
+  Widget _buildStreakFreeze(
+    BuildContext context,
+    WidgetRef ref,
+    int wallet,
+    int freezes,
+  ) {
+    final maxed = freezes >= PreviewController.maxFreezes;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: _buildListItem(
         art: ShopArt.streakFreezeItem,
         title: '1-day',
         price: 425,
+        priceDisabled: maxed,
+        priceSemantics: maxed
+            ? 'Streak Freeze, $freezes of ${PreviewController.maxFreezes} '
+                  'equipped. Maximum reached'
+            : null,
         onAction: () {
+          if (maxed) {
+            // Duolingo: no purchase once both freeze slots are full.
+            showLearningNotice(
+              context,
+              'Streak Freeze maxed out',
+              'You already have ${PreviewController.maxFreezes} of '
+                  '${PreviewController.maxFreezes} Streak Freezes equipped. '
+                  'Use one before buying another.',
+            );
+            return;
+          }
           final cost = 425;
           if (wallet >= cost) {
             final bought = ref
@@ -416,6 +506,7 @@ class ShopScreen extends ConsumerWidget {
       ),
     );
   }
+
   Widget _buildListItem({
     required ArtRegion art,
     required String title,
@@ -423,6 +514,8 @@ class ShopScreen extends ConsumerWidget {
     Color? actionColor,
     int? price,
     bool popular = false,
+    bool priceDisabled = false,
+    String? priceSemantics,
     VoidCallback? onAction,
   }) {
     return Container(
@@ -504,32 +597,42 @@ class ShopScreen extends ConsumerWidget {
                   Flexible(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: InkWell(
-                        onTap: onAction,
-                        borderRadius: BorderRadius.circular(12),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 8,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const ReferenceArt(
-                                LearningArt.gem,
-                                width: 20,
-                                height: 24,
+                      child: Semantics(
+                        button: true,
+                        enabled: !priceDisabled,
+                        label: priceSemantics,
+                        child: Opacity(
+                          opacity: priceDisabled ? .45 : 1,
+                          child: InkWell(
+                            onTap: onAction,
+                            borderRadius: BorderRadius.circular(12),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 8,
                               ),
-                              const SizedBox(width: 6),
-                              Text(
-                                '$price',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
-                                  color: ShopColors.blue,
-                                ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const ReferenceArt(
+                                    LearningArt.gem,
+                                    width: 20,
+                                    height: 24,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    '$price',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w800,
+                                      color: priceDisabled
+                                          ? ReferenceColors.disabled
+                                          : ShopColors.blue,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
