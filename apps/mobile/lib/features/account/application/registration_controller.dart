@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../progress/application/preview_controller.dart';
+import '../data/account_repository.dart';
+import '../domain/account_models.dart';
 
+/// Steps: 0 age, 1 name, 2 email, 3 password, 4 welcome.
 class RegistrationState {
   const RegistrationState({
     this.step = 0,
@@ -13,11 +15,67 @@ class RegistrationState {
     this.error,
     this.busy = false,
     this.hidden = true,
+    this.errorTick = 0,
+    this.forward = true,
   });
   final int step;
   final String age, first, last, email, password;
   final String? error;
   final bool busy, hidden;
+
+  /// Incremented on each validation failure; drives the error shake.
+  final int errorTick;
+
+  /// Direction of the last step change (page slide).
+  final bool forward;
+
+  static final _emailPattern = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$');
+  static const _domainFixes = {
+    'gmail.c': 'gmail.com',
+    'gmail.co': 'gmail.com',
+    'gmial.com': 'gmail.com',
+    'gmai.com': 'gmail.com',
+    'yahoo.c': 'yahoo.com',
+    'hotmail.c': 'hotmail.com',
+    'outlook.c': 'outlook.com',
+  };
+
+  bool get ageValid {
+    final v = int.tryParse(age.trim());
+    return v != null && v >= 1 && v <= 120;
+  }
+
+  bool get nameValid =>
+      first.trim().isNotEmpty && first.length + last.length <= 59;
+  bool get emailValid => _emailPattern.hasMatch(email.trim());
+  bool get passwordValid => password.length >= 12;
+  String get fullName => '${first.trim()} ${last.trim()}'.trim();
+
+  /// Whether the primary button is enabled for the current step
+  /// (Duolingo keeps NEXT grey until input exists).
+  bool get canSubmit =>
+      !busy &&
+      switch (step) {
+        0 => age.trim().isNotEmpty,
+        1 => first.trim().isNotEmpty,
+        2 => email.trim().isNotEmpty,
+        3 => password.isNotEmpty,
+        _ => true,
+      };
+
+  /// Inline email error shown under the field after a failed NEXT.
+  bool get emailInvalidShown =>
+      step == 2 && error != null && email.isNotEmpty && !emailValid;
+
+  /// Typo-corrected email offered under "Suggested email".
+  String? get emailSuggestion {
+    final at = email.trim().lastIndexOf('@');
+    if (at < 1) return null;
+    final domain = email.trim().substring(at + 1).toLowerCase();
+    final fix = _domainFixes[domain];
+    return fix == null ? null : '${email.trim().substring(0, at)}@$fix';
+  }
+
   RegistrationState copyWith({
     int? step,
     String? age,
@@ -28,6 +86,8 @@ class RegistrationState {
     String? error,
     bool? busy,
     bool? hidden,
+    int? errorTick,
+    bool? forward,
   }) => RegistrationState(
     step: step ?? this.step,
     age: age ?? this.age,
@@ -38,6 +98,8 @@ class RegistrationState {
     error: error,
     busy: busy ?? this.busy,
     hidden: hidden ?? this.hidden,
+    errorTick: errorTick ?? this.errorTick,
+    forward: forward ?? this.forward,
   );
 }
 
@@ -72,56 +134,56 @@ class RegistrationController extends Notifier<RegistrationState> {
     );
   }
 
-  void back() {
-    if (state.busy || state.step == 0) return;
-    state = state.copyWith(step: state.step - 1);
+  void acceptSuggestion() {
+    final s = state.emailSuggestion;
+    if (s != null) state = state.copyWith(email: s);
   }
 
-  void toggleHidden() => state = state.copyWith(hidden: !state.hidden);
+  void back() {
+    if (state.busy || state.step == 0) return;
+    state = state.copyWith(step: state.step - 1, forward: false);
+  }
+
+  void toggleHidden() =>
+      state = state.copyWith(hidden: !state.hidden, error: state.error);
+
+  void _fail(String error) =>
+      state = state.copyWith(error: error, errorTick: state.errorTick + 1);
+
   Future<void> next() async {
     if (state.busy || state.step == 4) return;
-    String? error;
-    if (state.step == 0 &&
-        (int.tryParse(state.age) == null ||
-            int.parse(state.age) < 1 ||
-            int.parse(state.age) > 120)) {
-      error = 'Enter an age between 1 and 120.';
-    }
-    if (state.step == 1 &&
-        (state.first.trim().isEmpty ||
-            state.first.length + state.last.length > 59)) {
-      error = 'Enter your name (up to 60 characters).';
-    }
-    if (state.step == 2 &&
-        !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(state.email.trim())) {
-      error = 'Enter a valid email address.';
-    }
-    if (state.step == 3 && state.password.length < 12) {
-      error = 'Use at least 12 characters.';
-    }
-    if (error != null) {
-      state = state.copyWith(error: error);
-      return;
-    }
+    final error = switch (state.step) {
+      0 when !state.ageValid => 'Enter an age between 1 and 120.',
+      1 when !state.nameValid => 'Enter your name (up to 60 characters).',
+      2 when !state.emailValid => 'Invalid email address',
+      3 when !state.passwordValid => 'Use at least 12 characters.',
+      _ => null,
+    };
+    if (error != null) return _fail(error);
     if (state.step < 3) {
-      state = state.copyWith(step: state.step + 1);
+      state = state.copyWith(step: state.step + 1, forward: true);
       return;
     }
     state = state.copyWith(busy: true);
-    await Future<void>.delayed(const Duration(milliseconds: 60));
-    if (_disposed) return;
-    error = ref
-        .read(previewControllerProvider.notifier)
-        .saveProfile(
-          '${state.first.trim()} ${state.last.trim()}'.trim(),
-          state.email,
-          register: true,
+    final result = await ref
+        .read(accountRepositoryProvider)
+        .createProfile(
+          NewProfile(
+            age: int.parse(state.age.trim()),
+            firstName: state.first.trim(),
+            lastName: state.last.trim(),
+            email: state.email.trim(),
+            password: state.password,
+          ),
         );
+    if (_disposed) return;
     state = state.copyWith(
       busy: false,
-      error: error,
-      step: error == null ? 4 : 3,
-      password: error == null ? '' : null,
+      error: result,
+      step: result == null ? 4 : 3,
+      forward: true,
+      password: result == null ? '' : null,
+      errorTick: result == null ? null : state.errorTick + 1,
     );
   }
 }
