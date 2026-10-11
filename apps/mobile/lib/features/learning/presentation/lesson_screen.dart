@@ -14,6 +14,10 @@ import '../domain/learning_models.dart';
 import 'learning_visuals.dart';
 import '../data/english_explanations.dart';
 import 'spoken_exercise.dart';
+import 'exercises/match_pairs_exercise.dart';
+import 'widgets/lesson_choice_tile.dart';
+import 'widgets/lesson_sheets.dart';
+import 'widgets/token_fly_in.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({super.key});
@@ -27,6 +31,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   final _text = TextEditingController();
   String? _exerciseId;
   bool _backgroundPaused = false;
+  final _bankKeys = <String, GlobalKey>{};
   @override
   void initState() {
     super.initState();
@@ -108,6 +113,29 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     context.pop();
   }
 
+  Future<void> _showHeartsIntro() async {
+    final controller = ref.read(lessonControllerProvider.notifier);
+    controller.acknowledgeHeartsIntro();
+    await showHeartsIntroSheet(
+      context,
+      hearts: ref.read(lessonControllerProvider).hearts,
+    );
+  }
+
+  void _gotIt(LessonState state, LessonController controller) {
+    if (!state.outOfHearts) {
+      controller.next();
+      return;
+    }
+    showOutOfHeartsSheet(
+      context,
+      onEnd: () {
+        controller.abandon();
+        if (mounted) context.pop();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(lessonControllerProvider);
@@ -119,6 +147,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           HapticFeedback.lightImpact();
         } else {
           HapticFeedback.mediumImpact();
+          if (next.showHeartsIntro) _showHeartsIntro();
         }
       }
       if (next.stage == LessonStage.completed &&
@@ -177,9 +206,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                         ),
                         const SizedBox(width: 16),
                         LessonHeartCounter(
-                          hearts:
-                              (5 - (state.attempted - state.originalCorrect))
-                                  .clamp(0, 5),
+                          hearts: state.hearts,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -190,7 +217,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                '${(5 - (state.attempted - state.originalCorrect)).clamp(0, 5)}',
+                                '${state.hearts}',
                                 style: const TextStyle(
                                   color: LearningColors.red,
                                   fontSize: 17,
@@ -332,7 +359,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: exercise?.audioPairs == true
+                                  ? MainAxisAlignment.center
+                                  : MainAxisAlignment.spaceBetween,
                               children: [
                                 if (exercise?.hint != null)
                                   TextButton(
@@ -356,14 +385,17 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                     ),
                                   ),
                                 if (exercise != null &&
-                                    {
-                                      ExerciseKind.listenChoice,
-                                      ExerciseKind.dictation,
-                                    }.contains(exercise.kind))
+                                    (exercise.audioPairs ||
+                                        {
+                                          ExerciseKind.listenChoice,
+                                          ExerciseKind.dictation,
+                                        }.contains(exercise.kind)))
                                   Flexible(
                                     child: TextButton(
                                       onPressed: state.busy
                                           ? null
+                                          : exercise.audioPairs
+                                          ? controller.skipListening
                                           : controller.substituteMedia,
                                       child: Text(
                                         'CAN’T LISTEN NOW',
@@ -402,7 +434,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                               )
                             else
                               ReferenceButton(
-                                label: state.busy ? 'CHECKING…' : 'CHECK',
+                                label: state.busy
+                                    ? 'CHECKING…'
+                                    : exercise?.audioPairs == true
+                                    ? 'CONTINUE'
+                                    : 'CHECK',
                                 backgroundColor: LearningColors.green,
                                 onPressed: state.canCheck
                                     ? () {
@@ -425,7 +461,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                   bottom: 0,
                   child: LessonFeedbackEntrance(
                     key: ValueKey('${exercise!.id}:${state.retryPass}'),
-                    child: _feedback(exercise, state, controller),
+                    child: state.skipped
+                        ? SkipListeningPanel(
+                            onContinue: state.busy ? null : controller.next,
+                            onReport: _report,
+                          )
+                        : _feedback(exercise, state, controller),
                   ),
                 ),
             ],
@@ -478,7 +519,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                   );
                   return SizedBox(
                     width: width,
-                    child: LearningCard(
+                    child: LessonChoiceTile(
                       selected: state.selectedId == option.id,
                       correct: state.stage == LessonStage.feedback
                           ? state.correct
@@ -533,7 +574,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             for (final option in exercise.choices)
               Padding(
                 padding: const EdgeInsets.only(bottom: 12),
-                child: LearningCard(
+                child: LessonChoiceTile(
                   selected: state.selectedId == option.id,
                   correct: state.stage == LessonStage.feedback
                       ? state.correct
@@ -571,11 +612,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                 runSpacing: 9,
                 children: state.tokenIds
                     .map(
-                      (id) => _token(
-                        exercise.tokens.firstWhere((t) => t.id == id),
-                        () => controller.toggleToken(id),
-                        editable,
-                        true,
+                      (id) => TokenFlyIn(
+                        key: ValueKey('answer-$id'),
+                        originKey: _bankKeys[id],
+                        child: _token(
+                          exercise.tokens.firstWhere((t) => t.id == id),
+                          () => controller.toggleToken(id),
+                          editable,
+                          true,
+                        ),
                       ),
                     )
                     .toList(),
@@ -590,6 +635,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                 children: exercise.tokens
                     .map(
                       (token) => AnimatedOpacity(
+                        key: _bankKeys.putIfAbsent(token.id, GlobalKey.new),
                         duration: motionDuration(context, 120),
                         opacity: state.tokenIds.contains(token.id) ? .2 : 1,
                         child: _token(
@@ -606,62 +652,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           ],
         );
       case ExerciseKind.matchPairs:
-        return Column(
-          children: [
-            const SizedBox(height: 55),
-            for (final pair in exercise.pairs.entries)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 18),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: AnimatedOpacity(
-                        duration: motionDuration(context),
-                        opacity: state.matchedPairs.containsKey(pair.key)
-                            ? .3
-                            : 1,
-                        child: LearningCard(
-                          selected: state.selectedPairLeft == pair.key,
-                          onTap:
-                              editable &&
-                                  !state.matchedPairs.containsKey(pair.key)
-                              ? () => controller.selectPairLeft(pair.key)
-                              : null,
-                          child: Center(
-                            child: Text(
-                              pair.key,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: AnimatedOpacity(
-                        duration: motionDuration(context),
-                        opacity: state.matchedPairs.containsValue(pair.value)
-                            ? .3
-                            : 1,
-                        child: LearningCard(
-                          onTap:
-                              editable &&
-                                  !state.matchedPairs.containsValue(pair.value)
-                              ? () => controller.selectPairRight(pair.value)
-                              : null,
-                          child: Center(
-                            child: Text(
-                              pair.value,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
+        return MatchPairsExercise(
+          key: ValueKey('${exercise.id}:${state.retryPass}'),
+          exercise: exercise,
+          matched: state.matchedPairs,
+          selectedLeft: state.selectedPairLeft,
+          editable: editable,
+          onLeft: controller.selectPairLeft,
+          onRight: controller.selectPairRight,
         );
       case ExerciseKind.speakRepeat:
         return SpeakingWordsExercise(
@@ -891,7 +889,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                 ? LearningColors.green
                 : LearningColors.red,
             edgeColor: color,
-            onPressed: state.busy ? null : controller.next,
+            onPressed: state.busy
+                ? null
+                : correct
+                ? controller.next
+                : () => _gotIt(state, controller),
           ),
         ],
       ),

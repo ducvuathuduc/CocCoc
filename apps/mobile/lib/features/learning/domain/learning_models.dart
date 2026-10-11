@@ -36,6 +36,7 @@ class Exercise {
     this.pairs = const <String, String>{},
     this.hint,
     this.meaning,
+    this.audioPairs = false,
   });
 
   final String id;
@@ -49,6 +50,9 @@ class Exercise {
   final Map<String, String> pairs;
   final String? hint;
   final String? meaning;
+
+  /// Match-pairs variant whose left column plays audio clips (no text shown).
+  final bool audioPairs;
 
   Exercise copyWith({
     ExerciseKind? kind,
@@ -74,9 +78,13 @@ class Exercise {
       pairs: pairs ?? this.pairs,
       hint: hint ?? this.hint,
       meaning: meaning ?? this.meaning,
+      audioPairs: audioPairs,
     );
   }
 }
+
+/// Listening is paused for this long after "CAN'T LISTEN NOW" on audio pairs.
+const listeningSkipDuration = Duration(minutes: 15);
 
 class LessonAnswer {
   const LessonAnswer({
@@ -146,7 +154,12 @@ class LessonState {
     this.pendingMistakes = const [],
     this.nextMistakes = const [],
     this.resumeStage = LessonStage.answering,
+    this.heartsIntroSeen = false,
+    this.skipped = false,
+    this.heartsEnforced = false,
   });
+
+  static const maxHearts = 5;
 
   final LessonStage stage;
   final List<Exercise> exercises;
@@ -175,6 +188,23 @@ class LessonState {
   final int originalTotal;
   final List<Exercise> pendingMistakes, nextMistakes;
   final LessonStage resumeStage;
+
+  /// The one-time "each mistake costs 1 heart" sheet was acknowledged.
+  final bool heartsIntroSeen;
+
+  /// Hearts gate the lesson (intro sheet on first loss, stop at zero).
+  final bool heartsEnforced;
+
+  /// Current exercise was skipped via "CAN'T LISTEN NOW" (no heart cost).
+  final bool skipped;
+
+  int get hearts =>
+      (maxHearts - (attempted - originalCorrect)).clamp(0, maxHearts);
+
+  bool get outOfHearts => heartsEnforced && !isRetry && hearts == 0;
+
+  bool get showHeartsIntro =>
+      heartsEnforced && !heartsIntroSeen && !isRetry && correct == false;
 
   Exercise? get current =>
       index >= 0 && index < exercises.length ? exercises[index] : null;
@@ -242,8 +272,13 @@ class LessonState {
     bool? guest,
     bool? placement,
     DateTime? startedAt,
+    bool? heartsIntroSeen,
+    bool? skipped,
   }) {
     return LessonState(
+      heartsIntroSeen: heartsIntroSeen ?? this.heartsIntroSeen,
+      heartsEnforced: heartsEnforced,
+      skipped: skipped ?? this.skipped,
       originalTotal: originalTotal ?? this.originalTotal,
       pendingMistakes: List.unmodifiable(
         pendingMistakes ?? this.pendingMistakes,
