@@ -40,6 +40,7 @@ import 'features/progress/presentation/social_screens.dart';
 import 'features/account/presentation/account_screens.dart';
 import 'features/account/presentation/course_management_screen.dart';
 import 'features/account/presentation/password_change_screen.dart';
+import 'features/phone/presentation/phone_verification_screens.dart';
 import 'features/practice/presentation/practice_screens.dart';
 import 'features/practice/presentation/journey_screens.dart';
 import 'features/practice/presentation/challenge_intro.dart';
@@ -594,6 +595,18 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/settings/password',
           builder: (context, state) => const PasswordChangeScreen(),
+        ),
+        GoRoute(
+          path: phoneRoute,
+          builder: (context, state) => const PhoneNumberScreen(),
+        ),
+        GoRoute(
+          path: phoneCountryRoute,
+          builder: (context, state) => const PhoneCountryScreen(),
+        ),
+        GoRoute(
+          path: phoneCodeRoute,
+          builder: (context, state) => const PhoneCodeScreen(),
         ),
         GoRoute(
           path: '/settings/preferences',
