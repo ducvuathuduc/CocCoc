@@ -5,6 +5,9 @@ import '../data/journey_repository.dart';
 import '../data/stories_repository.dart';
 import '../domain/journey_models.dart';
 import '../../progress/application/preview_controller.dart';
+import '../../roleplay/application/roleplay_controller.dart';
+import '../../roleplay/data/roleplay_repository.dart';
+import '../../roleplay/domain/roleplay_models.dart';
 
 final _journeyProviders = {
   for (final kind in ['story', 'radio', 'roleplay', 'rapid', 'legendary'])
@@ -32,6 +35,32 @@ class JourneyController extends Notifier<JourneyState> {
     return true;
   }
 
+  /// Roleplay scenario this session plays (library pick or the restaurant).
+  RoleplayScenario get scenario {
+    final repo = ref.read(roleplayRepositoryProvider);
+    return repo.scenario(state.scenarioId ?? restaurantScenarioId) ??
+        repo.scenario(restaurantScenarioId)!;
+  }
+
+  List<RoleplayLine> get roleplayLines => scenario.lines;
+
+  /// Selects a library scenario (null returns to the practice-hub restaurant).
+  bool pickScenario(String? id) {
+    if (kind != 'roleplay') return false;
+    if (id != null &&
+        ref.read(roleplayRepositoryProvider).scenario(id) == null) {
+      return false;
+    }
+    state = JourneyState(scenarioId: id);
+    return true;
+  }
+
+  void dismissIntro() {
+    if (kind == 'roleplay' && state.started) {
+      state = state.copyWith(introSeen: true);
+    }
+  }
+
   JourneyQuestion? get question => state.complete
       ? null
       : questions[state.step.clamp(0, questions.length - 1)];
@@ -51,7 +80,11 @@ class JourneyController extends Notifier<JourneyState> {
     };
   }
 
-  void start() => state = JourneyState(started: true, storyId: state.storyId);
+  void start() => state = JourneyState(
+    started: true,
+    storyId: state.storyId,
+    scenarioId: state.scenarioId,
+  );
   void continueReading() {
     if (state.started &&
         !state.complete &&
@@ -174,12 +207,18 @@ class JourneyController extends Notifier<JourneyState> {
       return;
     }
     final step = state.step + 1;
+    final complete = step >= roleplayLines.length;
     state = state.copyWith(
       step: step,
       replies: [...state.replies, value],
       draft: '',
       clearError: true,
-      complete: step >= englishRoleplay.length,
+      complete: complete,
     );
+    if (complete) {
+      ref
+          .read(roleplayLibraryControllerProvider.notifier)
+          .record(scenario.id, roleplayWordCount(state.replies));
+    }
   }
 }

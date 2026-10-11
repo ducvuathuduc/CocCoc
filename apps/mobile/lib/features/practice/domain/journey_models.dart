@@ -31,7 +31,14 @@ class JourneyState {
     this.remaining = 105,
     this.expired = false,
     this.milestoneSeen = false,
+    this.scenarioId,
+    this.introSeen = false,
   });
+
+  /// Roleplay scenario picked from the Roleplay library. Null keeps the
+  /// original practice-hub restaurant flow.
+  final String? scenarioId;
+  final bool introSeen;
   final bool started, complete, expired, milestoneSeen;
   final int remaining;
   final int step, correct, attempted;
@@ -59,7 +66,10 @@ class JourneyState {
     int? remaining,
     bool? expired,
     bool? milestoneSeen,
+    bool? introSeen,
   }) => JourneyState(
+    scenarioId: scenarioId,
+    introSeen: introSeen ?? this.introSeen,
     storyId: storyId ?? this.storyId,
     started: started ?? this.started,
     complete: complete ?? this.complete,

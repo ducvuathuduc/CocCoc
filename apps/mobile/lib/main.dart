@@ -53,6 +53,7 @@ import 'features/account/presentation/avatar_builder_screen.dart';
 import 'features/onboarding/presentation/welcome_screen.dart';
 import 'features/progress/presentation/profile_lists_screen.dart';
 import 'features/progress/application/profile_lists_controller.dart';
+import 'features/roleplay/presentation/roleplay_screens.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -553,6 +554,24 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/journeys/roleplay/feedback',
           builder: (context, state) => const RoleplayFeedbackScreen(),
+        ),
+        GoRoute(
+          path: '/roleplay',
+          builder: (context, state) => const RoleplayLibraryScreen(),
+        ),
+        GoRoute(
+          path: '/roleplay/topics/:id',
+          builder: (context, state) =>
+              RoleplayTopicScreen(topicId: state.pathParameters['id']!),
+        ),
+        GoRoute(
+          path: '/roleplay/scenarios/:id',
+          builder: (context, state) =>
+              RoleplayMaxIntroScreen(scenarioId: state.pathParameters['id']!),
+        ),
+        GoRoute(
+          path: '/roleplay/results',
+          builder: (context, state) => const RoleplayResultsScreen(),
         ),
         GoRoute(
           path: '/speaking/record',
