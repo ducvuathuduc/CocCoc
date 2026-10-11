@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/reference_art.dart';
+import '../domain/results_models.dart';
 
 /// Colors sampled (PIL getpixel) from docs/design/references/results/*.png;
 /// every value is listed in docs/design/qa/palette_from_refs.json.
@@ -27,6 +28,15 @@ abstract final class ResultsColors {
   static const streakMissed = Color(0xFFCF6E08); // 05 (890,1760)
   static const streakNumeralTop = Color(0xFFFFF6B9); // 05 (590,1050)
   static const streakShareEdge = Color(0xFFFFE0B3); // 05 (600,2230)
+  static const orange = Color(0xFFFF9601); // 07/09 flame, 09 title
+  static const bubbleBorder = Color(0xFFE7E5E7); // 07 bubble stroke
+  static const questTrack = Color(0xFF6F8BBB); // 10 (800,1520)
+  static const questFill = Color(0xFFCF3591); // 10 (400,1520)
+  static const questBarText = Color(0xFFFFFEFF); // 10 bar label
+  static const bannerEdge = Color(0xFF178EC8); // 13 banner lip
+  static const bannerDivider = Color(0xFF27AFF2); // 13 (946,400)
+  static const navDivider = Color(0xFFE7E5E7); // 13 (590,2272)
+  static const statInk = Color(0xFF989598); // 13 course level glyph
 }
 
 /// Graphics-only crops of results references; copy stays in data.
@@ -78,7 +88,86 @@ abstract final class ResultsArt {
     Rect.fromLTWH(308, 822, 564, 542),
   );
 
+  // results/07: calendar + Duo goal illustration.
+  static const streakGoal = ArtRegion(
+    'results-07',
+    Rect.fromLTWH(236, 1000, 784, 738),
+  );
+  // results/08: widget preview cards (previous, current, next).
+  static const widgetCards = {
+    WidgetCardState.previous: ArtRegion(
+      'results-08',
+      Rect.fromLTWH(0, 1180, 272, 438),
+    ),
+    WidgetCardState.current: ArtRegion(
+      'results-08',
+      Rect.fromLTWH(328, 1137, 524, 523),
+    ),
+    WidgetCardState.next: ArtRegion(
+      'results-08',
+      Rect.fromLTWH(909, 1181, 271, 434),
+    ),
+  };
+  // results/09: paired friend avatars and the small streak flame.
+  static const friendAvatars = ArtRegion(
+    'results-09',
+    Rect.fromLTWH(295, 1157, 586, 347),
+  );
+  static const friendFlame = ArtRegion(
+    'results-09',
+    Rect.fromLTWH(480, 1574, 102, 82),
+  );
+  // results/10: friends-quest stage (the progress bar is drawn natively on top).
+  static const friendsQuest = ArtRegion(
+    'results-10',
+    Rect.fromLTWH(149, 423, 882, 1187),
+  );
+  static const friendsQuestGem = ArtRegion(
+    'results-10',
+    Rect.fromLTWH(958, 222, 54, 80),
+  );
+  static const boostGem = ArtRegion(
+    'results-10',
+    Rect.fromLTWH(720, 2130, 50, 60),
+  );
+  // results/13: path return.
+  static const statFlag = ArtRegion(
+    'results-13',
+    Rect.fromLTWH(76, 216, 92, 74),
+  );
+  static const statFlame = ArtRegion(
+    'results-13',
+    Rect.fromLTWH(379, 216, 62, 74),
+  );
+  static const statGem = ArtRegion(
+    'results-13',
+    Rect.fromLTWH(621, 216, 60, 74),
+  );
+  static const statEnergy = ArtRegion(
+    'results-13',
+    Rect.fromLTWH(914, 216, 162, 74),
+  );
+  static const bannerGuide = ArtRegion(
+    'results-13',
+    Rect.fromLTWH(960, 345, 140, 250),
+  );
+  static const path = ArtRegion(
+    'results-13',
+    Rect.fromLTWH(0, 663, 1180, 1606),
+  );
+  static const nav = ArtRegion('results-13', Rect.fromLTWH(0, 2296, 1180, 180));
+
   static const files = ['results-04', 'results-05', 'results-11', 'results-12'];
+
+  /// Sources for results/07–10 and 13. Kept separate: each source is ~12 MB
+  /// decoded, so preloading all nine at once overflows the image cache.
+  static const extraFiles = [
+    'results-07',
+    'results-08',
+    'results-09',
+    'results-10',
+    'results-13',
+  ];
 }
 
 /// Duolingo-like motion timings for result screens (ms).

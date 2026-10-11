@@ -7,9 +7,17 @@ abstract class ResultsRepository {
   GemRewardResult gemReward();
   QuestProgressResult questProgress();
   LeagueRankResult leagueRank();
+
+  /// Optional celebrations: `null` skips that screen in the chain.
+  StreakGoalResult? streakGoal();
+  WidgetUnlockResult? widgetUnlock();
+  FriendStreakResult? friendStreak();
+  FriendsQuestResult? friendsQuest();
+  PathReturnResult pathReturn();
 }
 
-/// Archived Gummble "Completing a lesson" flow values (results/04, 05, 11, 12).
+/// Archived Gummble "Completing a lesson" flow values
+/// (results/04, 05, 07, 08, 09, 10, 11, 12, 13).
 class MockResultsRepository implements ResultsRepository {
   const MockResultsRepository();
 
@@ -119,5 +127,53 @@ class MockResultsRepository implements ResultsRepository {
         streak: 11,
       ),
     ],
+  );
+
+  @override
+  StreakGoalResult? streakGoal() => const StreakGoalResult(
+    goalDays: 7,
+    message: 'I bet 7 days will be easy\npeasy! Right?',
+    continueLabel: 'I CAN DO IT',
+  );
+
+  @override
+  WidgetUnlockResult? widgetUnlock() => const WidgetUnlockResult(
+    lead: 'You unlocked ',
+    highlight: 'Sleepytime Duo',
+    tail: '\non the widget. Keep going!',
+    continueLabel: 'CONTINUE',
+    cards: [
+      StreakWidgetCard(days: 4, state: WidgetCardState.previous),
+      StreakWidgetCard(days: 5, state: WidgetCardState.current),
+      StreakWidgetCard(days: 6, state: WidgetCardState.next),
+    ],
+  );
+
+  @override
+  FriendStreakResult? friendStreak() => const FriendStreakResult(
+    friendName: 'Sam Lee',
+    days: 1,
+    titlePrefix: 'Friend Streak with',
+    continueLabel: 'CONTINUE',
+  );
+
+  @override
+  FriendsQuestResult? friendsQuest() => const FriendsQuestResult(
+    gemBalance: 631,
+    current: 16,
+    target: 25,
+    daysLeft: 3,
+    boostLabel: 'SEND XP BOOST',
+    boostCost: 20,
+    laterLabel: 'MAYBE LATER',
+  );
+
+  @override
+  PathReturnResult pathReturn() => const PathReturnResult(
+    courseLevel: 10,
+    streak: 5,
+    gems: 950,
+    sectionLabel: 'SECTION 2, UNIT 1',
+    unitTitle: 'Use gender and\nnumber agreement',
   );
 }

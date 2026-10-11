@@ -12,42 +12,6 @@ import 'results_widgets.dart';
 
 void _defaultContinue(BuildContext context) => Navigator.of(context).maybePop();
 
-class _ResultsFrame extends StatelessWidget {
-  const _ResultsFrame({
-    required this.body,
-    required this.footer,
-    this.background = ResultsColors.surface,
-    this.bottom = 54,
-  });
-  final Widget body;
-  final Widget footer;
-  final Color background;
-  final double bottom;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: background,
-    body: SafeArea(
-      child: Column(
-        children: [
-          Expanded(child: body),
-          Padding(
-            padding: EdgeInsets.fromLTRB(18, 12, 18, bottom),
-            child: footer,
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-const _headline = TextStyle(
-  fontSize: 26.8,
-  height: 1.12,
-  fontWeight: FontWeight.w700,
-  color: ResultsColors.ink,
-);
-
 /// results/04 — "+50 gems" chest reward.
 class GemRewardScreen extends ConsumerWidget {
   const GemRewardScreen({this.onContinue, super.key});
@@ -56,7 +20,7 @@ class GemRewardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(gemRewardResultProvider);
-    return _ResultsFrame(
+    return ResultsFrame(
       footer: ResultsPrimaryButton(
         label: result.continueLabel,
         onPressed: onContinue ?? () => _defaultContinue(context),
@@ -95,7 +59,7 @@ class GemRewardScreen extends ConsumerWidget {
                   child: Text(
                     result.message,
                     textAlign: TextAlign.center,
-                    style: _headline,
+                    style: resultsHeadline,
                   ),
                 ),
               ),
@@ -122,7 +86,7 @@ class QuestProgressResultScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(questProgressResultProvider);
-    return _ResultsFrame(
+    return ResultsFrame(
       footer: ResultsPrimaryButton(
         label: result.continueLabel,
         onPressed: onContinue ?? () => _defaultContinue(context),
@@ -228,7 +192,7 @@ class _LeagueRankResultScreenState
         .where((row) => row.rank > result.promotionCutoff)
         .toList();
     var index = 0;
-    return _ResultsFrame(
+    return ResultsFrame(
       bottom: 63,
       footer: ResultsPrimaryButton(
         label: result.continueLabel,
@@ -246,7 +210,7 @@ class _LeagueRankResultScreenState
             child: Text(
               result.message,
               textAlign: TextAlign.center,
-              style: _headline.copyWith(fontSize: 26.3, height: 1.33),
+              style: resultsHeadline.copyWith(fontSize: 26.3, height: 1.33),
             ),
           ),
           const SizedBox(height: 27),
@@ -283,13 +247,18 @@ class _LeagueRankResultScreenState
                                   height: 19,
                                 ),
                                 const SizedBox(width: 10),
-                                Text(
-                                  result.promotionLabel,
-                                  style: const TextStyle(
-                                    fontSize: 21.5,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: 1.1,
-                                    color: ResultsColors.promotion,
+                                Flexible(
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      result.promotionLabel,
+                                      style: const TextStyle(
+                                        fontSize: 21.5,
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 1.1,
+                                        color: ResultsColors.promotion,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -334,7 +303,7 @@ class StreakExtendedScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(streakExtendedResultProvider);
-    return _ResultsFrame(
+    return ResultsFrame(
       background: ResultsColors.streakBackground,
       bottom: 56,
       footer: Column(

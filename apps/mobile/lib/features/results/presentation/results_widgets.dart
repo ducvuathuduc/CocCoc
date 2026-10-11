@@ -396,19 +396,212 @@ class ResultsPrimaryButton extends StatelessWidget {
   const ResultsPrimaryButton({
     required this.label,
     required this.onPressed,
+    this.content,
     super.key,
   });
   final String label;
   final VoidCallback onPressed;
 
+  /// Replaces the plain label (e.g. label + gem + cost).
+  final Widget? content;
+
   @override
   Widget build(BuildContext context) => ReferenceButton(
-    label: label,
+    label: content == null ? label : '',
+    leading: content,
     onPressed: onPressed,
     minHeight: 48,
     backgroundColor: ResultsColors.blue,
     edgeColor: ResultsColors.blueEdge,
     foregroundColor: ResultsColors.surface,
     textStyle: const TextStyle(fontSize: 18),
+  );
+}
+
+/// Shared scaffold: scrollable body with a pinned footer CTA.
+class ResultsFrame extends StatelessWidget {
+  const ResultsFrame({
+    required this.body,
+    required this.footer,
+    this.background = ResultsColors.surface,
+    this.bottom = 54,
+    super.key,
+  });
+  final Widget body;
+  final Widget footer;
+  final Color background;
+  final double bottom;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: background,
+    body: SafeArea(
+      child: Column(
+        children: [
+          Expanded(child: body),
+          Padding(
+            padding: EdgeInsets.fromLTRB(18, 12, 18, bottom),
+            child: footer,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+const resultsHeadline = TextStyle(
+  fontSize: 26.8,
+  height: 1.12,
+  fontWeight: FontWeight.w700,
+  color: ResultsColors.ink,
+);
+
+/// Flat blue link CTA ("MAYBE LATER") under a primary button.
+class ResultsLinkButton extends StatelessWidget {
+  const ResultsLinkButton({
+    required this.label,
+    required this.onPressed,
+    super.key,
+  });
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    height: 48,
+    width: double.infinity,
+    child: TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        foregroundColor: ResultsColors.blue,
+        textStyle: const TextStyle(
+          fontFamily: 'DuolingoSans',
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          letterSpacing: .8,
+        ),
+      ),
+      child: Text(label),
+    ),
+  );
+}
+
+/// Rounded speech bubble with a tail pointing down at the illustration.
+class ResultsSpeechBubble extends StatelessWidget {
+  const ResultsSpeechBubble({required this.text, this.tailX = 233, super.key});
+  final String text;
+  final double tailX;
+
+  @override
+  Widget build(BuildContext context) => CustomPaint(
+    painter: _ResultsBubblePainter(tailX),
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(17, 20, 17, 34),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 21,
+          height: 1.4,
+          color: ResultsColors.ink,
+        ),
+      ),
+    ),
+  );
+}
+
+class _ResultsBubblePainter extends CustomPainter {
+  _ResultsBubblePainter(this.tailX);
+  final double tailX;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const tail = 14.0;
+    final body = RRect.fromRectAndRadius(
+      Rect.fromLTWH(1, 1, size.width - 2, size.height - tail - 2),
+      const Radius.circular(16),
+    );
+    final path = Path()
+      ..addRRect(body)
+      ..moveTo(tailX - 13, body.bottom)
+      ..lineTo(tailX, body.bottom + tail)
+      ..lineTo(tailX + 3, body.bottom)
+      ..close();
+    canvas.drawPath(path, Paint()..color = ResultsColors.surface);
+    final stroke = Paint()
+      ..color = ResultsColors.bubbleBorder
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    canvas.drawPath(Path()..addRRect(body), stroke);
+    canvas.drawRect(
+      Rect.fromLTWH(tailX - 12, body.bottom - 1.5, 14, 3),
+      Paint()..color = ResultsColors.surface,
+    );
+    canvas.drawPath(
+      Path()
+        ..moveTo(tailX - 13, body.bottom)
+        ..lineTo(tailX, body.bottom + tail)
+        ..lineTo(tailX + 3, body.bottom),
+      stroke,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_ResultsBubblePainter oldDelegate) =>
+      oldDelegate.tailX != tailX;
+}
+
+/// Friends-quest bar: pink fill over a slate track with a centered count.
+class FriendsQuestBar extends StatelessWidget {
+  const FriendsQuestBar({
+    required this.fraction,
+    required this.label,
+    this.delayMs = 0,
+    super.key,
+  });
+  final double fraction;
+  final String label;
+  final int delayMs;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    label: 'Friends Quest progress $label',
+    excludeSemantics: true,
+    child: DelayedMotion(
+      delayMs: delayMs,
+      durationMs: ResultsMotion.fill,
+      builder: (context, t, _) => LayoutBuilder(
+        builder: (context, constraints) {
+          final h = constraints.maxHeight;
+          return Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: ResultsColors.questTrack,
+                  borderRadius: BorderRadius.circular(h / 2),
+                ),
+              ),
+              Container(
+                width: math.max(h, constraints.maxWidth * fraction * t),
+                decoration: BoxDecoration(
+                  color: ResultsColors.questFill,
+                  borderRadius: BorderRadius.circular(h / 2),
+                ),
+              ),
+              Center(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: h * .62,
+                    height: 1,
+                    fontWeight: FontWeight.w700,
+                    color: ResultsColors.questBarText,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ),
   );
 }

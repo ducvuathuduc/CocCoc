@@ -22,6 +22,10 @@ import 'features/progress/application/extended_controller.dart';
 import 'features/learning/presentation/lesson_screen.dart';
 import 'features/learning/presentation/explanation_screen.dart';
 import 'features/learning/presentation/lesson_results.dart';
+import 'features/learning/application/learning_controller.dart';
+import 'features/call/presentation/video_call_screen.dart';
+import 'features/results/presentation/results_chain.dart';
+import 'features/results/presentation/results_extra_screens.dart';
 import 'features/learning/presentation/session_entry.dart';
 import 'features/progress/presentation/hub_screens.dart';
 import 'features/shop/presentation/shop_screen.dart';
@@ -289,6 +293,24 @@ class _AppState extends ConsumerState<_App> {
           builder: (context, state) => const LessonResults(),
         ),
         GoRoute(
+          path: '/results/:completionId/rewards',
+          builder: (context, state) {
+            final receipt = ref.read(lessonControllerProvider).receipt;
+            return ResultsChainScreen(
+              streakGrew: state.uri.queryParameters['streak'] == '1',
+              gemsEarned: (receipt?.gems ?? 0) > 0,
+              guest: receipt?.guest ?? false,
+              onFinished: () => context.go('/home'),
+              onCreateProfile: () => context.go('/auth/register'),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/path-return',
+          builder: (context, state) =>
+              PathReturnScreen(onOpenPath: () => context.go('/home')),
+        ),
+        GoRoute(
           path: '/courses',
           builder: (context, state) => const CoursesScreen(),
         ),
@@ -538,7 +560,7 @@ class _AppState extends ConsumerState<_App> {
         ),
         GoRoute(
           path: '/speaking/call',
-          builder: (context, state) => const SpeakingCallScreen(),
+          builder: (context, state) => const VideoCallScreen(),
         ),
         GoRoute(
           path: '/speaking/result/:id',

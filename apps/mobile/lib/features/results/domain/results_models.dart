@@ -120,3 +120,99 @@ class LeagueRankResult {
 
   LeagueRankRow? get user => rows.where((row) => row.isUser).firstOrNull;
 }
+
+/// results/07: streak goal challenge ("I bet 7 days will be easy peasy!").
+class StreakGoalResult {
+  const StreakGoalResult({
+    required this.goalDays,
+    required this.message,
+    required this.continueLabel,
+  });
+  final int goalDays;
+  final String message;
+  final String continueLabel;
+}
+
+enum WidgetCardState { previous, current, next }
+
+class StreakWidgetCard {
+  const StreakWidgetCard({required this.days, required this.state});
+  final int days;
+  final WidgetCardState state;
+}
+
+/// results/08: home-screen widget art unlocked by the streak.
+class WidgetUnlockResult {
+  const WidgetUnlockResult({
+    required this.lead,
+    required this.highlight,
+    required this.tail,
+    required this.cards,
+    required this.continueLabel,
+  });
+  final String lead;
+  final String highlight;
+  final String tail;
+  final List<StreakWidgetCard> cards;
+  final String continueLabel;
+
+  String get message => '$lead$highlight$tail';
+}
+
+/// results/09: friend streak kept alive with a named friend.
+class FriendStreakResult {
+  const FriendStreakResult({
+    required this.friendName,
+    required this.days,
+    required this.titlePrefix,
+    required this.continueLabel,
+  });
+  final String friendName;
+  final int days;
+  final String titlePrefix;
+  final String continueLabel;
+
+  String get title => '$titlePrefix\n$friendName';
+}
+
+/// results/10: shared Friends Quest progress with an XP boost offer.
+class FriendsQuestResult {
+  const FriendsQuestResult({
+    required this.gemBalance,
+    required this.current,
+    required this.target,
+    required this.daysLeft,
+    required this.boostLabel,
+    required this.boostCost,
+    required this.laterLabel,
+  });
+  final int gemBalance;
+  final int current;
+  final int target;
+  final int daysLeft;
+  final String boostLabel;
+  final int boostCost;
+  final String laterLabel;
+
+  int get remaining => (target - current).clamp(0, target);
+  double get fraction =>
+      target <= 0 ? 0 : (current / target).clamp(0, 1).toDouble();
+  String get message =>
+      '$daysLeft days left! Do $remaining more lessons to\nfinish this Friends Quest.';
+}
+
+/// results/13: the path the learner returns to after the result chain.
+class PathReturnResult {
+  const PathReturnResult({
+    required this.courseLevel,
+    required this.streak,
+    required this.gems,
+    required this.sectionLabel,
+    required this.unitTitle,
+  });
+  final int courseLevel;
+  final int streak;
+  final int gems;
+  final String sectionLabel;
+  final String unitTitle;
+}

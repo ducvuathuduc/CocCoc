@@ -371,8 +371,22 @@ class LessonResults extends ConsumerWidget {
                           : LearningColors.blueDark,
                       onPressed: () async {
                         if (step == 0) {
+                          final before = ref.read(learningStateProvider).streak;
                           await controller.claim();
-                          if (context.mounted) next();
+                          if (!context.mounted) return;
+                          final router = GoRouter.maybeOf(context);
+                          if (router == null) {
+                            next();
+                            return;
+                          }
+                          // Duolingo order: streak → gems/quests → league,
+                          // then the guest create-profile prompt.
+                          final grew =
+                              ref.read(learningStateProvider).streak > before;
+                          router.go(
+                            '/results/${receipt.id}/rewards'
+                            '${grew ? '?streak=1' : ''}',
+                          );
                         } else if (step == 5) {
                           next();
                           context.push('/friends');
