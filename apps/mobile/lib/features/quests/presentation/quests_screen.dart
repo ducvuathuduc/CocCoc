@@ -171,26 +171,7 @@ class QuestsScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (activeSection == QuestSectionType.friends) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('FRIENDS QUEST', style: sectionStyle),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.timer_outlined,
-                            color: ReferenceColors.disabled,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            questState.friendsQuest.timeRemaining,
-                            style: sectionStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  _TimedHeader(label: 'FRIENDS QUEST', time: questState.friendsQuest.timeRemaining),
                   const SizedBox(height: 16),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
@@ -218,55 +199,16 @@ class QuestsScreen extends ConsumerWidget {
                     secondaryColor: const Color(0xFF75214A),
                   ),
                   const SizedBox(height: 18),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 6,
-                            backgroundColor: Color(0xFFBC418A),
-                          ),
-                          SizedBox(width: 12),
-                          Text('You', style: headingStyle),
-                        ],
-                      ),
-                      Text(
-                        '${questState.friendsQuest.userLessons} lessons',
-                        style: const TextStyle(
-                          fontSize: 19,
-                          color: ReferenceColors.disabled,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
+                  _LessonCountRow(
+                    name: 'You',
+                    dot: const Color(0xFFBC418A),
+                    lessons: questState.friendsQuest.userLessons,
                   ),
                   const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 6,
-                            backgroundColor: Color(0xFF75214A),
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            questState.friendsQuest.friendName,
-                            style: headingStyle,
-                          ),
-                        ],
-                      ),
-                      Text(
-                        '${questState.friendsQuest.friendLessons} lessons',
-                        style: const TextStyle(
-                          fontSize: 19,
-                          color: ReferenceColors.disabled,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
+                  _LessonCountRow(
+                    name: questState.friendsQuest.friendName,
+                    dot: const Color(0xFF75214A),
+                    lessons: questState.friendsQuest.friendLessons,
                   ),
                   const SizedBox(height: 20),
                   if (questState.friendsQuest.isCompleted)
@@ -315,26 +257,7 @@ class QuestsScreen extends ConsumerWidget {
                       ],
                     ),
                 ] else ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('WEEKEND QUEST', style: sectionStyle),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.timer_outlined,
-                            color: ReferenceColors.disabled,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            questState.weekendQuest.timeRemaining,
-                            style: sectionStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  _TimedHeader(label: 'WEEKEND QUEST', time: questState.weekendQuest.timeRemaining),
                   const SizedBox(height: 16),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
@@ -363,26 +286,7 @@ class QuestsScreen extends ConsumerWidget {
                 const Divider(color: ReferenceColors.border, thickness: 2),
                 const SizedBox(height: 24),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('DAILY QUESTS', style: sectionStyle),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.timer_outlined,
-                          color: ReferenceColors.disabled,
-                          size: 16,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          questState.dailyTimeRemaining,
-                          style: sectionStyle,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                _TimedHeader(label: 'DAILY QUESTS', time: questState.dailyTimeRemaining),
                 const SizedBox(height: 20),
 
                 for (final quest in questState.dailyQuests)
@@ -396,6 +300,103 @@ class QuestsScreen extends ConsumerWidget {
           SizedBox(height: bottomInset + 20),
         ],
       ),
+    );
+  }
+}
+
+/// Section label + countdown. Both sides shrink with an ellipsis so large
+/// accessibility text never overflows; at 1x they keep their natural width.
+class _TimedHeader extends StatelessWidget {
+  const _TimedHeader({required this.label, required this.time});
+
+  final String label;
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Text(
+            label,
+            style: sectionStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Flexible(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.timer_outlined,
+                color: ReferenceColors.disabled,
+                size: 16,
+              ),
+              const SizedBox(width: 4),
+              Flexible(
+                child: Text(
+                  time,
+                  style: sectionStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LessonCountRow extends StatelessWidget {
+  const _LessonCountRow({
+    required this.name,
+    required this.dot,
+    required this.lessons,
+  });
+
+  final String name;
+  final Color dot;
+  final int lessons;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(radius: 6, backgroundColor: dot),
+              const SizedBox(width: 12),
+              Flexible(
+                child: Text(
+                  name,
+                  style: headingStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          child: Text(
+            '$lessons lessons',
+            style: const TextStyle(
+              fontSize: 19,
+              color: ReferenceColors.disabled,
+              fontWeight: FontWeight.w700,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }
