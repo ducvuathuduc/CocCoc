@@ -1,5 +1,6 @@
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/account/application/avatar_controller.dart';
+import 'package:cocenglish/features/account/data/avatar_assets.dart';
 import 'package:cocenglish/features/account/presentation/avatar_builder_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
