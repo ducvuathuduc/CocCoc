@@ -5,6 +5,7 @@ import 'package:cocenglish/features/progress/application/preview_controller.dart
 import 'package:cocenglish/features/progress/presentation/streak_widgets_screen.dart';
 import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/features/notifications/presentation/notification_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -60,8 +61,8 @@ void main() {
     await t.pumpAndSettle();
 
     await open(t, 'Notifications');
-    await open(t, 'Practice reminders');
-    expect(find.byType(ReminderScreen), findsOneWidget);
+    await open(t, 'Reminders');
+    expect(find.byType(NotificationCategoryScreen), findsOneWidget);
     router.pop();
     await t.pumpAndSettle();
     router.pop();
