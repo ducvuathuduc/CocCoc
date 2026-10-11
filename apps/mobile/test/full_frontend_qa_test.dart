@@ -18,6 +18,7 @@ import 'package:cocenglish/features/progress/presentation/hub_screens.dart';
 import 'package:cocenglish/features/progress/presentation/streak_screen.dart';
 import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -215,6 +216,13 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
+      // The home path mascot loops forever when motion is allowed; this
+      // flow test only checks navigation, so run it with reduced motion.
+      tester.platformDispatcher.accessibilityFeaturesTestValue =
+          const FakeAccessibilityFeatures(disableAnimations: true);
+      addTearDown(
+        tester.platformDispatcher.clearAccessibilityFeaturesTestValue,
+      );
       await tester.pumpWidget(
         MainApp(
           initial: OnboardingState(
@@ -226,9 +234,19 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Shop'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('GET FOR 200 GEMS'));
+      // Mock wallet holds 1035 gems; the 5-pack timer boost costs 1800.
+      await tester.scrollUntilVisible(
+        find.text('1800'),
+        300,
+        scrollable: find
+            .descendant(
+              of: find.byType(ShopScreen),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('GET FOR 200 GEMS'));
+      await tester.tap(find.text('1800'));
       await tester.pumpAndSettle();
       expect(find.text('Not enough gems'), findsOneWidget);
       await tester.tap(find.text('GOT IT'));
@@ -271,15 +289,15 @@ void main() {
     await tester.pumpAndSettle();
     expect(
       find.text(
-        'Earn 30 quest points this month\nto claim your October Badge!',
+        'Earn 30 quest points this month\nto claim your December Badge!',
       ),
       findsOneWidget,
     );
-    expect(find.text('Earn 20 XP'), findsNothing);
+    expect(find.text('Score 90% in 1 lesson'), findsNothing);
     await tester.tap(find.text('CONTINUE'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Earn 20 XP'));
-    expect(find.text('Earn 20 XP'), findsOneWidget);
+    await tester.ensureVisible(find.text('Score 90% in 1 lesson'));
+    expect(find.text('Score 90% in 1 lesson'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
     await tester.pumpWidget(app());
     await tester.pumpAndSettle();

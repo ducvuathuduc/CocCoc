@@ -94,16 +94,35 @@ class PreviewController extends Notifier<PreviewState> {
     return true;
   }
 
+  static const shopClaimPrefix = 'shop-';
+  bool shopRewardClaimed(String offerId) =>
+      state.claims.contains('$shopClaimPrefix$offerId');
+
+  /// Opens a Shop special-offer chest once and credits its gems.
+  bool claimShopReward(String offerId, int gems) {
+    final key = '$shopClaimPrefix$offerId';
+    if (offerId.isEmpty || gems <= 0 || state.claims.contains(key)) {
+      return false;
+    }
+    state = state.copyWith(
+      bonusGems: state.bonusGems + gems,
+      claims: {...state.claims, key},
+    );
+    return true;
+  }
+
+  static const maxFreezes = 2;
+
   bool buyFreeze(String id) {
     if (id.isEmpty ||
-        _wallet < 200 ||
-        state.freezes >= 2 ||
+        _wallet < 425 ||
+        state.freezes >= maxFreezes ||
         state.purchases.contains(id)) {
       return false;
     }
     state = state.copyWith(
       freezes: state.freezes + 1,
-      spentGems: state.spentGems + 200,
+      spentGems: state.spentGems + 425,
       purchases: {...state.purchases, id},
     );
     return true;

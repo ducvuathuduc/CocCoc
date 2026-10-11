@@ -15,6 +15,13 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
+      // The path's idle loops never settle; reduced motion keeps
+      // pumpAndSettle meaningful through the lesson and result chain.
+      tester.platformDispatcher.accessibilityFeaturesTestValue =
+          const FakeAccessibilityFeatures(disableAnimations: true);
+      addTearDown(
+        tester.platformDispatcher.clearAccessibilityFeaturesTestValue,
+      );
       await tester.pumpWidget(
         MainApp(
           initial: OnboardingState(
@@ -76,13 +83,15 @@ void main() {
       expect(c.read(learningStateProvider).xp, 20);
       await c.read(lessonControllerProvider.notifier).claim();
       expect(c.read(learningStateProvider).xp, 20);
-      for (var i = 0; i < 2; i++) {
-        await tapText('CONTINUE');
-      }
-      await tapText('I’M COMMITTED');
-      await tapText('CONTINUE');
-      await tapText('MAYBE LATER');
-      await tapText('NOT NOW');
+      // Duolingo result chain (results/05, 07–12) via the app router.
+      await tapText('CONTINUE'); // streak extended
+      await tapText('I CAN DO IT'); // streak goal
+      await tapText('CONTINUE'); // widget unlocked
+      await tapText('CONTINUE'); // friend streak
+      await tapText('CONTINUE'); // gems
+      await tapText('CONTINUE'); // daily quests
+      await tapText('MAYBE LATER'); // friends quest
+      await tapText('I CAN DO IT'); // league
       expect(find.text('Use basic phrases'), findsOneWidget);
       expect(c.read(learningStateProvider).currentNode, 1);
       expect(tester.takeException(), isNull);
@@ -95,6 +104,9 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
+    tester.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures(disableAnimations: true);
+    addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
     await tester.pumpWidget(
       MainApp(
         initial: OnboardingState(

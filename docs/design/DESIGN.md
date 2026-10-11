@@ -48,6 +48,22 @@ Button press120ms downward2px; choice selection120ms; feedback panel160ms; path 
 
 Success/error sound≤300ms bundled and respects user toggle/system audio; haptic short on answer outcome and primary press, no redundant vibration every word token. Do not force sound during microphone recording. Correct/error panel announces via semantics and includes text/icon. Motion is decoration, never the only completion signal.
 
+2026-10-09 active mock lesson refinement: `LessonMotionTokens` in
+`apps/mobile/lib/core/design/lesson_motion.dart` owns the 16px track/inset
+highlight, 300ms ease-out fill, 250ms feedback entrance and 300ms damped heart
+shake. Feedback overlays stable exercise geometry and extends its color through
+the bottom safe inset. Each successful grade emits one light/correction medium
+haptic. Reduced motion displays the final state; backgrounding stops heart
+motion without replay. The timing values are authored UI targets; archived
+Gummble stills do not prove exact iOS timing. [Evidence](qa/UI_MASTER_LOG.md).
+
+The completion mock uses `RewardMotionTokens` for a 500ms ease-out count and
+600ms finite geometric confetti. It interpolates immutable receipt XP/accuracy
+and existing mock streak values without awarding from animation callbacks.
+Semantics retain final metrics. Reduced motion displays final counts; confetti
+stops on background and leaves Continue actionable. Original bundled character
+art is unchanged. Particle paths are authored motion approximations.
+
 ## Visual QA gate
 
 The current English mock frontend extends the core inventory with

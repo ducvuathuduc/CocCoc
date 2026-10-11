@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,12 +7,17 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/character_motion.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../../core/design/lesson_motion.dart';
 import '../application/learning_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../domain/learning_models.dart';
 import 'learning_visuals.dart';
 import '../data/english_explanations.dart';
 import 'spoken_exercise.dart';
+import 'exercises/match_pairs_exercise.dart';
+import 'widgets/lesson_choice_tile.dart';
+import 'widgets/lesson_sheets.dart';
+import 'widgets/token_fly_in.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({super.key});
@@ -25,6 +31,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   final _text = TextEditingController();
   String? _exerciseId;
   bool _backgroundPaused = false;
+  final _bankKeys = <String, GlobalKey>{};
   @override
   void initState() {
     super.initState();
@@ -106,11 +113,43 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     context.pop();
   }
 
+  Future<void> _showHeartsIntro() async {
+    final controller = ref.read(lessonControllerProvider.notifier);
+    controller.acknowledgeHeartsIntro();
+    await showHeartsIntroSheet(
+      context,
+      hearts: ref.read(lessonControllerProvider).hearts,
+    );
+  }
+
+  void _gotIt(LessonState state, LessonController controller) {
+    if (!state.outOfHearts) {
+      controller.next();
+      return;
+    }
+    showOutOfHeartsSheet(
+      context,
+      onEnd: () {
+        controller.abandon();
+        if (mounted) context.pop();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(lessonControllerProvider);
     final controller = ref.read(lessonControllerProvider.notifier);
     ref.listen(lessonControllerProvider, (previous, next) {
+      if (next.stage == LessonStage.feedback &&
+          previous?.stage == LessonStage.checking) {
+        if (next.correct == true) {
+          HapticFeedback.lightImpact();
+        } else {
+          HapticFeedback.mediumImpact();
+          if (next.showHeartsIntro) _showHeartsIntro();
+        }
+      }
       if (next.stage == LessonStage.completed &&
           previous?.stage != LessonStage.completed) {
         context.replace('/results/${next.receipt!.id}');
@@ -136,170 +175,193 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
-          child: Column(
+          bottom: false,
+          child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 7, 15, 4),
-                child: Row(
-                  children: [
-                    IconButton(
-                      tooltip: 'Exit lesson',
-                      onPressed: state.busy ? null : _exit,
-                      icon: const Icon(
-                        Icons.close_rounded,
-                        size: 32,
-                        color: ReferenceColors.disabled,
-                      ),
-                    ),
-                    Expanded(
-                      child: TweenAnimationBuilder<double>(
-                        tween: Tween(
-                          begin: 0,
-                          end: state.isRetry ? 1 : state.progress + .02,
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 7, 15, 4),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          tooltip: 'Exit lesson',
+                          onPressed: state.busy ? null : _exit,
+                          icon: const Icon(
+                            Icons.close_rounded,
+                            size: 32,
+                            color: ReferenceColors.disabled,
+                          ),
                         ),
-                        duration: motionDuration(context, 300),
-                        builder: (context, value, _) => LinearProgressIndicator(
-                          value: value.clamp(0, 1),
-                          minHeight: 16,
-                          borderRadius: BorderRadius.circular(16),
-                          backgroundColor: ReferenceColors.border,
-                          color: state.correctStreak >= 5
-                              ? LearningColors.orange
-                              : LearningColors.green,
+                        Expanded(
+                          child: LessonProgressBar(
+                            value: state.isRetry ? 1 : state.progress + .02,
+                            color: state.correctStreak >= 5
+                                ? LearningColors.orange
+                                : LearningColors.green,
+                            shineColor: state.correctStreak >= 5
+                                ? LessonMotionTokens.orangeShine
+                                : LessonMotionTokens.greenShine,
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    const ReferenceArt(
-                      LearningArt.heart,
-                      width: 26,
-                      height: 24,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${(5 - (state.attempted - state.originalCorrect)).clamp(0, 5)}',
-                      style: const TextStyle(
-                        color: LearningColors.red,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (exercise == null)
-                Expanded(
-                  child: Center(
-                    child: state.busy
-                        ? const CircularProgressIndicator()
-                        : Column(
+                        const SizedBox(width: 16),
+                        LessonHeartCounter(
+                          hearts: state.hearts,
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(state.error ?? 'Choose a lesson to start.'),
-                              TextButton(
-                                onPressed: () => controller.start(),
-                                child: const Text('TRY AGAIN'),
+                              const ReferenceArt(
+                                LearningArt.heart,
+                                width: 26,
+                                height: 24,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '${state.hearts}',
+                                style: const TextStyle(
+                                  color: LearningColors.red,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ],
                           ),
-                  ),
-                )
-              else
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) => SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: constraints.maxHeight - 26,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (state.correctStreak >= 5)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: Text(
-                                  '${state.correctStreak} IN A ROW',
-                                  style: const TextStyle(
-                                    color: LearningColors.orange,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                      ],
+                    ),
+                  ),
+                  if (exercise == null)
+                    Expanded(
+                      child: Center(
+                        child: state.busy
+                            ? const CircularProgressIndicator()
+                            : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    state.error ?? 'Choose a lesson to start.',
                                   ),
-                                ),
-                              ),
-                            if (state.isRetry)
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 12),
-                                child: Text(
-                                  'LET’S CORRECT YOUR MISTAKES',
-                                  style: TextStyle(
-                                    color: LearningColors.orange,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                  TextButton(
+                                    onPressed: () => controller.start(),
+                                    child: const Text('TRY AGAIN'),
                                   ),
-                                ),
+                                ],
                               ),
-                            if (exercise.kind == ExerciseKind.imageChoice)
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 15),
-                                child: Row(
+                      ),
+                    )
+                  else
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) =>
+                            SingleChildScrollView(
+                              padding: const EdgeInsets.fromLTRB(
+                                16,
+                                10,
+                                16,
+                                16,
+                              ),
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: constraints.maxHeight - 26,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Icon(
-                                      Icons.auto_awesome_rounded,
-                                      color: LearningColors.purple,
-                                      size: 23,
-                                    ),
-                                    SizedBox(width: 10),
+                                    if (state.correctStreak >= 5)
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 12,
+                                        ),
+                                        child: Text(
+                                          '${state.correctStreak} IN A ROW',
+                                          style: const TextStyle(
+                                            color: LearningColors.orange,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    if (state.isRetry)
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 12),
+                                        child: Text(
+                                          'LET’S CORRECT YOUR MISTAKES',
+                                          style: TextStyle(
+                                            color: LearningColors.orange,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    if (exercise.kind ==
+                                        ExerciseKind.imageChoice)
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 15),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.auto_awesome_rounded,
+                                              color: LearningColors.purple,
+                                              size: 23,
+                                            ),
+                                            SizedBox(width: 10),
+                                            Text(
+                                              'NEW WORD',
+                                              style: TextStyle(
+                                                color: LearningColors.purple,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     Text(
-                                      'NEW WORD',
-                                      style: TextStyle(
-                                        color: LearningColors.purple,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
+                                      exercise.title,
+                                      style: headingStyle.copyWith(
+                                        fontSize: 23,
                                       ),
                                     ),
+                                    const SizedBox(height: 19),
+                                    _renderer(
+                                      exercise,
+                                      state,
+                                      controller,
+                                      constraints.maxHeight,
+                                    ),
+                                    if (state.error != null)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: Text(
+                                          state.error!,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: LearningColors.red,
+                                          ),
+                                        ),
+                                      ),
                                   ],
                                 ),
                               ),
-                            Text(
-                              exercise.title,
-                              style: headingStyle.copyWith(fontSize: 23),
                             ),
-                            const SizedBox(height: 19),
-                            _renderer(
-                              exercise,
-                              state,
-                              controller,
-                              constraints.maxHeight,
-                            ),
-                            if (state.error != null)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: Text(
-                                  state.error!,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: LearningColors.red,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
                       ),
                     ),
-                  ),
-                ),
-              _LessonFooterTransition(
-                child: feedback
-                    ? _feedback(exercise!, state, controller)
-                    : Padding(
+                  Visibility(
+                    visible: !feedback,
+                    maintainSize: true,
+                    maintainState: true,
+                    maintainAnimation: true,
+                    child: SafeArea(
+                      top: false,
+                      child: Padding(
                         padding: const EdgeInsets.fromLTRB(16, 5, 16, 15),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: exercise?.audioPairs == true
+                                  ? MainAxisAlignment.center
+                                  : MainAxisAlignment.spaceBetween,
                               children: [
                                 if (exercise?.hint != null)
                                   TextButton(
@@ -323,14 +385,17 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                     ),
                                   ),
                                 if (exercise != null &&
-                                    {
-                                      ExerciseKind.listenChoice,
-                                      ExerciseKind.dictation,
-                                    }.contains(exercise.kind))
+                                    (exercise.audioPairs ||
+                                        {
+                                          ExerciseKind.listenChoice,
+                                          ExerciseKind.dictation,
+                                        }.contains(exercise.kind)))
                                   Flexible(
                                     child: TextButton(
                                       onPressed: state.busy
                                           ? null
+                                          : exercise.audioPairs
+                                          ? controller.skipListening
                                           : controller.substituteMedia,
                                       child: Text(
                                         'CAN’T LISTEN NOW',
@@ -369,7 +434,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                               )
                             else
                               ReferenceButton(
-                                label: state.busy ? 'CHECKING…' : 'CHECK',
+                                label: state.busy
+                                    ? 'CHECKING…'
+                                    : exercise?.audioPairs == true
+                                    ? 'CONTINUE'
+                                    : 'CHECK',
                                 backgroundColor: LearningColors.green,
                                 onPressed: state.canCheck
                                     ? () {
@@ -381,7 +450,25 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                ],
               ),
+              if (feedback)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: LessonFeedbackEntrance(
+                    key: ValueKey('${exercise!.id}:${state.retryPass}'),
+                    child: state.skipped
+                        ? SkipListeningPanel(
+                            onContinue: state.busy ? null : controller.next,
+                            onReport: _report,
+                          )
+                        : _feedback(exercise, state, controller),
+                  ),
+                ),
             ],
           ),
         ),
@@ -432,7 +519,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                   );
                   return SizedBox(
                     width: width,
-                    child: LearningCard(
+                    child: LessonChoiceTile(
                       selected: state.selectedId == option.id,
                       correct: state.stage == LessonStage.feedback
                           ? state.correct
@@ -487,7 +574,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             for (final option in exercise.choices)
               Padding(
                 padding: const EdgeInsets.only(bottom: 12),
-                child: LearningCard(
+                child: LessonChoiceTile(
                   selected: state.selectedId == option.id,
                   correct: state.stage == LessonStage.feedback
                       ? state.correct
@@ -525,11 +612,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                 runSpacing: 9,
                 children: state.tokenIds
                     .map(
-                      (id) => _token(
-                        exercise.tokens.firstWhere((t) => t.id == id),
-                        () => controller.toggleToken(id),
-                        editable,
-                        true,
+                      (id) => TokenFlyIn(
+                        key: ValueKey('answer-$id'),
+                        originKey: _bankKeys[id],
+                        child: _token(
+                          exercise.tokens.firstWhere((t) => t.id == id),
+                          () => controller.toggleToken(id),
+                          editable,
+                          true,
+                        ),
                       ),
                     )
                     .toList(),
@@ -544,6 +635,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                 children: exercise.tokens
                     .map(
                       (token) => AnimatedOpacity(
+                        key: _bankKeys.putIfAbsent(token.id, GlobalKey.new),
                         duration: motionDuration(context, 120),
                         opacity: state.tokenIds.contains(token.id) ? .2 : 1,
                         child: _token(
@@ -560,62 +652,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           ],
         );
       case ExerciseKind.matchPairs:
-        return Column(
-          children: [
-            const SizedBox(height: 55),
-            for (final pair in exercise.pairs.entries)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 18),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: AnimatedOpacity(
-                        duration: motionDuration(context),
-                        opacity: state.matchedPairs.containsKey(pair.key)
-                            ? .3
-                            : 1,
-                        child: LearningCard(
-                          selected: state.selectedPairLeft == pair.key,
-                          onTap:
-                              editable &&
-                                  !state.matchedPairs.containsKey(pair.key)
-                              ? () => controller.selectPairLeft(pair.key)
-                              : null,
-                          child: Center(
-                            child: Text(
-                              pair.key,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: AnimatedOpacity(
-                        duration: motionDuration(context),
-                        opacity: state.matchedPairs.containsValue(pair.value)
-                            ? .3
-                            : 1,
-                        child: LearningCard(
-                          onTap:
-                              editable &&
-                                  !state.matchedPairs.containsValue(pair.value)
-                              ? () => controller.selectPairRight(pair.value)
-                              : null,
-                          child: Center(
-                            child: Text(
-                              pair.value,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
+        return MatchPairsExercise(
+          key: ValueKey('${exercise.id}:${state.retryPass}'),
+          exercise: exercise,
+          matched: state.matchedPairs,
+          selectedLeft: state.selectedPairLeft,
+          editable: editable,
+          onLeft: controller.selectPairLeft,
+          onRight: controller.selectPairRight,
         );
       case ExerciseKind.speakRepeat:
         return SpeakingWordsExercise(
@@ -766,7 +810,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     return Container(
       width: double.infinity,
       color: correct ? LearningColors.correct : LearningColors.incorrect,
-      padding: const EdgeInsets.fromLTRB(16, 13, 16, 16),
+      padding: EdgeInsets.fromLTRB(
+        16,
+        13,
+        16,
+        16 + MediaQuery.paddingOf(context).bottom,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -824,12 +873,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             ),
             const SizedBox(height: 14),
           ],
-          ReferenceButton(
-            label: 'EXPLAIN MY ANSWER',
-            outlined: true,
-            foregroundColor: const Color(0xFF20AFAF),
-            onPressed: () => context.push('/explanation'),
-          ),
+          if (!correct)
+            ReferenceButton(
+              label: 'EXPLAIN MY ANSWER',
+              outlined: true,
+              foregroundColor: const Color(0xFF20AFAF),
+              onPressed: () => context.push('/explanation'),
+            ),
           const SizedBox(height: 12),
           if (state.error != null)
             Text(state.error!, style: TextStyle(color: color, fontSize: 16)),
@@ -839,7 +889,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                 ? LearningColors.green
                 : LearningColors.red,
             edgeColor: color,
-            onPressed: state.busy ? null : controller.next,
+            onPressed: state.busy
+                ? null
+                : correct
+                ? controller.next
+                : () => _gotIt(state, controller),
           ),
         ],
       ),
@@ -875,20 +929,5 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         'Thanks for helping us improve this exercise.',
       );
     }
-  }
-}
-
-class _LessonFooterTransition extends StatelessWidget {
-  const _LessonFooterTransition({required this.child});
-  final Widget child;
-  @override
-  Widget build(BuildContext context) {
-    final duration = motionDuration(context, 220);
-    if (duration == Duration.zero) return child;
-    return AnimatedSize(
-      duration: duration,
-      alignment: Alignment.bottomCenter,
-      child: child,
-    );
   }
 }

@@ -24,7 +24,7 @@ void main() {
       final before = c.read(learningStateProvider);
       GoRouter.of(context).push('/settings');
       await t.pumpAndSettle();
-      await t.tap(find.text('My courses'));
+      await t.tap(find.text('Courses'));
       await t.pumpAndSettle();
       expect(find.text('Courses'), findsOneWidget);
       expect(c.read(courseManagementProvider).courses.first.name, 'English');

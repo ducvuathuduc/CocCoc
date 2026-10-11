@@ -1,9 +1,13 @@
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
+import 'package:cocenglish/features/learning/application/completion_providers.dart';
+import 'package:cocenglish/features/learning/data/completion_repository.dart';
+import 'package:cocenglish/features/learning/domain/completion_summary.dart';
 import 'package:cocenglish/features/learning/domain/learning_models.dart';
 import 'package:cocenglish/features/learning/presentation/learning_visuals.dart';
 import 'package:cocenglish/features/learning/presentation/lesson_summary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 SessionReceipt _receipt({
@@ -28,18 +32,20 @@ Widget _harness(
   int mistakes = 0,
   double textScale = 1,
   bool reducedMotion = false,
-}) => MaterialApp(
-  theme: referenceTheme(),
-  home: Builder(
-    builder: (context) => MediaQuery(
-      data: MediaQuery.of(context).copyWith(
-        textScaler: TextScaler.linear(textScale),
-        disableAnimations: reducedMotion,
-      ),
-      child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: LessonSummary(receipt: receipt, mistakeCount: mistakes),
+}) => ProviderScope(
+  child: MaterialApp(
+    theme: referenceTheme(),
+    home: Builder(
+      builder: (context) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(textScale),
+          disableAnimations: reducedMotion,
+        ),
+        child: Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: LessonSummary(receipt: receipt, mistakeCount: mistakes),
+            ),
           ),
         ),
       ),
@@ -48,6 +54,71 @@ Widget _harness(
 );
 
 void main() {
+  testWidgets('430 completion preserves the source illustration proportions', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(430, 932);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
+    await tester.pumpWidget(_harness(_receipt()));
+    await tester.pumpAndSettle();
+    final art = tester.widget<ReferenceArt>(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is ReferenceArt && widget.region == LearningArt.medalDuo,
+      ),
+    );
+    expect(art.width, closeTo(430 * 772 / 1180, .01));
+    expect(art.height, closeTo(430 * 771 / 1180, .01));
+  });
+
+  testWidgets('overriding only the repository replaces completion content', (
+    tester,
+  ) async {
+    final repository = _AlternateCompletionRepository();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [completionRepositoryProvider.overrideWithValue(repository)],
+        child: MaterialApp(
+          theme: referenceTheme(),
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: LessonSummary(receipt: _receipt(), mistakeCount: 3),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(repository.receivedMistakes, 3);
+    expect(repository.receivedReceipt?.xp, 24);
+    expect(find.text('A fresh result'), findsOneWidget);
+    expect(find.text('Repository description'), findsOneWidget);
+    expect(find.text('POINTS'), findsOneWidget);
+    expect(find.text('37'), findsOneWidget);
+    expect(find.text('RECALL'), findsOneWidget);
+    expect(find.text('82%'), findsOneWidget);
+    expect(find.text('DURATION'), findsOneWidget);
+    expect(find.text('2:13'), findsOneWidget);
+    expect(find.bySemanticsLabel('Points, 37'), findsOneWidget);
+    expect(find.text('24'), findsNothing);
+  });
+
+  testWidgets('completion stat labels match the inspected source variants', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_harness(_receipt()));
+    await tester.pumpAndSettle();
+    expect(find.text('TOTAL XP'), findsOneWidget);
+    expect(find.text('AMAZING'), findsOneWidget);
+    expect(find.text('BLAZING'), findsOneWidget);
+    await tester.pumpWidget(_harness(_receipt(accuracy: .94), mistakes: 1));
+    await tester.pumpAndSettle();
+    expect(find.text('GREAT'), findsOneWidget);
+    expect(find.text('QUICK'), findsOneWidget);
+  });
+
   testWidgets('perfect summary uses medal art and actual receipt values', (
     tester,
   ) async {
@@ -57,6 +128,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
 
     await tester.pumpWidget(_harness(_receipt()));
+    await tester.pumpAndSettle();
 
     expect(find.text('Flawless'), findsOneWidget);
     expect(
@@ -66,10 +138,10 @@ void main() {
     expect(find.text('24'), findsOneWidget);
     expect(find.text('100%'), findsOneWidget);
     expect(find.text('1:05'), findsOneWidget);
-    final art = tester.widget<ReferenceArt>(find.byType(ReferenceArt));
+    final art = tester.widget<ReferenceArt>(_summaryArt());
     expect(art.region, LearningArt.medalDuo);
-    expect(art.width, 245);
-    expect(art.height, 245);
+    expect(art.width, closeTo(390 * 772 / 1180, .01));
+    expect(art.height, closeTo(390 * 771 / 1180, .01));
     final statRects = [
       tester.getRect(find.byKey(const Key('lesson-summary-stat-xp'))),
       tester.getRect(find.byKey(const Key('lesson-summary-stat-accuracy'))),
@@ -90,7 +162,7 @@ void main() {
       find.text('1 mistake reviewed. Keep up the great work!'),
       findsOneWidget,
     );
-    var art = tester.widget<ReferenceArt>(find.byType(ReferenceArt));
+    var art = tester.widget<ReferenceArt>(_summaryArt());
     expect(art.region, LearningArt.completed);
     expect(art.width / art.height, closeTo(404 / 545, .001));
 
@@ -99,7 +171,7 @@ void main() {
       find.text('3 mistakes reviewed. Keep up the great work!'),
       findsOneWidget,
     );
-    art = tester.widget<ReferenceArt>(find.byType(ReferenceArt));
+    art = tester.widget<ReferenceArt>(_summaryArt());
     expect(art.region, LearningArt.completed);
   });
 
@@ -180,4 +252,53 @@ void main() {
     expect(find.text('0:49'), findsOneWidget);
     expect(find.bySemanticsLabel('Time, 49 seconds'), findsOneWidget);
   });
+}
+
+Finder _summaryArt() => find.byWidgetPredicate(
+  (widget) =>
+      widget is ReferenceArt &&
+      (widget.region == LearningArt.medalDuo ||
+          widget.region == LearningArt.completed),
+);
+
+class _AlternateCompletionRepository implements CompletionRepository {
+  SessionReceipt? receivedReceipt;
+  int? receivedMistakes;
+
+  @override
+  CompletionStreak streak(int days) =>
+      const MockCompletionRepository().streak(days);
+
+  @override
+  CompletionSummary summary(
+    SessionReceipt receipt, {
+    required int mistakeCount,
+  }) {
+    receivedReceipt = receipt;
+    receivedMistakes = mistakeCount;
+    return const CompletionSummary(
+      title: 'A fresh result',
+      description: 'Repository description',
+      perfect: true,
+      claimLabel: 'REVIEW RESULT',
+      xp: CompletionStat(
+        label: 'POINTS',
+        semanticLabel: 'Points, 37',
+        value: '37',
+        animatedValue: 37,
+      ),
+      accuracy: CompletionStat(
+        label: 'RECALL',
+        semanticLabel: 'Recall, 82 percent',
+        value: '82%',
+        animatedValue: 82,
+        suffix: '%',
+      ),
+      time: CompletionStat(
+        label: 'DURATION',
+        semanticLabel: 'Duration, 2 minutes 13 seconds',
+        value: '2:13',
+      ),
+    );
+  }
 }

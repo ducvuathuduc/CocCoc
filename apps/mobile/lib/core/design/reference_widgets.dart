@@ -57,6 +57,7 @@ class ReferenceButton extends StatefulWidget {
     this.leading,
     this.contentPadding,
     this.minHeight,
+    this.textStyle,
     this.cornerRadius = 14,
     super.key,
   });
@@ -69,6 +70,7 @@ class ReferenceButton extends StatefulWidget {
   final Widget? leading;
   final EdgeInsetsGeometry? contentPadding;
   final double? minHeight;
+  final TextStyle? textStyle;
   final double cornerRadius;
   @override
   State<ReferenceButton> createState() => _ReferenceButtonState();
@@ -99,7 +101,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
         child: AnimatedPadding(
           duration: MediaQuery.disableAnimationsOf(context)
               ? Duration.zero
-              : const Duration(milliseconds: 80),
+              : const Duration(milliseconds: 100),
           curve: Curves.easeOutCubic,
           padding: EdgeInsets.only(
             top: _pressed ? 4 : 0,
@@ -108,7 +110,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
           child: AnimatedContainer(
             duration: MediaQuery.disableAnimationsOf(context)
                 ? Duration.zero
-                : const Duration(milliseconds: 80),
+                : const Duration(milliseconds: 100),
             curve: Curves.easeOutCubic,
             decoration: BoxDecoration(
               color: background,
@@ -154,7 +156,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.8,
                   height: 1.1,
-                ),
+                ).merge(widget.textStyle),
               ),
               onPressed: widget.onPressed,
               child: widget.leading == null

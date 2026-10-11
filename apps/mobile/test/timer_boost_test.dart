@@ -5,11 +5,11 @@ import 'package:cocenglish/features/progress/application/timer_boost_controller.
 import 'package:cocenglish/features/progress/presentation/timer_boost_screen.dart';
 import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cocenglish/features/progress/presentation/hub_screens.dart';
 
 void main() {
   testWidgets(
@@ -28,10 +28,25 @@ void main() {
       final c = ProviderScope.containerOf(context);
       await t.tap(find.byTooltip('Shop'));
       await t.pumpAndSettle();
-      await t.scrollUntilVisible(find.text('GET'), 180);
-      await t.tap(find.text('GET'));
+      final myTimerBoost = find.byKey(const ValueKey('shop-my-timer-boost'));
+      await t.scrollUntilVisible(
+        myTimerBoost,
+        180,
+        scrollable: find
+            .descendant(
+              of: find.byType(ShopScreen),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
+      await t.tap(myTimerBoost);
       await t.pumpAndSettle();
-      await t.tap(find.text('Single'));
+      await t.tap(
+        find.descendant(
+          of: find.byType(TimerBoostOffer),
+          matching: find.text('Single'),
+        ),
+      );
       await t.pumpAndSettle();
       await t.tap(find.text('GET TIMER BOOSTS'));
       await t.pumpAndSettle();
@@ -201,13 +216,27 @@ void main() {
       );
       await tester.tap(find.byTooltip('Shop'));
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('GET'), 180);
+      final myTimerBoost = find.byKey(const ValueKey('shop-my-timer-boost'));
+      await tester.scrollUntilVisible(
+        myTimerBoost,
+        180,
+        scrollable: find
+            .descendant(
+              of: find.byType(ShopScreen),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('GET'));
+      await tester.tap(myTimerBoost);
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Single'));
+      final single = find.descendant(
+        of: find.byType(TimerBoostOffer),
+        matching: find.text('Single'),
+      );
+      await tester.ensureVisible(single);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Single'));
+      await tester.tap(single);
       await tester.pumpAndSettle();
       await tester.tap(find.text('GET TIMER BOOSTS'));
       await tester.pumpAndSettle();

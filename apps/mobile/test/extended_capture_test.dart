@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
+import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
@@ -23,7 +24,6 @@ import 'package:cocenglish/features/progress/application/max_controller.dart';
 import 'package:cocenglish/features/progress/application/preview_controller.dart';
 import 'package:cocenglish/features/progress/application/timer_boost_controller.dart';
 import 'package:cocenglish/features/progress/presentation/timer_boost_screen.dart';
-import 'package:cocenglish/features/progress/presentation/hub_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';

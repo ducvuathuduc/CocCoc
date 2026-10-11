@@ -7,238 +7,17 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../auth/application/auth_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/hub_screens.dart';
-import '../application/registration_controller.dart';
 import '../application/profile_editor_controller.dart';
 import '../application/avatar_controller.dart';
+import '../application/settings_extras_controller.dart';
+import '../data/settings_repository.dart';
 import 'avatar_motion.dart';
 
-class RegistrationScreen extends ConsumerWidget {
-  const RegistrationScreen({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final s = ref.watch(registrationControllerProvider),
-        vm = ref.read(registrationControllerProvider.notifier);
-    final titles = [
-      'How old are you?',
-      'What’s your name?',
-      'What’s your email?',
-      'Create a password',
-    ];
-    Widget input(
-      String id,
-      String value,
-      String hint,
-      void Function(String) onChanged, {
-      TextInputType? type,
-      bool password = false,
-    }) => TextFormField(
-      key: ValueKey('register-$id'),
-      initialValue: value,
-      onChanged: onChanged,
-      maxLength: password ? 128 : 60,
-      keyboardType: type,
-      obscureText: password && s.hidden,
-      enabled: !s.busy,
-      decoration: InputDecoration(
-        hintText: hint,
-        counterText: '',
-        suffixIcon: password
-            ? IconButton(
-                tooltip: s.hidden ? 'Show password' : 'Hide password',
-                onPressed: vm.toggleHidden,
-                icon: Icon(
-                  s.hidden
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  color: LearningColors.blue,
-                ),
-              )
-            : null,
-      ),
-    );
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 20, 8),
-              child: Row(
-                children: [
-                  IconButton(
-                    tooltip: 'Back',
-                    onPressed: s.busy
-                        ? null
-                        : () {
-                            if (s.step == 0 || s.step == 4) {
-                              context.canPop()
-                                  ? context.pop()
-                                  : context.go('/home');
-                            } else {
-                              vm.back();
-                            }
-                          },
-                    icon: const Icon(
-                      Icons.arrow_back_rounded,
-                      size: 32,
-                      color: ReferenceColors.disabled,
-                    ),
-                  ),
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: LinearProgressIndicator(
-                        value: (s.step + 1) / 5,
-                        minHeight: 15,
-                        color: LearningColors.green,
-                        backgroundColor: ReferenceColors.border,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: AnimatedSwitcher(
-                  duration: motionDuration(context, 180),
-                  child: Column(
-                    key: ValueKey(s.step),
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (s.step < 4) ...[
-                        const SizedBox(height: 10),
-                        Text(
-                          titles[s.step],
-                          style: headingStyle.copyWith(fontSize: 27),
-                        ),
-                        const SizedBox(height: 25),
-                      ],
-                      if (s.step == 0)
-                        input(
-                          'age',
-                          s.age,
-                          'Age',
-                          (v) => vm.edit(age: v),
-                          type: TextInputType.number,
-                        ),
-                      if (s.step == 1) ...[
-                        input(
-                          'first',
-                          s.first,
-                          'First name',
-                          (v) => vm.edit(first: v),
-                        ),
-                        const SizedBox(height: 15),
-                        input(
-                          'last',
-                          s.last,
-                          'Last name (optional)',
-                          (v) => vm.edit(last: v),
-                        ),
-                      ],
-                      if (s.step == 2)
-                        input(
-                          'email',
-                          s.email,
-                          'Email',
-                          (v) => vm.edit(email: v),
-                          type: TextInputType.emailAddress,
-                        ),
-                      if (s.step == 3) ...[
-                        input(
-                          'password',
-                          s.password,
-                          'Password',
-                          (v) => vm.edit(password: v),
-                          password: true,
-                        ),
-                        const SizedBox(height: 14),
-                        const Text(
-                          'Use at least 12 characters.',
-                          style: TextStyle(color: ReferenceColors.muted),
-                        ),
-                      ],
-                      if (s.error != null)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 18),
-                          child: Text(
-                            s.error!,
-                            style: const TextStyle(
-                              color: LearningColors.red,
-                              fontSize: 17,
-                            ),
-                          ),
-                        ),
-                      if (s.step == 4) ...[
-                        const SizedBox(height: 110),
-                        Text(
-                          'Welcome, ${s.first}! Your profile is ready.',
-                          textAlign: TextAlign.center,
-                          style: headingStyle,
-                        ),
-                        const SizedBox(height: 25),
-                        const Center(
-                          child: ReferenceArt(
-                            ArtRegion(
-                              'signup-15',
-                              Rect.fromLTWH(395, 1260, 400, 405),
-                            ),
-                            width: 155,
-                            height: 158,
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        const Text(
-                          'Verify your email to keep your progress safe.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: ReferenceColors.muted,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-              child: Column(
-                children: [
-                  ReferenceButton(
-                    label: s.busy
-                        ? 'CREATING PROFILE…'
-                        : s.step == 3
-                        ? 'CREATE PROFILE'
-                        : 'CONTINUE',
-                    onPressed: s.busy
-                        ? null
-                        : s.step == 4
-                        ? () => context.go('/auth/verify')
-                        : vm.next,
-                  ),
-                  const SizedBox(height: 15),
-                  const Text(
-                    'Save your progress and keep learning.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ReferenceColors.muted,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+export 'delete_account_screen.dart';
+export 'signup_flow.dart';
 
 class VerificationScreen extends ConsumerStatefulWidget {
   const VerificationScreen({super.key});
@@ -312,88 +91,101 @@ class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final s = ref.watch(previewControllerProvider),
-        vm = ref.read(previewControllerProvider.notifier);
-    Widget row(String title, String route) => ListTile(
+    Widget row(String title, String route, {String? subtitle}) => ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(
         title,
         style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
       ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle,
+              style: const TextStyle(
+                fontSize: 16,
+                color: ReferenceColors.disabled,
+              ),
+            )
+          : null,
       trailing: const Icon(
         Icons.chevron_right,
         color: ReferenceColors.disabled,
       ),
       onTap: () => context.push(route),
     );
+
+    Widget textLink(String text) => Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: LearningColors.blue,
+          fontWeight: FontWeight.w700,
+          fontSize: 15,
+          letterSpacing: 0.8,
+        ),
+      ),
+    );
+
     return PreviewPage(
       title: 'Settings',
       children: [
         const Text('ACCOUNT', style: sectionStyle),
         const SizedBox(height: 10),
+        row('Preferences', '/settings/preferences'),
         row('Profile', '/settings/profile'),
+        row('Notifications', '/settings/notifications'),
+        row('Courses', '/settings/courses'),
+        row('Duolingo for Schools', '/settings/schools'),
+        row('Social accounts', '/settings/social'),
+        row('Privacy settings', '/settings/privacy'),
         const Divider(),
-        row('Verify email', '/auth/verify'),
-        const Divider(),
-        row('My courses', '/settings/courses'),
-        const Divider(),
-        row('Password', '/settings/password'),
         const SizedBox(height: 25),
-        const Text('PREFERENCES', style: sectionStyle),
+
+        const Text('SUBSCRIPTION', style: sectionStyle),
         const SizedBox(height: 10),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text(
-            'Sound effects',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-          ),
-          value: s.sound,
-          onChanged: vm.setSound,
-          activeThumbColor: LearningColors.green,
+        row(
+          'Manage Subscription',
+          '/subscription',
+          subtitle: 'Super Duolingo 12 months',
         ),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text(
-            'Private profile',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-          ),
-          value: s.private,
-          onChanged: vm.setPrivate,
-          activeThumbColor: LearningColors.green,
-        ),
-        row('Practice reminders', '/settings/reminders'),
-        const Divider(),
-        row('Streak widgets', '/streak/widgets'),
-        const Divider(),
-        row('Super Duolingo', '/super'),
-        const Divider(),
-        row('Duolingo Max', '/max'),
-        const Divider(),
-        row('Manage subscription', '/subscription'),
-        const Divider(),
-        row('Sync status', '/sync'),
-        const SizedBox(height: 25),
-        const Text('PROGRESS', style: sectionStyle),
-        row('2025 Year in Review', '/year-review'),
-        const Divider(),
-        row('League history', '/league/results'),
-        const SizedBox(height: 25),
-        const Text('HELP', style: sectionStyle),
-        row('Connection and recovery', '/recovery'),
-        const SizedBox(height: 25),
+        const SizedBox(height: 16),
         ReferenceButton(
-          label: 'LOG OUT',
+          label: 'RESTORE SUBSCRIPTION',
+          outlined: true,
+          foregroundColor: LearningColors.blue,
+          onPressed: () {
+            final active = ref.read(extendedControllerProvider).unlimited;
+            showLearningNotice(
+              context,
+              active ? 'Subscription restored' : 'No subscription found',
+              active
+                  ? 'Your subscription is active on this account.'
+                  : 'We couldn’t find a purchase to restore for this account.',
+            );
+          },
+        ),
+        const SizedBox(height: 25),
+        const Divider(),
+        const SizedBox(height: 25),
+
+        const Text('SUPPORT', style: sectionStyle),
+        const SizedBox(height: 10),
+        row('Help Center', '/support/help'),
+        row('Feedback', '/support/feedback'),
+        const SizedBox(height: 16),
+        ReferenceButton(
+          label: 'SIGN OUT',
           outlined: true,
           foregroundColor: LearningColors.blue,
           onPressed: () => learningSheet<void>(
             context,
-            title: 'Log out?',
+            title: 'Sign out?',
             child: Column(
               children: [
                 const Text('You can log in again to continue learning.'),
                 const SizedBox(height: 20),
                 ReferenceButton(
-                  label: 'LOG OUT',
+                  label: 'SIGN OUT',
                   backgroundColor: LearningColors.blue,
                   edgeColor: LearningColors.blueDark,
                   onPressed: () {
@@ -411,17 +203,12 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(height: 24),
-        TextButton(
-          onPressed: () => context.push('/account/delete'),
-          child: const Text(
-            'DELETE ACCOUNT',
-            style: TextStyle(
-              color: LearningColors.red,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
+        const SizedBox(height: 35),
+
+        textLink('TERMS'),
+        textLink('PRIVACY POLICY'),
+        textLink('ACKNOWLEDGEMENTS'),
+        const SizedBox(height: 40),
       ],
     );
   }
@@ -653,8 +440,350 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               }
             },
           ),
+          const SizedBox(height: 24),
+          Center(
+            child: TextButton(
+              onPressed: () => context.push('/account/delete'),
+              child: const Text(
+                'DELETE ACCOUNT',
+                style: TextStyle(
+                  color: LearningColors.red,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+Widget _settingsLink(BuildContext context, String title, String route) =>
+    ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+      ),
+      trailing: const Icon(
+        Icons.chevron_right,
+        color: ReferenceColors.disabled,
+      ),
+      onTap: () => context.push(route),
+    );
+
+Widget _settingsSwitch(
+  String title,
+  bool value,
+  ValueChanged<bool> onChanged,
+) => SwitchListTile(
+  contentPadding: EdgeInsets.zero,
+  title: Text(
+    title,
+    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+  ),
+  value: value,
+  onChanged: onChanged,
+  activeThumbColor: LearningColors.green,
+);
+
+/// Settings > Preferences: lesson experience toggles and the home-screen
+/// streak widget.
+class PreferencesScreen extends ConsumerWidget {
+  const PreferencesScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.watch(previewControllerProvider),
+        vm = ref.read(previewControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Preferences',
+      children: [
+        const Text('LESSON EXPERIENCE', style: sectionStyle),
+        const SizedBox(height: 10),
+        _settingsSwitch('Sound effects', s.sound, vm.setSound),
+        const Divider(),
+        const SizedBox(height: 25),
+        const Text('WIDGETS', style: sectionStyle),
+        const SizedBox(height: 10),
+        _settingsLink(context, 'Streak widgets', '/streak/widgets'),
+      ],
+    );
+  }
+}
+
+/// Settings > Notifications: practice reminder schedule.
+class NotificationSettingsScreen extends StatelessWidget {
+  const NotificationSettingsScreen({super.key});
+  @override
+  Widget build(BuildContext context) => PreviewPage(
+    title: 'Notifications',
+    children: [
+      _settingsLink(context, 'Practice reminders', '/settings/reminders'),
+    ],
+  );
+}
+
+/// Settings > Privacy settings.
+class PrivacySettingsScreen extends ConsumerWidget {
+  const PrivacySettingsScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.watch(previewControllerProvider),
+        vm = ref.read(previewControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Privacy settings',
+      children: [_settingsSwitch('Private profile', s.private, vm.setPrivate)],
+    );
+  }
+}
+
+/// Settings > Help Center: connection recovery and sync status.
+class HelpCenterScreen extends StatelessWidget {
+  const HelpCenterScreen({super.key});
+  @override
+  Widget build(BuildContext context) => PreviewPage(
+    title: 'Help Center',
+    children: [
+      _settingsLink(context, 'Connection and recovery', '/recovery'),
+      const Divider(),
+      _settingsLink(context, 'Sync status', '/sync'),
+    ],
+  );
+}
+
+InputDecoration _settingsFieldDecoration({String? hint, String? error}) =>
+    InputDecoration(
+      counterText: '',
+      filled: true,
+      fillColor: const Color(0xFFF7F7F7),
+      hintText: hint,
+      errorText: error,
+      errorMaxLines: 3,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFE5E5E5), width: 2),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: LearningColors.blue, width: 2),
+      ),
+    );
+
+const _fieldLabelStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+  color: ReferenceColors.ink,
+);
+
+/// Settings > Duolingo for Schools: join a teacher's classroom by code.
+class SchoolsSettingsScreen extends ConsumerStatefulWidget {
+  const SchoolsSettingsScreen({super.key});
+  @override
+  ConsumerState<SchoolsSettingsScreen> createState() => _SchoolsState();
+}
+
+class _SchoolsState extends ConsumerState<SchoolsSettingsScreen> {
+  final code = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    code.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    code.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final copy = ref.watch(settingsRepositoryProvider).schools,
+        s = ref.watch(settingsExtrasControllerProvider),
+        vm = ref.read(settingsExtrasControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Duolingo for Schools',
+      children: [
+        Text(copy.heading, style: headingStyle),
+        const SizedBox(height: 12),
+        Text(
+          copy.body,
+          style: const TextStyle(fontSize: 17, color: ReferenceColors.muted),
+        ),
+        const SizedBox(height: 24),
+        if (s.classroom != null) ...[
+          Text(
+            '${copy.joinedPrefix} ${s.classroom}',
+            key: const ValueKey('schools-joined'),
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w700,
+              color: LearningColors.greenDark,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ReferenceButton(
+            label: copy.leaveLabel,
+            outlined: true,
+            foregroundColor: LearningColors.red,
+            onPressed: vm.leaveClassroom,
+          ),
+        ] else ...[
+          Text(copy.codeLabel, style: _fieldLabelStyle),
+          const SizedBox(height: 8),
+          TextField(
+            key: const ValueKey('schools-code'),
+            controller: code,
+            maxLength: 6,
+            textCapitalization: TextCapitalization.characters,
+            style: const TextStyle(fontSize: 20, color: ReferenceColors.ink),
+            decoration: _settingsFieldDecoration(
+              hint: copy.codeHint,
+              error: s.joinError,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ReferenceButton(
+            label: copy.joinLabel,
+            backgroundColor: LearningColors.blue,
+            edgeColor: LearningColors.blueDark,
+            onPressed: code.text.trim().isEmpty || s.joining
+                ? null
+                : () => vm.joinClassroom(code.text),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Settings > Social accounts: link or unlink sign-in providers.
+class SocialAccountsScreen extends ConsumerWidget {
+  const SocialAccountsScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accounts = ref.watch(settingsRepositoryProvider).socialAccounts,
+        s = ref.watch(settingsExtrasControllerProvider),
+        vm = ref.read(settingsExtrasControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Social accounts',
+      children: [
+        for (var i = 0; i < accounts.length; i++) ...[
+          if (i > 0) const Divider(),
+          _settingsSwitch(
+            accounts[i].name,
+            s.connected.contains(accounts[i].id),
+            (on) => vm.setSocial(accounts[i].id, on),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Settings > Feedback: pick a topic, describe it, submit.
+class FeedbackScreen extends ConsumerStatefulWidget {
+  const FeedbackScreen({super.key});
+  @override
+  ConsumerState<FeedbackScreen> createState() => _FeedbackState();
+}
+
+class _FeedbackState extends ConsumerState<FeedbackScreen> {
+  final message = TextEditingController();
+  int topic = 0;
+  @override
+  void initState() {
+    super.initState();
+    message.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    message.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit(FeedbackContent copy) async {
+    final sent = await ref
+        .read(settingsExtrasControllerProvider.notifier)
+        .sendFeedback(copy.topics[topic], message.text);
+    if (!sent || !mounted) return;
+    await showLearningNotice(context, copy.thanksTitle, copy.thanksBody);
+    if (mounted && context.canPop()) context.pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final copy = ref.watch(settingsRepositoryProvider).feedback,
+        sending = ref.watch(settingsExtrasControllerProvider).sending;
+    return PreviewPage(
+      title: 'Feedback',
+      children: [
+        Text(copy.topicLabel, style: _fieldLabelStyle),
+        const SizedBox(height: 12),
+        for (var i = 0; i < copy.topics.length; i++)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Semantics(
+              selected: i == topic,
+              button: true,
+              child: InkWell(
+                key: ValueKey('feedback-topic-$i'),
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => setState(() => topic = i),
+                child: Container(
+                  constraints: const BoxConstraints(minHeight: 52),
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: i == topic ? ReferenceColors.blueFill : null,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: i == topic
+                          ? ReferenceColors.blueBorder
+                          : ReferenceColors.border,
+                      width: 2,
+                    ),
+                  ),
+                  child: Text(
+                    copy.topics[i],
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: i == topic
+                          ? LearningColors.blue
+                          : ReferenceColors.ink,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        const SizedBox(height: 14),
+        Text(copy.messageLabel, style: _fieldLabelStyle),
+        const SizedBox(height: 8),
+        TextField(
+          key: const ValueKey('feedback-message'),
+          controller: message,
+          minLines: 4,
+          maxLines: 8,
+          maxLength: 1000,
+          style: const TextStyle(fontSize: 18, color: ReferenceColors.ink),
+          decoration: _settingsFieldDecoration(hint: copy.messageHint),
+        ),
+        const SizedBox(height: 20),
+        ReferenceButton(
+          label: copy.submitLabel,
+          backgroundColor: LearningColors.blue,
+          edgeColor: LearningColors.blueDark,
+          onPressed: message.text.trim().isEmpty || sending
+              ? null
+              : () => _submit(copy),
+        ),
+      ],
     );
   }
 }
@@ -790,80 +919,6 @@ class _SyncState extends ConsumerState<SyncScreen> {
       ),
     ],
   );
-}
-
-class DeleteAccountScreen extends ConsumerWidget {
-  const DeleteAccountScreen({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final requested = ref.watch(previewControllerProvider).deletionRequested;
-    return PreviewPage(
-      title: 'Delete Account',
-      children: [
-        SizedBox(height: requested ? 90 : 35),
-        if (requested)
-          const ReferenceArt(
-            ArtRegion('delete-06', Rect.fromLTWH(383, 805, 414, 445)),
-            width: 145,
-            height: 156,
-          ),
-        const SizedBox(height: 25),
-        Text(
-          requested ? 'Request received' : 'Delete your account?',
-          textAlign: TextAlign.center,
-          style: headingStyle,
-        ),
-        const SizedBox(height: 20),
-        Text(
-          requested ? 'Your account deletion request has been received.' : 'Deleting your account removes your profile and learning progress.',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 19,
-            color: ReferenceColors.muted,
-            height: 1.5,
-          ),
-        ),
-        const SizedBox(height: 35),
-        ReferenceButton(
-          label: requested ? 'DONE' : 'DELETE ACCOUNT',
-          backgroundColor: requested ? LearningColors.blue : LearningColors.red,
-          edgeColor: requested
-              ? LearningColors.blueDark
-              : LearningColors.redDark,
-          onPressed: requested
-              ? () => context.pop()
-              : () => learningSheet<void>(
-                  context,
-                  title: 'Delete your account?',
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Your profile and learning progress will be removed.',
-                      ),
-                      const SizedBox(height: 25),
-                      ReferenceButton(
-                        label: 'CONFIRM',
-                        backgroundColor: LearningColors.red,
-                        edgeColor: LearningColors.redDark,
-                        onPressed: () {
-                          ref
-                              .read(previewControllerProvider.notifier)
-                              .requestDeletion();
-                          Navigator.pop(context);
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('CANCEL'),
-                      ),
-                    ],
-                  ),
-                ),
-        ),
-      ],
-    );
-  }
 }
 
 enum RecoveryFailure { connection, signIn, rateLimited }

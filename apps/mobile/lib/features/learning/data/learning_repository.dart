@@ -19,6 +19,10 @@ abstract class LearningRepository {
   LessonState? loadDraft();
 
   void clearDraft();
+
+  /// Whether lessons enforce hearts: one-time hearts explanation after the
+  /// first mistake and the out-of-hearts stop at zero.
+  bool get enforcesHearts => false;
 }
 
 class LearningFailure implements Exception {
@@ -31,9 +35,14 @@ class LearningFailure implements Exception {
 }
 
 class MockLearningRepository implements LearningRepository {
-  MockLearningRepository({this.delay = const Duration(milliseconds: 25)});
+  MockLearningRepository({
+    this.delay = const Duration(milliseconds: 25),
+    this.enforcesHearts = false,
+  });
 
   final Duration delay;
+  @override
+  final bool enforcesHearts;
   int gradeCalls = 0;
   int completeCalls = 0;
   LessonState? _draft;
@@ -252,3 +261,20 @@ const mockPracticeExercises = <Exercise>[
     meaning: 'Xin chào, tôi là Sam.',
   ),
 ];
+
+/// Audio match-pairs (reference lesson/10): left column plays the English
+/// word, right column shows its meaning in the order given by [tokens].
+const mockListeningPairsExercise = Exercise(
+  id: 'english-11-listen-pairs',
+  kind: ExerciseKind.matchPairs,
+  title: 'Tap the matching pairs',
+  prompt: 'Match what you hear with its meaning.',
+  audioPairs: true,
+  pairs: {'and': 'và', 'I': 'tôi', 'boy': 'cậu bé', 'cat': 'con mèo'},
+  tokens: [
+    ExerciseChoice(id: 'tôi', text: 'tôi'),
+    ExerciseChoice(id: 'con mèo', text: 'con mèo'),
+    ExerciseChoice(id: 'và', text: 'và'),
+    ExerciseChoice(id: 'cậu bé', text: 'cậu bé'),
+  ],
+);

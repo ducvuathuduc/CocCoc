@@ -154,6 +154,125 @@
         "providerInferenceCalls": 0
       },
       "remaining": "teacher rubric/account entitlement; full schema/curriculum; actual JWT/transaction/permissions/outbox; Drift; native voice/assessment benchmark; physical Android/iOS; live billing/push/backup/CI run"
+    },
+    {
+      "taskId": "P2-DES-001",
+      "phase": "Phase A authorized mock UI refinement",
+      "owner": "W1-design / root review",
+      "branch": "master",
+      "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/repo",
+      "dependencyGateReceipts": [
+        "docs/agent/FRONTEND_FLOW_PLAN.md",
+        "docs/design/qa/UI_MASTER_LOG.md"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/core/design/reference_widgets.dart",
+        "apps/mobile/lib/core/design/lesson_motion.dart",
+        "apps/mobile/test/reference_button_test.dart",
+        "apps/mobile/test/design_ui_master_golden_test.dart"
+      ],
+      "requirements": [
+        "SC17",
+        "CHECKdisabled",
+        "reducedmotion",
+        "text2",
+        "semantics"
+      ],
+      "interfaces": [
+        "ReferenceButton",
+        "LessonMotionTokens"
+      ],
+      "testCommand": "flutter analyze --no-pub --fatal-infos; proxy-free flutter test --no-pub test/reference_button_test.dart test/design_ui_master_golden_test.dart",
+      "status": "CLAIMED",
+      "evidence": [
+        "docs/design/qa/TEAM_STATE.md"
+      ],
+      "remaining": "Scoped tactile slice first; whole P2-DES acceptance remains open."
+    },
+    {
+      "taskId": "UI-SPRINT-I-COMPLETION",
+      "phase": "Phase A authorized mock UI refinement",
+      "owner": "root; completion_qa read-only review",
+      "branch": "int/phaseA",
+      "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/wt/int",
+      "dependencyGateReceipts": [
+        "../../tickets/queue/40-ui-sprint-I.md",
+        "../../tickets/QUALITY_GATES.md",
+        "docs/agent/FRONTEND_FLOW_PLAN.md"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/features/learning/domain/completion_summary.dart",
+        "apps/mobile/lib/features/learning/data/completion_repository.dart",
+        "apps/mobile/lib/features/learning/application/completion_providers.dart",
+        "apps/mobile/lib/features/learning/presentation/lesson_summary.dart",
+        "apps/mobile/lib/features/learning/presentation/lesson_results.dart",
+        "apps/mobile/lib/core/design/reference_widgets.dart"
+      ],
+      "requirements": [
+        "SC21",
+        "G-DATA",
+        "G-COLOR",
+        "430 golden",
+        "text2",
+        "reduced motion",
+        "immutable receipt values"
+      ],
+      "interfaces": [
+        "CompletionRepository",
+        "MockCompletionRepository",
+        "completionRepositoryProvider"
+      ],
+      "testCommand": "proxy-free flutter test --no-pub --concurrency=1 --dart-define=ENABLE_MASCOT_MOTION=false test/completion_sprint_golden_test.dart test/completion_ui_master_golden_test.dart test/lesson_summary_test.dart test/completion_fidelity_test.dart test/reference_button_test.dart --reporter expanded; flutter analyze --no-pub --fatal-infos; python3 tool/palette_check.py",
+      "status": "DONE",
+      "evidence": [
+        "specs/lesson-complete.md",
+        "docs/design/qa/UI_MASTER_LOG.md",
+        "../../tickets/par/compare/lesson-complete.png",
+        "../../tickets/par/compare/lesson-streak.png",
+        "/workspace/tools/ui-sprint-completion-current-targeted.log",
+        "/workspace/tools/ui-sprint-completion-current-analyze-retry.log",
+        "/workspace/tools/ui-sprint-completion-current-palette.log"
+      ],
+      "remaining": "Scoped screen DONE under ticket40 SPEED FIRST rule:29focused tests pass; analyzer0issues; QA accepts small glyph/numeral/1\u20132px alignment differences. OS indicators outside widget captures. Whole-sprint/full-suite gate remains open;74legacy palette mismatches unchanged."
+    },
+    {
+      "taskId": "UI-SPRINT-I-SHELL",
+      "phase": "Phase A authorized mock UI refinement",
+      "owner": "root; completion_qa read-only review",
+      "branch": "int/phaseA",
+      "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/wt/int",
+      "dependencyGateReceipts": [
+        "../../tickets/queue/40-ui-sprint-I.md",
+        "docs/design/flows/04_COURSE_PATH.md",
+        "34c66b9"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/features/shell",
+        "apps/mobile/lib/features/learning/presentation/learning_path.dart",
+        "apps/mobile/lib/features/progress/presentation/learning_shell.dart",
+        "apps/mobile/test/app_shell_sprint_test.dart",
+        "apps/mobile/test/path_ui_master_golden_test.dart"
+      ],
+      "requirements": [
+        "G-DATA",
+        "G-COLOR",
+        "430 golden",
+        "text2",
+        "48dp",
+        "preserve five router branches",
+        "reduced motion"
+      ],
+      "interfaces": [
+        "AppShellRepository",
+        "MockAppShellRepository",
+        "appShellRepositoryProvider"
+      ],
+      "testCommand": "proxy-free focused flutter tests; flutter analyze --no-pub --fatal-infos; python3 tool/palette_check.py",
+      "status": "DONE",
+      "evidence": [
+        "specs/top-bar-bottom-nav.md"
+      ],
+      "remaining": "Implement typed shell content, preserve icon proportions and \u226548dp stats; verify repository overrides, tab state, motion, 360/430 text1/2, compare and commit."
     }
   ]
 }

@@ -8,14 +8,15 @@ import '../../../core/design/duo_motion.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../../core/design/path_motion.dart';
 import '../application/learning_controller.dart';
 import '../application/course_navigation_controller.dart';
 import '../domain/course_catalog.dart';
 import '../domain/course_review.dart';
 import '../domain/learning_models.dart';
-import '../../progress/application/extended_controller.dart';
-import '../../progress/application/preview_controller.dart';
 import '../../progress/domain/score_information.dart';
+import '../../shell/domain/app_shell_models.dart';
+import '../../shell/presentation/app_stats_bar.dart';
 import 'learning_visuals.dart';
 
 export 'unit_guide_screen.dart' show UnitGuideScreen;
@@ -38,55 +39,22 @@ class _LearningPathState extends ConsumerState<LearningPath> {
   Widget build(BuildContext context) {
     final progress = ref.watch(learningStateProvider);
     final draft = ref.watch(lessonControllerProvider);
-    final energy = ref.watch(extendedControllerProvider);
     final active = ref.watch(courseNavigationProvider).active;
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: SizedBox(
-            width: double.infinity,
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              spacing: 10,
-              children: [
-                _status(
-                  'Courses',
-                  ReferenceArt(LearningArt.english, width: 30, height: 24),
-                  progress.score == 0 ? '' : '${progress.score}',
-                  ReferenceColors.ink,
-                  () => setState(() => _courses = !_courses),
-                ),
-                _status(
-                  'Streak',
-                  const ReferenceArt(LearningArt.flame, width: 24, height: 28),
-                  '${progress.streak}',
-                  LearningColors.orange,
-                  () => context.push('/streak'),
-                ),
-                _status(
-                  'Shop',
-                  const ReferenceArt(LearningArt.gem, width: 23, height: 26),
-                  '${ref.watch(previewWalletProvider)}',
-                  LearningColors.blue,
-                  () => context.push('/shop'),
-                ),
-                _status(
-                  'Energy',
-                  const ReferenceArt(
-                    ArtRegion('energy-02', Rect.fromLTWH(977, 350, 160, 110)),
-                    width: 30,
-                    height: 23,
-                  ),
-                  energy.unlimited ? '∞' : '${energy.energy}',
-                  energy.unlimited
-                      ? const Color(0xFFBD4CF5)
-                      : const Color(0xFFFF80CE),
-                  () => context.push('/energy'),
-                ),
-              ],
-            ),
-          ),
+        AppStatsBar(
+          onSelected: (kind) {
+            switch (kind) {
+              case AppStatKind.course:
+                setState(() => _courses = !_courses);
+              case AppStatKind.streak:
+                context.push('/streak');
+              case AppStatKind.gems:
+                context.push('/shop');
+              case AppStatKind.energy:
+                context.push('/energy');
+            }
+          },
         ),
         Expanded(
           child: Stack(
@@ -109,7 +77,9 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                             children: [
                               Positioned(
                                 left: width * .62,
-                                top: 210,
+                                // The viewport reaches above the resting owl so
+                                // the jump (frames ~130-180) is not clipped.
+                                top: 183,
                                 child: DuoMotion(
                                   pose: DuoPose.reading,
                                   spec: const DuoMotionSpec(
@@ -119,17 +89,24 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                                     loop: true,
                                   ),
                                   width: 118,
-                                  height: 126,
+                                  height: 153,
                                   viewport: const Rect.fromLTWH(
                                     228,
-                                    173,
+                                    30,
                                     625,
-                                    667,
+                                    810,
                                   ),
-                                  fallback: const ReferenceArt(
-                                    LearningArt.pathDuo,
-                                    width: 102,
-                                    height: 105,
+                                  fallback: const Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: SizedBox(
+                                      width: 118,
+                                      height: 126,
+                                      child: ReferenceArt(
+                                        LearningArt.pathDuo,
+                                        width: 102,
+                                        height: 105,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -243,42 +220,6 @@ class _LearningPathState extends ConsumerState<LearningPath> {
       ],
     );
   }
-
-  Widget _status(
-    String label,
-    Widget art,
-    String value,
-    Color color,
-    VoidCallback action,
-  ) => Semantics(
-    label: label,
-    button: true,
-    child: Tooltip(
-      message: label,
-      child: InkWell(
-        onTap: action,
-        borderRadius: BorderRadius.circular(10),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              art,
-              const SizedBox(width: 7),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                  color: color,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
 
   Widget _unitBanner(BuildContext context, int unit, String title) => Container(
     decoration: BoxDecoration(
@@ -609,7 +550,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
   }
 }
 
-class PathNode extends StatelessWidget {
+class PathNode extends StatefulWidget {
   const PathNode({
     required this.current,
     required this.completed,
@@ -629,67 +570,123 @@ class PathNode extends StatelessWidget {
   final Color? color;
   final Color? edgeColor;
   @override
-  Widget build(BuildContext context) => Tooltip(
-    message: tooltip,
-    child: Semantics(
-      button: true,
-      label: tooltip,
-      child: GestureDetector(
-        onTap: onTap,
-        child: SizedBox(
-          width: 100,
-          height: 90,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (current)
+  State<PathNode> createState() => _PathNodeState();
+}
+
+class _PathNodeState extends State<PathNode> {
+  bool _pressed = false;
+
+  void _press(bool pressed) {
+    if (mounted && _pressed != pressed) setState(() => _pressed = pressed);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final current = widget.current;
+    final completed = widget.completed;
+    final progress = widget.progress;
+    final color = widget.color;
+    final edgeColor = widget.edgeColor;
+    final icon = widget.icon;
+    final tooltip = widget.tooltip;
+    final reduced = MediaQuery.disableAnimationsOf(context);
+    return Tooltip(
+      message: tooltip,
+      child: Semantics(
+        button: true,
+        label: tooltip,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          onTapDown: (_) => _press(true),
+          onTapUp: (_) => _press(false),
+          onTapCancel: () => _press(false),
+          child: SizedBox(
+            width: 100,
+            height: 90,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (current)
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: progress),
+                    duration: motionDuration(context, 450),
+                    builder: (context, value, _) => CustomPaint(
+                      size: const Size(98, 87),
+                      painter: _NodeRing(value, color ?? LearningColors.green),
+                    ),
+                  ),
                 TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0, end: progress),
-                  duration: motionDuration(context, 450),
-                  builder: (context, value, _) => CustomPaint(
-                    size: const Size(98, 87),
-                    painter: _NodeRing(value, color ?? LearningColors.green),
+                  tween: Tween(
+                    begin: 0,
+                    end: _pressed ? PathMotionTokens.depth : 0,
+                  ),
+                  duration: reduced
+                      ? Duration.zero
+                      : PathMotionTokens.pressDuration,
+                  curve: PathMotionTokens.pressCurve,
+                  builder: (context, displacement, child) =>
+                      Transform.translate(
+                        offset: Offset(0, displacement),
+                        child: child,
+                      ),
+                  child: AnimatedScale(
+                    scale: _pressed ? PathMotionTokens.pressedScale : 1,
+                    duration: reduced
+                        ? Duration.zero
+                        : _pressed
+                        ? PathMotionTokens.pressDuration
+                        : PathMotionTokens.releaseDuration,
+                    curve: _pressed
+                        ? PathMotionTokens.pressCurve
+                        : PathMotionTokens.releaseCurve,
+                    child: AnimatedContainer(
+                      duration: reduced
+                          ? Duration.zero
+                          : PathMotionTokens.pressDuration,
+                      width: 70,
+                      height: 62,
+                      decoration: BoxDecoration(
+                        color:
+                            color ??
+                            (current || completed
+                                ? completed
+                                      ? LearningColors.yellow
+                                      : LearningColors.green
+                                : ReferenceColors.border),
+                        borderRadius: BorderRadius.circular(40),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                edgeColor ??
+                                (current || completed
+                                    ? completed
+                                          ? const Color(0xFFE5A400)
+                                          : LearningColors.greenDark
+                                    : const Color(0xFFBCBABC)),
+                            offset: Offset(
+                              0,
+                              _pressed ? 0 : PathMotionTokens.depth,
+                            ),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        completed ? Icons.check_rounded : icon,
+                        size: 36,
+                        color: color != null || current || completed
+                            ? Colors.white
+                            : ReferenceColors.disabled,
+                      ),
+                    ),
                   ),
                 ),
-              Container(
-                width: 70,
-                height: 62,
-                decoration: BoxDecoration(
-                  color:
-                      color ??
-                      (current || completed
-                          ? completed
-                                ? LearningColors.yellow
-                                : LearningColors.green
-                          : ReferenceColors.border),
-                  borderRadius: BorderRadius.circular(40),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          edgeColor ??
-                          (current || completed
-                              ? completed
-                                    ? const Color(0xFFE5A400)
-                                    : LearningColors.greenDark
-                              : const Color(0xFFBCBABC)),
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  completed ? Icons.check_rounded : icon,
-                  size: 36,
-                  color: color != null || current || completed
-                      ? Colors.white
-                      : ReferenceColors.disabled,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _NodeRing extends CustomPainter {

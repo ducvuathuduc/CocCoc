@@ -22,8 +22,13 @@ import 'features/progress/application/extended_controller.dart';
 import 'features/learning/presentation/lesson_screen.dart';
 import 'features/learning/presentation/explanation_screen.dart';
 import 'features/learning/presentation/lesson_results.dart';
+import 'features/learning/application/learning_controller.dart';
+import 'features/call/presentation/video_call_screen.dart';
+import 'features/results/presentation/results_chain.dart';
+import 'features/results/presentation/results_extra_screens.dart';
 import 'features/learning/presentation/session_entry.dart';
 import 'features/progress/presentation/hub_screens.dart';
+import 'features/shop/presentation/shop_screen.dart';
 import 'features/progress/presentation/learning_shell.dart';
 import 'features/progress/presentation/streak_screen.dart';
 import 'features/progress/presentation/streak_widgets_screen.dart';
@@ -288,6 +293,24 @@ class _AppState extends ConsumerState<_App> {
           builder: (context, state) => const LessonResults(),
         ),
         GoRoute(
+          path: '/results/:completionId/rewards',
+          builder: (context, state) {
+            final receipt = ref.read(lessonControllerProvider).receipt;
+            return ResultsChainScreen(
+              streakGrew: state.uri.queryParameters['streak'] == '1',
+              gemsEarned: (receipt?.gems ?? 0) > 0,
+              guest: receipt?.guest ?? false,
+              onFinished: () => context.go('/home'),
+              onCreateProfile: () => context.go('/auth/register'),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/path-return',
+          builder: (context, state) =>
+              PathReturnScreen(onOpenPath: () => context.go('/home')),
+        ),
+        GoRoute(
           path: '/courses',
           builder: (context, state) => const CoursesScreen(),
         ),
@@ -537,7 +560,7 @@ class _AppState extends ConsumerState<_App> {
         ),
         GoRoute(
           path: '/speaking/call',
-          builder: (context, state) => const SpeakingCallScreen(),
+          builder: (context, state) => const VideoCallScreen(),
         ),
         GoRoute(
           path: '/speaking/result/:id',
@@ -571,6 +594,34 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/settings/password',
           builder: (context, state) => const PasswordChangeScreen(),
+        ),
+        GoRoute(
+          path: '/settings/preferences',
+          builder: (context, state) => const PreferencesScreen(),
+        ),
+        GoRoute(
+          path: '/settings/notifications',
+          builder: (context, state) => const NotificationSettingsScreen(),
+        ),
+        GoRoute(
+          path: '/settings/privacy',
+          builder: (context, state) => const PrivacySettingsScreen(),
+        ),
+        GoRoute(
+          path: '/support/help',
+          builder: (context, state) => const HelpCenterScreen(),
+        ),
+        GoRoute(
+          path: '/settings/schools',
+          builder: (context, state) => const SchoolsSettingsScreen(),
+        ),
+        GoRoute(
+          path: '/settings/social',
+          builder: (context, state) => const SocialAccountsScreen(),
+        ),
+        GoRoute(
+          path: '/support/feedback',
+          builder: (context, state) => const FeedbackScreen(),
         ),
         GoRoute(
           path: '/settings/reminders',

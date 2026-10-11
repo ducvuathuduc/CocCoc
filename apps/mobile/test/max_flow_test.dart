@@ -76,12 +76,10 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Profile'));
+      // Duolingo Max is reached from the Max banner at the top of the Shop.
+      await tester.tap(find.byTooltip('Shop'));
       await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Settings'));
-      await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('Duolingo Max'), 180);
-      await tester.tap(find.text('Duolingo Max'));
+      await tester.tap(find.text('MANAGE FEATURES'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('TRY FOR \$0.00'));
       await tester.pumpAndSettle();
@@ -121,8 +119,7 @@ void main() {
       final navigator = Navigator.of(tester.element(find.text('NEXT')));
       await navigator.maybePop();
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('Duolingo Max'), 180);
-      await tester.tap(find.text('Duolingo Max'));
+      await tester.tap(find.text('MANAGE FEATURES'));
       await tester.pumpAndSettle();
       expect(c.read(maxControllerProvider).tourStep, tourIndex);
       expect(find.text('NEXT'), findsOneWidget);

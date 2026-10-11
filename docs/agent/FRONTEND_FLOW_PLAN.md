@@ -26,6 +26,15 @@ supersedes earlier239-test frontend evidence for current course/account/profile 
 - [x] UI-QA-001: 102 local tests, analyzer/format/blueprint gate, Android full-flow and motion runs, normal debug APK and release web build. [QA receipt](../design/qa/REPORT.md) records limits and diagnostic metrics.
 - [x] UI-WEB-001: local mock preview served at http://127.0.0.1:4173/preview.html and opened for user review. Source launcher: tools/scripts/mobile-preview.mjs.
 - [ ] UI-FIDELITY-001: continue visual refinement from diagnostics and user review; source video/timelines needed to establish archived iOS animation equivalence. No 100% pixel/motion sign-off.
+  2026-10-09 UI-MASTER-01 progress: core lesson header/feedback slice has a
+  highlighted ease-out progress bar, stable exercise geometry under sliding
+  feedback, compact correct panel, grade haptic and lifecycle-safe heart shake.
+  Meaningful RED cases, targeted checks and 12 goldens are recorded in the
+  [master log](../design/qa/UI_MASTER_LOG.md). Whole-app fidelity stays open.
+  A second small slice adds tactile path-node depression/release bounce and
+  home/intro goldens with 17 passing focused cases; remaining variants stay open.
+  Completion motion adds receipt/streak count-up, finite confetti, three result
+  goldens and 25 passing focused cases. Full source/motion equivalence is open.
 - [x] UI-LEARNING-002: native course/path/node/guide → ten original exercises/12 renderers → correct/error/hint/local report/exit/retry → seven results/score/gems/streak/quest update → path. Guest/placement/replay isolation and receipt idempotency tested. SC07,12–22; local fixtures only.
 - [x] UI-PRACTICE-003: native hub, words, mistakes, listening substitution, speaking/record/call/results with explicit simulated capability states and lifecycle cancellation. SC23–30; no real mic/audio/scoring.
 - [x] UI-PROGRESS-004: native first-entry quests/hub, league, profile, friends/activity, shop and local receipt states. SC31–37; fixture social/reward data only.

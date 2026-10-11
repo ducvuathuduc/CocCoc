@@ -19,6 +19,13 @@ the active learning course; Math/Music/Chess are outside implementation scope.
 
 ## Tasks
 
+- [x] UI-SPRINT-I-COMPLETION: archived completion/streak fidelity and repository
+  seam.29focused tests pass, analyzer0issues; independent QA accepts small
+  differences under ticket40 SPEED FIRST. Whole-sprint/full-suite gate remains
+  open. Previous feature-completion receipts are preserved. New evidence:
+  [UI master log](../design/qa/UI_MASTER_LOG.md),
+  [source specification](../../specs/lesson-complete.md).
+
 Evidence for UI-LESSON-044..046: [English lesson report](../design/qa/ENGLISH_LESSON_REPORT.md),
 439-test gate, 31 scoped tests, 15 native states, 5 enabled Lily frames and current
 Flutter web release. Mock English lesson scope; previous completion marks retained.
@@ -118,6 +125,12 @@ states are verified; source profile-editor entry/result remain in progress.
 UI-QA-014 awaits the final refreshed web/browser check. The avatar assets are now
 obtained; the continuation below adds the native editor. Do not rebuild completed
 families while reconciling source variants.
+
+2026-10-09 UI-MASTER-01: the core lesson header/feedback slice adds 390×844
+goldens and 360/430 × text1/2 feedback captures without replacing completed
+flows. See the [master log](../design/qa/UI_MASTER_LOG.md). UI-QA-014 and
+UI-BROWSER-026 remain open: this session exposes no browser inspection tool;
+native goldens do not establish browser or device success.
 
 ## Clean product surface and original avatar continuation (2026-10-05)
 
