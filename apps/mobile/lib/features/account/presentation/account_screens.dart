@@ -14,6 +14,7 @@ import '../application/profile_editor_controller.dart';
 import '../application/avatar_controller.dart';
 import '../application/settings_extras_controller.dart';
 import '../data/settings_repository.dart';
+import '../../notifications/presentation/notification_screens.dart';
 import 'avatar_motion.dart';
 
 export 'delete_account_screen.dart';
@@ -512,16 +513,12 @@ class PreferencesScreen extends ConsumerWidget {
   }
 }
 
-/// Settings > Notifications: practice reminder schedule.
+/// Settings > Notifications: Reminders / Friends / Leaderboards /
+/// Announcements / Friend Nudges, each with Push / Email toggles.
 class NotificationSettingsScreen extends StatelessWidget {
   const NotificationSettingsScreen({super.key});
   @override
-  Widget build(BuildContext context) => PreviewPage(
-    title: 'Notifications',
-    children: [
-      _settingsLink(context, 'Practice reminders', '/settings/reminders'),
-    ],
-  );
+  Widget build(BuildContext context) => const NotificationsHubScreen();
 }
 
 /// Settings > Privacy settings.

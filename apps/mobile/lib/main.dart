@@ -53,6 +53,7 @@ import 'features/account/presentation/avatar_builder_screen.dart';
 import 'features/onboarding/presentation/welcome_screen.dart';
 import 'features/progress/presentation/profile_lists_screen.dart';
 import 'features/progress/application/profile_lists_controller.dart';
+import 'features/notifications/presentation/notification_screens.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -602,6 +603,12 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/settings/notifications',
           builder: (context, state) => const NotificationSettingsScreen(),
+        ),
+        GoRoute(
+          path: '/settings/notifications/:category',
+          builder: (context, state) => NotificationCategoryScreen(
+            categoryId: state.pathParameters['category']!,
+          ),
         ),
         GoRoute(
           path: '/settings/privacy',
