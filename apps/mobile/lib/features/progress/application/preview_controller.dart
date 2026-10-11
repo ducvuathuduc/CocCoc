@@ -96,14 +96,14 @@ class PreviewController extends Notifier<PreviewState> {
 
   bool buyFreeze(String id) {
     if (id.isEmpty ||
-        _wallet < 200 ||
+        _wallet < 425 ||
         state.freezes >= 2 ||
         state.purchases.contains(id)) {
       return false;
     }
     state = state.copyWith(
       freezes: state.freezes + 1,
-      spentGems: state.spentGems + 200,
+      spentGems: state.spentGems + 425,
       purchases: {...state.purchases, id},
     );
     return true;

@@ -24,6 +24,7 @@ import 'features/learning/presentation/explanation_screen.dart';
 import 'features/learning/presentation/lesson_results.dart';
 import 'features/learning/presentation/session_entry.dart';
 import 'features/progress/presentation/hub_screens.dart';
+import 'features/shop/presentation/shop_screen.dart';
 import 'features/progress/presentation/learning_shell.dart';
 import 'features/progress/presentation/streak_screen.dart';
 import 'features/progress/presentation/streak_widgets_screen.dart';
