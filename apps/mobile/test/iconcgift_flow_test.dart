@@ -97,11 +97,11 @@ void main() {
       final maxCard = t.getSemantics(
         find.byKey(const ValueKey('app-icon-max')),
       );
-      expect(maxCard, containsSemantics(isSelected: true));
+      expect(maxCard, isSemantics(isSelected: true));
       final streakCard = t.getSemantics(
         find.byKey(const ValueKey('app-icon-streakSociety')),
       );
-      expect(streakCard, containsSemantics(isSelected: false));
+      expect(streakCard, isSemantics(isSelected: false));
     });
 
     testWidgets('Streak Society then restore original icon', (t) async {
