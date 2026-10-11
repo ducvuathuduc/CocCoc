@@ -30,6 +30,8 @@ Widget harness({
 );
 
 void main() {
+  setUp(() => DuoMotion.debugSingleCycleLoops = false);
+  tearDown(() => DuoMotion.debugSingleCycleLoops = true);
   testWidgets('all original motion assets parse into compositions', (
     tester,
   ) async {

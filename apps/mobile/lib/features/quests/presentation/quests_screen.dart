@@ -171,7 +171,10 @@ class QuestsScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (activeSection == QuestSectionType.friends) ...[
-                  _TimedHeader(label: 'FRIENDS QUEST', time: questState.friendsQuest.timeRemaining),
+                  _TimedHeader(
+                    label: 'FRIENDS QUEST',
+                    time: questState.friendsQuest.timeRemaining,
+                  ),
                   const SizedBox(height: 16),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
@@ -257,7 +260,10 @@ class QuestsScreen extends ConsumerWidget {
                       ],
                     ),
                 ] else ...[
-                  _TimedHeader(label: 'WEEKEND QUEST', time: questState.weekendQuest.timeRemaining),
+                  _TimedHeader(
+                    label: 'WEEKEND QUEST',
+                    time: questState.weekendQuest.timeRemaining,
+                  ),
                   const SizedBox(height: 16),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
@@ -286,7 +292,10 @@ class QuestsScreen extends ConsumerWidget {
                 const Divider(color: ReferenceColors.border, thickness: 2),
                 const SizedBox(height: 24),
 
-                _TimedHeader(label: 'DAILY QUESTS', time: questState.dailyTimeRemaining),
+                _TimedHeader(
+                  label: 'DAILY QUESTS',
+                  time: questState.dailyTimeRemaining,
+                ),
                 const SizedBox(height: 20),
 
                 for (final quest in questState.dailyQuests)
@@ -314,39 +323,42 @@ class _TimedHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Text(
-            label,
-            style: sectionStyle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              style: sectionStyle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-        ),
-        Flexible(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.timer_outlined,
-                color: ReferenceColors.disabled,
-                size: 16,
-              ),
-              const SizedBox(width: 4),
-              Flexible(
-                child: Text(
-                  time,
-                  style: sectionStyle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: constraints.maxWidth / 2),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.timer_outlined,
+                  color: ReferenceColors.disabled,
+                  size: 16,
                 ),
-              ),
-            ],
+                const SizedBox(width: 4),
+                Flexible(
+                  child: Text(
+                    time,
+                    style: sectionStyle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -364,39 +376,42 @@ class _LessonCountRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircleAvatar(radius: 6, backgroundColor: dot),
-              const SizedBox(width: 12),
-              Flexible(
-                child: Text(
-                  name,
-                  style: headingStyle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(radius: 6, backgroundColor: dot),
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Text(
+                    name,
+                    style: headingStyle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Flexible(
-          child: Text(
-            '$lessons lessons',
-            style: const TextStyle(
-              fontSize: 19,
-              color: ReferenceColors.disabled,
-              fontWeight: FontWeight.w700,
+              ],
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
           ),
-        ),
-      ],
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: constraints.maxWidth / 2),
+            child: Text(
+              '$lessons lessons',
+              style: const TextStyle(
+                fontSize: 19,
+                color: ReferenceColors.disabled,
+                fontWeight: FontWeight.w700,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
