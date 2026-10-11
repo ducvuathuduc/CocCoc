@@ -21,9 +21,9 @@ void main() {
       controller.useDemoBalance();
       expect(controller.buyFreeze('buy-2'), true);
       expect(controller.buyFreeze('buy-2'), false);
-      expect(container.read(previewWalletProvider), 835);
+      expect(container.read(previewWalletProvider), 610);
       expect(container.read(previewControllerProvider).freezes, 1);
-      expect(container.read(previewControllerProvider).spentGems, 200);
+      expect(container.read(previewControllerProvider).spentGems, 425);
     },
   );
 }

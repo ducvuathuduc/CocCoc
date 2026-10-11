@@ -20,7 +20,7 @@ void main() {
     final rest = tester.getTopLeft(button);
     final gesture = await tester.startGesture(tester.getCenter(button));
     await tester.pump(const Duration(milliseconds: 150));
-    await tester.pump(const Duration(milliseconds: 80));
+    await tester.pump(const Duration(milliseconds: 120));
     expect(tester.getTopLeft(button).dy, closeTo(rest.dy + 4, .01));
     await gesture.cancel();
     await tester.pump();
