@@ -85,6 +85,7 @@ class LessonController extends Notifier<LessonState> {
         placement: placement,
         startedAt: DateTime.now(),
         originalTotal: loaded.length,
+        heartsEnforced: _repository.enforcesHearts,
       );
     } on LearningFailure catch (error) {
       if (_isCurrent(revision)) {
@@ -147,6 +148,26 @@ class LessonController extends Notifier<LessonState> {
     } else {
       state = state.copyWith(clearSelectedPairLeft: true);
     }
+  }
+
+  /// Records that the learner saw the one-time hearts explanation sheet.
+  void acknowledgeHeartsIntro() {
+    if (state.heartsIntroSeen) return;
+    state = state.copyWith(heartsIntroSeen: true);
+  }
+
+  /// "CAN'T LISTEN NOW" on audio pairs: skip the exercise without a heart
+  /// cost and show the skip notice in the feedback slot.
+  void skipListening() {
+    final current = state.current;
+    if (!_editable || current == null || !current.audioPairs) return;
+    state = state.copyWith(
+      stage: LessonStage.feedback,
+      skipped: true,
+      clearCorrect: true,
+      clearSelectedPairLeft: true,
+      clearError: true,
+    );
   }
 
   void revealHint() {
@@ -330,6 +351,7 @@ class LessonController extends Notifier<LessonState> {
       clearCorrect: true,
       assisted: false,
       textAlternative: false,
+      skipped: false,
       clearError: true,
     );
   }
@@ -351,6 +373,7 @@ class LessonController extends Notifier<LessonState> {
       clearCorrect: true,
       assisted: false,
       textAlternative: false,
+      skipped: false,
       clearError: true,
     );
   }
