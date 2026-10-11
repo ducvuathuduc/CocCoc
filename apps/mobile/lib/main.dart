@@ -35,6 +35,7 @@ import 'features/progress/presentation/streak_widgets_screen.dart';
 import 'features/progress/presentation/year_review_screen.dart';
 import 'features/progress/presentation/league_result_screen.dart';
 import 'features/progress/presentation/family_subscription_screen.dart';
+import 'features/gift/presentation/gift_screens.dart';
 import 'features/progress/presentation/achievements_screen.dart';
 import 'features/progress/presentation/social_screens.dart';
 import 'features/account/presentation/account_screens.dart';
@@ -441,6 +442,26 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/subscription/family/invite',
           builder: (context, state) => const FamilyPlanScreen(),
+        ),
+        GoRoute(
+          path: GiftRoutes.hub,
+          builder: (context, state) => const GiftSubscriptionScreen(),
+        ),
+        GoRoute(
+          path: GiftRoutes.intro,
+          builder: (context, state) => const GiftSuperIntroScreen(),
+        ),
+        GoRoute(
+          path: GiftRoutes.recipient,
+          builder: (context, state) => const GiftRecipientScreen(),
+        ),
+        GoRoute(
+          path: GiftRoutes.note,
+          builder: (context, state) => const GiftNoteScreen(),
+        ),
+        GoRoute(
+          path: GiftRoutes.sent,
+          builder: (context, state) => const GiftSentScreen(),
         ),
         GoRoute(
           path: '/streak',
