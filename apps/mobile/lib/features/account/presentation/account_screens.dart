@@ -113,15 +113,19 @@ class SettingsScreen extends ConsumerWidget {
       onTap: () => context.push(route),
     );
 
-    Widget textLink(String text) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: LearningColors.blue,
-          fontWeight: FontWeight.w700,
-          fontSize: 15,
-          letterSpacing: 0.8,
+    Widget textLink(String text, String route) => InkWell(
+      key: ValueKey('settings-link-${route.split('/').last}'),
+      onTap: () => context.push(route),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: LearningColors.blue,
+            fontWeight: FontWeight.w700,
+            fontSize: 15,
+            letterSpacing: 0.8,
+          ),
         ),
       ),
     );
@@ -205,9 +209,9 @@ class SettingsScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 35),
 
-        textLink('TERMS'),
-        textLink('PRIVACY POLICY'),
-        textLink('ACKNOWLEDGEMENTS'),
+        textLink('TERMS', '/settings/legal/terms'),
+        textLink('PRIVACY POLICY', '/settings/legal/privacy'),
+        textLink('ACKNOWLEDGEMENTS', '/settings/legal/acknowledgements'),
         const SizedBox(height: 40),
       ],
     );

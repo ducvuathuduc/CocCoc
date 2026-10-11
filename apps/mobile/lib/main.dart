@@ -39,6 +39,8 @@ import 'features/progress/presentation/achievements_screen.dart';
 import 'features/progress/presentation/social_screens.dart';
 import 'features/account/presentation/account_screens.dart';
 import 'features/account/presentation/course_management_screen.dart';
+import 'features/legal/domain/legal_models.dart';
+import 'features/legal/presentation/legal_document_screen.dart';
 import 'features/account/presentation/password_change_screen.dart';
 import 'features/practice/presentation/practice_screens.dart';
 import 'features/practice/presentation/journey_screens.dart';
@@ -606,6 +608,25 @@ class _AppState extends ConsumerState<_App> {
         GoRoute(
           path: '/settings/privacy',
           builder: (context, state) => const PrivacySettingsScreen(),
+        ),
+        GoRoute(
+          path: '/settings/legal/terms',
+          name: 'legal-terms',
+          builder: (context, state) =>
+              const LegalDocumentScreen(kind: LegalDocumentKind.terms),
+        ),
+        GoRoute(
+          path: '/settings/legal/privacy',
+          name: 'legal-privacy',
+          builder: (context, state) =>
+              const LegalDocumentScreen(kind: LegalDocumentKind.privacy),
+        ),
+        GoRoute(
+          path: '/settings/legal/acknowledgements',
+          name: 'legal-acknowledgements',
+          builder: (context, state) => const LegalDocumentScreen(
+            kind: LegalDocumentKind.acknowledgements,
+          ),
         ),
         GoRoute(
           path: '/support/help',
