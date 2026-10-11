@@ -101,7 +101,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
         child: AnimatedPadding(
           duration: MediaQuery.disableAnimationsOf(context)
               ? Duration.zero
-              : const Duration(milliseconds: 80),
+              : const Duration(milliseconds: 100),
           curve: Curves.easeOutCubic,
           padding: EdgeInsets.only(
             top: _pressed ? 4 : 0,
@@ -110,7 +110,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
           child: AnimatedContainer(
             duration: MediaQuery.disableAnimationsOf(context)
                 ? Duration.zero
-                : const Duration(milliseconds: 80),
+                : const Duration(milliseconds: 100),
             curve: Curves.easeOutCubic,
             decoration: BoxDecoration(
               color: background,

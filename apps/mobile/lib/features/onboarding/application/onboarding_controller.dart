@@ -1,8 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/onboarding_content_repository.dart';
 import '../data/onboarding_repository.dart';
+import '../domain/onboarding_content.dart';
 import '../domain/onboarding_state.dart';
 
+final onboardingContentRepositoryProvider =
+    Provider<OnboardingContentRepository>(
+      (ref) => const MockOnboardingContentRepository(),
+    );
+final onboardingContentProvider = Provider<OnboardingContent>(
+  (ref) => ref.watch(onboardingContentRepositoryProvider).loadContent(),
+);
 final onboardingRepositoryProvider = Provider<OnboardingRepository>(
   (ref) => MemoryOnboardingRepository(),
 );
