@@ -9,10 +9,12 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../application/auth_controller.dart';
 import '../domain/auth_state.dart';
+import '../../../core/ui/duo_form.dart';
+import 'auth_widgets.dart';
 import 'saved_account_management.dart';
 
-const authBlue = Color(0xFF1CB0F6);
-const authBlueEdge = Color(0xFF1899D6);
+const authBlue = DuoFormColors.blue;
+const authBlueEdge = DuoFormColors.blueEdge;
 
 class LoginFlow extends ConsumerStatefulWidget {
   const LoginFlow({
@@ -32,6 +34,8 @@ class LoginFlow extends ConsumerStatefulWidget {
 
 class _LoginFlowState extends ConsumerState<LoginFlow> {
   final _fields = List.generate(4, (_) => TextEditingController());
+  int _errorTick = 0;
+  String? _lastError;
   AuthController get c => ref.read(authControllerProvider.notifier);
   @override
   void initState() {
@@ -69,6 +73,10 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
   @override
   Widget build(BuildContext context) {
     final s = ref.watch(authControllerProvider);
+    if (s.error != _lastError) {
+      if (s.error != null) _errorTick++;
+      _lastError = s.error;
+    }
     final values = [s.email, s.password, s.newPassword, s.confirmPassword];
     for (var i = 0; i < 4; i++) {
       if (_fields[i].text != values[i]) {
@@ -117,15 +125,20 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
                         ),
                       ),
                     Expanded(
-                      child: switch (s.stage) {
-                        AuthStage.choice =>
-                          s.remembered == null ? _choice() : _remembered(s),
-                        AuthStage.details => _details(s),
-                        AuthStage.forgot => _recovery(s),
-                        AuthStage.reset => _reset(s),
-                        AuthStage.signedIn => _signedIn(s),
-                        AuthStage.busy => const SigningInView(),
-                      },
+                      child: DuoStepSwitcher(
+                        child: KeyedSubtree(
+                          key: ValueKey('auth-stage-${s.stage.name}'),
+                          child: switch (s.stage) {
+                            AuthStage.choice =>
+                              s.remembered == null ? _choice() : _remembered(s),
+                            AuthStage.details => _details(s),
+                            AuthStage.forgot => _recovery(s),
+                            AuthStage.reset => _reset(s),
+                            AuthStage.signedIn => _signedIn(s),
+                            AuthStage.busy => const SigningInView(),
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -285,25 +298,29 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AutofillGroup(
-          child: JoinedAuthPanel(
-            children: [
-              _field(
-                0,
-                'Email',
-                c.updateEmail,
-                email: true,
-                autofill: const [AutofillHints.email],
-              ),
-              _field(
-                1,
-                'Password',
-                c.updatePassword,
-                hidden: s.hidden,
-                toggle: c.toggleHidden,
-                autofill: const [AutofillHints.password],
-                submit: s.canSignIn ? _signIn : null,
-              ),
-            ],
+          child: DuoShake(
+            trigger: _errorTick,
+            child: JoinedAuthPanel(
+              error: s.error != null,
+              children: [
+                _field(
+                  0,
+                  'Email, phone, or username',
+                  c.updateEmail,
+                  email: true,
+                  autofill: const [AutofillHints.email],
+                ),
+                _field(
+                  1,
+                  'Password',
+                  c.updatePassword,
+                  hidden: s.hidden,
+                  toggle: c.toggleHidden,
+                  autofill: const [AutofillHints.password],
+                  submit: s.canSignIn ? _signIn : null,
+                ),
+              ],
+            ),
           ),
         ),
         gap(20),
@@ -327,53 +344,19 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
     bottom: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final provider in AuthProvider.values)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: ReferenceButton(
-              label: 'SIGN IN WITH ${provider.name.toUpperCase()}',
-              outlined: true,
-              foregroundColor: ReferenceColors.ink,
-              leading: DuoIllustration(
-                switch (provider) {
-                  AuthProvider.google => ReferenceArtRegions.google,
-                  AuthProvider.facebook => ReferenceArtRegions.facebook,
-                  AuthProvider.apple => ReferenceArtRegions.apple,
-                },
-                width: provider == AuthProvider.apple ? 23 : 24,
-                height: 24,
-              ),
-              onPressed:
-                  ref.watch(authAvailableProvidersProvider).contains(provider)
-                  ? () {
-                      FocusScope.of(context).unfocus();
-                      c.social(provider);
-                    }
-                  : null,
-            ),
-          ),
-        gap(10),
-        Text.rich(
-          const TextSpan(
-            children: [
-              TextSpan(text: 'By signing in to Duolingo, you agree to our '),
-              TextSpan(
-                text: 'Terms',
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
-              TextSpan(text: ' and '),
-              TextSpan(
-                text: 'Privacy Policy.',
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
-            ],
-          ),
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 16,
-            color: ReferenceColors.muted,
-            height: 1.45,
-          ),
+        SocialAuthButtons(
+          verb: 'SIGN IN',
+          available: ref.watch(authAvailableProvidersProvider),
+          onPressed: (provider) {
+            FocusScope.of(context).unfocus();
+            c.social(provider);
+          },
+        ),
+        gap(12),
+        const AuthLegalFooter(
+          prefix: 'By signing in to Duolingo, you agree to our ',
+          terms: 'Terms',
+          privacy: 'Privacy Policy',
         ),
       ],
     ),
@@ -515,17 +498,8 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
           : null,
     ),
   );
-  Future<bool?> _sheet(Widget child) => showModalBottomSheet<bool>(
-    context: context,
-    showDragHandle: true,
-    isScrollControlled: true,
-    builder: (context) => SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 28, 16, 30),
-        child: child,
-      ),
-    ),
-  );
+  Future<bool?> _sheet(Widget child) =>
+      showDuoSheet<bool>(context, (_) => child);
   Widget _signedIn(AuthState s) => SingleChildScrollView(
     padding: const EdgeInsets.all(24),
     child: Column(
@@ -652,7 +626,7 @@ Widget authError(String value) => Semantics(
     padding: const EdgeInsets.symmetric(vertical: 12),
     child: Text(
       value,
-      style: const TextStyle(fontSize: 16, color: Color(0xFFD33131)),
+      style: const TextStyle(fontSize: 16, color: DuoFormColors.errorText),
     ),
   ),
 );
@@ -660,36 +634,16 @@ Widget authError(String value) => Semantics(
 class JoinedAuthPanel extends StatelessWidget {
   const JoinedAuthPanel({
     required this.children,
-    this.color = const Color(0xFFF7F7F7),
+    this.color = DuoFormColors.fieldFill,
+    this.error = false,
     super.key,
   });
   final List<Widget> children;
   final Color color;
+  final bool error;
   @override
-  Widget build(BuildContext context) => Material(
-    color: color,
-    shape: RoundedRectangleBorder(
-      side: const BorderSide(color: ReferenceColors.border, width: 2),
-      borderRadius: BorderRadius.circular(12),
-    ),
-    clipBehavior: Clip.antiAlias,
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Column(
-        children: [
-          for (var i = 0; i < children.length; i++) ...[
-            if (i > 0)
-              const Divider(
-                height: 2,
-                thickness: 2,
-                color: ReferenceColors.border,
-              ),
-            children[i],
-          ],
-        ],
-      ),
-    ),
-  );
+  Widget build(BuildContext context) =>
+      DuoFieldGroup(color: color, error: error, children: children);
 }
 
 class SigningInView extends StatelessWidget {
