@@ -7,6 +7,8 @@ import '../../../core/design/reference_theme.dart';
 import 'shop_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../../progress/application/extended_controller.dart';
+import '../../progress/application/preview_controller.dart';
+import '../../progress/presentation/timer_boost_screen.dart';
 import '../application/shop_controller.dart';
 
 import 'shop_visuals.dart';
@@ -20,6 +22,10 @@ class ShopScreen extends ConsumerWidget {
     final state = stateAsync.value;
     if (state == null) return const Scaffold();
     final max = ref.watch(extendedControllerProvider).isMax;
+    // Balance and owned items come from the app economy (same wallet the
+    // Home stats bar shows); the shop repository only supplies the catalog.
+    final wallet = ref.watch(previewWalletProvider);
+    final owned = ref.watch(previewControllerProvider);
 
     return Scaffold(
       backgroundColor: ShopColors.surface,
@@ -36,7 +42,7 @@ class ShopScreen extends ConsumerWidget {
                   const ReferenceArt(LearningArt.gem, width: 24, height: 28),
                   const SizedBox(width: 8),
                   Text(
-                    '${state.wallet}',
+                    '$wallet',
                     style: const TextStyle(
                       color: ShopColors.blue,
                       fontWeight: FontWeight.w700,
@@ -54,7 +60,7 @@ class ShopScreen extends ConsumerWidget {
                   const SizedBox(height: 44),
                   _buildSectionTitle('My Items'),
                   const SizedBox(height: 18),
-                  _buildMyItems(context, state),
+                  _buildMyItems(context, ref, freezes: owned.freezes, timerBoosts: owned.timerBoosts),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Subscriptions'),
                   const SizedBox(height: 18),
@@ -62,15 +68,15 @@ class ShopScreen extends ConsumerWidget {
                   const SizedBox(height: 64),
                   _buildSectionTitle('Special Offers'),
                   const SizedBox(height: 18),
-                  _buildSpecialOffers(state),
+                  _buildSpecialOffers(context, state),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Timer Boost'),
                   const SizedBox(height: 18),
-                  _buildTimerBoost(context, ref, state),
+                  _buildTimerBoost(context, ref, state, wallet),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Streak Freeze'),
                   const SizedBox(height: 18),
-                  _buildStreakFreeze(context, ref, state),
+                  _buildStreakFreeze(context, ref, wallet),
                   const SizedBox(height: 64),
                 ],
               ),
@@ -160,7 +166,12 @@ class ShopScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildMyItems(BuildContext context, ShopState state) {
+  Widget _buildMyItems(
+    BuildContext context,
+    WidgetRef ref, {
+    required int freezes,
+    required int timerBoosts,
+  }) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -178,15 +189,31 @@ class ShopScreen extends ConsumerWidget {
             _buildMyItemCard(
               ShopArt.streakFreeze,
               'Streak Freeze',
-              'x${state.freezes}',
+              'x$freezes',
               ShopColors.blue,
             ),
             const SizedBox(width: 10.9),
-            _buildMyItemCard(
-              ShopArt.timerBoostMyItem,
-              'Timer Boost',
-              'x${state.timerBoosts}',
-              ShopColors.blue,
+            // Tapping the owned Timer Boost card opens the pack picker, as the
+            // GET entry on the earlier shop did.
+            Tooltip(
+              message: 'Get Timer Boosts',
+              excludeFromSemantics: true,
+              child: Semantics(
+                button: true,
+                label: 'Timer Boost, x$timerBoosts. Get more',
+                excludeSemantics: true,
+                child: GestureDetector(
+                  key: const ValueKey('shop-my-timer-boost'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => showTimerBoostOffer(context, ref),
+                  child: _buildMyItemCard(
+                    ShopArt.timerBoostMyItem,
+                    'Timer Boost',
+                    'x$timerBoosts',
+                    ShopColors.blue,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -271,7 +298,7 @@ class ShopScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSpecialOffers(ShopState state) {
+  Widget _buildSpecialOffers(BuildContext context, ShopState state) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
@@ -283,7 +310,12 @@ class ShopScreen extends ConsumerWidget {
               title: offer.title,
               actionLabel: offer.actionLabel,
               actionColor: offer.actionLabel == 'CLAIM' ? ShopColors.blue : ReferenceColors.muted,
-              onAction: offer.actionLabel == 'CLAIM' ? () {} : null,
+              onAction: offer.actionLabel != 'CLAIM'
+                  ? null
+                  : offer.id == 'widget-reward'
+                  // The widget reward is claimed by adding the streak widget.
+                  ? () => context.push('/streak/widgets')
+                  : () {},
             ),
           );
         }).toList(),
@@ -305,7 +337,12 @@ class ShopScreen extends ConsumerWidget {
     }
   }
 
-  Widget _buildTimerBoost(BuildContext context, WidgetRef ref, ShopState state) {
+  Widget _buildTimerBoost(
+    BuildContext context,
+    WidgetRef ref,
+    ShopState state,
+    int wallet,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
@@ -319,8 +356,14 @@ class ShopScreen extends ConsumerWidget {
               popular: offer.popular,
               onAction: () {
                 final cost = offer.price ?? 0;
-                if (state.wallet >= cost) {
-                  ref.read(shopControllerProvider.notifier).buyItem(offer.id, cost);
+                final pack = _timerBoostPack(offer.id);
+                if (wallet >= cost && pack != null) {
+                  ref
+                      .read(previewControllerProvider.notifier)
+                      .buyTimerBoost(
+                        'shop-${offer.id}-${DateTime.now().microsecondsSinceEpoch}',
+                        pack,
+                      );
                 } else {
                   showLearningNotice(
                     context,
@@ -336,11 +379,14 @@ class ShopScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildStreakFreeze(
-    BuildContext context,
-    WidgetRef ref,
-    ShopState state,
-  ) {
+  static int? _timerBoostPack(String id) => switch (id) {
+    'timer-single' => 1,
+    'timer-5' => 5,
+    'timer-15' => 15,
+    _ => null,
+  };
+
+  Widget _buildStreakFreeze(BuildContext context, WidgetRef ref, int wallet) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: _buildListItem(
@@ -349,8 +395,11 @@ class ShopScreen extends ConsumerWidget {
         price: 425,
         onAction: () {
           final cost = 425;
-          if (state.wallet >= cost) {
-            ref.read(shopControllerProvider.notifier).buyItem('freeze-${DateTime.now().millisecondsSinceEpoch}', cost);
+          if (wallet >= cost) {
+            final bought = ref
+                .read(previewControllerProvider.notifier)
+                .buyFreeze('freeze-${DateTime.now().microsecondsSinceEpoch}');
+            if (!bought) return;
             showLearningNotice(
               context,
               'Streak Freeze equipped!',

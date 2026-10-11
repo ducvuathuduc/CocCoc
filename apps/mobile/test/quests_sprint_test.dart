@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/quests/presentation/quests_screen.dart';
 import 'package:cocenglish/features/quests/data/quests_repository.dart';
@@ -8,7 +9,12 @@ import 'package:cocenglish/features/quests/application/quests_controller.dart';
 import 'package:cocenglish/features/progress/application/preview_controller.dart';
 import 'package:cocenglish/features/progress/domain/preview_state.dart';
 
+import 'support/app_fonts.dart';
+import 'support/settle_images.dart';
+
 void main() {
+  setUpAll(loadAppFonts);
+
   testWidgets('QuestsScreen matches golden 430', (tester) async {
     tester.view.physicalSize = const Size(430, 844);
     tester.view.devicePixelRatio = 1.0;
@@ -43,6 +49,7 @@ void main() {
     );
 
     await tester.pumpAndSettle();
+    await settleImages(tester);
 
     await expectLater(
       find.byKey(const ValueKey('quests-screen')),

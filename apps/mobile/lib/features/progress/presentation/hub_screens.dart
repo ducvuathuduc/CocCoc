@@ -73,6 +73,7 @@ class LeagueScreen extends ConsumerWidget {
     final avatar = ref.watch(avatarControllerProvider);
     return Scaffold(
       body: LeagueRankingSurface(
+        onOpenHistory: () => context.push('/league/results'),
         ownAvatar: Tooltip(
           message: 'Set your status',
           excludeFromSemantics: true,

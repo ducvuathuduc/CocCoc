@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/progress/presentation/score_information_screen.dart';
 import 'package:cocenglish/features/progress/presentation/energy_screen.dart';
 
+import 'support/app_fonts.dart';
+import 'support/settle_images.dart';
+
 void main() {
+  setUpAll(loadAppFonts);
+
   testWidgets('ScoreInformationScreen matches golden 430', (tester) async {
     tester.view.physicalSize = const Size(430, 932);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
+    tester.view.padding = const FakeViewPadding(top: 59, bottom: 34);
+    tester.view.viewPadding = const FakeViewPadding(top: 59, bottom: 34);
     addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPadding);
+    addTearDown(tester.view.resetViewPadding);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -28,6 +38,7 @@ void main() {
     );
 
     await tester.pumpAndSettle();
+    await settleImages(tester);
 
     await expectLater(
       find.byKey(const ValueKey('score-screen')),
@@ -39,7 +50,11 @@ void main() {
     tester.view.physicalSize = const Size(430, 932);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
+    tester.view.padding = const FakeViewPadding(top: 59, bottom: 34);
+    tester.view.viewPadding = const FakeViewPadding(top: 59, bottom: 34);
     addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPadding);
+    addTearDown(tester.view.resetViewPadding);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -57,6 +72,7 @@ void main() {
     );
 
     await tester.pumpAndSettle();
+    await settleImages(tester);
 
     await expectLater(
       find.byKey(const ValueKey('energy-screen')),

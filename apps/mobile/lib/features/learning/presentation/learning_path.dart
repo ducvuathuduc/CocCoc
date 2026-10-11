@@ -77,7 +77,9 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                             children: [
                               Positioned(
                                 left: width * .62,
-                                top: 210,
+                                // The viewport reaches above the resting owl so
+                                // the jump (frames ~130-180) is not clipped.
+                                top: 183,
                                 child: DuoMotion(
                                   pose: DuoPose.reading,
                                   spec: const DuoMotionSpec(
@@ -87,17 +89,24 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                                     loop: true,
                                   ),
                                   width: 118,
-                                  height: 126,
+                                  height: 153,
                                   viewport: const Rect.fromLTWH(
                                     228,
-                                    173,
+                                    30,
                                     625,
-                                    667,
+                                    810,
                                   ),
-                                  fallback: const ReferenceArt(
-                                    LearningArt.pathDuo,
-                                    width: 102,
-                                    height: 105,
+                                  fallback: const Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: SizedBox(
+                                      width: 118,
+                                      height: 126,
+                                      child: ReferenceArt(
+                                        LearningArt.pathDuo,
+                                        width: 102,
+                                        height: 105,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),

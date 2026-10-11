@@ -1,4 +1,5 @@
 import 'package:cocenglish/core/design/reference_theme.dart';
+import 'package:cocenglish/features/progress/application/streak_controller.dart';
 import 'package:cocenglish/features/progress/presentation/streak_screen.dart';
 import 'package:cocenglish/features/progress/presentation/social_screens.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,10 @@ void main() {
 
         await tester.pumpWidget(
           ProviderScope(
+            // Fixed clock: the calendar milestone follows today's date.
+            overrides: [
+              streakClockProvider.overrideWithValue(DateTime(2026, 10, 10)),
+            ],
             child: MaterialApp(
               theme: referenceTheme(),
               builder: (context, child) => MediaQuery(

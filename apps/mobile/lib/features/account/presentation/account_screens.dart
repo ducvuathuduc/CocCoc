@@ -428,10 +428,116 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               }
             },
           ),
+          const SizedBox(height: 24),
+          Center(
+            child: TextButton(
+              onPressed: () => context.push('/account/delete'),
+              child: const Text(
+                'DELETE ACCOUNT',
+                style: TextStyle(
+                  color: LearningColors.red,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
+}
+
+Widget _settingsLink(BuildContext context, String title, String route) =>
+    ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+      ),
+      trailing: const Icon(
+        Icons.chevron_right,
+        color: ReferenceColors.disabled,
+      ),
+      onTap: () => context.push(route),
+    );
+
+Widget _settingsSwitch(
+  String title,
+  bool value,
+  ValueChanged<bool> onChanged,
+) => SwitchListTile(
+  contentPadding: EdgeInsets.zero,
+  title: Text(
+    title,
+    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+  ),
+  value: value,
+  onChanged: onChanged,
+  activeThumbColor: LearningColors.green,
+);
+
+/// Settings > Preferences: lesson experience toggles and the home-screen
+/// streak widget.
+class PreferencesScreen extends ConsumerWidget {
+  const PreferencesScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.watch(previewControllerProvider),
+        vm = ref.read(previewControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Preferences',
+      children: [
+        const Text('LESSON EXPERIENCE', style: sectionStyle),
+        const SizedBox(height: 10),
+        _settingsSwitch('Sound effects', s.sound, vm.setSound),
+        const Divider(),
+        const SizedBox(height: 25),
+        const Text('WIDGETS', style: sectionStyle),
+        const SizedBox(height: 10),
+        _settingsLink(context, 'Streak widgets', '/streak/widgets'),
+      ],
+    );
+  }
+}
+
+/// Settings > Notifications: practice reminder schedule.
+class NotificationSettingsScreen extends StatelessWidget {
+  const NotificationSettingsScreen({super.key});
+  @override
+  Widget build(BuildContext context) => PreviewPage(
+    title: 'Notifications',
+    children: [
+      _settingsLink(context, 'Practice reminders', '/settings/reminders'),
+    ],
+  );
+}
+
+/// Settings > Privacy settings.
+class PrivacySettingsScreen extends ConsumerWidget {
+  const PrivacySettingsScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.watch(previewControllerProvider),
+        vm = ref.read(previewControllerProvider.notifier);
+    return PreviewPage(
+      title: 'Privacy settings',
+      children: [_settingsSwitch('Private profile', s.private, vm.setPrivate)],
+    );
+  }
+}
+
+/// Settings > Help Center: connection recovery and sync status.
+class HelpCenterScreen extends StatelessWidget {
+  const HelpCenterScreen({super.key});
+  @override
+  Widget build(BuildContext context) => PreviewPage(
+    title: 'Help Center',
+    children: [
+      _settingsLink(context, 'Connection and recovery', '/recovery'),
+      const Divider(),
+      _settingsLink(context, 'Sync status', '/sync'),
+    ],
+  );
 }
 
 class ReminderScreen extends ConsumerStatefulWidget {

@@ -596,6 +596,22 @@ class _AppState extends ConsumerState<_App> {
           builder: (context, state) => const PasswordChangeScreen(),
         ),
         GoRoute(
+          path: '/settings/preferences',
+          builder: (context, state) => const PreferencesScreen(),
+        ),
+        GoRoute(
+          path: '/settings/notifications',
+          builder: (context, state) => const NotificationSettingsScreen(),
+        ),
+        GoRoute(
+          path: '/settings/privacy',
+          builder: (context, state) => const PrivacySettingsScreen(),
+        ),
+        GoRoute(
+          path: '/support/help',
+          builder: (context, state) => const HelpCenterScreen(),
+        ),
+        GoRoute(
           path: '/settings/reminders',
           builder: (context, state) => const ReminderScreen(),
         ),

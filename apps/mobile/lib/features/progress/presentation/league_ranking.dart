@@ -25,12 +25,16 @@ class LeagueRankingSurface extends ConsumerWidget {
     required this.ownAvatar,
     required this.onOpenProfile,
     required this.onSetStatus,
+    this.onOpenHistory,
     super.key,
   });
 
   final Widget ownAvatar;
   final ValueChanged<String> onOpenProfile;
   final VoidCallback onSetStatus;
+
+  /// Opens past league results; the league trophy row is the entry point.
+  final VoidCallback? onOpenHistory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,7 +52,7 @@ class LeagueRankingSurface extends ConsumerWidget {
           onSetStatus: onSetStatus,
         ),
     ];
-    const header = _LeagueHeader();
+    final header = _LeagueHeader(onOpenHistory: onOpenHistory);
     const divider = Divider(
       height: 2,
       thickness: 2,
@@ -114,7 +118,9 @@ class LeagueRankingSurface extends ConsumerWidget {
 }
 
 class _LeagueHeader extends StatelessWidget {
-  const _LeagueHeader();
+  const _LeagueHeader({this.onOpenHistory});
+
+  final VoidCallback? onOpenHistory;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -156,22 +162,42 @@ class _LeagueHeader extends StatelessWidget {
           style: TextStyle(fontSize: 19, color: ReferenceColors.muted),
         ),
         const SizedBox(height: 26),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              const ReferenceArt(_bronzeTrophy, width: 55, height: 100),
-              const SizedBox(width: 28),
-              for (var index = 0; index < 4; index++) ...[
-                const ReferenceArt(_lockedTrophy, width: 72, height: 95),
-                if (index < 3) const SizedBox(width: 24),
-              ],
-            ],
-          ),
-        ),
+        _trophies(),
       ],
     ),
   );
+
+  Widget _trophies() {
+    final row = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          const ReferenceArt(_bronzeTrophy, width: 55, height: 100),
+          const SizedBox(width: 28),
+          for (var index = 0; index < 4; index++) ...[
+            const ReferenceArt(_lockedTrophy, width: 72, height: 95),
+            if (index < 3) const SizedBox(width: 24),
+          ],
+        ],
+      ),
+    );
+    final open = onOpenHistory;
+    if (open == null) return row;
+    return Tooltip(
+      message: 'League history',
+      excludeFromSemantics: true,
+      child: Semantics(
+        button: true,
+        label: 'League history',
+        child: GestureDetector(
+          key: const ValueKey('league-history'),
+          behavior: HitTestBehavior.opaque,
+          onTap: open,
+          child: row,
+        ),
+      ),
+    );
+  }
 }
 
 class _LeagueRow extends StatelessWidget {

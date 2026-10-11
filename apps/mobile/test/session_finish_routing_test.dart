@@ -33,25 +33,46 @@ void main() {
       final c = ProviderScope.containerOf(context);
       final learning = c.read(learningStateProvider);
       final gems = c.read(previewControllerProvider).bonusGems;
+      // Entry points follow Duolingo: Streak widgets under Settings >
+      // Preferences, Year in Review on the own profile, League history from
+      // the league trophy row.
       router.push('/settings');
       await t.pumpAndSettle();
-      for (final (title, screen) in <(String, Type)>[
-        ('Streak widgets', StreakWidgetsScreen),
-        ('2025 Year in Review', YearReviewScreen),
-        ('League history', LeagueResultScreen),
-      ]) {
-        await t.scrollUntilVisible(
-          find.text(title),
-          220,
-          scrollable: find.byType(Scrollable).last,
-        );
-        await t.tap(find.text(title));
-        await t.pumpAndSettle();
-        expect(find.byType(screen), findsOneWidget);
-        router.pop();
-        await t.pumpAndSettle();
-        expect(find.text('Settings'), findsOneWidget);
-      }
+      await t.tap(find.text('Preferences'));
+      await t.pumpAndSettle();
+      await t.tap(find.text('Streak widgets'));
+      await t.pumpAndSettle();
+      expect(find.byType(StreakWidgetsScreen), findsOneWidget);
+      router.pop();
+      await t.pumpAndSettle();
+      router.pop();
+      await t.pumpAndSettle();
+      expect(find.text('Settings'), findsOneWidget);
+      router.pop();
+      await t.pumpAndSettle();
+
+      await t.tap(find.byTooltip('Profile'));
+      await t.pumpAndSettle();
+      final review = find.text('2025 YEAR IN REVIEW');
+      await t.ensureVisible(review);
+      await t.pumpAndSettle();
+      await t.tap(review);
+      await t.pumpAndSettle();
+      expect(find.byType(YearReviewScreen), findsOneWidget);
+      router.pop();
+      await t.pumpAndSettle();
+
+      c.read(previewControllerProvider.notifier).optIntoLeague();
+      router.go('/league');
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('league-history')));
+      await t.pumpAndSettle();
+      expect(find.byType(LeagueResultScreen), findsOneWidget);
+      router.pop();
+      await t.pumpAndSettle();
+
+      router.push('/settings');
+      await t.pumpAndSettle();
       router.push('/league/results');
       await t.pumpAndSettle();
       await t.tap(find.byTooltip('Close').hitTestable());

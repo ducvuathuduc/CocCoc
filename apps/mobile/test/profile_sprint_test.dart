@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/profile/profile_mock.dart';
 import 'package:cocenglish/features/profile/profile_tab_screen.dart';
 
+import 'support/app_fonts.dart';
+
 void main() {
+  setUpAll(loadAppFonts);
+
   testWidgets('Profile avatar sheet matches golden 430', (tester) async {
     tester.view.physicalSize = const Size(430, 844);
     tester.view.devicePixelRatio = 1.0;
