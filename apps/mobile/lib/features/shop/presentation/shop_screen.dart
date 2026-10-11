@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../gift/presentation/gift_screens.dart';
+
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import 'shop_widgets.dart';
@@ -305,13 +307,25 @@ class ShopScreen extends ConsumerWidget {
   Widget _buildSubscriptions(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: _buildListItem(
-        art: ShopArt.maxFamilyPlan,
-        title: 'Max Family Plan',
-        actionLabel: 'UPGRADE',
-        actionColor: ShopColors.blue,
-        // Upgrade goes to the existing Family plan picker.
-        onAction: () => context.push('/subscription/family'),
+      child: Column(
+        children: [
+          _buildListItem(
+            art: ShopArt.maxFamilyPlan,
+            title: 'Max Family Plan',
+            actionLabel: 'UPGRADE',
+            actionColor: ShopColors.blue,
+            // Upgrade goes to the existing Family plan picker.
+            onAction: () => context.push('/subscription/family'),
+          ),
+          const SizedBox(height: 18),
+          _buildListItem(
+            art: GiftArt.duoGift,
+            title: 'Gift Super',
+            actionLabel: 'GIFT',
+            actionColor: ShopColors.blue,
+            onAction: () => context.push(GiftRoutes.hub),
+          ),
+        ],
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../app_icon/presentation/app_icon_sheet.dart';
 import '../../learning/application/learning_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../application/preview_controller.dart';
@@ -528,32 +529,7 @@ class _PersonalStreak extends ConsumerWidget {
     );
   }
 
-  void _iconSheet(BuildContext context) => showModalBottomSheet<void>(
-    context: context,
-    showDragHandle: true,
-    builder: (sheet) => SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const ReferenceArt(StreakArt.appIcons, width: 120, height: 123),
-            const SizedBox(height: 12),
-            const Text(
-              'Streak app icon',
-              style: headingStyle,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            ReferenceButton(
-              label: 'DONE',
-              onPressed: () => Navigator.pop(sheet),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+  void _iconSheet(BuildContext context) => showAppIconSheet(context);
 }
 
 const streakMonths = [

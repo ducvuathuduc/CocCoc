@@ -146,3 +146,12 @@ Unit checks also activate the previously inspected original `character-lin.riv`,
 | unit-skip-warning.png | sc_0e8d2cbe798c4f52bb675b1c196ce631 | d229d963d603b0f51f0bfabedd831ae1a4bad82ede36be57b3ac5c4980112159 | [source](https://storage.gummble.com/prod/content/app_screens/5b43adbe-b81e-46d7-975d-34ac7a053c86.png) |
 | unit-skip-failed.png | sc_8975ffca8e1f44cebb67878c4dcbd5cb | 1ed29ea7ce99d658617705bbd1461f1f967461d1ed34a4b55a68c82b6c10f23c | [source](https://storage.gummble.com/prod/content/app_screens/1ab882d5-337f-432d-8b78-7d3aeb32b354.png) |
 | unit-skip-result.png | sc_1b1f74944fc643ae966c450854f6f45d | edd2628a77ed0a731141f140c11035349b846494ae05bd1bd85bbdc9219aeb0f | [source](https://storage.gummble.com/prod/content/app_screens/f6fccedf-27ff-407b-835e-5db2a2bef4e8.png) |
+
+Sprint 2 icon/gift slice: four byte-intact Gummble screens (Duolingo iOS flows "Changing app icon" and "Gift a Super Duolingo", copied from `work/refs6/`). Only illustration/icon regions are painted (alternate app icons, gift Duo, hero headers with their nav glyph and SUPER logo); all copy, cards, tables, fields and buttons are native Flutter.
+
+| Bundle file | Source screen | SHA-256 |
+| --- | --- | --- |
+| app-icon-select.png | Changing_app_icon/01 | b7db62a93966e4b2a7286a2c894986489b442522e070675a0a7218016281ecb5 |
+| gift-subscription.png | Gift_a_Super_Duolingo/00 | 4cad8607f89c92f03688373e906721aea706eaa2452be97691f0487cec65e7a0 |
+| gift-intro.png | Gift_a_Super_Duolingo/01 | 28968b4777e46de884956dcda673cbda3025ecc704706424f3c88a759f58203b |
+| gift-note.png | Gift_a_Super_Duolingo/02 | c23ca41cff28567511d0ce2a4c3d823600f0296100b43939b8fbb72c95d4c469 |

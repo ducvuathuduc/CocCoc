@@ -564,6 +564,14 @@ class SubscriptionScreen extends ConsumerWidget {
           outlined: true,
           onPressed: () => context.push(state.isMax ? '/max' : '/super'),
         ),
+        const SizedBox(height: 16),
+        ReferenceButton(
+          key: const ValueKey('subscription-gift-super'),
+          label: 'GIFT SUPER',
+          outlined: true,
+          foregroundColor: const Color(0xFF3C4DFF),
+          onPressed: () => context.push('/subscription/gift'),
+        ),
         const SizedBox(height: 24),
         LearningCard(
           child: Column(
