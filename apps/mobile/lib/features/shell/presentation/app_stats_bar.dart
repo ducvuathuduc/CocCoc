@@ -31,47 +31,53 @@ class AppStatsBar extends ConsumerWidget {
                 child: PressableIcon(
                   radius: 10,
                   onTap: () => onSelected(stat.kind),
-                  child: Container(
+                  child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       minWidth: 48,
                       minHeight: 48,
                     ),
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 4,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _art(stat),
-                          if (stat.value.isNotEmpty) ...[
-                            const SizedBox(width: 7),
-                            ExcludeSemantics(
-                              child: Text(
-                                stat.value,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: switch (stat.kind) {
-                                    AppStatKind.course => ReferenceColors.ink,
-                                    AppStatKind.streak =>
-                                      stat.active
-                                          ? LearningColors.orange
-                                          : ReferenceColors.disabled,
-                                    AppStatKind.gems => LearningColors.blue,
-                                    AppStatKind.energy =>
-                                      stat.unlimited
-                                          ? ReferenceColors.purple
-                                          // Energy/02 flat battery (1070,380).
-                                          : const Color(0xFFFF86CD),
-                                  },
+                    // widthFactor keeps each stat at its own width; a plain
+                    // Container(alignment:) fills the Wrap row and stacks
+                    // the stats vertically.
+                    child: Align(
+                      widthFactor: 1,
+                      heightFactor: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 4,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _art(stat),
+                            if (stat.value.isNotEmpty) ...[
+                              const SizedBox(width: 7),
+                              ExcludeSemantics(
+                                child: Text(
+                                  stat.value,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: switch (stat.kind) {
+                                      AppStatKind.course => ReferenceColors.ink,
+                                      AppStatKind.streak =>
+                                        stat.active
+                                            ? LearningColors.orange
+                                            : ReferenceColors.disabled,
+                                      AppStatKind.gems => LearningColors.blue,
+                                      AppStatKind.energy =>
+                                        stat.unlimited
+                                            ? ReferenceColors.purple
+                                            // Energy/02 flat battery (1070,380).
+                                            : const Color(0xFFFF86CD),
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
                   ),

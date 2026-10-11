@@ -107,8 +107,8 @@ class DuoMotion extends StatefulWidget {
   final Rect? viewport;
   final bool enabled;
 
-  /// Test hook: when true, looping specs play a single cycle and then hold
-  /// their last frame, so `pumpAndSettle` can settle screens that show an
+  /// Test hook: when true, looping specs hold their first frame instead of
+  /// repeating, so `pumpAndSettle` can settle screens that show an
   /// idle mascot. Set globally in `test/flutter_test_config.dart`.
   @visibleForTesting
   static bool debugSingleCycleLoops = false;
@@ -234,7 +234,10 @@ class _DuoMotionState extends State<DuoMotion>
       microseconds: (segmentFrames / composition.frameRate * 1000000).round(),
     );
     if (fromStart) _controller.value = 0;
-    if (_spec.loop && !DuoMotion.debugSingleCycleLoops) {
+    if (_spec.loop && DuoMotion.debugSingleCycleLoops) {
+      // Tests: hold the loop's first frame so screens settle.
+      _controller.value = 0;
+    } else if (_spec.loop) {
       _controller.repeat();
     } else {
       _controller.forward().whenComplete(() {
