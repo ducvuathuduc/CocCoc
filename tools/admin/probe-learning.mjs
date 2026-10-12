@@ -3,12 +3,12 @@
 // only). Creates a synthetic Appwrite user + JWT with the server key, then: course list + manifest
 // (published vi_en v2 shape), enroll, getPath, a full online lesson (start -> answer every item ->
 // complete), an offline completion (syncOfflineCompletion) for the next lesson, and the frontier
-// after both. Optionally (--deletion) requests account deletion in Progress and waits for the
+// after both. --scheduled re-queues one outbox row for the cron relay. Optionally (--deletion) requests account deletion in Progress and waits for the
 // Learning purge (account.deleted.v1 -> rows gone). Finally deletes every Learning and Progress
 // row naming the user and the Appwrite user itself. Requires APPWRITE_API_KEY (server key) and
 // ALLOW_LIVE_PROBE=reviewed-test-project. Prints one JSON report; exit 1 on any failed check.
 import { randomUUID } from 'node:crypto';
-import { Client, Query, TablesDB, Users } from 'node-appwrite';
+import { Client, Functions, Query, TablesDB, Users } from 'node-appwrite';
 import { correctAnswer } from '../../services/learning/test/helpers/answers.mjs';
 import { DEFAULT_ENDPOINT, DEFAULT_PROJECT, loadMaintainer } from './lib.mjs';
 
@@ -23,12 +23,16 @@ const projectId = process.env.APPWRITE_PROJECT_ID ?? DEFAULT_PROJECT;
 const learningUrl = process.env.COC_LEARNING_URL ?? 'https://coccoc-learning.sgp.appwrite.run';
 const progressUrl = process.env.COC_PROGRESS_URL ?? 'https://coccoc-progress.sgp.appwrite.run';
 const withDeletion = process.argv.includes('--deletion');
+// --scheduled: re-queue the online completion's ACKed outbox row and require the coc-learning cron
+// (learning-outbox-relay) to deliver it again (Progress answers the duplicate as a replay).
+const withScheduled = process.argv.includes('--scheduled');
 const client = new Client()
   .setEndpoint(endpoint)
   .setProject(projectId)
   .setKey(process.env.APPWRITE_API_KEY ?? '');
 const users = new Users(client);
 const db = new TablesDB(client);
+const functions = new Functions(client);
 const databaseId = 'cocenglish';
 const checks = [];
 const check = (name, pass, detail) => checks.push({ name, pass: Boolean(pass), detail });
@@ -245,6 +249,72 @@ try {
       ? { studyXp: rewards.body.studyXp, awardXp: rewards.body.awardXp, gems: rewards.body.gems }
       : rewards.body,
   );
+  if (withScheduled) {
+    const row = (
+      await db.listRows({
+        databaseId,
+        tableId: 'l_outbox',
+        queries: [Query.equal('aggregateId', sessionIds[0] ?? 'none'), Query.limit(1)],
+      })
+    ).rows[0];
+    const requeuedAt = new Date().toISOString();
+    if (row) {
+      await db.updateRow({
+        databaseId,
+        tableId: 'l_outbox',
+        rowId: row.$id,
+        data: {
+          status: 'PENDING',
+          attempt: 0,
+          nextAttemptAt: requeuedAt,
+          leaseOwner: null,
+          leaseUntil: null,
+          revision: Number(row.revision) + 1,
+        },
+      });
+    }
+    let status = '';
+    for (let i = 0; i < 30; i++) {
+      await new Promise((r) => setTimeout(r, 5000));
+      const current = await db
+        .getRow({ databaseId, tableId: 'l_outbox', rowId: row?.$id ?? 'none' })
+        .catch(() => null);
+      status = current ? `${current.status}:${current.attempt}` : 'missing';
+      if (status.startsWith('ACK') || status.startsWith('DEAD')) break;
+    }
+    const runs = (
+      await functions.listExecutions({
+        functionId: 'coc-learning',
+        queries: [
+          Query.equal('trigger', 'schedule'),
+          Query.orderDesc('$createdAt'),
+          Query.limit(5),
+        ],
+      })
+    ).executions
+      .filter(
+        (e) =>
+          Date.parse(e.$createdAt) >= Date.parse(requeuedAt) - 1000 &&
+          /"acked":[1-9]/.test(e.logs ?? ''),
+      )
+      .map((e) => ({ id: e.$id, http: e.responseStatusCode, logs: e.logs.trim() }));
+    check(
+      'scheduled learning-outbox-relay re-delivered the re-queued event (ACK, cron 200)',
+      status.startsWith('ACK') && runs.some((e) => e.http === 200),
+      { status, runs },
+    );
+    const again = await call(
+      progressUrl,
+      'GET',
+      `/v1/me/rewards?completionId=${encodeURIComponent(sessionIds[0] ?? 'none')}`,
+      { jwt },
+    );
+    check(
+      'duplicate delivery credited nothing new (idempotent replay)',
+      again.status === 200 && again.body.studyXp === rewards.body?.studyXp,
+      again.status === 200 ? { studyXp: again.body.studyXp } : again.body,
+    );
+  }
   if (withDeletion) {
     const del = await call(progressUrl, 'POST', '/v1/me/deletion', {
       jwt,
@@ -278,18 +348,35 @@ try {
       }
     }
   }
-  for (const aggregate of [...sessionIds, userId]) {
-    const page = await db
+  // Producer outboxes (Learning lesson/purge events, AI purge ack) and the Progress inbox rows
+  // those events left (p_inbox is keyed by eventId, not userId).
+  const eventIds = [];
+  for (const tableId of ['l_outbox', 'a_outbox']) {
+    for (const aggregate of [...sessionIds, userId]) {
+      const page = await db
+        .listRows({
+          databaseId,
+          tableId,
+          queries: [Query.equal('aggregateId', aggregate), Query.limit(100)],
+        })
+        .catch(() => ({ rows: [] }));
+      for (const row of page.rows) {
+        if (row.eventId) eventIds.push(row.eventId);
+        await db.deleteRow({ databaseId, tableId, rowId: row.$id }).catch(() => undefined);
+        swept++;
+      }
+    }
+  }
+  if (eventIds.length) {
+    const inbox = await db
       .listRows({
         databaseId,
-        tableId: 'l_outbox',
-        queries: [Query.equal('aggregateId', aggregate), Query.limit(100)],
+        tableId: 'p_inbox',
+        queries: [Query.equal('eventId', eventIds), Query.limit(100)],
       })
       .catch(() => ({ rows: [] }));
-    for (const row of page.rows) {
-      await db
-        .deleteRow({ databaseId, tableId: 'l_outbox', rowId: row.$id })
-        .catch(() => undefined);
+    for (const row of inbox.rows) {
+      await db.deleteRow({ databaseId, tableId: 'p_inbox', rowId: row.$id }).catch(() => undefined);
       swept++;
     }
   }

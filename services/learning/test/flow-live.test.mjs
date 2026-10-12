@@ -27,14 +27,15 @@ after(async () => {
   if (!enabled || !tables) return;
   const del = (tableId, rowId) =>
     tables.deleteRow({ databaseId, tableId, rowId }).catch(() => undefined);
-  for (const tableId of [
-    'l_enrollments',
-    'l_active_slots',
-    'l_sessions',
-    'l_answers',
-    'l_review_items',
-    'l_receipts',
-  ]) {
+  // Every Learning table naming the user, plus Progress rows: the TEST project's every-minute
+  // learning-outbox-relay cron may deliver this run's lesson.completed.v1 before cleanup.
+  const all = await tables
+    .listTables({ databaseId, queries: [Query.limit(100)] })
+    .catch(() => ({ tables: [] }));
+  const userTables = all.tables
+    .filter((t) => /^[lp]_/.test(t.$id) && t.columns?.some((c) => c.key === 'userId'))
+    .map((t) => t.$id);
+  for (const tableId of userTables) {
     for (let page = 0; page < 5; page++) {
       const rows = await tables
         .listRows({ databaseId, tableId, queries: [Query.equal('userId', user), Query.limit(100)] })
@@ -42,6 +43,16 @@ after(async () => {
       if (!rows.rows.length) break;
       for (const row of rows.rows) await del(tableId, row.$id);
     }
+  }
+  if (cleanup.eventIds.length) {
+    const inbox = await tables
+      .listRows({
+        databaseId,
+        tableId: 'p_inbox',
+        queries: [Query.equal('eventId', cleanup.eventIds), Query.limit(100)],
+      })
+      .catch(() => ({ rows: [] }));
+    for (const row of inbox.rows) await del('p_inbox', row.$id);
   }
   for (const id of cleanup.eventIds) await del('l_outbox', id);
   if (publishedHere) {
@@ -150,14 +161,20 @@ test(
     ]);
     assert.equal(c1.status, 200, JSON.stringify(c1.body));
     assert.deepEqual(c2.body, c1.body, 'concurrent completes (different keys) -> one completion');
-    assert.equal(c1.body.originalCorrect, firstWasWrong ? 9 : 10);
+    // vi_en v2 lessons author 10-15 originals (u1n1l1 has 13).
+    assert.equal(c1.body.originalCount, session.bundle.exercises.length);
+    assert.equal(c1.body.originalCorrect, c1.body.originalCount - (firstWasWrong ? 1 : 0));
     const outbox = await persistence.list('l_outbox', {
       equal: { aggregateId: session.sessionId },
       limit: 10,
     });
     cleanup.eventIds.push(...outbox.items.map((i) => i.id));
     assert.equal(outbox.total, 1, 'exactly one durable outbox event');
-    assert.equal(outbox.items[0].row.status, 'PENDING');
+    // PENDING unless the TEST project's every-minute learning-outbox-relay cron already took it.
+    assert.ok(
+      ['PENDING', 'LEASED', 'ACK', 'DEAD'].includes(outbox.items[0].row.status),
+      outbox.items[0].row.status,
+    );
     const path = await a.call('GET', '/v1/courses/vi_en/path', { user });
     assert.deepEqual(path.body.enrollment.completedLessonIds, ['u1n1l1']);
     const reviewRows = await persistence.list('l_review_items', {
