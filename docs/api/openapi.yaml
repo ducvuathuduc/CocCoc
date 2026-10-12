@@ -9789,7 +9789,7 @@
               "maxLength": 36,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             },
-            "maxItems": 100
+            "maxItems": 1200
           },
           "masteredNodeIds": {
             "type": "array",
@@ -9799,7 +9799,7 @@
               "maxLength": 36,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             },
-            "maxItems": 24
+            "maxItems": 600
           },
           "revision": {
             "type": "integer",
@@ -9901,7 +9901,7 @@
             "items": {
               "$ref": "#/components/schemas/Node"
             },
-            "maxItems": 24
+            "maxItems": 100
           },
           "asOf": {
             "type": "string",
@@ -10010,7 +10010,7 @@
               "maxLength": 36,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             },
-            "maxItems": 6
+            "maxItems": 30
           }
         },
         "required": [
@@ -10051,7 +10051,7 @@
               "maxLength": 36,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             },
-            "maxItems": 24
+            "maxItems": 30
           }
         },
         "required": [
@@ -10139,28 +10139,28 @@
             "items": {
               "$ref": "#/components/schemas/ContentSection"
             },
-            "maxItems": 2
+            "maxItems": 20
           },
           "units": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ContentUnit"
             },
-            "maxItems": 6
+            "maxItems": 120
           },
           "nodes": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ContentNode"
             },
-            "maxItems": 24
+            "maxItems": 600
           },
           "bundles": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/BundleIndex"
             },
-            "maxItems": 48
+            "maxItems": 1200
           },
           "placementBundle": {
             "$ref": "#/components/schemas/BundleIndex"

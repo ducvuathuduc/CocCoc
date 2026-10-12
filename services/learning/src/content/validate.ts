@@ -16,6 +16,16 @@ const TEXT_TYPES = new Set([
 const CHOICE_TYPES = new Set(['choice', 'imageChoice', 'listenChoice', 'storyQuestion']);
 const TOKEN_TYPES = new Set(['wordBank', 'sentenceOrder']);
 
+/** Mirrors OpenAPI CourseManifest/ContentSection/ContentUnit maxItems (scaled 2026-10-12). */
+export const MANIFEST_LIMITS = {
+  sections: 20,
+  units: 120,
+  nodes: 600,
+  bundles: 1200,
+  unitsPerSection: 30,
+  nodesPerUnit: 30,
+} as const;
+
 export interface ContentProblem {
   where: string;
   problem: string;
@@ -146,10 +156,10 @@ export function validateManifestStructure(manifest: CourseManifest): ContentProb
   const add = (where: string, problem: string) => out.push({ where, problem });
   if (manifest.schemaVersion !== 1) add('manifest', 'SCHEMA_VERSION');
   if (
-    manifest.sections.length > 2 ||
-    manifest.units.length > 6 ||
-    manifest.nodes.length > 24 ||
-    manifest.bundles.length > 48
+    manifest.sections.length > MANIFEST_LIMITS.sections ||
+    manifest.units.length > MANIFEST_LIMITS.units ||
+    manifest.nodes.length > MANIFEST_LIMITS.nodes ||
+    manifest.bundles.length > MANIFEST_LIMITS.bundles
   ) {
     add('manifest', 'SIZE_LIMIT');
   }
@@ -160,12 +170,15 @@ export function validateManifestStructure(manifest: CourseManifest): ContentProb
   if (new Set(manifest.nodes.map((n) => n.order)).size !== manifest.nodes.length)
     add('manifest', 'DUPLICATE_NODE_ORDER');
   for (const section of manifest.sections) {
+    if (section.unitIds.length > MANIFEST_LIMITS.unitsPerSection)
+      add(section.sectionId, 'SIZE_LIMIT');
     for (const unitId of section.unitIds) {
       if (units.get(unitId)?.sectionId !== section.sectionId)
         add(section.sectionId, 'UNIT_SECTION_MISMATCH');
     }
   }
   for (const unit of manifest.units) {
+    if (unit.nodeIds.length > MANIFEST_LIMITS.nodesPerUnit) add(unit.unitId, 'SIZE_LIMIT');
     for (const nodeId of unit.nodeIds) {
       const node = nodes.get(nodeId);
       if (!node || node.unitId !== unit.unitId || node.sectionId !== unit.sectionId)

@@ -40,8 +40,8 @@ export function enrollmentDto(row: Row) {
     courseId: view.courseId,
     courseVersion: view.courseVersion,
     frontierNodeOrder: view.frontierNodeOrder,
-    completedLessonIds: view.completedLessonIds.slice(-100),
-    masteredNodeIds: view.masteredNodeIds.slice(0, 24),
+    completedLessonIds: view.completedLessonIds.slice(-1200),
+    masteredNodeIds: view.masteredNodeIds.slice(0, 600),
     revision: view.revision,
   };
 }

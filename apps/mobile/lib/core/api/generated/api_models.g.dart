@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 72d4d87713a6d2082ef87417541c8849da5bf3a8318917d68ad11080629e8b19).
+// Source: docs/api/openapi.yaml (sha256 d4366630f70851d5151da6c49e324fa2f96179e5b55b99f8818dfb1f47aa79d1).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors

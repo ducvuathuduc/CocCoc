@@ -149,3 +149,70 @@ test('content repository refuses a file whose bytes do not match the pinned sha2
     'unknown signing key fails closed',
   );
 });
+
+test('scaled limits: a 500-node / 1000-lesson manifest structure is valid; 601 nodes is refused', () => {
+  const build = (nodeCount) => {
+    const perUnit = 25;
+    const unitCount = Math.ceil(nodeCount / perUnit);
+    const sections = Array.from({ length: Math.ceil(unitCount / 30) }, (_, s) => ({
+      sectionId: `s${s}`,
+      title: 'S',
+      unitIds: [],
+    }));
+    const units = [];
+    const nodes = [];
+    const bundles = [];
+    for (let u = 0; u < unitCount; u++) {
+      const section = sections[Math.floor(u / 30)];
+      const unit = {
+        unitId: `u${u}`,
+        sectionId: section.sectionId,
+        title: 'U',
+        guideText: '',
+        nodeIds: [],
+      };
+      section.unitIds.push(unit.unitId);
+      units.push(unit);
+      for (let n = 0; n < perUnit && nodes.length < nodeCount; n++) {
+        const order = nodes.length;
+        const lessonIds = [`l${order}a`, `l${order}b`];
+        nodes.push({
+          nodeId: `n${order}`,
+          unitId: unit.unitId,
+          sectionId: section.sectionId,
+          order,
+          title: 'N',
+          kind: 'lesson',
+          lessonIds,
+        });
+        unit.nodeIds.push(`n${order}`);
+        for (const lessonId of lessonIds)
+          bundles.push({
+            lessonId,
+            lessonVersion: `v.${lessonId}`,
+            rewardIdentity: lessonId,
+            fileId: `f.${lessonId}`,
+            sha256: 'a'.repeat(64),
+          });
+      }
+    }
+    return {
+      schemaVersion: 1,
+      sections,
+      units,
+      nodes,
+      bundles,
+      placementBundle: { lessonId: 'placement' },
+    };
+  };
+  assert.deepEqual(kit.validateManifestStructure(build(500)), []);
+  assert.ok(kit.validateManifestStructure(build(601)).some((p) => p.problem === 'SIZE_LIMIT'));
+  assert.deepEqual(kit.MANIFEST_LIMITS, {
+    sections: 20,
+    units: 120,
+    nodes: 600,
+    bundles: 1200,
+    unitsPerSection: 30,
+    nodesPerUnit: 30,
+  });
+});
