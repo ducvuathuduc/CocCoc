@@ -7,6 +7,11 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 process.chdir(root);
 const names = ['learning', 'progress', 'ai'];
 const buildOnly = process.argv.includes('--build');
+// node-appwrite pulls CommonJS dependencies that call require() for Node built-ins; ESM
+// bundles need a real require so the self-contained Function artifact loads.
+const banner = {
+  js: "import { createRequire as __cocCreateRequire } from 'node:module';\nconst require = __cocCreateRequire(import.meta.url);",
+};
 const selected = process.argv.filter((value) => names.includes(value));
 function run(file, args) {
   const result = spawnSync(process.execPath, [file, ...args], { stdio: 'inherit', cwd: root });
@@ -26,12 +31,14 @@ for (const name of selected.length ? selected : names) {
     target: 'node22',
     format: 'esm',
     sourcemap: true,
+    banner,
   });
 }
 await build({
   entryPoints: {
     'mock-completion': 'services/learning/src/mock-completion.ts',
     'mock-rewards': 'services/progress/src/mock-rewards.ts',
+    'foundation-testkit': 'services/shared/src/testing/testkit.ts',
   },
   outdir: '.cache/backend-fixtures',
   bundle: true,
@@ -39,6 +46,7 @@ await build({
   target: 'node22',
   format: 'esm',
   outExtension: { '.js': '.mjs' },
+  banner,
 });
 if (!buildOnly) {
   run('node_modules/eslint/bin/eslint.js', ['services/*/src/**/*.ts']);
@@ -51,7 +59,7 @@ if (!buildOnly) {
     'tsconfig.backend.json',
     'eslint.config.mjs',
   ]);
-  const tests = names.flatMap((name) =>
+  const tests = [...names, 'shared'].flatMap((name) =>
     fs.existsSync(`services/${name}/test`)
       ? fs
           .readdirSync(`services/${name}/test`)

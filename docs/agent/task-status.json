@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-10",
+  "updated": "2026-10-12",
   "project": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
@@ -273,6 +273,60 @@
         "specs/top-bar-bottom-nav.md"
       ],
       "remaining": "Implement typed shell content, preserve icon proportions and \u226548dp stats; verify repository overrides, tab state, motion, 360/430 text1/2, compare and commit."
+    },
+    {
+      "taskId": "P1-FOUND-002",
+      "phase": "P1",
+      "owner": "pb/found subagent",
+      "branch": "pb/found",
+      "worktree": "wt/b-found (from origin/main 57fbc06)",
+      "dependencyGateReceipts": [
+        "P1-FOUND-001 cloud/device gates still pending; this record covers the LOCAL half only",
+        "docs/api/AUTH.md",
+        "docs/api/EVENTS_ERRORS.md",
+        "docs/architecture/SERVICE_CATALOG.md",
+        "docs/architecture/CONSISTENCY.md"
+      ],
+      "exclusivePaths": [
+        "services/shared/src",
+        "services/shared/test",
+        "services/learning/src/index.ts",
+        "services/learning/src/persistence",
+        "services/progress/src/index.ts",
+        "services/progress/src/persistence",
+        "services/ai/src/index.ts",
+        "services/ai/src/persistence",
+        "tools/scripts/backend-check.mjs",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": [
+        "per-request verified JWT via AuthPort (Account.get adapter)",
+        "standard error envelope",
+        "owner persistence ports + in-memory test adapters",
+        "internal HMAC signing/verification with 300s skew window",
+        "/ready fail-closed semantics"
+      ],
+      "requirementCoverage": "Local scaffold only. Live Appwrite Account.get/TablesDB transaction/conflict/permission probes NOT run (gated test skipped); no durable adapter; no deploy.",
+      "interfaces": [
+        "AuthPort",
+        "createAppwriteAuthPort",
+        "createRouter/createHostedHandler",
+        "ServiceError/toErrorResponse",
+        "signServiceRequest/verifyServiceRequest",
+        "PersistencePort/OwnerStore",
+        "EventConsumer",
+        "LearningPersistence/ProgressPersistence/AiPersistence"
+      ],
+      "testCommand": "pnpm backend:verify && pnpm backend:smoke && pnpm contracts:check",
+      "status": "VERIFYING",
+      "evidence": [
+        "pnpm backend:verify PASS: 44 tests, 43 pass, 0 fail, 1 skipped (gated live Appwrite probe)",
+        "pnpm backend:smoke PASS",
+        "pnpm contracts:check PASS (94 schemas, 30 fixture cases)",
+        "pnpm api:lint PASS",
+        "pnpm audit:check PASS"
+      ],
+      "remaining": "Cloud half of P1-FOUND-002: admitted-account Node22 runtime, live Account.get, TablesDB transaction/conflict/permission probes, durable Appwrite adapter replacing disabled adapters, scheduler provenance negative test. Hosted HMAC keyring env name COC_SERVICE_KEYS and scaffold code SERVICE_NOT_CONFIGURED are not yet in canonical docs."
     }
   ]
 }

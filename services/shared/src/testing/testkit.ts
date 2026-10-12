@@ -1,0 +1,17 @@
+// Test-only bundle entry (built to .cache/backend-fixtures/foundation-testkit.mjs).
+export * from '../errors.js';
+export * from '../auth.js';
+export * from '../service-hmac.js';
+export * from '../transport.js';
+export { createDisabledOwnerStore } from '../disabled-store.js';
+export { createMemoryOwnerStore } from './memory-owner-store.js';
+export { createMemoryLearningPersistence } from '../../../learning/src/persistence/memory.js';
+export { createMemoryProgressPersistence } from '../../../progress/src/persistence/memory.js';
+export { createMemoryAiPersistence } from '../../../ai/src/persistence/memory.js';
+export { createDisabledLearningPersistence } from '../../../learning/src/persistence/disabled.js';
+export { createDisabledProgressPersistence } from '../../../progress/src/persistence/disabled.js';
+export { createDisabledAiPersistence } from '../../../ai/src/persistence/disabled.js';
+export { LEARNING_TABLES } from '../../../learning/src/persistence/port.js';
+export { PROGRESS_TABLES } from '../../../progress/src/persistence/port.js';
+export { AI_TABLES } from '../../../ai/src/persistence/port.js';
+export { createAccountVerifier } from '../verify-jwt.js';
