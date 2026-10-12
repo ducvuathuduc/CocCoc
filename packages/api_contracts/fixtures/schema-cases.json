@@ -1,0 +1,1148 @@
+{
+ "description": "Shared JSON Schema 2020-12 fixture cases for docs/api/openapi.yaml components. Consumed by tools/blueprint/validate-schemas.mjs (Ajv) and apps/mobile/test/api_contracts_round_trip_test.dart (Dart DTO round-trips). Expansion markers: {\"$repeat\":{\"text\",\"count\"}} builds a long string; {\"$file\":\"repo-relative path\"} inlines a JSON example.",
+ "cases": [
+  {
+   "label": "LIVE complete",
+   "schema": "VoiceLease",
+   "valid": true,
+   "value": {
+    "sessionId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "mode": "LIVE",
+    "providerAlias": "gemini-live",
+    "model": "gemini-2.5-flash-native-audio-preview-12-2025",
+    "ephemeralToken": "ephemeral.fixture",
+    "connectExpiresAt": "2026-10-04T00:01:00Z",
+    "sessionExpiresAt": "2026-10-04T00:03:00Z",
+    "epoch": 0,
+    "inputSampleRate": 16000,
+    "outputSampleRate": 24000,
+    "configVersion": "v1"
+   }
+  },
+  {
+   "label": "LIVE missing token",
+   "schema": "VoiceLease",
+   "valid": false,
+   "value": {
+    "sessionId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "mode": "LIVE",
+    "providerAlias": "gemini-live",
+    "model": "gemini-2.5-flash-native-audio-preview-12-2025",
+    "ephemeralToken": null,
+    "connectExpiresAt": "2026-10-04T00:01:00Z",
+    "sessionExpiresAt": "2026-10-04T00:03:00Z",
+    "epoch": 0,
+    "inputSampleRate": 16000,
+    "outputSampleRate": 24000,
+    "configVersion": "v1"
+   }
+  },
+  {
+   "label": "TURN no credential",
+   "schema": "VoiceLease",
+   "valid": true,
+   "value": {
+    "sessionId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "mode": "TURN",
+    "providerAlias": "gemini-live",
+    "model": "gemini-2.5-flash-native-audio-preview-12-2025",
+    "ephemeralToken": null,
+    "connectExpiresAt": null,
+    "sessionExpiresAt": "2026-10-04T00:03:00Z",
+    "epoch": 0,
+    "inputSampleRate": 16000,
+    "outputSampleRate": 24000,
+    "configVersion": "v1"
+   }
+  },
+  {
+   "label": "TURN credential rejected",
+   "schema": "VoiceLease",
+   "valid": false,
+   "value": {
+    "sessionId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "mode": "TURN",
+    "providerAlias": "gemini-live",
+    "model": "gemini-2.5-flash-native-audio-preview-12-2025",
+    "ephemeralToken": "ephemeral.fixture",
+    "connectExpiresAt": "2026-10-04T00:01:00Z",
+    "sessionExpiresAt": "2026-10-04T00:03:00Z",
+    "epoch": 0,
+    "inputSampleRate": 16000,
+    "outputSampleRate": 24000,
+    "configVersion": "v1"
+   }
+  },
+  {
+   "label": "wrong native sample rate",
+   "schema": "VoiceLease",
+   "valid": false,
+   "value": {
+    "sessionId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "mode": "LIVE",
+    "providerAlias": "gemini-live",
+    "model": "gemini-2.5-flash-native-audio-preview-12-2025",
+    "ephemeralToken": "ephemeral.fixture",
+    "connectExpiresAt": "2026-10-04T00:01:00Z",
+    "sessionExpiresAt": "2026-10-04T00:03:00Z",
+    "epoch": 0,
+    "inputSampleRate": 44100,
+    "outputSampleRate": 24000,
+    "configVersion": "v1"
+   }
+  },
+  {
+   "label": "honest unscored response",
+   "schema": "Assessment",
+   "valid": true,
+   "value": {
+    "jobId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "status": "SUCCEEDED",
+    "transcript": "Hello",
+    "accuracy": null,
+    "fluency": null,
+    "completeness": null,
+    "prosody": null,
+    "words": [],
+    "scorer": null,
+    "scoreVersion": null,
+    "unavailableReason": "scorer_disabled",
+    "expiresAt": "2026-10-11T00:00:00Z",
+    "scoreState": "NULL_UNAVAILABLE",
+    "locale": "en-US",
+    "referenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "provider": null,
+    "modelVersion": null,
+    "miscues": []
+   }
+  },
+  {
+   "label": "unscored numeric accuracy rejected",
+   "schema": "Assessment",
+   "valid": false,
+   "value": {
+    "jobId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "status": "SUCCEEDED",
+    "transcript": "Hello",
+    "accuracy": 99,
+    "fluency": null,
+    "completeness": null,
+    "prosody": null,
+    "words": [],
+    "scorer": null,
+    "scoreVersion": null,
+    "unavailableReason": "scorer_disabled",
+    "expiresAt": "2026-10-11T00:00:00Z",
+    "scoreState": "NULL_UNAVAILABLE",
+    "locale": "en-US",
+    "referenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "provider": null,
+    "modelVersion": null,
+    "miscues": []
+   }
+  },
+  {
+   "label": "VALID without dedicated provenance rejected",
+   "schema": "Assessment",
+   "valid": false,
+   "value": {
+    "jobId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "status": "SUCCEEDED",
+    "transcript": "Hello",
+    "accuracy": null,
+    "fluency": null,
+    "completeness": null,
+    "prosody": null,
+    "words": [],
+    "scorer": null,
+    "scoreVersion": null,
+    "unavailableReason": "scorer_disabled",
+    "expiresAt": "2026-10-11T00:00:00Z",
+    "scoreState": "VALID",
+    "locale": "en-US",
+    "referenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "provider": null,
+    "modelVersion": null,
+    "miscues": []
+   }
+  },
+  {
+   "label": "dedicated valid response with null prosody",
+   "schema": "Assessment",
+   "valid": true,
+   "value": {
+    "jobId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "status": "SUCCEEDED",
+    "transcript": "Hello",
+    "accuracy": 80,
+    "fluency": null,
+    "completeness": 85,
+    "prosody": null,
+    "words": [],
+    "scorer": "azure",
+    "scoreVersion": "v1",
+    "unavailableReason": "scorer_disabled",
+    "expiresAt": "2026-10-11T00:00:00Z",
+    "scoreState": "VALID",
+    "locale": "en-US",
+    "referenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "provider": "azure-speech",
+    "modelVersion": "recorded-config",
+    "miscues": []
+   }
+  },
+  {
+   "label": "invalid score range",
+   "schema": "Assessment",
+   "valid": false,
+   "value": {
+    "jobId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "status": "SUCCEEDED",
+    "transcript": "Hello",
+    "accuracy": 101,
+    "fluency": null,
+    "completeness": null,
+    "prosody": null,
+    "words": [],
+    "scorer": null,
+    "scoreVersion": null,
+    "unavailableReason": "scorer_disabled",
+    "expiresAt": "2026-10-11T00:00:00Z",
+    "scoreState": "VALID",
+    "locale": "en-US",
+    "referenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "provider": null,
+    "modelVersion": null,
+    "miscues": []
+   }
+  },
+  {
+   "label": "matching connections retained",
+   "schema": "Answer",
+   "valid": true,
+   "value": {
+    "kind": "pairs",
+    "matches": [
+     {
+      "leftId": "left-a",
+      "rightId": "right-b"
+     }
+    ]
+   }
+  },
+  {
+   "label": "ID-only fabricated pair answer rejected",
+   "schema": "Answer",
+   "valid": false,
+   "value": {
+    "kind": "pairs",
+    "pairIds": [
+     "known-pair"
+    ]
+   }
+  },
+  {
+   "label": "client correctness injection rejected",
+   "schema": "Answer",
+   "valid": false,
+   "value": {
+    "kind": "choice",
+    "choiceId": "a",
+    "correct": true
+   }
+  },
+  {
+   "label": "heartbeat duration bounded",
+   "schema": "VoiceHeartbeat",
+   "valid": false,
+   "value": {
+    "epoch": 0,
+    "elapsedSeconds": 181,
+    "turnCount": 1
+   }
+  },
+  {
+   "label": "oversized base64 rejected",
+   "schema": "AssessmentRequest",
+   "valid": false,
+   "value": {
+    "jobId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "referenceExerciseId": "ex1",
+    "lessonVersion": "v1",
+    "locale": "en-US",
+    "wavBase64": {
+     "$repeat": {
+      "text": "A",
+      "count": 640068
+     }
+    },
+    "audioSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+   }
+  },
+  {
+   "label": "exercise textTranslation",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "acceptedText": [
+      "Hello"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "textTranslation",
+    "content": {
+     "placeholder": "Type",
+     "maxChars": 512
+    }
+   }
+  },
+  {
+   "label": "exercise choice",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctChoiceId": "a"
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "choice",
+    "content": {
+     "choices": [
+      {
+       "id": "a",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "exercise wordBank",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctTokenIds": [
+      "t1"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "wordBank",
+    "content": {
+     "tokens": [
+      {
+       "id": "t1",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "exercise sentenceOrder",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctTokenIds": [
+      "t1"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "sentenceOrder",
+    "content": {
+     "tokens": [
+      {
+       "id": "t1",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "exercise fillBlank",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "acceptedText": [
+      "Hello"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "fillBlank",
+    "content": {
+     "placeholder": "Type",
+     "maxChars": 512
+    }
+   }
+  },
+  {
+   "label": "exercise matchPairs",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctPairIds": [
+      "p1"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "matchPairs",
+    "content": {
+     "pairs": [
+      {
+       "id": "p1",
+       "left": {
+        "id": "l1",
+        "text": "hello"
+       },
+       "right": {
+        "id": "r1",
+        "text": "xin chao"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "exercise imageChoice",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctChoiceId": "a"
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "imageChoice",
+    "content": {
+     "choices": [
+      {
+       "id": "a",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "exercise listenChoice",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctChoiceId": "a"
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "listenChoice",
+    "content": {
+     "choices": [
+      {
+       "id": "a",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "exercise dictation",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "acceptedText": [
+      "Hello"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "dictation",
+    "content": {
+     "placeholder": "Type",
+     "maxChars": 512
+    }
+   }
+  },
+  {
+   "label": "exercise speakRepeat",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "acceptedText": [
+      "Hello"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "speakRepeat",
+    "content": {
+     "referenceText": "Hello",
+     "locale": "en-US",
+     "maxSeconds": 15
+    }
+   }
+  },
+  {
+   "label": "exercise dialogueTurn",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "acceptedText": [
+      "Hello"
+     ]
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "dialogueTurn",
+    "content": {
+     "referenceText": "Hello",
+     "locale": "en-US",
+     "maxSeconds": 15
+    }
+   }
+  },
+  {
+   "label": "exercise storyQuestion",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctChoiceId": "a"
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "storyQuestion",
+    "content": {
+     "passage": "Hello",
+     "question": "What?",
+     "choices": [
+      {
+       "id": "a",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "missing authored correct choice rejected",
+   "schema": "Exercise",
+   "valid": false,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "choice",
+    "content": {
+     "choices": [
+      {
+       "id": "a",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "unknown exercise renderer rejected",
+   "schema": "Exercise",
+   "valid": false,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "remoteWidget",
+    "content": {}
+   }
+  },
+  {
+   "label": "wrong typed payload rejected",
+   "schema": "Exercise",
+   "valid": false,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "choice",
+    "content": {
+     "tokens": [
+      {
+       "id": "t1",
+       "text": "hello"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "label": "lesson.completed.v1 example event",
+   "schema": "BusinessEvent",
+   "valid": true,
+   "value": {
+    "$file": "docs/api/examples/lesson-completed.v1.json"
+   }
+  },
+  {
+   "label": "unknown business event type rejected",
+   "schema": "BusinessEvent",
+   "valid": false,
+   "value": {
+    "eventId": "00000000-0000-4000-8000-000000000003",
+    "type": "lesson.started.v1",
+    "schemaVersion": 1,
+    "producer": "learning",
+    "aggregateId": "fixture-completion",
+    "occurredAt": "2026-10-09T12:00:00Z",
+    "requestId": "req-1",
+    "payload": {
+     "completionId": "fixture-completion",
+     "userId": "fixture-user",
+     "courseId": "vi_en",
+     "lessonVersion": "fixture-v1",
+     "rewardIdentity": "fixture-lesson",
+     "source": "ONLINE",
+     "mode": "LESSON",
+     "originalCount": 10,
+     "originalCorrect": 8,
+     "assisted": false
+    }
+   }
+  },
+  {
+   "label": "account.purged.v1 from learning",
+   "schema": "BusinessEvent",
+   "valid": true,
+   "value": {
+    "eventId": "00000000-0000-4000-8000-000000000004",
+    "type": "account.purged.v1",
+    "schemaVersion": 1,
+    "producer": "learning",
+    "aggregateId": "fixture-user",
+    "occurredAt": "2026-10-09T12:00:00Z",
+    "requestId": "req-2",
+    "payload": {
+     "userId": "fixture-user",
+     "requestId": "00000000-0000-4000-8000-000000000005",
+     "owner": "learning"
+    }
+   }
+  },
+  {
+   "label": "purge event from progress producer rejected",
+   "schema": "BusinessEvent",
+   "valid": false,
+   "value": {
+    "eventId": "00000000-0000-4000-8000-000000000004",
+    "type": "account.purged.v1",
+    "schemaVersion": 1,
+    "producer": "progress",
+    "aggregateId": "fixture-user",
+    "occurredAt": "2026-10-09T12:00:00Z",
+    "requestId": "req-2",
+    "payload": {
+     "userId": "fixture-user",
+     "requestId": "00000000-0000-4000-8000-000000000005",
+     "owner": "learning"
+    }
+   }
+  },
+  {
+   "label": "unknown answer kind rejected",
+   "schema": "Answer",
+   "valid": false,
+   "value": {
+    "kind": "audio",
+    "text": "hello"
+   }
+  },
+  {
+   "label": "text answer retained",
+   "schema": "Answer",
+   "valid": true,
+   "value": {
+    "kind": "text",
+    "text": "Xin chao"
+   }
+  },
+  {
+   "label": "unknown voice lease mode rejected",
+   "schema": "VoiceLease",
+   "valid": false,
+   "value": {
+    "sessionId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "mode": "BATCH",
+    "providerAlias": "gemini-live",
+    "model": "gemini-2.5-flash-native-audio-preview-12-2025",
+    "ephemeralToken": "ephemeral.fixture",
+    "connectExpiresAt": "2026-10-04T00:01:00Z",
+    "sessionExpiresAt": "2026-10-04T00:03:00Z",
+    "epoch": 0,
+    "inputSampleRate": 16000,
+    "outputSampleRate": 24000,
+    "configVersion": "v1"
+   }
+  },
+  {
+   "label": "health ok",
+   "schema": "Health",
+   "valid": true,
+   "value": {
+    "service": "learning",
+    "buildId": "build-1",
+    "status": "ok"
+   }
+  },
+  {
+   "label": "health non-object rejected",
+   "schema": "Health",
+   "valid": false,
+   "value": [
+    "learning",
+    "build-1",
+    "ok"
+   ]
+  },
+  {
+   "label": "health missing status rejected",
+   "schema": "Health",
+   "valid": false,
+   "value": {
+    "service": "learning",
+    "buildId": "build-1"
+   }
+  },
+  {
+   "label": "health unknown field rejected",
+   "schema": "Health",
+   "valid": false,
+   "value": {
+    "service": "learning",
+    "buildId": "build-1",
+    "status": "ok",
+    "debug": true
+   }
+  },
+  {
+   "label": "health wrong enum rejected",
+   "schema": "Health",
+   "valid": false,
+   "value": {
+    "service": "gateway",
+    "buildId": "build-1",
+    "status": "ok"
+   }
+  },
+  {
+   "label": "error envelope with open details",
+   "schema": "Error",
+   "valid": true,
+   "value": {
+    "error": {
+     "code": "VALIDATION_FAILED",
+     "message": "Bad input",
+     "requestId": "req-3",
+     "details": {
+      "field": "nickname",
+      "limits": {
+       "max": 40
+      }
+     },
+     "retryable": false
+    }
+   }
+  },
+  {
+   "label": "profile patch clears avatar with explicit null",
+   "schema": "ProfilePatch",
+   "valid": true,
+   "value": {
+    "avatarId": null,
+    "expectedRevision": 3
+   }
+  },
+  {
+   "label": "profile patch omits avatar",
+   "schema": "ProfilePatch",
+   "valid": true,
+   "value": {
+    "nickname": "Thanh",
+    "dailyGoal": 10,
+    "expectedRevision": 4
+   }
+  },
+  {
+   "label": "profile patch wrong integer type rejected",
+   "schema": "ProfilePatch",
+   "valid": false,
+   "value": {
+    "dailyGoal": "10",
+    "expectedRevision": 4
+   }
+  },
+  {
+   "label": "profile patch missing revision rejected",
+   "schema": "ProfilePatch",
+   "valid": false,
+   "value": {
+    "nickname": "Thanh"
+   }
+  },
+  {
+   "label": "listen exercise with non-audio alternative",
+   "schema": "Exercise",
+   "valid": true,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctChoiceId": "a"
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "listenChoice",
+    "content": {
+     "choices": [
+      {
+       "id": "a",
+       "text": "hello"
+      }
+     ]
+    },
+    "nonAudioAlternative": {
+     "id": "ex1-alt",
+     "prompt": {
+      "text": "Hello",
+      "locale": "en-US"
+     },
+     "gradingRule": {
+      "caseSensitive": false,
+      "ignorePunctuation": true,
+      "ignoreDiacritics": false,
+      "correctChoiceId": "a"
+     },
+     "hint": "Think",
+     "explanation": "A greeting",
+     "skillIds": [
+      "greet"
+     ],
+     "vocabularyIds": [
+      "hello"
+     ],
+     "type": "choice",
+     "content": {
+      "choices": [
+       {
+        "id": "a",
+        "text": "hello"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "label": "invalid nested alternative rejected",
+   "schema": "Exercise",
+   "valid": false,
+   "value": {
+    "id": "ex1",
+    "prompt": {
+     "text": "Hello",
+     "locale": "en-US"
+    },
+    "gradingRule": {
+     "caseSensitive": false,
+     "ignorePunctuation": true,
+     "ignoreDiacritics": false,
+     "correctChoiceId": "a"
+    },
+    "hint": "Think",
+    "explanation": "A greeting",
+    "skillIds": [
+     "greet"
+    ],
+    "vocabularyIds": [
+     "hello"
+    ],
+    "type": "listenChoice",
+    "content": {
+     "choices": [
+      {
+       "id": "a",
+       "text": "hello"
+      }
+     ]
+    },
+    "nonAudioAlternative": {
+     "id": "ex1-alt",
+     "prompt": {
+      "text": "Hello",
+      "locale": "en-US"
+     },
+     "gradingRule": {
+      "caseSensitive": false,
+      "ignorePunctuation": true,
+      "ignoreDiacritics": false,
+      "correctChoiceId": "a"
+     },
+     "hint": "Think",
+     "explanation": "A greeting",
+     "skillIds": [
+      "greet"
+     ],
+     "vocabularyIds": [
+      "hello"
+     ],
+     "type": "remoteWidget",
+     "content": {
+      "choices": [
+       {
+        "id": "a",
+        "text": "hello"
+       }
+      ]
+     }
+    }
+   }
+  }
+ ]
+}
