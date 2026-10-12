@@ -388,7 +388,7 @@
         "pnpm contracts:check PASS",
         "pnpm backend:verify PASS"
       ],
-      "remaining": "Cloud schema apply/drift and table/bucket permission probes DONE on the admitted test project (cloudSlice). Still open: scoped per-service API keys and scope probes, scheduler-spoof probe (needs deployed Functions), quota/term-expiry record by the account owner, a GitHub Actions run for a real CI receipt, a macOS runner for the simulator build. Curriculum seed belongs with P4-LEARN-001.",
+      "remaining": "Cloud schema apply/drift and table/bucket permission probes DONE on the admitted test project (cloudSlice). Per-service Functions, dynamic-key scopes, auth/platform settings and header/scheduler-spoof probes DONE (functionsSlice). Still open: service adoption of dynamic keys, scheduled worker modes, quota/term-expiry record by the account owner, a GitHub Actions run for a real CI receipt, a macOS runner for the simulator build. Curriculum seed belongs with P4-LEARN-001.",
       "cloudSlice": {
         "branch": "pb/cloud",
         "worktree": "wt/b-cloud (from pb/data cf3ed7c)",
@@ -407,6 +407,30 @@
           "dry-run output no longer truncated when piped (exitCode instead of process.exit)",
           "pnpm schema:apply / schema:check-live / appwrite:probe scripts"
         ]
+      },
+      "functionsSlice": {
+        "branch": "pb/c-ops",
+        "worktree": "wt/c-ops (from origin/main 919c37a)",
+        "status": "DONE",
+        "scope": "Per-service Appwrite Functions and project settings on the admitted test project coccoc-test (6acc656d0025cc57bd81, sgp), Appwrite CLI 28.3.0, node-appwrite 29.2.0, 2026-10-12; declarations appwrite/appwrite.config.json + appwrite/ops/project.json; evidence in docs/devops/APPWRITE_SETUP.md#live-evidence-per-service-functions-and-project-settings-2026-10-12; no keys/JWTs recorded",
+        "interfaces": [
+          "pnpm appwrite:plan",
+          "pnpm appwrite:test",
+          "pnpm appwrite:apply",
+          "pnpm appwrite:check-live",
+          "pnpm appwrite:deploy",
+          "pnpm appwrite:health",
+          "pnpm appwrite:probe-functions",
+          ".github/workflows/appwrite-deploy.yml (workflow_dispatch only)"
+        ],
+        "evidence": [
+          "pnpm appwrite:apply APPLIED (3 functions, 18 variables, 3 secret COC_SERVICE_KEYS keyrings, 2 platforms, 3 domains, 4 auth methods, 6 policies) then NO_CHANGES",
+          "pnpm appwrite:deploy DEPLOYED buildId 919c37ab0e3a: coc-learning 6accacc22a4bff59e282, coc-progress 6accacd39bc7a25c3e42, coc-ai 6accace316aa1b069b36 ready; GET /health 200 for all three",
+          "pnpm appwrite:check-live PASS (0 drift)",
+          "pnpm appwrite:probe-functions PASS 31/31 over coccoc-{learning,progress,ai}.sgp.appwrite.run (forged user-id/user-jwt/schedule headers, tampered and revoked JWT, unsigned internal calls rejected; valid JWT verified then fails closed 503)",
+          "pnpm appwrite:test 6/6 pass"
+        ],
+        "remaining": "Services must read the per-execution dynamic key (x-appwrite-key) instead of APPWRITE_API_KEY/COC_PROGRESS_APPWRITE_KEY env before persistence flags are enabled (API keys cannot create project keys); scheduled worker modes + provenance check (schedules declared, kept empty live); Learning/Progress scope wrappers should stop spreading the Appwrite req (runtime adapter covers it); maintainer HMAC key, COC_PROGRESS_URL relay and COC_CONTENT_PUBLIC_KEYS not set."
       }
     },
     {
