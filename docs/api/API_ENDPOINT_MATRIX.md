@@ -46,36 +46,50 @@ Generated from [OpenAPI](openapi.yaml); wire DTOs/headers/errors/idempotency/rat
 | POST /v1/voice-sessions/{sessionId}/turns | submitVoiceTurn / ai | FR-SPEECH-002 | a_voice_sessions, a_usage, a_jobs, a_receipts | JWT or specified internal signature |
 | POST /internal/events | consumeEvent / progress | FR-GAME-001, FR-AUTH-005 | p_inbox, p_reward_ledger, p_rewards, p_day_activity, p_quests | JWT or specified internal signature |
 | GET /internal/outbox-watermark | getOutboxWatermark / learning | FR-SOCIAL-002 | l_outbox | JWT or specified internal signature |
+| GET /v1/me/energy | getEnergy / learning | FR-GAME-005 | l_energy | JWT or specified internal signature |
+| POST /v1/enrollments/{courseId}/activate | switchCourse / learning | FR-COURSE-002 | l_enrollments, l_receipts | JWT or specified internal signature |
+| POST /v1/enrollments/{courseId}/reset | resetCourse / learning | FR-COURSE-002 | l_enrollments, l_receipts | JWT or specified internal signature |
+| DELETE /v1/enrollments/{courseId} | removeCourse / learning | FR-COURSE-002 | l_enrollments, l_receipts | JWT or specified internal signature |
+| GET /v1/mistakes | listMistakes / learning | FR-PRACTICE-002 | l_mistakes | JWT or specified internal signature |
+| GET /v1/words | listWords / learning | FR-PRACTICE-002 | l_review_items | JWT or specified internal signature |
+| GET /v1/activities | listActivityProgress / learning | FR-PRACTICE-001 | l_activity_progress | JWT or specified internal signature |
+| GET /v1/me/preferences | getPreferences / progress | FR-SET-001 | p_preferences | JWT or specified internal signature |
+| PATCH /v1/me/preferences | updatePreferences / progress | FR-SET-001 | p_preferences, p_receipts | JWT or specified internal signature |
+| POST /v1/feedback | sendFeedback / progress | FR-SET-001 | p_feedback, p_receipts | JWT or specified internal signature |
+| GET /v1/shop | listShop / progress | FR-GAME-003 | p_inventory, p_rewards | JWT or specified internal signature |
+| POST /v1/shop/purchases | buyItem / progress | FR-GAME-003 | p_inventory, p_item_ledger, p_reward_ledger, p_rewards, p_freeze_ledger, p_outbox, p_receipts | JWT or specified internal signature |
+| POST /v1/me/boosts | activateBoost / progress | FR-GAME-003 | p_inventory, p_item_ledger, p_boosts, p_receipts | JWT or specified internal signature |
+| POST /v1/me/streak-repair | repairStreak / progress | FR-GAME-003 | p_rewards, p_reward_ledger, p_item_ledger, p_inventory, p_receipts | JWT or specified internal signature |
+| GET /v1/friend-streaks | listFriendStreaks / progress | FR-SOCIAL-001 | p_friend_streaks, p_profiles | JWT or specified internal signature |
+| POST /v1/friend-streaks | inviteFriendStreak / progress | FR-SOCIAL-001 | p_friend_streaks, p_follows, p_blocks, p_receipts | JWT or specified internal signature |
+| POST /v1/friend-streaks/{pairId}/respond | respondFriendStreak / progress | FR-SOCIAL-001 | p_friend_streaks, p_receipts | JWT or specified internal signature |
+| POST /v1/interactions | sendInteraction / progress | FR-SOCIAL-001 | p_interactions, p_reward_ledger, p_rewards, p_boosts, p_blocks, p_receipts | JWT or specified internal signature |
+| POST /v1/blocks | blockUser / progress | FR-SOCIAL-001 | p_blocks, p_follows, p_friend_streaks, p_receipts | JWT or specified internal signature |
+| DELETE /v1/blocks/{userId} | unblockUser / progress | FR-SOCIAL-001 | p_blocks, p_receipts | JWT or specified internal signature |
+| POST /v1/user-reports | reportUser / progress | FR-SOCIAL-001 | p_user_reports, p_receipts | JWT or specified internal signature |
+| POST /v1/classrooms/join | joinClassroom / progress | FR-SOCIAL-001 | p_classrooms, p_classroom_members, p_receipts | JWT or specified internal signature |
+| DELETE /v1/classrooms/{classroomId}/membership | leaveClassroom / progress | FR-SOCIAL-001 | p_classroom_members, p_receipts | JWT or specified internal signature |
+| GET /v1/me/year-review/{year} | getYearReview / progress | FR-SOCIAL-001 | p_year_reviews | JWT or specified internal signature |
+| GET /v1/league/result | getLeagueResult / progress | FR-SOCIAL-002 | p_league_profiles | JWT or specified internal signature |
+| POST /v1/league/result/seen | markLeagueResultSeen / progress | FR-SOCIAL-002 | p_league_profiles, p_receipts | JWT or specified internal signature |
+| GET /v1/me/entitlement | getEntitlement / progress | FR-SET-001 | p_entitlements | JWT or specified internal signature |
+| POST /v1/billing/purchases | verifyPurchase / progress | FR-SET-001 | p_purchases, p_entitlements, p_reward_ledger, p_rewards, p_outbox, p_receipts | JWT or specified internal signature |
+| POST /internal/billing/notifications | billingNotification / progress | FR-SET-001 | p_purchases, p_entitlements, p_inbox, p_outbox | JWT or specified internal signature |
+| POST /v1/family | createFamily / progress | FR-SET-001 | p_family_groups, p_entitlements, p_outbox, p_receipts | JWT or specified internal signature |
+| POST /v1/family/{groupId}/members | joinFamily / progress | FR-SET-001 | p_family_groups, p_entitlements, p_outbox, p_receipts | JWT or specified internal signature |
+| DELETE /v1/family/{groupId}/members/{userId} | removeFamilyMember / progress | FR-SET-001 | p_family_groups, p_entitlements, p_outbox, p_receipts | JWT or specified internal signature |
+| POST /v1/gifts | sendGift / progress | FR-SET-001 | p_gifts, p_purchases, p_blocks, p_receipts | JWT or specified internal signature |
+| POST /v1/gifts/{giftId}/redeem | redeemGift / progress | FR-SET-001 | p_gifts, p_entitlements, p_outbox, p_receipts | JWT or specified internal signature |
+| GET /v1/me/referral | getReferral / progress | FR-SET-001 | p_referrals | JWT or specified internal signature |
+| POST /v1/referrals/redeem | redeemReferral / progress | FR-SET-001 | p_referrals, p_entitlements, p_outbox, p_receipts | JWT or specified internal signature |
+| POST /v1/promo-codes/redeem | redeemPromoCode / progress | FR-SET-001 | p_promo_codes, p_promo_redemptions, p_entitlements, p_reward_ledger, p_rewards, p_item_ledger, p_inventory, p_outbox, p_receipts | JWT or specified internal signature |
+| POST /v1/ad-events | recordAdEvent / progress | FR-GAME-005 | p_ad_events, p_entitlements, p_reward_ledger, p_rewards, p_outbox, p_receipts | JWT or specified internal signature |
+| GET /v1/conversations | listConversations / ai | FR-AI-001 | a_conversations | JWT or specified internal signature |
+| POST /v1/conversations | startConversation / ai | FR-AI-001, FR-SPEECH-002 | a_conversations, a_voice_sessions, a_receipts | JWT or specified internal signature |
+| POST /v1/conversations/{conversationId}/complete | completeConversation / ai | FR-AI-001 | a_conversations, a_voice_sessions, a_outbox, a_receipts | JWT or specified internal signature |
 
 Health/ready shapes apply to all three independent service domains; Learning is the primary OpenAPI declaration owner. Internal events have receiver-specific allowlists, not cross-owned writes.
 
-## Proposed endpoints (not yet in OpenAPI)
+## Proposed endpoints
 
-Hand-maintained; `tools/audit/endpoint-matrix.mjs` (`pnpm docs:endpoints`) keeps this section when it regenerates the table above. These are PROPOSED for the 62-table data model (MIGRATIONS M002 + M003). None exists in openapi.yaml, generated types or handlers; each needs its OpenAPI operation, x-requirements trace, Idempotency-Key on mutations and an owner-task acceptance test before implementation. Table names are the owner tables the operation would touch.
-
-| Route (proposed) | Operation / owner | Duolingo feature | Owned tables | Planned task |
-|---|---|---|---|---|
-| GET /v1/me/energy | getEnergy / learning | Energy battery | l_energy | P6-GAME-003 |
-| POST /v1/enrollments/{courseId}/activate · /reset · DELETE /v1/enrollments/{courseId} | switchCourse, resetCourse, removeCourse / learning | multiple courses, reset/remove course | l_enrollments, l_receipts | P4-LEARN-003 |
-| GET /v1/mistakes | listMistakes / learning | Practice Hub Mistakes | l_mistakes | P6-REVIEW-002 |
-| GET /v1/words | listWords / learning | Practice Hub Words (recent/alphabetical) | l_review_items | P6-REVIEW-002 |
-| GET /v1/activities | listActivityProgress / learning | Stories, Adventures, DuoRadio, side quests, Clash library | l_activity_progress | P7-PRACTICE-001 |
-| GET/PATCH /v1/me/preferences | getPreferences, updatePreferences / progress | notification, sound, speaking/listening settings | p_preferences, p_receipts | P3-AUTH-002 |
-| GET /v1/shop · POST /v1/shop/purchases | listShop, buyItem / progress | shop power-ups, energy refill, streak repair | p_inventory, p_item_ledger, p_reward_ledger, p_rewards, p_outbox, p_receipts | P6-GAME-003 |
-| POST /v1/me/boosts | activateBoost / progress | XP boost, timer boost | p_inventory, p_item_ledger, p_boosts, p_receipts | P6-GAME-003 |
-| POST /v1/me/streak-repair | repairStreak / progress | streak repair | p_rewards, p_reward_ledger, p_item_ledger, p_receipts | P6-GAME-003 |
-| GET/POST /v1/friend-streaks · POST /v1/friend-streaks/{pairId}/respond | listFriendStreaks, inviteFriendStreak, respondFriendStreak / progress | Friend Streak | p_friend_streaks, p_follows, p_receipts | P9-SOCIAL-002 |
-| POST /v1/interactions | sendInteraction / progress | nudge, high-five, kudos, gift XP boost | p_interactions, p_reward_ledger, p_boosts, p_receipts | P9-SOCIAL-002 |
-| POST /v1/blocks · DELETE /v1/blocks/{userId} | blockUser, unblockUser / progress | block user | p_blocks, p_follows, p_friend_streaks, p_receipts | P9-SOCIAL-002 |
-| POST /v1/user-reports | reportUser / progress | report user | p_user_reports, p_receipts | P9-SOCIAL-002 |
-| GET /v1/league/result · POST /v1/league/result/seen | getLeagueResult, markLeagueResultSeen / progress | league result screen, Diamond Tournament | p_league_profiles, p_receipts | P9-LEAGUE-002 |
-| GET /v1/me/entitlement · POST /v1/billing/purchases · POST /internal/billing/notifications | getEntitlement, verifyPurchase, billingNotification / progress | Super/Max, gems purchase | p_entitlements, p_purchases, p_outbox, p_receipts | P10-BILL-001 |
-| POST /v1/family · POST /v1/family/{groupId}/members · DELETE …/members/{userId} | createFamily, joinFamily, removeFamilyMember / progress | Family Plan | p_family_groups, p_entitlements, p_receipts | P10-BILL-001 |
-| POST /v1/gifts · POST /v1/gifts/{giftId}/redeem | sendGift, redeemGift / progress | gift Super/Max | p_gifts, p_purchases, p_entitlements, p_receipts | P10-BILL-001 |
-| GET /v1/me/referral · POST /v1/referrals/redeem | getReferral, redeemReferral / progress | invite friends | p_referrals, p_entitlements, p_receipts | P10-BILL-001 |
-| POST /v1/promo-codes/redeem | redeemPromoCode / progress | promo codes (Super days, gems, items) | p_promo_codes, p_promo_redemptions, p_entitlements, p_reward_ledger, p_item_ledger, p_inventory, p_outbox, p_receipts | P10-PROMO-001 |
-| POST /v1/ad-events | recordAdEvent / progress | mock ads, free tier only (interstitial, rewarded gems, rewarded energy refill) | p_ad_events, p_entitlements (read), p_reward_ledger, p_outbox, p_receipts | P10-ADS-001 |
-| GET /v1/me/year-review/{year} | getYearReview / progress | Year in Review | p_year_reviews, p_day_activity | P9-SOCIAL-002 |
-| POST /v1/feedback | sendFeedback / progress | settings feedback | p_feedback, p_receipts | P3-AUTH-002 |
-| POST /v1/classrooms/join · DELETE /v1/classrooms/{classroomId}/membership | joinClassroom, leaveClassroom / progress | Duolingo for Schools join | p_classrooms, p_classroom_members, p_receipts | P9-SOCIAL-002 |
-| GET /v1/conversations · POST /v1/conversations · POST /v1/conversations/{conversationId}/complete | listConversations, startConversation, completeConversation / ai | Roleplay, Video Call review | a_conversations, a_voice_sessions, a_outbox, a_receipts | P8-AI-003 |
+None. On 2026-10-12 (branch pb/contract2) every endpoint previously listed here as proposed for the 62-table model (MIGRATIONS M002 + M003) was promoted into [OpenAPI](openapi.yaml) and now appears in the generated table above: 41 operations covering energy, course switch/reset/remove, mistakes, words, the activity library, preferences, feedback, shop/boosts/streak repair, friend streaks, interactions, blocks, user reports, classrooms, Year in Review, league result, mock billing/entitlement/family/gifts/referrals, promo redemption, mock ad events and AI conversations. Each carries its x-requirements trace, owner tables and an Idempotency-Key on user mutations; handlers and owner-task acceptance tests remain with the planned tasks in [IMPLEMENTATION_PLAN](../agent/IMPLEMENTATION_PLAN.md). `tools/audit/endpoint-matrix.mjs` (`pnpm docs:endpoints`) still preserves this hand-maintained section, so new proposals can be listed here before their contract change.

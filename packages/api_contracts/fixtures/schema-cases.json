@@ -1143,6 +1143,885 @@
      }
     }
    }
+  },
+  {
+   "label": "energy limited battery",
+   "schema": "Energy",
+   "valid": true,
+   "value": {
+    "mode": "LIMITED",
+    "balance": 18,
+    "capacity": 25,
+    "nextUnitAt": "2026-10-12T09:00:00Z",
+    "fullAt": "2026-10-13T02:00:00Z",
+    "revision": 4,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "energy balance above battery max rejected",
+   "schema": "Energy",
+   "valid": false,
+   "value": {
+    "mode": "LIMITED",
+    "balance": 101,
+    "capacity": 25,
+    "nextUnitAt": null,
+    "fullAt": null,
+    "revision": 4,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "mistake page",
+   "schema": "MistakePage",
+   "valid": true,
+   "value": {
+    "items": [
+     {
+      "courseId": "vi_en",
+      "exerciseId": "ex1",
+      "lessonVersion": "v1",
+      "skillId": "greet",
+      "mistakeCount": 2,
+      "lastMistakeAt": "2026-10-12T08:00:00Z",
+      "resolvedAt": null
+     }
+    ],
+    "nextCursor": null,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "mistake with zero count rejected",
+   "schema": "Mistake",
+   "valid": false,
+   "value": {
+    "courseId": "vi_en",
+    "exerciseId": "ex1",
+    "lessonVersion": "v1",
+    "skillId": "greet",
+    "mistakeCount": 0,
+    "lastMistakeAt": "2026-10-12T08:00:00Z",
+    "resolvedAt": null
+   }
+  },
+  {
+   "label": "word page with strength",
+   "schema": "WordPage",
+   "valid": true,
+   "value": {
+    "items": [
+     {
+      "courseId": "vi_en",
+      "vocabularyId": "hello",
+      "skillId": "greet",
+      "term": "hello",
+      "translation": "xin chào",
+      "stage": 2,
+      "strength": 3,
+      "halfLifeHours": 48,
+      "correctCount": 5,
+      "incorrectCount": 1,
+      "firstSeenAt": "2026-10-12T08:00:00Z",
+      "lastReviewedAt": "2026-10-12T08:00:00Z",
+      "dueAt": "2026-10-14T08:00:00Z"
+     }
+    ],
+    "nextCursor": "c1",
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "activity progress story",
+   "schema": "ActivityProgressPage",
+   "valid": true,
+   "value": {
+    "items": [
+     {
+      "courseId": "vi_en",
+      "kind": "STORY",
+      "activityId": "story-1",
+      "completions": 1,
+      "bestScore": 9,
+      "stars": 3,
+      "firstCompletedAt": "2026-10-12T08:00:00Z",
+      "lastCompletedAt": "2026-10-12T08:00:00Z"
+     }
+    ],
+    "nextCursor": null,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "activity progress unknown kind rejected",
+   "schema": "ActivityProgress",
+   "valid": false,
+   "value": {
+    "courseId": "vi_en",
+    "kind": "PODCAST",
+    "activityId": "x",
+    "completions": 0,
+    "bestScore": 0,
+    "stars": 0,
+    "firstCompletedAt": null,
+    "lastCompletedAt": null
+   }
+  },
+  {
+   "label": "preferences",
+   "schema": "Preferences",
+   "valid": true,
+   "value": {
+    "notificationsOff": [
+     "friend_activity"
+    ],
+    "smartScheduling": true,
+    "reminderMinute": 1200,
+    "soundEffects": true,
+    "haptics": false,
+    "motivationalMessages": true,
+    "listeningExercises": true,
+    "speakingExercises": false,
+    "friendStreakInvites": true,
+    "revision": 2,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "preferences patch needs revision",
+   "schema": "PreferencesPatch",
+   "valid": false,
+   "value": {
+    "haptics": true
+   }
+  },
+  {
+   "label": "preferences patch reminder out of day rejected",
+   "schema": "PreferencesPatch",
+   "valid": false,
+   "value": {
+    "reminderMinute": 1440,
+    "expectedRevision": 2
+   }
+  },
+  {
+   "label": "feedback request",
+   "schema": "FeedbackRequest",
+   "valid": true,
+   "value": {
+    "topic": "bug_report",
+    "message": "Audio stops after lesson 3.",
+    "appVersion": "1.0.0+1",
+    "platform": "ANDROID"
+   }
+  },
+  {
+   "label": "shop catalog",
+   "schema": "Shop",
+   "valid": true,
+   "value": {
+    "catalogVersion": "shop-v1",
+    "gems": 500,
+    "freezeSlots": 1,
+    "items": [
+     {
+      "itemId": "streak_freeze",
+      "kind": "FREEZE",
+      "priceGems": 200,
+      "maxOwned": 2,
+      "owned": 1,
+      "durationMinutes": null,
+      "available": true
+     },
+     {
+      "itemId": "xp_boost_15",
+      "kind": "XP_BOOST",
+      "priceGems": 100,
+      "maxOwned": 5,
+      "owned": 0,
+      "durationMinutes": 15,
+      "available": true
+     }
+    ],
+    "inventory": [
+     {
+      "itemId": "xp_boost_15",
+      "quantity": 1,
+      "expiresAt": null
+     }
+    ],
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "shop purchase result",
+   "schema": "ShopPurchase",
+   "valid": true,
+   "value": {
+    "operationId": "op-1",
+    "itemId": "energy_refill",
+    "quantity": 1,
+    "gemsSpent": 350,
+    "gems": 150,
+    "freezeSlots": 1,
+    "inventory": null,
+    "energyGrantPending": true,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "shop purchase quantity zero rejected",
+   "schema": "ShopPurchaseRequest",
+   "valid": false,
+   "value": {
+    "itemId": "xp_boost_15",
+    "quantity": 0,
+    "catalogVersion": "shop-v1"
+   }
+  },
+  {
+   "label": "boost window",
+   "schema": "Boost",
+   "valid": true,
+   "value": {
+    "boostId": "boost-1",
+    "kind": "XP_BOOST",
+    "multiplier": 2,
+    "startsAt": "2026-10-12T08:00:00Z",
+    "endsAt": "2026-10-12T08:15:00Z",
+    "inventory": {
+     "itemId": "xp_boost_15",
+     "quantity": 1,
+     "expiresAt": null
+    }
+   }
+  },
+  {
+   "label": "streak repair request",
+   "schema": "StreakRepairRequest",
+   "valid": true,
+   "value": {
+    "lostStreakDay": "2026-10-11",
+    "payWith": "GEMS"
+   }
+  },
+  {
+   "label": "streak repair bad day rejected",
+   "schema": "StreakRepairRequest",
+   "valid": false,
+   "value": {
+    "lostStreakDay": "yesterday",
+    "payWith": "GEMS"
+   }
+  },
+  {
+   "label": "friend streak page",
+   "schema": "FriendStreakPage",
+   "valid": true,
+   "value": {
+    "items": [
+     {
+      "pairId": "pair-1",
+      "friendUserId": "user-2",
+      "friendNickname": "Lan",
+      "inviterId": "user-1",
+      "status": "ACTIVE",
+      "length": 12,
+      "startDay": "2026-10-01",
+      "lastExtendedDay": "2026-10-12",
+      "extendedToday": true
+     }
+    ],
+    "nextCursor": null,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "interaction request uses message key",
+   "schema": "InteractionRequest",
+   "valid": true,
+   "value": {
+    "targetUserId": "user-2",
+    "kind": "NUDGE",
+    "contextId": "quest-1",
+    "messageKey": "nudge.keep_going"
+   }
+  },
+  {
+   "label": "interaction free text rejected",
+   "schema": "InteractionRequest",
+   "valid": false,
+   "value": {
+    "targetUserId": "user-2",
+    "kind": "NUDGE",
+    "contextId": "quest-1",
+    "messageKey": "Come back now!"
+   }
+  },
+  {
+   "label": "interaction result",
+   "schema": "Interaction",
+   "valid": true,
+   "value": {
+    "operationId": "op-2",
+    "toUserId": "user-2",
+    "kind": "GIFT_BOOST",
+    "contextId": "quest-1",
+    "day": "2026-10-12",
+    "gemsCost": 50,
+    "gems": 450
+   }
+  },
+  {
+   "label": "user report",
+   "schema": "UserReportRequest",
+   "valid": true,
+   "value": {
+    "targetUserId": "user-3",
+    "reason": "INAPPROPRIATE_NAME",
+    "note": null
+   }
+  },
+  {
+   "label": "classroom membership",
+   "schema": "ClassroomMembership",
+   "valid": true,
+   "value": {
+    "classroomId": "class-1",
+    "name": "FPT SE18",
+    "courseId": "vi_en",
+    "status": "ACTIVE",
+    "joinedAt": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "classroom code with space rejected",
+   "schema": "ClassroomJoinRequest",
+   "valid": false,
+   "value": {
+    "joinCode": "AB CD"
+   }
+  },
+  {
+   "label": "year review",
+   "schema": "YearReview",
+   "valid": true,
+   "value": {
+    "year": 2026,
+    "generatedAt": "2026-10-12T08:00:00Z",
+    "totalXp": 12000,
+    "activeDays": 200,
+    "longestStreak": 150,
+    "lessonsCompleted": 420,
+    "wordsLearned": 900,
+    "minutesSpent": 5000,
+    "achievementsEarned": 12,
+    "topLeagueTier": 6,
+    "courseIds": [
+     "vi_en"
+    ]
+   }
+  },
+  {
+   "label": "league result with last week",
+   "schema": "LeagueResult",
+   "valid": true,
+   "value": {
+    "tier": 4,
+    "stage": "LEAGUE",
+    "weeksParticipated": 10,
+    "topThreeFinishes": 2,
+    "diamondWeeks": 0,
+    "lastResult": {
+     "weekId": "2026-W41",
+     "previousTier": 3,
+     "tier": 4,
+     "stage": "LEAGUE",
+     "rank": 3,
+     "outcome": "PROMOTED",
+     "gemsAwarded": 20
+    },
+    "unseen": true,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "league result tier 10 rejected",
+   "schema": "LeagueResult",
+   "valid": false,
+   "value": {
+    "tier": 10,
+    "stage": "LEAGUE",
+    "weeksParticipated": 0,
+    "topThreeFinishes": 0,
+    "diamondWeeks": 0,
+    "lastResult": null,
+    "unseen": false,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "entitlement promo super",
+   "schema": "Entitlement",
+   "valid": true,
+   "value": {
+    "plan": "SUPER",
+    "source": "PROMO",
+    "status": "ACTIVE",
+    "expiresAt": "2026-11-12T08:00:00Z",
+    "autoRenew": false,
+    "familyGroupId": null,
+    "unlimitedEnergy": true,
+    "adFree": true,
+    "conversations": false,
+    "revision": 3,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "mock purchase request",
+   "schema": "PurchaseRequest",
+   "valid": true,
+   "value": {
+    "productId": "super_monthly",
+    "kind": "SUBSCRIPTION",
+    "platform": "SIMULATION",
+    "simulationOutcome": "ACTIVE"
+   }
+  },
+  {
+   "label": "real store platform rejected in mock billing",
+   "schema": "PurchaseRequest",
+   "valid": false,
+   "value": {
+    "productId": "super_monthly",
+    "kind": "SUBSCRIPTION",
+    "platform": "PLAY",
+    "simulationOutcome": "ACTIVE"
+   }
+  },
+  {
+   "label": "mock purchase pending keeps free",
+   "schema": "Purchase",
+   "valid": true,
+   "value": {
+    "purchaseId": "pur-1",
+    "productId": "super_monthly",
+    "kind": "SUBSCRIPTION",
+    "platform": "SIMULATION",
+    "state": "PENDING",
+    "verifiedAt": null,
+    "gems": null,
+    "entitlement": {
+     "plan": "FREE",
+     "source": "NONE",
+     "status": "ACTIVE",
+     "expiresAt": null,
+     "autoRenew": false,
+     "familyGroupId": null,
+     "unlimitedEnergy": false,
+     "adFree": false,
+     "conversations": false,
+     "revision": 3,
+     "asOf": "2026-10-12T08:00:00Z"
+    }
+   }
+  },
+  {
+   "label": "billing notification",
+   "schema": "BillingNotification",
+   "valid": true,
+   "value": {
+    "notificationId": "n-1",
+    "purchaseId": "pur-1",
+    "platform": "SIMULATION",
+    "state": "REFUNDED",
+    "occurredAt": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "family group",
+   "schema": "FamilyGroup",
+   "valid": true,
+   "value": {
+    "groupId": "fam-1",
+    "ownerUserId": "user-1",
+    "plan": "MAX",
+    "status": "ACTIVE",
+    "members": [
+     {
+      "userId": "user-1",
+      "nickname": "Thanh",
+      "role": "MANAGER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     }
+    ],
+    "inviteCode": "FAM-7Q2K",
+    "revision": 1
+   }
+  },
+  {
+   "label": "family of seven rejected",
+   "schema": "FamilyGroup",
+   "valid": false,
+   "value": {
+    "groupId": "fam-1",
+    "ownerUserId": "user-1",
+    "plan": "MAX",
+    "status": "ACTIVE",
+    "members": [
+     {
+      "userId": "u0",
+      "nickname": "n",
+      "role": "MEMBER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     },
+     {
+      "userId": "u1",
+      "nickname": "n",
+      "role": "MEMBER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     },
+     {
+      "userId": "u2",
+      "nickname": "n",
+      "role": "MEMBER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     },
+     {
+      "userId": "u3",
+      "nickname": "n",
+      "role": "MEMBER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     },
+     {
+      "userId": "u4",
+      "nickname": "n",
+      "role": "MEMBER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     },
+     {
+      "userId": "u5",
+      "nickname": "n",
+      "role": "MEMBER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     },
+     {
+      "userId": "u6",
+      "nickname": "n",
+      "role": "MEMBER",
+      "joinedAt": "2026-10-12T08:00:00Z"
+     }
+    ],
+    "inviteCode": null,
+    "revision": 1
+   }
+  },
+  {
+   "label": "gift request",
+   "schema": "GiftRequest",
+   "valid": true,
+   "value": {
+    "recipientUserId": "user-2",
+    "plan": "SUPER",
+    "durationDays": 30,
+    "note": "Chúc mừng!",
+    "simulationOutcome": "ACTIVE"
+   }
+  },
+  {
+   "label": "gift free plan rejected",
+   "schema": "GiftRequest",
+   "valid": false,
+   "value": {
+    "recipientUserId": "user-2",
+    "plan": "FREE",
+    "durationDays": 30,
+    "note": null,
+    "simulationOutcome": "ACTIVE"
+   }
+  },
+  {
+   "label": "gift delivered",
+   "schema": "Gift",
+   "valid": true,
+   "value": {
+    "giftId": "gift-1",
+    "senderId": "user-1",
+    "recipientId": "user-2",
+    "plan": "SUPER",
+    "durationDays": 30,
+    "note": null,
+    "status": "DELIVERED",
+    "deliveredAt": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "referral",
+   "schema": "Referral",
+   "valid": true,
+   "value": {
+    "code": "THANH-4821",
+    "accepted": 2,
+    "qualified": 1,
+    "rewarded": 1,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "promo gems redemption",
+   "schema": "PromoRedemption",
+   "valid": true,
+   "value": {
+    "redemptionId": "red-1",
+    "promoId": "promo-1",
+    "rewardType": "GEMS",
+    "superDays": null,
+    "gems": 500,
+    "itemId": null,
+    "itemQuantity": null,
+    "entitlement": null,
+    "redeemedAt": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "promo code with symbols rejected",
+   "schema": "PromoRedeemRequest",
+   "valid": false,
+   "value": {
+    "code": "FREE$$"
+   }
+  },
+  {
+   "label": "ad rewarded gems",
+   "schema": "AdEvent",
+   "valid": true,
+   "value": {
+    "adEventId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "placement": "REWARDED_GEMS",
+    "kind": "REWARDED_COMPLETION",
+    "learningDay": "2026-10-12",
+    "dailyIndex": 1,
+    "remainingToday": 4,
+    "rewardGems": 10,
+    "rewardEnergy": 0,
+    "gems": 510,
+    "energyGrantPending": false
+   }
+  },
+  {
+   "label": "ad event id must be uuid",
+   "schema": "AdEventRequest",
+   "valid": false,
+   "value": {
+    "adEventId": "ad-1",
+    "placement": "REWARDED_GEMS",
+    "kind": "IMPRESSION"
+   }
+  },
+  {
+   "label": "conversation completed with feedback",
+   "schema": "Conversation",
+   "valid": true,
+   "value": {
+    "conversationId": "conv-1",
+    "kind": "ROLEPLAY",
+    "courseId": "vi_en",
+    "scenarioId": "cafe-order",
+    "voiceSessionId": null,
+    "status": "COMPLETED",
+    "startedAt": "2026-10-12T08:00:00Z",
+    "completedAt": "2026-10-12T08:05:00Z",
+    "turnCount": 8,
+    "wordsUsed": 21,
+    "stars": 2,
+    "xpAwarded": 15,
+    "feedback": {
+     "summary": "Clear ordering.",
+     "strengths": [
+      "polite requests"
+     ],
+     "improvements": [
+      "past tense"
+     ],
+     "usedWords": [
+      "coffee",
+      "please"
+     ]
+    },
+    "expiresAt": "2026-11-11T08:05:00Z"
+   }
+  },
+  {
+   "label": "conversation page",
+   "schema": "ConversationPage",
+   "valid": true,
+   "value": {
+    "items": [
+     {
+      "conversationId": "conv-1",
+      "kind": "ROLEPLAY",
+      "courseId": "vi_en",
+      "scenarioId": "cafe-order",
+      "voiceSessionId": null,
+      "status": "COMPLETED",
+      "startedAt": "2026-10-12T08:00:00Z",
+      "completedAt": "2026-10-12T08:05:00Z",
+      "turnCount": 8,
+      "wordsUsed": 21,
+      "stars": 2,
+      "xpAwarded": 15,
+      "feedback": {
+       "summary": "Clear ordering.",
+       "strengths": [
+        "polite requests"
+       ],
+       "improvements": [
+        "past tense"
+       ],
+       "usedWords": [
+        "coffee",
+        "please"
+       ]
+      },
+      "expiresAt": "2026-11-11T08:05:00Z"
+     }
+    ],
+    "nextCursor": null,
+    "asOf": "2026-10-12T08:00:00Z"
+   }
+  },
+  {
+   "label": "conversation over 60 turns rejected",
+   "schema": "Conversation",
+   "valid": false,
+   "value": {
+    "conversationId": "conv-1",
+    "kind": "ROLEPLAY",
+    "courseId": "vi_en",
+    "scenarioId": "cafe-order",
+    "voiceSessionId": null,
+    "status": "COMPLETED",
+    "startedAt": "2026-10-12T08:00:00Z",
+    "completedAt": "2026-10-12T08:05:00Z",
+    "turnCount": 61,
+    "wordsUsed": 21,
+    "stars": 2,
+    "xpAwarded": 15,
+    "feedback": {
+     "summary": "Clear ordering.",
+     "strengths": [
+      "polite requests"
+     ],
+     "improvements": [
+      "past tense"
+     ],
+     "usedWords": [
+      "coffee",
+      "please"
+     ]
+    },
+    "expiresAt": "2026-11-11T08:05:00Z"
+   }
+  },
+  {
+   "label": "conversation start",
+   "schema": "ConversationStartRequest",
+   "valid": true,
+   "value": {
+    "kind": "VIDEO_CALL",
+    "courseId": "vi_en",
+    "scenarioId": "lily-call",
+    "voiceSessionId": "c7081304-39d3-48a4-a411-e737da8a2479"
+   }
+  },
+  {
+   "label": "ai.practice.completed.v1 event",
+   "schema": "BusinessEvent",
+   "valid": true,
+   "value": {
+    "eventId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "type": "ai.practice.completed.v1",
+    "schemaVersion": 1,
+    "producer": "ai",
+    "aggregateId": "agg-1",
+    "occurredAt": "2026-10-12T08:00:00Z",
+    "requestId": "req-1",
+    "payload": {
+     "completionId": "conv-1",
+     "userId": "user-1",
+     "kind": "ROLEPLAY",
+     "courseId": "vi_en",
+     "scenarioId": "cafe-order",
+     "xp": 15,
+     "wordsUsed": 21,
+     "stars": 2
+    }
+   }
+  },
+  {
+   "label": "entitlement.changed.v1 event",
+   "schema": "BusinessEvent",
+   "valid": true,
+   "value": {
+    "eventId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "type": "entitlement.changed.v1",
+    "schemaVersion": 1,
+    "producer": "progress",
+    "aggregateId": "agg-1",
+    "occurredAt": "2026-10-12T08:00:00Z",
+    "requestId": "req-1",
+    "payload": {
+     "userId": "user-1",
+     "plan": "SUPER",
+     "status": "ACTIVE",
+     "expiresAt": "2026-11-12T08:00:00Z",
+     "entitlementRevision": 3
+    }
+   }
+  },
+  {
+   "label": "energy.granted.v1 event",
+   "schema": "BusinessEvent",
+   "valid": true,
+   "value": {
+    "eventId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "type": "energy.granted.v1",
+    "schemaVersion": 1,
+    "producer": "progress",
+    "aggregateId": "agg-1",
+    "occurredAt": "2026-10-12T08:00:00Z",
+    "requestId": "req-1",
+    "payload": {
+     "operationId": "op-1",
+     "userId": "user-1",
+     "amount": null,
+     "refillToCapacity": true,
+     "reason": "SHOP"
+    }
+   }
+  },
+  {
+   "label": "entitlement event from learning rejected",
+   "schema": "BusinessEvent",
+   "valid": false,
+   "value": {
+    "eventId": "c7081304-39d3-48a4-a411-e737da8a2479",
+    "type": "entitlement.changed.v1",
+    "schemaVersion": 1,
+    "producer": "learning",
+    "aggregateId": "agg-1",
+    "occurredAt": "2026-10-12T08:00:00Z",
+    "requestId": "req-1",
+    "payload": {
+     "userId": "user-1",
+     "plan": "SUPER",
+     "status": "ACTIVE",
+     "expiresAt": null,
+     "entitlementRevision": 3
+    }
+   }
   }
  ]
 }

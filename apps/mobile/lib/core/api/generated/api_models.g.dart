@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 1f0abde1778efb8d4de3aba9d38e2a218a9596574305aeb4e7dd587e8e942efc).
+// Source: docs/api/openapi.yaml (sha256 72d4d87713a6d2082ef87417541c8849da5bf3a8318917d68ad11080629e8b19).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors
@@ -4319,6 +4319,138 @@ final class BusinessEventZoneChangedV1 implements BusinessEvent {
       };
 }
 
+/// Inline wire object `BusinessEventAiPracticeCompletedV1` (nested in a component schema).
+final class BusinessEventAiPracticeCompletedV1 implements BusinessEvent {
+  const BusinessEventAiPracticeCompletedV1({
+    required this.eventId,
+    required this.aggregateId,
+    required this.occurredAt,
+    required this.requestId,
+    required this.payload,
+  });
+
+  static BusinessEventAiPracticeCompletedV1 _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return BusinessEventAiPracticeCompletedV1(
+      eventId: map['eventId'] as String,
+      aggregateId: map['aggregateId'] as String,
+      occurredAt: map['occurredAt'] as String,
+      requestId: map['requestId'] as String,
+      payload: AiPracticeEventPayload._decode(map['payload']),
+    );
+  }
+
+  final String eventId;
+  @override
+  String get type => 'ai.practice.completed.v1';
+  int get schemaVersion => 1;
+  String get producer => 'ai';
+  final String aggregateId;
+  final String occurredAt;
+  final String requestId;
+  final AiPracticeEventPayload payload;
+
+  @override
+  Map<String, Object?> toJson() => <String, Object?>{
+        'eventId': eventId,
+        'type': type,
+        'schemaVersion': schemaVersion,
+        'producer': producer,
+        'aggregateId': aggregateId,
+        'occurredAt': occurredAt,
+        'requestId': requestId,
+        'payload': payload.toJson(),
+      };
+}
+
+/// Inline wire object `BusinessEventEntitlementChangedV1` (nested in a component schema).
+final class BusinessEventEntitlementChangedV1 implements BusinessEvent {
+  const BusinessEventEntitlementChangedV1({
+    required this.eventId,
+    required this.aggregateId,
+    required this.occurredAt,
+    required this.requestId,
+    required this.payload,
+  });
+
+  static BusinessEventEntitlementChangedV1 _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return BusinessEventEntitlementChangedV1(
+      eventId: map['eventId'] as String,
+      aggregateId: map['aggregateId'] as String,
+      occurredAt: map['occurredAt'] as String,
+      requestId: map['requestId'] as String,
+      payload: EntitlementEventPayload._decode(map['payload']),
+    );
+  }
+
+  final String eventId;
+  @override
+  String get type => 'entitlement.changed.v1';
+  int get schemaVersion => 1;
+  String get producer => 'progress';
+  final String aggregateId;
+  final String occurredAt;
+  final String requestId;
+  final EntitlementEventPayload payload;
+
+  @override
+  Map<String, Object?> toJson() => <String, Object?>{
+        'eventId': eventId,
+        'type': type,
+        'schemaVersion': schemaVersion,
+        'producer': producer,
+        'aggregateId': aggregateId,
+        'occurredAt': occurredAt,
+        'requestId': requestId,
+        'payload': payload.toJson(),
+      };
+}
+
+/// Inline wire object `BusinessEventEnergyGrantedV1` (nested in a component schema).
+final class BusinessEventEnergyGrantedV1 implements BusinessEvent {
+  const BusinessEventEnergyGrantedV1({
+    required this.eventId,
+    required this.aggregateId,
+    required this.occurredAt,
+    required this.requestId,
+    required this.payload,
+  });
+
+  static BusinessEventEnergyGrantedV1 _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return BusinessEventEnergyGrantedV1(
+      eventId: map['eventId'] as String,
+      aggregateId: map['aggregateId'] as String,
+      occurredAt: map['occurredAt'] as String,
+      requestId: map['requestId'] as String,
+      payload: EnergyGrantedEventPayload._decode(map['payload']),
+    );
+  }
+
+  final String eventId;
+  @override
+  String get type => 'energy.granted.v1';
+  int get schemaVersion => 1;
+  String get producer => 'progress';
+  final String aggregateId;
+  final String occurredAt;
+  final String requestId;
+  final EnergyGrantedEventPayload payload;
+
+  @override
+  Map<String, Object?> toJson() => <String, Object?>{
+        'eventId': eventId,
+        'type': type,
+        'schemaVersion': schemaVersion,
+        'producer': producer,
+        'aggregateId': aggregateId,
+        'occurredAt': occurredAt,
+        'requestId': requestId,
+        'payload': payload.toJson(),
+      };
+}
+
 /// Wire union for `#/components/schemas/BusinessEvent` (oneOf, discriminated by `type`).
 sealed class BusinessEvent {
   /// Validates [json] against the `BusinessEvent` schema (exactly one variant), then decodes it.
@@ -4335,6 +4467,9 @@ sealed class BusinessEvent {
       'account.deleted.v1' => BusinessEventAccountDeletedV1._decode(map),
       'account.purged.v1' => BusinessEventAccountPurgedV1._decode(map),
       'zone.changed.v1' => BusinessEventZoneChangedV1._decode(map),
+      'ai.practice.completed.v1' => BusinessEventAiPracticeCompletedV1._decode(map),
+      'entitlement.changed.v1' => BusinessEventEntitlementChangedV1._decode(map),
+      'energy.granted.v1' => BusinessEventEnergyGrantedV1._decode(map),
       _ => throw StateError('Unknown BusinessEvent.type after validation'),
     };
   }
@@ -4643,6 +4778,2495 @@ final class ActivityPage {
       };
 }
 
+/// Wire DTO for `#/components/schemas/Energy`.
+final class Energy {
+  const Energy({
+    required this.mode,
+    required this.balance,
+    required this.capacity,
+    required this.nextUnitAt,
+    required this.fullAt,
+    required this.revision,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `Energy` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Energy.fromJson(Object? json) {
+    ContractValidator.instance.check('Energy', json);
+    return Energy._decode(json);
+  }
+
+  static Energy _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Energy(
+      mode: map['mode'] as String,
+      balance: (map['balance'] as num).toInt(),
+      capacity: (map['capacity'] as num).toInt(),
+      nextUnitAt: map['nextUnitAt'] == null ? null : map['nextUnitAt'] as String,
+      fullAt: map['fullAt'] == null ? null : map['fullAt'] as String,
+      revision: (map['revision'] as num).toInt(),
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final String mode;
+  final int balance;
+  final int capacity;
+  final String? nextUnitAt;
+  final String? fullAt;
+  final int revision;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'mode': mode,
+        'balance': balance,
+        'capacity': capacity,
+        'nextUnitAt': nextUnitAt,
+        'fullAt': fullAt,
+        'revision': revision,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/EnrollmentCommandRequest`.
+final class EnrollmentCommandRequest {
+  const EnrollmentCommandRequest({
+    required this.expectedRevision,
+  });
+
+  /// Validates [json] against the `EnrollmentCommandRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory EnrollmentCommandRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('EnrollmentCommandRequest', json);
+    return EnrollmentCommandRequest._decode(json);
+  }
+
+  static EnrollmentCommandRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return EnrollmentCommandRequest(
+      expectedRevision: (map['expectedRevision'] as num).toInt(),
+    );
+  }
+
+  final int expectedRevision;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'expectedRevision': expectedRevision,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Mistake`.
+final class Mistake {
+  const Mistake({
+    required this.courseId,
+    required this.exerciseId,
+    required this.lessonVersion,
+    required this.skillId,
+    required this.mistakeCount,
+    required this.lastMistakeAt,
+    required this.resolvedAt,
+  });
+
+  /// Validates [json] against the `Mistake` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Mistake.fromJson(Object? json) {
+    ContractValidator.instance.check('Mistake', json);
+    return Mistake._decode(json);
+  }
+
+  static Mistake _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Mistake(
+      courseId: map['courseId'] as String,
+      exerciseId: map['exerciseId'] as String,
+      lessonVersion: map['lessonVersion'] as String,
+      skillId: map['skillId'] as String,
+      mistakeCount: (map['mistakeCount'] as num).toInt(),
+      lastMistakeAt: map['lastMistakeAt'] as String,
+      resolvedAt: map['resolvedAt'] == null ? null : map['resolvedAt'] as String,
+    );
+  }
+
+  final String courseId;
+  final String exerciseId;
+  final String lessonVersion;
+  final String skillId;
+  final int mistakeCount;
+  final String lastMistakeAt;
+  final String? resolvedAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'courseId': courseId,
+        'exerciseId': exerciseId,
+        'lessonVersion': lessonVersion,
+        'skillId': skillId,
+        'mistakeCount': mistakeCount,
+        'lastMistakeAt': lastMistakeAt,
+        'resolvedAt': resolvedAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/MistakePage`.
+final class MistakePage {
+  const MistakePage({
+    required this.items,
+    required this.nextCursor,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `MistakePage` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory MistakePage.fromJson(Object? json) {
+    ContractValidator.instance.check('MistakePage', json);
+    return MistakePage._decode(json);
+  }
+
+  static MistakePage _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return MistakePage(
+      items: List<Mistake>.unmodifiable((map['items'] as List<Object?>).map((Object? x) => Mistake._decode(x))),
+      nextCursor: map['nextCursor'] == null ? null : map['nextCursor'] as String,
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final List<Mistake> items;
+  final String? nextCursor;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'items': items.map((Mistake x) => x.toJson()).toList(),
+        'nextCursor': nextCursor,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Word`.
+final class Word {
+  const Word({
+    required this.courseId,
+    required this.vocabularyId,
+    required this.skillId,
+    required this.term,
+    required this.translation,
+    required this.stage,
+    required this.strength,
+    required this.halfLifeHours,
+    required this.correctCount,
+    required this.incorrectCount,
+    required this.firstSeenAt,
+    required this.lastReviewedAt,
+    required this.dueAt,
+  });
+
+  /// Validates [json] against the `Word` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Word.fromJson(Object? json) {
+    ContractValidator.instance.check('Word', json);
+    return Word._decode(json);
+  }
+
+  static Word _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Word(
+      courseId: map['courseId'] as String,
+      vocabularyId: map['vocabularyId'] as String,
+      skillId: map['skillId'] as String,
+      term: map['term'] as String,
+      translation: map['translation'] == null ? null : map['translation'] as String,
+      stage: (map['stage'] as num).toInt(),
+      strength: (map['strength'] as num).toInt(),
+      halfLifeHours: (map['halfLifeHours'] as num).toInt(),
+      correctCount: (map['correctCount'] as num).toInt(),
+      incorrectCount: (map['incorrectCount'] as num).toInt(),
+      firstSeenAt: map['firstSeenAt'] as String,
+      lastReviewedAt: map['lastReviewedAt'] == null ? null : map['lastReviewedAt'] as String,
+      dueAt: map['dueAt'] as String,
+    );
+  }
+
+  final String courseId;
+  final String vocabularyId;
+  final String skillId;
+  final String term;
+  final String? translation;
+  final int stage;
+  final int strength;
+  final int halfLifeHours;
+  final int correctCount;
+  final int incorrectCount;
+  final String firstSeenAt;
+  final String? lastReviewedAt;
+  final String dueAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'courseId': courseId,
+        'vocabularyId': vocabularyId,
+        'skillId': skillId,
+        'term': term,
+        'translation': translation,
+        'stage': stage,
+        'strength': strength,
+        'halfLifeHours': halfLifeHours,
+        'correctCount': correctCount,
+        'incorrectCount': incorrectCount,
+        'firstSeenAt': firstSeenAt,
+        'lastReviewedAt': lastReviewedAt,
+        'dueAt': dueAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/WordPage`.
+final class WordPage {
+  const WordPage({
+    required this.items,
+    required this.nextCursor,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `WordPage` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory WordPage.fromJson(Object? json) {
+    ContractValidator.instance.check('WordPage', json);
+    return WordPage._decode(json);
+  }
+
+  static WordPage _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return WordPage(
+      items: List<Word>.unmodifiable((map['items'] as List<Object?>).map((Object? x) => Word._decode(x))),
+      nextCursor: map['nextCursor'] == null ? null : map['nextCursor'] as String,
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final List<Word> items;
+  final String? nextCursor;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'items': items.map((Word x) => x.toJson()).toList(),
+        'nextCursor': nextCursor,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ActivityProgress`.
+final class ActivityProgress {
+  const ActivityProgress({
+    required this.courseId,
+    required this.kind,
+    required this.activityId,
+    required this.completions,
+    required this.bestScore,
+    required this.stars,
+    required this.firstCompletedAt,
+    required this.lastCompletedAt,
+  });
+
+  /// Validates [json] against the `ActivityProgress` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ActivityProgress.fromJson(Object? json) {
+    ContractValidator.instance.check('ActivityProgress', json);
+    return ActivityProgress._decode(json);
+  }
+
+  static ActivityProgress _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ActivityProgress(
+      courseId: map['courseId'] as String,
+      kind: map['kind'] as String,
+      activityId: map['activityId'] as String,
+      completions: (map['completions'] as num).toInt(),
+      bestScore: (map['bestScore'] as num).toInt(),
+      stars: (map['stars'] as num).toInt(),
+      firstCompletedAt: map['firstCompletedAt'] == null ? null : map['firstCompletedAt'] as String,
+      lastCompletedAt: map['lastCompletedAt'] == null ? null : map['lastCompletedAt'] as String,
+    );
+  }
+
+  final String courseId;
+  final String kind;
+  final String activityId;
+  final int completions;
+  final int bestScore;
+  final int stars;
+  final String? firstCompletedAt;
+  final String? lastCompletedAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'courseId': courseId,
+        'kind': kind,
+        'activityId': activityId,
+        'completions': completions,
+        'bestScore': bestScore,
+        'stars': stars,
+        'firstCompletedAt': firstCompletedAt,
+        'lastCompletedAt': lastCompletedAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ActivityProgressPage`.
+final class ActivityProgressPage {
+  const ActivityProgressPage({
+    required this.items,
+    required this.nextCursor,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `ActivityProgressPage` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ActivityProgressPage.fromJson(Object? json) {
+    ContractValidator.instance.check('ActivityProgressPage', json);
+    return ActivityProgressPage._decode(json);
+  }
+
+  static ActivityProgressPage _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ActivityProgressPage(
+      items: List<ActivityProgress>.unmodifiable((map['items'] as List<Object?>).map((Object? x) => ActivityProgress._decode(x))),
+      nextCursor: map['nextCursor'] == null ? null : map['nextCursor'] as String,
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final List<ActivityProgress> items;
+  final String? nextCursor;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'items': items.map((ActivityProgress x) => x.toJson()).toList(),
+        'nextCursor': nextCursor,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Preferences`.
+final class Preferences {
+  const Preferences({
+    required this.notificationsOff,
+    required this.smartScheduling,
+    required this.reminderMinute,
+    required this.soundEffects,
+    required this.haptics,
+    required this.motivationalMessages,
+    required this.listeningExercises,
+    required this.speakingExercises,
+    required this.friendStreakInvites,
+    required this.revision,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `Preferences` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Preferences.fromJson(Object? json) {
+    ContractValidator.instance.check('Preferences', json);
+    return Preferences._decode(json);
+  }
+
+  static Preferences _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Preferences(
+      notificationsOff: List<String>.unmodifiable((map['notificationsOff'] as List<Object?>).map((Object? x) => x as String)),
+      smartScheduling: map['smartScheduling'] as bool,
+      reminderMinute: (map['reminderMinute'] as num).toInt(),
+      soundEffects: map['soundEffects'] as bool,
+      haptics: map['haptics'] as bool,
+      motivationalMessages: map['motivationalMessages'] as bool,
+      listeningExercises: map['listeningExercises'] as bool,
+      speakingExercises: map['speakingExercises'] as bool,
+      friendStreakInvites: map['friendStreakInvites'] as bool,
+      revision: (map['revision'] as num).toInt(),
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final List<String> notificationsOff;
+  final bool smartScheduling;
+  final int reminderMinute;
+  final bool soundEffects;
+  final bool haptics;
+  final bool motivationalMessages;
+  final bool listeningExercises;
+  final bool speakingExercises;
+  final bool friendStreakInvites;
+  final int revision;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'notificationsOff': List<Object?>.of(notificationsOff),
+        'smartScheduling': smartScheduling,
+        'reminderMinute': reminderMinute,
+        'soundEffects': soundEffects,
+        'haptics': haptics,
+        'motivationalMessages': motivationalMessages,
+        'listeningExercises': listeningExercises,
+        'speakingExercises': speakingExercises,
+        'friendStreakInvites': friendStreakInvites,
+        'revision': revision,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/PreferencesPatch`.
+final class PreferencesPatch {
+  const PreferencesPatch({
+    this.notificationsOff,
+    this.smartScheduling,
+    this.reminderMinute,
+    this.soundEffects,
+    this.haptics,
+    this.motivationalMessages,
+    this.listeningExercises,
+    this.speakingExercises,
+    this.friendStreakInvites,
+    required this.expectedRevision,
+  });
+
+  /// Validates [json] against the `PreferencesPatch` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory PreferencesPatch.fromJson(Object? json) {
+    ContractValidator.instance.check('PreferencesPatch', json);
+    return PreferencesPatch._decode(json);
+  }
+
+  static PreferencesPatch _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return PreferencesPatch(
+      notificationsOff: map.containsKey('notificationsOff') ? List<String>.unmodifiable((map['notificationsOff'] as List<Object?>).map((Object? x) => x as String)) : null,
+      smartScheduling: map.containsKey('smartScheduling') ? map['smartScheduling'] as bool : null,
+      reminderMinute: map.containsKey('reminderMinute') ? (map['reminderMinute'] as num).toInt() : null,
+      soundEffects: map.containsKey('soundEffects') ? map['soundEffects'] as bool : null,
+      haptics: map.containsKey('haptics') ? map['haptics'] as bool : null,
+      motivationalMessages: map.containsKey('motivationalMessages') ? map['motivationalMessages'] as bool : null,
+      listeningExercises: map.containsKey('listeningExercises') ? map['listeningExercises'] as bool : null,
+      speakingExercises: map.containsKey('speakingExercises') ? map['speakingExercises'] as bool : null,
+      friendStreakInvites: map.containsKey('friendStreakInvites') ? map['friendStreakInvites'] as bool : null,
+      expectedRevision: (map['expectedRevision'] as num).toInt(),
+    );
+  }
+
+  final List<String>? notificationsOff;
+  final bool? smartScheduling;
+  final int? reminderMinute;
+  final bool? soundEffects;
+  final bool? haptics;
+  final bool? motivationalMessages;
+  final bool? listeningExercises;
+  final bool? speakingExercises;
+  final bool? friendStreakInvites;
+  final int expectedRevision;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        if (notificationsOff != null) 'notificationsOff': List<Object?>.of(notificationsOff!),
+        'smartScheduling': ?smartScheduling,
+        'reminderMinute': ?reminderMinute,
+        'soundEffects': ?soundEffects,
+        'haptics': ?haptics,
+        'motivationalMessages': ?motivationalMessages,
+        'listeningExercises': ?listeningExercises,
+        'speakingExercises': ?speakingExercises,
+        'friendStreakInvites': ?friendStreakInvites,
+        'expectedRevision': expectedRevision,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FeedbackRequest`.
+final class FeedbackRequest {
+  const FeedbackRequest({
+    required this.topic,
+    required this.message,
+    required this.appVersion,
+    required this.platform,
+  });
+
+  /// Validates [json] against the `FeedbackRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FeedbackRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('FeedbackRequest', json);
+    return FeedbackRequest._decode(json);
+  }
+
+  static FeedbackRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FeedbackRequest(
+      topic: map['topic'] as String,
+      message: map['message'] as String,
+      appVersion: map['appVersion'] as String,
+      platform: map['platform'] as String,
+    );
+  }
+
+  final String topic;
+  final String message;
+  final String appVersion;
+  final String platform;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'topic': topic,
+        'message': message,
+        'appVersion': appVersion,
+        'platform': platform,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/InventoryItem`.
+final class InventoryItem {
+  const InventoryItem({
+    required this.itemId,
+    required this.quantity,
+    required this.expiresAt,
+  });
+
+  /// Validates [json] against the `InventoryItem` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory InventoryItem.fromJson(Object? json) {
+    ContractValidator.instance.check('InventoryItem', json);
+    return InventoryItem._decode(json);
+  }
+
+  static InventoryItem _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return InventoryItem(
+      itemId: map['itemId'] as String,
+      quantity: (map['quantity'] as num).toInt(),
+      expiresAt: map['expiresAt'] == null ? null : map['expiresAt'] as String,
+    );
+  }
+
+  final String itemId;
+  final int quantity;
+  final String? expiresAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'itemId': itemId,
+        'quantity': quantity,
+        'expiresAt': expiresAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ShopItem`.
+final class ShopItem {
+  const ShopItem({
+    required this.itemId,
+    required this.kind,
+    required this.priceGems,
+    required this.maxOwned,
+    required this.owned,
+    required this.durationMinutes,
+    required this.available,
+  });
+
+  /// Validates [json] against the `ShopItem` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ShopItem.fromJson(Object? json) {
+    ContractValidator.instance.check('ShopItem', json);
+    return ShopItem._decode(json);
+  }
+
+  static ShopItem _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ShopItem(
+      itemId: map['itemId'] as String,
+      kind: map['kind'] as String,
+      priceGems: (map['priceGems'] as num).toInt(),
+      maxOwned: (map['maxOwned'] as num).toInt(),
+      owned: (map['owned'] as num).toInt(),
+      durationMinutes: map['durationMinutes'] == null ? null : (map['durationMinutes'] as num).toInt(),
+      available: map['available'] as bool,
+    );
+  }
+
+  final String itemId;
+  final String kind;
+  final int priceGems;
+  final int maxOwned;
+  final int owned;
+  final int? durationMinutes;
+  final bool available;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'itemId': itemId,
+        'kind': kind,
+        'priceGems': priceGems,
+        'maxOwned': maxOwned,
+        'owned': owned,
+        'durationMinutes': durationMinutes,
+        'available': available,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Shop`.
+final class Shop {
+  const Shop({
+    required this.catalogVersion,
+    required this.gems,
+    required this.freezeSlots,
+    required this.items,
+    required this.inventory,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `Shop` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Shop.fromJson(Object? json) {
+    ContractValidator.instance.check('Shop', json);
+    return Shop._decode(json);
+  }
+
+  static Shop _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Shop(
+      catalogVersion: map['catalogVersion'] as String,
+      gems: (map['gems'] as num).toInt(),
+      freezeSlots: (map['freezeSlots'] as num).toInt(),
+      items: List<ShopItem>.unmodifiable((map['items'] as List<Object?>).map((Object? x) => ShopItem._decode(x))),
+      inventory: List<InventoryItem>.unmodifiable((map['inventory'] as List<Object?>).map((Object? x) => InventoryItem._decode(x))),
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final String catalogVersion;
+  final int gems;
+  final int freezeSlots;
+  final List<ShopItem> items;
+  final List<InventoryItem> inventory;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'catalogVersion': catalogVersion,
+        'gems': gems,
+        'freezeSlots': freezeSlots,
+        'items': items.map((ShopItem x) => x.toJson()).toList(),
+        'inventory': inventory.map((InventoryItem x) => x.toJson()).toList(),
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ShopPurchaseRequest`.
+final class ShopPurchaseRequest {
+  const ShopPurchaseRequest({
+    required this.itemId,
+    required this.quantity,
+    required this.catalogVersion,
+  });
+
+  /// Validates [json] against the `ShopPurchaseRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ShopPurchaseRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('ShopPurchaseRequest', json);
+    return ShopPurchaseRequest._decode(json);
+  }
+
+  static ShopPurchaseRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ShopPurchaseRequest(
+      itemId: map['itemId'] as String,
+      quantity: (map['quantity'] as num).toInt(),
+      catalogVersion: map['catalogVersion'] as String,
+    );
+  }
+
+  final String itemId;
+  final int quantity;
+  final String catalogVersion;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'itemId': itemId,
+        'quantity': quantity,
+        'catalogVersion': catalogVersion,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ShopPurchase`.
+final class ShopPurchase {
+  const ShopPurchase({
+    required this.operationId,
+    required this.itemId,
+    required this.quantity,
+    required this.gemsSpent,
+    required this.gems,
+    required this.freezeSlots,
+    required this.inventory,
+    required this.energyGrantPending,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `ShopPurchase` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ShopPurchase.fromJson(Object? json) {
+    ContractValidator.instance.check('ShopPurchase', json);
+    return ShopPurchase._decode(json);
+  }
+
+  static ShopPurchase _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ShopPurchase(
+      operationId: map['operationId'] as String,
+      itemId: map['itemId'] as String,
+      quantity: (map['quantity'] as num).toInt(),
+      gemsSpent: (map['gemsSpent'] as num).toInt(),
+      gems: (map['gems'] as num).toInt(),
+      freezeSlots: (map['freezeSlots'] as num).toInt(),
+      inventory: map['inventory'] == null ? null : InventoryItem._decode(map['inventory']),
+      energyGrantPending: map['energyGrantPending'] as bool,
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final String operationId;
+  final String itemId;
+  final int quantity;
+  final int gemsSpent;
+  final int gems;
+  final int freezeSlots;
+  final InventoryItem? inventory;
+  final bool energyGrantPending;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'operationId': operationId,
+        'itemId': itemId,
+        'quantity': quantity,
+        'gemsSpent': gemsSpent,
+        'gems': gems,
+        'freezeSlots': freezeSlots,
+        'inventory': inventory?.toJson(),
+        'energyGrantPending': energyGrantPending,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/BoostRequest`.
+final class BoostRequest {
+  const BoostRequest({
+    required this.itemId,
+  });
+
+  /// Validates [json] against the `BoostRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory BoostRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('BoostRequest', json);
+    return BoostRequest._decode(json);
+  }
+
+  static BoostRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return BoostRequest(
+      itemId: map['itemId'] as String,
+    );
+  }
+
+  final String itemId;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'itemId': itemId,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Boost`.
+final class Boost {
+  const Boost({
+    required this.boostId,
+    required this.kind,
+    required this.multiplier,
+    required this.startsAt,
+    required this.endsAt,
+    required this.inventory,
+  });
+
+  /// Validates [json] against the `Boost` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Boost.fromJson(Object? json) {
+    ContractValidator.instance.check('Boost', json);
+    return Boost._decode(json);
+  }
+
+  static Boost _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Boost(
+      boostId: map['boostId'] as String,
+      kind: map['kind'] as String,
+      multiplier: (map['multiplier'] as num).toInt(),
+      startsAt: map['startsAt'] as String,
+      endsAt: map['endsAt'] as String,
+      inventory: map['inventory'] == null ? null : InventoryItem._decode(map['inventory']),
+    );
+  }
+
+  final String boostId;
+  final String kind;
+  final int multiplier;
+  final String startsAt;
+  final String endsAt;
+  final InventoryItem? inventory;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'boostId': boostId,
+        'kind': kind,
+        'multiplier': multiplier,
+        'startsAt': startsAt,
+        'endsAt': endsAt,
+        'inventory': inventory?.toJson(),
+      };
+}
+
+/// Wire DTO for `#/components/schemas/StreakRepairRequest`.
+final class StreakRepairRequest {
+  const StreakRepairRequest({
+    required this.lostStreakDay,
+    required this.payWith,
+  });
+
+  /// Validates [json] against the `StreakRepairRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory StreakRepairRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('StreakRepairRequest', json);
+    return StreakRepairRequest._decode(json);
+  }
+
+  static StreakRepairRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return StreakRepairRequest(
+      lostStreakDay: map['lostStreakDay'] as String,
+      payWith: map['payWith'] as String,
+    );
+  }
+
+  final String lostStreakDay;
+  final String payWith;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'lostStreakDay': lostStreakDay,
+        'payWith': payWith,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FriendStreak`.
+final class FriendStreak {
+  const FriendStreak({
+    required this.pairId,
+    required this.friendUserId,
+    required this.friendNickname,
+    required this.inviterId,
+    required this.status,
+    required this.length,
+    required this.startDay,
+    required this.lastExtendedDay,
+    required this.extendedToday,
+  });
+
+  /// Validates [json] against the `FriendStreak` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FriendStreak.fromJson(Object? json) {
+    ContractValidator.instance.check('FriendStreak', json);
+    return FriendStreak._decode(json);
+  }
+
+  static FriendStreak _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FriendStreak(
+      pairId: map['pairId'] as String,
+      friendUserId: map['friendUserId'] as String,
+      friendNickname: map['friendNickname'] as String,
+      inviterId: map['inviterId'] as String,
+      status: map['status'] as String,
+      length: (map['length'] as num).toInt(),
+      startDay: map['startDay'] == null ? null : map['startDay'] as String,
+      lastExtendedDay: map['lastExtendedDay'] == null ? null : map['lastExtendedDay'] as String,
+      extendedToday: map['extendedToday'] as bool,
+    );
+  }
+
+  final String pairId;
+  final String friendUserId;
+  final String friendNickname;
+  final String inviterId;
+  final String status;
+  final int length;
+  final String? startDay;
+  final String? lastExtendedDay;
+  final bool extendedToday;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'pairId': pairId,
+        'friendUserId': friendUserId,
+        'friendNickname': friendNickname,
+        'inviterId': inviterId,
+        'status': status,
+        'length': length,
+        'startDay': startDay,
+        'lastExtendedDay': lastExtendedDay,
+        'extendedToday': extendedToday,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FriendStreakPage`.
+final class FriendStreakPage {
+  const FriendStreakPage({
+    required this.items,
+    required this.nextCursor,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `FriendStreakPage` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FriendStreakPage.fromJson(Object? json) {
+    ContractValidator.instance.check('FriendStreakPage', json);
+    return FriendStreakPage._decode(json);
+  }
+
+  static FriendStreakPage _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FriendStreakPage(
+      items: List<FriendStreak>.unmodifiable((map['items'] as List<Object?>).map((Object? x) => FriendStreak._decode(x))),
+      nextCursor: map['nextCursor'] == null ? null : map['nextCursor'] as String,
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final List<FriendStreak> items;
+  final String? nextCursor;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'items': items.map((FriendStreak x) => x.toJson()).toList(),
+        'nextCursor': nextCursor,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FriendStreakInviteRequest`.
+final class FriendStreakInviteRequest {
+  const FriendStreakInviteRequest({
+    required this.targetUserId,
+  });
+
+  /// Validates [json] against the `FriendStreakInviteRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FriendStreakInviteRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('FriendStreakInviteRequest', json);
+    return FriendStreakInviteRequest._decode(json);
+  }
+
+  static FriendStreakInviteRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FriendStreakInviteRequest(
+      targetUserId: map['targetUserId'] as String,
+    );
+  }
+
+  final String targetUserId;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'targetUserId': targetUserId,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FriendStreakResponseRequest`.
+final class FriendStreakResponseRequest {
+  const FriendStreakResponseRequest({
+    required this.accept,
+  });
+
+  /// Validates [json] against the `FriendStreakResponseRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FriendStreakResponseRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('FriendStreakResponseRequest', json);
+    return FriendStreakResponseRequest._decode(json);
+  }
+
+  static FriendStreakResponseRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FriendStreakResponseRequest(
+      accept: map['accept'] as bool,
+    );
+  }
+
+  final bool accept;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'accept': accept,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/InteractionRequest`.
+final class InteractionRequest {
+  const InteractionRequest({
+    required this.targetUserId,
+    required this.kind,
+    required this.contextId,
+    required this.messageKey,
+  });
+
+  /// Validates [json] against the `InteractionRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory InteractionRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('InteractionRequest', json);
+    return InteractionRequest._decode(json);
+  }
+
+  static InteractionRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return InteractionRequest(
+      targetUserId: map['targetUserId'] as String,
+      kind: map['kind'] as String,
+      contextId: map['contextId'] as String,
+      messageKey: map['messageKey'] as String,
+    );
+  }
+
+  final String targetUserId;
+  final String kind;
+  final String contextId;
+  final String messageKey;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'targetUserId': targetUserId,
+        'kind': kind,
+        'contextId': contextId,
+        'messageKey': messageKey,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Interaction`.
+final class Interaction {
+  const Interaction({
+    required this.operationId,
+    required this.toUserId,
+    required this.kind,
+    required this.contextId,
+    required this.day,
+    required this.gemsCost,
+    required this.gems,
+  });
+
+  /// Validates [json] against the `Interaction` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Interaction.fromJson(Object? json) {
+    ContractValidator.instance.check('Interaction', json);
+    return Interaction._decode(json);
+  }
+
+  static Interaction _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Interaction(
+      operationId: map['operationId'] as String,
+      toUserId: map['toUserId'] as String,
+      kind: map['kind'] as String,
+      contextId: map['contextId'] as String,
+      day: map['day'] as String,
+      gemsCost: (map['gemsCost'] as num).toInt(),
+      gems: (map['gems'] as num).toInt(),
+    );
+  }
+
+  final String operationId;
+  final String toUserId;
+  final String kind;
+  final String contextId;
+  final String day;
+  final int gemsCost;
+  final int gems;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'operationId': operationId,
+        'toUserId': toUserId,
+        'kind': kind,
+        'contextId': contextId,
+        'day': day,
+        'gemsCost': gemsCost,
+        'gems': gems,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/BlockRequest`.
+final class BlockRequest {
+  const BlockRequest({
+    required this.targetUserId,
+  });
+
+  /// Validates [json] against the `BlockRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory BlockRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('BlockRequest', json);
+    return BlockRequest._decode(json);
+  }
+
+  static BlockRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return BlockRequest(
+      targetUserId: map['targetUserId'] as String,
+    );
+  }
+
+  final String targetUserId;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'targetUserId': targetUserId,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/UserReportRequest`.
+final class UserReportRequest {
+  const UserReportRequest({
+    required this.targetUserId,
+    required this.reason,
+    required this.note,
+  });
+
+  /// Validates [json] against the `UserReportRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory UserReportRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('UserReportRequest', json);
+    return UserReportRequest._decode(json);
+  }
+
+  static UserReportRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return UserReportRequest(
+      targetUserId: map['targetUserId'] as String,
+      reason: map['reason'] as String,
+      note: map['note'] == null ? null : map['note'] as String,
+    );
+  }
+
+  final String targetUserId;
+  final String reason;
+  final String? note;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'targetUserId': targetUserId,
+        'reason': reason,
+        'note': note,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ClassroomJoinRequest`.
+final class ClassroomJoinRequest {
+  const ClassroomJoinRequest({
+    required this.joinCode,
+  });
+
+  /// Validates [json] against the `ClassroomJoinRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ClassroomJoinRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('ClassroomJoinRequest', json);
+    return ClassroomJoinRequest._decode(json);
+  }
+
+  static ClassroomJoinRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ClassroomJoinRequest(
+      joinCode: map['joinCode'] as String,
+    );
+  }
+
+  final String joinCode;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'joinCode': joinCode,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ClassroomMembership`.
+final class ClassroomMembership {
+  const ClassroomMembership({
+    required this.classroomId,
+    required this.name,
+    required this.courseId,
+    required this.status,
+    required this.joinedAt,
+  });
+
+  /// Validates [json] against the `ClassroomMembership` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ClassroomMembership.fromJson(Object? json) {
+    ContractValidator.instance.check('ClassroomMembership', json);
+    return ClassroomMembership._decode(json);
+  }
+
+  static ClassroomMembership _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ClassroomMembership(
+      classroomId: map['classroomId'] as String,
+      name: map['name'] as String,
+      courseId: map['courseId'] as String,
+      status: map['status'] as String,
+      joinedAt: map['joinedAt'] as String,
+    );
+  }
+
+  final String classroomId;
+  final String name;
+  final String courseId;
+  final String status;
+  final String joinedAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'classroomId': classroomId,
+        'name': name,
+        'courseId': courseId,
+        'status': status,
+        'joinedAt': joinedAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/YearReview`.
+final class YearReview {
+  const YearReview({
+    required this.year,
+    required this.generatedAt,
+    required this.totalXp,
+    required this.activeDays,
+    required this.longestStreak,
+    required this.lessonsCompleted,
+    required this.wordsLearned,
+    required this.minutesSpent,
+    required this.achievementsEarned,
+    required this.topLeagueTier,
+    required this.courseIds,
+  });
+
+  /// Validates [json] against the `YearReview` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory YearReview.fromJson(Object? json) {
+    ContractValidator.instance.check('YearReview', json);
+    return YearReview._decode(json);
+  }
+
+  static YearReview _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return YearReview(
+      year: (map['year'] as num).toInt(),
+      generatedAt: map['generatedAt'] as String,
+      totalXp: (map['totalXp'] as num).toInt(),
+      activeDays: (map['activeDays'] as num).toInt(),
+      longestStreak: (map['longestStreak'] as num).toInt(),
+      lessonsCompleted: (map['lessonsCompleted'] as num).toInt(),
+      wordsLearned: (map['wordsLearned'] as num).toInt(),
+      minutesSpent: (map['minutesSpent'] as num).toInt(),
+      achievementsEarned: (map['achievementsEarned'] as num).toInt(),
+      topLeagueTier: map['topLeagueTier'] == null ? null : (map['topLeagueTier'] as num).toInt(),
+      courseIds: List<String>.unmodifiable((map['courseIds'] as List<Object?>).map((Object? x) => x as String)),
+    );
+  }
+
+  final int year;
+  final String generatedAt;
+  final int totalXp;
+  final int activeDays;
+  final int longestStreak;
+  final int lessonsCompleted;
+  final int wordsLearned;
+  final int minutesSpent;
+  final int achievementsEarned;
+  final int? topLeagueTier;
+  final List<String> courseIds;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'year': year,
+        'generatedAt': generatedAt,
+        'totalXp': totalXp,
+        'activeDays': activeDays,
+        'longestStreak': longestStreak,
+        'lessonsCompleted': lessonsCompleted,
+        'wordsLearned': wordsLearned,
+        'minutesSpent': minutesSpent,
+        'achievementsEarned': achievementsEarned,
+        'topLeagueTier': topLeagueTier,
+        'courseIds': List<Object?>.of(courseIds),
+      };
+}
+
+/// Wire DTO for `#/components/schemas/LeagueWeekResult`.
+final class LeagueWeekResult {
+  const LeagueWeekResult({
+    required this.weekId,
+    required this.previousTier,
+    required this.tier,
+    required this.stage,
+    required this.rank,
+    required this.outcome,
+    required this.gemsAwarded,
+  });
+
+  /// Validates [json] against the `LeagueWeekResult` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory LeagueWeekResult.fromJson(Object? json) {
+    ContractValidator.instance.check('LeagueWeekResult', json);
+    return LeagueWeekResult._decode(json);
+  }
+
+  static LeagueWeekResult _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return LeagueWeekResult(
+      weekId: map['weekId'] as String,
+      previousTier: (map['previousTier'] as num).toInt(),
+      tier: (map['tier'] as num).toInt(),
+      stage: map['stage'] as String,
+      rank: map['rank'] == null ? null : (map['rank'] as num).toInt(),
+      outcome: map['outcome'] as String,
+      gemsAwarded: (map['gemsAwarded'] as num).toInt(),
+    );
+  }
+
+  final String weekId;
+  final int previousTier;
+  final int tier;
+  final String stage;
+  final int? rank;
+  final String outcome;
+  final int gemsAwarded;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'weekId': weekId,
+        'previousTier': previousTier,
+        'tier': tier,
+        'stage': stage,
+        'rank': rank,
+        'outcome': outcome,
+        'gemsAwarded': gemsAwarded,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/LeagueResult`.
+final class LeagueResult {
+  const LeagueResult({
+    required this.tier,
+    required this.stage,
+    required this.weeksParticipated,
+    required this.topThreeFinishes,
+    required this.diamondWeeks,
+    required this.lastResult,
+    required this.unseen,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `LeagueResult` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory LeagueResult.fromJson(Object? json) {
+    ContractValidator.instance.check('LeagueResult', json);
+    return LeagueResult._decode(json);
+  }
+
+  static LeagueResult _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return LeagueResult(
+      tier: (map['tier'] as num).toInt(),
+      stage: map['stage'] as String,
+      weeksParticipated: (map['weeksParticipated'] as num).toInt(),
+      topThreeFinishes: (map['topThreeFinishes'] as num).toInt(),
+      diamondWeeks: (map['diamondWeeks'] as num).toInt(),
+      lastResult: map['lastResult'] == null ? null : LeagueWeekResult._decode(map['lastResult']),
+      unseen: map['unseen'] as bool,
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final int tier;
+  final String stage;
+  final int weeksParticipated;
+  final int topThreeFinishes;
+  final int diamondWeeks;
+  final LeagueWeekResult? lastResult;
+  final bool unseen;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'tier': tier,
+        'stage': stage,
+        'weeksParticipated': weeksParticipated,
+        'topThreeFinishes': topThreeFinishes,
+        'diamondWeeks': diamondWeeks,
+        'lastResult': lastResult?.toJson(),
+        'unseen': unseen,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/LeagueResultSeenRequest`.
+final class LeagueResultSeenRequest {
+  const LeagueResultSeenRequest({
+    required this.weekId,
+  });
+
+  /// Validates [json] against the `LeagueResultSeenRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory LeagueResultSeenRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('LeagueResultSeenRequest', json);
+    return LeagueResultSeenRequest._decode(json);
+  }
+
+  static LeagueResultSeenRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return LeagueResultSeenRequest(
+      weekId: map['weekId'] as String,
+    );
+  }
+
+  final String weekId;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'weekId': weekId,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Entitlement`.
+final class Entitlement {
+  const Entitlement({
+    required this.plan,
+    required this.source,
+    required this.status,
+    required this.expiresAt,
+    required this.autoRenew,
+    required this.familyGroupId,
+    required this.unlimitedEnergy,
+    required this.adFree,
+    required this.conversations,
+    required this.revision,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `Entitlement` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Entitlement.fromJson(Object? json) {
+    ContractValidator.instance.check('Entitlement', json);
+    return Entitlement._decode(json);
+  }
+
+  static Entitlement _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Entitlement(
+      plan: map['plan'] as String,
+      source: map['source'] as String,
+      status: map['status'] as String,
+      expiresAt: map['expiresAt'] == null ? null : map['expiresAt'] as String,
+      autoRenew: map['autoRenew'] as bool,
+      familyGroupId: map['familyGroupId'] == null ? null : map['familyGroupId'] as String,
+      unlimitedEnergy: map['unlimitedEnergy'] as bool,
+      adFree: map['adFree'] as bool,
+      conversations: map['conversations'] as bool,
+      revision: (map['revision'] as num).toInt(),
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final String plan;
+  final String source;
+  final String status;
+  final String? expiresAt;
+  final bool autoRenew;
+  final String? familyGroupId;
+  final bool unlimitedEnergy;
+  final bool adFree;
+  final bool conversations;
+  final int revision;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'plan': plan,
+        'source': source,
+        'status': status,
+        'expiresAt': expiresAt,
+        'autoRenew': autoRenew,
+        'familyGroupId': familyGroupId,
+        'unlimitedEnergy': unlimitedEnergy,
+        'adFree': adFree,
+        'conversations': conversations,
+        'revision': revision,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/PurchaseRequest`.
+final class PurchaseRequest {
+  const PurchaseRequest({
+    required this.productId,
+    required this.kind,
+    required this.simulationOutcome,
+  });
+
+  /// Validates [json] against the `PurchaseRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory PurchaseRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('PurchaseRequest', json);
+    return PurchaseRequest._decode(json);
+  }
+
+  static PurchaseRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return PurchaseRequest(
+      productId: map['productId'] as String,
+      kind: map['kind'] as String,
+      simulationOutcome: map['simulationOutcome'] as String,
+    );
+  }
+
+  final String productId;
+  final String kind;
+  String get platform => 'SIMULATION';
+  final String simulationOutcome;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'productId': productId,
+        'kind': kind,
+        'platform': platform,
+        'simulationOutcome': simulationOutcome,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Purchase`.
+final class Purchase {
+  const Purchase({
+    required this.purchaseId,
+    required this.productId,
+    required this.kind,
+    required this.state,
+    required this.verifiedAt,
+    required this.gems,
+    required this.entitlement,
+  });
+
+  /// Validates [json] against the `Purchase` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Purchase.fromJson(Object? json) {
+    ContractValidator.instance.check('Purchase', json);
+    return Purchase._decode(json);
+  }
+
+  static Purchase _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Purchase(
+      purchaseId: map['purchaseId'] as String,
+      productId: map['productId'] as String,
+      kind: map['kind'] as String,
+      state: map['state'] as String,
+      verifiedAt: map['verifiedAt'] == null ? null : map['verifiedAt'] as String,
+      gems: map['gems'] == null ? null : (map['gems'] as num).toInt(),
+      entitlement: Entitlement._decode(map['entitlement']),
+    );
+  }
+
+  final String purchaseId;
+  final String productId;
+  final String kind;
+  String get platform => 'SIMULATION';
+  final String state;
+  final String? verifiedAt;
+  final int? gems;
+  final Entitlement entitlement;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'purchaseId': purchaseId,
+        'productId': productId,
+        'kind': kind,
+        'platform': platform,
+        'state': state,
+        'verifiedAt': verifiedAt,
+        'gems': gems,
+        'entitlement': entitlement.toJson(),
+      };
+}
+
+/// Wire DTO for `#/components/schemas/BillingNotification`.
+final class BillingNotification {
+  const BillingNotification({
+    required this.notificationId,
+    required this.purchaseId,
+    required this.state,
+    required this.occurredAt,
+  });
+
+  /// Validates [json] against the `BillingNotification` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory BillingNotification.fromJson(Object? json) {
+    ContractValidator.instance.check('BillingNotification', json);
+    return BillingNotification._decode(json);
+  }
+
+  static BillingNotification _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return BillingNotification(
+      notificationId: map['notificationId'] as String,
+      purchaseId: map['purchaseId'] as String,
+      state: map['state'] as String,
+      occurredAt: map['occurredAt'] as String,
+    );
+  }
+
+  final String notificationId;
+  final String purchaseId;
+  String get platform => 'SIMULATION';
+  final String state;
+  final String occurredAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'notificationId': notificationId,
+        'purchaseId': purchaseId,
+        'platform': platform,
+        'state': state,
+        'occurredAt': occurredAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FamilyMember`.
+final class FamilyMember {
+  const FamilyMember({
+    required this.userId,
+    required this.nickname,
+    required this.role,
+    required this.joinedAt,
+  });
+
+  /// Validates [json] against the `FamilyMember` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FamilyMember.fromJson(Object? json) {
+    ContractValidator.instance.check('FamilyMember', json);
+    return FamilyMember._decode(json);
+  }
+
+  static FamilyMember _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FamilyMember(
+      userId: map['userId'] as String,
+      nickname: map['nickname'] as String,
+      role: map['role'] as String,
+      joinedAt: map['joinedAt'] as String,
+    );
+  }
+
+  final String userId;
+  final String nickname;
+  final String role;
+  final String joinedAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'userId': userId,
+        'nickname': nickname,
+        'role': role,
+        'joinedAt': joinedAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FamilyGroup`.
+final class FamilyGroup {
+  const FamilyGroup({
+    required this.groupId,
+    required this.ownerUserId,
+    required this.plan,
+    required this.status,
+    required this.members,
+    required this.inviteCode,
+    required this.revision,
+  });
+
+  /// Validates [json] against the `FamilyGroup` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FamilyGroup.fromJson(Object? json) {
+    ContractValidator.instance.check('FamilyGroup', json);
+    return FamilyGroup._decode(json);
+  }
+
+  static FamilyGroup _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FamilyGroup(
+      groupId: map['groupId'] as String,
+      ownerUserId: map['ownerUserId'] as String,
+      plan: map['plan'] as String,
+      status: map['status'] as String,
+      members: List<FamilyMember>.unmodifiable((map['members'] as List<Object?>).map((Object? x) => FamilyMember._decode(x))),
+      inviteCode: map['inviteCode'] == null ? null : map['inviteCode'] as String,
+      revision: (map['revision'] as num).toInt(),
+    );
+  }
+
+  final String groupId;
+  final String ownerUserId;
+  final String plan;
+  final String status;
+  final List<FamilyMember> members;
+  final String? inviteCode;
+  final int revision;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'groupId': groupId,
+        'ownerUserId': ownerUserId,
+        'plan': plan,
+        'status': status,
+        'members': members.map((FamilyMember x) => x.toJson()).toList(),
+        'inviteCode': inviteCode,
+        'revision': revision,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FamilyCreateRequest`.
+final class FamilyCreateRequest {
+  const FamilyCreateRequest({
+    required this.plan,
+  });
+
+  /// Validates [json] against the `FamilyCreateRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FamilyCreateRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('FamilyCreateRequest', json);
+    return FamilyCreateRequest._decode(json);
+  }
+
+  static FamilyCreateRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FamilyCreateRequest(
+      plan: map['plan'] as String,
+    );
+  }
+
+  final String plan;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'plan': plan,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/FamilyJoinRequest`.
+final class FamilyJoinRequest {
+  const FamilyJoinRequest({
+    required this.inviteCode,
+  });
+
+  /// Validates [json] against the `FamilyJoinRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory FamilyJoinRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('FamilyJoinRequest', json);
+    return FamilyJoinRequest._decode(json);
+  }
+
+  static FamilyJoinRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return FamilyJoinRequest(
+      inviteCode: map['inviteCode'] as String,
+    );
+  }
+
+  final String inviteCode;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'inviteCode': inviteCode,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/GiftRequest`.
+final class GiftRequest {
+  const GiftRequest({
+    required this.recipientUserId,
+    required this.plan,
+    required this.durationDays,
+    required this.note,
+    required this.simulationOutcome,
+  });
+
+  /// Validates [json] against the `GiftRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory GiftRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('GiftRequest', json);
+    return GiftRequest._decode(json);
+  }
+
+  static GiftRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return GiftRequest(
+      recipientUserId: map['recipientUserId'] as String,
+      plan: map['plan'] as String,
+      durationDays: (map['durationDays'] as num).toInt(),
+      note: map['note'] == null ? null : map['note'] as String,
+      simulationOutcome: map['simulationOutcome'] as String,
+    );
+  }
+
+  final String recipientUserId;
+  final String plan;
+  final int durationDays;
+  final String? note;
+  final String simulationOutcome;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'recipientUserId': recipientUserId,
+        'plan': plan,
+        'durationDays': durationDays,
+        'note': note,
+        'simulationOutcome': simulationOutcome,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Gift`.
+final class Gift {
+  const Gift({
+    required this.giftId,
+    required this.senderId,
+    required this.recipientId,
+    required this.plan,
+    required this.durationDays,
+    required this.note,
+    required this.status,
+    required this.deliveredAt,
+  });
+
+  /// Validates [json] against the `Gift` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Gift.fromJson(Object? json) {
+    ContractValidator.instance.check('Gift', json);
+    return Gift._decode(json);
+  }
+
+  static Gift _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Gift(
+      giftId: map['giftId'] as String,
+      senderId: map['senderId'] as String,
+      recipientId: map['recipientId'] as String,
+      plan: map['plan'] as String,
+      durationDays: (map['durationDays'] as num).toInt(),
+      note: map['note'] == null ? null : map['note'] as String,
+      status: map['status'] as String,
+      deliveredAt: map['deliveredAt'] == null ? null : map['deliveredAt'] as String,
+    );
+  }
+
+  final String giftId;
+  final String senderId;
+  final String recipientId;
+  final String plan;
+  final int durationDays;
+  final String? note;
+  final String status;
+  final String? deliveredAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'giftId': giftId,
+        'senderId': senderId,
+        'recipientId': recipientId,
+        'plan': plan,
+        'durationDays': durationDays,
+        'note': note,
+        'status': status,
+        'deliveredAt': deliveredAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Referral`.
+final class Referral {
+  const Referral({
+    required this.code,
+    required this.accepted,
+    required this.qualified,
+    required this.rewarded,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `Referral` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Referral.fromJson(Object? json) {
+    ContractValidator.instance.check('Referral', json);
+    return Referral._decode(json);
+  }
+
+  static Referral _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Referral(
+      code: map['code'] as String,
+      accepted: (map['accepted'] as num).toInt(),
+      qualified: (map['qualified'] as num).toInt(),
+      rewarded: (map['rewarded'] as num).toInt(),
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final String code;
+  final int accepted;
+  final int qualified;
+  final int rewarded;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'code': code,
+        'accepted': accepted,
+        'qualified': qualified,
+        'rewarded': rewarded,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ReferralRedeemRequest`.
+final class ReferralRedeemRequest {
+  const ReferralRedeemRequest({
+    required this.code,
+  });
+
+  /// Validates [json] against the `ReferralRedeemRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ReferralRedeemRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('ReferralRedeemRequest', json);
+    return ReferralRedeemRequest._decode(json);
+  }
+
+  static ReferralRedeemRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ReferralRedeemRequest(
+      code: map['code'] as String,
+    );
+  }
+
+  final String code;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'code': code,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/PromoRedeemRequest`.
+final class PromoRedeemRequest {
+  const PromoRedeemRequest({
+    required this.code,
+  });
+
+  /// Validates [json] against the `PromoRedeemRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory PromoRedeemRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('PromoRedeemRequest', json);
+    return PromoRedeemRequest._decode(json);
+  }
+
+  static PromoRedeemRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return PromoRedeemRequest(
+      code: map['code'] as String,
+    );
+  }
+
+  final String code;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'code': code,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/PromoRedemption`.
+final class PromoRedemption {
+  const PromoRedemption({
+    required this.redemptionId,
+    required this.promoId,
+    required this.rewardType,
+    required this.superDays,
+    required this.gems,
+    required this.itemId,
+    required this.itemQuantity,
+    required this.entitlement,
+    required this.redeemedAt,
+  });
+
+  /// Validates [json] against the `PromoRedemption` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory PromoRedemption.fromJson(Object? json) {
+    ContractValidator.instance.check('PromoRedemption', json);
+    return PromoRedemption._decode(json);
+  }
+
+  static PromoRedemption _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return PromoRedemption(
+      redemptionId: map['redemptionId'] as String,
+      promoId: map['promoId'] as String,
+      rewardType: map['rewardType'] as String,
+      superDays: map['superDays'] == null ? null : (map['superDays'] as num).toInt(),
+      gems: map['gems'] == null ? null : (map['gems'] as num).toInt(),
+      itemId: map['itemId'] == null ? null : map['itemId'] as String,
+      itemQuantity: map['itemQuantity'] == null ? null : (map['itemQuantity'] as num).toInt(),
+      entitlement: map['entitlement'] == null ? null : Entitlement._decode(map['entitlement']),
+      redeemedAt: map['redeemedAt'] as String,
+    );
+  }
+
+  final String redemptionId;
+  final String promoId;
+  final String rewardType;
+  final int? superDays;
+  final int? gems;
+  final String? itemId;
+  final int? itemQuantity;
+  final Entitlement? entitlement;
+  final String redeemedAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'redemptionId': redemptionId,
+        'promoId': promoId,
+        'rewardType': rewardType,
+        'superDays': superDays,
+        'gems': gems,
+        'itemId': itemId,
+        'itemQuantity': itemQuantity,
+        'entitlement': entitlement?.toJson(),
+        'redeemedAt': redeemedAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/AdEventRequest`.
+final class AdEventRequest {
+  const AdEventRequest({
+    required this.adEventId,
+    required this.placement,
+    required this.kind,
+  });
+
+  /// Validates [json] against the `AdEventRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory AdEventRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('AdEventRequest', json);
+    return AdEventRequest._decode(json);
+  }
+
+  static AdEventRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return AdEventRequest(
+      adEventId: map['adEventId'] as String,
+      placement: map['placement'] as String,
+      kind: map['kind'] as String,
+    );
+  }
+
+  final String adEventId;
+  final String placement;
+  final String kind;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'adEventId': adEventId,
+        'placement': placement,
+        'kind': kind,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/AdEvent`.
+final class AdEvent {
+  const AdEvent({
+    required this.adEventId,
+    required this.placement,
+    required this.kind,
+    required this.learningDay,
+    required this.dailyIndex,
+    required this.remainingToday,
+    required this.rewardGems,
+    required this.rewardEnergy,
+    required this.gems,
+    required this.energyGrantPending,
+  });
+
+  /// Validates [json] against the `AdEvent` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory AdEvent.fromJson(Object? json) {
+    ContractValidator.instance.check('AdEvent', json);
+    return AdEvent._decode(json);
+  }
+
+  static AdEvent _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return AdEvent(
+      adEventId: map['adEventId'] as String,
+      placement: map['placement'] as String,
+      kind: map['kind'] as String,
+      learningDay: map['learningDay'] as String,
+      dailyIndex: (map['dailyIndex'] as num).toInt(),
+      remainingToday: (map['remainingToday'] as num).toInt(),
+      rewardGems: (map['rewardGems'] as num).toInt(),
+      rewardEnergy: (map['rewardEnergy'] as num).toInt(),
+      gems: (map['gems'] as num).toInt(),
+      energyGrantPending: map['energyGrantPending'] as bool,
+    );
+  }
+
+  final String adEventId;
+  final String placement;
+  final String kind;
+  final String learningDay;
+  final int dailyIndex;
+  final int remainingToday;
+  final int rewardGems;
+  final int rewardEnergy;
+  final int gems;
+  final bool energyGrantPending;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'adEventId': adEventId,
+        'placement': placement,
+        'kind': kind,
+        'learningDay': learningDay,
+        'dailyIndex': dailyIndex,
+        'remainingToday': remainingToday,
+        'rewardGems': rewardGems,
+        'rewardEnergy': rewardEnergy,
+        'gems': gems,
+        'energyGrantPending': energyGrantPending,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ConversationFeedback`.
+final class ConversationFeedback {
+  const ConversationFeedback({
+    required this.summary,
+    required this.strengths,
+    required this.improvements,
+    required this.usedWords,
+  });
+
+  /// Validates [json] against the `ConversationFeedback` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ConversationFeedback.fromJson(Object? json) {
+    ContractValidator.instance.check('ConversationFeedback', json);
+    return ConversationFeedback._decode(json);
+  }
+
+  static ConversationFeedback _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ConversationFeedback(
+      summary: map['summary'] as String,
+      strengths: List<String>.unmodifiable((map['strengths'] as List<Object?>).map((Object? x) => x as String)),
+      improvements: List<String>.unmodifiable((map['improvements'] as List<Object?>).map((Object? x) => x as String)),
+      usedWords: List<String>.unmodifiable((map['usedWords'] as List<Object?>).map((Object? x) => x as String)),
+    );
+  }
+
+  final String summary;
+  final List<String> strengths;
+  final List<String> improvements;
+  final List<String> usedWords;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'summary': summary,
+        'strengths': List<Object?>.of(strengths),
+        'improvements': List<Object?>.of(improvements),
+        'usedWords': List<Object?>.of(usedWords),
+      };
+}
+
+/// Wire DTO for `#/components/schemas/Conversation`.
+final class Conversation {
+  const Conversation({
+    required this.conversationId,
+    required this.kind,
+    required this.courseId,
+    required this.scenarioId,
+    required this.voiceSessionId,
+    required this.status,
+    required this.startedAt,
+    required this.completedAt,
+    required this.turnCount,
+    required this.wordsUsed,
+    required this.stars,
+    required this.xpAwarded,
+    required this.feedback,
+    required this.expiresAt,
+  });
+
+  /// Validates [json] against the `Conversation` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory Conversation.fromJson(Object? json) {
+    ContractValidator.instance.check('Conversation', json);
+    return Conversation._decode(json);
+  }
+
+  static Conversation _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return Conversation(
+      conversationId: map['conversationId'] as String,
+      kind: map['kind'] as String,
+      courseId: map['courseId'] as String,
+      scenarioId: map['scenarioId'] as String,
+      voiceSessionId: map['voiceSessionId'] == null ? null : map['voiceSessionId'] as String,
+      status: map['status'] as String,
+      startedAt: map['startedAt'] as String,
+      completedAt: map['completedAt'] == null ? null : map['completedAt'] as String,
+      turnCount: (map['turnCount'] as num).toInt(),
+      wordsUsed: (map['wordsUsed'] as num).toInt(),
+      stars: (map['stars'] as num).toInt(),
+      xpAwarded: (map['xpAwarded'] as num).toInt(),
+      feedback: map['feedback'] == null ? null : ConversationFeedback._decode(map['feedback']),
+      expiresAt: map['expiresAt'] as String,
+    );
+  }
+
+  final String conversationId;
+  final String kind;
+  final String courseId;
+  final String scenarioId;
+  final String? voiceSessionId;
+  final String status;
+  final String startedAt;
+  final String? completedAt;
+  final int turnCount;
+  final int wordsUsed;
+  final int stars;
+  final int xpAwarded;
+  final ConversationFeedback? feedback;
+  final String expiresAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'conversationId': conversationId,
+        'kind': kind,
+        'courseId': courseId,
+        'scenarioId': scenarioId,
+        'voiceSessionId': voiceSessionId,
+        'status': status,
+        'startedAt': startedAt,
+        'completedAt': completedAt,
+        'turnCount': turnCount,
+        'wordsUsed': wordsUsed,
+        'stars': stars,
+        'xpAwarded': xpAwarded,
+        'feedback': feedback?.toJson(),
+        'expiresAt': expiresAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ConversationPage`.
+final class ConversationPage {
+  const ConversationPage({
+    required this.items,
+    required this.nextCursor,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `ConversationPage` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ConversationPage.fromJson(Object? json) {
+    ContractValidator.instance.check('ConversationPage', json);
+    return ConversationPage._decode(json);
+  }
+
+  static ConversationPage _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ConversationPage(
+      items: List<Conversation>.unmodifiable((map['items'] as List<Object?>).map((Object? x) => Conversation._decode(x))),
+      nextCursor: map['nextCursor'] == null ? null : map['nextCursor'] as String,
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final List<Conversation> items;
+  final String? nextCursor;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'items': items.map((Conversation x) => x.toJson()).toList(),
+        'nextCursor': nextCursor,
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ConversationStartRequest`.
+final class ConversationStartRequest {
+  const ConversationStartRequest({
+    required this.kind,
+    required this.courseId,
+    required this.scenarioId,
+    required this.voiceSessionId,
+  });
+
+  /// Validates [json] against the `ConversationStartRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ConversationStartRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('ConversationStartRequest', json);
+    return ConversationStartRequest._decode(json);
+  }
+
+  static ConversationStartRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ConversationStartRequest(
+      kind: map['kind'] as String,
+      courseId: map['courseId'] as String,
+      scenarioId: map['scenarioId'] as String,
+      voiceSessionId: map['voiceSessionId'] == null ? null : map['voiceSessionId'] as String,
+    );
+  }
+
+  final String kind;
+  final String courseId;
+  final String scenarioId;
+  final String? voiceSessionId;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'kind': kind,
+        'courseId': courseId,
+        'scenarioId': scenarioId,
+        'voiceSessionId': voiceSessionId,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ConversationCompleteRequest`.
+final class ConversationCompleteRequest {
+  const ConversationCompleteRequest({
+    required this.endReason,
+  });
+
+  /// Validates [json] against the `ConversationCompleteRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ConversationCompleteRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('ConversationCompleteRequest', json);
+    return ConversationCompleteRequest._decode(json);
+  }
+
+  static ConversationCompleteRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ConversationCompleteRequest(
+      endReason: map['endReason'] as String,
+    );
+  }
+
+  final String endReason;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'endReason': endReason,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/AiPracticeEventPayload`.
+final class AiPracticeEventPayload {
+  const AiPracticeEventPayload({
+    required this.completionId,
+    required this.userId,
+    required this.kind,
+    required this.courseId,
+    required this.scenarioId,
+    required this.xp,
+    required this.wordsUsed,
+    required this.stars,
+  });
+
+  /// Validates [json] against the `AiPracticeEventPayload` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory AiPracticeEventPayload.fromJson(Object? json) {
+    ContractValidator.instance.check('AiPracticeEventPayload', json);
+    return AiPracticeEventPayload._decode(json);
+  }
+
+  static AiPracticeEventPayload _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return AiPracticeEventPayload(
+      completionId: map['completionId'] as String,
+      userId: map['userId'] as String,
+      kind: map['kind'] as String,
+      courseId: map['courseId'] as String,
+      scenarioId: map['scenarioId'] as String,
+      xp: (map['xp'] as num).toInt(),
+      wordsUsed: (map['wordsUsed'] as num).toInt(),
+      stars: (map['stars'] as num).toInt(),
+    );
+  }
+
+  final String completionId;
+  final String userId;
+  final String kind;
+  final String courseId;
+  final String scenarioId;
+  final int xp;
+  final int wordsUsed;
+  final int stars;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'completionId': completionId,
+        'userId': userId,
+        'kind': kind,
+        'courseId': courseId,
+        'scenarioId': scenarioId,
+        'xp': xp,
+        'wordsUsed': wordsUsed,
+        'stars': stars,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/EntitlementEventPayload`.
+final class EntitlementEventPayload {
+  const EntitlementEventPayload({
+    required this.userId,
+    required this.plan,
+    required this.status,
+    required this.expiresAt,
+    required this.entitlementRevision,
+  });
+
+  /// Validates [json] against the `EntitlementEventPayload` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory EntitlementEventPayload.fromJson(Object? json) {
+    ContractValidator.instance.check('EntitlementEventPayload', json);
+    return EntitlementEventPayload._decode(json);
+  }
+
+  static EntitlementEventPayload _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return EntitlementEventPayload(
+      userId: map['userId'] as String,
+      plan: map['plan'] as String,
+      status: map['status'] as String,
+      expiresAt: map['expiresAt'] == null ? null : map['expiresAt'] as String,
+      entitlementRevision: (map['entitlementRevision'] as num).toInt(),
+    );
+  }
+
+  final String userId;
+  final String plan;
+  final String status;
+  final String? expiresAt;
+  final int entitlementRevision;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'userId': userId,
+        'plan': plan,
+        'status': status,
+        'expiresAt': expiresAt,
+        'entitlementRevision': entitlementRevision,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/EnergyGrantedEventPayload`.
+final class EnergyGrantedEventPayload {
+  const EnergyGrantedEventPayload({
+    required this.operationId,
+    required this.userId,
+    required this.amount,
+    required this.refillToCapacity,
+    required this.reason,
+  });
+
+  /// Validates [json] against the `EnergyGrantedEventPayload` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory EnergyGrantedEventPayload.fromJson(Object? json) {
+    ContractValidator.instance.check('EnergyGrantedEventPayload', json);
+    return EnergyGrantedEventPayload._decode(json);
+  }
+
+  static EnergyGrantedEventPayload _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return EnergyGrantedEventPayload(
+      operationId: map['operationId'] as String,
+      userId: map['userId'] as String,
+      amount: map['amount'] == null ? null : (map['amount'] as num).toInt(),
+      refillToCapacity: map['refillToCapacity'] as bool,
+      reason: map['reason'] as String,
+    );
+  }
+
+  final String operationId;
+  final String userId;
+  final int? amount;
+  final bool refillToCapacity;
+  final String reason;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'operationId': operationId,
+        'userId': userId,
+        'amount': amount,
+        'refillToCapacity': refillToCapacity,
+        'reason': reason,
+      };
+}
+
 /// Decoders for every `#/components/schemas` entry, keyed by schema name.
 const Map<String, Object Function(Object?)> apiContractDecoders =
     <String, Object Function(Object?)>{
@@ -4740,4 +7364,61 @@ const Map<String, Object Function(Object?)> apiContractDecoders =
   'QuestPage': QuestPage.fromJson,
   'ProfilePage': ProfilePage.fromJson,
   'ActivityPage': ActivityPage.fromJson,
+  'Energy': Energy.fromJson,
+  'EnrollmentCommandRequest': EnrollmentCommandRequest.fromJson,
+  'Mistake': Mistake.fromJson,
+  'MistakePage': MistakePage.fromJson,
+  'Word': Word.fromJson,
+  'WordPage': WordPage.fromJson,
+  'ActivityProgress': ActivityProgress.fromJson,
+  'ActivityProgressPage': ActivityProgressPage.fromJson,
+  'Preferences': Preferences.fromJson,
+  'PreferencesPatch': PreferencesPatch.fromJson,
+  'FeedbackRequest': FeedbackRequest.fromJson,
+  'InventoryItem': InventoryItem.fromJson,
+  'ShopItem': ShopItem.fromJson,
+  'Shop': Shop.fromJson,
+  'ShopPurchaseRequest': ShopPurchaseRequest.fromJson,
+  'ShopPurchase': ShopPurchase.fromJson,
+  'BoostRequest': BoostRequest.fromJson,
+  'Boost': Boost.fromJson,
+  'StreakRepairRequest': StreakRepairRequest.fromJson,
+  'FriendStreak': FriendStreak.fromJson,
+  'FriendStreakPage': FriendStreakPage.fromJson,
+  'FriendStreakInviteRequest': FriendStreakInviteRequest.fromJson,
+  'FriendStreakResponseRequest': FriendStreakResponseRequest.fromJson,
+  'InteractionRequest': InteractionRequest.fromJson,
+  'Interaction': Interaction.fromJson,
+  'BlockRequest': BlockRequest.fromJson,
+  'UserReportRequest': UserReportRequest.fromJson,
+  'ClassroomJoinRequest': ClassroomJoinRequest.fromJson,
+  'ClassroomMembership': ClassroomMembership.fromJson,
+  'YearReview': YearReview.fromJson,
+  'LeagueWeekResult': LeagueWeekResult.fromJson,
+  'LeagueResult': LeagueResult.fromJson,
+  'LeagueResultSeenRequest': LeagueResultSeenRequest.fromJson,
+  'Entitlement': Entitlement.fromJson,
+  'PurchaseRequest': PurchaseRequest.fromJson,
+  'Purchase': Purchase.fromJson,
+  'BillingNotification': BillingNotification.fromJson,
+  'FamilyMember': FamilyMember.fromJson,
+  'FamilyGroup': FamilyGroup.fromJson,
+  'FamilyCreateRequest': FamilyCreateRequest.fromJson,
+  'FamilyJoinRequest': FamilyJoinRequest.fromJson,
+  'GiftRequest': GiftRequest.fromJson,
+  'Gift': Gift.fromJson,
+  'Referral': Referral.fromJson,
+  'ReferralRedeemRequest': ReferralRedeemRequest.fromJson,
+  'PromoRedeemRequest': PromoRedeemRequest.fromJson,
+  'PromoRedemption': PromoRedemption.fromJson,
+  'AdEventRequest': AdEventRequest.fromJson,
+  'AdEvent': AdEvent.fromJson,
+  'ConversationFeedback': ConversationFeedback.fromJson,
+  'Conversation': Conversation.fromJson,
+  'ConversationPage': ConversationPage.fromJson,
+  'ConversationStartRequest': ConversationStartRequest.fromJson,
+  'ConversationCompleteRequest': ConversationCompleteRequest.fromJson,
+  'AiPracticeEventPayload': AiPracticeEventPayload.fromJson,
+  'EntitlementEventPayload': EntitlementEventPayload.fromJson,
+  'EnergyGrantedEventPayload': EnergyGrantedEventPayload.fromJson,
 };

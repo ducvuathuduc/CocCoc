@@ -26,7 +26,21 @@ Error envelope:
 | 504 | DEADLINE_EXCEEDED | same-key receipt lookup/retry; never assume uncommitted |
 | 500 | INTERNAL_ERROR | redacted message; request ID; no leaked SQL/provider response |
 
-IDEMPOTENCY_REPLAY (EDGE_CASE_MATRIX EC07) is a telemetry outcome for a same-key/same-body replay that returns the original receipt with its original 2xx status; it is never an error code. Proposed codes for the [proposed endpoints](API_ENDPOINT_MATRIX.md#proposed-endpoints-not-yet-in-openapi), added to this table only with their OpenAPI operations: ENERGY_DEPLETED (409), ENTITLEMENT_REQUIRED (403), USER_BLOCKED (403), FRIEND_STREAK_LIMIT (409), ITEM_UNAVAILABLE (409), STREAK_REPAIR_EXPIRED (409), PURCHASE_PENDING (409), CLASSROOM_CODE_INVALID (404).
+IDEMPOTENCY_REPLAY (EDGE_CASE_MATRIX EC07) is a telemetry outcome for a same-key/same-body replay that returns the original receipt with its original 2xx status; it is never an error code. Codes of the endpoints promoted on 2026-10-12 (pb/contract2) are wire contract in [OpenAPI](openapi.yaml). They join the HTTP table above, and `services/shared` `errors.ts`, when the owner tasks implement their handlers; until then a hosted route answers SERVICE_NOT_CONFIGURED.
+
+| Code | HTTP | Operations | Behavior |
+|---|---|---|---|
+| ENERGY_DEPLETED | 409 | startSession/submitAnswer under LIMITED energy | offer free mistakes review, refill or wait; never blocks UNLIMITED learning |
+| ENTITLEMENT_REQUIRED | 403 | startConversation, createFamily | plan from p_entitlements projection only; show plan screen, no retry |
+| USER_BLOCKED | 403 | inviteFriendStreak, sendInteraction, sendGift, followUser | block in either direction; generic unavailable message |
+| FRIEND_STREAK_LIMIT | 409 | inviteFriendStreak, respondFriendStreak | 5 PENDING+ACTIVE per user |
+| ITEM_UNAVAILABLE | 409 | buyItem, activateBoost, repairStreak, sendInteraction | item not in catalogVersion, not owned, or maxOwned reached; refetch shop |
+| STREAK_REPAIR_EXPIRED | 409 | repairStreak | offer window closed or lostStreakDay mismatch |
+| PURCHASE_PENDING | 409 | verifyPurchase, sendGift | mock purchase still PENDING; FREE stays available |
+| CLASSROOM_CODE_INVALID | 404 | joinClassroom | unknown/archived code, same response for both |
+| PROMO_ALREADY_REDEEMED | 409 | redeemPromoCode | new key for a code this user already redeemed; same-key replay returns the stored receipt; unknown/expired/exhausted codes stay NOT_FOUND |
+| AD_NOT_ELIGIBLE | 403 | recordAdEvent | SUPER/MAX (ACTIVE/GRACE) users never see ads |
+| AD_DAILY_CAP | 409 | recordAdEvent | no free dailyIndex under the configured cap for this placement/kind/day |
 
 Client-only codes NETWORK_TIMEOUT, CACHE_CORRUPT, JOURNAL_CORRUPT, MIC_PERMISSION_DENIED, MIC_UNAVAILABLE, SPEECH_NO_INPUT, AUDIO_INTERRUPTED, AUDIO_PLAYBACK_FAILED, VOICE_DISCONNECTED, VOICE_STALE_EVENT, AI_INVALID_OUTPUT, SYNC_REJECTED map to [edge cases](../product/EDGE_CASE_MATRIX.md); never returned as fictional vendor error codes.
 
@@ -48,7 +62,7 @@ Assessment acceptance atomically reserves validated WAV duration in recorded-spe
 {"eventId":"uuid","type":"lesson.completed.v1","schemaVersion":1,"producer":"learning","aggregateId":"session-id","occurredAt":"2026-10-03T10:00:00Z","requestId":"uuid","payload":{"completionId":"session-id","userId":"user-id","courseId":"vi_en","lessonVersion":"v1","rewardIdentity":"lesson-1","source":"ONLINE","mode":"LESSON","originalCount":10,"originalCorrect":9,"assisted":false}}
 ~~~
 
-Events: lesson.completed.v1 (Learning→Progress); account.deleted.v1 (Progress→Learning/AI); account.purged.v1 (owner acknowledgement→Progress); zone.changed.v1 (Progress operational notification, not a reason to rewrite old Learning data). Proposed with the data-gap expansion (schemas join OpenAPI shared components before any producer ships): ai.practice.completed.v1 (AI→Progress; conversationId as completionId, kind ROLEPLAY/VIDEO_CALL, xp, wordsUsed); entitlement.changed.v1 (Progress→Learning/AI; userId, plan, status, expiresAt, entitlement revision; consumers keep only the newest revision); energy.granted.v1 (Progress→Learning; operationId, amount or refill-to-capacity, reason SHOP/CHEST/FRIEND/QUEST). lesson.completed.v1 mode gains the reserved session modes listed in DATA_MODEL l_sessions. Payload user IDs come only from trusted owner records. No raw audio/transcript/password/email. Consumers validate event type/version/producer/ranges. Unknown version dead-letters and alerts; never partially applies.
+Events: lesson.completed.v1 (Learning→Progress); account.deleted.v1 (Progress→Learning/AI); account.purged.v1 (owner acknowledgement→Progress); zone.changed.v1 (Progress operational notification, not a reason to rewrite old Learning data). Added to the OpenAPI BusinessEvent union on 2026-10-12 (producers ship with their owner tasks): ai.practice.completed.v1 (AI→Progress; conversationId as completionId, kind ROLEPLAY/VIDEO_CALL, xp, wordsUsed); entitlement.changed.v1 (Progress→Learning/AI; userId, plan, status, expiresAt, entitlement revision; consumers keep only the newest revision); energy.granted.v1 (Progress→Learning; operationId, amount or refill-to-capacity, reason SHOP/CHEST/FRIEND/QUEST/AD/PROMO). lesson.completed.v1 mode gains the reserved session modes listed in DATA_MODEL l_sessions. Payload user IDs come only from trusted owner records. No raw audio/transcript/password/email. Consumers validate event type/version/producer/ranges. Unknown version dead-letters and alerts; never partially applies.
 
 Learning completion and outbox insert commit atomically. Worker leases≤20due rows with optimistic transaction, lease30s, delivers sequentially within deadline, checkpoints ack. If lease expires another worker may redeliver. Consumer creates inbox and all domain effects in one transaction. Duplicate event with same hash returns accepted/replayed; changed payload hash is409 security error. No claim of exactly-once network delivery; exactly-once **effects** come from dedupe and transactions.
 

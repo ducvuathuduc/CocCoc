@@ -4263,6 +4263,4206 @@
           }
         }
       }
+    },
+    "/v1/me/energy": {
+      "get": {
+        "operationId": "getEnergy",
+        "summary": "Energy battery with lazy regeneration; UNLIMITED under default energyMode or SUPER/MAX projection.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Energy battery with lazy regeneration; UNLIMITED under default energyMode or SUPER/MAX projection.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-GAME-005"
+        ],
+        "x-tables": [
+          "l_energy"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Energy"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/enrollments/{courseId}/activate": {
+      "post": {
+        "operationId": "switchCourse",
+        "summary": "Make an enrolled, non-removed course the single active course; flips both rows in one transaction.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Make an enrolled, non-removed course the single active course; flips both rows in one transaction.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-COURSE-002"
+        ],
+        "x-tables": [
+          "l_enrollments",
+          "l_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Enrollment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentCommandRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/enrollments/{courseId}/reset": {
+      "post": {
+        "operationId": "resetCourse",
+        "summary": "Reset course progress in place (frontier and lesson JSON cleared); first rewards stay with Progress.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Reset course progress in place (frontier and lesson JSON cleared); first rewards stay with Progress.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-COURSE-002"
+        ],
+        "x-tables": [
+          "l_enrollments",
+          "l_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Enrollment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentCommandRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/enrollments/{courseId}": {
+      "delete": {
+        "operationId": "removeCourse",
+        "summary": "Hide a course (removedAt) while keeping history; the last active course cannot be removed (409).",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Hide a course (removedAt) while keeping history; the last active course cannot be removed (409).",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-COURSE-002"
+        ],
+        "x-tables": [
+          "l_enrollments",
+          "l_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/mistakes": {
+      "get": {
+        "operationId": "listMistakes",
+        "summary": "Practice Hub Mistakes: unresolved first, newest mistake first; max100 unresolved per course.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Practice Hub Mistakes: unresolved first, newest mistake first; max100 unresolved per course.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-PRACTICE-002"
+        ],
+        "x-tables": [
+          "l_mistakes"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "name": "includeResolved",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MistakePage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/words": {
+      "get": {
+        "operationId": "listWords",
+        "summary": "Practice Hub Words from review items; term text joined from the published lexicon.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Practice Hub Words from review items; term text joined from the published lexicon.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-PRACTICE-002"
+        ],
+        "x-tables": [
+          "l_review_items"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "RECENT",
+                "ALPHABETICAL"
+              ],
+              "default": "RECENT"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WordPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/activities": {
+      "get": {
+        "operationId": "listActivityProgress",
+        "summary": "Library progress for Stories, Adventures, DuoRadio, side quests, Clash and unit reviews.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Library progress for Stories, Adventures, DuoRadio, side quests, Clash and unit reviews.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-PRACTICE-001"
+        ],
+        "x-tables": [
+          "l_activity_progress"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "STORY",
+                "ADVENTURE",
+                "RADIO",
+                "SIDE_QUEST",
+                "CLASH",
+                "UNIT_REVIEW"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityProgressPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/me/preferences": {
+      "get": {
+        "operationId": "getPreferences",
+        "summary": "Server-relevant settings; device-only choices stay on the device.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Server-relevant settings; device-only choices stay on the device.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_preferences"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updatePreferences",
+        "summary": "Partial update with expectedRevision; REVISION_CONFLICT returns current values.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Partial update with expectedRevision; REVISION_CONFLICT returns current values.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_preferences",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreferencesPatch"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/feedback": {
+      "post": {
+        "operationId": "sendFeedback",
+        "summary": "Settings feedback form; text only, no attachments.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Settings feedback form; text only, no attachments.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_feedback",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/shop": {
+      "get": {
+        "operationId": "listShop",
+        "summary": "Versioned shop catalog with owned quantities, wallet and freeze slots.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Versioned shop catalog with owned quantities, wallet and freeze slots.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-GAME-003"
+        ],
+        "x-tables": [
+          "p_inventory",
+          "p_rewards"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Shop"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/shop/purchases": {
+      "post": {
+        "operationId": "buyItem",
+        "summary": "Buy an item for gems once per key; energy refill also emits energy.granted.v1.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Buy an item for gems once per key; energy refill also emits energy.granted.v1.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-GAME-003"
+        ],
+        "x-tables": [
+          "p_inventory",
+          "p_item_ledger",
+          "p_reward_ledger",
+          "p_rewards",
+          "p_freeze_ledger",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopPurchase"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShopPurchaseRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/boosts": {
+      "post": {
+        "operationId": "activateBoost",
+        "summary": "Consume an owned boost item and open its window; reward consume applies it at server completion time.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Consume an owned boost item and open its window; reward consume applies it at server completion time.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-GAME-003"
+        ],
+        "x-tables": [
+          "p_inventory",
+          "p_item_ledger",
+          "p_boosts",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Boost"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoostRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/streak-repair": {
+      "post": {
+        "operationId": "repairStreak",
+        "summary": "Restore currentStreak from lostStreak inside the offer window, paid by gems or a repair item.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Restore currentStreak from lostStreak inside the offer window, paid by gems or a repair item.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-GAME-003"
+        ],
+        "x-tables": [
+          "p_rewards",
+          "p_reward_ledger",
+          "p_item_ledger",
+          "p_inventory",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rewards"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StreakRepairRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/friend-streaks": {
+      "get": {
+        "operationId": "listFriendStreaks",
+        "summary": "Pending and active friend streaks (max5 per user).",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Pending and active friend streaks (max5 per user).",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_friend_streaks",
+          "p_profiles"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendStreakPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      },
+      "post": {
+        "operationId": "inviteFriendStreak",
+        "summary": "Invite a mutual follower; blocked, CHILD or full (5) pairs rejected.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Invite a mutual follower; blocked, CHILD or full (5) pairs rejected.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_friend_streaks",
+          "p_follows",
+          "p_blocks",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendStreak"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendStreakInviteRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/friend-streaks/{pairId}/respond": {
+      "post": {
+        "operationId": "respondFriendStreak",
+        "summary": "Invitee accepts or declines a pending friend streak.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Invitee accepts or declines a pending friend streak.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_friend_streaks",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "pairId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendStreak"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendStreakResponseRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/interactions": {
+      "post": {
+        "operationId": "sendInteraction",
+        "summary": "Nudge/high-five/kudos/congrats/gift boost with a server message key, once per pair/kind/context/day.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Nudge/high-five/kudos/congrats/gift boost with a server message key, once per pair/kind/context/day.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_interactions",
+          "p_reward_ledger",
+          "p_rewards",
+          "p_boosts",
+          "p_blocks",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Interaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InteractionRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/blocks": {
+      "post": {
+        "operationId": "blockUser",
+        "summary": "Block a user: deletes both follows and ends pair features in one transaction.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Block a user: deletes both follows and ends pair features in one transaction.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_blocks",
+          "p_follows",
+          "p_friend_streaks",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlockRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/blocks/{userId}": {
+      "delete": {
+        "operationId": "unblockUser",
+        "summary": "Unblock is idempotent and restores no follow.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Unblock is idempotent and restores no follow.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_blocks",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/user-reports": {
+      "post": {
+        "operationId": "reportUser",
+        "summary": "Report a profile to the moderation queue, once per reporter/target/reason.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Report a profile to the moderation queue, once per reporter/target/reason.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_user_reports",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserReportRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/classrooms/join": {
+      "post": {
+        "operationId": "joinClassroom",
+        "summary": "Join a classroom by code (compared by hash); invalid or archived code is CLASSROOM_CODE_INVALID.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Join a classroom by code (compared by hash); invalid or archived code is CLASSROOM_CODE_INVALID.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_classrooms",
+          "p_classroom_members",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassroomMembership"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassroomJoinRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/classrooms/{classroomId}/membership": {
+      "delete": {
+        "operationId": "leaveClassroom",
+        "summary": "Leave a classroom; idempotent.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Leave a classroom; idempotent.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_classroom_members",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "classroomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/me/year-review/{year}": {
+      "get": {
+        "operationId": "getYearReview",
+        "summary": "Immutable Year in Review snapshot; NOT_FOUND until generated.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Immutable Year in Review snapshot; NOT_FOUND until generated.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-001"
+        ],
+        "x-tables": [
+          "p_year_reviews"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 2020,
+              "maximum": 2100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/YearReview"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/league/result": {
+      "get": {
+        "operationId": "getLeagueResult",
+        "summary": "Carried tier, tournament stage, counters and the last settled week result.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Carried tier, tournament stage, counters and the last settled week result.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-002"
+        ],
+        "x-tables": [
+          "p_league_profiles"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeagueResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/league/result/seen": {
+      "post": {
+        "operationId": "markLeagueResultSeen",
+        "summary": "Mark the one-time result screen as shown for a settled week.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Mark the one-time result screen as shown for a settled week.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-002"
+        ],
+        "x-tables": [
+          "p_league_profiles",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeagueResultSeenRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/entitlement": {
+      "get": {
+        "operationId": "getEntitlement",
+        "summary": "Server-decided plan; free learning never depends on it.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Server-decided plan; free learning never depends on it.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_entitlements"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entitlement"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/billing/purchases": {
+      "post": {
+        "operationId": "verifyPurchase",
+        "summary": "MOCK billing: simulated purchase verified server-side; PENDING keeps FREE (PURCHASE_PENDING on premium use).",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. MOCK billing: simulated purchase verified server-side; PENDING keeps FREE (PURCHASE_PENDING on premium use).",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_purchases",
+          "p_entitlements",
+          "p_reward_ledger",
+          "p_rewards",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchase"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchaseRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/billing/notifications": {
+      "post": {
+        "operationId": "billingNotification",
+        "summary": "MOCK billing state notification (signed); deduped by notificationId, older state never restores access.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. MOCK billing state notification (signed); deduped by notificationId, older state never restores access.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_purchases",
+          "p_entitlements",
+          "p_inbox",
+          "p_outbox"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "serviceSignature": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "X-Service-Key-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          },
+          {
+            "name": "X-Service-Timestamp",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BillingNotification"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/family": {
+      "post": {
+        "operationId": "createFamily",
+        "summary": "Create a family group for the manager's paid plan; the invite code is returned once.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Create a family group for the manager's paid plan; the invite code is returned once.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_family_groups",
+          "p_entitlements",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyGroup"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyCreateRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/family/{groupId}/members": {
+      "post": {
+        "operationId": "joinFamily",
+        "summary": "Join a family group by invite code; max6 members including the manager.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Join a family group by invite code; max6 members including the manager.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_family_groups",
+          "p_entitlements",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyGroup"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyJoinRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/family/{groupId}/members/{userId}": {
+      "delete": {
+        "operationId": "removeFamilyMember",
+        "summary": "Manager removes a member or a member leaves; entitlement reverts atomically.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Manager removes a member or a member leaves; entitlement reverts atomically.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_family_groups",
+          "p_entitlements",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyGroup"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/gifts": {
+      "post": {
+        "operationId": "sendGift",
+        "summary": "Gift Super/Max to a non-blocked user through the mock purchase path.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Gift Super/Max to a non-blocked user through the mock purchase path.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_gifts",
+          "p_purchases",
+          "p_blocks",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gift"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiftRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/gifts/{giftId}/redeem": {
+      "post": {
+        "operationId": "redeemGift",
+        "summary": "Recipient redeems a delivered gift once; extends the entitlement.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Recipient redeems a delivered gift once; extends the entitlement.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_gifts",
+          "p_entitlements",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "giftId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entitlement"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/me/referral": {
+      "get": {
+        "operationId": "getReferral",
+        "summary": "Own invite code (derived server-side, stored only as a hash) and counters.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Own invite code (derived server-side, stored only as a hash) and counters.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_referrals"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Referral"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/referrals/redeem": {
+      "post": {
+        "operationId": "redeemReferral",
+        "summary": "Invitee accepts an invite code once; inviter reward is granted on qualification.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Invitee accepts an invite code once; inviter reward is granted on qualification.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_referrals",
+          "p_entitlements",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferralRedeemRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/promo-codes/redeem": {
+      "post": {
+        "operationId": "redeemPromoCode",
+        "summary": "Redeem a promo code once per user; unknown/expired/exhausted are one NOT_FOUND; repeat is PROMO_ALREADY_REDEEMED.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Redeem a promo code once per user; unknown/expired/exhausted are one NOT_FOUND; repeat is PROMO_ALREADY_REDEEMED.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_promo_codes",
+          "p_promo_redemptions",
+          "p_entitlements",
+          "p_reward_ledger",
+          "p_rewards",
+          "p_item_ledger",
+          "p_inventory",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromoRedemption"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoRedeemRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/ad-events": {
+      "post": {
+        "operationId": "recordAdEvent",
+        "summary": "MOCK ads, free tier only: AD_NOT_ELIGIBLE for SUPER/MAX, AD_DAILY_CAP past the cap; reward granted once.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. MOCK ads, free tier only: AD_NOT_ELIGIBLE for SUPER/MAX, AD_DAILY_CAP past the cap; reward granted once.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-GAME-005"
+        ],
+        "x-tables": [
+          "p_ad_events",
+          "p_entitlements",
+          "p_reward_ledger",
+          "p_rewards",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdEventRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/conversations": {
+      "get": {
+        "operationId": "listConversations",
+        "summary": "Roleplay/Video Call history and feedback for Practice Hub review.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Roleplay/Video Call history and feedback for Practice Hub review.",
+        "tags": [
+          "ai"
+        ],
+        "x-owner": "ai",
+        "x-requirements": [
+          "FR-AI-001"
+        ],
+        "x-tables": [
+          "a_conversations"
+        ],
+        "servers": [
+          {
+            "url": "https://ai.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ROLEPLAY",
+                "VIDEO_CALL"
+              ]
+            }
+          },
+          {
+            "name": "scenarioId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      },
+      "post": {
+        "operationId": "startConversation",
+        "summary": "Start a Roleplay/Video Call; ENTITLEMENT_REQUIRED unless the projected plan allows it.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Start a Roleplay/Video Call; ENTITLEMENT_REQUIRED unless the projected plan allows it.",
+        "tags": [
+          "ai"
+        ],
+        "x-owner": "ai",
+        "x-requirements": [
+          "FR-AI-001",
+          "FR-SPEECH-002"
+        ],
+        "x-tables": [
+          "a_conversations",
+          "a_voice_sessions",
+          "a_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://ai.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conversation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationStartRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/conversations/{conversationId}/complete": {
+      "post": {
+        "operationId": "completeConversation",
+        "summary": "Complete once: server-computed stars/words/feedback and ai.practice.completed.v1 in one transaction.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Complete once: server-computed stars/words/feedback and ai.practice.completed.v1 in one transaction.",
+        "tags": [
+          "ai"
+        ],
+        "x-owner": "ai",
+        "x-requirements": [
+          "FR-AI-001"
+        ],
+        "x-tables": [
+          "a_conversations",
+          "a_voice_sessions",
+          "a_outbox",
+          "a_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://ai.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conversation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationCompleteRequest"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -8477,6 +12677,144 @@
               "requestId",
               "payload"
             ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "const": "ai.practice.completed.v1"
+              },
+              "schemaVersion": {
+                "const": 1
+              },
+              "producer": {
+                "const": "ai"
+              },
+              "aggregateId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              "occurredAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "requestId": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "payload": {
+                "$ref": "#/components/schemas/AiPracticeEventPayload"
+              }
+            },
+            "required": [
+              "eventId",
+              "type",
+              "schemaVersion",
+              "producer",
+              "aggregateId",
+              "occurredAt",
+              "requestId",
+              "payload"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "const": "entitlement.changed.v1"
+              },
+              "schemaVersion": {
+                "const": 1
+              },
+              "producer": {
+                "const": "progress"
+              },
+              "aggregateId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              "occurredAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "requestId": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "payload": {
+                "$ref": "#/components/schemas/EntitlementEventPayload"
+              }
+            },
+            "required": [
+              "eventId",
+              "type",
+              "schemaVersion",
+              "producer",
+              "aggregateId",
+              "occurredAt",
+              "requestId",
+              "payload"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "const": "energy.granted.v1"
+              },
+              "schemaVersion": {
+                "const": 1
+              },
+              "producer": {
+                "const": "progress"
+              },
+              "aggregateId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              "occurredAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "requestId": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "payload": {
+                "$ref": "#/components/schemas/EnergyGrantedEventPayload"
+              }
+            },
+            "required": [
+              "eventId",
+              "type",
+              "schemaVersion",
+              "producer",
+              "aggregateId",
+              "occurredAt",
+              "requestId",
+              "payload"
+            ]
           }
         ]
       },
@@ -8755,6 +13093,2665 @@
           "items",
           "nextCursor",
           "asOf"
+        ]
+      },
+      "Energy": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "LIMITED",
+              "UNLIMITED"
+            ]
+          },
+          "balance": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "capacity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "nextUnitAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fullAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "mode",
+          "balance",
+          "capacity",
+          "nextUnitAt",
+          "fullAt",
+          "revision",
+          "asOf"
+        ]
+      },
+      "EnrollmentCommandRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "expectedRevision"
+        ]
+      },
+      "Mistake": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "exerciseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "lessonVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "skillId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "mistakeCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "lastMistakeAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resolvedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "courseId",
+          "exerciseId",
+          "lessonVersion",
+          "skillId",
+          "mistakeCount",
+          "lastMistakeAt",
+          "resolvedAt"
+        ]
+      },
+      "MistakePage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mistake"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "asOf"
+        ]
+      },
+      "Word": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "vocabularyId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "skillId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "term": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "translation": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 160
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stage": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "strength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "halfLifeHours": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "correctCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "incorrectCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "firstSeenAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastReviewedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dueAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "courseId",
+          "vocabularyId",
+          "skillId",
+          "term",
+          "translation",
+          "stage",
+          "strength",
+          "halfLifeHours",
+          "correctCount",
+          "incorrectCount",
+          "firstSeenAt",
+          "lastReviewedAt",
+          "dueAt"
+        ]
+      },
+      "WordPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Word"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "asOf"
+        ]
+      },
+      "ActivityProgress": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "STORY",
+              "ADVENTURE",
+              "RADIO",
+              "SIDE_QUEST",
+              "CLASH",
+              "UNIT_REVIEW"
+            ]
+          },
+          "activityId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "completions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "bestScore": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "stars": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "firstCompletedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastCompletedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "courseId",
+          "kind",
+          "activityId",
+          "completions",
+          "bestScore",
+          "stars",
+          "firstCompletedAt",
+          "lastCompletedAt"
+        ]
+      },
+      "ActivityProgressPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActivityProgress"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "asOf"
+        ]
+      },
+      "Preferences": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "notificationsOff": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+            },
+            "maxItems": 32
+          },
+          "smartScheduling": {
+            "type": "boolean"
+          },
+          "reminderMinute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1439
+          },
+          "soundEffects": {
+            "type": "boolean"
+          },
+          "haptics": {
+            "type": "boolean"
+          },
+          "motivationalMessages": {
+            "type": "boolean"
+          },
+          "listeningExercises": {
+            "type": "boolean"
+          },
+          "speakingExercises": {
+            "type": "boolean"
+          },
+          "friendStreakInvites": {
+            "type": "boolean"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "notificationsOff",
+          "smartScheduling",
+          "reminderMinute",
+          "soundEffects",
+          "haptics",
+          "motivationalMessages",
+          "listeningExercises",
+          "speakingExercises",
+          "friendStreakInvites",
+          "revision",
+          "asOf"
+        ]
+      },
+      "PreferencesPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "notificationsOff": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+            },
+            "maxItems": 32
+          },
+          "smartScheduling": {
+            "type": "boolean"
+          },
+          "reminderMinute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1439
+          },
+          "soundEffects": {
+            "type": "boolean"
+          },
+          "haptics": {
+            "type": "boolean"
+          },
+          "motivationalMessages": {
+            "type": "boolean"
+          },
+          "listeningExercises": {
+            "type": "boolean"
+          },
+          "speakingExercises": {
+            "type": "boolean"
+          },
+          "friendStreakInvites": {
+            "type": "boolean"
+          },
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "expectedRevision"
+        ]
+      },
+      "FeedbackRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "topic": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "appVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "ANDROID",
+              "IOS",
+              "WEB"
+            ]
+          }
+        },
+        "required": [
+          "topic",
+          "message",
+          "appVersion",
+          "platform"
+        ]
+      },
+      "InventoryItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 999
+          },
+          "expiresAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "itemId",
+          "quantity",
+          "expiresAt"
+        ]
+      },
+      "ShopItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "FREEZE",
+              "STREAK_REPAIR",
+              "TIMER_BOOST",
+              "XP_BOOST",
+              "WEEKEND_AMULET",
+              "ENERGY_REFILL"
+            ]
+          },
+          "priceGems": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "maxOwned": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 999
+          },
+          "owned": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 999
+          },
+          "durationMinutes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10080
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "available": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "itemId",
+          "kind",
+          "priceGems",
+          "maxOwned",
+          "owned",
+          "durationMinutes",
+          "available"
+        ]
+      },
+      "Shop": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "catalogVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "gems": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "freezeSlots": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShopItem"
+            },
+            "maxItems": 50
+          },
+          "inventory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InventoryItem"
+            },
+            "maxItems": 50
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "catalogVersion",
+          "gems",
+          "freezeSlots",
+          "items",
+          "inventory",
+          "asOf"
+        ]
+      },
+      "ShopPurchaseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "catalogVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          }
+        },
+        "required": [
+          "itemId",
+          "quantity",
+          "catalogVersion"
+        ]
+      },
+      "ShopPurchase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "itemId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "gemsSpent": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "gems": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "freezeSlots": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "inventory": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InventoryItem"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "energyGrantPending": {
+            "type": "boolean"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "operationId",
+          "itemId",
+          "quantity",
+          "gemsSpent",
+          "gems",
+          "freezeSlots",
+          "inventory",
+          "energyGrantPending",
+          "asOf"
+        ]
+      },
+      "BoostRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          }
+        },
+        "required": [
+          "itemId"
+        ]
+      },
+      "Boost": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "boostId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "XP_BOOST",
+              "HAPPY_HOUR",
+              "TIMER_BOOST"
+            ]
+          },
+          "multiplier": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "inventory": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InventoryItem"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "boostId",
+          "kind",
+          "multiplier",
+          "startsAt",
+          "endsAt",
+          "inventory"
+        ]
+      },
+      "StreakRepairRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lostStreakDay": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "maxLength": 10
+          },
+          "payWith": {
+            "type": "string",
+            "enum": [
+              "GEMS",
+              "ITEM"
+            ]
+          }
+        },
+        "required": [
+          "lostStreakDay",
+          "payWith"
+        ]
+      },
+      "FriendStreak": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "pairId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "friendUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "friendNickname": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "inviterId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACTIVE",
+              "DECLINED",
+              "ENDED"
+            ]
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "startDay": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "maxLength": 10
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastExtendedDay": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "maxLength": 10
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "extendedToday": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "pairId",
+          "friendUserId",
+          "friendNickname",
+          "inviterId",
+          "status",
+          "length",
+          "startDay",
+          "lastExtendedDay",
+          "extendedToday"
+        ]
+      },
+      "FriendStreakPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FriendStreak"
+            },
+            "maxItems": 20
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "asOf"
+        ]
+      },
+      "FriendStreakInviteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "targetUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          }
+        },
+        "required": [
+          "targetUserId"
+        ]
+      },
+      "FriendStreakResponseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accept": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "accept"
+        ]
+      },
+      "InteractionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "targetUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "NUDGE",
+              "HIGH_FIVE",
+              "KUDOS",
+              "GIFT_BOOST",
+              "CONGRATS"
+            ]
+          },
+          "contextId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "messageKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          }
+        },
+        "required": [
+          "targetUserId",
+          "kind",
+          "contextId",
+          "messageKey"
+        ]
+      },
+      "Interaction": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "toUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "NUDGE",
+              "HIGH_FIVE",
+              "KUDOS",
+              "GIFT_BOOST",
+              "CONGRATS"
+            ]
+          },
+          "contextId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "day": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "maxLength": 10
+          },
+          "gemsCost": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "gems": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "operationId",
+          "toUserId",
+          "kind",
+          "contextId",
+          "day",
+          "gemsCost",
+          "gems"
+        ]
+      },
+      "BlockRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "targetUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          }
+        },
+        "required": [
+          "targetUserId"
+        ]
+      },
+      "UserReportRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "targetUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "SPAM",
+              "INAPPROPRIATE_NAME",
+              "INAPPROPRIATE_AVATAR",
+              "HARASSMENT",
+              "CHEATING",
+              "OTHER"
+            ]
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "targetUserId",
+          "reason",
+          "note"
+        ]
+      },
+      "ClassroomJoinRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "joinCode": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 16,
+            "pattern": "^[A-Za-z0-9-]+$"
+          }
+        },
+        "required": [
+          "joinCode"
+        ]
+      },
+      "ClassroomMembership": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "classroomId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "LEFT"
+            ]
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "classroomId",
+          "name",
+          "courseId",
+          "status",
+          "joinedAt"
+        ]
+      },
+      "YearReview": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "year": {
+            "type": "integer",
+            "minimum": 2020,
+            "maximum": 2100
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalXp": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "activeDays": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 366
+          },
+          "longestStreak": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "lessonsCompleted": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "wordsLearned": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "minutesSpent": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "achievementsEarned": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "topLeagueTier": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "courseIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            "maxItems": 10
+          }
+        },
+        "required": [
+          "year",
+          "generatedAt",
+          "totalXp",
+          "activeDays",
+          "longestStreak",
+          "lessonsCompleted",
+          "wordsLearned",
+          "minutesSpent",
+          "achievementsEarned",
+          "topLeagueTier",
+          "courseIds"
+        ]
+      },
+      "LeagueWeekResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "weekId": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "previousTier": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "tier": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "LEAGUE",
+              "QUARTERFINAL",
+              "SEMIFINAL",
+              "FINAL"
+            ]
+          },
+          "rank": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 30
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "PROMOTED",
+              "DEMOTED",
+              "STAYED",
+              "TOURNAMENT_ADVANCED",
+              "TOURNAMENT_ELIMINATED",
+              "EXCLUDED"
+            ]
+          },
+          "gemsAwarded": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "weekId",
+          "previousTier",
+          "tier",
+          "stage",
+          "rank",
+          "outcome",
+          "gemsAwarded"
+        ]
+      },
+      "LeagueResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tier": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "LEAGUE",
+              "QUARTERFINAL",
+              "SEMIFINAL",
+              "FINAL"
+            ]
+          },
+          "weeksParticipated": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "topThreeFinishes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "diamondWeeks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "lastResult": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LeagueWeekResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unseen": {
+            "type": "boolean"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "tier",
+          "stage",
+          "weeksParticipated",
+          "topThreeFinishes",
+          "diamondWeeks",
+          "lastResult",
+          "unseen",
+          "asOf"
+        ]
+      },
+      "LeagueResultSeenRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "weekId": {
+            "type": "string",
+            "maxLength": 10
+          }
+        },
+        "required": [
+          "weekId"
+        ]
+      },
+      "Entitlement": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "plan": {
+            "type": "string",
+            "enum": [
+              "FREE",
+              "SUPER",
+              "MAX"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "NONE",
+              "PURCHASE",
+              "FAMILY",
+              "GIFT",
+              "TRIAL",
+              "PROMO",
+              "REFERRAL"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "GRACE",
+              "HOLD",
+              "CANCELED",
+              "EXPIRED",
+              "REVOKED"
+            ]
+          },
+          "expiresAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "autoRenew": {
+            "type": "boolean"
+          },
+          "familyGroupId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unlimitedEnergy": {
+            "type": "boolean"
+          },
+          "adFree": {
+            "type": "boolean"
+          },
+          "conversations": {
+            "type": "boolean"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "plan",
+          "source",
+          "status",
+          "expiresAt",
+          "autoRenew",
+          "familyGroupId",
+          "unlimitedEnergy",
+          "adFree",
+          "conversations",
+          "revision",
+          "asOf"
+        ]
+      },
+      "PurchaseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "productId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "SUBSCRIPTION",
+              "GEMS"
+            ]
+          },
+          "platform": {
+            "const": "SIMULATION"
+          },
+          "simulationOutcome": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACTIVE",
+              "GRACE",
+              "HOLD",
+              "CANCELED",
+              "EXPIRED",
+              "REVOKED",
+              "REFUNDED"
+            ]
+          }
+        },
+        "required": [
+          "productId",
+          "kind",
+          "platform",
+          "simulationOutcome"
+        ]
+      },
+      "Purchase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "purchaseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "productId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "SUBSCRIPTION",
+              "GEMS",
+              "GIFT"
+            ]
+          },
+          "platform": {
+            "const": "SIMULATION"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACTIVE",
+              "GRACE",
+              "HOLD",
+              "CANCELED",
+              "EXPIRED",
+              "REVOKED",
+              "REFUNDED"
+            ]
+          },
+          "verifiedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "gems": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "entitlement": {
+            "$ref": "#/components/schemas/Entitlement"
+          }
+        },
+        "required": [
+          "purchaseId",
+          "productId",
+          "kind",
+          "platform",
+          "state",
+          "verifiedAt",
+          "gems",
+          "entitlement"
+        ]
+      },
+      "BillingNotification": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "notificationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "purchaseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "platform": {
+            "const": "SIMULATION"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACTIVE",
+              "GRACE",
+              "HOLD",
+              "CANCELED",
+              "EXPIRED",
+              "REVOKED",
+              "REFUNDED"
+            ]
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "notificationId",
+          "purchaseId",
+          "platform",
+          "state",
+          "occurredAt"
+        ]
+      },
+      "FamilyMember": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "nickname": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "MANAGER",
+              "MEMBER"
+            ]
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "userId",
+          "nickname",
+          "role",
+          "joinedAt"
+        ]
+      },
+      "FamilyGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "groupId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "ownerUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "plan": {
+            "type": "string",
+            "enum": [
+              "SUPER",
+              "MAX"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "ENDED"
+            ]
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyMember"
+            },
+            "maxItems": 6
+          },
+          "inviteCode": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 4,
+                "maxLength": 16,
+                "pattern": "^[A-Za-z0-9-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "groupId",
+          "ownerUserId",
+          "plan",
+          "status",
+          "members",
+          "inviteCode",
+          "revision"
+        ]
+      },
+      "FamilyCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "plan": {
+            "type": "string",
+            "enum": [
+              "SUPER",
+              "MAX"
+            ]
+          }
+        },
+        "required": [
+          "plan"
+        ]
+      },
+      "FamilyJoinRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "inviteCode": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 16,
+            "pattern": "^[A-Za-z0-9-]+$"
+          }
+        },
+        "required": [
+          "inviteCode"
+        ]
+      },
+      "GiftRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "recipientUserId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "plan": {
+            "type": "string",
+            "enum": [
+              "SUPER",
+              "MAX"
+            ]
+          },
+          "durationDays": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 160
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "simulationOutcome": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACTIVE",
+              "GRACE",
+              "HOLD",
+              "CANCELED",
+              "EXPIRED",
+              "REVOKED",
+              "REFUNDED"
+            ]
+          }
+        },
+        "required": [
+          "recipientUserId",
+          "plan",
+          "durationDays",
+          "note",
+          "simulationOutcome"
+        ]
+      },
+      "Gift": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "giftId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "senderId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "recipientId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "plan": {
+            "type": "string",
+            "enum": [
+              "SUPER",
+              "MAX"
+            ]
+          },
+          "durationDays": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 160
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "DELIVERED",
+              "REDEEMED",
+              "REFUNDED"
+            ]
+          },
+          "deliveredAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "giftId",
+          "senderId",
+          "recipientId",
+          "plan",
+          "durationDays",
+          "note",
+          "status",
+          "deliveredAt"
+        ]
+      },
+      "Referral": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 16,
+            "pattern": "^[A-Za-z0-9-]+$"
+          },
+          "accepted": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "qualified": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "rewarded": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "code",
+          "accepted",
+          "qualified",
+          "rewarded",
+          "asOf"
+        ]
+      },
+      "ReferralRedeemRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 16,
+            "pattern": "^[A-Za-z0-9-]+$"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "PromoRedeemRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 32,
+            "pattern": "^[A-Za-z0-9-]+$"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "PromoRedemption": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "redemptionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "promoId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "rewardType": {
+            "type": "string",
+            "enum": [
+              "SUPER_DAYS",
+              "GEMS",
+              "ITEM"
+            ]
+          },
+          "superDays": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 365
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "gems": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "itemId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64,
+                "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "itemQuantity": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 99
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "entitlement": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Entitlement"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "redeemedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "redemptionId",
+          "promoId",
+          "rewardType",
+          "superDays",
+          "gems",
+          "itemId",
+          "itemQuantity",
+          "entitlement",
+          "redeemedAt"
+        ]
+      },
+      "AdEventRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "adEventId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "placement": {
+            "type": "string",
+            "enum": [
+              "LESSON_END_INTERSTITIAL",
+              "REWARDED_GEMS",
+              "REWARDED_ENERGY_REFILL"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "IMPRESSION",
+              "REWARDED_COMPLETION"
+            ]
+          }
+        },
+        "required": [
+          "adEventId",
+          "placement",
+          "kind"
+        ]
+      },
+      "AdEvent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "adEventId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "placement": {
+            "type": "string",
+            "enum": [
+              "LESSON_END_INTERSTITIAL",
+              "REWARDED_GEMS",
+              "REWARDED_ENERGY_REFILL"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "IMPRESSION",
+              "REWARDED_COMPLETION"
+            ]
+          },
+          "learningDay": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "maxLength": 10
+          },
+          "dailyIndex": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "remainingToday": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20
+          },
+          "rewardGems": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "rewardEnergy": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 25
+          },
+          "gems": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "energyGrantPending": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "adEventId",
+          "placement",
+          "kind",
+          "learningDay",
+          "dailyIndex",
+          "remainingToday",
+          "rewardGems",
+          "rewardEnergy",
+          "gems",
+          "energyGrantPending"
+        ]
+      },
+      "ConversationFeedback": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "summary": {
+            "type": "string",
+            "maxLength": 600
+          },
+          "strengths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "maxItems": 5
+          },
+          "improvements": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "maxItems": 5
+          },
+          "usedWords": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "maxItems": 60
+          }
+        },
+        "required": [
+          "summary",
+          "strengths",
+          "improvements",
+          "usedWords"
+        ]
+      },
+      "Conversation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "conversationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "ROLEPLAY",
+              "VIDEO_CALL"
+            ]
+          },
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "scenarioId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "voiceSessionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "COMPLETED",
+              "ABANDONED",
+              "EXPIRED"
+            ]
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "turnCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 60
+          },
+          "wordsUsed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "stars": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "xpAwarded": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "feedback": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConversationFeedback"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "conversationId",
+          "kind",
+          "courseId",
+          "scenarioId",
+          "voiceSessionId",
+          "status",
+          "startedAt",
+          "completedAt",
+          "turnCount",
+          "wordsUsed",
+          "stars",
+          "xpAwarded",
+          "feedback",
+          "expiresAt"
+        ]
+      },
+      "ConversationPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Conversation"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "asOf"
+        ]
+      },
+      "ConversationStartRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "ROLEPLAY",
+              "VIDEO_CALL"
+            ]
+          },
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "scenarioId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "voiceSessionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "courseId",
+          "scenarioId",
+          "voiceSessionId"
+        ]
+      },
+      "ConversationCompleteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "endReason": {
+            "type": "string",
+            "enum": [
+              "COMPLETED",
+              "USER_EXIT"
+            ]
+          }
+        },
+        "required": [
+          "endReason"
+        ]
+      },
+      "AiPracticeEventPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "completionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "userId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "ROLEPLAY",
+              "VIDEO_CALL"
+            ]
+          },
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "scenarioId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "xp": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "wordsUsed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "stars": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          }
+        },
+        "required": [
+          "completionId",
+          "userId",
+          "kind",
+          "courseId",
+          "scenarioId",
+          "xp",
+          "wordsUsed",
+          "stars"
+        ]
+      },
+      "EntitlementEventPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "plan": {
+            "type": "string",
+            "enum": [
+              "FREE",
+              "SUPER",
+              "MAX"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "GRACE",
+              "HOLD",
+              "CANCELED",
+              "EXPIRED",
+              "REVOKED"
+            ]
+          },
+          "expiresAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "entitlementRevision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "userId",
+          "plan",
+          "status",
+          "expiresAt",
+          "entitlementRevision"
+        ]
+      },
+      "EnergyGrantedEventPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "userId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "refillToCapacity": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "SHOP",
+              "CHEST",
+              "FRIEND",
+              "QUEST",
+              "AD",
+              "PROMO"
+            ]
+          }
+        },
+        "required": [
+          "operationId",
+          "userId",
+          "amount",
+          "refillToCapacity",
+          "reason"
         ]
       }
     },

@@ -828,6 +828,778 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/energy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Energy battery with lazy regeneration; UNLIMITED under default energyMode or SUPER/MAX projection.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Energy battery with lazy regeneration; UNLIMITED under default energyMode or SUPER/MAX projection.
+         */
+        get: operations["getEnergy"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/enrollments/{courseId}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Make an enrolled, non-removed course the single active course; flips both rows in one transaction.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Make an enrolled, non-removed course the single active course; flips both rows in one transaction.
+         */
+        post: operations["switchCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/enrollments/{courseId}/reset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reset course progress in place (frontier and lesson JSON cleared); first rewards stay with Progress.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Reset course progress in place (frontier and lesson JSON cleared); first rewards stay with Progress.
+         */
+        post: operations["resetCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/enrollments/{courseId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Hide a course (removedAt) while keeping history; the last active course cannot be removed (409).
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Hide a course (removedAt) while keeping history; the last active course cannot be removed (409).
+         */
+        delete: operations["removeCourse"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/mistakes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Practice Hub Mistakes: unresolved first, newest mistake first; max100 unresolved per course.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Practice Hub Mistakes: unresolved first, newest mistake first; max100 unresolved per course.
+         */
+        get: operations["listMistakes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/words": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Practice Hub Words from review items; term text joined from the published lexicon.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Practice Hub Words from review items; term text joined from the published lexicon.
+         */
+        get: operations["listWords"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Library progress for Stories, Adventures, DuoRadio, side quests, Clash and unit reviews.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Library progress for Stories, Adventures, DuoRadio, side quests, Clash and unit reviews.
+         */
+        get: operations["listActivityProgress"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Server-relevant settings; device-only choices stay on the device.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Server-relevant settings; device-only choices stay on the device.
+         */
+        get: operations["getPreferences"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Partial update with expectedRevision; REVISION_CONFLICT returns current values.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Partial update with expectedRevision; REVISION_CONFLICT returns current values.
+         */
+        patch: operations["updatePreferences"];
+        trace?: never;
+    };
+    "/v1/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Settings feedback form; text only, no attachments.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Settings feedback form; text only, no attachments.
+         */
+        post: operations["sendFeedback"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shop": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Versioned shop catalog with owned quantities, wallet and freeze slots.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Versioned shop catalog with owned quantities, wallet and freeze slots.
+         */
+        get: operations["listShop"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shop/purchases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Buy an item for gems once per key; energy refill also emits energy.granted.v1.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Buy an item for gems once per key; energy refill also emits energy.granted.v1.
+         */
+        post: operations["buyItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/boosts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Consume an owned boost item and open its window; reward consume applies it at server completion time.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Consume an owned boost item and open its window; reward consume applies it at server completion time.
+         */
+        post: operations["activateBoost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/streak-repair": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restore currentStreak from lostStreak inside the offer window, paid by gems or a repair item.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Restore currentStreak from lostStreak inside the offer window, paid by gems or a repair item.
+         */
+        post: operations["repairStreak"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/friend-streaks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Pending and active friend streaks (max5 per user).
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Pending and active friend streaks (max5 per user).
+         */
+        get: operations["listFriendStreaks"];
+        put?: never;
+        /**
+         * Invite a mutual follower; blocked, CHILD or full (5) pairs rejected.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Invite a mutual follower; blocked, CHILD or full (5) pairs rejected.
+         */
+        post: operations["inviteFriendStreak"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/friend-streaks/{pairId}/respond": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Invitee accepts or declines a pending friend streak.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Invitee accepts or declines a pending friend streak.
+         */
+        post: operations["respondFriendStreak"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/interactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Nudge/high-five/kudos/congrats/gift boost with a server message key, once per pair/kind/context/day.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Nudge/high-five/kudos/congrats/gift boost with a server message key, once per pair/kind/context/day.
+         */
+        post: operations["sendInteraction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/blocks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Block a user: deletes both follows and ends pair features in one transaction.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Block a user: deletes both follows and ends pair features in one transaction.
+         */
+        post: operations["blockUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/blocks/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Unblock is idempotent and restores no follow.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Unblock is idempotent and restores no follow.
+         */
+        delete: operations["unblockUser"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/user-reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Report a profile to the moderation queue, once per reporter/target/reason.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Report a profile to the moderation queue, once per reporter/target/reason.
+         */
+        post: operations["reportUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/classrooms/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join a classroom by code (compared by hash); invalid or archived code is CLASSROOM_CODE_INVALID.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Join a classroom by code (compared by hash); invalid or archived code is CLASSROOM_CODE_INVALID.
+         */
+        post: operations["joinClassroom"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/classrooms/{classroomId}/membership": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Leave a classroom; idempotent.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Leave a classroom; idempotent.
+         */
+        delete: operations["leaveClassroom"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/year-review/{year}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Immutable Year in Review snapshot; NOT_FOUND until generated.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Immutable Year in Review snapshot; NOT_FOUND until generated.
+         */
+        get: operations["getYearReview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/league/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Carried tier, tournament stage, counters and the last settled week result.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Carried tier, tournament stage, counters and the last settled week result.
+         */
+        get: operations["getLeagueResult"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/league/result/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark the one-time result screen as shown for a settled week.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Mark the one-time result screen as shown for a settled week.
+         */
+        post: operations["markLeagueResultSeen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/entitlement": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Server-decided plan; free learning never depends on it.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Server-decided plan; free learning never depends on it.
+         */
+        get: operations["getEntitlement"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/billing/purchases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * MOCK billing: simulated purchase verified server-side; PENDING keeps FREE (PURCHASE_PENDING on premium use).
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. MOCK billing: simulated purchase verified server-side; PENDING keeps FREE (PURCHASE_PENDING on premium use).
+         */
+        post: operations["verifyPurchase"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/billing/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * MOCK billing state notification (signed); deduped by notificationId, older state never restores access.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. MOCK billing state notification (signed); deduped by notificationId, older state never restores access.
+         */
+        post: operations["billingNotification"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/family": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a family group for the manager's paid plan; the invite code is returned once.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Create a family group for the manager's paid plan; the invite code is returned once.
+         */
+        post: operations["createFamily"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/family/{groupId}/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join a family group by invite code; max6 members including the manager.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Join a family group by invite code; max6 members including the manager.
+         */
+        post: operations["joinFamily"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/family/{groupId}/members/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Manager removes a member or a member leaves; entitlement reverts atomically.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Manager removes a member or a member leaves; entitlement reverts atomically.
+         */
+        delete: operations["removeFamilyMember"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/gifts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Gift Super/Max to a non-blocked user through the mock purchase path.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Gift Super/Max to a non-blocked user through the mock purchase path.
+         */
+        post: operations["sendGift"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/gifts/{giftId}/redeem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Recipient redeems a delivered gift once; extends the entitlement.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Recipient redeems a delivered gift once; extends the entitlement.
+         */
+        post: operations["redeemGift"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/referral": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Own invite code (derived server-side, stored only as a hash) and counters.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Own invite code (derived server-side, stored only as a hash) and counters.
+         */
+        get: operations["getReferral"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/referrals/redeem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Invitee accepts an invite code once; inviter reward is granted on qualification.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Invitee accepts an invite code once; inviter reward is granted on qualification.
+         */
+        post: operations["redeemReferral"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/promo-codes/redeem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Redeem a promo code once per user; unknown/expired/exhausted are one NOT_FOUND; repeat is PROMO_ALREADY_REDEEMED.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Redeem a promo code once per user; unknown/expired/exhausted are one NOT_FOUND; repeat is PROMO_ALREADY_REDEEMED.
+         */
+        post: operations["redeemPromoCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/ad-events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * MOCK ads, free tier only: AD_NOT_ELIGIBLE for SUPER/MAX, AD_DAILY_CAP past the cap; reward granted once.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. MOCK ads, free tier only: AD_NOT_ELIGIBLE for SUPER/MAX, AD_DAILY_CAP past the cap; reward granted once.
+         */
+        post: operations["recordAdEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/conversations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Roleplay/Video Call history and feedback for Practice Hub review.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Roleplay/Video Call history and feedback for Practice Hub review.
+         */
+        get: operations["listConversations"];
+        put?: never;
+        /**
+         * Start a Roleplay/Video Call; ENTITLEMENT_REQUIRED unless the projected plan allows it.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Start a Roleplay/Video Call; ENTITLEMENT_REQUIRED unless the projected plan allows it.
+         */
+        post: operations["startConversation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/conversations/{conversationId}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete once: server-computed stars/words/feedback and ai.practice.completed.v1 in one transaction.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Complete once: server-computed stars/words/feedback and ai.practice.completed.v1 in one transaction.
+         */
+        post: operations["completeConversation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1705,6 +2477,48 @@ export interface components {
             occurredAt: string;
             requestId: string;
             payload: components["schemas"]["ZoneEventPayload"];
+        } | {
+            /** Format: uuid */
+            eventId: string;
+            /** @constant */
+            type: "ai.practice.completed.v1";
+            /** @constant */
+            schemaVersion: 1;
+            /** @constant */
+            producer: "ai";
+            aggregateId: string;
+            /** Format: date-time */
+            occurredAt: string;
+            requestId: string;
+            payload: components["schemas"]["AiPracticeEventPayload"];
+        } | {
+            /** Format: uuid */
+            eventId: string;
+            /** @constant */
+            type: "entitlement.changed.v1";
+            /** @constant */
+            schemaVersion: 1;
+            /** @constant */
+            producer: "progress";
+            aggregateId: string;
+            /** Format: date-time */
+            occurredAt: string;
+            requestId: string;
+            payload: components["schemas"]["EntitlementEventPayload"];
+        } | {
+            /** Format: uuid */
+            eventId: string;
+            /** @constant */
+            type: "energy.granted.v1";
+            /** @constant */
+            schemaVersion: 1;
+            /** @constant */
+            producer: "progress";
+            aggregateId: string;
+            /** Format: date-time */
+            occurredAt: string;
+            requestId: string;
+            payload: components["schemas"]["EnergyGrantedEventPayload"];
         };
         Watermark: {
             /** Format: date-time */
@@ -1759,6 +2573,488 @@ export interface components {
             nextCursor: string | null;
             /** Format: date-time */
             asOf: string;
+        };
+        Energy: {
+            /** @enum {string} */
+            mode: "LIMITED" | "UNLIMITED";
+            balance: number;
+            capacity: number;
+            nextUnitAt: string | null;
+            fullAt: string | null;
+            revision: number;
+            /** Format: date-time */
+            asOf: string;
+        };
+        EnrollmentCommandRequest: {
+            expectedRevision: number;
+        };
+        Mistake: {
+            courseId: string;
+            exerciseId: string;
+            lessonVersion: string;
+            skillId: string;
+            mistakeCount: number;
+            /** Format: date-time */
+            lastMistakeAt: string;
+            resolvedAt: string | null;
+        };
+        MistakePage: {
+            items: components["schemas"]["Mistake"][];
+            nextCursor: string | null;
+            /** Format: date-time */
+            asOf: string;
+        };
+        Word: {
+            courseId: string;
+            vocabularyId: string;
+            skillId: string;
+            term: string;
+            translation: string | null;
+            stage: number;
+            strength: number;
+            halfLifeHours: number;
+            correctCount: number;
+            incorrectCount: number;
+            /** Format: date-time */
+            firstSeenAt: string;
+            lastReviewedAt: string | null;
+            /** Format: date-time */
+            dueAt: string;
+        };
+        WordPage: {
+            items: components["schemas"]["Word"][];
+            nextCursor: string | null;
+            /** Format: date-time */
+            asOf: string;
+        };
+        ActivityProgress: {
+            courseId: string;
+            /** @enum {string} */
+            kind: "STORY" | "ADVENTURE" | "RADIO" | "SIDE_QUEST" | "CLASH" | "UNIT_REVIEW";
+            activityId: string;
+            completions: number;
+            bestScore: number;
+            stars: number;
+            firstCompletedAt: string | null;
+            lastCompletedAt: string | null;
+        };
+        ActivityProgressPage: {
+            items: components["schemas"]["ActivityProgress"][];
+            nextCursor: string | null;
+            /** Format: date-time */
+            asOf: string;
+        };
+        Preferences: {
+            notificationsOff: string[];
+            smartScheduling: boolean;
+            reminderMinute: number;
+            soundEffects: boolean;
+            haptics: boolean;
+            motivationalMessages: boolean;
+            listeningExercises: boolean;
+            speakingExercises: boolean;
+            friendStreakInvites: boolean;
+            revision: number;
+            /** Format: date-time */
+            asOf: string;
+        };
+        PreferencesPatch: {
+            notificationsOff?: string[];
+            smartScheduling?: boolean;
+            reminderMinute?: number;
+            soundEffects?: boolean;
+            haptics?: boolean;
+            motivationalMessages?: boolean;
+            listeningExercises?: boolean;
+            speakingExercises?: boolean;
+            friendStreakInvites?: boolean;
+            expectedRevision: number;
+        };
+        FeedbackRequest: {
+            topic: string;
+            message: string;
+            appVersion: string;
+            /** @enum {string} */
+            platform: "ANDROID" | "IOS" | "WEB";
+        };
+        InventoryItem: {
+            itemId: string;
+            quantity: number;
+            expiresAt: string | null;
+        };
+        ShopItem: {
+            itemId: string;
+            /** @enum {string} */
+            kind: "FREEZE" | "STREAK_REPAIR" | "TIMER_BOOST" | "XP_BOOST" | "WEEKEND_AMULET" | "ENERGY_REFILL";
+            priceGems: number;
+            maxOwned: number;
+            owned: number;
+            durationMinutes: number | null;
+            available: boolean;
+        };
+        Shop: {
+            catalogVersion: string;
+            gems: number;
+            freezeSlots: number;
+            items: components["schemas"]["ShopItem"][];
+            inventory: components["schemas"]["InventoryItem"][];
+            /** Format: date-time */
+            asOf: string;
+        };
+        ShopPurchaseRequest: {
+            itemId: string;
+            quantity: number;
+            catalogVersion: string;
+        };
+        ShopPurchase: {
+            operationId: string;
+            itemId: string;
+            quantity: number;
+            gemsSpent: number;
+            gems: number;
+            freezeSlots: number;
+            inventory: components["schemas"]["InventoryItem"] | null;
+            energyGrantPending: boolean;
+            /** Format: date-time */
+            asOf: string;
+        };
+        BoostRequest: {
+            itemId: string;
+        };
+        Boost: {
+            boostId: string;
+            /** @enum {string} */
+            kind: "XP_BOOST" | "HAPPY_HOUR" | "TIMER_BOOST";
+            multiplier: number;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            inventory: components["schemas"]["InventoryItem"] | null;
+        };
+        StreakRepairRequest: {
+            lostStreakDay: string;
+            /** @enum {string} */
+            payWith: "GEMS" | "ITEM";
+        };
+        FriendStreak: {
+            pairId: string;
+            friendUserId: string;
+            friendNickname: string;
+            inviterId: string;
+            /** @enum {string} */
+            status: "PENDING" | "ACTIVE" | "DECLINED" | "ENDED";
+            length: number;
+            startDay: string | null;
+            lastExtendedDay: string | null;
+            extendedToday: boolean;
+        };
+        FriendStreakPage: {
+            items: components["schemas"]["FriendStreak"][];
+            nextCursor: string | null;
+            /** Format: date-time */
+            asOf: string;
+        };
+        FriendStreakInviteRequest: {
+            targetUserId: string;
+        };
+        FriendStreakResponseRequest: {
+            accept: boolean;
+        };
+        InteractionRequest: {
+            targetUserId: string;
+            /** @enum {string} */
+            kind: "NUDGE" | "HIGH_FIVE" | "KUDOS" | "GIFT_BOOST" | "CONGRATS";
+            contextId: string;
+            messageKey: string;
+        };
+        Interaction: {
+            operationId: string;
+            toUserId: string;
+            /** @enum {string} */
+            kind: "NUDGE" | "HIGH_FIVE" | "KUDOS" | "GIFT_BOOST" | "CONGRATS";
+            contextId: string;
+            day: string;
+            gemsCost: number;
+            gems: number;
+        };
+        BlockRequest: {
+            targetUserId: string;
+        };
+        UserReportRequest: {
+            targetUserId: string;
+            /** @enum {string} */
+            reason: "SPAM" | "INAPPROPRIATE_NAME" | "INAPPROPRIATE_AVATAR" | "HARASSMENT" | "CHEATING" | "OTHER";
+            note: string | null;
+        };
+        ClassroomJoinRequest: {
+            joinCode: string;
+        };
+        ClassroomMembership: {
+            classroomId: string;
+            name: string;
+            courseId: string;
+            /** @enum {string} */
+            status: "ACTIVE" | "LEFT";
+            /** Format: date-time */
+            joinedAt: string;
+        };
+        YearReview: {
+            year: number;
+            /** Format: date-time */
+            generatedAt: string;
+            totalXp: number;
+            activeDays: number;
+            longestStreak: number;
+            lessonsCompleted: number;
+            wordsLearned: number;
+            minutesSpent: number;
+            achievementsEarned: number;
+            topLeagueTier: number | null;
+            courseIds: string[];
+        };
+        LeagueWeekResult: {
+            weekId: string;
+            previousTier: number;
+            tier: number;
+            /** @enum {string} */
+            stage: "LEAGUE" | "QUARTERFINAL" | "SEMIFINAL" | "FINAL";
+            rank: number | null;
+            /** @enum {string} */
+            outcome: "PROMOTED" | "DEMOTED" | "STAYED" | "TOURNAMENT_ADVANCED" | "TOURNAMENT_ELIMINATED" | "EXCLUDED";
+            gemsAwarded: number;
+        };
+        LeagueResult: {
+            tier: number;
+            /** @enum {string} */
+            stage: "LEAGUE" | "QUARTERFINAL" | "SEMIFINAL" | "FINAL";
+            weeksParticipated: number;
+            topThreeFinishes: number;
+            diamondWeeks: number;
+            lastResult: components["schemas"]["LeagueWeekResult"] | null;
+            unseen: boolean;
+            /** Format: date-time */
+            asOf: string;
+        };
+        LeagueResultSeenRequest: {
+            weekId: string;
+        };
+        Entitlement: {
+            /** @enum {string} */
+            plan: "FREE" | "SUPER" | "MAX";
+            /** @enum {string} */
+            source: "NONE" | "PURCHASE" | "FAMILY" | "GIFT" | "TRIAL" | "PROMO" | "REFERRAL";
+            /** @enum {string} */
+            status: "ACTIVE" | "GRACE" | "HOLD" | "CANCELED" | "EXPIRED" | "REVOKED";
+            expiresAt: string | null;
+            autoRenew: boolean;
+            familyGroupId: string | null;
+            unlimitedEnergy: boolean;
+            adFree: boolean;
+            conversations: boolean;
+            revision: number;
+            /** Format: date-time */
+            asOf: string;
+        };
+        PurchaseRequest: {
+            productId: string;
+            /** @enum {string} */
+            kind: "SUBSCRIPTION" | "GEMS";
+            /** @constant */
+            platform: "SIMULATION";
+            /** @enum {string} */
+            simulationOutcome: "PENDING" | "ACTIVE" | "GRACE" | "HOLD" | "CANCELED" | "EXPIRED" | "REVOKED" | "REFUNDED";
+        };
+        Purchase: {
+            purchaseId: string;
+            productId: string;
+            /** @enum {string} */
+            kind: "SUBSCRIPTION" | "GEMS" | "GIFT";
+            /** @constant */
+            platform: "SIMULATION";
+            /** @enum {string} */
+            state: "PENDING" | "ACTIVE" | "GRACE" | "HOLD" | "CANCELED" | "EXPIRED" | "REVOKED" | "REFUNDED";
+            verifiedAt: string | null;
+            gems: number | null;
+            entitlement: components["schemas"]["Entitlement"];
+        };
+        BillingNotification: {
+            notificationId: string;
+            purchaseId: string;
+            /** @constant */
+            platform: "SIMULATION";
+            /** @enum {string} */
+            state: "PENDING" | "ACTIVE" | "GRACE" | "HOLD" | "CANCELED" | "EXPIRED" | "REVOKED" | "REFUNDED";
+            /** Format: date-time */
+            occurredAt: string;
+        };
+        FamilyMember: {
+            userId: string;
+            nickname: string;
+            /** @enum {string} */
+            role: "MANAGER" | "MEMBER";
+            /** Format: date-time */
+            joinedAt: string;
+        };
+        FamilyGroup: {
+            groupId: string;
+            ownerUserId: string;
+            /** @enum {string} */
+            plan: "SUPER" | "MAX";
+            /** @enum {string} */
+            status: "ACTIVE" | "ENDED";
+            members: components["schemas"]["FamilyMember"][];
+            inviteCode: string | null;
+            revision: number;
+        };
+        FamilyCreateRequest: {
+            /** @enum {string} */
+            plan: "SUPER" | "MAX";
+        };
+        FamilyJoinRequest: {
+            inviteCode: string;
+        };
+        GiftRequest: {
+            recipientUserId: string;
+            /** @enum {string} */
+            plan: "SUPER" | "MAX";
+            durationDays: number;
+            note: string | null;
+            /** @enum {string} */
+            simulationOutcome: "PENDING" | "ACTIVE" | "GRACE" | "HOLD" | "CANCELED" | "EXPIRED" | "REVOKED" | "REFUNDED";
+        };
+        Gift: {
+            giftId: string;
+            senderId: string;
+            recipientId: string;
+            /** @enum {string} */
+            plan: "SUPER" | "MAX";
+            durationDays: number;
+            note: string | null;
+            /** @enum {string} */
+            status: "PENDING" | "DELIVERED" | "REDEEMED" | "REFUNDED";
+            deliveredAt: string | null;
+        };
+        Referral: {
+            code: string;
+            accepted: number;
+            qualified: number;
+            rewarded: number;
+            /** Format: date-time */
+            asOf: string;
+        };
+        ReferralRedeemRequest: {
+            code: string;
+        };
+        PromoRedeemRequest: {
+            code: string;
+        };
+        PromoRedemption: {
+            redemptionId: string;
+            promoId: string;
+            /** @enum {string} */
+            rewardType: "SUPER_DAYS" | "GEMS" | "ITEM";
+            superDays: number | null;
+            gems: number | null;
+            itemId: string | null;
+            itemQuantity: number | null;
+            entitlement: components["schemas"]["Entitlement"] | null;
+            /** Format: date-time */
+            redeemedAt: string;
+        };
+        AdEventRequest: {
+            /** Format: uuid */
+            adEventId: string;
+            /** @enum {string} */
+            placement: "LESSON_END_INTERSTITIAL" | "REWARDED_GEMS" | "REWARDED_ENERGY_REFILL";
+            /** @enum {string} */
+            kind: "IMPRESSION" | "REWARDED_COMPLETION";
+        };
+        AdEvent: {
+            /** Format: uuid */
+            adEventId: string;
+            /** @enum {string} */
+            placement: "LESSON_END_INTERSTITIAL" | "REWARDED_GEMS" | "REWARDED_ENERGY_REFILL";
+            /** @enum {string} */
+            kind: "IMPRESSION" | "REWARDED_COMPLETION";
+            learningDay: string;
+            dailyIndex: number;
+            remainingToday: number;
+            rewardGems: number;
+            rewardEnergy: number;
+            gems: number;
+            energyGrantPending: boolean;
+        };
+        ConversationFeedback: {
+            summary: string;
+            strengths: string[];
+            improvements: string[];
+            usedWords: string[];
+        };
+        Conversation: {
+            conversationId: string;
+            /** @enum {string} */
+            kind: "ROLEPLAY" | "VIDEO_CALL";
+            courseId: string;
+            scenarioId: string;
+            voiceSessionId: string | null;
+            /** @enum {string} */
+            status: "ACTIVE" | "COMPLETED" | "ABANDONED" | "EXPIRED";
+            /** Format: date-time */
+            startedAt: string;
+            completedAt: string | null;
+            turnCount: number;
+            wordsUsed: number;
+            stars: number;
+            xpAwarded: number;
+            feedback: components["schemas"]["ConversationFeedback"] | null;
+            /** Format: date-time */
+            expiresAt: string;
+        };
+        ConversationPage: {
+            items: components["schemas"]["Conversation"][];
+            nextCursor: string | null;
+            /** Format: date-time */
+            asOf: string;
+        };
+        ConversationStartRequest: {
+            /** @enum {string} */
+            kind: "ROLEPLAY" | "VIDEO_CALL";
+            courseId: string;
+            scenarioId: string;
+            voiceSessionId: string | null;
+        };
+        ConversationCompleteRequest: {
+            /** @enum {string} */
+            endReason: "COMPLETED" | "USER_EXIT";
+        };
+        AiPracticeEventPayload: {
+            completionId: string;
+            userId: string;
+            /** @enum {string} */
+            kind: "ROLEPLAY" | "VIDEO_CALL";
+            courseId: string;
+            scenarioId: string;
+            xp: number;
+            wordsUsed: number;
+            stars: number;
+        };
+        EntitlementEventPayload: {
+            userId: string;
+            /** @enum {string} */
+            plan: "FREE" | "SUPER" | "MAX";
+            /** @enum {string} */
+            status: "ACTIVE" | "GRACE" | "HOLD" | "CANCELED" | "EXPIRED" | "REVOKED";
+            expiresAt: string | null;
+            entitlementRevision: number;
+        };
+        EnergyGrantedEventPayload: {
+            operationId: string;
+            userId: string;
+            amount: number | null;
+            refillToCapacity: boolean;
+            /** @enum {string} */
+            reason: "SHOP" | "CHEST" | "FRIEND" | "QUEST" | "AD" | "PROMO";
         };
     };
     responses: {
@@ -3358,6 +4654,1572 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Watermark"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    getEnergy: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Energy"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    switchCourse: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                courseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EnrollmentCommandRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Enrollment"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    resetCourse: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                courseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EnrollmentCommandRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Enrollment"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    removeCourse: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                courseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    listMistakes: {
+        parameters: {
+            query: {
+                courseId: string;
+                includeResolved?: boolean;
+                cursor?: components["parameters"]["Cursor"];
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MistakePage"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    listWords: {
+        parameters: {
+            query: {
+                courseId: string;
+                sort?: "RECENT" | "ALPHABETICAL";
+                cursor?: components["parameters"]["Cursor"];
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WordPage"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    listActivityProgress: {
+        parameters: {
+            query: {
+                courseId: string;
+                kind?: "STORY" | "ADVENTURE" | "RADIO" | "SIDE_QUEST" | "CLASH" | "UNIT_REVIEW";
+                cursor?: components["parameters"]["Cursor"];
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityProgressPage"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    getPreferences: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preferences"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    updatePreferences: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreferencesPatch"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preferences"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    sendFeedback: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedbackRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    listShop: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Shop"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    buyItem: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShopPurchaseRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShopPurchase"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    activateBoost: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BoostRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Boost"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    repairStreak: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StreakRepairRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rewards"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    listFriendStreaks: {
+        parameters: {
+            query?: {
+                cursor?: components["parameters"]["Cursor"];
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FriendStreakPage"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    inviteFriendStreak: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FriendStreakInviteRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FriendStreak"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    respondFriendStreak: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                pairId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FriendStreakResponseRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FriendStreak"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    sendInteraction: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InteractionRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Interaction"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    blockUser: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BlockRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    unblockUser: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    reportUser: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserReportRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    joinClassroom: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClassroomJoinRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClassroomMembership"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    leaveClassroom: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                classroomId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    getYearReview: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path: {
+                year: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YearReview"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    getLeagueResult: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeagueResult"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    markLeagueResultSeen: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LeagueResultSeenRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    getEntitlement: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Entitlement"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    verifyPurchase: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PurchaseRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Purchase"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    billingNotification: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "X-Service-Key-Id": string;
+                "X-Service-Timestamp": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingNotification"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    createFamily: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FamilyCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyGroup"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    joinFamily: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                groupId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FamilyJoinRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyGroup"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    removeFamilyMember: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                groupId: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyGroup"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    sendGift: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GiftRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Gift"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    redeemGift: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                giftId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Entitlement"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    getReferral: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Referral"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    redeemReferral: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReferralRedeemRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    redeemPromoCode: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PromoRedeemRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromoRedemption"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    recordAdEvent: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdEventRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdEvent"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    listConversations: {
+        parameters: {
+            query?: {
+                kind?: "ROLEPLAY" | "VIDEO_CALL";
+                scenarioId?: string;
+                cursor?: components["parameters"]["Cursor"];
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationPage"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    startConversation: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationStartRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Conversation"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    completeConversation: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                conversationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationCompleteRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Conversation"];
                 };
             };
             400: components["responses"]["Failure"];
