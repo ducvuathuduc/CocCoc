@@ -273,6 +273,57 @@
         "specs/top-bar-bottom-nav.md"
       ],
       "remaining": "Implement typed shell content, preserve icon proportions and \u226548dp stats; verify repository overrides, tab state, motion, 360/430 text1/2, compare and commit."
+    },
+    {
+      "taskId": "P1-CONTRACT-001",
+      "phase": "Phase1 toolchain / adapters / CI (Phase B slice)",
+      "owner": "subagent b-contract",
+      "branch": "pb/contract",
+      "worktree": "/workspace/projects/25b10038-9b3c-4e9b-bbe5-2053de7f453d/wt/b-contract",
+      "dependencyGateReceipts": [
+        "docs/agent/IMPLEMENTATION_PLAN.md#P1-CONTRACT-001",
+        "docs/api/openapi.yaml",
+        "origin/main 57fbc06"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/core/api",
+        "apps/mobile/test/api_contracts_round_trip_test.dart",
+        "packages/api_contracts/fixtures",
+        "tools/blueprint/generate-dart-contracts.mjs",
+        "tools/blueprint/validate-schemas.mjs",
+        "package.json#scripts.contracts:check",
+        "package.json#scripts.contracts:dart",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": [
+        "retain OpenAPI-derived TS wire types",
+        "schema-mapped Dart DTO round-trips",
+        "malformed/wrong unions rejected",
+        "generation idempotent"
+      ],
+      "requirementCoverage": "All 94 components.schemas have generated Dart DTOs (102 classes incl. inline objects/union variants); fromJson validates against the verbatim embedded schema with Ajv semantics before decoding. No UI/repository wiring; openapi.yaml, generated.ts and pubspec/pnpm locks unchanged.",
+      "interfaces": [
+        "ContractValidator",
+        "ContractViolation",
+        "JsonPresence",
+        "apiContractDecoders",
+        "<Schema>.fromJson/toJson"
+      ],
+      "testCommand": "pnpm contracts:check; cd apps/mobile && flutter test --no-pub test/api_contracts_round_trip_test.dart && flutter analyze --no-pub; pnpm backend:verify",
+      "status": "DONE",
+      "evidence": [
+        "packages/api_contracts/fixtures/schema-cases.json",
+        "apps/mobile/test/api_contracts_round_trip_test.dart",
+        "tools/blueprint/generate-dart-contracts.mjs"
+      ],
+      "checks": {
+        "contractsCheck": "PASS: Ajv compiledSchemas 94, fixtureCases 49 (30 pre-existing cases unchanged + 19 added); Dart generation --check up to date",
+        "dartRoundTripTests": "PASS 65/65 (49 shared fixture cases + coverage/verbatim-schema/typed-union/malformed/presence tests)",
+        "ajvDartDifferential": "PASS ad-hoc (not committed): 6669 single-field mutations of valid fixtures, 0 Ajv/Dart verdict mismatches, all 1144 valid mutations round-trip",
+        "flutterAnalyze": "PASS: flutter analyze --no-pub (apps/mobile) No issues found",
+        "backendVerify": "PASS: pnpm backend:verify 16/16 node tests, status PASS"
+      },
+      "limitations": "Contract/unit evidence only; no device, network or live-provider proof. Enum-valued fields are typed String (membership enforced by the validator), date-time fields stay wire strings. Generated Dart is emitted pre-formatted by the generator, not dart format."
     }
   ]
 }
