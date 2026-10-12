@@ -741,8 +741,11 @@ class _FastCalls implements CallRepository, CallTurns {
   }
 
   @override
-  Future<CallTurnResult> speakTurn(String sessionId, int cursor) =>
-      inner.speakTurn(sessionId, cursor);
+  Future<CallTurnResult> speakTurn(
+    String sessionId,
+    int cursor, {
+    Uint8List? wav,
+  }) => inner.speakTurn(sessionId, cursor, wav: wav);
 
   @override
   Future<void> completeCall(String sessionId, int linesSpoken) =>

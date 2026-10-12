@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:crypto/crypto.dart';
+
 import '../../../core/api/api_contracts.dart' as wire;
 import '../../../core/api/client/active_course.dart';
 import '../../../core/api/client/api_endpoints.g.dart';
