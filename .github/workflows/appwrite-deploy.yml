@@ -1,0 +1,47 @@
+name: Appwrite deploy (test project, manual)
+# Manual dispatch only: never runs on push/PR. Deploys the three service bundles to the reviewed
+# TEST project with the same script used locally (pnpm appwrite:apply / appwrite:deploy).
+# Required repository secret: APPWRITE_TEST_API_KEY (project key with functions/variables/project
+# scopes). The HMAC keyrings are generated server-side by the apply step and never leave Appwrite.
+on:
+  workflow_dispatch:
+    inputs:
+      services:
+        description: 'Comma-separated services to deploy (learning,progress,ai)'
+        required: true
+        default: 'learning,progress,ai'
+      apply_settings:
+        description: 'Run pnpm appwrite:apply (functions/auth/platforms/variables) before deploying'
+        type: boolean
+        default: true
+permissions:
+  contents: read
+concurrency:
+  group: appwrite-deploy-test
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: appwrite-test
+    env:
+      APPWRITE_PROJECT_ENV: test
+      ALLOW_APPWRITE_APPLY: reviewed-test-project
+      APPWRITE_ENDPOINT: https://sgp.cloud.appwrite.io/v1
+      APPWRITE_PROJECT_ID: 6acc656d0025cc57bd81
+      APPWRITE_API_KEY: ${{ secrets.APPWRITE_TEST_API_KEY }}
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22.23.3
+      - run: npm install --global pnpm@10.15.0 appwrite-cli@28.3.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm backend:verify
+      - run: pnpm appwrite:plan && pnpm appwrite:test
+      - name: Configure Appwrite CLI (key from secret, never echoed)
+        run: appwrite client --endpoint "$APPWRITE_ENDPOINT" --project-id "$APPWRITE_PROJECT_ID" --key "$APPWRITE_API_KEY" > /dev/null
+      - if: ${{ inputs.apply_settings }}
+        run: pnpm appwrite:apply
+      - run: pnpm appwrite:deploy -- --service "${{ inputs.services }}" --no-build
+      - run: pnpm appwrite:check-live
