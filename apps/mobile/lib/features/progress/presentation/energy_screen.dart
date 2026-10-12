@@ -4,16 +4,43 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
-import '../../learning/application/learning_controller.dart';
+import '../application/energy_controller.dart';
+import '../application/preview_controller.dart';
+import '../domain/energy_offer.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../application/extended_controller.dart';
 import 'hub_screens.dart';
 
 class EnergyScreen extends ConsumerWidget {
   const EnergyScreen({super.key});
+
+  Future<void> _refill(
+    BuildContext context,
+    WidgetRef ref,
+    EnergyOffer offer, {
+    bool adRewarded = false,
+  }) async {
+    final controller = ref.read(energyControllerProvider.notifier);
+    await controller.refill(offer, adRewarded: adRewarded);
+    if (!context.mounted || controller.error == null) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(controller.error!),
+        action: SnackBarAction(
+          label: ref.read(energyRepositoryProvider).retryLabel,
+          onPressed: () => _refill(context, ref, offer, adRewarded: adRewarded),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(extendedControllerProvider);
+    ref.watch(energyControllerProvider);
+    final repository = ref.watch(energyRepositoryProvider);
+    final offers = ref.watch(energyOffersProvider);
+    final wallet = ref.watch(previewWalletProvider);
     final color = state.unlimited
         ? const Color(0xFFBD4CF5)
         : const Color(0xFFFF80CE);
@@ -25,7 +52,7 @@ class EnergyScreen extends ConsumerWidget {
           const ReferenceArt(LearningArt.gem, width: 22, height: 26),
           const SizedBox(width: 6),
           Text(
-            '${ref.watch(learningStateProvider).gems}',
+            '$wallet',
             style: const TextStyle(
               color: LearningColors.blue,
               fontWeight: FontWeight.w700,
@@ -60,7 +87,9 @@ class EnergyScreen extends ConsumerWidget {
                     ),
                     Center(
                       child: Text(
-                        state.unlimited ? '∞' : '${state.energy} / 25',
+                        state.unlimited
+                            ? '∞'
+                            : '${state.energy} / ${repository.capacity}',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -147,62 +176,108 @@ class EnergyScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 24),
-        for (final item in const [
-          ('25', 'Recharge', '500'),
-          ('5', '+5 energy', 'WATCH AD'),
-          ('2', '+2 energy', 'FREE'),
-        ]) ...[
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: ReferenceColors.border, width: 2),
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
-              child: Row(
-                children: [
-                  Container(
-                    width: 46,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: ReferenceColors.disabled,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        item.$1,
-                        style: headingStyle.copyWith(color: Colors.white),
-                      ),
-                    ),
+        for (final item in offers) ...[
+          GestureDetector(
+            onTap: ref.read(energyControllerProvider.notifier).available(item)
+                ? () async {
+                    var rewarded = false;
+                    if (item.kind == EnergyRefillKind.ad) {
+                      final controller = ref.read(
+                        energyControllerProvider.notifier,
+                      );
+                      if (!controller.beginAd(item)) return;
+                      try {
+                        rewarded =
+                            await context.push<bool>(
+                              '/ad?placement=REWARDED_ENERGY_REFILL',
+                            ) ==
+                            true;
+                      } finally {
+                        controller.endAd();
+                      }
+                      if (!context.mounted) return;
+                    }
+                    await _refill(context, ref, item, adRewarded: rewarded);
+                  }
+                : null,
+            child: Semantics(
+              button: true,
+              enabled: ref
+                  .read(energyControllerProvider.notifier)
+                  .available(item),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: ReferenceColors.border, width: 2),
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 17,
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Text(
-                      item.$2,
-                      style: headingStyle.copyWith(
-                        fontSize: 19,
-                        color: ReferenceColors.disabled,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 46,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color:
+                              ref
+                                  .read(energyControllerProvider.notifier)
+                                  .available(item)
+                              ? LearningColors.blue
+                              : ReferenceColors.disabled,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${item.amount}',
+                            style: headingStyle.copyWith(color: Colors.white),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Flexible(
-                    child: Text(
-                      item.$3,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: ReferenceColors.disabled,
-                        fontWeight: FontWeight.w700,
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          item.title,
+                          style: headingStyle.copyWith(
+                            fontSize: 19,
+                            color:
+                                ref
+                                    .read(energyControllerProvider.notifier)
+                                    .available(item)
+                                ? LearningColors.blue
+                                : ReferenceColors.disabled,
+                          ),
+                        ),
                       ),
-                    ),
+                      Flexible(
+                        child: Text(
+                          item.action,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color:
+                                ref
+                                    .read(energyControllerProvider.notifier)
+                                    .available(item)
+                                ? LearningColors.blue
+                                : ReferenceColors.disabled,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
           const SizedBox(height: 16),
         ],
-        const Text(
-          'Your energy is full.',
+        Text(
+          state.energy >= repository.capacity || state.unlimited
+              ? repository.fullMessage
+              : repository.partialMessage,
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 15, color: ReferenceColors.muted),
         ),

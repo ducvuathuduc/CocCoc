@@ -33,6 +33,16 @@ class EnergyController extends Notifier<bool> {
         (offer.cost == 0 || ref.read(previewWalletProvider) >= offer.cost);
   }
 
+  bool beginAd(EnergyOffer offer) {
+    if (offer.kind != EnergyRefillKind.ad || !available(offer)) return false;
+    state = true;
+    return true;
+  }
+
+  void endAd() {
+    if (ref.mounted) state = false;
+  }
+
   Future<void> refill(EnergyOffer offer, {bool adRewarded = false}) async {
     error = null;
     if (!available(offer) ||
