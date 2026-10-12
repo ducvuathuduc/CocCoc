@@ -29,6 +29,7 @@ export { httpDeliver, createImmediateRelay } from '../application/relay.js';
 export { loadLocalContent } from './local-content.js';
 export { withRequestScope } from '../http/scope.js';
 export { createContentRepository } from '../content/repository.js';
+export { createStorageContentFiles, downloadText } from '../content/storage-files.js';
 export { createDisabledLearningPersistence } from '../persistence/disabled.js';
 export { createKeyring, signServiceRequest } from '../../../shared/src/service-hmac.js';
 export { devKey } from '../../../shared/src/testing/dev-keyring.js';

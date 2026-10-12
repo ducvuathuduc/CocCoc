@@ -35,6 +35,9 @@ export function oneOf<T extends string>(value: unknown, field: string, values: r
     ? (value as T)
     : fail(field);
 }
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export const uuid = (value: unknown, field: string): string =>
+  typeof value === 'string' && UUID.test(value) ? value.toLowerCase() : fail(field);
 export const sha = (value: unknown, field: string): string =>
   typeof value === 'string' && SHA.test(value) ? value : fail(field);
 export function text(value: unknown, field: string, max: number): string {

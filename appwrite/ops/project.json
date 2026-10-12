@@ -73,8 +73,10 @@
         "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
         "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
         "COC_DATABASE_ID": "cocenglish",
-        "COC_LEARNING_PERSISTENCE": "disabled",
-        "COC_LEARNING_ADMITTED": "not-admitted"
+        "COC_LEARNING_PERSISTENCE": "appwrite",
+        "COC_LEARNING_ADMITTED": "reviewed-cloud-gate",
+        "COC_PROGRESS_URL": "https://coccoc-progress.sgp.appwrite.run",
+        "COC_CONTENT_PUBLIC_KEYS": "[{\"keyId\":\"dev-content-1\",\"publicKeyHex\":\"d3e72a89d3c49e3a14ae05eeccd1de6c4b6688e4f38305409a9d7916b2d315c4\"}]"
       },
       "secrets": ["COC_SERVICE_KEYS"],
       "keyringSenders": ["learning", "progress"]

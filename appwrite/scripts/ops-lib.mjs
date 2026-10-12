@@ -25,6 +25,7 @@ export const KEYRING_SENDERS = {
 };
 export const MANAGED_RUNTIME_VARS = ['BUILD_ID'];
 const SECRETISH = /(KEY|SECRET|TOKEN|PASSWORD|PRIVATE)/;
+const PUBLIC_KEY_VARS = ['COC_CONTENT_PUBLIC_KEYS'];
 const CRON_FIELD = /^(\*|\d+|\d+-\d+|\*\/\d+|\d+(,\d+)+)$/;
 
 export function functionByService(config) {
@@ -113,6 +114,8 @@ export function validateOps(config, ops, context = {}) {
     if (decl.bundle !== `services/${service}/dist/function.mjs`)
       fail(`${id}: bundle must be services/${service}/dist/function.mjs`);
     for (const [key, value] of Object.entries(decl.variables ?? {})) {
+      // Ed25519 content-verification PUBLIC keys (Learning trust anchor) are not secrets.
+      if (PUBLIC_KEY_VARS.includes(key)) continue;
       if (SECRETISH.test(key))
         fail(`${id}: variable ${key} looks secret; declare it under secrets`);
       if (/[0-9a-f]{40,}/i.test(String(value)))

@@ -2,10 +2,11 @@
 // energy.granted.v1 refills/adds energy; entitlement.changed.v1 projects the paid plan onto
 // l_energy (newest revision wins). The l_inbox row and the effect commit together; a duplicate
 // replays and a changed payload under the same eventId is IDEMPOTENCY_CONFLICT.
-// account.deleted.v1 stays SERVICE_NOT_CONFIGURED (503, the relay retries) until the Learning
-// purge task ships; it is never acknowledged without its effect.
+// account.deleted.v1 purges the user's Learning rows and acknowledges with account.purged.v1
+// (application/deletion.ts); it is never acknowledged without its effect.
 import { ServiceError } from '../../../shared/src/errors.js';
 import type { BusinessEvent, EventConsumer } from '../../../shared/src/ports.js';
+import { applyAccountDeletion } from './deletion.js';
 import type { LearningDeps } from './deps.js';
 import {
   applyEnergyGrant,
@@ -98,6 +99,9 @@ export function createLearningEventConsumer(deps: LearningDeps): EventConsumer {
       if (event.type === 'entitlement.changed.v1') {
         const change = parseEntitlement(event);
         return deps.persistence.applyInboxEvent(entry, (tx) => applyEntitlement(deps, tx, change));
+      }
+      if (event.type === 'account.deleted.v1') {
+        return applyAccountDeletion(deps, event, context.bodyHash);
       }
       throw new ServiceError('SERVICE_NOT_CONFIGURED', { details: { type: event.type } });
     },

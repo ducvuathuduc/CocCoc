@@ -32,9 +32,24 @@ export interface LessonCompletedEvent {
   };
 }
 
+/** account.purged.v1: Learning's acknowledgement that a deleted account's rows are gone. */
+export interface AccountPurgedEvent {
+  eventId: string;
+  type: 'account.purged.v1';
+  schemaVersion: 1;
+  producer: 'learning';
+  aggregateId: string;
+  occurredAt: string;
+  requestId: string;
+  payload: { userId: string; requestId: string; owner: 'learning' };
+}
+
+/** Events Learning produces into l_outbox (all delivered to Progress /internal/events). */
+export type LearningOutboxEvent = LessonCompletedEvent | AccountPurgedEvent;
+
 export function stageOutboxEvent(
   tx: LearningTransaction,
-  event: LessonCompletedEvent,
+  event: LearningOutboxEvent,
   nowMs: number,
 ): void {
   const at = iso(nowMs);
@@ -59,7 +74,7 @@ export function stageOutboxEvent(
 
 export type DeliveryOutcome = 'ack' | 'retry' | 'dead';
 /** Deliver one event; map the receiver's answer to an outcome. Must not throw for HTTP errors. */
-export type Deliver = (event: LessonCompletedEvent) => Promise<DeliveryOutcome>;
+export type Deliver = (event: LearningOutboxEvent) => Promise<DeliveryOutcome>;
 
 export interface DispatchReport {
   leased: number;
@@ -192,7 +207,7 @@ export async function dispatchOutbox(
     if (options.deadlineMs !== undefined && deps.nowMs() - started > options.deadlineMs) break;
     let outcome: DeliveryOutcome;
     try {
-      outcome = await deliver(JSON.parse(String(row['payloadJson'])) as LessonCompletedEvent);
+      outcome = await deliver(JSON.parse(String(row['payloadJson'])) as LearningOutboxEvent);
     } catch {
       outcome = 'retry';
     }

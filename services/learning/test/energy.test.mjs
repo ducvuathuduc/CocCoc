@@ -242,18 +242,7 @@ test('energy.granted.v1 over the signed inbox: refill once, substitution rejecte
     kit.devKey('learning'),
   );
   assert.equal(forged.status, 403);
-  // account.deleted.v1 is not acknowledged without its (not yet shipped) purge effect.
-  const deletion = await h.signed('/internal/events', {
-    eventId: randomUUID(),
-    type: 'account.deleted.v1',
-    schemaVersion: 1,
-    producer: 'progress',
-    aggregateId: h.user,
-    occurredAt: '2026-10-12T08:00:00.000Z',
-    requestId: randomUUID(),
-    payload: { userId: h.user, requestId: randomUUID() },
-  });
-  assert.equal(deletion.status, 503);
+  // account.deleted.v1 (purge + account.purged.v1) is covered by deletion.test.mjs.
 });
 
 test('entitlement.changed.v1: SUPER makes energy UNLIMITED (no spend); older revision ignored; expiry restores LIMITED', async () => {

@@ -18,6 +18,7 @@ import { enrollCourse, enrollmentCommand, getPath } from '../application/enrollm
 import { listActivityProgress, listMistakes, listWords } from '../application/practice.js';
 import { createLearningEventConsumer } from '../application/events.js';
 import { dispatchOutbox, MAX_BATCH, outboxWatermark } from '../application/outbox.js';
+import { syncOfflineCompletion } from '../application/offline.js';
 import { createReport } from '../application/reports.js';
 import { getReview } from '../application/review.js';
 import {
@@ -195,6 +196,56 @@ export function learningRoutes(deps: LearningDeps): Route[] {
           c.requestId,
         ),
       );
+    }),
+    user('POST', '/v1/offline-completions', async (c) => {
+      const uid = userId(c);
+      const fields = [
+        'operationId',
+        'localCompletionId',
+        'courseId',
+        'lessonId',
+        'lessonVersion',
+        'bundleHash',
+        'expectedEnrollmentRevision',
+        'answers',
+      ];
+      const b = v.object(c.body, 'body', fields, fields);
+      if (!Array.isArray(b['answers']) || b['answers'].length > 60)
+        throw new ServiceError('VALIDATION_ERROR', { details: { field: 'answers' } });
+      const answerFields = ['exerciseId', 'attemptOrdinal', 'answer', 'assisted', 'substituted'];
+      const body = {
+        operationId: v.uuid(b['operationId'], 'operationId'),
+        localCompletionId: v.uuid(b['localCompletionId'], 'localCompletionId'),
+        courseId: v.id(b['courseId'], 'courseId'),
+        lessonId: v.id(b['lessonId'], 'lessonId'),
+        lessonVersion: v.id(b['lessonVersion'], 'lessonVersion'),
+        bundleHash: v.sha(b['bundleHash'], 'bundleHash'),
+        expectedEnrollmentRevision: v.int(
+          b['expectedEnrollmentRevision'],
+          'expectedEnrollmentRevision',
+          0,
+          2147483647,
+        ),
+        answers: (b['answers'] as unknown[]).map((raw, i) => {
+          const a = v.object(raw, `answers[${i}]`, answerFields, answerFields);
+          return {
+            exerciseId: v.id(a['exerciseId'], `answers[${i}].exerciseId`),
+            attemptOrdinal: v.int(a['attemptOrdinal'], `answers[${i}].attemptOrdinal`, 0, 2),
+            answer: v.answer(a['answer'], `answers[${i}].answer`),
+            assisted: v.bool(a['assisted'], `answers[${i}].assisted`),
+            substituted: v.bool(a['substituted'], `answers[${i}].substituted`),
+          };
+        }),
+      };
+      const result = await syncOfflineCompletion(
+        deps,
+        uid,
+        body,
+        idempotencyKey(),
+        hash('syncOfflineCompletion', body),
+        c.requestId,
+      );
+      return { status: result.statusCode, body: result.response };
     }),
     user('POST', '/v1/sessions/{sessionId}/abandon', async (c) => {
       const uid = userId(c);

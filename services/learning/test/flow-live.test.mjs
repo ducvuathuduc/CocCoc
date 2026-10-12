@@ -1,5 +1,5 @@
 // Gated LIVE end-to-end: the real Learning router + use cases on the durable Appwrite adapter
-// (TEST project), committed content files read locally. Publishes vi_en/v1 only if the TEST project
+// (TEST project), committed content files read locally. Publishes vi_en/v2 only if the TEST project
 // has no vi_en course yet (and then removes it), enrolls a synthetic user, runs a full lesson with
 // a wrong answer + retry, two-device conflict, completion with replay, and checks the outbox row.
 // Enable: COC_LIVE_LEARNING_APPWRITE=1 APPWRITE_PROJECT_ID=... APPWRITE_API_KEY=... [NODE_USE_ENV_PROXY=1]
@@ -47,7 +47,7 @@ after(async () => {
   if (publishedHere) {
     const kit = await loadKit('flow-live');
     await del('l_courses', kit.ids.course('vi_en'));
-    await del('l_content_versions', kit.ids.contentVersion('vi_en', 'v1'));
+    await del('l_content_versions', kit.ids.contentVersion('vi_en', 'v2'));
     const receipts = await tables
       .listRows({
         databaseId,
