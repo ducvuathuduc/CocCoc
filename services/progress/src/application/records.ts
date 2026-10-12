@@ -212,3 +212,41 @@ export function publicProfileView(
     followStatus,
   };
 }
+
+/** Stage an outbox event (Progress -> Learning/AI); the relay delivers it signed. */
+export function putOutbox(
+  tx: ProgressTx,
+  type: 'account.deleted.v1' | 'entitlement.changed.v1' | 'energy.granted.v1',
+  aggregateId: string,
+  payload: Record<string, unknown>,
+  eventId: string,
+): void {
+  tx.put('p_outbox', ids.outbox(eventId), {
+    eventId,
+    type,
+    schemaVersion: 1,
+    aggregateId,
+    occurredAt: tx.nowIso,
+    payloadJson: JSON.stringify(payload),
+    attempt: 0,
+    nextAttemptAt: tx.nowIso,
+    leaseOwner: null,
+    leaseUntil: null,
+    status: 'PENDING',
+    ackAt: null,
+  });
+}
+
+export function freeEntitlement(userId: string): Row {
+  return {
+    userId,
+    plan: 'FREE',
+    source: 'NONE',
+    status: 'ACTIVE',
+    expiresAt: null,
+    autoRenew: false,
+    familyGroupId: null,
+    purchaseId: null,
+    giftId: null,
+  };
+}

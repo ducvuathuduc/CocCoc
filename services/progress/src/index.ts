@@ -1,4 +1,5 @@
 import { createHostedHandler } from '../../shared/src/transport.js';
+import { setCodeSecret } from './application/commerce.js';
 import { progressWiring, scopeProgressHandler } from './http/wiring.js';
 import { createAppwriteProgressPersistence } from './persistence/appwrite.js';
 import { createDisabledProgressPersistence } from './persistence/disabled.js';
@@ -22,6 +23,7 @@ function hostedPersistence(env: Record<string, string | undefined>): ProgressPer
   return createDisabledProgressPersistence();
 }
 
+setCodeSecret(process.env['COC_PROGRESS_CODE_SECRET']);
 const persistence = hostedPersistence(process.env);
 export default scopeProgressHandler(
   createHostedHandler('progress', persistence, process.env, progressWiring(persistence)),

@@ -5,12 +5,13 @@
 import type { FunctionContext, ServiceWiring } from '../../../shared/src/transport.js';
 import { createProgressEventConsumer } from '../application/consume-events.js';
 import type { ProgressPersistence } from '../persistence/port.js';
+import { extendedRoutes } from './routes-extended.js';
 import { PROGRESS_ROUTE_TEMPLATES, progressRoutes } from './routes.js';
 import { withRequestScope } from './scope.js';
 
 export function progressWiring(persistence: ProgressPersistence): ServiceWiring {
   return {
-    routes: progressRoutes(persistence),
+    routes: [...progressRoutes(persistence), ...extendedRoutes(persistence)],
     eventConsumer: createProgressEventConsumer(persistence),
   };
 }

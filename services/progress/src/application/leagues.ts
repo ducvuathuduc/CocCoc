@@ -3,9 +3,20 @@
 // cutoff. One cohort per transaction (<= 30 members + 30 league profiles + run row).
 import { ServiceError } from '../../../shared/src/errors.js';
 import type { ProgressPersistence, ProgressTx, Row } from '../persistence/port.js';
-import { COHORT_SIZE, movementFor, nextTier, rankMembers } from '../domain/league.js';
+import {
+  COHORT_SIZE,
+  MIN_COHORT_FOR_MOVES,
+  movementFor,
+  nextTier,
+  rankMembers,
+} from '../domain/league.js';
 import { leagueWeek, leagueWeekEnd } from '../domain/time.js';
+import { creditGems } from './commerce.js';
 import { editable, ids, operationId, requireProfile } from './records.js';
+
+/** P9-LEAGUE-002: gems for the top three of a full cohort, granted once at settlement. */
+export const PODIUM_GEMS = [20, 15, 10] as const;
+const OUTCOME = { PROMOTE: 'PROMOTED', DEMOTE: 'DEMOTED', STAY: 'STAYED' } as const;
 
 export const MAX_COHORTS_PER_TIER = 1000;
 const MAX_SETTLE_DELAY_MS = 24 * 60 * 60 * 1000;
@@ -218,6 +229,18 @@ export async function settleLeagueWeek(
         const leagueProfile = await tx.get('p_league_profiles', profileId);
         if (leagueProfile && leagueProfile['lastSettledWeekId'] !== weekId) {
           const newTier = nextTier(tier, movement);
+          const podium =
+            ranked.length >= MIN_COHORT_FOR_MOVES ? (PODIUM_GEMS[member.rank - 1] ?? 0) : 0;
+          if (podium > 0) {
+            await creditGems(
+              tx,
+              member.userId,
+              podium,
+              'LEAGUE',
+              operationId('league-podium', weekId, member.userId),
+              `league_${weekId}`,
+            );
+          }
           tx.put('p_league_profiles', profileId, {
             ...editable(leagueProfile),
             tier: newTier,
@@ -232,6 +255,8 @@ export async function settleLeagueWeek(
               tier: newTier,
               rank: member.rank,
               movement,
+              outcome: OUTCOME[movement],
+              gemsAwarded: podium,
             }),
           });
         }

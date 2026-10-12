@@ -17,6 +17,7 @@ import {
   operationId,
   profileView,
   promoteZone,
+  putOutbox,
   requireProfile,
 } from './records.js';
 
@@ -214,20 +215,6 @@ export async function requestDeletion(tx: ProgressTx, userId: string) {
       deletedAt: tx.nowIso,
     });
   }
-  const eventId = randomUUID();
-  tx.put('p_outbox', ids.outbox(eventId), {
-    eventId,
-    type: 'account.deleted.v1',
-    schemaVersion: 1,
-    aggregateId: userId,
-    occurredAt: tx.nowIso,
-    payloadJson: JSON.stringify({ userId, requestId }),
-    attempt: 0,
-    nextAttemptAt: tx.nowIso,
-    leaseOwner: null,
-    leaseUntil: null,
-    status: 'PENDING',
-    ackAt: null,
-  });
+  putOutbox(tx, 'account.deleted.v1', userId, { userId, requestId }, randomUUID());
   return { requestId, status: 'REQUESTED' as const, requestedAt: tx.nowIso };
 }

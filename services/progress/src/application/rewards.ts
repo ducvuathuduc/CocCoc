@@ -22,6 +22,7 @@ import { computeAward, isAward } from '../domain/lesson-xp.js';
 import { recomputeStreak, STREAK_WINDOW_DAYS } from '../domain/streak.js';
 import { addDays, leagueWeek, monthKey, zonedDay } from '../domain/time.js';
 import { activeBoostMultiplier } from './boosts.js';
+import { extendFriendStreaks } from './settings.js';
 import { editable, emptyRewards, ids, isDeleted, operationId, zoneAt } from './records.js';
 
 export type CompletionEvent = Extract<BusinessEvent, { type: 'lesson.completed.v1' }>;
@@ -103,7 +104,10 @@ export async function applyLessonCompletion(tx: ProgressTx, event: CompletionEve
   const rewards = editable((await tx.get('p_rewards', rewardsId)) ?? emptyRewards(userId));
   rewards['studyXp'] = Number(rewards['studyXp']) + award.studyXp;
   rewards['leagueXpLifetime'] = Number(rewards['leagueXpLifetime']) + award.leagueXp;
-  if (becameActive) await advanceStreak(tx, userId, rewards, day);
+  if (becameActive) {
+    await advanceStreak(tx, userId, rewards, day);
+    await extendFriendStreaks(tx, userId, day);
+  }
 
   const visible = Boolean(profile?.['publicOptIn']) && profile?.['ageBand'] !== 'CHILD';
   await grantAchievements(tx, userId, rewards, award.kind === 'FIRST', event, visible);

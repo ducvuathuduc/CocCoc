@@ -30,14 +30,14 @@ import {
 import type { ProgressPersistence, ProgressTx } from '../persistence/port.js';
 import { pathParam, requestScope, type RouteTemplate } from './scope.js';
 
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const ID = /^[A-Za-z0-9][A-Za-z0-9_.-]{0,35}$/;
+export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export const ID = /^[A-Za-z0-9][A-Za-z0-9_.-]{0,35}$/;
 
-function bad(field: string): never {
+export function bad(field: string): never {
   throw new ServiceError('VALIDATION_ERROR', { details: { field } });
 }
 
-function objectBody(
+export function objectBody(
   body: unknown,
   allowed: readonly string[],
   required: readonly string[] = [],
@@ -49,7 +49,7 @@ function objectBody(
   return value;
 }
 
-function parseQuery(query: string, allowed: readonly string[]): Record<string, string> {
+export function parseQuery(query: string, allowed: readonly string[]): Record<string, string> {
   const out: Record<string, string> = {};
   if (!query) return out;
   for (const part of query.split('&')) {
@@ -69,7 +69,7 @@ function parseQuery(query: string, allowed: readonly string[]): Record<string, s
   return out;
 }
 
-function paging(query: string): { offset: number; limit: number } {
+export function paging(query: string): { offset: number; limit: number } {
   const q = parseQuery(query, ['cursor', 'limit']);
   let limit = 20;
   if (q['limit'] !== undefined) {
@@ -81,7 +81,7 @@ function paging(query: string): { offset: number; limit: number } {
   return { offset: decodeCursor(q['cursor']), limit };
 }
 
-function subjectOf(context: RouteContext): string {
+export function subjectOf(context: RouteContext): string {
   const userId = context.subject?.userId;
   if (!userId) throw new ServiceError('AUTH_REQUIRED');
   return userId;
@@ -90,7 +90,7 @@ function subjectOf(context: RouteContext): string {
 type Effect = (tx: ProgressTx, userId: string) => Promise<{ status: number; body: unknown }>;
 
 /** Receipt-backed mutation: idempotency key is scoped by user + operation. */
-async function mutate(
+export async function mutate(
   store: ProgressPersistence,
   context: RouteContext,
   operation: string,
@@ -125,7 +125,7 @@ async function mutate(
   return { status: outcome.receipt.statusCode, body };
 }
 
-function receipt(context: RouteContext, status: 'completed' | 'replayed') {
+export function receipt(context: RouteContext, status: 'completed' | 'replayed') {
   return {
     status: 200,
     body: {
@@ -136,7 +136,7 @@ function receipt(context: RouteContext, status: 'completed' | 'replayed') {
   };
 }
 
-function read<R>(
+export function read<R>(
   store: ProgressPersistence,
   context: RouteContext,
   work: (tx: ProgressTx, userId: string) => Promise<R>,
@@ -187,11 +187,18 @@ function profilePatch(body: unknown): ProfilePatch {
   return patch;
 }
 
-function emptyBody(body: unknown): void {
+export function emptyBody(body: unknown): void {
   objectBody(body, []);
 }
 
 export const PROGRESS_ROUTE_TEMPLATES: readonly RouteTemplate[] = [
+  { method: 'POST', path: '/v1/friend-streaks/{pairId}/respond' },
+  { method: 'DELETE', path: '/v1/blocks/{userId}', noBody: true },
+  { method: 'DELETE', path: '/v1/classrooms/{classroomId}/membership', noBody: true },
+  { method: 'GET', path: '/v1/me/year-review/{year}' },
+  { method: 'POST', path: '/v1/family/{groupId}/members' },
+  { method: 'DELETE', path: '/v1/family/{groupId}/members/{userId}', noBody: true },
+  { method: 'POST', path: '/v1/gifts/{giftId}/redeem', noBody: true },
   { method: 'POST', path: '/v1/me/initialize', noBody: true },
   { method: 'POST', path: '/v1/me/freezes', noBody: true },
   { method: 'POST', path: '/v1/league/join', noBody: true },

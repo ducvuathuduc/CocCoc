@@ -22,3 +22,6 @@ export * from '../domain/lesson-xp.js';
 export * from '../domain/streak.js';
 export * from '../domain/time.js';
 export * from '../domain/league.js';
+export { createPromoCode, codeHash, derivedCode } from '../application/commerce.js';
+export { classroomCodeHash } from '../application/settings.js';
+export { PROGRESS_ROUTE_TEMPLATES } from '../http/routes.js';

@@ -82,6 +82,7 @@ export async function followUser(tx: ProgressTx, userId: string, targetId: strin
   if (targetId === userId) {
     throw new ServiceError('VALIDATION_ERROR', { details: { field: 'targetUserId' } });
   }
+  if (await isBlockedPair(tx, userId, targetId)) throw new ServiceError('USER_BLOCKED');
   if (!(await visibleProfile(tx, userId, targetId))) throw new ServiceError('PROFILE_UNAVAILABLE');
   const id = ids.follow(userId, targetId);
   const existing = await tx.get('p_follows', id);
