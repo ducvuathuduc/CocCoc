@@ -1600,6 +1600,106 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/jobs/streak-rollover": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Streak day rollover: for profiles whose last qualified day is before yesterday, consume equipped freezes per missed day or end the streak (bounded batch, cursor).
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Streak day rollover: for profiles whose last qualified day is before yesterday, consume equipped freezes per missed day or end the streak (bounded batch, cursor).
+         */
+        post: operations["runStreakRollover"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/jobs/league-settlement": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Settle the last ended league week (or weekId) after the Learning outbox watermark is zero; otherwise cohorts stay SETTLING.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Settle the last ended league week (or weekId) after the Learning outbox watermark is zero; otherwise cohorts stay SETTLING.
+         */
+        post: operations["runLeagueSettlement"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/jobs/deletion-purge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retry the bounded private-row purge for deletions whose owners all acknowledged (status PURGING).
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Retry the bounded private-row purge for deletions whose owners all acknowledged (status PURGING).
+         */
+        post: operations["runDeletionPurge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/jobs/progress-outbox-relay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Lease due p_outbox rows (<=20, 30s lease) and deliver account.deleted.v1, entitlement.changed.v1 and energy.granted.v1 signed to Learning/AI; jittered retry, DEAD after 10 failures.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Lease due p_outbox rows (<=20, 30s lease) and deliver account.deleted.v1, entitlement.changed.v1 and energy.granted.v1 signed to Learning/AI; jittered retry, DEAD after 10 failures.
+         */
+        post: operations["runProgressOutboxRelay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/jobs/learning-outbox-dispatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Lease due l_outbox rows (<=20, 30s lease) and deliver lesson.completed.v1 signed to Progress; jittered retry, DEAD after 10 failures.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Lease due l_outbox rows (<=20, 30s lease) and deliver lesson.completed.v1 signed to Progress; jittered retry, DEAD after 10 failures.
+         */
+        post: operations["runLearningOutboxDispatch"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3055,6 +3155,32 @@ export interface components {
             refillToCapacity: boolean;
             /** @enum {string} */
             reason: "SHOP" | "CHEST" | "FRIEND" | "QUEST" | "AD" | "PROMO";
+        };
+        JobTickRequest: {
+            /** Format: uuid */
+            tickId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            limit?: number;
+            cursor?: string | null;
+            weekId?: string | null;
+        };
+        JobRunReport: {
+            /** @enum {string} */
+            job: "STREAK_ROLLOVER" | "LEAGUE_SETTLEMENT" | "DELETION_PURGE" | "PROGRESS_OUTBOX_RELAY" | "LEARNING_OUTBOX_DISPATCH";
+            /** Format: uuid */
+            tickId: string;
+            /** Format: date-time */
+            startedAt: string;
+            /** Format: date-time */
+            finishedAt: string;
+            processed: number;
+            succeeded: number;
+            retried: number;
+            dead: number;
+            skipped: number;
+            nextCursor: string | null;
+            needsIntervention: boolean;
         };
     };
     responses: {
@@ -6220,6 +6346,206 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Conversation"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    runStreakRollover: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "X-Service-Key-Id": string;
+                "X-Service-Timestamp": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JobTickRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobRunReport"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    runLeagueSettlement: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "X-Service-Key-Id": string;
+                "X-Service-Timestamp": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JobTickRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobRunReport"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    runDeletionPurge: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "X-Service-Key-Id": string;
+                "X-Service-Timestamp": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JobTickRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobRunReport"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    runProgressOutboxRelay: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "X-Service-Key-Id": string;
+                "X-Service-Timestamp": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JobTickRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobRunReport"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    runLearningOutboxDispatch: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "X-Service-Key-Id": string;
+                "X-Service-Timestamp": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JobTickRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobRunReport"];
                 };
             };
             400: components["responses"]["Failure"];

@@ -2022,6 +2022,83 @@
      "entitlementRevision": 3
     }
    }
+  },
+  {
+   "label": "job tick minimal",
+   "schema": "JobTickRequest",
+   "valid": true,
+   "value": {
+    "tickId": "0b6f3c2e-6a51-4f7e-9c1d-3e2a4b5c6d7e",
+    "scheduledAt": "2026-10-12T17:00:00.000Z"
+   }
+  },
+  {
+   "label": "job tick league week with limit",
+   "schema": "JobTickRequest",
+   "valid": true,
+   "value": {
+    "tickId": "0b6f3c2e-6a51-4f7e-9c1d-3e2a4b5c6d7e",
+    "scheduledAt": "2026-10-12T17:00:00.000Z",
+    "limit": 200,
+    "cursor": null,
+    "weekId": "2026-10-05"
+   }
+  },
+  {
+   "label": "job tick limit above 500 rejected",
+   "schema": "JobTickRequest",
+   "valid": false,
+   "value": {
+    "tickId": "0b6f3c2e-6a51-4f7e-9c1d-3e2a4b5c6d7e",
+    "scheduledAt": "2026-10-12T17:00:00.000Z",
+    "limit": 501
+   }
+  },
+  {
+   "label": "job tick unknown field rejected",
+   "schema": "JobTickRequest",
+   "valid": false,
+   "value": {
+    "tickId": "0b6f3c2e-6a51-4f7e-9c1d-3e2a4b5c6d7e",
+    "scheduledAt": "2026-10-12T17:00:00.000Z",
+    "force": true
+   }
+  },
+  {
+   "label": "job run report outbox relay",
+   "schema": "JobRunReport",
+   "valid": true,
+   "value": {
+    "job": "PROGRESS_OUTBOX_RELAY",
+    "tickId": "0b6f3c2e-6a51-4f7e-9c1d-3e2a4b5c6d7e",
+    "startedAt": "2026-10-12T17:00:00.000Z",
+    "finishedAt": "2026-10-12T17:00:02.000Z",
+    "processed": 3,
+    "succeeded": 2,
+    "retried": 1,
+    "dead": 0,
+    "skipped": 0,
+    "nextCursor": null,
+    "needsIntervention": false
+   }
+  },
+  {
+   "label": "job run report unknown job rejected",
+   "schema": "JobRunReport",
+   "valid": false,
+   "value": {
+    "job": "CLEANUP",
+    "tickId": "0b6f3c2e-6a51-4f7e-9c1d-3e2a4b5c6d7e",
+    "startedAt": "2026-10-12T17:00:00.000Z",
+    "finishedAt": "2026-10-12T17:00:02.000Z",
+    "processed": 3,
+    "succeeded": 2,
+    "retried": 1,
+    "dead": 0,
+    "skipped": 0,
+    "nextCursor": null,
+    "needsIntervention": false
+   }
   }
  ]
 }

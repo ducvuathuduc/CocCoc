@@ -87,6 +87,11 @@ Generated from [OpenAPI](openapi.yaml); wire DTOs/headers/errors/idempotency/rat
 | GET /v1/conversations | listConversations / ai | FR-AI-001 | a_conversations | JWT or specified internal signature |
 | POST /v1/conversations | startConversation / ai | FR-AI-001, FR-SPEECH-002 | a_conversations, a_voice_sessions, a_receipts | JWT or specified internal signature |
 | POST /v1/conversations/{conversationId}/complete | completeConversation / ai | FR-AI-001 | a_conversations, a_voice_sessions, a_outbox, a_receipts | JWT or specified internal signature |
+| POST /internal/jobs/streak-rollover | runStreakRollover / progress | FR-GAME-002 | p_rewards, p_day_activity, p_freeze_ledger, p_profiles | JWT or specified internal signature |
+| POST /internal/jobs/league-settlement | runLeagueSettlement / progress | FR-SOCIAL-002 | p_league_runs, p_league_members, p_league_profiles, p_reward_ledger, p_rewards | JWT or specified internal signature |
+| POST /internal/jobs/deletion-purge | runDeletionPurge / progress | FR-AUTH-005 | p_deletions, p_profiles, p_rewards, p_reward_ledger, p_receipts | JWT or specified internal signature |
+| POST /internal/jobs/progress-outbox-relay | runProgressOutboxRelay / progress | FR-AUTH-005, FR-SET-001, FR-GAME-005 | p_outbox | JWT or specified internal signature |
+| POST /internal/jobs/learning-outbox-dispatch | runLearningOutboxDispatch / learning | FR-GAME-001 | l_outbox | JWT or specified internal signature |
 
 Health/ready shapes apply to all three independent service domains; Learning is the primary OpenAPI declaration owner. Internal events have receiver-specific allowlists, not cross-owned writes.
 

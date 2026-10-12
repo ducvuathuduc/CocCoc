@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 d4366630f70851d5151da6c49e324fa2f96179e5b55b99f8818dfb1f47aa79d1).
+// Source: docs/api/openapi.yaml (sha256 6e34e576fa92fff5624c640699a97e1ea3946d375b6e001dd1b3d481007aee7b).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors
@@ -7267,6 +7267,116 @@ final class EnergyGrantedEventPayload {
       };
 }
 
+/// Wire DTO for `#/components/schemas/JobTickRequest`.
+final class JobTickRequest {
+  const JobTickRequest({
+    required this.tickId,
+    required this.scheduledAt,
+    this.limit,
+    this.cursor = const JsonPresence<String>.absent(),
+    this.weekId = const JsonPresence<String>.absent(),
+  });
+
+  /// Validates [json] against the `JobTickRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory JobTickRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('JobTickRequest', json);
+    return JobTickRequest._decode(json);
+  }
+
+  static JobTickRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return JobTickRequest(
+      tickId: map['tickId'] as String,
+      scheduledAt: map['scheduledAt'] as String,
+      limit: map.containsKey('limit') ? (map['limit'] as num).toInt() : null,
+      cursor: map.containsKey('cursor') ? JsonPresence<String>.value(map['cursor'] == null ? null : map['cursor'] as String) : const JsonPresence<String>.absent(),
+      weekId: map.containsKey('weekId') ? JsonPresence<String>.value(map['weekId'] == null ? null : map['weekId'] as String) : const JsonPresence<String>.absent(),
+    );
+  }
+
+  final String tickId;
+  final String scheduledAt;
+  final int? limit;
+  final JsonPresence<String> cursor;
+  final JsonPresence<String> weekId;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'tickId': tickId,
+        'scheduledAt': scheduledAt,
+        'limit': ?limit,
+        if (cursor.isPresent) 'cursor': cursor.value,
+        if (weekId.isPresent) 'weekId': weekId.value,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/JobRunReport`.
+final class JobRunReport {
+  const JobRunReport({
+    required this.job,
+    required this.tickId,
+    required this.startedAt,
+    required this.finishedAt,
+    required this.processed,
+    required this.succeeded,
+    required this.retried,
+    required this.dead,
+    required this.skipped,
+    required this.nextCursor,
+    required this.needsIntervention,
+  });
+
+  /// Validates [json] against the `JobRunReport` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory JobRunReport.fromJson(Object? json) {
+    ContractValidator.instance.check('JobRunReport', json);
+    return JobRunReport._decode(json);
+  }
+
+  static JobRunReport _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return JobRunReport(
+      job: map['job'] as String,
+      tickId: map['tickId'] as String,
+      startedAt: map['startedAt'] as String,
+      finishedAt: map['finishedAt'] as String,
+      processed: (map['processed'] as num).toInt(),
+      succeeded: (map['succeeded'] as num).toInt(),
+      retried: (map['retried'] as num).toInt(),
+      dead: (map['dead'] as num).toInt(),
+      skipped: (map['skipped'] as num).toInt(),
+      nextCursor: map['nextCursor'] == null ? null : map['nextCursor'] as String,
+      needsIntervention: map['needsIntervention'] as bool,
+    );
+  }
+
+  final String job;
+  final String tickId;
+  final String startedAt;
+  final String finishedAt;
+  final int processed;
+  final int succeeded;
+  final int retried;
+  final int dead;
+  final int skipped;
+  final String? nextCursor;
+  final bool needsIntervention;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'job': job,
+        'tickId': tickId,
+        'startedAt': startedAt,
+        'finishedAt': finishedAt,
+        'processed': processed,
+        'succeeded': succeeded,
+        'retried': retried,
+        'dead': dead,
+        'skipped': skipped,
+        'nextCursor': nextCursor,
+        'needsIntervention': needsIntervention,
+      };
+}
+
 /// Decoders for every `#/components/schemas` entry, keyed by schema name.
 const Map<String, Object Function(Object?)> apiContractDecoders =
     <String, Object Function(Object?)>{
@@ -7421,4 +7531,6 @@ const Map<String, Object Function(Object?)> apiContractDecoders =
   'AiPracticeEventPayload': AiPracticeEventPayload.fromJson,
   'EntitlementEventPayload': EntitlementEventPayload.fromJson,
   'EnergyGrantedEventPayload': EnergyGrantedEventPayload.fromJson,
+  'JobTickRequest': JobTickRequest.fromJson,
+  'JobRunReport': JobRunReport.fromJson,
 };

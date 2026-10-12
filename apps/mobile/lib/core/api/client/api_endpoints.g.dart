@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 d4366630f70851d5151da6c49e324fa2f96179e5b55b99f8818dfb1f47aa79d1).
+// Source: docs/api/openapi.yaml (sha256 6e34e576fa92fff5624c640699a97e1ea3946d375b6e001dd1b3d481007aee7b).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import '../api_contracts.dart' as wire;

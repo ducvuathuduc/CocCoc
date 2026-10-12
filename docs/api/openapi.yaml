@@ -8463,6 +8463,589 @@
           }
         }
       }
+    },
+    "/internal/jobs/streak-rollover": {
+      "post": {
+        "operationId": "runStreakRollover",
+        "summary": "Streak day rollover: for profiles whose last qualified day is before yesterday, consume equipped freezes per missed day or end the streak (bounded batch, cursor).",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Streak day rollover: for profiles whose last qualified day is before yesterday, consume equipped freezes per missed day or end the streak (bounded batch, cursor).",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-GAME-002"
+        ],
+        "x-tables": [
+          "p_rewards",
+          "p_day_activity",
+          "p_freeze_ledger",
+          "p_profiles"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "serviceSignature": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "X-Service-Key-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          },
+          {
+            "name": "X-Service-Timestamp",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRunReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobTickRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/jobs/league-settlement": {
+      "post": {
+        "operationId": "runLeagueSettlement",
+        "summary": "Settle the last ended league week (or weekId) after the Learning outbox watermark is zero; otherwise cohorts stay SETTLING.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Settle the last ended league week (or weekId) after the Learning outbox watermark is zero; otherwise cohorts stay SETTLING.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SOCIAL-002"
+        ],
+        "x-tables": [
+          "p_league_runs",
+          "p_league_members",
+          "p_league_profiles",
+          "p_reward_ledger",
+          "p_rewards"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "serviceSignature": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "X-Service-Key-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          },
+          {
+            "name": "X-Service-Timestamp",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRunReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobTickRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/jobs/deletion-purge": {
+      "post": {
+        "operationId": "runDeletionPurge",
+        "summary": "Retry the bounded private-row purge for deletions whose owners all acknowledged (status PURGING).",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Retry the bounded private-row purge for deletions whose owners all acknowledged (status PURGING).",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-AUTH-005"
+        ],
+        "x-tables": [
+          "p_deletions",
+          "p_profiles",
+          "p_rewards",
+          "p_reward_ledger",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "serviceSignature": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "X-Service-Key-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          },
+          {
+            "name": "X-Service-Timestamp",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRunReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobTickRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/jobs/progress-outbox-relay": {
+      "post": {
+        "operationId": "runProgressOutboxRelay",
+        "summary": "Lease due p_outbox rows (<=20, 30s lease) and deliver account.deleted.v1, entitlement.changed.v1 and energy.granted.v1 signed to Learning/AI; jittered retry, DEAD after 10 failures.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Lease due p_outbox rows (<=20, 30s lease) and deliver account.deleted.v1, entitlement.changed.v1 and energy.granted.v1 signed to Learning/AI; jittered retry, DEAD after 10 failures.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-AUTH-005",
+          "FR-SET-001",
+          "FR-GAME-005"
+        ],
+        "x-tables": [
+          "p_outbox"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "serviceSignature": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "X-Service-Key-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          },
+          {
+            "name": "X-Service-Timestamp",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRunReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobTickRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/jobs/learning-outbox-dispatch": {
+      "post": {
+        "operationId": "runLearningOutboxDispatch",
+        "summary": "Lease due l_outbox rows (<=20, 30s lease) and deliver lesson.completed.v1 signed to Progress; jittered retry, DEAD after 10 failures.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Signed by the scheduler key (sender scheduler in COC_SERVICE_KEYS) or a maintainer key; never selected by a platform header. Idempotent per tick: re-running a tick re-reads state. Lease due l_outbox rows (<=20, 30s lease) and deliver lesson.completed.v1 signed to Progress; jittered retry, DEAD after 10 failures.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-GAME-001"
+        ],
+        "x-tables": [
+          "l_outbox"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "serviceSignature": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "X-Service-Key-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          },
+          {
+            "name": "X-Service-Timestamp",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobRunReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobTickRequest"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -15752,6 +16335,134 @@
           "amount",
           "refillToCapacity",
           "reason"
+        ]
+      },
+      "JobTickRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tickId": {
+            "type": "string",
+            "format": "uuid",
+            "maxLength": 36
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "weekId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "maxLength": 10
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "tickId",
+          "scheduledAt"
+        ]
+      },
+      "JobRunReport": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "job": {
+            "type": "string",
+            "enum": [
+              "STREAK_ROLLOVER",
+              "LEAGUE_SETTLEMENT",
+              "DELETION_PURGE",
+              "PROGRESS_OUTBOX_RELAY",
+              "LEARNING_OUTBOX_DISPATCH"
+            ]
+          },
+          "tickId": {
+            "type": "string",
+            "format": "uuid",
+            "maxLength": 36
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "processed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "succeeded": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "retried": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "dead": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "skipped": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "needsIntervention": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "job",
+          "tickId",
+          "startedAt",
+          "finishedAt",
+          "processed",
+          "succeeded",
+          "retried",
+          "dead",
+          "skipped",
+          "nextCursor",
+          "needsIntervention"
         ]
       }
     },
