@@ -16,11 +16,42 @@ enum ExerciseKind {
 enum LessonStage { idle, answering, checking, feedback, completed, paused }
 
 class ExerciseChoice {
-  const ExerciseChoice({required this.id, required this.text, this.art});
+  const ExerciseChoice({
+    required this.id,
+    required this.text,
+    this.art,
+    this.image,
+  });
 
   final String id;
   final String text;
+
+  /// Bundled reference character key (`LearningArt.character`).
   final String? art;
+
+  /// Word illustration from the content bundle (`imageAssetId`); rendered
+  /// instead of [art] when present.
+  final LessonImage? image;
+}
+
+/// A content image asset: `fileId` (`i.<unitId>.<wordId>`, EXERCISE_FORMATS
+/// section 5) and the bundle's `sha256` of its bytes (null for mock content,
+/// which only uses the images shipped with the app).
+class LessonImage {
+  const LessonImage(this.fileId, [this.sha256]);
+
+  final String fileId;
+  final String? sha256;
+
+  @override
+  bool operator ==(Object other) =>
+      other is LessonImage && other.fileId == fileId && other.sha256 == sha256;
+
+  @override
+  int get hashCode => Object.hash(fileId, sha256);
+
+  @override
+  String toString() => 'LessonImage($fileId)';
 }
 
 class Exercise {

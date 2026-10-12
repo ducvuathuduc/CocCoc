@@ -1,11 +1,13 @@
 import '../../../core/api/api_contracts.dart' as wire;
 import '../domain/learning_models.dart';
+import 'lesson_image_catalog.g.dart';
 
 /// Maps OpenAPI lesson exercises to the frozen UI's [Exercise] model and UI
 /// answers back to wire `Answer`s. Also grades offline from the bundle's
 /// grading rule (provisional; the server regrades on sync).
 final class LessonWireMapper {
-  LessonWireMapper(this.exercises) {
+  LessonWireMapper(this.exercises, {List<wire.Asset> assets = const []})
+    : _assetHashes = {for (final a in assets) a.fileId: a.sha256} {
     for (final exercise in exercises) {
       _register(_effective(exercise));
     }
@@ -15,6 +17,9 @@ final class LessonWireMapper {
   final List<wire.Exercise> exercises;
 
   final Map<String, Map<String, Object?>> _byId = {};
+
+  /// Bundle `assets`: fileId -> sha256.
+  final Map<String, String> _assetHashes;
 
   /// Ids of exercises replaced by their non-speech alternative.
   final Set<String> substitutedIds = {};
@@ -66,6 +71,18 @@ final class LessonWireMapper {
   /// Picture keys `LearningArt.character` can render.
   static const bundledArt = {'boy', 'girl', 'cat', 'woman', 'man', 'bear'};
 
+  /// The word illustration for [imageAssetId]: listed in the bundle `assets`
+  /// (hash-pinned; shipped with the app or downloaded by hash) or, without a
+  /// bundle entry, shipped with the app. `null` when neither.
+  LessonImage? imageFor(String? imageAssetId) {
+    if (imageAssetId == null) return null;
+    final hash = _assetHashes[imageAssetId];
+    if (hash != null) return LessonImage(imageAssetId, hash);
+    return bundledLessonImages.containsKey(imageAssetId)
+        ? LessonImage(imageAssetId)
+        : null;
+  }
+
   /// UI exercises in bundle order (speech replaced by alternatives).
   List<Exercise> toDomain() => [
     for (final exercise in exercises) _toDomain(_effective(exercise)),
@@ -85,11 +102,16 @@ final class LessonWireMapper {
 
     List<ExerciseChoice> choices(Object? raw, {bool art = false}) => [
       for (final item in _list(raw))
-        ExerciseChoice(
-          id: _map(item)['id']! as String,
-          text: _map(item)['text']! as String,
-          art: art ? artFor(_map(item)['imageAssetId'] as String?) : null,
-        ),
+        () {
+          final assetId = art ? _map(item)['imageAssetId'] as String? : null;
+          final image = imageFor(assetId);
+          return ExerciseChoice(
+            id: _map(item)['id']! as String,
+            text: _map(item)['text']! as String,
+            art: image == null ? artFor(assetId) : null,
+            image: image,
+          );
+        }(),
     ];
 
     switch (type) {
@@ -97,9 +119,11 @@ final class LessonWireMapper {
         final correct = rule['correctChoiceId'] as String?;
         final options = choices(content['choices'], art: type != 'choice');
         // A picture item renders as a text choice unless every option has
-        // bundled art (the picture tile has no text-only state).
+        // an illustration or bundled art (the picture tile has no text-only
+        // state).
         final pictures =
-            type == 'imageChoice' && options.every((o) => o.art != null);
+            type == 'imageChoice' &&
+            options.every((o) => o.image != null || o.art != null);
         return Exercise(
           id: json['id']! as String,
           kind: switch (type) {

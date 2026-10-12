@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +14,7 @@ import '../application/learning_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../domain/learning_models.dart';
 import 'learning_visuals.dart';
+import 'lesson_image_view.dart';
 import '../data/english_explanations.dart';
 import 'spoken_exercise.dart';
 import 'exercises/match_pairs_exercise.dart';
@@ -512,11 +515,22 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                 children: exercise.choices.map((option) {
                   final width = (c.maxWidth - 20) / 2;
                   final artHeight = (availableHeight * .22).clamp(82.0, 145.0);
+                  final image = option.image;
                   final art = LearningArt.character(option.art);
                   final factor = ((width - 30) / art.source.width).clamp(
                     0.0,
                     artHeight / art.source.height,
                   );
+                  final picture = image != null
+                      ? LessonImageView(
+                          image,
+                          size: math.min(width - 30, artHeight),
+                        )
+                      : ReferenceArt(
+                          art,
+                          width: art.source.width * factor,
+                          height: art.source.height * factor,
+                        );
                   return SizedBox(
                     width: width,
                     child: LessonChoiceTile(
@@ -532,13 +546,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                         children: [
                           SizedBox(
                             height: artHeight,
-                            child: Center(
-                              child: ReferenceArt(
-                                art,
-                                width: art.source.width * factor,
-                                height: art.source.height * factor,
-                              ),
-                            ),
+                            child: Center(child: picture),
                           ),
                           const SizedBox(height: 13),
                           Text(

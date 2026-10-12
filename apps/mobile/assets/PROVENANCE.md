@@ -155,3 +155,13 @@ Sprint 2 icon/gift slice: four byte-intact Gummble screens (Duolingo iOS flows "
 | gift-subscription.png | Gift_a_Super_Duolingo/00 | 4cad8607f89c92f03688373e906721aea706eaa2452be97691f0487cec65e7a0 |
 | gift-intro.png | Gift_a_Super_Duolingo/01 | 28968b4777e46de884956dcda673cbda3025ecc704706424f3c88a759f58203b |
 | gift-note.png | Gift_a_Super_Duolingo/02 | c23ca41cff28567511d0ce2a4c3d823600f0296100b43939b8fbb72c95d4c469 |
+
+# Lesson word illustrations — 2026-10-12
+
+`lesson_images/i.<unitId>.<wordId>.webp` (110 files, one per picturable vi_en v2 word used by
+`imageChoice`) are original artwork authored for this project as vector code in
+`tools/content/lesson_art/` (flat rounded shapes, transparent background, colours limited to
+samples from `docs/design/qa/palette_from_refs.json`). No third-party image, character or
+screenshot pixels are used. `tools/content/lesson_art/render.py` renders the SVG sources
+(`content/vi_en/media/images/src/`) to 512×512 lossless WebP; the same bytes are the content
+assets published to `learning-assets`, and `lesson_image_catalog.g.dart` lists their SHA-256.

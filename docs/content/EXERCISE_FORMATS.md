@@ -176,6 +176,17 @@ Progression rules enforced by the generator and lint:
 production list for P7-AUDIO-001). Media `sha256` values are deterministic placeholders until the
 files exist; every audio/speech item has a text alternative, so lessons work without media.
 
+Word images are real: one original flat illustration per picturable word (110 in v2), drawn as
+vector code in `tools/content/lesson_art/` (palette colours only, `pnpm palette:check` /
+`python3 tools/palette_check.py --lesson-art`) and rendered by
+`python3 tools/content/lesson_art/render.py` to `content/vi_en/media/images/<fileId>.webp`
+(512×512 lossless WebP, transparent; SVG sources in `media/images/src/`), the same bytes to
+`apps/mobile/assets/lesson_images/` and the app catalog `lesson_image_catalog.g.dart`. The generator
+hashes the committed WebP, so manifest `sha256`/`bytes` are real; `publish-appwrite.mjs` uploads the
+files to `learning-assets` under their `fileId` (public read). The app shows the bundled file when its
+hash matches, otherwise downloads `…/storage/buckets/learning-assets/files/<fileId>/view`, verifies the
+hash and caches it by hash.
+
 ## 6. Authoring tables (source of truth)
 
 `content/vi_en/source/v2/units/uNN-*.mjs`, one per unit (parser:

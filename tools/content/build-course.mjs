@@ -128,12 +128,26 @@ function audioAssets(key, transcript, locale = 'en-US') {
   });
   return [make('n', 1, 420), make('s', 0.75, 560)];
 }
+// Word illustrations (imageChoice art) live in content/<course>/media/images/<fileId>.webp
+// (drawn by tools/content/lesson_art/render.py, 512x512 WebP). A committed file contributes its real
+// sha256 + byte size; a word without a file keeps a deterministic placeholder hash.
+const IMAGE_DIR = path.join(root, `content/${course.courseId}/media/images`);
+const imageFiles = new Map();
+function imageFile(fileId) {
+  if (!imageFiles.has(fileId)) {
+    const file = path.join(IMAGE_DIR, `${fileId}.webp`);
+    imageFiles.set(fileId, fs.existsSync(file) ? fs.readFileSync(file) : null);
+  }
+  return imageFiles.get(fileId);
+}
 function imageAsset(v) {
+  const fileId = `i.${v.unitId}.${v.id}`;
+  const bytes = imageFile(fileId);
   return {
-    fileId: `i.${v.unitId}.${v.id}`,
-    sha256: tools.sha256(`placeholder-image:${v.unitId}.${v.id}`),
+    fileId,
+    sha256: bytes ? tools.sha256(bytes) : tools.sha256(`placeholder-image:${v.unitId}.${v.id}`),
     mime: 'image/webp',
-    bytes: 18000,
+    bytes: bytes ? bytes.length : 18000,
     durationMs: null,
     width: 512,
     height: 512,

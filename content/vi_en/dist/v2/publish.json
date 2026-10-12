@@ -3,13 +3,13 @@
   "versionId": "v2",
   "signatureKeyId": "dev-content-1",
   "manifestFileId": "vi_en.v2.manifest",
-  "manifestSha256": "4e9b0564d1ed5b6f6b406e05583e24e5ee2a5e33d86c489e2e5ba79961eafb81",
+  "manifestSha256": "6bce297f8731f9a9440d5aa3e6158916d71ef22e695e9e76f7c2708c1e7a08bf",
   "manifestHash": "013672aa5927648264926e14d514d9d670ba04f547fc10aba6d50095b8e8b587",
   "files": [
     {
       "fileId": "vi_en.v2.manifest",
       "path": "manifest.json",
-      "sha256": "4e9b0564d1ed5b6f6b406e05583e24e5ee2a5e33d86c489e2e5ba79961eafb81",
+      "sha256": "6bce297f8731f9a9440d5aa3e6158916d71ef22e695e9e76f7c2708c1e7a08bf",
       "bytes": 128195
     },
     {
@@ -111,8 +111,8 @@
     {
       "fileId": "vi_en.v2.u1n5l1",
       "path": "bundles/u1n5l1.json",
-      "sha256": "c26b829c6e942f71b40da5c3c32bde1124b82aaca844c5401bf4ad2494bb88e4",
-      "bytes": 11599
+      "sha256": "fc1fe14a99c12fe3c8d12d794f19af9060842f62dd26dd878cdb21543dcf5050",
+      "bytes": 11596
     },
     {
       "fileId": "vi_en.v2.u1n5l2",
@@ -183,14 +183,14 @@
     {
       "fileId": "vi_en.v2.u1n7l1",
       "path": "bundles/u1n7l1.json",
-      "sha256": "2dafc623c38416c66e9a5758cac90a792e0dd7a8231247de1e5abbc233affffb",
-      "bytes": 16732
+      "sha256": "3dab97e909d03f3de52b8a0f22fa0af1501f522bd020dedb8031a662d0c62ee9",
+      "bytes": 16729
     },
     {
       "fileId": "vi_en.v2.u1n7l2",
       "path": "bundles/u1n7l2.json",
-      "sha256": "b9d90c343a2ed3b671ffd8ff70b33e76747c8f8e04378563ca4f54919c216e65",
-      "bytes": 16431
+      "sha256": "547ccb2960e2809e889ace0a1c74cf8b20762d37169a51e01800bce9299dcc7f",
+      "bytes": 16428
     },
     {
       "fileId": "vi_en.v2.u1n8l1",
@@ -207,8 +207,8 @@
     {
       "fileId": "vi_en.v2.u2n1l1",
       "path": "bundles/u2n1l1.json",
-      "sha256": "2a16a18b28dcf8f5a6f88dd1cb6fe83bae75fcb9c0c031afcd989b3015205522",
-      "bytes": 12633
+      "sha256": "25d7e01153ced0c55b854bb22ba40f741d777fc138ec39d88946757dfb7db4cc",
+      "bytes": 12627
     },
     {
       "fileId": "vi_en.v2.u2n1l2",
@@ -231,8 +231,8 @@
     {
       "fileId": "vi_en.v2.u2n2l1",
       "path": "bundles/u2n2l1.json",
-      "sha256": "935a532d00cc9462a498bdb3af96aa718bee6f4351726cdecc8591f4fa65d24c",
-      "bytes": 14039
+      "sha256": "f9671c10e6a79c83193c4dd76d19253362a287c6981db25e84f2896055736456",
+      "bytes": 14030
     },
     {
       "fileId": "vi_en.v2.u2n2l2",
@@ -297,14 +297,14 @@
     {
       "fileId": "vi_en.v2.u2n4l2",
       "path": "bundles/u2n4l2.json",
-      "sha256": "a8d7138762ca285f5c63c6e37cd819fb2bf07ea1c47106d76ad27d1e8292bc0d",
-      "bytes": 12441
+      "sha256": "ea72bc0b8c43a96d92d77f3aef7de54612b8978b2dfbc73ad92a4729f3aab31d",
+      "bytes": 12438
     },
     {
       "fileId": "vi_en.v2.u2n5l1",
       "path": "bundles/u2n5l1.json",
-      "sha256": "57b764fe244558a168600acc09b8a9006d2da0264258ed2c09fb95715baf6250",
-      "bytes": 12378
+      "sha256": "edb8416aeeb70fc8cc62db52ac168cda9fd1cd22984f0e50eee9362dda5a296b",
+      "bytes": 12373
     },
     {
       "fileId": "vi_en.v2.u2n5l2",
@@ -375,14 +375,14 @@
     {
       "fileId": "vi_en.v2.u2n7l1",
       "path": "bundles/u2n7l1.json",
-      "sha256": "ae10f02e53646809c0a958aef6729e4c5a46008bfaa581c1137e35114d7d2cc3",
-      "bytes": 16590
+      "sha256": "6545fbfcd19dd369af059e7cbdbf3b3e4efe2c39dfa9f1fd5a7b6578a4db71d3",
+      "bytes": 16588
     },
     {
       "fileId": "vi_en.v2.u2n7l2",
       "path": "bundles/u2n7l2.json",
-      "sha256": "2e41f2ad7367307d829fa032488c71a798257d1415a4ef1d1a1fb4161212279b",
-      "bytes": 16550
+      "sha256": "b92e16f84a960928b6f194a68627a310e20fede507f22be24a23549740f88846",
+      "bytes": 16547
     },
     {
       "fileId": "vi_en.v2.u2n8l1",
@@ -399,8 +399,8 @@
     {
       "fileId": "vi_en.v2.u3n1l1",
       "path": "bundles/u3n1l1.json",
-      "sha256": "70729c55a1d278a2f607fbbea99cc3e1ab7148c90359aa81d8dc708bc93d3403",
-      "bytes": 14426
+      "sha256": "59c8cb85a3d1cbe66ffcd9d5bc4f30585b5914396674868d48d611f33c45fc4a",
+      "bytes": 14414
     },
     {
       "fileId": "vi_en.v2.u3n1l2",
@@ -423,8 +423,8 @@
     {
       "fileId": "vi_en.v2.u3n2l1",
       "path": "bundles/u3n2l1.json",
-      "sha256": "57b29ee722fc67934aa2e7f1ef8e46da6f086449630b9fbc4c378de96be34e94",
-      "bytes": 14371
+      "sha256": "e15be67b72340c98f595da823bf8e1e6360988a44de5030eb41f4f0864cf82a2",
+      "bytes": 14360
     },
     {
       "fileId": "vi_en.v2.u3n2l2",
@@ -489,8 +489,8 @@
     {
       "fileId": "vi_en.v2.u3n4l2",
       "path": "bundles/u3n4l2.json",
-      "sha256": "aab00c0373baa1a60d22c836d2d49dddd09a3c878b6fe176e2e8b2c1794d9f20",
-      "bytes": 12740
+      "sha256": "000c430c7a296a910149c4d302bd6a4a8e6dad0faf5924c69e5889d5f40a1090",
+      "bytes": 12737
     },
     {
       "fileId": "vi_en.v2.u3n5l1",
@@ -531,8 +531,8 @@
     {
       "fileId": "vi_en.v2.u3n6l1",
       "path": "bundles/u3n6l1.json",
-      "sha256": "7c982e2eb52a205791fdde5a7a2231fe998c7979e4b9e24395a8730ee03ff168",
-      "bytes": 13712
+      "sha256": "3ecb5f9f2d93f1d623cd4526105f30ecf18fd82362fe30560b1f07211de87813",
+      "bytes": 13702
     },
     {
       "fileId": "vi_en.v2.u3n6l2",
@@ -567,14 +567,14 @@
     {
       "fileId": "vi_en.v2.u3n7l1",
       "path": "bundles/u3n7l1.json",
-      "sha256": "03f446f5ccdc390e39acd2804e066ba9faf0352013b147188e8cc27240c5cd57",
-      "bytes": 16979
+      "sha256": "1fb7bfd25488dc60a72f410451e6e65da492c0f27244486adcf4c8cddc039397",
+      "bytes": 16976
     },
     {
       "fileId": "vi_en.v2.u3n7l2",
       "path": "bundles/u3n7l2.json",
-      "sha256": "b7c9bb81a4d81f9795130a8a823344455e0cb8a0ad14f47807f04c7f49128549",
-      "bytes": 16428
+      "sha256": "31eefbe55ebbb9e69a7bdad6f6d6b3a2c32270d9f58a2042cfba2463d670ae34",
+      "bytes": 16424
     },
     {
       "fileId": "vi_en.v2.u3n8l1",
@@ -681,14 +681,14 @@
     {
       "fileId": "vi_en.v2.u4n4l2",
       "path": "bundles/u4n4l2.json",
-      "sha256": "2781513b4318f7edf9cb5e93761204c083ab5987d911465f9b61b114ff4a93aa",
-      "bytes": 13161
+      "sha256": "97abb2e99f2dc0746a30d6522659ac2a3096650aa048b026c9b963555ee126ab",
+      "bytes": 13158
     },
     {
       "fileId": "vi_en.v2.u4n5l1",
       "path": "bundles/u4n5l1.json",
-      "sha256": "00c05fe2af69594a6549ed13c913edaabd822311d527711be71fd02dfc1767ff",
-      "bytes": 11931
+      "sha256": "34682ad8eeb37f96be152a786d0c58eb14e5317cdcf7bf92831aba0ebc7d4018",
+      "bytes": 11928
     },
     {
       "fileId": "vi_en.v2.u4n5l2",
@@ -723,8 +723,8 @@
     {
       "fileId": "vi_en.v2.u4n6l1",
       "path": "bundles/u4n6l1.json",
-      "sha256": "a0ff35a49d58ed95de6accc3d799255edd555decc058a9822f43f60f045984c5",
-      "bytes": 14033
+      "sha256": "9c1d0914015d3daf51489933fac38307d47b4bc4e4f2b93b7d1d8a128cfc58dd",
+      "bytes": 14022
     },
     {
       "fileId": "vi_en.v2.u4n6l2",
@@ -759,14 +759,14 @@
     {
       "fileId": "vi_en.v2.u4n7l1",
       "path": "bundles/u4n7l1.json",
-      "sha256": "dee58b0ccb040a37532d9e8387cd442f0c0f4e9f779568c5f6dcdaf9d297b5eb",
-      "bytes": 17128
+      "sha256": "8e814e03dc0042da5ad8f3abb6a84b4ef8051360f19ea0df3ba2eeb8d7df5ea9",
+      "bytes": 17124
     },
     {
       "fileId": "vi_en.v2.u4n7l2",
       "path": "bundles/u4n7l2.json",
-      "sha256": "2e9f99d45bcdf9e13b68c8c6fdf88c28a2d886f03b35c10e68f33835ded28a6d",
-      "bytes": 17653
+      "sha256": "dd14aede65a3e76a08aeaf2340c701c8f61b4c16cf9ab672f324a081ddca021d",
+      "bytes": 17650
     },
     {
       "fileId": "vi_en.v2.u4n8l1",
@@ -807,8 +807,8 @@
     {
       "fileId": "vi_en.v2.u5n2l1",
       "path": "bundles/u5n2l1.json",
-      "sha256": "614cbb368e1c0f75f8a6a706d50b0150d0b538f9d096d2d4304a2cd4943662cc",
-      "bytes": 11423
+      "sha256": "5d12d13d247717654702199be01e21c1c91c7f6ff0b52e2db7ec8c158a502433",
+      "bytes": 11419
     },
     {
       "fileId": "vi_en.v2.u5n2l2",
@@ -837,8 +837,8 @@
     {
       "fileId": "vi_en.v2.u5n3l1",
       "path": "bundles/u5n3l1.json",
-      "sha256": "2f3fc4af3d1938a3e3eb9c57869aaff08e78e61802353ae2a534623f6860f989",
-      "bytes": 12708
+      "sha256": "0b0846b412e3f61e99a4c674a655e5741187f8d0db4fb6dd8049590bd5b9e3b9",
+      "bytes": 12701
     },
     {
       "fileId": "vi_en.v2.u5n3l2",
@@ -873,8 +873,8 @@
     {
       "fileId": "vi_en.v2.u5n4l2",
       "path": "bundles/u5n4l2.json",
-      "sha256": "a2fe06fb8228c1302fe323814c168fc147c020cf297af2b0ce291925a24240cf",
-      "bytes": 13000
+      "sha256": "45f265ad2409369b805b9b1038cf338951cabc1b6b7a5d96b7335771bed6e801",
+      "bytes": 12996
     },
     {
       "fileId": "vi_en.v2.u5n5l1",
@@ -951,14 +951,14 @@
     {
       "fileId": "vi_en.v2.u5n7l1",
       "path": "bundles/u5n7l1.json",
-      "sha256": "694f7e4aceedf53e3d9f54719de961630f690ac3ec058297ee3d6394090f70ce",
-      "bytes": 17304
+      "sha256": "2efcdcb77dedee42fd7f59b378ca4ba795da931e68946414708c820fa1ef3369",
+      "bytes": 17300
     },
     {
       "fileId": "vi_en.v2.u5n7l2",
       "path": "bundles/u5n7l2.json",
-      "sha256": "aaa7f7fcdb734580e65e12b0441b3aafa1a003eeda510514ea45ca172de9fcf3",
-      "bytes": 17700
+      "sha256": "482aec7e7c2bcaf3e21abf61ad2ae87c48fe5ac1eb627f87065f7bed7ac5e172",
+      "bytes": 17696
     },
     {
       "fileId": "vi_en.v2.u5n8l1",
@@ -975,8 +975,8 @@
     {
       "fileId": "vi_en.v2.u6n1l1",
       "path": "bundles/u6n1l1.json",
-      "sha256": "927d1d5966cff03afc5ebeedf8b2c040738b9bfc5da7ed06ca943dd555fd950e",
-      "bytes": 14516
+      "sha256": "3bdacc7744d20ba6cf7dd7e9d063a46c54c37b3bb41554a79f135ef0b6d31e70",
+      "bytes": 14504
     },
     {
       "fileId": "vi_en.v2.u6n1l2",
@@ -999,8 +999,8 @@
     {
       "fileId": "vi_en.v2.u6n2l1",
       "path": "bundles/u6n2l1.json",
-      "sha256": "75bebc72f972ddaa5d5b0afff4d090707d8efd44a0f8340c3ae344529c7c84d7",
-      "bytes": 15336
+      "sha256": "faf89d2c4db49929d2d4178c1d984c52b17f39960068a2b77c6ef10b56efa0b1",
+      "bytes": 15322
     },
     {
       "fileId": "vi_en.v2.u6n2l2",
@@ -1029,8 +1029,8 @@
     {
       "fileId": "vi_en.v2.u6n3l1",
       "path": "bundles/u6n3l1.json",
-      "sha256": "e879d80024e342b4c72f0f329b5969d8eff3354794db93d879a75c45593af465",
-      "bytes": 15042
+      "sha256": "4acaeeb2044c84e08ed6b46df52802f6e2a7f5da5379960222bbd1c1f5d912a2",
+      "bytes": 15029
     },
     {
       "fileId": "vi_en.v2.u6n3l2",
@@ -1065,8 +1065,8 @@
     {
       "fileId": "vi_en.v2.u6n4l2",
       "path": "bundles/u6n4l2.json",
-      "sha256": "cf51e8fffafc4f3cfe26c2234efaf2c63b56875d2d8b129ca93bd39c5d098b9c",
-      "bytes": 12593
+      "sha256": "25c2f8645506b72d8a91039fc5137b454ca246630814b9a9b22774cdaefac888",
+      "bytes": 12589
     },
     {
       "fileId": "vi_en.v2.u6n5l1",
@@ -1107,8 +1107,8 @@
     {
       "fileId": "vi_en.v2.u6n6l1",
       "path": "bundles/u6n6l1.json",
-      "sha256": "75fc87dee76b68fa2db7a80721fc11d068f09b865fb9cb6c76ba1c13aa20c734",
-      "bytes": 12864
+      "sha256": "fd616ed6fadcbd2511a4bfab0e4ff37ad1697090845cc31f07b14fa386685c47",
+      "bytes": 12859
     },
     {
       "fileId": "vi_en.v2.u6n6l2",
@@ -1143,14 +1143,14 @@
     {
       "fileId": "vi_en.v2.u6n7l1",
       "path": "bundles/u6n7l1.json",
-      "sha256": "d161518ae4284ec6d20c4d73ca74815b8d94a332a6ebaba7ee42466453bb40dd",
-      "bytes": 17562
+      "sha256": "123d3bb6100451750a1a39645d94eb3ed681bc1028ed0cc97175b541fc85be93",
+      "bytes": 17559
     },
     {
       "fileId": "vi_en.v2.u6n7l2",
       "path": "bundles/u6n7l2.json",
-      "sha256": "a763c63ef0e61807da6201f12712d9ce11cc99cbc193a4d75906397e1f01bcd4",
-      "bytes": 16916
+      "sha256": "74f50ed66e43c7aae1d1d12f6fe3a906da0e70134c7de5cbbfd25124c405657f",
+      "bytes": 16912
     },
     {
       "fileId": "vi_en.v2.u6n8l1",
@@ -1167,8 +1167,8 @@
     {
       "fileId": "vi_en.v2.u7n1l1",
       "path": "bundles/u7n1l1.json",
-      "sha256": "1a93962441c7e5e49dd2b7eb350ea47c254c43eb01c5f9d8a8aeeaa4544de11e",
-      "bytes": 13432
+      "sha256": "f52ce0e0f1e5d44e02a6ef6294cdddaa7c54de1fb4ccbc43436fa0c90a7b970a",
+      "bytes": 13426
     },
     {
       "fileId": "vi_en.v2.u7n1l2",
@@ -1257,8 +1257,8 @@
     {
       "fileId": "vi_en.v2.u7n4l2",
       "path": "bundles/u7n4l2.json",
-      "sha256": "b0fd17442ced9836282c38d682a6a20c86829bf5e28921cbdcdab2d84633a850",
-      "bytes": 13438
+      "sha256": "fc97da71b543dbf57940cd42d07b69e014240c6ffbc1473517d64a5cc66cbacc",
+      "bytes": 13434
     },
     {
       "fileId": "vi_en.v2.u7n5l1",
@@ -1335,14 +1335,14 @@
     {
       "fileId": "vi_en.v2.u7n7l1",
       "path": "bundles/u7n7l1.json",
-      "sha256": "29cb6d79cc7f1be3361fdbed5affcefc8b122a5e5c363be042b04287d6526f9c",
-      "bytes": 17072
+      "sha256": "51487c4edd9592458ab4003982609206556d9f8463de510a7c12f49d94f726ff",
+      "bytes": 17071
     },
     {
       "fileId": "vi_en.v2.u7n7l2",
       "path": "bundles/u7n7l2.json",
-      "sha256": "3b1621da11eb9bf14fe1fb3fe72a9935e56f384e9526fe057c8fe08400134550",
-      "bytes": 17374
+      "sha256": "22e160bbe6912f9d7f39eb4cf8c9090b40165de153405ebf194eaceeb59884c5",
+      "bytes": 17371
     },
     {
       "fileId": "vi_en.v2.u7n8l1",
@@ -1413,8 +1413,8 @@
     {
       "fileId": "vi_en.v2.u8n3l1",
       "path": "bundles/u8n3l1.json",
-      "sha256": "a1ce46d0ba0160d30e31a9fde83853ff352d14d411e1a3e518ac1ac60ec6eba8",
-      "bytes": 12984
+      "sha256": "8964050ed5801bcf3717f68d384abc2ce1052ef699e0b6993af61fdd8020ccd6",
+      "bytes": 12976
     },
     {
       "fileId": "vi_en.v2.u8n3l2",
@@ -1449,14 +1449,14 @@
     {
       "fileId": "vi_en.v2.u8n4l2",
       "path": "bundles/u8n4l2.json",
-      "sha256": "cbe2b0f051b708ba72badfec0cd2814c09bde8782314eff4b25a106b34a142ec",
-      "bytes": 13122
+      "sha256": "b877f706e99af1c172cc343779363fe81c2a9a0bd1662ffa95b377085fac4f28",
+      "bytes": 13119
     },
     {
       "fileId": "vi_en.v2.u8n5l1",
       "path": "bundles/u8n5l1.json",
-      "sha256": "338db2757bc5b97741234dc447ceb17d3a09b106f41c29ef31b78c3b4898a48a",
-      "bytes": 14413
+      "sha256": "141c4537aeb504d8f895a5c508a74dbbf529d3a4bf42b14a88f0347cf3d71943",
+      "bytes": 14402
     },
     {
       "fileId": "vi_en.v2.u8n5l2",
@@ -1491,8 +1491,8 @@
     {
       "fileId": "vi_en.v2.u8n6l1",
       "path": "bundles/u8n6l1.json",
-      "sha256": "787e677ed4a8eb6e55b06ffb251bb28de4692945aedf19d49f848ec0a2d461bb",
-      "bytes": 13102
+      "sha256": "4e2ccd08c1522199912b16332cd9e71d1ba2e826eea35b3e4553cf05a14a5c81",
+      "bytes": 13094
     },
     {
       "fileId": "vi_en.v2.u8n6l2",
@@ -1527,14 +1527,14 @@
     {
       "fileId": "vi_en.v2.u8n7l1",
       "path": "bundles/u8n7l1.json",
-      "sha256": "935ec6d9b5356c1d99f836682da678c0c62879ae8c4ed73201ce47dbf391e220",
-      "bytes": 16825
+      "sha256": "b3bdb503bf1c418b69968152d4d3f1ddde98b32fe253a734911ea9500537d143",
+      "bytes": 16821
     },
     {
       "fileId": "vi_en.v2.u8n7l2",
       "path": "bundles/u8n7l2.json",
-      "sha256": "67dac0147383f4a8b9ebe9c04087536ea636f87e9af4f8cec00e0f806c652fd8",
-      "bytes": 17487
+      "sha256": "138ca0d32f7cf94d5fcc5e195f9b68c0461df8bc810546db660f0a5081d80027",
+      "bytes": 17484
     },
     {
       "fileId": "vi_en.v2.u8n8l1",
@@ -1551,8 +1551,8 @@
     {
       "fileId": "vi_en.v2.u9n1l1",
       "path": "bundles/u9n1l1.json",
-      "sha256": "9e6072659eb0fad3edbf24f19b410ede6d18db7febb4fae0e0b256e880f69ffe",
-      "bytes": 11344
+      "sha256": "20510f214bf343efb18b5628aa9801bc45da4e2a2b951131d076de9a90253834",
+      "bytes": 11340
     },
     {
       "fileId": "vi_en.v2.u9n1l2",
@@ -1575,8 +1575,8 @@
     {
       "fileId": "vi_en.v2.u9n2l1",
       "path": "bundles/u9n2l1.json",
-      "sha256": "5b4fff1e89cc6bc2fbf3acbe4fee56806f27c14c02046b8f251ad3e420fcaa26",
-      "bytes": 14144
+      "sha256": "119fd20a0020269d8e5141087f445fd6ef888133e486df5edfd5eda4a987ef12",
+      "bytes": 14133
     },
     {
       "fileId": "vi_en.v2.u9n2l2",
@@ -1605,8 +1605,8 @@
     {
       "fileId": "vi_en.v2.u9n3l1",
       "path": "bundles/u9n3l1.json",
-      "sha256": "2b0f37e821c7e6e0ad12634938025c74c9f93876cdf735344aadeabaa2ae86b1",
-      "bytes": 13813
+      "sha256": "68583523f190001585c470ae0782aab9acb640728dc5b7f349e72e6b918b0d0f",
+      "bytes": 13803
     },
     {
       "fileId": "vi_en.v2.u9n3l2",
@@ -1641,8 +1641,8 @@
     {
       "fileId": "vi_en.v2.u9n4l2",
       "path": "bundles/u9n4l2.json",
-      "sha256": "3220c6fd0ac2fd059fe528a36e76fbe47dba21db0b6335f0ecf6ba4be70d2ff8",
-      "bytes": 12695
+      "sha256": "b578f1c1cbdc2c8efdbe076dc7498ab6512215764d84a97057c066473c85221b",
+      "bytes": 12692
     },
     {
       "fileId": "vi_en.v2.u9n5l1",
@@ -1683,8 +1683,8 @@
     {
       "fileId": "vi_en.v2.u9n6l1",
       "path": "bundles/u9n6l1.json",
-      "sha256": "9ecfd0d08bb50fc2b3e6e103f13fcc1ba493a36d05b53728ba832fa8e3608583",
-      "bytes": 14193
+      "sha256": "e87065754fc742964679206d7fd8f0ae4376aeb02d0c9fba5079a23fee15861d",
+      "bytes": 14183
     },
     {
       "fileId": "vi_en.v2.u9n6l2",
@@ -1719,14 +1719,14 @@
     {
       "fileId": "vi_en.v2.u9n7l1",
       "path": "bundles/u9n7l1.json",
-      "sha256": "46620f8bb06b79b905968ff9305a57785a1ce3cb6a2e638eb85d8ee123726f86",
-      "bytes": 17021
+      "sha256": "a85de10d16fa359b97e45bcebd34056241478d66ea220a8d2bff5ab965349ea4",
+      "bytes": 17017
     },
     {
       "fileId": "vi_en.v2.u9n7l2",
       "path": "bundles/u9n7l2.json",
-      "sha256": "bdeb01c31c6854250b7005f2a1ba385063474b7c2772f41a7e6d28d0456c8c6c",
-      "bytes": 17338
+      "sha256": "ba27d809d092aa412d2efae1a645b476d7fd3b8e0a580a72697126ffbc30790c",
+      "bytes": 17334
     },
     {
       "fileId": "vi_en.v2.u9n8l1",
@@ -1743,8 +1743,8 @@
     {
       "fileId": "vi_en.v2.u10n1l1",
       "path": "bundles/u10n1l1.json",
-      "sha256": "a614d875314f6c081cf0503a38805c0b11695b4605440f9e83a669a64e3aa310",
-      "bytes": 11823
+      "sha256": "22a4a1877034a029ce01e34d648a60f0beb65170084632edd4eb67191a2ada95",
+      "bytes": 11820
     },
     {
       "fileId": "vi_en.v2.u10n1l2",
@@ -1767,8 +1767,8 @@
     {
       "fileId": "vi_en.v2.u10n2l1",
       "path": "bundles/u10n2l1.json",
-      "sha256": "c945f4fb6593f90a7bad16bb42ce7bb18d64ed5c27aa9837406d687e43053110",
-      "bytes": 14266
+      "sha256": "19d0ab89f50ab774d5b6dc2ded3606607779aac22e04350979ac3e4d847f9915",
+      "bytes": 14255
     },
     {
       "fileId": "vi_en.v2.u10n2l2",
@@ -1833,14 +1833,14 @@
     {
       "fileId": "vi_en.v2.u10n4l2",
       "path": "bundles/u10n4l2.json",
-      "sha256": "8c802785a700c9610a868d76f3b7e7194d7a2ae1a60693c27f71b4a9b1e0ed50",
-      "bytes": 13344
+      "sha256": "415dc55618c5a8337169d4c6ce3e12dc25cada1c1e8f4f6739bf8c05c77b5b3c",
+      "bytes": 13340
     },
     {
       "fileId": "vi_en.v2.u10n5l1",
       "path": "bundles/u10n5l1.json",
-      "sha256": "644d76b6425c9b181eeba780ac4c2b1dd14398e08fd7af088f8939df8a957ab3",
-      "bytes": 15323
+      "sha256": "5c3c2de3ecf11c2b5a7c1a405ec547e8b8f38381c5de6504475823a8ebac5ec6",
+      "bytes": 15309
     },
     {
       "fileId": "vi_en.v2.u10n5l2",
@@ -1911,14 +1911,14 @@
     {
       "fileId": "vi_en.v2.u10n7l1",
       "path": "bundles/u10n7l1.json",
-      "sha256": "450edecb22d08a609874a2c41e00bd1d89deb71a508bb55bdcc49dc2aba24595",
-      "bytes": 17224
+      "sha256": "1aac66ec6743db015c2a3d243ff4ce44a22b8757972da85eb383bec4de350811",
+      "bytes": 17220
     },
     {
       "fileId": "vi_en.v2.u10n7l2",
       "path": "bundles/u10n7l2.json",
-      "sha256": "16ad78e22ed124e199a6807a83388e6b9af9ede2b8339b10187630a1ac66063d",
-      "bytes": 17484
+      "sha256": "05056eab9aaff653cf6a07fc168eba9b0baca0af27a54117cf2d1d28088403ed",
+      "bytes": 17480
     },
     {
       "fileId": "vi_en.v2.u10n8l1",
@@ -1935,8 +1935,8 @@
     {
       "fileId": "vi_en.v2.u11n1l1",
       "path": "bundles/u11n1l1.json",
-      "sha256": "d90607feb8cd0f284f6dd7b224ca5ac9e8582cff0a1064cc1ba5fd7820f4d864",
-      "bytes": 12937
+      "sha256": "e9a58a71ce4480b99045f5034ed073340f90ce1f9cb4ddc79f321e8c072fe98f",
+      "bytes": 12929
     },
     {
       "fileId": "vi_en.v2.u11n1l2",
@@ -1959,8 +1959,8 @@
     {
       "fileId": "vi_en.v2.u11n2l1",
       "path": "bundles/u11n2l1.json",
-      "sha256": "ddf2578cc13a1c94cb83716f3c2e85816422f2be121365b7118f5f4aad4d3d1e",
-      "bytes": 14621
+      "sha256": "197b3b50dd2ce28ac44a8495d6b62f13865c3008d0cefeedeabc84823b7c89da",
+      "bytes": 14611
     },
     {
       "fileId": "vi_en.v2.u11n2l2",
@@ -1989,8 +1989,8 @@
     {
       "fileId": "vi_en.v2.u11n3l1",
       "path": "bundles/u11n3l1.json",
-      "sha256": "b9bc265592c26171fabc45608074ea0803156a0c696ab41ac41f9a9b1b3c5bac",
-      "bytes": 14560
+      "sha256": "0076544761506ccc4e7ecb7a97894268913a0c29da0608d1cae1bd330ba3cfc8",
+      "bytes": 14548
     },
     {
       "fileId": "vi_en.v2.u11n3l2",
@@ -2025,14 +2025,14 @@
     {
       "fileId": "vi_en.v2.u11n4l2",
       "path": "bundles/u11n4l2.json",
-      "sha256": "d1b1a444c84d6ad77e312326a48a9dddc4a5f535a81dce20ed9136c9cb82b20f",
-      "bytes": 13367
+      "sha256": "809b7f118bc6827b67033bf1f2591dc9e6cb1847bd48ae75c486dbbdfccb169a",
+      "bytes": 13363
     },
     {
       "fileId": "vi_en.v2.u11n5l1",
       "path": "bundles/u11n5l1.json",
-      "sha256": "2680b5cfe5109e4e4fc396266751389631085a299b6f08918ac070d42a1a59b6",
-      "bytes": 15914
+      "sha256": "7efc775dc794ca363777f5d378ce07f93e6f60cbc5a8ed99b19930cbafef3a3a",
+      "bytes": 15899
     },
     {
       "fileId": "vi_en.v2.u11n5l2",
@@ -2103,14 +2103,14 @@
     {
       "fileId": "vi_en.v2.u11n7l1",
       "path": "bundles/u11n7l1.json",
-      "sha256": "38c7cbb5350deda65fba5d68648398fc7c2a200043ee0a1c6cf342c7c106a8c7",
-      "bytes": 16864
+      "sha256": "453c85944d5d2f4c8235b790ab60d15a7b34fd50d8f031ae1fd8f2c961bb5d0e",
+      "bytes": 16860
     },
     {
       "fileId": "vi_en.v2.u11n7l2",
       "path": "bundles/u11n7l2.json",
-      "sha256": "843ba4bab4dcceac335626c74de8686d40f8bdcd1cd4ca220bb92a27b9770eef",
-      "bytes": 17435
+      "sha256": "db66b394919b128f25850019d72d2d277d00857ab1c527888088e3572a2b6c88",
+      "bytes": 17431
     },
     {
       "fileId": "vi_en.v2.u11n8l1",
@@ -2127,8 +2127,8 @@
     {
       "fileId": "vi_en.v2.u12n1l1",
       "path": "bundles/u12n1l1.json",
-      "sha256": "5d8ff0135115035f89a3c8cf4c6ae7e10d753d982d691db5204bf00d570b6683",
-      "bytes": 11597
+      "sha256": "95f03ccb2c36fe315317b2fcd540b00934b6a43eb14a2630a5eaec7e75373cb2",
+      "bytes": 11593
     },
     {
       "fileId": "vi_en.v2.u12n1l2",
@@ -2151,8 +2151,8 @@
     {
       "fileId": "vi_en.v2.u12n2l1",
       "path": "bundles/u12n2l1.json",
-      "sha256": "65329ab09a518a2bb8667503fd492691f8ed53a2158c60ebf7c43e8fe91d8389",
-      "bytes": 15078
+      "sha256": "a476420593ab6b25d93cb7ecfa0a21f1a7ad350bd354008d62ed15f1236c7fba",
+      "bytes": 15067
     },
     {
       "fileId": "vi_en.v2.u12n2l2",
@@ -2217,14 +2217,14 @@
     {
       "fileId": "vi_en.v2.u12n4l2",
       "path": "bundles/u12n4l2.json",
-      "sha256": "73aa68425b58e2e350a4c8951ec67293278fbaaa66d56d96c5e277d61a778ee7",
-      "bytes": 13118
+      "sha256": "c8dc9664e27f5584a98a8b315bd73d541f83823b6b7a2b4f562b0396ad5e2b3a",
+      "bytes": 13115
     },
     {
       "fileId": "vi_en.v2.u12n5l1",
       "path": "bundles/u12n5l1.json",
-      "sha256": "f5352ccad26619d1f34ad1da7d3b836f212d67136bee73b1a2800901edd98f3d",
-      "bytes": 12322
+      "sha256": "43078c6b8e3afc95711c0e0a4058122aeda70386e517043dacee4fb901e10a9c",
+      "bytes": 12318
     },
     {
       "fileId": "vi_en.v2.u12n5l2",
@@ -2295,14 +2295,14 @@
     {
       "fileId": "vi_en.v2.u12n7l1",
       "path": "bundles/u12n7l1.json",
-      "sha256": "66680df9ad2e7878dca85f84c5f279c553e439b52c3f5b532ff7e7ee0a89c260",
-      "bytes": 17801
+      "sha256": "3c938a248cd7fd9389bdad09fa353b722cb0c4b8d9a939fdda9a3ce2c230d9e0",
+      "bytes": 17797
     },
     {
       "fileId": "vi_en.v2.u12n7l2",
       "path": "bundles/u12n7l2.json",
-      "sha256": "b0e0f235e10a861dd7c175bdc1a3ad3aca723f450813708a1c0588e9de03340e",
-      "bytes": 17479
+      "sha256": "6dbb032d3a529b7faf0701a13dd00b2ff1f04b729727b150a00ba30dc2134091",
+      "bytes": 17475
     },
     {
       "fileId": "vi_en.v2.u12n8l1",
@@ -2319,8 +2319,8 @@
     {
       "fileId": "vi_en.v2.u13n1l1",
       "path": "bundles/u13n1l1.json",
-      "sha256": "1bc779b596e5514f6a60942bebee27adb5b4a30aee9e79ef16caf733760f9c52",
-      "bytes": 13635
+      "sha256": "6291c44aa696cffe12f1db34a4203ab6b650df09396aec9e396ca3545f0c6db3",
+      "bytes": 13627
     },
     {
       "fileId": "vi_en.v2.u13n1l2",
@@ -2373,8 +2373,8 @@
     {
       "fileId": "vi_en.v2.u13n3l1",
       "path": "bundles/u13n3l1.json",
-      "sha256": "5032c0c127e8ed50fe1a3eeac14375ffeaecfa6414a9947165603d9660b68a4d",
-      "bytes": 14227
+      "sha256": "f837e314b21a9d4ef693357d03bdbe5a9feca1f46a893508d51be0a99e7270d6",
+      "bytes": 14217
     },
     {
       "fileId": "vi_en.v2.u13n3l2",
@@ -2409,8 +2409,8 @@
     {
       "fileId": "vi_en.v2.u13n4l2",
       "path": "bundles/u13n4l2.json",
-      "sha256": "09e175daf7ceb47c3b3dcc3bb916a675fae5946edb18bf93057f17afc6605d00",
-      "bytes": 13007
+      "sha256": "1629a1d02a80d8e055ce795c4fc7adaaf2299e657038e89a4dbfe9256579e8e1",
+      "bytes": 13004
     },
     {
       "fileId": "vi_en.v2.u13n5l1",
@@ -2451,8 +2451,8 @@
     {
       "fileId": "vi_en.v2.u13n6l1",
       "path": "bundles/u13n6l1.json",
-      "sha256": "19eda382bb8c38fa8f551aa88288238e4c26b58b716c67190c49c968a6262679",
-      "bytes": 13139
+      "sha256": "bc9121488c49b8db0ebb8f63527afa8ec36e3c14023363763b57e7fadf834aae",
+      "bytes": 13132
     },
     {
       "fileId": "vi_en.v2.u13n6l2",
@@ -2487,14 +2487,14 @@
     {
       "fileId": "vi_en.v2.u13n7l1",
       "path": "bundles/u13n7l1.json",
-      "sha256": "e7084e2adb78f2c21fab32f39ef8d59bf2357b1f42760c0389b3b23eb05644cf",
-      "bytes": 17338
+      "sha256": "7142676d4f3ab8dbeeec077bfeb0be7fd6c8f5048f69ab8dd7038cd62b596feb",
+      "bytes": 17334
     },
     {
       "fileId": "vi_en.v2.u13n7l2",
       "path": "bundles/u13n7l2.json",
-      "sha256": "5353bda6afaf014c73cbd962cc1db93de3eb48c04b47a9c3b42b2af9d3abacaf",
-      "bytes": 17384
+      "sha256": "1f7ce8d09ee7bf2b142922309c60ee98edc377d2e4c7d6849478690e9d157787",
+      "bytes": 17380
     },
     {
       "fileId": "vi_en.v2.u13n8l1",
@@ -2535,8 +2535,8 @@
     {
       "fileId": "vi_en.v2.u14n2l1",
       "path": "bundles/u14n2l1.json",
-      "sha256": "e5df60a6c1acf893370e7931fb5b7121143ff47bd8cbdfd7b4493edb12ae3b22",
-      "bytes": 11791
+      "sha256": "8b3b649c203bd2e898966de505e78968d8d1015d538e4fbc5a80ce5db03aa7c2",
+      "bytes": 11787
     },
     {
       "fileId": "vi_en.v2.u14n2l2",
@@ -2601,14 +2601,14 @@
     {
       "fileId": "vi_en.v2.u14n4l2",
       "path": "bundles/u14n4l2.json",
-      "sha256": "9d28d8d08f6a07bebc53acc40d25f7bb4bf7174fe347001b4c10c414487aecda",
-      "bytes": 12538
+      "sha256": "983e3efccdab17f745b71b498eda6d5670a24f83bb722b76ac93379c15deb237",
+      "bytes": 12534
     },
     {
       "fileId": "vi_en.v2.u14n5l1",
       "path": "bundles/u14n5l1.json",
-      "sha256": "af293194830418bf001d15694e12913ba6dfed5bff015553cc0e47b09f1e94fc",
-      "bytes": 13435
+      "sha256": "5a546f3ea961ff4d4af826e016c641d3c46c1e000ff674a16c3e15d4b854ca08",
+      "bytes": 13429
     },
     {
       "fileId": "vi_en.v2.u14n5l2",
@@ -2643,8 +2643,8 @@
     {
       "fileId": "vi_en.v2.u14n6l1",
       "path": "bundles/u14n6l1.json",
-      "sha256": "500a1bfb763855032169fd5af73db2574f710630ea558688bc3c0e71baa43a33",
-      "bytes": 11849
+      "sha256": "3752f7ee48aad66e3fc3e57dbe5a4d37890d8b20232e0676ebe586d1d0bf746d",
+      "bytes": 11846
     },
     {
       "fileId": "vi_en.v2.u14n6l2",
@@ -2679,14 +2679,14 @@
     {
       "fileId": "vi_en.v2.u14n7l1",
       "path": "bundles/u14n7l1.json",
-      "sha256": "125ae709ca5697915a44f684429b8b9c1cc3aea939073f5c648098e45d390f72",
-      "bytes": 17047
+      "sha256": "3e65df6da3e8b47a4a200de7745f7fffe59563af21f9c82abe804a29ffffecaa",
+      "bytes": 17043
     },
     {
       "fileId": "vi_en.v2.u14n7l2",
       "path": "bundles/u14n7l2.json",
-      "sha256": "c56cd9d1cd99964a056aba0aa2fb4e65031f3411fed37b3a04fac8cd36fc5d72",
-      "bytes": 17393
+      "sha256": "ecb615fec5e535e784f4989d46a0bb5e0d7c54c617863185429cdd35f46ab3e8",
+      "bytes": 17391
     },
     {
       "fileId": "vi_en.v2.u14n8l1",
@@ -2793,8 +2793,8 @@
     {
       "fileId": "vi_en.v2.u15n4l2",
       "path": "bundles/u15n4l2.json",
-      "sha256": "7900e3796bbdb9af5cea489a533c89b937669bcdfd203357ae70ddbfb1e939d5",
-      "bytes": 13275
+      "sha256": "6f416c0fa437f1fe18a56ba4dcc4fabd415b882b32eb667a65d66abf7c002a38",
+      "bytes": 13272
     },
     {
       "fileId": "vi_en.v2.u15n5l1",
@@ -2835,8 +2835,8 @@
     {
       "fileId": "vi_en.v2.u15n6l1",
       "path": "bundles/u15n6l1.json",
-      "sha256": "8bf5a1cbc9001258b7405c7c2bdc6cd34f5d350f0341a33c44ddd48fdf8ec8ef",
-      "bytes": 12834
+      "sha256": "a16d4b08ddf41de4ebe71e538804d4b5abec108512b8cac150c96ea56849558c",
+      "bytes": 12828
     },
     {
       "fileId": "vi_en.v2.u15n6l2",
@@ -2871,14 +2871,14 @@
     {
       "fileId": "vi_en.v2.u15n7l1",
       "path": "bundles/u15n7l1.json",
-      "sha256": "5fc96e1101e8456373b1a7af4e4e255f023196cdd4186e5ab5c16694b3674001",
-      "bytes": 17231
+      "sha256": "ca2c90fa7386cce02d6f323f6b0d8885108542b08e30f7e38832e7d6de5b8d66",
+      "bytes": 17227
     },
     {
       "fileId": "vi_en.v2.u15n7l2",
       "path": "bundles/u15n7l2.json",
-      "sha256": "e1046aec700a488f6b6bd3c40b4b3b8e4e26d939e4208622eb19f938069a6d7e",
-      "bytes": 16928
+      "sha256": "76adfaaff4df043b1e915dafa6c357b0315be7df60d4aeeba551f2aa71fafb6c",
+      "bytes": 16925
     },
     {
       "fileId": "vi_en.v2.u15n8l1",
@@ -2949,8 +2949,8 @@
     {
       "fileId": "vi_en.v2.u16n3l1",
       "path": "bundles/u16n3l1.json",
-      "sha256": "49bcdb3c2c007b80f42d907220ae9e149dadefc7f4ccadea44e6422878ac5e70",
-      "bytes": 16000
+      "sha256": "63e39c99ae472b54d9f58d8123ac00af1780ab2a983fbd072b365de953005a59",
+      "bytes": 15989
     },
     {
       "fileId": "vi_en.v2.u16n3l2",
@@ -2985,8 +2985,8 @@
     {
       "fileId": "vi_en.v2.u16n4l2",
       "path": "bundles/u16n4l2.json",
-      "sha256": "3f03ba0f8ca10d0e0bae65dfd9b1e018c57d006d66230b91eda2ac46f1156ade",
-      "bytes": 13539
+      "sha256": "e36a3f91b0075a04b6fd7d842ad07528e893d0225224a112e178b9081147d7d3",
+      "bytes": 13535
     },
     {
       "fileId": "vi_en.v2.u16n5l1",
@@ -3063,14 +3063,14 @@
     {
       "fileId": "vi_en.v2.u16n7l1",
       "path": "bundles/u16n7l1.json",
-      "sha256": "cada1ed7be8b5e65bc9e5521ebacc2d68c31b716927708915419d861c011c369",
-      "bytes": 17293
+      "sha256": "3821f77a7399e60087743bf057ff8ffc5b8f4644d9e45274b9a5bd2c3877935e",
+      "bytes": 17289
     },
     {
       "fileId": "vi_en.v2.u16n7l2",
       "path": "bundles/u16n7l2.json",
-      "sha256": "7c17472f88cd5d7781f7b317421f7e1eda52ee232a49a02162264b528484085d",
-      "bytes": 17455
+      "sha256": "5e01ef3582145820596bced5c371c6276e7257a8afbcd62895817216a04d4a84",
+      "bytes": 17451
     },
     {
       "fileId": "vi_en.v2.u16n8l1",
@@ -3087,8 +3087,8 @@
     {
       "fileId": "vi_en.v2.placement",
       "path": "bundles/placement.json",
-      "sha256": "c574b39eb6136efc2870207b592d9fa882cf345933eb893e7f879fd0915e1c5c",
-      "bytes": 8191
+      "sha256": "102b42c0ae332e852db28c612237a56df1f24c6aceba0066fdbc89e25ff2daaa",
+      "bytes": 8188
     }
   ]
 }

@@ -164,7 +164,7 @@ class ApiLearningRepository implements LearningRepository {
   List<Exercise> _activate(JournalSession session) {
     _session = session;
     final bundle = wire.LessonBundle.fromJson(session.bundle);
-    final mapper = LessonWireMapper(bundle.exercises);
+    final mapper = LessonWireMapper(bundle.exercises, assets: bundle.assets);
     _mapper = mapper;
     _attempts
       ..clear()
