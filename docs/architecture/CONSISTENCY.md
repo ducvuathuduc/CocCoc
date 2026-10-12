@@ -21,6 +21,18 @@ Completion validates verified subject, pinned bundle and all required attempts. 
 
 The scaffold's `pnpm backend:smoke` uses in-memory fixture ports, injects receiver failure and lost ack, validates real OpenAPI event schema and verifies one reward effect. It proves the local workflow only: no durable lease, HMAC transport, Cloud transaction, timezone/replay cap or process-crash recovery is implemented by those mock stores. Cloud entrypoints import only transport, so fixture counts cannot award live XP.
 
+Scheduled jobs (P1-OPS-001 cron wiring; OpenAPI `/internal/jobs/*`, EVENTS_ERRORS "Scheduler ticks"):
+
+| Job | Owner / code | Appwrite cron (one schedule per function) | Effect |
+|---|---|---|---|
+| Learning outbox dispatch | Learning `dispatchOutbox` (worker mode, `runLearningOutboxDispatch`) | `* * * * *` on coc-learning, pending until Learning persistence is enabled | lease ≤20 due l_outbox rows, deliver lesson.completed.v1 to Progress |
+| Progress outbox relay | Progress `relayOutbox` | `* * * * *` on coc-progress (every tick) | account.deleted.v1 / entitlement.changed.v1 → Learning+AI, energy.granted.v1 → Learning |
+| Deletion purge retry | Progress `purgeDeletedAccount` | same tick | bounded purge of PURGING tombstones to COMPLETED |
+| Streak day rollover | Progress `processMissedDays` | same schedule, UTC minute 5 of each hour | consume equipped freezes per missed day or end the streak (candidates: last qualified day ≥2 UTC days old) |
+| League settlement | Progress `settleLeagueWeek` | same schedule, UTC minute 15 of each hour | settle the last ended week and every SETTLING week once the Learning watermark is zero |
+
+Learning energy (P6-GAME-003): with `COC_ENERGY_MODE=LIMITED` a LESSON/MASTERY answer spends one unit inside the answer transaction and an empty battery is ENERGY_DEPLETED at answer and lesson start; REVIEW and PLACEMENT are free; the default (unset) mode is UNLIMITED. energy.granted.v1 refills or adds through the l_inbox row; entitlement.changed.v1 projects SUPER/MAX (ACTIVE/GRACE, unexpired) as UNLIMITED and keeps only the newest entitlement revision.
+
 ```mermaid
 sequenceDiagram
   participant M as Flutter

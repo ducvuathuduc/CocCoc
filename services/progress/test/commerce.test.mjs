@@ -587,3 +587,21 @@ test('classrooms, year review and league result screen', async () => {
   );
   assert.equal((await h.call('GET', '/v1/league/result', { user: 'alice' })).body.unseen, false);
 });
+
+test('promo codes: the user who took the last slot still gets PROMO_ALREADY_REDEEMED', async () => {
+  const h = setup();
+  await initUser(h, 'solo');
+  await initUser(h, 'late');
+  await kit.createPromoCode(h.store, {
+    code: 'LAST-ONE',
+    rewardType: 'GEMS',
+    gems: 10,
+    maxRedemptions: 1,
+    startsAt: '2026-01-01T00:00:00.000Z',
+  });
+  const redeem = (user) =>
+    h.call('POST', '/v1/promo-codes/redeem', { user, body: { code: 'last-one' } });
+  assert.equal((await redeem('solo')).status, 200);
+  assert.equal(code(await redeem('solo')), 'PROMO_ALREADY_REDEEMED');
+  assert.equal(code(await redeem('late')), 'NOT_FOUND');
+});

@@ -1,6 +1,7 @@
 // Composition contract for Learning use cases, plus small row helpers shared by them.
 import type { ContentRepository } from '../content/repository.js';
 import type { LearningPersistence, Row } from '../persistence/port.js';
+import type { Deliver } from './outbox.js';
 
 export interface EventRelay {
   /** Best-effort immediate delivery of committed outbox rows; the dispatcher is the backstop. */
@@ -15,6 +16,10 @@ export interface LearningDeps {
   /** Appwrite user IDs allowed to publish content (FR-ADMIN-001); empty -> nobody. */
   maintainers: ReadonlySet<string>;
   relay?: EventRelay | undefined;
+  /** Course energyMode configuration (FR-GAME-005); absent means UNLIMITED. */
+  energyMode?: 'LIMITED' | 'UNLIMITED' | undefined;
+  /** Signed delivery used by the scheduled outbox dispatch tick; absent fails closed. */
+  deliver?: Deliver | undefined;
 }
 
 export const SESSION_TTL_MS = 24 * 60 * 60 * 1000;

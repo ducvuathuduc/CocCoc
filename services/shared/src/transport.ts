@@ -45,8 +45,12 @@ const EVENT_KEYS = new Set([
 /** Receiver allowlist: event type -> producers accepted by this receiver (EVENTS_ERRORS). */
 export const EVENT_ALLOWLIST: Record<ServiceName, Record<string, readonly ServiceName[]>> = {
   progress: { 'lesson.completed.v1': ['learning'], 'account.purged.v1': ['learning', 'ai'] },
-  learning: { 'account.deleted.v1': ['progress'] },
-  ai: { 'account.deleted.v1': ['progress'] },
+  learning: {
+    'account.deleted.v1': ['progress'],
+    'entitlement.changed.v1': ['progress'],
+    'energy.granted.v1': ['progress'],
+  },
+  ai: { 'account.deleted.v1': ['progress'], 'entitlement.changed.v1': ['progress'] },
 };
 
 export function parseTraceparent(value: string | undefined): string | undefined {

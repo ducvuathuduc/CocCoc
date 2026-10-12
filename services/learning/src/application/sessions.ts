@@ -25,6 +25,7 @@ import {
   SESSION_TTL_MS,
   type LearningDeps,
 } from './deps.js';
+import { assertEnergyForStart, spendEnergy } from './energy.js';
 import { activeEnrollment, enrollmentView } from './enrollment.js';
 import { stageOutboxEvent, type LessonCompletedEvent } from './outbox.js';
 import { stageMistakes } from './practice.js';
@@ -195,6 +196,7 @@ export async function startSession(
         assertLessonUnlocked(manifest, enrollmentView(enrollment), body.lessonId);
       if (enrollment && body.mode === 'MASTERY')
         assertMasteryUnlocked(manifest, enrollmentView(enrollment), body.lessonId);
+      await assertEnergyForStart(deps, tx, userId, body.mode);
 
       // One active online session per user/course (FR-LESSON-001).
       const slotId = ids.slot(userId, body.courseId);
@@ -355,6 +357,7 @@ export async function submitAnswer(
       const answerId = ids.answer(sessionId, body.exerciseId, body.attemptOrdinal);
       if (await tx.get('l_answers', answerId))
         throw new ServiceError('SESSION_CONFLICT', { details: { reason: 'ALREADY_ANSWERED' } });
+      const spent = await spendEnergy(deps, tx, userId, String(session['mode']));
       tx.put('l_answers', answerId, {
         sessionId,
         userId,
@@ -373,6 +376,7 @@ export async function submitAnswer(
         nextOriginalOrdinal: after.nextOriginalOrdinal,
         retryPass: after.retryPass,
         assisted: Boolean(session['assisted']) || body.assisted,
+        energySpent: Number(session['energySpent'] ?? 0) + spent,
         revision,
         updatedAt: iso(now),
       });

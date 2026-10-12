@@ -4,7 +4,8 @@
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import { ServiceError } from './errors.js';
 
-export type ServiceSender = 'learning' | 'progress' | 'ai' | 'maintainer';
+/** 'scheduler' signs only the /internal/jobs/* ticks (no event or business route accepts it). */
+export type ServiceSender = 'learning' | 'progress' | 'ai' | 'maintainer' | 'scheduler';
 export interface ServiceKey {
   keyId: string;
   sender: ServiceSender;
@@ -14,7 +15,7 @@ export type Keyring = ReadonlyMap<string, ServiceKey>;
 
 export const MAX_SKEW_SECONDS = 300;
 export const MIN_KEY_BYTES = 32;
-const SENDERS = new Set<ServiceSender>(['learning', 'progress', 'ai', 'maintainer']);
+const SENDERS = new Set<ServiceSender>(['learning', 'progress', 'ai', 'maintainer', 'scheduler']);
 const KEY_ID = /^[A-Za-z0-9._-]{1,64}$/;
 const TIMESTAMP = /^[1-9][0-9]{0,15}$/;
 const SIGNATURE = /^[0-9a-f]{64}$/;

@@ -34,5 +34,6 @@ export { createKeyring, signServiceRequest } from '../../../shared/src/service-h
 export { devKey } from '../../../shared/src/testing/dev-keyring.js';
 export { createRouter, canonicalBodyHash } from '../../../shared/src/transport.js';
 export { createMemoryOwnerStore } from '../../../shared/src/testing/memory-owner-store.js';
-export { energyView } from '../application/energy.js';
+export { energyView, energyModeFrom } from '../application/energy.js';
+export { createLearningEventConsumer } from '../application/events.js';
 export { strengthOf, lexiconOf } from '../application/practice.js';

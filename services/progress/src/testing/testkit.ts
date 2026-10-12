@@ -25,3 +25,26 @@ export * from '../domain/league.js';
 export { createPromoCode, codeHash, derivedCode } from '../application/commerce.js';
 export { classroomCodeHash } from '../application/settings.js';
 export { PROGRESS_ROUTE_TEMPLATES } from '../http/routes.js';
+export {
+  relayOutbox,
+  eventOf,
+  RELAY_TARGETS,
+  relayOutcomeForStatus,
+} from '../application/outbox-relay.js';
+export { httpRelayDeliver, httpWatermark } from '../application/relay-http.js';
+export {
+  runStreakRollover,
+  runLeagueSettlement,
+  runDeletionPurge,
+  runProgressOutboxRelay,
+} from '../application/jobs.js';
+export { jobRoutes } from '../http/wiring.js';
+export { signServiceRequest } from '../../../shared/src/service-hmac.js';
+export { createInternalClient } from '../../../shared/src/internal-client.js';
+export { runProgressWorker, STREAK_MINUTE, LEAGUE_MINUTE } from '../http/worker.js';
+export {
+  plainRequest,
+  withExecutionKey,
+  currentExecutionKey,
+  isScheduledExecution,
+} from '../../../shared/src/appwrite-entry.js';

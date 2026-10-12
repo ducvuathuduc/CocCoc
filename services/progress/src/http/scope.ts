@@ -81,7 +81,15 @@ export function withRequestScope(
     }
     const scoped: FunctionContext = {
       ...context,
-      req: { ...req, path, ...(bodyText !== undefined ? { bodyText } : {}) },
+      // Copy plain fields only: the Appwrite runtime req has lazy getters (bodyJson throws on an
+      // empty body), so spreading it can crash a GET before the router runs.
+      req: {
+        method: req.method,
+        path,
+        headers: req.headers ?? {},
+        ...(bodyText !== undefined ? { bodyText } : {}),
+        ...(req.queryString !== undefined ? { queryString: req.queryString } : {}),
+      },
     };
     return storage.run({ params, idempotencyKey }, () => router(scoped));
   };

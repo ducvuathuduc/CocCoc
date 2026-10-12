@@ -39,6 +39,29 @@ export function createInternalClient(options: InternalClientOptions) {
       const text = await response.text();
       return { status: response.status, body: text ? (JSON.parse(text) as unknown) : null };
     },
+    /** Signed GET with a query string (e.g. /internal/outbox-watermark?before=...). */
+    async get(
+      path: string,
+      query: Record<string, string>,
+      requestId = randomUUID(),
+    ): Promise<InternalResponse> {
+      const raw = new URLSearchParams(query).toString().replace(/\+/g, '%20');
+      const headers = signServiceRequest({
+        key: options.key,
+        method: 'GET',
+        path,
+        query: raw,
+        allowedQueryKeys: Object.keys(query),
+        body: '',
+        nowSeconds: nowSeconds(),
+      });
+      const response = await fetchImpl(`${base}${path}${raw ? `?${raw}` : ''}`, {
+        method: 'GET',
+        headers: { ...headers, 'X-Request-ID': requestId },
+      });
+      const text = await response.text();
+      return { status: response.status, body: text ? (JSON.parse(text) as unknown) : null };
+    },
     /** Deliver one business event to the receiver's /internal/events. */
     deliverEvent(event: unknown): Promise<InternalResponse> {
       return this.post('/internal/events', JSON.stringify(event));

@@ -22,7 +22,11 @@ import type { ListQuery, ListedRow, ProgressTable, Row, Scalar } from './port.js
 export interface AppwriteProgressOptions {
   endpoint: string;
   projectId: string;
-  apiKey: string;
+  /**
+   * Server key, or a provider read on every call: hosted Functions pass the per-execution dynamic
+   * key (`x-appwrite-key` request header) so no long-lived key needs to be stored.
+   */
+  apiKey: string | (() => string | undefined);
   databaseId?: string;
   /** True only when the deployment opted in after the live gate (see src/index.ts). */
   admitted: boolean;
@@ -76,18 +80,30 @@ export function createAppwriteProgressPersistence(options: AppwriteProgressOptio
     throw new Error('INVALID_APPWRITE_CONFIGURATION');
   }
   const databaseId = options.databaseId ?? 'cocenglish';
-  const db =
-    options.tables ??
-    new TablesDB(
-      new Client()
-        .setEndpoint(options.endpoint)
-        .setProject(options.projectId)
-        .setKey(options.apiKey),
-    );
+  const clients = new Map<string, TablesDB>();
+  const keyOf = () => {
+    const key = typeof options.apiKey === 'function' ? options.apiKey() : options.apiKey;
+    if (!key) throw new ServiceError('SERVICE_NOT_CONFIGURED', { details: { reason: 'NO_KEY' } });
+    return key;
+  };
+  /** TablesDB client for the current key (one cached client per key; old keys dropped). */
+  const db = (): TablesDB => {
+    if (options.tables) return options.tables;
+    const key = keyOf();
+    let client = clients.get(key);
+    if (!client) {
+      clients.clear();
+      client = new TablesDB(
+        new Client().setEndpoint(options.endpoint).setProject(options.projectId).setKey(key),
+      );
+      clients.set(key, client);
+    }
+    return client;
+  };
 
   async function getRow(table: ProgressTable, id: string): Promise<Row | null> {
     try {
-      const row = await db.getRow({ databaseId, tableId: table, rowId: id });
+      const row = await db().getRow({ databaseId, tableId: table, rowId: id });
       return normalizeRow(table, row as unknown as Row);
     } catch (error) {
       if (error instanceof AppwriteException && error.code === 404) return null;
@@ -105,7 +121,7 @@ export function createAppwriteProgressPersistence(options: AppwriteProgressOptio
         const page = Math.min(PAGE, limit - out.length);
         const queries = [...base, Query.limit(page)];
         if (cursor) queries.push(Query.cursorAfter(cursor));
-        const result = await db.listRows({ databaseId, tableId: table, queries, total: false });
+        const result = await db().listRows({ databaseId, tableId: table, queries, total: false });
         for (const row of result.rows) {
           out.push({ id: row.$id, row: normalizeRow(table, row as unknown as Row) });
         }
@@ -121,7 +137,7 @@ export function createAppwriteProgressPersistence(options: AppwriteProgressOptio
   async function count(table: ProgressTable, where: Readonly<Record<string, Scalar>>) {
     try {
       const queries = buildQueries({ where }).filter((q) => !q.includes('"$id"'));
-      const result = await db.listRows({
+      const result = await db().listRows({
         databaseId,
         tableId: table,
         queries: [...queries, Query.limit(1)],
@@ -152,9 +168,9 @@ export function createAppwriteProgressPersistence(options: AppwriteProgressOptio
   async function commit(ops: StagedOp[]): Promise<void> {
     let transactionId: string | undefined;
     try {
-      const tx = await db.createTransaction({ ttl: TX_TTL_SECONDS });
+      const tx = await db().createTransaction({ ttl: TX_TTL_SECONDS });
       transactionId = tx.$id;
-      await db.createOperations({ transactionId, operations: ops.map(toOperation) });
+      await db().createOperations({ transactionId, operations: ops.map(toOperation) });
       const guarded = ops.filter((op) => op.action === 'update' || op.action === 'delete');
       const current = await Promise.all(guarded.map((op) => getRow(op.table, op.id)));
       guarded.forEach((op, index) => {
@@ -163,11 +179,13 @@ export function createAppwriteProgressPersistence(options: AppwriteProgressOptio
           throw new TransactionConflict('revision_moved');
         }
       });
-      await db.updateTransaction({ transactionId, commit: true });
+      await db().updateTransaction({ transactionId, commit: true });
       transactionId = undefined;
     } catch (error) {
       if (transactionId) {
-        await db.updateTransaction({ transactionId, rollback: true }).catch(() => undefined);
+        await db()
+          .updateTransaction({ transactionId, rollback: true })
+          .catch(() => undefined);
       }
       mapError(error);
     }
@@ -178,7 +196,7 @@ export function createAppwriteProgressPersistence(options: AppwriteProgressOptio
     admittedForHosting: options.admitted,
     async ping() {
       try {
-        await db.listRows({
+        await db().listRows({
           databaseId,
           tableId: 'p_inbox',
           queries: [Query.limit(1)],

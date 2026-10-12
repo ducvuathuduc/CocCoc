@@ -3,7 +3,7 @@
 import { createHash } from 'node:crypto';
 import { createKeyring, parseKeyring, type Keyring, type ServiceKey } from '../service-hmac.js';
 
-const SENDERS = ['learning', 'progress', 'ai', 'maintainer'] as const;
+const SENDERS = ['learning', 'progress', 'ai', 'maintainer', 'scheduler'] as const;
 export type DevSender = (typeof SENDERS)[number];
 
 export function devKey(sender: DevSender): ServiceKey {

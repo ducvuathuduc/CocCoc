@@ -16,7 +16,8 @@ import type { LearningDeps } from '../application/deps.js';
 import { getEnergy } from '../application/energy.js';
 import { enrollCourse, enrollmentCommand, getPath } from '../application/enrollment.js';
 import { listActivityProgress, listMistakes, listWords } from '../application/practice.js';
-import { outboxWatermark } from '../application/outbox.js';
+import { createLearningEventConsumer } from '../application/events.js';
+import { dispatchOutbox, MAX_BATCH, outboxWatermark } from '../application/outbox.js';
 import { createReport } from '../application/reports.js';
 import { getReview } from '../application/review.js';
 import {
@@ -27,6 +28,7 @@ import {
   submitAnswer,
 } from '../application/sessions.js';
 import { SESSION_MODES } from '../content/types.js';
+import { emptyCounts, jobRoute } from '../../../shared/src/job-tick.js';
 import { idempotencyKey, pathParam, withRequestScope } from './scope.js';
 import * as v from './validate.js';
 
@@ -402,8 +404,40 @@ export function learningRoutes(deps: LearningDeps): Route[] {
   ];
 }
 
+/** Signed scheduler tick: the backstop dispatcher for l_outbox (scheduler/maintainer key). */
+export function learningJobRoutes(deps: LearningDeps): Route[] {
+  return [
+    jobRoute(
+      '/internal/jobs/learning-outbox-dispatch',
+      'LEARNING_OUTBOX_DISPATCH',
+      () => deps.nowMs(),
+      async (tick) => {
+        if (!deps.deliver) {
+          throw new ServiceError('SERVICE_NOT_CONFIGURED', { details: { job: 'dispatch' } });
+        }
+        const report = await dispatchOutbox(deps, deps.deliver, {
+          limit: Math.min(tick.limit ?? MAX_BATCH, MAX_BATCH),
+          deadlineMs: 20_000,
+          owner: `tick-${tick.tickId.slice(0, 8)}-${deps.newId().slice(0, 8)}`,
+        });
+        return {
+          ...emptyCounts(),
+          processed: report.leased,
+          succeeded: report.acked,
+          retried: report.retried,
+          dead: report.dead,
+          skipped: report.leased - report.acked - report.retried - report.dead,
+        };
+      },
+    ),
+  ];
+}
+
 export function learningWiring(deps: LearningDeps): ServiceWiring {
-  return { routes: learningRoutes(deps) };
+  return {
+    routes: [...learningRoutes(deps), ...learningJobRoutes(deps)],
+    eventConsumer: createLearningEventConsumer(deps),
+  };
 }
 
 /** Wrap a router built from learningWiring so OpenAPI path templates resolve. */

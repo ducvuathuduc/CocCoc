@@ -52,6 +52,7 @@ export function createDevHandler(
       key: ownKey,
       progressBaseUrl: `http://127.0.0.1:${progressPort}`,
     });
+    deps.deliver = deliver;
     deps.relay = createImmediateRelay(() => deps, deliver);
     // Backstop sweep for anything the immediate relay could not deliver.
     setInterval(() => void dispatchOutbox(deps, deliver).catch(() => undefined), 5000).unref();

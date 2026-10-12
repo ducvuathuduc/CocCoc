@@ -37,6 +37,7 @@ export async function createTestApp(
     persistence?: LearningPersistence;
     files?: ContentFileStore;
     seed?: boolean;
+    energyMode?: 'LIMITED' | 'UNLIMITED';
   } = {},
 ) {
   const persistence = options.persistence ?? createMemoryLearningPersistence(options.nowMs);
@@ -52,7 +53,11 @@ export async function createTestApp(
     newId: randomUUID,
     maintainers: new Set(['maintainer-1']),
   };
-  if (options.deliver) deps.relay = createImmediateRelay(() => deps, options.deliver);
+  if (options.energyMode) deps.energyMode = options.energyMode;
+  if (options.deliver) {
+    deps.deliver = options.deliver;
+    deps.relay = createImmediateRelay(() => deps, options.deliver);
+  }
   if (options.seed !== false) {
     for (const p of local.publications) {
       await publishContent(

@@ -64,7 +64,18 @@ export function withRequestScope(
     const emptyDelete = context.req.method === 'DELETE' && !context.req.bodyText;
     const scoped: FunctionContext = {
       ...context,
-      req: { ...context.req, path, ...(emptyDelete ? { bodyText: '{}' } : {}) },
+      // Plain fields only: the Appwrite runtime req has lazy getters (bodyJson throws on empty body).
+      req: {
+        method: context.req.method,
+        path,
+        headers: context.req.headers ?? {},
+        ...(emptyDelete
+          ? { bodyText: '{}' }
+          : context.req.bodyText !== undefined
+            ? { bodyText: context.req.bodyText }
+            : {}),
+        ...(context.req.queryString !== undefined ? { queryString: context.req.queryString } : {}),
+      },
     };
     return storage.run({ params, headers }, () => handler(scoped));
   };

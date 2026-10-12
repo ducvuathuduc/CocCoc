@@ -631,6 +631,11 @@ export async function redeemPromoCode(tx: ProgressTx, userId: string, code: stri
     promo?.['maxRedemptions'] !== null &&
     promo?.['maxRedemptions'] !== undefined &&
     Number(promo['redeemedCount']) >= Number(promo['maxRedemptions']);
+  // A user who already redeemed this code hears so even after the last slot went to them.
+  if (promo && promo['codeHash'] === hash) {
+    const own = rowId('p_promo_redemptions', userId, String(promo['promoId']));
+    if (await tx.get('p_promo_redemptions', own)) throw new ServiceError('PROMO_ALREADY_REDEEMED');
+  }
   if (
     !promo ||
     promo['codeHash'] !== hash ||
