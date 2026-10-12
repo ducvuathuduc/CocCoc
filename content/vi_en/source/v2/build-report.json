@@ -1,0 +1,170 @@
+{
+  "courseId": "vi_en",
+  "versionId": "v2",
+  "signatureKeyId": "dev-content-1",
+  "sections": 2,
+  "units": 16,
+  "nodes": 208,
+  "lessons": 416,
+  "exercises": 5232,
+  "exerciseTypes": {
+    "choice": 518,
+    "dialogueTurn": 208,
+    "dictation": 512,
+    "fillBlank": 432,
+    "imageChoice": 154,
+    "listenChoice": 528,
+    "matchPairs": 320,
+    "sentenceOrder": 352,
+    "speakRepeat": 336,
+    "storyQuestion": 128,
+    "textTranslation": 944,
+    "wordBank": 800
+  },
+  "nodeKinds": {
+    "lesson": 96,
+    "listening": 32,
+    "speaking": 32,
+    "story": 16,
+    "mastery": 32
+  },
+  "vocabulary": 320,
+  "sentences": 486,
+  "dialogues": 96,
+  "storyQuestions": 96,
+  "audioKeys": 582,
+  "assets": 1252,
+  "ambiguousTiles": [],
+  "maxBundleBytes": 19772,
+  "unitsDetail": [
+    {
+      "unitId": "u1",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Chào hỏi và làm quen",
+      "vocab": 20,
+      "sentences": 34
+    },
+    {
+      "unitId": "u2",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Gia đình",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u3",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Đồ ăn và thức uống",
+      "vocab": 20,
+      "sentences": 32
+    },
+    {
+      "unitId": "u4",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Số đếm và tuổi",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u5",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Thời gian và một ngày của tôi",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u6",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Nhà của tôi",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u7",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Trường lớp",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u8",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Thời tiết và các mùa",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u9",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Mua sắm",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u10",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Hỏi đường và thành phố",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u11",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Du lịch",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u12",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Công việc",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u13",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Sở thích",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u14",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Sức khỏe",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u15",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Bạn bè và cảm xúc",
+      "vocab": 20,
+      "sentences": 30
+    },
+    {
+      "unitId": "u16",
+      "sectionId": "sec2",
+      "cefr": "A2",
+      "title": "Kế hoạch và tương lai",
+      "vocab": 20,
+      "sentences": 30
+    }
+  ],
+  "manifestSha256": "ede7a535ac99df463501c21fb74d6e9be97ff127e48be87f140861e90868b498"
+}
