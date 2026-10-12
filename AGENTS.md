@@ -1,17 +1,53 @@
-# CocEnglish project instructions
+# CocEnglish — agent instructions
 
-Read docs/00_START_HERE.md, the assigned task in docs/agent/IMPLEMENTATION_PLAN.md, and nearest nested AGENTS.md before changing code. Current authorized architecture audit/research/scaffold task: docs/agent/RESEARCH_REFRESH_PLAN.md. Existing frontend work in docs/agent/FRONTEND_FLOW_PLAN.md is preserved. Full cloud/device/production phase gates remain pending.
+Start at [docs/00_START_HERE.md](docs/00_START_HERE.md). Then read the assigned task in [docs/agent/IMPLEMENTATION_PLAN.md](docs/agent/IMPLEMENTATION_PLAN.md) and the nearest nested `AGENTS.md` before changing code.
 
-Frozen: Flutter Android/iOS; feature-first Riverpod MVVM; TypeScript/Node22; three services Learning/Progress/AI; Appwrite Auth/TablesDB/Storage; REST/OpenAPI; service-owned writes; Drift journal. Change architecture only through docs/agent/TASK_PROTOCOL.md ADR procedure. Do not default to Python or add broker/cluster/cache/gateway products.
+## Layout (full map: [docs/agent/REPOSITORY_TREE.md](docs/agent/REPOSITORY_TREE.md))
 
-Canonical owners: requirements docs/product/SRS.md; wire docs/api/openapi.yaml; storage docs/data/DATA_MODEL.md; design docs/design/DESIGN.md; phases docs/agent/IMPLEMENTATION_PLAN.md. Link, do not duplicate.
+| Path | Owns | Instructions |
+|---|---|---|
+| `apps/mobile/` | Flutter Android/iOS app (all product UI) | [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) |
+| `services/{learning,progress,ai}/` | Three independently bundled Node 22 services; `services/shared/` holds transport/auth/HMAC only | [services/AGENTS.md](services/AGENTS.md) |
+| `appwrite/` | Appwrite TablesDB schema declaration, apply/drift/probe scripts, seeds | [appwrite/AGENTS.md](appwrite/AGENTS.md) |
+| `packages/api_contracts/` | TypeScript wire types generated from OpenAPI + shared schema fixtures | generated: `pnpm contracts:generate` |
+| `docs/` | Specifications, decisions, evidence, task state | [docs/AGENTS.md](docs/AGENTS.md) |
+| `tools/` | Every checked command: `blueprint/`, `audit/`, `scripts/`, `evals/`, `agent/` hooks, `palette_check.py`, `toolchain.json` pins | — |
+| `.agents/skills/`, `.claude/` | Agent skills and reviewer definitions (`.claude/skills` points to `.agents/skills`) | [CLAUDE.md](CLAUDE.md) |
 
-Claim one task/change area; inspect targeted symbols with rg/AST tools, not whole-repo dumps. Parallel work stays within current passed phase. Root contracts, routing, dependency locks and migrations are exclusive change areas. Native forks share subscription quota; use at most one child and only for a useful isolated context.
+## Frozen architecture
 
-Preserve input on failures. User identity from verified Appwrite JWT; keys server-side. Never trust client XP/clock/pronunciation score. No live AI in deterministic CI. Secrets/logs redacted; no paid adapter auto-enables.
+The architecture is frozen as follows. Flutter Android/iOS uses feature-first manual Riverpod MVVM. The backend is TypeScript on Node 22 with three services: Learning, Progress and AI. Appwrite provides Auth, TablesDB and Storage. The API is REST described by OpenAPI, and each service owns its writes. The local journal is Drift. Change the architecture only through the ADR procedure in [docs/agent/TASK_PROTOCOL.md](docs/agent/TASK_PROTOCOL.md). Do not add a broker, cluster, cache, gateway or a Python service.
 
-For behavior changes, write a meaningful failing test, implement, run targeted checks, then required gate. For major screens use gummble-ui-research skill and project tokens/state fixtures. Report exact commands/evidence and capability limitations; never claim app build/device success from document checks.
+Canonical owners:
 
-No deploy, publish, merge, reset/delete, force-push or new paid plan without explicit request. Research/scaffold permission does not authorize those actions.
+- Requirements: `docs/product/SRS.md`.
+- Wire format: `docs/api/openapi.yaml`. The file is JSON, which is valid YAML 1.2; every tool reads it as JSON.
+- Storage: `docs/data/DATA_MODEL.md`.
+- Design: `docs/design/DESIGN.md`.
+- Phases: `docs/agent/IMPLEMENTATION_PLAN.md`.
 
-Checks: pnpm backend:verify; pnpm backend:smoke; pnpm contracts:check; pnpm api:lint; pnpm audit:check; pnpm verify. See docs/devops/LOCAL_SETUP_WINDOWS.md. Mock stores never power cloud entrypoints; readiness fails closed until actual adapters are admitted. Before ending, update only assigned task evidence and canonical docs affected by actual decisions.
+Link to these owners; never duplicate them.
+
+## Rules
+
+- Identity comes only from a verified Appwrite JWT. Never trust a client's XP, clock or pronunciation score. Keys stay server-side, logs are redacted, and no paid adapter auto-enables.
+- Hosted entrypoints use disabled adapters and fail closed. In-memory stores exist only in `src/testing/`, `src/dev.ts` and tests.
+- Exclusive change areas: OpenAPI, the root router, `pubspec.lock`/`pnpm-lock.yaml`, `appwrite/schema` and migrations, and the `services/shared` interfaces. One owner at a time.
+- For a behavior change, write a meaningful failing test first. Then implement, run the area's targeted checks, then the gates. Report exact commands and evidence. Never claim a device or cloud result from a document check.
+- No deploy, publish, `schema:apply`, merge to `main`, reset/delete, force-push or paid plan without an explicit request.
+
+## Gates (run from root after `pnpm install --frozen-lockfile`)
+
+```sh
+pnpm backend:verify   # tsc + esbuild bundles + eslint + prettier + node tests
+pnpm backend:smoke    # in-process outbox->inbox fixture
+pnpm dev:smoke        # real HTTP: 3 dev services, /health, signed cross-service event
+pnpm contracts:check  # schema fixtures + Dart DTOs in sync with OpenAPI
+pnpm api:lint         # redocly
+pnpm schema:plan && pnpm schema:test && pnpm seed:check
+pnpm blueprint:check && pnpm audit:check   # traceability, links, Mermaid, endpoint matrix
+pnpm verify           # Flutter format/analyze/test + blueprint (see apps/mobile/AGENTS.md)
+python3 tools/palette_check.py              # informational: known baseline of unmatched colors
+```
+
+Run locally: `pnpm dev:services`. Learning runs on :4101, Progress on :4102 and AI on :4103, all with in-memory dev adapters. See [services/AGENTS.md](services/AGENTS.md).

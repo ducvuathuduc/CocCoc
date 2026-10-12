@@ -56,7 +56,7 @@ Root [AGENTS](../AGENTS.md), [CLAUDE](../CLAUDE.md) and five module AGENTS estab
 
 ## PART I — Final Repository Tree
 
-[REPOSITORY_TREE](agent/REPOSITORY_TREE.md) is the deliberate approved tree with directory purposes. It distinguishes Phase0 files that exist from future implementation paths. Only mobile and the three service AGENTS currently exist in application directories; there is no application pretending to be implemented.
+[REPOSITORY_TREE](agent/REPOSITORY_TREE.md) is the single layout and ownership map (updated 2026-10-12 to the actual tree; the V1 future-path sample it replaced is superseded).
 
 ## PART J — Documentation Package
 

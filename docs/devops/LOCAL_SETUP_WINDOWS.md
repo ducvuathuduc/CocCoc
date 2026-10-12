@@ -35,16 +35,15 @@ Pop-Location
 
 Fresh receipt: the default Android build failed on a modified immutable transform workspace in the global Gradle cache. The diagnostic build passed with a separate repo-local Gradle user home, keeping the old cache intact. To reproduce the tested build environment from the repository root, set `$env:GRADLE_USER_HOME = Join-Path (Get-Location) '.cache/gradle-android-refresh'` before `pnpm build:android`. The successful retry used the Flutter tools snapshot with `build apk --debug`; no mobile/Gradle/lock changes. A debug APK compile is not physical-device or release-signing proof. See [receipt](../audit/VALIDATION.md) and [artifact hashes](../audit/BUILD_ARTIFACTS.json).
 
-Backend packages independently run a loopback health scaffold after `pnpm backend:build`:
+Run the three services locally in explicit dev mode. They use the same router and wiring as the hosted bundles, with in-memory adapters:
 
 ```powershell
-pnpm --filter @cocenglish/learning start
-# In two separate terminals:
-pnpm --filter @cocenglish/progress start
-pnpm --filter @cocenglish/ai start
+pnpm dev:services                       # Learning 4101, Progress 4102, AI 4103 on 127.0.0.1
+pnpm dev:services progress              # or a single service; also: pnpm --filter @cocenglish/progress dev
+pnpm dev:smoke                          # starts all three and checks health + a signed cross-service event
 ```
 
-Health ports default 4301/4302/4303; `/ready` returns 401 and business routes 503 because cloud adapters are disabled. Local async demonstration is `pnpm backend:smoke`; it is not connected to mobile or a database. Per-service bundle command: `pnpm --filter @cocenglish/learning build` (substitute Progress/AI). Artifacts are self-contained `services/<owner>/dist/function.mjs`; shared transport is bundled, fixture stores excluded.
+`/health` returns 200 `degraded`. `/ready` returns 503 `SERVICE_NOT_CONFIGURED` because memory adapters are never admitted. User business routes fail closed because dev mode has no auth port. Internal calls need `X-Service-*` HMAC headers made with the dev keys, unless you set `COC_SERVICE_KEYS`; `COC_DEV_PORT_BASE` shifts the ports. The in-process async fixture is `pnpm backend:smoke`. Neither is connected to the mobile app or a database. Per-service bundle command: `pnpm --filter @cocenglish/learning build` (substitute Progress/AI). Artifacts are self-contained `services/<owner>/dist/function.mjs`. Shared transport is bundled into each one, and fixture/memory stores are excluded.
 
 Human-readable install steps: install the pinned Flutter SDK at a short Windows path; install Android Studio/SDK36 and a compatible JDK through the Flutter-supported toolchain; place Flutter bin and Node22 on PATH; install pnpm10.15.0; restore locks with commands above. Verify actual Gradle/JDK compatibility by build rather than copying untested overrides. Do not upgrade the working SDK/lock to newest versions during setup.
 
