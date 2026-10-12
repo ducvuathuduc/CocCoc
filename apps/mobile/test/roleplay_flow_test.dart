@@ -1,6 +1,7 @@
 import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/features/practice/application/journey_controller.dart';
 import 'package:cocenglish/features/roleplay/application/roleplay_controller.dart';
+import 'package:cocenglish/features/roleplay/data/roleplay_repository.dart';
 import 'package:cocenglish/features/roleplay/domain/roleplay_models.dart';
 import 'package:cocenglish/main.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +24,17 @@ void main() {
       addTearDown(t.view.resetPhysicalSize);
       addTearDown(t.view.resetDevicePixelRatio);
       await t.pumpWidget(
-        MainApp(
-          initial: OnboardingState(
-            step: OnboardingStep.lessonEntry,
-            language: 'English',
+        ProviderScope(
+          overrides: [
+            roleplayRepositoryProvider.overrideWithValue(
+              const MockRoleplayRepository.reference(),
+            ),
+          ],
+          child: MainApp(
+            initial: OnboardingState(
+              step: OnboardingStep.lessonEntry,
+              language: 'English',
+            ),
           ),
         ),
       );
@@ -102,10 +110,17 @@ void main() {
     t,
   ) async {
     await t.pumpWidget(
-      MainApp(
-        initial: OnboardingState(
-          step: OnboardingStep.lessonEntry,
-          language: 'English',
+      ProviderScope(
+        overrides: [
+          roleplayRepositoryProvider.overrideWithValue(
+            const MockRoleplayRepository.reference(),
+          ),
+        ],
+        child: MainApp(
+          initial: OnboardingState(
+            step: OnboardingStep.lessonEntry,
+            language: 'English',
+          ),
         ),
       ),
     );
@@ -125,7 +140,13 @@ void main() {
 
   group('RoleplayLibraryController', () {
     test('record scores stars/XP and keeps best progress', () {
-      final c = ProviderContainer();
+      final c = ProviderContainer(
+        overrides: [
+          roleplayRepositoryProvider.overrideWithValue(
+            const MockRoleplayRepository.reference(),
+          ),
+        ],
+      );
       addTearDown(c.dispose);
       final vm = c.read(roleplayLibraryControllerProvider.notifier);
       final low = vm.record('hotel', 5)!;
@@ -149,7 +170,13 @@ void main() {
     });
 
     test('journey controller plays scenario lines and records results', () {
-      final c = ProviderContainer();
+      final c = ProviderContainer(
+        overrides: [
+          roleplayRepositoryProvider.overrideWithValue(
+            const MockRoleplayRepository.reference(),
+          ),
+        ],
+      );
       addTearDown(c.dispose);
       final vm = c.read(journeyControllerProvider('roleplay').notifier);
       expect(vm.pickScenario('nope'), isFalse);

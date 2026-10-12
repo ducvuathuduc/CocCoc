@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:cocenglish/features/progress/data/league_repository.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/progress/presentation/league_ranking.dart';
 
@@ -23,6 +24,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [mockLeagueRosterProvider.overrideWithValue(const [])],
         child: MaterialApp(
           theme: referenceTheme(),
           debugShowCheckedModeBanner: false,

@@ -112,7 +112,13 @@ void main() {
       'I am here.',
       'Hello, I am Sam.',
     ]);
-    expect(mockPracticeWords.map((word) => [word.term, word.meaning]), [
+    expect(mockPracticeWords.length, greaterThanOrEqualTo(100));
+    expect(
+      mockPracticeWords.map((w) => w.id).toSet(),
+      hasLength(mockPracticeWords.length),
+    );
+    expect(mockPracticeWords.every((w) => w.meaning.isNotEmpty), isTrue);
+    expect(mockPracticeWords.take(4).map((word) => [word.term, word.meaning]), [
       ['woman', 'người phụ nữ'],
       ['hello', 'xin chào'],
       ['bear', 'con gấu'],

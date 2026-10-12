@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:cocenglish/features/progress/data/league_repository.dart';
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/account/data/avatar_assets.dart';
@@ -15,8 +16,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('ranking is immutable, descending and assigns all eight ranks', () {
+  test('unpinned mock league adds the demo cohort to the reference eight', () {
+    debugPinReferenceLeague = false;
+    addTearDown(() => debugPinReferenceLeague = true);
     final container = ProviderContainer();
+    addTearDown(container.dispose);
+
+    final ranking = container.read(leagueRankingProvider);
+    expect(ranking.entries, hasLength(8 + demoLeagueRoster.length));
+    expect(
+      ranking.entries.map((entry) => entry.rank),
+      [for (var i = 1; i <= ranking.entries.length; i++) i],
+    );
+  });
+  test('ranking is immutable, descending and assigns all eight ranks', () {
+    final container = ProviderContainer(
+      overrides: [mockLeagueRosterProvider.overrideWithValue(const [])],
+    );
     addTearDown(container.dispose);
 
     final ranking = container.read(leagueRankingProvider);
@@ -57,7 +73,9 @@ void main() {
   });
 
   test('learner XP re-ranks only me and keeps deterministic foreign ties', () {
-    final container = ProviderContainer();
+    final container = ProviderContainer(
+      overrides: [mockLeagueRosterProvider.overrideWithValue(const [])],
+    );
     addTearDown(container.dispose);
     final before = container.read(leagueRankingProvider);
     final foreignBefore = {
@@ -97,6 +115,7 @@ void main() {
     var statusOpens = 0;
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [mockLeagueRosterProvider.overrideWithValue(const [])],
         child: MaterialApp(
           theme: referenceTheme(),
           home: Scaffold(
@@ -171,6 +190,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [mockLeagueRosterProvider.overrideWithValue(const [])],
         child: MaterialApp(
           theme: referenceTheme(),
           builder: (context, child) => MediaQuery(
@@ -258,7 +278,10 @@ void main() {
     );
     final catalog = AvatarCatalogLoader.parse(source!);
     final container = ProviderContainer(
-      overrides: [avatarCatalogProvider.overrideWithValue(AsyncData(catalog))],
+      overrides: [
+        avatarCatalogProvider.overrideWithValue(AsyncData(catalog)),
+        mockLeagueRosterProvider.overrideWithValue(const []),
+      ],
     );
     addTearDown(container.dispose);
 
@@ -327,6 +350,7 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           avatarCatalogProvider.overrideWithValue(AsyncData(catalog)),
+          mockLeagueRosterProvider.overrideWithValue(const []),
         ],
       );
       addTearDown(container.dispose);
@@ -408,6 +432,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [mockLeagueRosterProvider.overrideWithValue(const [])],
         child: MaterialApp(
           theme: referenceTheme(),
           home: Scaffold(

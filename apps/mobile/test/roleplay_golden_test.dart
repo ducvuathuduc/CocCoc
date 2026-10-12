@@ -1,3 +1,4 @@
+import 'package:cocenglish/features/roleplay/data/roleplay_repository.dart';
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/practice/application/journey_controller.dart';
@@ -68,7 +69,13 @@ void main() {
       t.view.devicePixelRatio = 1;
       addTearDown(t.view.resetPhysicalSize);
       addTearDown(t.view.resetDevicePixelRatio);
-      final c = ProviderContainer();
+      final c = ProviderContainer(
+        overrides: [
+          roleplayRepositoryProvider.overrideWithValue(
+            const MockRoleplayRepository.reference(),
+          ),
+        ],
+      );
       addTearDown(c.dispose);
       entry.value.$2?.call(c);
       await t.pumpWidget(
@@ -108,6 +115,11 @@ void main() {
     addTearDown(t.view.resetDevicePixelRatio);
     await t.pumpWidget(
       ProviderScope(
+        overrides: [
+          roleplayRepositoryProvider.overrideWithValue(
+            const MockRoleplayRepository.reference(),
+          ),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: referenceTheme(),
@@ -143,7 +155,13 @@ void main() {
       addTearDown(t.view.resetPhysicalSize);
       addTearDown(t.view.resetDevicePixelRatio);
       for (final entry in screens.entries) {
-        final c = ProviderContainer();
+        final c = ProviderContainer(
+          overrides: [
+            roleplayRepositoryProvider.overrideWithValue(
+              const MockRoleplayRepository.reference(),
+            ),
+          ],
+        );
         entry.value.$2?.call(c);
         await t.pumpWidget(
           UncontrolledProviderScope(
@@ -170,7 +188,13 @@ void main() {
   }
 
   test('library state starts with the restaurant featured for review', () {
-    final c = ProviderContainer();
+    final c = ProviderContainer(
+      overrides: [
+        roleplayRepositoryProvider.overrideWithValue(
+          const MockRoleplayRepository.reference(),
+        ),
+      ],
+    );
     addTearDown(c.dispose);
     final s = c.read(roleplayLibraryControllerProvider);
     expect(s.featuredId, 'restaurant');

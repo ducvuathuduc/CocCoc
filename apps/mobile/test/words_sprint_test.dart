@@ -1,4 +1,6 @@
 import 'package:cocenglish/core/design/reference_theme.dart';
+import 'package:cocenglish/features/practice/application/practice_controller.dart';
+import 'package:cocenglish/features/practice/data/practice_repository.dart';
 import 'package:cocenglish/features/practice/presentation/words_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +17,11 @@ void main() {
 
         await tester.pumpWidget(
           ProviderScope(
+            overrides: [
+              practiceRepositoryProvider.overrideWithValue(
+                MockPracticeRepository.reference(),
+              ),
+            ],
             child: MaterialApp(
               theme: referenceTheme(),
               builder: (context, child) => MediaQuery(
@@ -50,6 +57,11 @@ void main() {
 
         await tester.pumpWidget(
           ProviderScope(
+            overrides: [
+              practiceRepositoryProvider.overrideWithValue(
+                MockPracticeRepository.reference(),
+              ),
+            ],
             child: MaterialApp(
               theme: referenceTheme(),
               builder: (context, child) => MediaQuery(

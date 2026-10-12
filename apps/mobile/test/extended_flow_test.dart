@@ -1,3 +1,4 @@
+import 'package:cocenglish/features/practice/data/practice_repository.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/practice/application/practice_controller.dart';
 import 'package:cocenglish/features/practice/domain/practice_models.dart';
@@ -56,7 +57,13 @@ void main() {
     }
   }
   test('plan checkout is local, selected, and cancellation clears unlimited energy', () {
-    final c = ProviderContainer();
+    final c = ProviderContainer(
+      overrides: [
+        practiceRepositoryProvider.overrideWithValue(
+          MockPracticeRepository.reference(),
+        ),
+      ],
+    );
     addTearDown(c.dispose);
     final vm = c.read(extendedControllerProvider.notifier);
     expect(vm.confirmPlan(), isFalse);
@@ -69,7 +76,13 @@ void main() {
     expect(c.read(extendedControllerProvider).plan, isNull);
   });
   test('word sorting preserves recall and the current flashcard', () {
-    final c = ProviderContainer();
+    final c = ProviderContainer(
+      overrides: [
+        practiceRepositoryProvider.overrideWithValue(
+          MockPracticeRepository.reference(),
+        ),
+      ],
+    );
     addTearDown(c.dispose);
     final vm = c.read(practiceControllerProvider.notifier);
     vm.reveal();
@@ -86,7 +99,13 @@ void main() {
   test(
     'family membership requires a family plan, deduplicates, and caps at six',
     () {
-      final c = ProviderContainer();
+      final c = ProviderContainer(
+        overrides: [
+          practiceRepositoryProvider.overrideWithValue(
+            MockPracticeRepository.reference(),
+          ),
+        ],
+      );
       addTearDown(c.dispose);
       final vm = c.read(extendedControllerProvider.notifier);
       expect(vm.invite('Sam'), 'Choose the Family Plan first.');
@@ -110,6 +129,11 @@ void main() {
   ) async {
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          practiceRepositoryProvider.overrideWithValue(
+            MockPracticeRepository.reference(),
+          ),
+        ],
         child: MaterialApp(theme: referenceTheme(), home: const WordsScreen()),
       ),
     );

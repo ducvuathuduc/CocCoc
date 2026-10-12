@@ -13,7 +13,9 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          friendsRepositoryProvider.overrideWithValue(MockFriendsRepository()),
+          friendsRepositoryProvider.overrideWithValue(
+            const MockFriendsRepository.reference(),
+          ),
         ],
         child: const MaterialApp(
           home: FriendsScreen(),
