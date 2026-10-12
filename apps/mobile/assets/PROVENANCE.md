@@ -180,3 +180,7 @@ counts come through feature repositories/providers. No artwork was generated.
 [`earn_heart_05`](../../../docs/design/refs/gap/earn_heart_05_ad9c329958244b1b9c0a9a7ba09bc098.png)
 opening frame. The final creative clips the entire source CTA and OS indicator
 before painting; the app renders its own actionable button from repository data.
+
+## Launcher, notification and widget art (original)
+
+The launcher icon (Android adaptive + legacy mipmaps, iOS AppIcon set), the Android 12 splash icon, the notification small icon `ic_stat_coc`, the notification large icon `ic_notification_mascot` and the streak-widget flames were drawn for this repository (original toad mascot in `tool/brand/mascot.svg`, flames as Android vectors). Regenerate the PNGs with `python3 tool/brand/render.py` from `apps/mobile`. Colours come from the existing palette (`ReferenceColors.green` #5BCD05, ink #4D4B4E, surface #FFFDFE); no third-party art is used.

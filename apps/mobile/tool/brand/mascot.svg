@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" width="108" height="108">
+  <!-- CocEnglish original mascot: a round, friendly toad ("cóc"). Drawn for this repo. -->
+  <g id="frog">
+    <ellipse cx="54" cy="64" rx="27" ry="21" fill="#FFFDFE"/>
+    <circle cx="39" cy="44" r="11" fill="#FFFDFE"/>
+    <circle cx="69" cy="44" r="11" fill="#FFFDFE"/>
+    <circle cx="39" cy="44" r="6.2" fill="#4D4B4E"/>
+    <circle cx="69" cy="44" r="6.2" fill="#4D4B4E"/>
+    <circle cx="41.2" cy="41.8" r="2.2" fill="#FFFDFE"/>
+    <circle cx="71.2" cy="41.8" r="2.2" fill="#FFFDFE"/>
+    <path d="M40 64 Q54 77 68 64" fill="none" stroke="#4D4B4E" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="33.5" cy="66" rx="4.6" ry="3" fill="#FF4B4C" fill-opacity="0.45"/>
+    <ellipse cx="74.5" cy="66" rx="4.6" ry="3" fill="#FF4B4C" fill-opacity="0.45"/>
+  </g>
+</svg>

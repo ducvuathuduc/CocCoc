@@ -62,6 +62,12 @@ import 'features/progress/presentation/profile_lists_screen.dart';
 import 'features/progress/application/profile_lists_controller.dart';
 import 'features/notifications/presentation/notification_screens.dart';
 import 'features/roleplay/presentation/roleplay_screens.dart';
+import 'features/reminders/application/reminder_coordinator.dart';
+import 'features/reminders/presentation/reminder_permission_sheet.dart';
+import 'features/notifications/application/notification_settings_controller.dart';
+import 'features/auth/application/auth_controller.dart';
+import 'features/learning/domain/learning_models.dart';
+import 'core/cache/snapshot_cache.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -189,11 +195,12 @@ class _App extends ConsumerStatefulWidget {
   ConsumerState<_App> createState() => _AppState();
 }
 
-class _AppState extends ConsumerState<_App> {
+class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
   late final GoRouter _router;
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     final initial = ref.read(onboardingControllerProvider);
     _router = GoRouter(
       initialLocation: _location(initial.step),
@@ -309,7 +316,11 @@ class _AppState extends ConsumerState<_App> {
               streakGrew: state.uri.queryParameters['streak'] == '1',
               gemsEarned: (receipt?.gems ?? 0) > 0,
               guest: receipt?.guest ?? false,
-              onFinished: () => context.go('/home'),
+              onFinished: () async {
+                // Duolingo-style: offer reminders once, after the first lesson.
+                await maybeOfferReminders(context, ref);
+                if (context.mounted) context.go('/home');
+              },
               onCreateProfile: () => context.go('/auth/register'),
             );
           },
@@ -750,12 +761,78 @@ class _AppState extends ConsumerState<_App> {
   };
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _router.dispose();
     super.dispose();
   }
 
+  bool _remindersStarted = false;
+
+  /// Notification and home-widget taps land here; ignored until onboarding
+  /// has reached the learning path.
+  void _openFromReminder(String location) {
+    if (!mounted) return;
+    if (ref.read(onboardingControllerProvider).step !=
+        OnboardingStep.lessonEntry) {
+      return;
+    }
+    _router.go(location);
+  }
+
+  void _startReminders() {
+    if (_remindersStarted || !ref.read(reminderPlatformSupportedProvider)) {
+      return;
+    }
+    _remindersStarted = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        ref.read(reminderCoordinatorProvider).start(_openFromReminder);
+      }
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Resume covers reboots, timezone changes and a new local day.
+    if (state == AppLifecycleState.resumed && _remindersStarted) {
+      ref.read(reminderCoordinatorProvider).sync();
+    }
+  }
+
+  void _listenForReminders() {
+    if (!ref.read(reminderPlatformSupportedProvider)) return;
+    ref.listen<SessionReceipt?>(
+      lessonControllerProvider.select(
+        (s) => s.stage == LessonStage.completed ? s.receipt : null,
+      ),
+      (previous, next) {
+        if (next != null && previous?.id != next.id) {
+          ref.read(reminderCoordinatorProvider).onLessonCompleted(next);
+        }
+      },
+    );
+    ref.listen(
+      notificationSettingsControllerProvider,
+      (_, _) => ref.read(reminderCoordinatorProvider).sync(),
+    );
+    ref.listen(
+      snapshotRevisionProvider.select((m) => m['progress'] ?? 0),
+      (_, _) => ref.read(reminderCoordinatorProvider).sync(),
+    );
+    ref.listen(authControllerProvider.select((s) => s.user?.id), (
+      previous,
+      next,
+    ) {
+      if (previous != null && previous != next) {
+        ref.read(reminderCoordinatorProvider).onSignedOut();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _startReminders();
+    _listenForReminders();
     ref.listen(onboardingControllerProvider, (previous, next) {
       if (previous?.step != next.step &&
           _location(previous?.step ?? OnboardingStep.welcome) !=
