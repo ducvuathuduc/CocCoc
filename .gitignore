@@ -1,6 +1,6 @@
 # JavaScript and package-manager state
-node_modules/
-**/node_modules/
+node_modules
+**/node_modules
 .pnpm-store/
 **/dist/
 

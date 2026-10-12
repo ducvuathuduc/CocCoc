@@ -95,7 +95,7 @@ and `/workspace/tools/ui-sprint-baseline-tests.log`. Serial retries are pending;
 no baseline pass count or clean analyzer result is established by these attempts.
 
 This branch was missing the G-COLOR palette/checker. Restored byte-identical
-copies from the shared `../../repo` checkout. `python3 tool/palette_check.py`
+copies from the shared `../../repo` checkout. `python3 tools/palette_check.py`
 reports 74 pre-existing unmatched colors. No existing color was edited to hide
 this baseline. Source-derived colors for each changed screen must be checked.
 

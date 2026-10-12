@@ -94,7 +94,7 @@ The directive explicitly permits consolidation. These mappings preserve required
 | [docs/research/AI_EVIDENCE.md](../../docs/research/AI_EVIDENCE.md) | Navigation, task state or enforced tool configuration | internal links + Mermaid when present; evidence distinguished |
 | [docs/research/RESEARCH_EVIDENCE.md](../../docs/research/RESEARCH_EVIDENCE.md) | Navigation, task state or enforced tool configuration | internal links + Mermaid when present; evidence distinguished |
 | [eslint.config.mjs](../../eslint.config.mjs) | Navigation, task state or enforced tool configuration | node syntax + applicable executed command |
-| [infrastructure/toolchain.json](../../infrastructure/toolchain.json) | Navigation, task state or enforced tool configuration | JSON parse + applicable schema/owner checks |
+| [tools/toolchain.json](../../tools/toolchain.json) | Navigation, task state or enforced tool configuration | JSON parse + applicable schema/owner checks |
 | [package.json](../../package.json) | Navigation, task state or enforced tool configuration | JSON parse + applicable schema/owner checks |
 | [packages/api_contracts/generated.ts](../../packages/api_contracts/generated.ts) | OpenAPI-derived wire types only | strict TS/ESLint; generated wire schema for contracts |
 | [packages/api_contracts/package.json](../../packages/api_contracts/package.json) | OpenAPI-derived wire types only | JSON parse + applicable schema/owner checks |

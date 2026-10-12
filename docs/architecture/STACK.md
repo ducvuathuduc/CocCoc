@@ -51,7 +51,7 @@ All are observed latest stable versions on the research date, **not an installed
 | [patrol4.10.0](https://pub.dev/packages/patrol) | 2026-09-15 | defer until native permission/device automation requires it | flutter_test/integration_test SDK first; pin golden host |
 | [flutter_lints6.0.0](https://pub.dev/packages/flutter_lints) | 2025-05-27 | selected dev analyzer baseline | add only meaningful project rules |
 
-Registry publish/score/download counts establish recent publication and rough adoption, **not issue health**. Open/critical issue counts, unresolved platform regressions and precise binary deltas are UNVERIFIED; P1 evaluates relevant pinned release issues and real Android/iOS build. No invented issue count or package size. Commit pubspec.lock and pnpm-lock.yaml; Flutter/Dart and runtime versions in infrastructure/toolchain.json. Upgrades are reviewed, never “latest” in CI.
+Registry publish/score/download counts establish recent publication and rough adoption, **not issue health**. Open/critical issue counts, unresolved platform regressions and precise binary deltas are UNVERIFIED; P1 evaluates relevant pinned release issues and real Android/iOS build. No invented issue count or package size. Commit pubspec.lock and pnpm-lock.yaml; Flutter/Dart and runtime versions in tools/toolchain.json. Upgrades are reviewed, never “latest” in CI.
 
 ## Windows evidence and workflow
 

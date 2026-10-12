@@ -20,7 +20,7 @@ Read [project instructions](../../AGENTS.md) and
 | Topic | Canonical owner |
 | --- | --- |
 | Product rules and edge cases | [SRS](../product/SRS.md), [edge cases](../product/EDGE_CASE_MATRIX.md) |
-| Architecture and pinned target stack | [architecture](../architecture/ARCHITECTURE.md), [stack](../architecture/STACK.md), [toolchain](../../infrastructure/toolchain.json) |
+| Architecture and pinned target stack | [architecture](../architecture/ARCHITECTURE.md), [stack](../architecture/STACK.md), [toolchain](../../tools/toolchain.json) |
 | Three service responsibilities | [service catalog](../architecture/SERVICE_CATALOG.md), [Learning](../../services/learning/AGENTS.md), [Progress](../../services/progress/AGENTS.md), [AI](../../services/ai/AGENTS.md) |
 | REST payloads and operations | [OpenAPI](../api/openapi.yaml) |
 | JWT and route authorization | [authentication](../api/AUTH.md) |

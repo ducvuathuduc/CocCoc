@@ -18,7 +18,7 @@
       "exclusivePaths": [
         "apps/mobile",
         "tools/scripts",
-        "infrastructure/toolchain.json",
+        "tools/toolchain.json",
         ".github/workflows/mobile.yml",
         "docs/design/qa",
         "docs/agent/task-status.json"
@@ -222,7 +222,7 @@
         "MockCompletionRepository",
         "completionRepositoryProvider"
       ],
-      "testCommand": "proxy-free flutter test --no-pub --concurrency=1 --dart-define=ENABLE_MASCOT_MOTION=false test/completion_sprint_golden_test.dart test/completion_ui_master_golden_test.dart test/lesson_summary_test.dart test/completion_fidelity_test.dart test/reference_button_test.dart --reporter expanded; flutter analyze --no-pub --fatal-infos; python3 tool/palette_check.py",
+      "testCommand": "proxy-free flutter test --no-pub --concurrency=1 --dart-define=ENABLE_MASCOT_MOTION=false test/completion_sprint_golden_test.dart test/completion_ui_master_golden_test.dart test/lesson_summary_test.dart test/completion_fidelity_test.dart test/reference_button_test.dart --reporter expanded; flutter analyze --no-pub --fatal-infos; python3 tools/palette_check.py",
       "status": "DONE",
       "evidence": [
         "specs/lesson-complete.md",
@@ -267,7 +267,7 @@
         "MockAppShellRepository",
         "appShellRepositoryProvider"
       ],
-      "testCommand": "proxy-free focused flutter tests; flutter analyze --no-pub --fatal-infos; python3 tool/palette_check.py",
+      "testCommand": "proxy-free focused flutter tests; flutter analyze --no-pub --fatal-infos; python3 tools/palette_check.py",
       "status": "DONE",
       "evidence": [
         "specs/top-bar-bottom-nav.md"
