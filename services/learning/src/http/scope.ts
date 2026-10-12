@@ -59,7 +59,13 @@ export function withRequestScope(
         break;
       }
     }
-    const scoped: FunctionContext = { ...context, req: { ...context.req, path } };
+    // The shared router requires a JSON body on every non-GET; OpenAPI DELETE operations carry
+    // none, so an empty DELETE body is presented to it as {} (Learning-local shim).
+    const emptyDelete = context.req.method === 'DELETE' && !context.req.bodyText;
+    const scoped: FunctionContext = {
+      ...context,
+      req: { ...context.req, path, ...(emptyDelete ? { bodyText: '{}' } : {}) },
+    };
     return storage.run({ params, headers }, () => handler(scoped));
   };
 }

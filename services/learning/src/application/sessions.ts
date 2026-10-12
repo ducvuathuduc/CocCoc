@@ -27,6 +27,7 @@ import {
 } from './deps.js';
 import { activeEnrollment, enrollmentView } from './enrollment.js';
 import { stageOutboxEvent, type LessonCompletedEvent } from './outbox.js';
+import { stageMistakes } from './practice.js';
 import { buildReviewBundle, REVIEW_LESSON_ID, stageReviewUpdates } from './review.js';
 
 export interface StartBody {
@@ -402,6 +403,15 @@ export async function completeSession(
     preview['mode'] === 'LESSON' || preview['mode'] === 'MASTERY'
       ? (await deps.content.published(courseId)).manifest
       : null;
+  // Review snapshots mix exercises from several lessons: map each back to its authored version.
+  const sourceVersions = new Map<string, string>();
+  if (preview['lessonId'] === REVIEW_LESSON_ID) {
+    const published = (await deps.content.published(courseId)).manifest;
+    for (const exercise of bundle.exercises) {
+      const index = published.bundles.find((b) => exercise.id.startsWith(`${b.lessonId}-`));
+      if (index) sourceVersions.set(exercise.id, index.lessonVersion);
+    }
+  }
   let eventId: string | null = null;
   const outcome = await deps.persistence.commitWithReceipt(
     { userId, operation: 'completeSession', key },
@@ -463,6 +473,17 @@ export async function completeSession(
           exercises: bundle.exercises,
           attempts,
           advance: mode !== 'LESSON',
+          nowMs: now,
+        });
+        await stageMistakes(deps, tx, {
+          userId,
+          courseId,
+          sessionId,
+          mode,
+          exercises: bundle.exercises,
+          attempts,
+          lessonVersionOf: (exerciseId) =>
+            sourceVersions.get(exerciseId) ?? String(session['lessonVersion']),
           nowMs: now,
         });
       }

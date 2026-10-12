@@ -13,7 +13,9 @@ import {
 } from '../../../shared/src/transport.js';
 import { getBundle, getManifest, listCourses, publishContent } from '../application/content.js';
 import type { LearningDeps } from '../application/deps.js';
-import { enrollCourse, getPath } from '../application/enrollment.js';
+import { getEnergy } from '../application/energy.js';
+import { enrollCourse, enrollmentCommand, getPath } from '../application/enrollment.js';
+import { listActivityProgress, listMistakes, listWords } from '../application/practice.js';
 import { outboxWatermark } from '../application/outbox.js';
 import { createReport } from '../application/reports.js';
 import { getReview } from '../application/review.js';
@@ -277,6 +279,111 @@ export function learningRoutes(deps: LearningDeps): Route[] {
           c.requestId,
         ),
       );
+    }),
+    user('GET', '/v1/me/energy', async (c) => {
+      noBodyQuery(c, []);
+      return { status: 200, body: await getEnergy(deps, userId(c)) };
+    }),
+    ...(['activate', 'reset'] as const).map((action) =>
+      user('POST', `/v1/enrollments/{courseId}/${action}`, async (c) => {
+        const uid = userId(c);
+        const courseId = pathParam('courseId');
+        const b = v.object(c.body, 'body', ['expectedRevision'], ['expectedRevision']);
+        const body = {
+          expectedRevision: v.int(b['expectedRevision'], 'expectedRevision', 0, 2147483647),
+        };
+        const op = action === 'activate' ? 'switchCourse' : 'resetCourse';
+        return fromReceipt(
+          await enrollmentCommand(
+            deps,
+            uid,
+            courseId,
+            op,
+            body.expectedRevision,
+            idempotencyKey(),
+            hash(op, body, { courseId }),
+            c.requestId,
+          ),
+        );
+      }),
+    ),
+    user('DELETE', '/v1/enrollments/{courseId}', async (c) => {
+      const uid = userId(c);
+      const courseId = pathParam('courseId');
+      v.object(c.body ?? {}, 'body', [], []);
+      return fromReceipt(
+        await enrollmentCommand(
+          deps,
+          uid,
+          courseId,
+          'removeCourse',
+          null,
+          idempotencyKey(),
+          hash('removeCourse', {}, { courseId }),
+          c.requestId,
+        ),
+      );
+    }),
+    user('GET', '/v1/mistakes', async (c) => {
+      const q = noBodyQuery(c, ['courseId', 'includeResolved', 'cursor', 'limit']);
+      const includeResolved =
+        q['includeResolved'] === undefined
+          ? false
+          : v.oneOf(q['includeResolved'], 'includeResolved', ['true', 'false'] as const) === 'true';
+      return {
+        status: 200,
+        body: await listMistakes(
+          deps,
+          userId(c),
+          v.id(q['courseId'], 'courseId'),
+          includeResolved,
+          v.cursorOf(q),
+          v.limitOf(q),
+        ),
+      };
+    }),
+    user('GET', '/v1/words', async (c) => {
+      const q = noBodyQuery(c, ['courseId', 'sort', 'cursor', 'limit']);
+      const sort =
+        q['sort'] === undefined
+          ? 'RECENT'
+          : v.oneOf(q['sort'], 'sort', ['RECENT', 'ALPHABETICAL'] as const);
+      return {
+        status: 200,
+        body: await listWords(
+          deps,
+          userId(c),
+          v.id(q['courseId'], 'courseId'),
+          sort,
+          v.cursorOf(q),
+          v.limitOf(q),
+        ),
+      };
+    }),
+    user('GET', '/v1/activities', async (c) => {
+      const q = noBodyQuery(c, ['courseId', 'kind', 'cursor', 'limit']);
+      const kind =
+        q['kind'] === undefined
+          ? undefined
+          : v.oneOf(q['kind'], 'kind', [
+              'STORY',
+              'ADVENTURE',
+              'RADIO',
+              'SIDE_QUEST',
+              'CLASH',
+              'UNIT_REVIEW',
+            ] as const);
+      return {
+        status: 200,
+        body: await listActivityProgress(
+          deps,
+          userId(c),
+          v.id(q['courseId'], 'courseId'),
+          kind,
+          v.cursorOf(q),
+          v.limitOf(q),
+        ),
+      };
     }),
     {
       method: 'GET',

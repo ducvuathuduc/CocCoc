@@ -163,3 +163,75 @@ export async function getPath(
     nextCursor: offset + page.length < nodes.length ? encodeCursor(offset + page.length) : null,
   };
 }
+
+// P4-LEARN-003: switchCourse / resetCourse / removeCourse. Commands carry the target enrollment's
+// revision; reset/remove never touch Progress-owned XP or rewards.
+type EnrollmentCommand = 'switchCourse' | 'resetCourse' | 'removeCourse';
+
+export async function enrollmentCommand(
+  deps: LearningDeps,
+  userId: string,
+  courseId: string,
+  command: EnrollmentCommand,
+  expectedRevision: number | null,
+  key: string,
+  bodyHash: string,
+  requestId: string,
+) {
+  const manifest =
+    command === 'resetCourse' ? (await deps.content.published(courseId)).manifest : null;
+  return deps.persistence.commitWithReceipt(
+    { userId, operation: command, key },
+    bodyHash,
+    async (tx) => {
+      const now = deps.nowMs();
+      const rowId = ids.enrollment(userId, courseId);
+      const row = activeEnrollment(await tx.get('l_enrollments', rowId));
+      if (!row)
+        throw new ServiceError('NOT_FOUND', { details: { courseId, reason: 'NOT_ENROLLED' } });
+      if (expectedRevision !== null && Number(row['revision']) !== expectedRevision) {
+        throw new ServiceError('REVISION_CONFLICT', {
+          details: { currentRevision: Number(row['revision']) },
+        });
+      }
+      if (command === 'removeCourse') {
+        tx.put('l_enrollments', rowId, {
+          ...row,
+          active: false,
+          removedAt: iso(now),
+          ...bumped(row, now),
+        });
+        const slotId = ids.slot(userId, courseId);
+        if (await tx.get('l_active_slots', slotId)) tx.remove('l_active_slots', slotId);
+        return { statusCode: 200, response: { operationId: key, status: 'accepted', requestId } };
+      }
+      if (command === 'switchCourse') {
+        const others = await deps.persistence.list('l_enrollments', {
+          equal: { userId, active: true },
+          limit: 20,
+        });
+        for (const other of others.items) {
+          if (other.id === rowId) continue;
+          const fresh = await tx.get('l_enrollments', other.id);
+          if (fresh?.['active'])
+            tx.put('l_enrollments', other.id, { ...fresh, active: false, ...bumped(fresh, now) });
+        }
+        const next = { ...row, active: true, ...bumped(row, now) };
+        tx.put('l_enrollments', rowId, next);
+        return { statusCode: 200, response: enrollmentDto(next) };
+      }
+      const next = {
+        ...row,
+        courseVersion: manifest!.courseVersion,
+        frontierNodeOrder: placementFrontier(manifest!, false),
+        completedLessonsJson: '[]',
+        masteredNodesJson: '[]',
+        legendaryNodesJson: '[]',
+        proficiencyScore: 0,
+        ...bumped(row, now),
+      };
+      tx.put('l_enrollments', rowId, next);
+      return { statusCode: 200, response: enrollmentDto(next) };
+    },
+  );
+}

@@ -165,6 +165,19 @@ test(
       limit: 100,
     });
     assert.ok(reviewRows.total > 0);
+    const words = await a.call('GET', '/v1/words', {
+      user,
+      query: 'courseId=vi_en&sort=ALPHABETICAL',
+    });
+    assert.equal(words.status, 200, JSON.stringify(words.body));
+    assert.ok(words.body.items.length > 0);
+    const mistakes = await a.call('GET', '/v1/mistakes', {
+      user,
+      query: 'courseId=vi_en&includeResolved=true',
+    });
+    assert.equal(mistakes.status, 200, JSON.stringify(mistakes.body));
+    assert.equal(mistakes.body.items.length, firstWasWrong ? 1 : 0);
+    assert.equal((await a.call('GET', '/v1/me/energy', { user })).body.mode, 'UNLIMITED');
     // Dispatcher against a fake receiver: lease + ACK durably.
     const report = await kit.dispatchOutbox(a.deps, async () => 'ack', {
       eventIds: outbox.items.map((i) => i.id),

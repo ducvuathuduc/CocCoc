@@ -10,6 +10,7 @@ import { applyEvidence, masteryOf, orderDue, type ReviewState } from '../domain/
 import type { AttemptRecord } from '../domain/session-queue.js';
 import { ids } from '../persistence/ids.js';
 import type { LearningTransaction, Row } from '../persistence/port.js';
+import { unresolvedMistakeIds } from './practice.js';
 import { decodeCursor, encodeCursor, iso, jsonArray, type LearningDeps } from './deps.js';
 
 export const REVIEW_LESSON_ID = 'review_dynamic';
@@ -173,6 +174,16 @@ export async function buildReviewBundle(
     sources.push((await deps.content.bundle(manifest, lessonId)).bundle);
   const due = await dueItems(deps, input.userId, input.courseId, REVIEW_MAX);
   const picked = new Map<string, { exercise: Exercise; source: LessonBundle }>();
+  // Unresolved mistakes first (P6-REVIEW-002), then due vocabulary, then recent padding.
+  for (const exerciseId of await unresolvedMistakeIds(deps, input.userId, input.courseId, 10)) {
+    for (const source of sources) {
+      const match = source.exercises.find((e) => e.id === exerciseId);
+      if (match) {
+        picked.set(match.id, { exercise: match, source });
+        break;
+      }
+    }
+  }
   for (const item of due) {
     for (const source of sources) {
       const match = source.exercises.find(
