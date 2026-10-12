@@ -31,6 +31,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   integration_test:
     sdk: flutter
+  patrol: 4.10.0
 
 flutter:
   uses-material-design: true
@@ -86,3 +87,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Feather.ttf
           weight: 700
+
+# On-device E2E (patrol_test/), run in CI by .github/workflows/android-e2e.yml.
+patrol:
+  app_name: CocEnglish
+  test_directory: patrol_test
+  screenshot_on_failure: true
+  android:
+    package_name: com.cocenglish.cocenglish
