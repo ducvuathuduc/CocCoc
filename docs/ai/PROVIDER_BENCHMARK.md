@@ -1,6 +1,6 @@
 # Provider decisions, pricing and benchmark admission
 
-Accessed 2026-10-09. [Evidence IDs R10–R20](../audit/RESEARCH_EVIDENCE.md) own source provenance. All p50/p95, accent-quality, structured-output failure rate and native battery/frame measurements are **PENDING BENCHMARK**. Vendor latency statements are not our measurements. Vietnam availability, account/model entitlement and quota consoles must be checked before enablement. Paid fallbacks remain disabled.
+Accessed 2026-10-09. [Evidence IDs R10–R20](../research/RESEARCH_EVIDENCE.md) own source provenance. All p50/p95, accent-quality, structured-output failure rate and native battery/frame measurements are **PENDING BENCHMARK**. Vendor latency statements are not our measurements. Vietnam availability, account/model entitlement and quota consoles must be checked before enablement. Paid fallbacks remain disabled.
 
 | Capability | Primary decision / protocol | Fallback / change trigger | Proof required |
 |---|---|---|---|

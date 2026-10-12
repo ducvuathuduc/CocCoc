@@ -1,6 +1,6 @@
 # AI, listening and speech architecture
 
-Current facts/model status/prices are in [provider benchmark](PROVIDER_BENCHMARK.md) and [current research](../audit/RESEARCH_EVIDENCE.md); historical [AI evidence](../research/AI_EVIDENCE.md) retains its date; cost controls in [COST_MODEL](../devops/COST_MODEL.md). This document defines implementation decisions. No provider latency/accuracy benchmark has been run.
+Current facts/model status/prices are in [provider benchmark](PROVIDER_BENCHMARK.md) and [current research](../research/RESEARCH_EVIDENCE.md); historical [AI evidence](../research/AI_EVIDENCE.md) retains its date; cost controls in [COST_MODEL](../devops/COST_MODEL.md). This document defines implementation decisions. No provider latency/accuracy benchmark has been run.
 
 ## Decisions and model routing
 

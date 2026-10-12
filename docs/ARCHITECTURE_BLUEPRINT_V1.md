@@ -1,6 +1,6 @@
 # Architecture Blueprint V1 — CocEnglish
 
-Current 2026-10-09–10 [conditional freeze](ARCHITECTURE_FREEZE_REPORT.md) and [research](audit/RESEARCH_EVIDENCE.md) supersede changing vendor/model/tooling/status assumptions below. Historical rationale/IDs remain preserved. Legacy Live retirement and 2.5 text eligibility require current gated profiles; mock builds do not establish production readiness.
+Current 2026-10-09–10 [conditional freeze](ARCHITECTURE_FREEZE_REPORT.md) and [research](research/RESEARCH_EVIDENCE.md) supersede changing vendor/model/tooling/status assumptions below. Historical rationale/IDs remain preserved. Legacy Live retirement and 2.5 text eligibility require current gated profiles; mock builds do not establish production readiness.
 
 Research snapshot2026-10-03; final review2026-10-04, Asia/Saigon. This is the Phase0 handoff package requested by the master directive. Normative product/platform choices are frozen; current account, runtime and device capabilities require the named implementation gates. All technical documents use one concise English source; this executive decision is Vietnamese.
 
@@ -60,7 +60,7 @@ Root [AGENTS](../AGENTS.md), [CLAUDE](../CLAUDE.md) and five module AGENTS estab
 
 ## PART J — Documentation Package
 
-[00_READ_ME_FIRST](00_READ_ME_FIRST.md) is the canonical inventory and reading order. All linked specifications and ADRs contain actual content in this checkout. Consolidations: PRD→SRS; C4/data flows→ARCHITECTURE; ERD→DATA_MODEL; tokens/motion→DESIGN; events/errors→EVENTS_ERRORS; AI speech/listening/fallback→AI_ARCHITECTURE; environments/deployment→CI_CD; observability/load/runbook→OPERATIONS; device/test/release matrix→TEST_STRATEGY; DoD/change policy→TASK_PROTOCOL. [ASSUMPTIONS](ASSUMPTIONS.md) names unresolved external gates, owners and fallback behavior. No bilingual duplicate technical specifications.
+[00_START_HERE](00_START_HERE.md) is the canonical inventory and reading order. All linked specifications and ADRs contain actual content in this checkout. Consolidations: PRD→SRS; C4/data flows→ARCHITECTURE; ERD→DATA_MODEL; tokens/motion→DESIGN; events/errors→EVENTS_ERRORS; AI speech/listening/fallback→AI_ARCHITECTURE; environments/deployment→CI_CD; observability/load/runbook→OPERATIONS; device/test/release matrix→TEST_STRATEGY; DoD/change policy→TASK_PROTOCOL. [ASSUMPTIONS](ASSUMPTIONS.md) names unresolved external gates, owners and fallback behavior. No bilingual duplicate technical specifications.
 
 ## PART K — Implementation Roadmap
 

@@ -4,7 +4,7 @@ Goal: reconcile the attached current engineering directive with the actual Flutt
 
 Architecture: retain Flutter/Riverpod and three independently packaged TypeScript Learning/Progress/AI services. Progress retains profile ownership. Appwrite remains managed infrastructure; a dispatcher is an execution role within Learning. Existing UI, application IDs, contracts and production phase gates are preserved.
 
-Spec: the user attachment dated 2026-10-09; [canonical entry](../00_READ_ME_FIRST.md), [SRS](../product/SRS.md), [OpenAPI](../api/openapi.yaml), [task protocol](TASK_PROTOCOL.md).
+Spec: the user attachment dated 2026-10-09; [canonical entry](../00_START_HERE.md), [SRS](../product/SRS.md), [OpenAPI](../api/openapi.yaml), [task protocol](TASK_PROTOCOL.md).
 
 ## Constraints and review focus
 

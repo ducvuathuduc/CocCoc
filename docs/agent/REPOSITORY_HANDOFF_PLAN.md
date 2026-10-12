@@ -11,7 +11,7 @@ entry point for a teammate without losing source, original assets or evidence.
 service boundaries and canonical documentation owners. This task does not
 implement backend services or advance production phase gates.
 
-**Spec:** [reading order](../00_READ_ME_FIRST.md),
+**Spec:** [reading order](../00_START_HERE.md),
 [implementation plan](IMPLEMENTATION_PLAN.md),
 [task protocol](TASK_PROTOCOL.md). Date: 2026-10-09, Asia/Saigon.
 

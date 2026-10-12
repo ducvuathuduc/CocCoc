@@ -1,6 +1,8 @@
-# Actual changed files and content ownership
+# Actual changed files and content ownership (frozen 2026-10-10 record)
 
-Final manifest generated from Git diff/untracked files on 2026-10-10. No generated cache/install/build directories are listed. Individual command results are in [validation](VALIDATION.md). A listed check method is not an assertion that cloud/device evidence exists.
+Frozen record of the 2026-10-10 refresh. It is no longer regenerated: the old generator also rewrote this file from whatever the current Git diff was, so it was replaced by `tools/audit/endpoint-matrix.mjs`, which only touches the endpoint matrix. Paths moved by the 2026-10-12 restructure are shown at their new location; removed duplicates are marked *(merged)*. Current layout: [repository tree](../agent/REPOSITORY_TREE.md).
+
+Originally generated from Git diff/untracked files on 2026-10-10. No generated cache/install/build directories are listed. Individual command results are in [validation](VALIDATION.md). A listed check method is not an assertion that cloud/device evidence exists.
 
 ## Required-content consolidation
 
@@ -42,7 +44,7 @@ The directive explicitly permits consolidation. These mappings preserve required
 | [appwrite/scripts/schema.mjs](../../appwrite/scripts/schema.mjs) | Additive foundation schema/dry-run or typed seed | node syntax + applicable executed command |
 | [appwrite/scripts/seed.mjs](../../appwrite/scripts/seed.mjs) | Additive foundation schema/dry-run or typed seed | node syntax + applicable executed command |
 | [appwrite/seeds/catalog.json](../../appwrite/seeds/catalog.json) | Additive foundation schema/dry-run or typed seed | JSON parse + applicable schema/owner checks |
-| [docs/00_READ_ME_FIRST.md](../../docs/00_READ_ME_FIRST.md) | Navigation, task state or enforced tool configuration | internal links + Mermaid when present; evidence distinguished |
+| docs/00_READ_ME_FIRST.md *(merged into [00_START_HERE](../00_START_HERE.md))* | Navigation, task state or enforced tool configuration | internal links + Mermaid when present; evidence distinguished |
 | [docs/00_START_HERE.md](../../docs/00_START_HERE.md) | Navigation, task state or enforced tool configuration | internal links + Mermaid when present; evidence distinguished |
 | [docs/ARCHITECTURE_BLUEPRINT_V1.md](../../docs/ARCHITECTURE_BLUEPRINT_V1.md) | Navigation, task state or enforced tool configuration | internal links + Mermaid when present; evidence distinguished |
 | [docs/ARCHITECTURE_FREEZE_REPORT.md](../../docs/ARCHITECTURE_FREEZE_REPORT.md) | Navigation, task state or enforced tool configuration | internal links + Mermaid when present; evidence distinguished |
@@ -70,8 +72,8 @@ The directive explicitly permits consolidation. These mappings preserve required
 | [docs/audit/INPUT_INVENTORY.md](../../docs/audit/INPUT_INVENTORY.md) | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
 | [docs/audit/LEGACY_DOC_AUDIT.md](../../docs/audit/LEGACY_DOC_AUDIT.md) | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
 | [docs/audit/OPEN_DECISIONS.md](../../docs/audit/OPEN_DECISIONS.md) | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
-| [docs/audit/REPO_TREE.md](../../docs/audit/REPO_TREE.md) | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
-| [docs/audit/RESEARCH_EVIDENCE.md](../../docs/audit/RESEARCH_EVIDENCE.md) | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
+| docs/audit/REPO_TREE.md *(merged into [REPOSITORY_TREE](../agent/REPOSITORY_TREE.md))* | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
+| docs/audit/RESEARCH_EVIDENCE.md *(merged into [research/RESEARCH_EVIDENCE](../research/RESEARCH_EVIDENCE.md))* | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
 | [docs/audit/SCREEN_CONTROLS.json](../../docs/audit/SCREEN_CONTROLS.json) | Ground truth, evidence, disposition or verification | JSON parse + applicable schema/owner checks |
 | [docs/audit/UI_IMPLEMENTATION_GAP.md](../../docs/audit/UI_IMPLEMENTATION_GAP.md) | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
 | [docs/audit/VALIDATION.md](../../docs/audit/VALIDATION.md) | Ground truth, evidence, disposition or verification | internal links + Mermaid when present; evidence distinguished |
@@ -118,7 +120,7 @@ The directive explicitly permits consolidation. These mappings preserve required
 | [services/shared/src/verify-jwt.ts](../../services/shared/src/verify-jwt.ts) | Independent owner scaffold, transport/auth or acceptance fixture | strict TS/ESLint; generated wire schema for contracts |
 | [tools/audit/controls.mjs](../../tools/audit/controls.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
 | [tools/audit/inventory.mjs](../../tools/audit/inventory.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
-| [tools/audit/manifest.mjs](../../tools/audit/manifest.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
+| tools/audit/manifest.mjs *(split: [endpoint-matrix.mjs](../../tools/audit/endpoint-matrix.mjs))* | Reproducible local build/check/audit command | node syntax + applicable executed command |
 | [tools/audit/secret-check.mjs](../../tools/audit/secret-check.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
 | [tools/audit/tree.mjs](../../tools/audit/tree.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
 | [tools/audit/validate.mjs](../../tools/audit/validate.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
@@ -127,7 +129,7 @@ The directive explicitly permits consolidation. These mappings preserve required
 | [tools/evals/voice-harness.mjs](../../tools/evals/voice-harness.mjs) | Capability candidates, evals and honest scoring | node syntax + applicable executed command |
 | [tools/scripts/backend-check.mjs](../../tools/scripts/backend-check.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
 | [tools/scripts/backend-smoke.mjs](../../tools/scripts/backend-smoke.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
-| [tools/scripts/service-local.mjs](../../tools/scripts/service-local.mjs) | Reproducible local build/check/audit command | node syntax + applicable executed command |
+| tools/scripts/service-local.mjs *(replaced by [dev-services.mjs](../../tools/scripts/dev-services.mjs))* | Reproducible local build/check/audit command | node syntax + applicable executed command |
 | [tsconfig.backend.json](../../tsconfig.backend.json) | Navigation, task state or enforced tool configuration | JSON parse + applicable schema/owner checks |
 
 ## Preserved baseline

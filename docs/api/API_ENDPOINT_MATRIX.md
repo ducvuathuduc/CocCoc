@@ -51,7 +51,7 @@ Health/ready shapes apply to all three independent service domains; Learning is 
 
 ## Proposed endpoints (not yet in OpenAPI)
 
-Hand-maintained; `tools/audit/manifest.mjs` keeps this section when it regenerates the table above. These are PROPOSED for the 59-table data model (DATA_MODEL M002). None exists in openapi.yaml, generated types or handlers; each needs its OpenAPI operation, x-requirements trace, Idempotency-Key on mutations and an owner-task acceptance test before implementation. Table names are the owner tables the operation would touch.
+Hand-maintained; `tools/audit/endpoint-matrix.mjs` (`pnpm docs:endpoints`) keeps this section when it regenerates the table above. These are PROPOSED for the 59-table data model (DATA_MODEL M002). None exists in openapi.yaml, generated types or handlers; each needs its OpenAPI operation, x-requirements trace, Idempotency-Key on mutations and an owner-task acceptance test before implementation. Table names are the owner tables the operation would touch.
 
 | Route (proposed) | Operation / owner | Duolingo feature | Owned tables | Planned task |
 |---|---|---|---|---|

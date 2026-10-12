@@ -1,7 +1,7 @@
 # Teammate entry point — 2026-10-09
 
 Read [project instructions](../../AGENTS.md) and
-[canonical reading order](../00_READ_ME_FIRST.md) before editing.
+[canonical reading order](../00_START_HERE.md) before editing.
 
 ## What exists
 

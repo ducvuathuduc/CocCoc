@@ -1,6 +1,6 @@
 # Cost classification and zero-spend operation
 
-Current 2026-10-09 external prices/offer changes are in [evidence](../audit/RESEARCH_EVIDENCE.md) and [provider benchmark](../ai/PROVIDER_BENCHMARK.md). Historical numeric allowances below are planning observations, not account guarantees. Current Education enforcement and account expiry must be resolved before cloud admission; no new paid signup or spend occurred.
+Current 2026-10-09 external prices/offer changes are in [evidence](../research/RESEARCH_EVIDENCE.md) and [provider benchmark](../ai/PROVIDER_BENCHMARK.md). Historical numeric allowances below are planning observations, not account guarantees. Current Education enforcement and account expiry must be resolved before cloud admission; no new paid signup or spend occurred.
 
 ## Four design scenarios and accounting formulas
 

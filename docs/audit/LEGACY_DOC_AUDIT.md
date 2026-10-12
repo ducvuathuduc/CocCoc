@@ -4,7 +4,7 @@ Snapshot 2026-10-09, baseline 8b64cdcff3365e0ae4c5401bf2e799abd3dca649. Every ro
 
 | Document | Disposition | Evidence / original content | Migration action |
 |---|---|---|---|
-| [00_READ_ME_FIRST.md](../00_READ_ME_FIRST.md) | MODIFY | bae0c920b7a4; Reading order and canonical ownership | Link current refresh; reconcile implementation/status/vendor claims. Preserve IDs and contracts. |
+| [00_READ_ME_FIRST.md → 00_START_HERE.md](../00_START_HERE.md) | MODIFY | bae0c920b7a4; Reading order and canonical ownership | Link current refresh; reconcile implementation/status/vendor claims. Preserve IDs and contracts. |
 | [ARCHITECTURE_BLUEPRINT_V1.md](../ARCHITECTURE_BLUEPRINT_V1.md) | MODIFY | c3a71f00a418; Architecture Blueprint V1 — CocEnglish | Link current refresh; reconcile implementation/status/vendor claims. Preserve IDs and contracts. |
 | [ASSUMPTIONS.md](../ASSUMPTIONS.md) | MODIFY | a03d79776f4d; Assumptions and validation register | Link current refresh; reconcile implementation/status/vendor claims. Preserve IDs and contracts. |
 | [FREEZE_REVIEW.md](../FREEZE_REVIEW.md) | MODIFY | 1b65b9286c47; Architecture freeze review | Link current refresh; reconcile implementation/status/vendor claims. Preserve IDs and contracts. |
