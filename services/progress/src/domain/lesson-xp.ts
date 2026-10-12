@@ -2,6 +2,9 @@
 // rules"). Pure functions: no I/O, no clock.
 // - First online completion: XP = 10 + originalFirstCorrectCount (0-10) + 5 if all originals
 //   correct without hint. Offline first completion omits the perfect bonus and league XP.
+//   Published lessons carry 5-20 originals (vi_en v2 authors 10-15), so the 0-10 term is the
+//   first-correct share scaled to 10: round(10 * originalCorrect / originalCount); a 10-original
+//   lesson is unchanged.
 // - Repeated lesson, REVIEW and MASTERY sessions: 5 study XP, at most 30 replay XP per server
 //   learning day, zero league XP for REVIEW/MASTERY.
 // - At most 1,200 credited study XP per learning day; the excess stays practiced with award 0.
@@ -19,7 +22,10 @@ export type LessonXpResult =
   | { ok: true; studyXp: number; perfect: boolean }
   | { ok: false; reason: 'MODE_NOT_IMPLEMENTED' | 'INVALID_GRADED_RESULT' };
 
+/** Normal lesson length in the SRS; the first-correct XP term is scaled to it. */
 export const LESSON_ORIGINAL_COUNT = 10;
+export const MIN_ORIGINAL_COUNT = 5;
+export const MAX_ORIGINAL_COUNT = 20;
 export const REPLAY_XP = 5;
 export const REPLAY_DAILY_CAP = 30;
 export const DAILY_STUDY_XP_CAP = 1200;
@@ -30,12 +36,10 @@ export function validateGraded(lesson: GradedLesson): LessonXpResult | null {
   if (lesson.source !== 'ONLINE' && lesson.source !== 'OFFLINE') {
     return { ok: false, reason: 'INVALID_GRADED_RESULT' };
   }
-  const fixed = lesson.mode === 'LESSON' || lesson.mode === 'PLACEMENT';
-  const countOk = fixed
-    ? lesson.originalCount === LESSON_ORIGINAL_COUNT
-    : Number.isInteger(lesson.originalCount) &&
-      lesson.originalCount >= 5 &&
-      lesson.originalCount <= 20;
+  const countOk =
+    Number.isInteger(lesson.originalCount) &&
+    lesson.originalCount >= MIN_ORIGINAL_COUNT &&
+    lesson.originalCount <= MAX_ORIGINAL_COUNT;
   if (
     !countOk ||
     !Number.isInteger(lesson.originalCorrect) ||
@@ -58,9 +62,12 @@ export function firstCompletionXp(lesson: GradedLesson): LessonXpResult {
   if (lesson.mode === 'PLACEMENT') return { ok: true, studyXp: 0, perfect: false };
   const perfect =
     lesson.source === 'ONLINE' &&
-    lesson.originalCorrect === LESSON_ORIGINAL_COUNT &&
+    lesson.originalCorrect === lesson.originalCount &&
     !lesson.assisted;
-  return { ok: true, studyXp: 10 + lesson.originalCorrect + (perfect ? 5 : 0), perfect };
+  const firstCorrect = Math.round(
+    (LESSON_ORIGINAL_COUNT * lesson.originalCorrect) / lesson.originalCount,
+  );
+  return { ok: true, studyXp: 10 + firstCorrect + (perfect ? 5 : 0), perfect };
 }
 
 export interface AwardContext {

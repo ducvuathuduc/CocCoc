@@ -121,8 +121,8 @@
       "id": "learning-outbox-relay",
       "functionId": "coc-learning",
       "cron": "* * * * *",
-      "purpose": "Learning dispatcher drains due l_outbox rows (bounded batch <= 20) and delivers signed events to Progress (CONSISTENCY, ARCHITECTURE 'Scheduled bounded drain'). Worker mode shipped (services/learning/src/index.ts, x-appwrite-trigger=schedule at '/'); stays pending until Learning persistence is enabled on this project (the worker answers 503 SERVICE_NOT_CONFIGURED while disabled).",
-      "status": "pending-service-worker"
+      "purpose": "Learning dispatcher (services/learning/src/index.ts, x-appwrite-trigger=schedule at '/'): every minute drains due l_outbox rows (leased bounded batch, 20s deadline) and delivers signed lesson.completed.v1 / account.purged.v1 to Progress /internal/events; backstop for the bounded immediate relay after each commit (CONSISTENCY, ARCHITECTURE 'Scheduled bounded drain'). Active with Learning persistence on TEST.",
+      "status": "active"
     },
     {
       "id": "progress-worker",
@@ -132,5 +132,5 @@
       "status": "active"
     }
   ],
-  "$schedulesNote": "A function has a single cron and Appwrite invokes it at path '/' with x-appwrite-trigger: schedule. No hosted entrypoint implements a worker mode yet, and ARCHITECTURE requires worker mode to be selected only by verified platform schedule context. Until a service ships that worker, the live function schedule stays empty (check-live enforces it) so the cron cannot burn executions on 401s. To activate: implement the worker in the service, set status to 'active' (one active schedule per function; the progress jobs share one hourly cron and dispatch by time), then `pnpm appwrite:apply`."
+  "$schedulesNote": "A function has a single cron and Appwrite invokes it at path '/' with x-appwrite-trigger: schedule; the hosted entries (Learning, Progress) implement that worker mode, and a forged trigger over the public domain arrives as http and gets 401. A schedule is 'active' only when its service worker runs with persistence enabled on this project (check-live enforces the live cron equals the declaration; 'pending-service-worker' keeps the live schedule empty so the cron cannot burn executions). One active schedule per function; the progress jobs share one cron and dispatch by time. To activate: set status to 'active', mirror the cron in appwrite.config.json, then `pnpm appwrite:apply`."
 }

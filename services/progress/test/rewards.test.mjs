@@ -24,6 +24,25 @@ test('domain: FR-GAME-001 first/replay/cap formula', async () => {
     0,
   );
   assert.equal(kit.firstCompletionXp({ ...lesson, originalCorrect: 11 }).ok, false);
+  // vi_en v2 lessons carry 10-15 originals: the 0-10 term is the first-correct share scaled to 10.
+  assert.deepEqual(kit.firstCompletionXp({ ...lesson, originalCount: 13, originalCorrect: 13 }), {
+    ok: true,
+    studyXp: 25,
+    perfect: true,
+  });
+  assert.deepEqual(kit.firstCompletionXp({ ...lesson, originalCount: 15, originalCorrect: 12 }), {
+    ok: true,
+    studyXp: 18,
+    perfect: false,
+  });
+  assert.equal(
+    kit.firstCompletionXp({ ...lesson, originalCount: 4, originalCorrect: 4 }).ok,
+    false,
+  );
+  assert.equal(
+    kit.firstCompletionXp({ ...lesson, originalCount: 21, originalCorrect: 1 }).ok,
+    false,
+  );
   const ctx = { firstCompletion: false, dayStudyXp: 0, dayReplayXp: 25 };
   const replay = kit.computeAward({ ...lesson, originalCorrect: 3 }, ctx);
   assert.deepEqual([replay.kind, replay.studyXp, replay.capped], ['REPLAY', 5, false]);

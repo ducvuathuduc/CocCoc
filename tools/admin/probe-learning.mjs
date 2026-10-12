@@ -86,6 +86,9 @@ try {
     password: `${randomUUID()}Aa!`,
   });
   const { jwt } = await users.createJWT({ userId });
+  // Progress profile first, so lesson.completed.v1 lands on an initialized user.
+  const init = await call(progressUrl, 'POST', '/v1/me/initialize', { jwt, body: {} });
+  check('progress initialize', init.status === 200 || init.status === 201, init.status);
   check('health', (await learning('GET', '/health')).status === 200);
   check('no JWT -> 401', (await learning('GET', '/v1/courses')).status === 401);
   const courses = await learning('GET', '/v1/courses', { jwt });
@@ -209,8 +212,40 @@ try {
     outbox.rows.length === sessionIds.length,
     outbox.rows.map((r) => `${r.type}:${r.status}:${r.attempt}`),
   );
+  // Delivery: the immediate relay or the scheduled learning-outbox-relay must ACK every event
+  // (DEAD = Progress rejected it), and Progress must credit XP for both completions.
+  let statuses = [];
+  for (let i = 0; i < 30; i++) {
+    statuses = (
+      await db.listRows({
+        databaseId,
+        tableId: 'l_outbox',
+        queries: [Query.equal('aggregateId', sessionIds), Query.limit(10)],
+      })
+    ).rows.map((r) => `${r.status}:${r.attempt}`);
+    if (statuses.length && statuses.every((s) => s.startsWith('ACK') || s.startsWith('DEAD')))
+      break;
+    await new Promise((r) => setTimeout(r, 5000));
+  }
+  check(
+    'lesson.completed.v1 delivered to Progress (all ACK)',
+    statuses.length === sessionIds.length && statuses.every((s) => s.startsWith('ACK')),
+    statuses,
+  );
+  const rewards = await call(
+    progressUrl,
+    'GET',
+    `/v1/me/rewards?completionId=${encodeURIComponent(sessionIds[0] ?? 'none')}`,
+    { jwt },
+  );
+  check(
+    'Progress credited XP (online 13/13 perfect + offline)',
+    rewards.status === 200 && rewards.body.status === 'credited' && rewards.body.studyXp > 0,
+    rewards.status === 200
+      ? { studyXp: rewards.body.studyXp, awardXp: rewards.body.awardXp, gems: rewards.body.gems }
+      : rewards.body,
+  );
   if (withDeletion) {
-    await call(progressUrl, 'POST', '/v1/me/initialize', { jwt, body: {} });
     const del = await call(progressUrl, 'POST', '/v1/me/deletion', {
       jwt,
       body: { confirmation: 'DELETE' },
