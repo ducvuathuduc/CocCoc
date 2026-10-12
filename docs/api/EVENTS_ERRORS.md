@@ -15,8 +15,11 @@ Error envelope:
 | 400 | VALIDATION_ERROR, UNKNOWN_EXERCISE_TYPE, INVALID_AUDIO, INVALID_TIMEZONE | show safe field details, fix input, no auto-retry |
 | 401 | AUTH_REQUIRED, AUTH_EXPIRED | restore session/login once, pause sync |
 | 403 | FORBIDDEN, ACCOUNT_BLOCKED, MAINTAINER_REQUIRED | no retry, generic inaccessible resource |
+| 403 | ENTITLEMENT_REQUIRED, USER_BLOCKED, AD_NOT_ELIGIBLE | plan/block/ad eligibility decided server-side; no retry (details per code below) |
 | 404 | NOT_FOUND, PROFILE_UNAVAILABLE | avoid exposing private existence; refresh permitted listing |
+| 404 | CLASSROOM_CODE_INVALID | unknown and archived codes answer identically |
 | 409 | NODE_LOCKED, SESSION_CONFLICT, SESSION_INCOMPLETE, SESSION_EXPIRED, CONTENT_VERSION_RETIRED, IDEMPOTENCY_CONFLICT, REVISION_CONFLICT, INSUFFICIENT_GEMS, FREEZE_CAPACITY | preserve state, fetch current entity or repeat current version; no blind retry |
+| 409 | ENERGY_DEPLETED, FRIEND_STREAK_LIMIT, ITEM_UNAVAILABLE, STREAK_REPAIR_EXPIRED, PURCHASE_PENDING, PROMO_ALREADY_REDEEMED, AD_DAILY_CAP | economy/social state conflict; refetch the owning resource, no blind retry (details per code below) |
 | 409 | ACTIVE_VOICE_SESSION, VOICE_RESERVATION_CONFLICT, VOICE_SESSION_EXPIRED, VOICE_EPOCH_CONFLICT, VOICE_TOKEN_DELIVERY_UNCERTAIN | voice rules below; no blind remint or client budget refund |
 | 413 | PAYLOAD_TOO_LARGE | shorter input/recording; never auto-split graded utterance |
 | 429 | RATE_LIMITED, QUOTA_EXHAUSTED | honor Retry-After; capability fallback |
@@ -26,7 +29,7 @@ Error envelope:
 | 504 | DEADLINE_EXCEEDED | same-key receipt lookup/retry; never assume uncommitted |
 | 500 | INTERNAL_ERROR | redacted message; request ID; no leaked SQL/provider response |
 
-IDEMPOTENCY_REPLAY (EDGE_CASE_MATRIX EC07) is a telemetry outcome for a same-key/same-body replay that returns the original receipt with its original 2xx status; it is never an error code. Codes of the endpoints promoted on 2026-10-12 (pb/contract2) are wire contract in [OpenAPI](openapi.yaml). They join the HTTP table above, and `services/shared` `errors.ts`, when the owner tasks implement their handlers; until then a hosted route answers SERVICE_NOT_CONFIGURED.
+IDEMPOTENCY_REPLAY (EDGE_CASE_MATRIX EC07) is a telemetry outcome for a same-key/same-body replay that returns the original receipt with its original 2xx status; it is never an error code. Codes of the endpoints promoted on 2026-10-12 (pb/contract2) are wire contract in [OpenAPI](openapi.yaml). They are in the HTTP table above and in `services/shared/src/errors.ts` (added with the Progress owner handlers, 2026-10-12); the table below keeps their per-operation behavior.
 
 | Code | HTTP | Operations | Behavior |
 |---|---|---|---|
