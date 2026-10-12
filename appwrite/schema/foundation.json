@@ -1,19 +1,567 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "databaseId": "cocenglish",
-  "scope": "Initial owned tables only; remaining canonical tables and live transaction adapters are gated P1/P4/P6. All direct client writes denied.",
+  "scope": "All 37 canonical TablesDB tables from docs/data/DATA_MODEL.md plus the learning-assets bucket. Declaration only: no client table/bucket grants, rowSecurity on every table, p_notifications owner read row grant only. Live apply, availability and permission probes remain gated on an admitted test project.",
+  "sources": [
+    "docs/data/DATA_MODEL.md",
+    "docs/data/PERMISSIONS.md"
+  ],
+  "conventions": {
+    "mutableFields": "Tables whose retention cell is not append-only/immutable carry revision (integer>=0), createdAt, updatedAt per DATA_MODEL Types.",
+    "implicitTypes": "Columns without an explicit doc constraint follow appwrite/scripts/schema-lib.mjs conventionFor: *At/*Until datetime; *Id/*Identity/*Version string36; *Hash/*Sha256 string64; day keys string10; *zone string64; locale string16; type/operation/key/providerAlias/leaseOwner string64; counters integer.",
+    "enums": "Documented A/B/C value sets are Appwrite enum columns.",
+    "integerSets": "Integer value sets (dailyGoal 5/10/15, friend quest target 10) are declared as min/max range plus allowed; exact set is enforced by the owning service.",
+    "largeText": "String size is the doc maximum enforced by services; storage is varchar<=2048, text<=16383, mediumtext above (node-appwrite 29.2.0 varchar max 16381)."
+  },
   "tables": [
-    { "id": "l_courses", "owner": "learning", "columns": [
-      { "key": "courseId", "type": "string", "size": 36 }, { "key": "sourceLocale", "type": "string", "size": 16 }, { "key": "targetLocale", "type": "string", "size": 16 }, { "key": "title", "type": "string", "size": 120 }, { "key": "publishedVersion", "type": "string", "size": 36 }, { "key": "status", "type": "string", "size": 16 }, { "key": "manifestFileId", "type": "string", "size": 36 }
-    ], "indexes": [{ "key": "course_locale", "type": "unique", "columns": ["sourceLocale", "targetLocale"] }, { "key": "course_status", "type": "key", "columns": ["status", "courseId"] }] },
-    { "id": "l_outbox", "owner": "learning", "columns": [
-      { "key": "eventId", "type": "string", "size": 36 }, { "key": "type", "type": "string", "size": 64 }, { "key": "schemaVersion", "type": "integer" }, { "key": "aggregateId", "type": "string", "size": 36 }, { "key": "occurredAt", "type": "datetime" }, { "key": "payloadJson", "type": "string", "size": 16384 }, { "key": "attempt", "type": "integer" }, { "key": "nextAttemptAt", "type": "datetime" }, { "key": "leaseOwner", "type": "string", "size": 64, "required": false }, { "key": "leaseUntil", "type": "datetime", "required": false }, { "key": "status", "type": "string", "size": 16 }, { "key": "ackAt", "type": "datetime", "required": false }
-    ], "indexes": [{ "key": "outbox_event", "type": "unique", "columns": ["eventId"] }, { "key": "outbox_due", "type": "key", "columns": ["status", "nextAttemptAt"] }, { "key": "outbox_watermark", "type": "key", "columns": ["status", "occurredAt"] }] },
-    { "id": "p_inbox", "owner": "progress", "columns": [
-      { "key": "eventId", "type": "string", "size": 36 }, { "key": "type", "type": "string", "size": 64 }, { "key": "bodyHash", "type": "string", "size": 64 }, { "key": "appliedAt", "type": "datetime" }, { "key": "resultJson", "type": "string", "size": 2048 }
-    ], "indexes": [{ "key": "inbox_event", "type": "unique", "columns": ["eventId"] }] },
-    { "id": "p_reward_ledger", "owner": "progress", "columns": [
-      { "key": "eventId", "type": "string", "size": 36 }, { "key": "completionId", "type": "string", "size": 36 }, { "key": "userId", "type": "string", "size": 36 }, { "key": "rewardIdentity", "type": "string", "size": 36 }, { "key": "kind", "type": "string", "size": 16 }, { "key": "studyXpDelta", "type": "integer" }, { "key": "leagueXpDelta", "type": "integer" }, { "key": "gemsDelta", "type": "integer" }, { "key": "learningDay", "type": "string", "size": 10 }, { "key": "leagueWeek", "type": "string", "size": 10 }, { "key": "occurredAt", "type": "datetime" }, { "key": "capped", "type": "boolean" }
-    ], "indexes": [{ "key": "ledger_event_kind", "type": "unique", "columns": ["eventId", "kind"] }, { "key": "ledger_completion", "type": "unique", "columns": ["userId", "completionId", "kind"] }, { "key": "ledger_day", "type": "key", "columns": ["userId", "learningDay"] }] }
-  ]
+    {"id": "l_courses", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "sourceLocale", "type": "string", "size": 16},
+      {"key": "targetLocale", "type": "string", "size": 16},
+      {"key": "title", "type": "string", "size": 120},
+      {"key": "publishedVersion", "type": "string", "size": 36},
+      {"key": "status", "type": "enum", "elements": ["DRAFT", "PUBLISHED", "RETIRED"]},
+      {"key": "manifestFileId", "type": "string", "size": 36},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_sourceLocale_targetLocale", "type": "unique", "columns": ["sourceLocale", "targetLocale"]},
+      {"key": "k_status_courseId", "type": "key", "columns": ["status", "courseId"]}
+    ]},
+    {"id": "l_content_versions", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "versionId", "type": "string", "size": 36},
+      {"key": "manifestFileId", "type": "string", "size": 36},
+      {"key": "manifestSha256", "type": "string", "size": 64},
+      {"key": "schemaVersion", "type": "integer"},
+      {"key": "publishedAt", "type": "datetime"},
+      {"key": "retiredAt", "type": "datetime", "required": false},
+      {"key": "rewardMappingJson", "type": "string", "size": 16384},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_courseId_versionId", "type": "unique", "columns": ["courseId", "versionId"]}
+    ]},
+    {"id": "l_enrollments", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "courseVersion", "type": "string", "size": 36},
+      {"key": "frontierNodeOrder", "type": "integer", "min": 0, "max": 23},
+      {"key": "completedLessonsJson", "type": "string", "size": 16384},
+      {"key": "masteredNodesJson", "type": "string", "size": 4096},
+      {"key": "placementUsed", "type": "boolean"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_courseId", "type": "unique", "columns": ["userId", "courseId"]},
+      {"key": "k_userId", "type": "key", "columns": ["userId"]}
+    ]},
+    {"id": "l_active_slots", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "sessionId", "type": "string", "size": 36},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_courseId", "type": "unique", "columns": ["userId", "courseId"]}
+    ]},
+    {"id": "l_sessions", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "lessonId", "type": "string", "size": 36},
+      {"key": "lessonVersion", "type": "string", "size": 36},
+      {"key": "rewardIdentity", "type": "string", "size": 36},
+      {"key": "mode", "type": "enum", "elements": ["LESSON", "REVIEW", "MASTERY", "PLACEMENT"]},
+      {"key": "source", "type": "enum", "elements": ["ONLINE", "OFFLINE"]},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "COMPLETED", "ABANDONED", "EXPIRED"]},
+      {"key": "bundleHash", "type": "string", "size": 64},
+      {"key": "bundleSnapshotJson", "type": "string", "size": 65536, "required": false},
+      {"key": "nextOriginalOrdinal", "type": "integer", "min": 0, "max": 20},
+      {"key": "retryPass", "type": "integer", "min": 0, "max": 2},
+      {"key": "assisted", "type": "boolean"},
+      {"key": "startedAt", "type": "datetime"},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "completedAt", "type": "datetime", "required": false},
+      {"key": "resultJson", "type": "string", "size": 8192},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "k_userId_status", "type": "key", "columns": ["userId", "status"]},
+      {"key": "k_userId_completedAt", "type": "key", "columns": ["userId", "completedAt"]}
+    ]},
+    {"id": "l_answers", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "sessionId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "exerciseId", "type": "string", "size": 36},
+      {"key": "attemptOrdinal", "type": "integer", "min": 0, "max": 2},
+      {"key": "answerJson", "type": "string", "size": 8192},
+      {"key": "correct", "type": "boolean"},
+      {"key": "assisted", "type": "boolean"},
+      {"key": "substituted", "type": "boolean"},
+      {"key": "receivedAt", "type": "datetime"},
+      {"key": "resultJson", "type": "string", "size": 4096},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_sess_exer_atte", "type": "unique", "columns": ["sessionId", "exerciseId", "attemptOrdinal"]},
+      {"key": "k_sessionId_receivedAt", "type": "key", "columns": ["sessionId", "receivedAt"]}
+    ]},
+    {"id": "l_review_items", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "vocabularyId", "type": "string", "size": 36},
+      {"key": "skillId", "type": "string", "size": 36},
+      {"key": "stage", "type": "integer", "min": 0, "max": 4},
+      {"key": "dueAt", "type": "datetime"},
+      {"key": "firstAttemptWindowJson", "type": "string", "size": 4096},
+      {"key": "lastReviewedAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_courseId_vocabularyId", "type": "unique", "columns": ["userId", "courseId", "vocabularyId"]},
+      {"key": "k_userId_dueAt", "type": "key", "columns": ["userId", "dueAt"]}
+    ]},
+    {"id": "l_reports", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "exerciseId", "type": "string", "size": 36},
+      {"key": "lessonVersion", "type": "string", "size": 36},
+      {"key": "category", "type": "enum", "elements": ["CONTENT", "ANSWER", "AUDIO", "OTHER"]},
+      {"key": "note", "type": "string", "size": 512},
+      {"key": "status", "type": "enum", "elements": ["OPEN", "CLOSED"]},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "k_status_createdAt", "type": "key", "columns": ["status", "createdAt"]}
+    ]},
+    {"id": "l_receipts", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "operation", "type": "string", "size": 64},
+      {"key": "key", "type": "string", "size": 64},
+      {"key": "bodyHash", "type": "string", "size": 64},
+      {"key": "statusCode", "type": "integer"},
+      {"key": "responseJson", "type": "string", "size": 16384},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_operation_key", "type": "unique", "columns": ["userId", "operation", "key"]}
+    ]},
+    {"id": "l_outbox", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "type", "type": "string", "size": 64},
+      {"key": "schemaVersion", "type": "integer"},
+      {"key": "aggregateId", "type": "string", "size": 36},
+      {"key": "occurredAt", "type": "datetime"},
+      {"key": "payloadJson", "type": "string", "size": 16384},
+      {"key": "attempt", "type": "integer"},
+      {"key": "nextAttemptAt", "type": "datetime"},
+      {"key": "leaseOwner", "type": "string", "size": 64, "required": false},
+      {"key": "leaseUntil", "type": "datetime", "required": false},
+      {"key": "status", "type": "enum", "elements": ["PENDING", "LEASED", "ACK", "DEAD"]},
+      {"key": "ackAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_eventId", "type": "unique", "columns": ["eventId"]},
+      {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]},
+      {"key": "k_status_occurredAt", "type": "key", "columns": ["status", "occurredAt"]}
+    ]},
+    {"id": "l_inbox", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "type", "type": "string", "size": 64},
+      {"key": "bodyHash", "type": "string", "size": 64},
+      {"key": "appliedAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_eventId", "type": "unique", "columns": ["eventId"]}
+    ]},
+    {"id": "p_profiles", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "nickname", "type": "string", "size": 40},
+      {"key": "avatarId", "type": "string", "size": 36, "required": false},
+      {"key": "publicOptIn", "type": "boolean"},
+      {"key": "emailVerifiedSnapshot", "type": "boolean"},
+      {"key": "dailyGoal", "type": "integer", "min": 5, "max": 15, "allowed": [5, 10, 15]},
+      {"key": "learningZone", "type": "string", "size": 64},
+      {"key": "pendingZone", "type": "string", "size": 64, "required": false},
+      {"key": "zoneEffectiveAt", "type": "datetime", "required": false},
+      {"key": "lastZoneChangedAt", "type": "datetime"},
+      {"key": "deletedAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]},
+      {"key": "k_publicOptIn_nickname", "type": "key", "columns": ["publicOptIn", "nickname"]}
+    ]},
+    {"id": "p_zone_history", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "zone", "type": "string", "size": 64},
+      {"key": "effectiveAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_effectiveAt", "type": "unique", "columns": ["userId", "effectiveAt"]},
+      {"key": "k_userId_effectiveAt", "type": "key", "columns": ["userId", "effectiveAt"]}
+    ]},
+    {"id": "p_rewards", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "studyXp", "type": "integer", "min": 0},
+      {"key": "leagueXpLifetime", "type": "integer", "min": 0},
+      {"key": "gems", "type": "integer", "min": 0},
+      {"key": "freezeSlots", "type": "integer", "min": 0, "max": 2},
+      {"key": "currentStreak", "type": "integer", "min": 0, "max": 365},
+      {"key": "bestStreak", "type": "integer", "min": 0, "max": 365},
+      {"key": "lastQualifiedDay", "type": "string", "size": 10, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]}
+    ]},
+    {"id": "p_reward_ledger", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "completionId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "rewardIdentity", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["INITIAL", "FIRST", "REPLAY", "QUEST", "FREEZE"]},
+      {"key": "studyXpDelta", "type": "integer"},
+      {"key": "leagueXpDelta", "type": "integer"},
+      {"key": "gemsDelta", "type": "integer"},
+      {"key": "learningDay", "type": "string", "size": 10},
+      {"key": "leagueWeek", "type": "string", "size": 10},
+      {"key": "occurredAt", "type": "datetime"},
+      {"key": "capped", "type": "boolean"}
+    ], "indexes": [
+      {"key": "u_eventId_kind", "type": "unique", "columns": ["eventId", "kind"]},
+      {"key": "u_userId_completionId_kind", "type": "unique", "columns": ["userId", "completionId", "kind"]},
+      {"key": "k_userId_learningDay", "type": "key", "columns": ["userId", "learningDay"]}
+    ]},
+    {"id": "p_first_rewards", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "rewardIdentity", "type": "string", "size": 36},
+      {"key": "completionId", "type": "string", "size": 36},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_rewardIdentity", "type": "unique", "columns": ["userId", "rewardIdentity"]}
+    ]},
+    {"id": "p_day_activity", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "day", "type": "string", "size": 10},
+      {"key": "zone", "type": "string", "size": 64},
+      {"key": "active", "type": "boolean"},
+      {"key": "protected", "type": "boolean"},
+      {"key": "studyXp", "type": "integer"},
+      {"key": "replayXp", "type": "integer"},
+      {"key": "completedLessons", "type": "integer"},
+      {"key": "originalCorrect", "type": "integer"},
+      {"key": "reviewSessions", "type": "integer"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_day", "type": "unique", "columns": ["userId", "day"]},
+      {"key": "k_userId_day", "type": "key", "columns": ["userId", "day"]}
+    ]},
+    {"id": "p_freeze_ledger", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "operationId", "type": "string", "size": 36},
+      {"key": "action", "type": "enum", "elements": ["BUY", "CONSUME"]},
+      {"key": "day", "type": "string", "size": 10, "required": false},
+      {"key": "gemsDelta", "type": "integer"},
+      {"key": "slotDelta", "type": "integer"}
+    ], "indexes": [
+      {"key": "u_userId_operationId", "type": "unique", "columns": ["userId", "operationId"]}
+    ]},
+    {"id": "p_quests", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "period", "type": "enum", "elements": ["DAY", "MONTH", "WEEK"]},
+      {"key": "periodKey", "type": "string", "size": 10},
+      {"key": "questId", "type": "string", "size": 36},
+      {"key": "metricValue", "type": "integer"},
+      {"key": "target", "type": "integer"},
+      {"key": "claimed", "type": "boolean"},
+      {"key": "claimOperationId", "type": "string", "size": 36, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_period_periodKey_questId", "type": "unique", "columns": ["userId", "period", "periodKey", "questId"]},
+      {"key": "k_userId_periodKey", "type": "key", "columns": ["userId", "periodKey"]}
+    ]},
+    {"id": "p_follows", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "fromUserId", "type": "string", "size": 36},
+      {"key": "toUserId", "type": "string", "size": 36},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "BLOCKED"]},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_fromUserId_toUserId", "type": "unique", "columns": ["fromUserId", "toUserId"]},
+      {"key": "k_toUserId_status", "type": "key", "columns": ["toUserId", "status"]}
+    ]},
+    {"id": "p_friend_quests", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "weekId", "type": "string", "size": 36},
+      {"key": "pairId", "type": "string", "size": 36},
+      {"key": "userIdsJson", "type": "string", "size": 128},
+      {"key": "target", "type": "integer", "min": 10, "max": 10, "allowed": [10]},
+      {"key": "count", "type": "integer"},
+      {"key": "claimedUserIdsJson", "type": "string", "size": 128},
+      {"key": "membershipFrozenAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_weekId_pairId", "type": "unique", "columns": ["weekId", "pairId"]},
+      {"key": "k_weekId", "type": "key", "columns": ["weekId"]}
+    ]},
+    {"id": "p_league_members", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "weekId", "type": "string", "size": 36},
+      {"key": "cohortId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "tier", "type": "integer", "min": 0, "max": 9},
+      {"key": "eligibleXp", "type": "integer"},
+      {"key": "lastXpAt", "type": "datetime", "required": false},
+      {"key": "rank", "type": "integer", "required": false},
+      {"key": "settled", "type": "boolean"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_weekId_userId", "type": "unique", "columns": ["weekId", "userId"]},
+      {"key": "k_week_coho_elig_last_user", "type": "key", "columns": ["weekId", "cohortId", "eligibleXp", "lastXpAt", "userId"]}
+    ]},
+    {"id": "p_league_runs", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "weekId", "type": "string", "size": 36},
+      {"key": "cohortId", "type": "string", "size": 36},
+      {"key": "status", "type": "enum", "elements": ["OPEN", "SETTLING", "CLOSED"]},
+      {"key": "watermarkAt", "type": "datetime", "required": false},
+      {"key": "checkpointUserId", "type": "string", "size": 36, "required": false},
+      {"key": "closedAt", "type": "datetime", "required": false},
+      {"key": "snapshotJson", "type": "string", "size": 32768},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_weekId_cohortId", "type": "unique", "columns": ["weekId", "cohortId"]}
+    ]},
+    {"id": "p_activity", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["MILESTONE", "QUEST", "STREAK"]},
+      {"key": "publicSummary", "type": "string", "size": 160},
+      {"key": "visible", "type": "boolean"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_eventId", "type": "unique", "columns": ["eventId"]},
+      {"key": "k_userId_createdAt", "type": "key", "columns": ["userId", "createdAt"]}
+    ]},
+    {"id": "p_achievements", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "achievementId", "type": "string", "size": 36},
+      {"key": "earnedAt", "type": "datetime"},
+      {"key": "sourceEventId", "type": "string", "size": 36}
+    ], "indexes": [
+      {"key": "u_userId_achievementId", "type": "unique", "columns": ["userId", "achievementId"]}
+    ]},
+    {"id": "p_notifications", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [{"action": "read", "role": "user", "valueFrom": "userId"}], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "completionId", "type": "string", "size": 36},
+      {"key": "status", "type": "enum", "elements": ["PENDING", "CREDITED"]},
+      {"key": "profileRevision", "type": "integer"},
+      {"key": "rewardRevision", "type": "integer"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_completionId", "type": "unique", "columns": ["userId", "completionId"]}
+    ]},
+    {"id": "p_inbox", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "type", "type": "string", "size": 64},
+      {"key": "bodyHash", "type": "string", "size": 64},
+      {"key": "appliedAt", "type": "datetime"},
+      {"key": "resultJson", "type": "string", "size": 2048},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_eventId", "type": "unique", "columns": ["eventId"]}
+    ]},
+    {"id": "p_outbox", "owner": "progress", "mutable": true, "columnsFrom": "l_outbox", "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "type", "type": "string", "size": 64},
+      {"key": "schemaVersion", "type": "integer"},
+      {"key": "aggregateId", "type": "string", "size": 36},
+      {"key": "occurredAt", "type": "datetime"},
+      {"key": "payloadJson", "type": "string", "size": 16384},
+      {"key": "attempt", "type": "integer"},
+      {"key": "nextAttemptAt", "type": "datetime"},
+      {"key": "leaseOwner", "type": "string", "size": 64, "required": false},
+      {"key": "leaseUntil", "type": "datetime", "required": false},
+      {"key": "status", "type": "enum", "elements": ["PENDING", "LEASED", "ACK", "DEAD"]},
+      {"key": "ackAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]}
+    ]},
+    {"id": "p_receipts", "owner": "progress", "mutable": true, "columnsFrom": "l_receipts", "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "operation", "type": "string", "size": 64},
+      {"key": "key", "type": "string", "size": 64},
+      {"key": "bodyHash", "type": "string", "size": 64},
+      {"key": "statusCode", "type": "integer"},
+      {"key": "responseJson", "type": "string", "size": 16384},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_operation_key", "type": "unique", "columns": ["userId", "operation", "key"]}
+    ]},
+    {"id": "p_deletions", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "requestId", "type": "string", "size": 36},
+      {"key": "status", "type": "enum", "elements": ["REQUESTED", "REVOKED", "PURGING", "COMPLETED"]},
+      {"key": "ownerAcksJson", "type": "string", "size": 1024},
+      {"key": "requestedAt", "type": "datetime"},
+      {"key": "completedAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]}
+    ]},
+    {"id": "a_voice_sessions", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "sessionId", "type": "string", "size": 36},
+      {"key": "providerAlias", "type": "string", "size": 64},
+      {"key": "mode", "type": "enum", "elements": ["LIVE", "TURN"]},
+      {"key": "status", "type": "enum", "elements": ["RESERVED", "ACTIVE", "CLOSED", "EXPIRED"]},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "lastHeartbeatAt", "type": "datetime"},
+      {"key": "epoch", "type": "integer"},
+      {"key": "consumedSeconds", "type": "integer", "min": 0, "max": 180},
+      {"key": "configVersion", "type": "string", "size": 36},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_sessionId", "type": "unique", "columns": ["sessionId"]},
+      {"key": "k_userId_status", "type": "key", "columns": ["userId", "status"]}
+    ]},
+    {"id": "a_active_slots", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "sessionId", "type": "string", "size": 36},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "epoch", "type": "integer"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]}
+    ]},
+    {"id": "a_usage", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "utcDay", "type": "string", "size": 10},
+      {"key": "liveReservedSeconds", "type": "integer"},
+      {"key": "liveUsedSeconds", "type": "integer"},
+      {"key": "liveGrants", "type": "integer"},
+      {"key": "textRequests", "type": "integer"},
+      {"key": "recordedSpeechSeconds", "type": "integer"},
+      {"key": "recordedReservedSeconds", "type": "integer"},
+      {"key": "reservationIdsJson", "type": "string", "size": 16384},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_utcDay", "type": "unique", "columns": ["userId", "utcDay"]}
+    ]},
+    {"id": "a_jobs", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "jobId", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["TUTOR", "ASSESSMENT"]},
+      {"key": "status", "type": "enum", "elements": ["QUEUED", "RUNNING", "SUCCEEDED", "FAILED", "EXPIRED"]},
+      {"key": "referenceId", "type": "string", "size": 36},
+      {"key": "locale", "type": "string", "size": 16},
+      {"key": "inputHash", "type": "string", "size": 64},
+      {"key": "audioFileId", "type": "string", "size": 36, "required": false},
+      {"key": "leaseUntil", "type": "datetime", "required": false},
+      {"key": "attempt", "type": "integer"},
+      {"key": "dispatchState", "type": "enum", "elements": ["NOT_SENT", "CLAIMED", "SENT", "AMBIGUOUS"]},
+      {"key": "reservedSeconds", "type": "integer"},
+      {"key": "chargedSeconds", "type": "integer"},
+      {"key": "resultJson", "type": "string", "size": 32768, "required": false},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_jobId", "type": "unique", "columns": ["jobId"]},
+      {"key": "k_status_createdAt", "type": "key", "columns": ["status", "createdAt"]},
+      {"key": "k_userId_createdAt", "type": "key", "columns": ["userId", "createdAt"]}
+    ]},
+    {"id": "a_receipts", "owner": "ai", "mutable": true, "columnsFrom": "l_receipts", "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "operation", "type": "string", "size": 64},
+      {"key": "key", "type": "string", "size": 64},
+      {"key": "bodyHash", "type": "string", "size": 64},
+      {"key": "statusCode", "type": "integer"},
+      {"key": "responseJson", "type": "string", "size": 16384},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_operation_key", "type": "unique", "columns": ["userId", "operation", "key"]}
+    ]},
+    {"id": "a_inbox", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "bodyHash", "type": "string", "size": 64},
+      {"key": "appliedAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_eventId", "type": "unique", "columns": ["eventId"]}
+    ]},
+    {"id": "a_outbox", "owner": "ai", "mutable": true, "columnsFrom": "l_outbox", "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "eventId", "type": "string", "size": 36},
+      {"key": "type", "type": "string", "size": 64},
+      {"key": "schemaVersion", "type": "integer"},
+      {"key": "aggregateId", "type": "string", "size": 36},
+      {"key": "occurredAt", "type": "datetime"},
+      {"key": "payloadJson", "type": "string", "size": 16384},
+      {"key": "attempt", "type": "integer"},
+      {"key": "nextAttemptAt", "type": "datetime"},
+      {"key": "leaseOwner", "type": "string", "size": 64, "required": false},
+      {"key": "leaseUntil", "type": "datetime", "required": false},
+      {"key": "status", "type": "enum", "elements": ["PENDING", "LEASED", "ACK", "DEAD"]},
+      {"key": "ackAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_eventId", "type": "unique", "columns": ["eventId"]},
+      {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]}
+    ]}
+  ],
+  "buckets": [{"id": "learning-assets", "permissions": [], "fileSecurity": true, "note": "Published l_ files get file-level read(Role.any()) at publish time; drafts and a_ audio get none."}]
 }

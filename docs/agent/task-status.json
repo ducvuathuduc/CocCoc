@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-10",
+  "updated": "2026-10-12",
   "project": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
@@ -273,6 +273,53 @@
         "specs/top-bar-bottom-nav.md"
       ],
       "remaining": "Implement typed shell content, preserve icon proportions and \u226548dp stats; verify repository overrides, tab state, motion, 360/430 text1/2, compare and commit."
+    },
+    {
+      "taskId": "P1-OPS-001",
+      "phase": "P1",
+      "owner": "phase-b subagent (local slice)",
+      "branch": "pb/ops",
+      "worktree": "wt/b-ops (from origin/main 57fbc06)",
+      "dependencyGateReceipts": [
+        "docs/agent/IMPLEMENTATION_PLAN.md#P1-OPS-001",
+        "docs/data/DATA_MODEL.md",
+        "docs/data/PERMISSIONS.md",
+        "docs/data/MIGRATIONS.md",
+        "docs/devops/APPWRITE_SETUP.md"
+      ],
+      "exclusivePaths": [
+        "appwrite/schema",
+        "appwrite/scripts/schema.mjs",
+        "appwrite/scripts/schema-lib.mjs",
+        "appwrite/test",
+        "package.json#scripts.schema:test",
+        ".github/workflows/backend.yml",
+        "docs/devops/APPWRITE_SETUP.md"
+      ],
+      "requirements": [
+        "37-table schema declaration",
+        "index/row-security/permission declaration",
+        "offline dry-run plan",
+        "guarded apply"
+      ],
+      "requirementCoverage": "Local slice only: full 37-table/379-column/58-index declaration plus learning-assets bucket, re-derived from docs/data on every plan and test; apply guarded and never run. Not covered: live apply/availability, API-key scope probes, scheduler-spoof probe, actual quotas/expiry, curriculum seed (P4), real CI receipt, macOS simulator.",
+      "interfaces": [
+        "appwrite/scripts/schema-lib.mjs deriveDeclaration/validateDeclaration/buildPlan/storageFor",
+        "pnpm schema:plan",
+        "pnpm schema:test"
+      ],
+      "testCommand": "pnpm schema:plan && pnpm schema:test && pnpm seed:check && pnpm blueprint:check && pnpm contracts:check && pnpm backend:verify",
+      "status": "IN_PROGRESS",
+      "localSlice": "DONE",
+      "evidence": [
+        "pnpm schema:plan PASS DRY_RUN_NO_NETWORK tables=37 columns=379 indexes=58 unique=35 buckets=1",
+        "pnpm schema:test 10/10 pass",
+        "pnpm seed:check PASS",
+        "pnpm blueprint:check PASS",
+        "pnpm contracts:check PASS",
+        "pnpm backend:verify PASS"
+      ],
+      "remaining": "Concrete external prerequisites: an admitted Appwrite test project with private APPWRITE_* configuration for --apply, availability wait and permission/scope/scheduler-spoof probes; quota/term-expiry record by the account owner; a GitHub Actions run for a real CI receipt; a macOS runner for the simulator build. Curriculum seed belongs with P4-LEARN-001."
     }
   ]
 }

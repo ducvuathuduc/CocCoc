@@ -26,6 +26,7 @@ jobs:
       - run: pnpm contracts:check
       - run: pnpm api:lint
       - run: pnpm schema:plan
+      - run: pnpm schema:test
       - run: pnpm seed:check
       - run: pnpm audit:check
       - run: node tools/evals/voice-harness.mjs
