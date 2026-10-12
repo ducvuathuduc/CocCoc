@@ -1,6 +1,6 @@
 # Ground-truth input inventory
 
-Inspected 2026-10-09, baseline `8b64cdcff3365e0ae4c5401bf2e799abd3dca649`, branch `main`, commit date 2026-10-09T22:33:30+07:00. Working tree was clean before the refresh. [Machine inventory](INPUT_INVENTORY.json) records each real path, type, bytes, SHA-256, inspection mode, headings, Dart classes/routes, test titles and per-file last tracked commit/date. It is a baseline snapshot; later new files are in the final manifest/diff and [current disk tree](REPO_TREE.md).
+Inspected 2026-10-09, baseline `8b64cdcff3365e0ae4c5401bf2e799abd3dca649`, branch `main`, commit date 2026-10-09T22:33:30+07:00. Working tree was clean before the refresh. [Machine inventory](INPUT_INVENTORY.json) records each real path, type, bytes, SHA-256, inspection mode, headings, Dart classes/routes, test titles and per-file last tracked commit/date. It is a baseline snapshot; later new files are in the final manifest/diff and [current disk tree](../agent/REPOSITORY_TREE.md).
 
 | Artifact | Read status / evidence |
 |---|---|

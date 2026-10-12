@@ -4,7 +4,7 @@
 |---|---|---|
 | Flutter feature-first Riverpod MVVM / current identifiers | KEEP | Real app and lock present; preserve finished screens. [Inventory](INPUT_INVENTORY.md). |
 | Three own services, profile in Progress | KEEP | V1 ownership/API/data agree. Candidate five-service layout is not mandated by the current directive; no rubric supplied. Appwrite is infrastructure, dispatcher is a Learning role. |
-| Appwrite Cloud node-22 support uncertain | MODIFY | Public runtime list now confirms node-22; actual project runtime still needs a console/listRuntimes receipt. [R03](RESEARCH_EVIDENCE.md). |
+| Appwrite Cloud node-22 support uncertain | MODIFY | Public runtime list now confirms node-22; actual project runtime still needs a console/listRuntimes receipt. [R03](../research/RESEARCH_EVIDENCE.md). |
 | Functions as voice transport | KEEP exclusion / clarify | Sync response deadline differs from maximum configured async execution. Neither proves indefinite duplex audio relay. Direct provider WebSocket remains the design. |
 | Education might expire later | MODIFY | Public enforcement starts 2026-11-01; past-term organizations require plan choice. Account expiry and safe export/downgrade remain required. |
 | 2.5 Flash-Lite assumed generally available | MODIFY | Public docs retain it for eligible prior users; new projects use current candidate profile. No paid/live adapter auto-enables. |
