@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/cache/snapshot_cache.dart';
+import '../data/api_roleplay_repository.dart';
 import '../data/roleplay_repository.dart';
 import '../domain/roleplay_models.dart';
 
@@ -16,6 +20,14 @@ class RoleplayLibraryController extends Notifier<RoleplayLibraryState> {
   @override
   RoleplayLibraryState build() {
     final repo = ref.watch(roleplayRepositoryProvider);
+    // Server history landing later merges into progress without dropping the
+    // session's lastResult/featured pick.
+    ref.listen(
+      snapshotRevisionProvider.select((m) => m['roleplay'] ?? 0),
+      (_, _) => state = state.copyWith(
+        progress: {...state.progress, ...repo.initialProgress()},
+      ),
+    );
     return RoleplayLibraryState(
       progress: Map.unmodifiable(repo.initialProgress()),
       featuredId: repo.defaultFeaturedId(),
@@ -47,6 +59,12 @@ class RoleplayLibraryController extends Notifier<RoleplayLibraryState> {
   RoleplayResult? record(String scenarioId, int wordsUsed) {
     if (_repo.scenario(scenarioId) == null) return null;
     final before = state.progressOf(scenarioId);
+    final repo = _repo;
+    if (repo case final RoleplayCommands commands) {
+      unawaited(
+        commands.recordConversation(scenarioId).catchError((Object _) {}),
+      );
+    }
     final stars = roleplayStarsFor(wordsUsed);
     final result = RoleplayResult(
       scenarioId: scenarioId,

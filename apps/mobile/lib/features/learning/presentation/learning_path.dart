@@ -11,6 +11,7 @@ import '../../../core/design/reference_widgets.dart';
 import '../../../core/design/path_motion.dart';
 import '../application/learning_controller.dart';
 import '../application/course_navigation_controller.dart';
+import '../application/path_progress_provider.dart';
 import '../domain/course_catalog.dart';
 import '../domain/course_review.dart';
 import '../domain/learning_models.dart';
@@ -37,7 +38,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
       draft.nodeId == courseNodeId(_active, node);
   @override
   Widget build(BuildContext context) {
-    final progress = ref.watch(learningStateProvider);
+    final progress = ref.watch(pathLearningStateProvider);
     final draft = ref.watch(lessonControllerProvider);
     final active = ref.watch(courseNavigationProvider).active;
     return Column(

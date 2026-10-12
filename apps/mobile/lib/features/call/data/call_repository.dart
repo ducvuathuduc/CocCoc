@@ -1,6 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/client/active_course.dart';
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/config/app_config.dart';
 import '../domain/call_models.dart';
+import 'api_call_repository.dart';
 
 /// Source of video-call sessions. Swap the provider for a real adapter.
 abstract class CallRepository {
@@ -59,6 +63,10 @@ class MockCallRepository implements CallRepository {
   Future<void> completeCall(String sessionId, int linesSpoken) async {}
 }
 
-final callRepositoryProvider = Provider<CallRepository>(
-  (ref) => const MockCallRepository(),
-);
+final callRepositoryProvider = Provider<CallRepository>((ref) {
+  if (!ref.watch(appConfigProvider).isApi) return const MockCallRepository();
+  return ApiCallRepository(
+    ref.watch(apiEndpointsProvider),
+    ref.watch(activeCourseProvider),
+  );
+});

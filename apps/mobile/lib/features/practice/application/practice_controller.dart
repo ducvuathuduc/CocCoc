@@ -2,12 +2,34 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/client/active_course.dart';
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/cache/snapshot_cache.dart';
+import '../../../core/config/app_config.dart';
+import '../data/api_practice_repository.dart';
 import '../data/practice_repository.dart';
 import '../domain/practice_models.dart';
 
-final practiceRepositoryProvider = Provider<PracticeRepository>(
-  (_) => const MockPracticeRepository(),
-);
+final practiceRepositoryProvider = Provider<PracticeRepository>((ref) {
+  if (!ref.watch(appConfigProvider).isApi) {
+    return const MockPracticeRepository();
+  }
+  return ApiPracticeRepository(
+    ref.watch(apiEndpointsProvider),
+    ref.watch(activeCourseProvider),
+    host: SnapshotHost.of(ref, 'practice'),
+  );
+});
+
+/// Open review mistakes from the repository (empty when it has none).
+final practiceMistakesProvider = Provider<List<PracticeMistake>>((ref) {
+  watchSnapshot(ref, 'practice');
+  final repository = ref.watch(practiceRepositoryProvider);
+  if (repository case final PracticeMistakes mistakes) {
+    return mistakes.loadMistakes();
+  }
+  return const [];
+});
 
 final practiceControllerProvider =
     NotifierProvider<PracticeController, PracticeState>(PracticeController.new);
@@ -17,11 +39,14 @@ final speakingControllerProvider =
 
 class PracticeController extends Notifier<PracticeState> {
   @override
-  PracticeState build() => PracticeState(
-    words: List<PracticeWord>.unmodifiable(
-      ref.read(practiceRepositoryProvider).loadWords(),
-    ),
-  );
+  PracticeState build() {
+    watchSnapshot(ref, 'practice');
+    return PracticeState(
+      words: List<PracticeWord>.unmodifiable(
+        ref.read(practiceRepositoryProvider).loadWords(),
+      ),
+    );
+  }
 
   void reveal() {
     if (state.current == null) return;

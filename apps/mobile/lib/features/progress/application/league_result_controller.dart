@@ -1,17 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/league_repository.dart';
 import '../domain/league_result.dart';
 
-final leagueResultFixtureProvider = Provider<LeagueResultFixture?>(
-  (ref) => LeagueResultFixture(
-    previousTier: LeagueTier.bronze,
-    currentTier: LeagueTier.silver,
-    rewardGems: 40,
-    entries: const <LeagueResultEntry>[
-      LeagueResultEntry(name: 'Sam', xp: 867, rank: 1, isLearner: true),
-    ],
-  ),
-);
+final leagueResultFixtureProvider = Provider<LeagueResultFixture?>((ref) {
+  watchProgressSnapshot(ref);
+  return ref.watch(leagueRepositoryProvider).lastResult();
+});
 
 enum LeagueResultStage { result, promotion, reward, complete }
 
@@ -63,6 +60,14 @@ class LeagueResultController extends Notifier<LeagueResultState> {
     };
     if (next == state.stage) return false;
     state = state.copyWith(stage: next);
+    if (next == LeagueResultStage.complete) {
+      unawaited(
+        ref
+            .read(leagueRepositoryProvider)
+            .markResultSeen()
+            .catchError((Object _) {}),
+      );
+    }
     return next == LeagueResultStage.complete;
   }
 }

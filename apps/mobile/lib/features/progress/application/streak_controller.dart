@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/cache/snapshot_cache.dart';
+import '../data/social_repository.dart';
+
 enum FriendStreakStatus { pending, active }
 
 class StreakPerson {
@@ -73,7 +76,37 @@ class StreakController extends Notifier<StreakState> {
     final now =
         ref.read(streakFixtureProvider)?.month ??
         ref.read<DateTime>(streakClockProvider);
-    return StreakState(month: DateTime(now.year, now.month));
+    final base = StreakState(month: DateTime(now.year, now.month));
+    final social = ref.watch(socialRepositoryProvider);
+    ref.listen(
+      snapshotRevisionProvider.select((m) => m['social'] ?? 0),
+      (_, _) => _merge(social.friendStreaks()),
+    );
+    return _apply(base, social.friendStreaks());
+  }
+
+  SocialRepository get _social => ref.read(socialRepositoryProvider);
+
+  void _merge(List<FriendStreakLink>? links) {
+    if (links != null) state = _apply(state, links);
+  }
+
+  /// Server friend streaks replace the local preview sets (API mode only).
+  static StreakState _apply(StreakState base, List<FriendStreakLink>? links) {
+    if (links == null) return base;
+    return base.copyWith(
+      friends: {
+        for (final l in links)
+          if (l.state != FriendStreakState.pendingIncoming)
+            l.userId: l.state == FriendStreakState.active
+                ? FriendStreakStatus.active
+                : FriendStreakStatus.pending,
+      },
+      incoming: {
+        for (final l in links)
+          if (l.state == FriendStreakState.pendingIncoming) l.userId,
+      },
+    );
   }
 
   bool accept(String id) {
@@ -82,6 +115,7 @@ class StreakController extends Notifier<StreakState> {
         state.friends.containsKey(id)) {
       return false;
     }
+    sendSocial(() => _social.respondFriendStreak(id, accept: true));
     state = state.copyWith(
       friends: {...state.friends, id: FriendStreakStatus.active},
       incoming: {...state.incoming}..remove(id),
@@ -91,6 +125,7 @@ class StreakController extends Notifier<StreakState> {
 
   bool decline(String id) {
     if (!state.incoming.contains(id)) return false;
+    sendSocial(() => _social.respondFriendStreak(id, accept: false));
     state = state.copyWith(incoming: {...state.incoming}..remove(id));
     return true;
   }
@@ -102,6 +137,7 @@ class StreakController extends Notifier<StreakState> {
         state.friends.containsKey(id)) {
       return false;
     }
+    sendSocial(() => _social.inviteFriendStreak(id));
     state = state.copyWith(
       friends: {...state.friends, id: FriendStreakStatus.pending},
     );

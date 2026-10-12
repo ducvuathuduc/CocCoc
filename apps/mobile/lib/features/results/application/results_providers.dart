@@ -1,44 +1,54 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/app_config.dart';
+import '../../progress/data/league_repository.dart';
+import '../../progress/data/progress_snapshot.dart';
+import '../data/api_results_repository.dart';
 import '../data/results_repository.dart';
 import '../domain/results_models.dart';
 
-final resultsRepositoryProvider = Provider<ResultsRepository>(
-  (ref) => const MockResultsRepository(),
-);
+final resultsRepositoryProvider = Provider<ResultsRepository>((ref) {
+  if (!ref.watch(appConfigProvider).isApi) return const MockResultsRepository();
+  return ApiResultsRepository(ref.watch(progressSnapshotSourceProvider));
+});
 
 final streakExtendedResultProvider = Provider<StreakExtendedResult>(
-  (ref) => ref.watch(resultsRepositoryProvider).streakExtended(),
+  (ref) => _results(ref).streakExtended(),
 );
 
 final gemRewardResultProvider = Provider<GemRewardResult>(
-  (ref) => ref.watch(resultsRepositoryProvider).gemReward(),
+  (ref) => _results(ref).gemReward(),
 );
 
 final questProgressResultProvider = Provider<QuestProgressResult>(
-  (ref) => ref.watch(resultsRepositoryProvider).questProgress(),
+  (ref) => _results(ref).questProgress(),
 );
 
 final leagueRankResultProvider = Provider<LeagueRankResult>(
-  (ref) => ref.watch(resultsRepositoryProvider).leagueRank(),
+  (ref) => _results(ref).leagueRank(),
 );
 
 final streakGoalResultProvider = Provider<StreakGoalResult?>(
-  (ref) => ref.watch(resultsRepositoryProvider).streakGoal(),
+  (ref) => _results(ref).streakGoal(),
 );
 
 final widgetUnlockResultProvider = Provider<WidgetUnlockResult?>(
-  (ref) => ref.watch(resultsRepositoryProvider).widgetUnlock(),
+  (ref) => _results(ref).widgetUnlock(),
 );
 
 final friendStreakResultProvider = Provider<FriendStreakResult?>(
-  (ref) => ref.watch(resultsRepositoryProvider).friendStreak(),
+  (ref) => _results(ref).friendStreak(),
 );
 
 final friendsQuestResultProvider = Provider<FriendsQuestResult?>(
-  (ref) => ref.watch(resultsRepositoryProvider).friendsQuest(),
+  (ref) => _results(ref).friendsQuest(),
 );
 
 final pathReturnResultProvider = Provider<PathReturnResult>(
-  (ref) => ref.watch(resultsRepositoryProvider).pathReturn(),
+  (ref) => _results(ref).pathReturn(),
 );
+
+ResultsRepository _results(Ref ref) {
+  watchProgressSnapshot(ref);
+  return ref.watch(resultsRepositoryProvider);
+}

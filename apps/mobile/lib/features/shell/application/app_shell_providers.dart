@@ -3,14 +3,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../learning/application/learning_controller.dart';
 import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
+import '../../../core/config/app_config.dart';
+import '../../progress/data/league_repository.dart';
+import '../../progress/data/progress_snapshot.dart';
+import '../data/api_app_shell_repository.dart';
 import '../data/app_shell_repository.dart';
 import '../domain/app_shell_models.dart';
 
-final appShellRepositoryProvider = Provider<AppShellRepository>(
-  (ref) => const MockAppShellRepository(),
-);
+final appShellRepositoryProvider = Provider<AppShellRepository>((ref) {
+  if (!ref.watch(appConfigProvider).isApi) {
+    return const MockAppShellRepository();
+  }
+  return ApiAppShellRepository(ref.watch(progressSnapshotSourceProvider));
+});
 
 final appStatsProvider = Provider<List<AppStat>>((ref) {
+  watchProgressSnapshot(ref);
   final progress = ref.watch(
     learningStateProvider.select(
       (state) => (state.score, state.streak, state.completedLessons > 0),

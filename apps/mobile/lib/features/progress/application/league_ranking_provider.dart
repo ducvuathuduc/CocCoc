@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../learning/application/learning_controller.dart';
+import '../data/league_repository.dart';
 import '../domain/league_ranking.dart';
 import 'preview_controller.dart';
 import 'profile_summary_provider.dart';
@@ -16,6 +17,9 @@ const _fixtureUserIds = <String>[
 ];
 
 final leagueRankingProvider = Provider<LeagueRanking>((ref) {
+  watchProgressSnapshot(ref);
+  final remote = ref.watch(leagueRepositoryProvider).ranking();
+  if (remote != null) return remote;
   final candidates =
       <_LeagueCandidate>[
         for (final (order, userId) in _fixtureUserIds.indexed)
@@ -27,6 +31,15 @@ final leagueRankingProvider = Provider<LeagueRanking>((ref) {
               order: order,
               isOwn: false,
             ),
+        for (final (index, member)
+            in ref.watch(mockLeagueRosterProvider).indexed)
+          _LeagueCandidate(
+            userId: member.userId,
+            name: member.name,
+            xp: member.xp,
+            order: _fixtureUserIds.length + 1 + index,
+            isOwn: false,
+          ),
         _LeagueCandidate(
           userId: 'me',
           name: ref.watch(previewControllerProvider).name,

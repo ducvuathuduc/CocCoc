@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/cache/snapshot_cache.dart';
 import '../data/notification_repository.dart';
 import '../domain/notification_models.dart';
 
@@ -8,7 +9,10 @@ class NotificationSettingsController extends Notifier<NotificationPrefs> {
   NotificationRepository get _repo => ref.read(notificationRepositoryProvider);
 
   @override
-  NotificationPrefs build() => _repo.load();
+  NotificationPrefs build() {
+    watchSnapshot(ref, 'notifications');
+    return _repo.load();
+  }
 
   List<NotificationCategory> get categories => _repo.categories;
 

@@ -1,7 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/client/active_course.dart';
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/cache/snapshot_cache.dart';
+import '../../../core/config/app_config.dart';
 import '../../practice/data/journey_repository.dart' show englishRoleplay;
 import '../domain/roleplay_models.dart';
+import 'api_roleplay_repository.dart';
 
 abstract class RoleplayRepository {
   List<RoleplayTopic> topics();
@@ -31,8 +36,34 @@ final _restaurantHints = const [
   [RoleplayHint('cảm ơn', 'Thank you'), RoleplayHint('rất', 'very much')],
 ];
 
+/// Reference account: one restaurant run.
+const referenceRoleplayProgress = {
+  restaurantScenarioId: RoleplayProgress(
+    stars: 2,
+    bestWords: 13,
+    completions: 1,
+  ),
+};
+
+/// Demo conversation history across the library (stars, best words, runs).
+const demoRoleplayProgress = {
+  ...referenceRoleplayProgress,
+  'market': RoleplayProgress(stars: 3, bestWords: 21, completions: 3),
+  'airport': RoleplayProgress(stars: 2, bestWords: 15, completions: 2),
+  'party': RoleplayProgress(stars: 1, bestWords: 7, completions: 1),
+  'morning': RoleplayProgress(stars: 3, bestWords: 18, completions: 4),
+  'intro': RoleplayProgress(stars: 3, bestWords: 24, completions: 5),
+  'directions': RoleplayProgress(stars: 2, bestWords: 11, completions: 1),
+};
+
 class MockRoleplayRepository implements RoleplayRepository {
-  const MockRoleplayRepository();
+  const MockRoleplayRepository({this.progress = demoRoleplayProgress});
+
+  /// Only the archived reference progress (keeps reference goldens stable).
+  const MockRoleplayRepository.reference()
+    : progress = referenceRoleplayProgress;
+
+  final Map<String, RoleplayProgress> progress;
 
   static const _topics = [
     RoleplayTopic(id: 'daily', title: 'Daily Life'),
@@ -393,18 +424,19 @@ class MockRoleplayRepository implements RoleplayRepository {
   }
 
   @override
-  Map<String, RoleplayProgress> initialProgress() => const {
-    restaurantScenarioId: RoleplayProgress(
-      stars: 2,
-      bestWords: 13,
-      completions: 1,
-    ),
-  };
+  Map<String, RoleplayProgress> initialProgress() => progress;
 
   @override
   String defaultFeaturedId() => restaurantScenarioId;
 }
 
-final roleplayRepositoryProvider = Provider<RoleplayRepository>(
-  (ref) => const MockRoleplayRepository(),
-);
+final roleplayRepositoryProvider = Provider<RoleplayRepository>((ref) {
+  if (!ref.watch(appConfigProvider).isApi) {
+    return const MockRoleplayRepository();
+  }
+  return ApiRoleplayRepository(
+    ref.watch(apiEndpointsProvider),
+    ref.watch(activeCourseProvider),
+    host: SnapshotHost.of(ref, 'roleplay'),
+  );
+});

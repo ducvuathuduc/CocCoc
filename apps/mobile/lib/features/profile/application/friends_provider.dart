@@ -10,7 +10,7 @@ final friendsRepositoryProvider = Provider<FriendsRepository>((ref) {
   if (ref.watch(appConfigProvider).isApi) {
     return ApiFriendsRepository(ref.watch(apiEndpointsProvider));
   }
-  return MockFriendsRepository();
+  return const MockFriendsRepository();
 });
 
 final friendsProvider = FutureProvider<List<Friend>>((ref) async {

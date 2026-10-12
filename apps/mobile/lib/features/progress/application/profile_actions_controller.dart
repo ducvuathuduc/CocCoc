@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/social_repository.dart';
 import 'preview_controller.dart';
 
 const reportReasons = {'Nudity', 'Spam', 'Something else'};
@@ -63,6 +64,8 @@ class ProfileActionsController extends Notifier<ProfileActionsState> {
     if (ref.read(previewControllerProvider).following.contains(userId)) {
       ref.read(previewControllerProvider.notifier).follow(userId);
     }
+    final social = ref.read(socialRepositoryProvider);
+    sendSocial(() => social.block(userId));
     state = ProfileActionsState(
       blocked: {...state.blocked, userId},
       reports: {...state.reports, userId: reason},
@@ -80,6 +83,8 @@ class ProfileActionsController extends Notifier<ProfileActionsState> {
     if (ref.read(previewControllerProvider).following.contains(userId)) {
       ref.read(previewControllerProvider.notifier).follow(userId);
     }
+    final social = ref.read(socialRepositoryProvider);
+    sendSocial(() => social.block(userId));
     state = ProfileActionsState(
       blocked: {...state.blocked, userId},
       reports: state.reports,
@@ -91,6 +96,8 @@ class ProfileActionsController extends Notifier<ProfileActionsState> {
 
   void unblock(String userId) {
     if (!state.blocked.contains(userId)) return;
+    final social = ref.read(socialRepositoryProvider);
+    sendSocial(() => social.unblock(userId));
     state = ProfileActionsState(
       blocked: {...state.blocked}..remove(userId),
       reports: state.reports,

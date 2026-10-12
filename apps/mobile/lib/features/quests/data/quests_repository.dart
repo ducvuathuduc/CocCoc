@@ -25,3 +25,9 @@ class MockQuestsRepository implements QuestsRepository {
     dailyTimeRemaining: '5H',
   );
 }
+
+/// Optional server commands an API-backed [QuestsRepository] also implements.
+/// The local preview ledger keeps the optimistic UI either way.
+abstract interface class QuestCommands {
+  Future<bool> claim(String questId);
+}

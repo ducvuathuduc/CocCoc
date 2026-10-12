@@ -1,13 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/cache/snapshot_cache.dart';
+import '../../../core/config/app_config.dart';
+import '../data/api_quests_repository.dart';
 import '../data/quests_repository.dart';
 import '../domain/quest_models.dart';
 import '../../learning/application/learning_controller.dart';
 import '../../progress/application/preview_controller.dart';
 
-final questsRepositoryProvider = Provider<QuestsRepository>(
-  (ref) => const MockQuestsRepository(),
-);
+final questsRepositoryProvider = Provider<QuestsRepository>((ref) {
+  if (!ref.watch(appConfigProvider).isApi) return const MockQuestsRepository();
+  return ApiQuestsRepository(
+    ref.watch(apiEndpointsProvider),
+    host: SnapshotHost.of(ref, 'quests'),
+  );
+});
 
 final questsControllerProvider =
     NotifierProvider<QuestsController, QuestsTabState>(QuestsController.new);
@@ -15,6 +25,7 @@ final questsControllerProvider =
 class QuestsController extends Notifier<QuestsTabState> {
   @override
   QuestsTabState build() {
+    watchSnapshot(ref, 'quests');
     final initial = ref.watch(questsRepositoryProvider).loadQuests();
     final preview = ref.watch(previewControllerProvider);
     final learning = ref.watch(learningStateProvider);
@@ -100,6 +111,11 @@ class QuestsController extends Notifier<QuestsTabState> {
     final success = ref
         .read(previewControllerProvider.notifier)
         .claimQuest(previewId, eligible: quest.isCompleted);
+
+    final repository = ref.read(questsRepositoryProvider);
+    if (repository case final QuestCommands commands) {
+      unawaited(commands.claim(id).catchError((Object _) => false));
+    }
 
     // Update state to mark claimed
     final updatedList = List<DailyQuest>.from(state.dailyQuests);
