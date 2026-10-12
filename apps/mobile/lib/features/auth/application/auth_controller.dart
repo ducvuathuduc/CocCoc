@@ -1,32 +1,43 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/app_config.dart';
 import '../data/auth_repository.dart';
 import '../data/mock_auth_repository.dart';
 import '../domain/auth_state.dart';
 import '../services/appwrite_auth_service.dart';
 
 final appwriteAuthServiceProvider = Provider<AppwriteAuthService>(
-  (ref) => AppwriteAuthService.fromEnvironment(),
+  (ref) => AppwriteAuthService.fromConfig(ref.watch(appConfigProvider)),
 );
 
-const useMockAuth = bool.fromEnvironment(
-  'USE_MOCK_AUTH',
-  defaultValue: kDebugMode,
-);
+/// Mock auth unless `DATA_SOURCE=api` (or an explicit `USE_MOCK_AUTH=false`).
+final bool useMockAuth = AppConfig.current.useMockAuth;
 
 final authAvailableProvidersProvider = Provider<Set<AuthProvider>>((ref) {
-  if (useMockAuth) return Set.unmodifiable(AuthProvider.values);
+  if (ref.watch(appConfigProvider).useMockAuth) {
+    return Set.unmodifiable(AuthProvider.values);
+  }
   return ref
       .watch(appwriteAuthServiceProvider)
       .availableProviders(defaultTargetPlatform);
 });
 
 final authRepositoryProvider = Provider<AuthRepository>(
-  (ref) => useMockAuth
+  (ref) => ref.watch(appConfigProvider).useMockAuth
       ? MockAuthRepository()
       : AppwriteAuthRepository(ref.watch(appwriteAuthServiceProvider)),
 );
+
+/// Session commands (sign-up, guest, logout, JWT) of the active repository.
+/// Null only when a test overrides [authRepositoryProvider] with a fake that
+/// does not implement them.
+final authSessionRepositoryProvider = Provider<AuthSessionRepository?>((ref) {
+  final repository = ref.watch(authRepositoryProvider);
+  return repository is AuthSessionRepository
+      ? repository as AuthSessionRepository
+      : null;
+});
 
 final authControllerProvider = NotifierProvider<AuthController, AuthState>(
   AuthController.new,
@@ -315,6 +326,42 @@ class AuthController extends Notifier<AuthState> {
       if (!_finishCommand(revision)) return;
       state = state.copyWith(busy: false, error: _message(error));
     }
+  }
+
+  /// Starts a guest session (P3-AUTH-001); progress stays on this device
+  /// until the learner creates a profile.
+  Future<void> continueAsGuest() async {
+    if (_commandInFlight) return;
+    final session = ref.read(authSessionRepositoryProvider);
+    if (session == null) return;
+    final revision = _beginCommand(state.stage);
+    try {
+      final user = await session.continueAsGuest();
+      if (!_finishCommand(revision)) return;
+      state = state.copyWith(
+        stage: AuthStage.signedIn,
+        user: user,
+        busy: false,
+        clearError: true,
+      );
+    } on Object catch (error) {
+      if (!_finishCommand(revision)) return;
+      state = state.copyWith(busy: false, error: _message(error));
+    }
+  }
+
+  /// Ends the session server-side, then returns to the signed-out state while
+  /// keeping the remembered-account hint.
+  Future<void> signOut() async {
+    final session = ref.read(authSessionRepositoryProvider);
+    final revision = _beginCommand(AuthStage.choice);
+    try {
+      await session?.signOut();
+    } on Object {
+      // Local sign-out still proceeds; the server session expires on its own.
+    }
+    if (!_finishCommand(revision)) return;
+    state = AuthState(remembered: state.remembered);
   }
 
   void dismissRecovery() {

@@ -3,6 +3,7 @@ import 'package:appwrite/enums.dart' as appwrite_enums;
 import 'package:appwrite/models.dart' as appwrite_models;
 import 'package:flutter/foundation.dart';
 
+import '../../../core/config/app_config.dart';
 import '../domain/auth_state.dart';
 
 class AppwriteAuthServiceException implements Exception {
@@ -20,14 +21,18 @@ class AppwriteAuthService {
     required this.appleEnabled,
   });
 
-  factory AppwriteAuthService.fromEnvironment() {
-    const endpoint = String.fromEnvironment('APPWRITE_ENDPOINT');
-    const projectId = String.fromEnvironment('APPWRITE_PROJECT_ID');
+  factory AppwriteAuthService.fromEnvironment() =>
+      AppwriteAuthService.fromConfig(AppConfig.current);
+
+  /// Builds the Account client for [config]'s public endpoint and project.
+  factory AppwriteAuthService.fromConfig(AppConfig config) {
     const recoveryUrl = String.fromEnvironment('APPWRITE_RECOVERY_URL');
     const googleEnabled = bool.fromEnvironment('APPWRITE_GOOGLE_ENABLED');
     const facebookEnabled = bool.fromEnvironment('APPWRITE_FACEBOOK_ENABLED');
     const appleEnabled = bool.fromEnvironment('APPWRITE_APPLE_ENABLED');
 
+    final endpoint = config.appwriteEndpoint;
+    final projectId = config.appwriteProjectId;
     final endpointUri = Uri.tryParse(endpoint);
     final configured =
         endpointUri != null &&
@@ -46,12 +51,27 @@ class AppwriteAuthService {
     );
   }
 
+  /// Wraps an existing [Account] (tests, custom clients).
+  @visibleForTesting
+  factory AppwriteAuthService.withAccount(
+    Account? account, {
+    String recoveryUrl = '',
+  }) => AppwriteAuthService._(
+    account: account,
+    recoveryUrl: recoveryUrl,
+    googleEnabled: false,
+    facebookEnabled: false,
+    appleEnabled: false,
+  );
+
   static const configurationMessage =
       'Sign-in isn’t connected yet. Please try again later.';
   static const signInMessage =
       'We couldn’t sign you in. Check your email and password and try again.';
   static const requestMessage =
       'We couldn’t complete that request. Please try again.';
+  static const signUpMessage =
+      'We couldn’t create your account. Check your details and try again.';
   static const socialMessage =
       'That sign-in option isn’t available right now. Please try again.';
 
@@ -153,6 +173,62 @@ class AppwriteAuthService {
     }
   }
 
+  /// Creates an email/password account and signs it in (P3-AUTH-001).
+  Future<AuthUser> signUp(String email, String password, String name) async {
+    final account = _configuredAccount();
+    try {
+      await account.create(
+        userId: ID.unique(),
+        email: email.trim(),
+        password: password,
+        name: name.trim().isEmpty ? null : name.trim(),
+      );
+      await account.createEmailPasswordSession(
+        email: email.trim(),
+        password: password,
+      );
+      return _toAuthUser(await account.get());
+    } on Object {
+      throw const AppwriteAuthServiceException(signUpMessage);
+    }
+  }
+
+  /// Starts an anonymous (guest) session; it can be upgraded later.
+  Future<AuthUser> continueAsGuest() async {
+    final account = _configuredAccount();
+    try {
+      await account.createAnonymousSession();
+      return _toAuthUser(await account.get());
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  /// Deletes the current session. A missing session counts as signed out.
+  Future<void> signOut() async {
+    final account = _configuredAccount();
+    try {
+      await account.deleteSession(sessionId: 'current');
+    } on AppwriteException catch (error) {
+      if (error.code == 401) return;
+      throw const AppwriteAuthServiceException(requestMessage);
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  /// Mints a short-lived JWT for the API services; null when signed out.
+  Future<String?> createJwt() async {
+    final account = _account;
+    if (account == null) return null;
+    try {
+      return (await account.createJWT()).jwt;
+    } on AppwriteException catch (error) {
+      if (error.code == 401) return null;
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
   appwrite_enums.OAuthProvider _provider(AuthProvider provider) =>
       switch (provider) {
         AuthProvider.google => appwrite_enums.OAuthProvider.google,
@@ -160,6 +236,10 @@ class AppwriteAuthService {
         AuthProvider.apple => appwrite_enums.OAuthProvider.apple,
       };
 
-  AuthUser _toAuthUser(appwrite_models.User user) =>
-      AuthUser(id: user.$id, email: user.email, name: user.name);
+  AuthUser _toAuthUser(appwrite_models.User user) => AuthUser(
+    id: user.$id,
+    email: user.email,
+    name: user.name,
+    guest: user.email.isEmpty,
+  );
 }

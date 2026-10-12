@@ -1,7 +1,7 @@
 import '../domain/auth_state.dart';
 import 'auth_repository.dart';
 
-class MockAuthRepository implements AuthRepository {
+class MockAuthRepository implements AuthRepository, AuthSessionRepository {
   MockAuthRepository({this.delay = const Duration(milliseconds: 650)});
 
   static const demoUser = AuthUser(
@@ -18,7 +18,9 @@ class MockAuthRepository implements AuthRepository {
   final Duration delay;
   final Map<String, String> _passwords = {};
   AuthUser? _remembered;
+  AuthUser? _session;
   String? _recoveryEmail;
+  int _guestSequence = 0;
 
   @override
   Future<AuthUser> signIn(String email, String password) async {
@@ -34,6 +36,7 @@ class MockAuthRepository implements AuthRepository {
       name: demoUser.name,
     );
     _remembered = user;
+    _session = user;
     return user;
   }
 
@@ -69,11 +72,61 @@ class MockAuthRepository implements AuthRepository {
   Future<AuthUser> socialSignIn(AuthProvider provider) async {
     await Future<void>.delayed(delay);
     _remembered = demoUser;
+    _session = demoUser;
     return demoUser;
   }
 
+  /// Mock sessions do not survive a restart (in-memory only).
   @override
   Future<AuthUser?> restoreSession() async => null;
+
+  @override
+  Future<AuthUser> signUp(String email, String password, String name) async {
+    await Future<void>.delayed(delay);
+    final normalizedEmail = email.trim();
+    if (!_validEmail(normalizedEmail) ||
+        password.length < 8 ||
+        _passwords.containsKey(normalizedEmail)) {
+      throw const AuthFailure(
+        'We couldn’t create your account. Check your details and try again.',
+      );
+    }
+    _passwords[normalizedEmail] = password;
+    final user = AuthUser(
+      id: 'demo-user-${normalizedEmail.hashCode.toUnsigned(32)}',
+      email: normalizedEmail,
+      name: name.trim().isEmpty ? demoUser.name : name.trim(),
+    );
+    _remembered = user;
+    _session = user;
+    return user;
+  }
+
+  @override
+  Future<AuthUser> continueAsGuest() async {
+    await Future<void>.delayed(delay);
+    final guest = AuthUser(
+      id: 'guest-${++_guestSequence}',
+      email: '',
+      name: '',
+      guest: true,
+    );
+    _session = guest;
+    return guest;
+  }
+
+  @override
+  Future<void> signOut() async {
+    _session = null;
+  }
+
+  /// Mock mode never calls the API; a token exists only while signed in.
+  @override
+  Future<String?> accessToken() async =>
+      _session == null ? null : 'mock-jwt-${_session!.id}';
+
+  /// Currently signed-in mock user, if any.
+  AuthUser? get currentUser => _session;
 
   @override
   Future<AuthUser?> rememberedAccount() async => _remembered;

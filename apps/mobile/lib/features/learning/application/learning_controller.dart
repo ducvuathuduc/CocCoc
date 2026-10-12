@@ -1,11 +1,28 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/cache/lesson_journal.dart';
+import '../../../core/config/app_config.dart';
+import '../../auth/application/auth_controller.dart';
+import '../data/api_learning_repository.dart';
 import '../data/learning_repository.dart';
 import '../domain/learning_models.dart';
 
-final learningRepositoryProvider = Provider<LearningRepository>(
-  (ref) => MockLearningRepository(),
-);
+final learningRepositoryProvider = Provider<LearningRepository>((ref) {
+  if (!ref.watch(appConfigProvider).isApi) return MockLearningRepository();
+  return ApiLearningRepository(
+    learning: ref.watch(learningApiProvider),
+    progress: ref.watch(progressApiProvider),
+    journal: ref.watch(lessonJournalProvider),
+  );
+});
+
+/// Durable lesson journal, namespaced per signed-in user so one account never
+/// sees another's queued answers.
+final lessonJournalProvider = Provider<LessonJournal>((ref) {
+  final user = ref.watch(authControllerProvider.select((s) => s.user?.id));
+  return PreferencesLessonJournal(namespace: user ?? 'anonymous');
+});
 
 final learningStateProvider =
     NotifierProvider<LearningStateController, LearningState>(

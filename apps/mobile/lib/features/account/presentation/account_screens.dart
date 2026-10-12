@@ -196,6 +196,7 @@ class SettingsScreen extends ConsumerWidget {
                   backgroundColor: LearningColors.blue,
                   edgeColor: LearningColors.blueDark,
                   onPressed: () {
+                    ref.read(authSessionRepositoryProvider)?.signOut().ignore();
                     ref.invalidate(authControllerProvider);
                     Navigator.pop(context);
                     context.go('/welcome');

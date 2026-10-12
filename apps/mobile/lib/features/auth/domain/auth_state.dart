@@ -3,11 +3,19 @@ enum AuthStage { choice, details, forgot, reset, busy, signedIn }
 enum AuthProvider { google, facebook, apple }
 
 class AuthUser {
-  const AuthUser({required this.id, required this.email, required this.name});
+  const AuthUser({
+    required this.id,
+    required this.email,
+    required this.name,
+    this.guest = false,
+  });
 
   final String id;
   final String email;
   final String name;
+
+  /// Anonymous session (P3-AUTH-001 guest); no email, upgradeable later.
+  final bool guest;
 
   @override
   bool operator ==(Object other) =>
@@ -15,10 +23,11 @@ class AuthUser {
       other is AuthUser &&
           other.id == id &&
           other.email == email &&
-          other.name == name;
+          other.name == name &&
+          other.guest == guest;
 
   @override
-  int get hashCode => Object.hash(id, email, name);
+  int get hashCode => Object.hash(id, email, name, guest);
 }
 
 class AuthState {

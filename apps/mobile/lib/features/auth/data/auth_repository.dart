@@ -16,13 +16,27 @@ abstract interface class AuthRepository {
   Future<void> forgetAccount();
 }
 
+/// Session commands beyond the sign-in surface (P3-AUTH-001): account
+/// creation, guest sessions, logout and the API access token. Kept separate
+/// from [AuthRepository] so existing fakes stay valid.
+abstract interface class AuthSessionRepository {
+  Future<AuthUser> signUp(String email, String password, String name);
+  Future<AuthUser> continueAsGuest();
+
+  /// Ends the session and clears per-user local caches.
+  Future<void> signOut();
+
+  /// Short-lived bearer token for the API services; null when signed out.
+  Future<String?> accessToken();
+}
+
 class AuthFailure implements Exception {
   const AuthFailure(this.message);
 
   final String message;
 }
 
-class AppwriteAuthRepository implements AuthRepository {
+class AppwriteAuthRepository implements AuthRepository, AuthSessionRepository {
   AppwriteAuthRepository(this.service, [SharedPreferencesAsync? preferences])
     : _preferences = preferences;
 
@@ -139,7 +153,52 @@ class AppwriteAuthRepository implements AuthRepository {
     }
   }
 
+  @override
+  Future<AuthUser> signUp(String email, String password, String name) async {
+    try {
+      final user = await service.signUp(email, password, name);
+      await _rememberBestEffort(user);
+      return user;
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<AuthUser> continueAsGuest() async {
+    try {
+      return await service.continueAsGuest();
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      await service.signOut();
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<String?> accessToken() async {
+    try {
+      return await service.createJwt();
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
   Future<void> _rememberBestEffort(AuthUser user) async {
+    if (user.guest) return;
     try {
       await _storage.setString(
         rememberedKey,
