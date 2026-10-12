@@ -56,7 +56,10 @@ String exerciseAnswer(Exercise exercise) {
   if (exercise.correctText.isNotEmpty) return exercise.correctText;
   if (exercise.pairs.isNotEmpty) {
     return exercise.pairs.entries
-        .map((e) => '${e.key} → ${e.value}')
+        .map(
+          (e) =>
+              '${exercise.pairLabel(e.key)} → ${exercise.pairLabel(e.value)}',
+        )
         .join('\n');
   }
   return exercise.correctIds
@@ -75,7 +78,10 @@ String submittedAnswer(Exercise exercise, LessonState state) {
   if (state.text.trim().isNotEmpty) return state.text.trim();
   if (state.matchedPairs.isNotEmpty) {
     return state.matchedPairs.entries
-        .map((e) => '${e.key} → ${e.value}')
+        .map(
+          (e) =>
+              '${exercise.pairLabel(e.key)} → ${exercise.pairLabel(e.value)}',
+        )
         .join('\n');
   }
   final ids = state.selectedId == null ? state.tokenIds : [state.selectedId!];

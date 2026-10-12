@@ -37,6 +37,7 @@ class Exercise {
     this.hint,
     this.meaning,
     this.audioPairs = false,
+    this.pairLabels = const <String, String>{},
   });
 
   final String id;
@@ -53,6 +54,13 @@ class Exercise {
 
   /// Match-pairs variant whose left column plays audio clips (no text shown).
   final bool audioPairs;
+
+  /// Display text for [pairs] keys/values when they are wire ids (API mode).
+  /// Empty when the pairs are keyed by their text (mock fixtures).
+  final Map<String, String> pairLabels;
+
+  /// Text shown for a pair side ([id] itself when it is already text).
+  String pairLabel(String id) => pairLabels[id] ?? id;
 
   Exercise copyWith({
     ExerciseKind? kind,
@@ -79,6 +87,7 @@ class Exercise {
       hint: hint ?? this.hint,
       meaning: meaning ?? this.meaning,
       audioPairs: audioPairs,
+      pairLabels: pairLabels,
     );
   }
 }

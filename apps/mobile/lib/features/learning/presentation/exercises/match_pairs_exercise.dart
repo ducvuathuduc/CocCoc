@@ -146,7 +146,7 @@ class _MatchPairsExerciseState extends State<MatchPairsExercise>
           child: Center(
             child: audio
                 ? _AudioWave(seed: key, tone: tone)
-                : _label(key, tone),
+                : _label(widget.exercise.pairLabel(key), tone),
           ),
         ),
       ),
@@ -165,7 +165,10 @@ class _MatchPairsExerciseState extends State<MatchPairsExercise>
         shakeEpoch: flashing && !_flashCorrect ? _shakeEpoch : 0,
         padding: const EdgeInsets.symmetric(horizontal: 14),
         onTap: widget.editable && !matched ? () => _tapRight(value) : null,
-        child: SizedBox(height: 70, child: Center(child: _label(value, tone))),
+        child: SizedBox(
+          height: 70,
+          child: Center(child: _label(widget.exercise.pairLabel(value), tone)),
+        ),
       ),
     );
   }

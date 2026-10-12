@@ -144,7 +144,14 @@ void main() {
     expect(lesson.first.kind, ExerciseKind.choice);
     expect(lesson.first.choices.map((c) => c.text), contains('xin chào'));
     expect(lesson[1].kind, ExerciseKind.matchPairs);
-    expect(lesson[1].pairs['hello'], 'xin chào');
+    expect(
+      lesson[1].pairs.entries
+          .map(
+            (e) => [lesson[1].pairLabel(e.key), lesson[1].pairLabel(e.value)],
+          )
+          .first,
+      ['hello', 'xin chào'],
+    );
     final start = bodyOf(transport.to('POST /v1/sessions').single);
     expect(start, {
       'courseId': 'vi_en',

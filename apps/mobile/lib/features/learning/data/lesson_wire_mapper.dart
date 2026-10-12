@@ -16,10 +16,6 @@ final class LessonWireMapper {
 
   final Map<String, Map<String, Object?>> _byId = {};
 
-  /// Pair bookkeeping: domain uses texts, wire uses ids.
-  final Map<String, Map<String, String>> _leftIdByText = {};
-  final Map<String, Map<String, String>> _rightIdByText = {};
-
   /// Ids of exercises replaced by their non-speech alternative.
   final Set<String> substitutedIds = {};
 
@@ -57,20 +53,18 @@ final class LessonWireMapper {
   void _register(Map<String, Object?> json) {
     final id = json['id']! as String;
     _byId[id] = json;
-    if (json['type'] == 'matchPairs') {
-      final lefts = <String, String>{};
-      final rights = <String, String>{};
-      for (final pair in _list(_map(json['content'])['pairs'])) {
-        final p = _map(pair);
-        final left = _map(p['left']);
-        final right = _map(p['right']);
-        lefts[left['text']! as String] = left['id']! as String;
-        rights[right['text']! as String] = right['id']! as String;
-      }
-      _leftIdByText[id] = lefts;
-      _rightIdByText[id] = rights;
-    }
   }
+
+  /// `imageAssetId` (`i.<unitId>.<wordId>`, EXERCISE_FORMATS §3.7) to the
+  /// bundled character art key, or `null` when the app has no art for it.
+  static String? artFor(String? imageAssetId) {
+    if (imageAssetId == null) return null;
+    final word = imageAssetId.split('.').last.toLowerCase();
+    return bundledArt.contains(word) ? word : null;
+  }
+
+  /// Picture keys `LearningArt.character` can render.
+  static const bundledArt = {'boy', 'girl', 'cat', 'woman', 'man', 'bear'};
 
   /// UI exercises in bundle order (speech replaced by alternatives).
   List<Exercise> toDomain() => [
@@ -94,23 +88,28 @@ final class LessonWireMapper {
         ExerciseChoice(
           id: _map(item)['id']! as String,
           text: _map(item)['text']! as String,
-          art: art ? _map(item)['imageAssetId'] as String? : null,
+          art: art ? artFor(_map(item)['imageAssetId'] as String?) : null,
         ),
     ];
 
     switch (type) {
       case 'choice' || 'imageChoice' || 'listenChoice':
         final correct = rule['correctChoiceId'] as String?;
+        final options = choices(content['choices'], art: type != 'choice');
+        // A picture item renders as a text choice unless every option has
+        // bundled art (the picture tile has no text-only state).
+        final pictures =
+            type == 'imageChoice' && options.every((o) => o.art != null);
         return Exercise(
           id: json['id']! as String,
           kind: switch (type) {
-            'imageChoice' => ExerciseKind.imageChoice,
+            'imageChoice' when pictures => ExerciseKind.imageChoice,
             'listenChoice' => ExerciseKind.listenChoice,
             _ => ExerciseKind.choice,
           },
           title: title,
           prompt: prompt,
-          choices: choices(content['choices'], art: type != 'choice'),
+          choices: options,
           correctIds: [?correct],
           correctText: _choiceText(content['choices'], correct),
           hint: hint,
@@ -149,11 +148,18 @@ final class LessonWireMapper {
           meaning: explanation,
         );
       case 'matchPairs':
+        // Keyed by wire ids (texts may repeat across sides); labels carry
+        // the text the tiles show.
         final pairs = <String, String>{};
+        final labels = <String, String>{};
         for (final pair in _list(content['pairs'])) {
           final p = _map(pair);
-          pairs[_map(p['left'])['text']! as String] =
-              _map(p['right'])['text']! as String;
+          final left = _map(p['left']), right = _map(p['right']);
+          final leftId = left['id']! as String,
+              rightId = right['id']! as String;
+          pairs[leftId] = rightId;
+          labels[leftId] = left['text']! as String;
+          labels[rightId] = right['text']! as String;
         }
         return Exercise(
           id: json['id']! as String,
@@ -161,6 +167,7 @@ final class LessonWireMapper {
           title: title,
           prompt: prompt,
           pairs: pairs,
+          pairLabels: labels,
           hint: hint,
           meaning: explanation,
         );
@@ -196,14 +203,12 @@ final class LessonWireMapper {
       case 'wordBank' || 'sentenceOrder':
         return wire.TokenAnswer(tokenIds: List.unmodifiable(answer.tokenIds));
       case 'matchPairs':
-        final lefts = _leftIdByText[exerciseId] ?? const {};
-        final rights = _rightIdByText[exerciseId] ?? const {};
         return wire.PairAnswer(
           matches: [
             for (final entry in answer.matchedPairs.entries)
               wire.PairAnswerMatchesItem(
-                leftId: lefts[entry.key] ?? entry.key,
-                rightId: rights[entry.value] ?? entry.value,
+                leftId: entry.key,
+                rightId: entry.value,
               ),
           ],
         );
