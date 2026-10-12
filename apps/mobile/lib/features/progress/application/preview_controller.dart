@@ -80,6 +80,13 @@ class PreviewController extends Notifier<PreviewState> {
     return true;
   }
 
+  /// Mock-only refill purchase, guarded by the current shared preview wallet.
+  bool spendRefillGems(int cost) {
+    if (cost <= 0 || _wallet < cost) return false;
+    state = state.copyWith(spentGems: state.spentGems + cost);
+    return true;
+  }
+
   void dismissQuestIntro() => state = state.copyWith(questIntroSeen: true);
   bool claimQuest(String id, {required bool eligible}) {
     if (!eligible ||

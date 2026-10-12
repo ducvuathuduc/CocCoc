@@ -23,6 +23,16 @@ class ExtendedController extends Notifier<ExtendedState> {
   @override
   ExtendedState build() => const ExtendedState();
 
+  void setEnergy(int balance) {
+    state = ExtendedState(
+      selectedPlan: state.selectedPlan,
+      plan: state.plan,
+      energy: balance.clamp(0, 25),
+      invited: state.invited,
+      cancelReason: state.cancelReason,
+    );
+  }
+
   void choosePlan(String plan) {
     if (!{
       'individual',
