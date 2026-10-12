@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CocEnglish</string>
+    <string name="streak_widget_label">Chuỗi ngày học</string>
+    <string name="streak_widget_description">Xem chuỗi ngày học và mục tiêu hôm nay</string>
+    <string name="streak_widget_flame">Ngọn lửa chuỗi ngày học</string>
+    <string name="streak_widget_default">Mở app để bắt đầu chuỗi!</string>
+    <string name="streak_widget_goal">%1$d/%2$d phút hôm nay</string>
+</resources>

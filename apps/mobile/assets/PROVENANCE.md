@@ -165,3 +165,7 @@ samples from `docs/design/qa/palette_from_refs.json`). No third-party image, cha
 screenshot pixels are used. `tools/content/lesson_art/render.py` renders the SVG sources
 (`content/vi_en/media/images/src/`) to 512×512 lossless WebP; the same bytes are the content
 assets published to `learning-assets`, and `lesson_image_catalog.g.dart` lists their SHA-256.
+
+## Launcher, notification and widget art (original)
+
+The launcher icon (Android adaptive + legacy mipmaps, iOS AppIcon set), the Android 12 splash icon, the notification small icon `ic_stat_coc`, the notification large icon `ic_notification_mascot` and the streak-widget flames were drawn for this repository (original toad mascot in `tool/brand/mascot.svg`, flames as Android vectors). Regenerate the PNGs with `python3 tool/brand/render.py` from `apps/mobile`. Colours come from the existing palette (`ReferenceColors.green` #5BCD05, ink #4D4B4E, surface #FFFDFE); no third-party art is used.

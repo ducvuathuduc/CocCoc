@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><color name="launch_background">#7BC900</color></resources>
+<resources>
+    <!-- Palette green (ReferenceColors.green) -->
+    <color name="launch_background">#5BCD05</color>
+    <color name="ic_launcher_background">#5BCD05</color>
+    <color name="coc_accent">#5BCD05</color>
+    <color name="coc_surface">#FFFDFE</color>
+    <color name="coc_ink">#4D4B4E</color>
+    <color name="coc_muted">#807E80</color>
+    <color name="coc_border">#E7E5E7</color>
+    <color name="coc_flame">#FF9600</color>
+    <color name="coc_flame_core">#FFC800</color>
+    <color name="coc_flame_off">#B0AEB0</color>
+</resources>
