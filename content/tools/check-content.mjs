@@ -5,6 +5,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import Ajv from 'ajv/dist/2020.js';
 import formats from 'ajv-formats';
 import { loadContentTools, root } from './lib.mjs';
@@ -65,6 +66,13 @@ for (const courseDir of fs
   }
 }
 assert.ok(summary.length > 0, 'no content found');
+// Next course version (vi_en v2, not yet published): source-table lint + grader round-trip +
+// OpenAPI + determinism against the committed build report (tools/content/lint-course.mjs).
+const lint = spawnSync(process.execPath, [path.join(root, 'tools/content/lint-course.mjs')], {
+  encoding: 'utf8',
+});
+assert.equal(lint.status, 0, `v2 content lint failed:\n${lint.stderr}${lint.stdout}`);
+summary.push({ next: JSON.parse(lint.stdout.trim().split('\n').pop()) });
 console.log(
   JSON.stringify({
     status: 'PASS',
