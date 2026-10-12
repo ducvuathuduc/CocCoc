@@ -306,7 +306,7 @@
         "internal HMAC signing/verification with 300s skew window",
         "/ready fail-closed semantics"
       ],
-      "requirementCoverage": "Local scaffold only. Live Appwrite Account.get/TablesDB transaction/conflict/permission probes NOT run (gated test skipped); no durable adapter; no deploy.",
+      "requirementCoverage": "Local scaffold plus live probes on the admitted test project: Account.get auth port, TablesDB transaction commit/rollback/partial-commit/conflict and row/table/bucket permission probes PASS, node-22 runtime offered. Not covered: durable Appwrite adapter, Function deployment/execution, scheduler provenance.",
       "interfaces": [
         "AuthPort",
         "createAppwriteAuthPort",
@@ -326,7 +326,22 @@
         "pnpm api:lint PASS",
         "pnpm audit:check PASS"
       ],
-      "remaining": "Cloud half of P1-FOUND-002: admitted-account Node22 runtime, live Account.get, TablesDB transaction/conflict/permission probes, durable Appwrite adapter replacing disabled adapters, scheduler provenance negative test. COC_SERVICE_KEYS and SERVICE_NOT_CONFIGURED are now documented in docs/api/EVENTS_ERRORS.md (DATA-GAP-20261012)."
+      "remaining": "Durable Appwrite adapter replacing disabled adapters; per-service Function deployment and execution on node-22 (not deployed yet by instruction); scheduler provenance / HMAC spoof negative tests against deployed Functions. COC_SERVICE_KEYS and SERVICE_NOT_CONFIGURED are documented in docs/api/EVENTS_ERRORS.md (DATA-GAP-20261012).",
+      "cloudSlice": {
+        "branch": "pb/cloud",
+        "worktree": "wt/b-cloud (from pb/data cf3ed7c)",
+        "status": "PROBES_PASS",
+        "scope": "Admitted test project coccoc-test (6acc656d0025cc57bd81, Appwrite Cloud sgp, server 2.4.0, Education plan), node-appwrite 29.2.0, branch pb/cloud, 2026-10-12; evidence in docs/devops/APPWRITE_SETUP.md#live-evidence-admitted-test-project-2026-10-12; no keys/JWTs recorded",
+        "evidence": [
+          "auth.account-get-live-test PASS: COC_LIVE_APPWRITE_PROBE=1 node --test services/shared/test/appwrite-live.test.mjs 1 pass 0 skipped, with a JWT minted from an Account API email/password session (project header only); valid JWT -> Account.get user id, tampered JWT rejected",
+          "perm.revoked-session-jwt-rejected PASS: JWT of a deleted session -> 401",
+          "tx.staged-invisible-then-commit PASS; tx.rollback-discards PASS",
+          "tx.partial-commit-prevented-on-unique-violation PASS: unique-index violation in a transaction -> commit 409 transaction_conflict, sibling staged row not committed",
+          "tx.concurrent-update-conflict PASS: second transaction on the same row -> 409 transaction_conflict; tx.out-of-band-write-conflict PASS: 409",
+          "functions.node22-runtime PASS: /functions/runtimes lists node-22 (also node-16.0/18.0/24/25/26); 0 functions deployed (deploy deliberately not done)",
+          "command: APPWRITE_PROJECT_ENV=test ALLOW_LIVE_PROBE=reviewed-test-project pnpm appwrite:probe -> 12/12 probes pass, 2 synthetic users + 6 rows deleted"
+        ]
+      }
     },
     {
       "taskId": "P1-OPS-001",
@@ -373,7 +388,26 @@
         "pnpm contracts:check PASS",
         "pnpm backend:verify PASS"
       ],
-      "remaining": "Concrete external prerequisites: an admitted Appwrite test project with private APPWRITE_* configuration for --apply, availability wait and permission/scope/scheduler-spoof probes; quota/term-expiry record by the account owner; a GitHub Actions run for a real CI receipt; a macOS runner for the simulator build. Curriculum seed belongs with P4-LEARN-001."
+      "remaining": "Cloud schema apply/drift and table/bucket permission probes DONE on the admitted test project (cloudSlice). Still open: scoped per-service API keys and scope probes, scheduler-spoof probe (needs deployed Functions), quota/term-expiry record by the account owner, a GitHub Actions run for a real CI receipt, a macOS runner for the simulator build. Curriculum seed belongs with P4-LEARN-001.",
+      "cloudSlice": {
+        "branch": "pb/cloud",
+        "worktree": "wt/b-cloud (from pb/data cf3ed7c)",
+        "status": "DONE",
+        "scope": "Admitted test project coccoc-test (6acc656d0025cc57bd81, Appwrite Cloud sgp, server 2.4.0, Education plan), node-appwrite 29.2.0, branch pb/cloud, 2026-10-12; evidence in docs/devops/APPWRITE_SETUP.md#live-evidence-admitted-test-project-2026-10-12; no keys/JWTs recorded",
+        "evidence": [
+          "pnpm schema:apply (1st) APPLIED declarationSha256=16394f13bff2a9d9f37d0e24224a0c956997b70c519636ec55644be6604970b0: database cocenglish + 59 tables, 630 columns, 108 indexes (60 unique), bucket learning-assets; all columns/indexes available, none failed",
+          "pnpm schema:apply (2nd) NO_CHANGES: 0 created (idempotent)",
+          "pnpm schema:check-live PASS: 0 missing, 0 drift, 0 extra, 0 pending (re-run after probes: PASS)",
+          "No declared size/limit change needed: live types varchar/text/mediumtext/string+enum/integer/boolean/datetime match the accepted families; row width and index length within Cloud limits",
+          "pnpm appwrite:probe: client JWT row creates denied (401) on p_blocks/p_notifications/p_zone_history; listRows without grant -> 0 rows; p_notifications owner-only read, other user 404, owner update/delete 401; learning-assets client upload 401; synthetic users and rows deleted"
+        ],
+        "fixes": [
+          "schema.mjs apply rewritten as snapshot+diff: waits for column/index availability instead of throwing, reports created counts and NO_CHANGES, aborts on drift before any change, reports extra live resources",
+          "new read-only --check-live drift mode (pnpm schema:check-live) and pure diffLive/columnDrift in schema-lib.mjs with offline tests",
+          "dry-run output no longer truncated when piped (exitCode instead of process.exit)",
+          "pnpm schema:apply / schema:check-live / appwrite:probe scripts"
+        ]
+      }
     },
     {
       "taskId": "P1-CONTRACT-001",

@@ -19,6 +19,9 @@
     "audit:check": "node tools/audit/validate.mjs",
     "schema:plan": "node appwrite/scripts/schema.mjs",
     "schema:test": "node --test appwrite/test/schema.test.mjs",
+    "schema:apply": "node appwrite/scripts/schema.mjs --apply",
+    "schema:check-live": "node appwrite/scripts/schema.mjs --check-live",
+    "appwrite:probe": "node appwrite/scripts/live-probe.mjs",
     "seed:check": "node appwrite/scripts/seed.mjs",
     "schema:declare": "node appwrite/scripts/schema-declare.mjs"
   },

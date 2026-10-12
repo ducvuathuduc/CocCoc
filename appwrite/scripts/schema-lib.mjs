@@ -240,3 +240,86 @@ export function buildPlan(declaration) {
     buckets: declaration.buckets.map((b) => ({ createBucket: b.id, fileSecurity: b.fileSecurity, bucketPermissions: b.permissions })),
   };
 }
+
+// Column type names Appwrite reports differ by server version (1.8+ reports varchar/text/mediumtext;
+// older servers report string, enums report type string + format enum). Accept the documented family only.
+export const ACCEPTED_LIVE_TYPES = {
+  createVarcharColumn: ['varchar', 'string'],
+  createTextColumn: ['text', 'string'],
+  createMediumtextColumn: ['mediumtext', 'string'],
+  createEnumColumn: ['enum', 'string'],
+  createIntegerColumn: ['integer'],
+  createBooleanColumn: ['boolean'],
+  createDatetimeColumn: ['datetime'],
+};
+
+/** Returns a drift reason for a live column against its declaration, or '' when it matches. */
+export function columnDrift(column, live) {
+  const target = storageFor(column);
+  const reasons = [];
+  if (!ACCEPTED_LIVE_TYPES[target.method].includes(live.type)) reasons.push(`type ${live.type} not in ${ACCEPTED_LIVE_TYPES[target.method].join('/')}`);
+  if (column.type === 'enum' && live.format !== 'enum' && live.type !== 'enum') reasons.push('not an enum column');
+  if (column.type === 'string' && live.format === 'enum') reasons.push('unexpected enum format');
+  if (Boolean(live.required) !== (column.required !== false)) reasons.push(`required ${live.required}`);
+  if (live.array) reasons.push('array column');
+  if (target.size && Number(live.size) !== target.size) reasons.push(`size ${live.size} != ${target.size}`);
+  if (column.type === 'enum' && JSON.stringify(live.elements) !== JSON.stringify(column.elements)) reasons.push(`elements ${JSON.stringify(live.elements)}`);
+  if (column.type === 'integer') {
+    if (column.min !== undefined && Number(live.min) !== column.min) reasons.push(`min ${live.min} != ${column.min}`);
+    if (column.max !== undefined && Number(live.max) !== column.max) reasons.push(`max ${live.max} != ${column.max}`);
+  }
+  return reasons.join('; ');
+}
+
+/**
+ * Compares a live snapshot with the declaration. Pure: the snapshot shape is
+ * { database: boolean, tables: { [id]: { permissions, rowSecurity, columns: [...], indexes: [...] } }, buckets: { [id]: { permissions, fileSecurity } } }.
+ * missing = additive work apply may do; drift = existing resources that differ (review, never dropped);
+ * extra = live resources absent from the declaration (reported, never dropped); pending = not yet available.
+ */
+export function diffLive(declaration, live) {
+  const out = { missing: [], drift: [], extra: [], pending: [] };
+  if (!live.database) out.missing.push({ kind: 'database', id: declaration.databaseId });
+  const declaredIds = new Set(declaration.tables.map((t) => t.id));
+  for (const id of Object.keys(live.tables ?? {})) if (!declaredIds.has(id)) out.extra.push({ kind: 'table', id });
+  for (const table of declaration.tables) {
+    const lt = live.tables?.[table.id];
+    if (!lt) {
+      out.missing.push({ kind: 'table', id: table.id });
+      for (const column of table.columns) out.missing.push({ kind: 'column', table: table.id, key: column.key });
+      for (const index of table.indexes) out.missing.push({ kind: 'index', table: table.id, key: index.key });
+      continue;
+    }
+    if (JSON.stringify([...(lt.permissions ?? [])].sort()) !== JSON.stringify([...table.permissions].sort())) out.drift.push({ kind: 'table', id: table.id, reason: `permissions ${JSON.stringify(lt.permissions)}` });
+    if (lt.rowSecurity !== table.rowSecurity) out.drift.push({ kind: 'table', id: table.id, reason: `rowSecurity ${lt.rowSecurity}` });
+    const liveCols = new Map((lt.columns ?? []).map((c) => [c.key, c]));
+    const declaredCols = new Set(table.columns.map((c) => c.key));
+    for (const column of table.columns) {
+      const lc = liveCols.get(column.key);
+      if (!lc) out.missing.push({ kind: 'column', table: table.id, key: column.key });
+      else {
+        const reason = columnDrift(column, lc);
+        if (reason) out.drift.push({ kind: 'column', table: table.id, key: column.key, reason });
+        else if (lc.status !== 'available') out.pending.push({ kind: 'column', table: table.id, key: column.key, status: lc.status, error: lc.error || undefined });
+      }
+    }
+    for (const key of liveCols.keys()) if (!declaredCols.has(key)) out.extra.push({ kind: 'column', table: table.id, key });
+    const liveIdx = new Map((lt.indexes ?? []).map((i) => [i.key, i]));
+    const declaredIdx = new Set(table.indexes.map((i) => i.key));
+    for (const index of table.indexes) {
+      const li = liveIdx.get(index.key);
+      if (!li) out.missing.push({ kind: 'index', table: table.id, key: index.key });
+      else if (li.type !== index.type || JSON.stringify(li.columns) !== JSON.stringify(index.columns))
+        out.drift.push({ kind: 'index', table: table.id, key: index.key, reason: `${li.type}(${(li.columns ?? []).join(',')})` });
+      else if (li.status !== 'available') out.pending.push({ kind: 'index', table: table.id, key: index.key, status: li.status, error: li.error || undefined });
+    }
+    for (const key of liveIdx.keys()) if (!declaredIdx.has(key)) out.extra.push({ kind: 'index', table: table.id, key });
+  }
+  for (const bucket of declaration.buckets) {
+    const lb = live.buckets?.[bucket.id];
+    if (!lb) out.missing.push({ kind: 'bucket', id: bucket.id });
+    else if (lb.fileSecurity !== bucket.fileSecurity || JSON.stringify(lb.permissions ?? []) !== JSON.stringify(bucket.permissions))
+      out.drift.push({ kind: 'bucket', id: bucket.id, reason: `fileSecurity ${lb.fileSecurity} permissions ${JSON.stringify(lb.permissions)}` });
+  }
+  return out;
+}

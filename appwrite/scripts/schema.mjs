@@ -4,8 +4,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Client, Storage, TablesDB, TablesDBIndexType } from 'node-appwrite';
-import { buildPlan, deriveDeclaration, storageFor, validateDeclaration } from './schema-lib.mjs';
+import { Client, Query, Storage, TablesDB, TablesDBIndexType } from 'node-appwrite';
+import { buildPlan, deriveDeclaration, diffLive, storageFor, validateDeclaration } from './schema-lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
@@ -18,16 +18,18 @@ if (problems.length) {
 }
 const plan = buildPlan(declaration);
 // Resolve every SDK method the apply path would call against the pinned node-appwrite API (offline introspection).
-const requiredMethods = new Set(['get', 'create', 'getTable', 'createTable', 'getColumn', 'listColumns', 'listIndexes', 'createIndex']);
+const requiredMethods = new Set(['get', 'create', 'listTables', 'createTable', 'listColumns', 'listIndexes', 'createIndex']);
 for (const table of plan.tables) for (const column of table.columns) requiredMethods.add(column.method);
 const missing = [...requiredMethods].filter((name) => typeof TablesDB.prototype[name] !== 'function');
-for (const name of ['getBucket', 'createBucket']) if (typeof Storage.prototype[name] !== 'function') missing.push(`Storage.${name}`);
+for (const name of ['getBucket', 'listBuckets', 'createBucket']) if (typeof Storage.prototype[name] !== 'function') missing.push(`Storage.${name}`);
 if (missing.length || !TablesDBIndexType.Unique || !TablesDBIndexType.Key) {
   console.error(JSON.stringify({ status: 'FAIL', mode: 'SDK_RESOLUTION', missing }));
   process.exit(1);
 }
 
-if (!process.argv.includes('--apply')) {
+const apply = process.argv.includes('--apply');
+const checkLive = process.argv.includes('--check-live');
+if (!apply && !checkLive) {
   console.log(
     JSON.stringify(
       {
@@ -42,74 +44,148 @@ if (!process.argv.includes('--apply')) {
       2,
     ),
   );
-  process.exit(0);
+  process.exitCode = 0;
+} else {
+  await live();
 }
 
-if (process.env.APPWRITE_PROJECT_ENV !== 'test' || process.env.ALLOW_SCHEMA_APPLY !== 'reviewed-test-project') throw new Error('Apply only to an explicitly admitted test project.');
-const { APPWRITE_ENDPOINT: endpoint, APPWRITE_PROJECT_ID: project, APPWRITE_API_KEY: key } = process.env;
-if (!endpoint?.startsWith('https://') || !project || !key) throw new Error('Missing private Appwrite test configuration.');
-const client = new Client().setEndpoint(endpoint).setProject(project).setKey(key);
-const tables = new TablesDB(client);
-const storage = new Storage(client);
-const databaseId = declaration.databaseId;
-async function createIfAbsent(get, create) {
-  try {
-    return await get();
-  } catch (error) {
-    if (error.code !== 404) throw error;
-    return create();
-  }
-}
-// Reported column types differ between Appwrite versions; accept the documented family only.
-const acceptedTypes = { createVarcharColumn: ['varchar', 'string'], createTextColumn: ['text', 'string'], createMediumtextColumn: ['mediumtext', 'string'], createEnumColumn: ['string', 'enum'], createIntegerColumn: ['integer'], createBooleanColumn: ['boolean'], createDatetimeColumn: ['datetime'] };
-await createIfAbsent(() => tables.get({ databaseId }), () => tables.create({ databaseId, name: 'CocEnglish', enabled: true }));
-for (const table of declaration.tables) {
-  const args = { databaseId, tableId: table.id };
-  await createIfAbsent(() => tables.getTable(args), () => tables.createTable({ ...args, name: table.id, permissions: table.permissions, rowSecurity: table.rowSecurity }));
-  for (const column of table.columns) {
-    const target = storageFor(column);
-    const required = column.required !== false;
-    let existing;
+
+// Live modes. --check-live is read-only (drift check); --apply is additive create-if-absent and
+// never drops or modifies existing resources: drift aborts for human review.
+async function live() {
+  if (process.env.APPWRITE_PROJECT_ENV !== 'test' || (apply && process.env.ALLOW_SCHEMA_APPLY !== 'reviewed-test-project')) throw new Error('Apply only to an explicitly admitted test project.');
+  const { APPWRITE_ENDPOINT: endpoint, APPWRITE_PROJECT_ID: project, APPWRITE_API_KEY: key } = process.env;
+  if (!endpoint?.startsWith('https://') || !project || !key) throw new Error('Missing private Appwrite test configuration.');
+  const client = new Client().setEndpoint(endpoint).setProject(project).setKey(key);
+  const tables = new TablesDB(client);
+  const storage = new Storage(client);
+  const databaseId = declaration.databaseId;
+  const log = (event) => console.error(JSON.stringify({ t: new Date().toISOString(), ...event }));
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const page = async (fetch, field) => {
+    const items = [];
+    for (let offset = 0; ; offset += 100) {
+      const res = await fetch([Query.limit(100), Query.offset(offset)]);
+      items.push(...res[field]);
+      if (res[field].length < 100) return items;
+    }
+  };
+  async function snapshot() {
+    const snap = { database: false, tables: {}, buckets: {} };
     try {
-      existing = await tables.getColumn({ ...args, key: column.key });
+      await tables.get({ databaseId });
+      snap.database = true;
     } catch (error) {
       if (error.code !== 404) throw error;
     }
-    if (existing) {
-      const drift =
-        !acceptedTypes[target.method].includes(existing.type) ||
-        existing.required !== required ||
-        (target.size && existing.size !== target.size) ||
-        (column.type === 'enum' && JSON.stringify(existing.elements) !== JSON.stringify(column.elements)) ||
-        (column.type === 'integer' && ((column.min !== undefined && Number(existing.min) !== column.min) || (column.max !== undefined && Number(existing.max) !== column.max)));
-      if (drift) throw new Error(`Schema drift requires review: ${table.id}.${column.key}`);
-      continue;
+    if (snap.database) {
+      const list = await page((queries) => tables.listTables({ databaseId, queries }), 'tables');
+      await pool(list, 6, async (t) => {
+        const args = { databaseId, tableId: t.$id };
+        const [columns, indexes] = await Promise.all([page((queries) => tables.listColumns({ ...args, queries }), 'columns'), page((queries) => tables.listIndexes({ ...args, queries }), 'indexes')]);
+        snap.tables[t.$id] = { permissions: t.$permissions, rowSecurity: t.rowSecurity, columns, indexes };
+      });
     }
-    const common = { ...args, key: column.key, required };
-    const create = {
-      createVarcharColumn: () => tables.createVarcharColumn({ ...common, size: target.size }),
-      createTextColumn: () => tables.createTextColumn(common),
-      createMediumtextColumn: () => tables.createMediumtextColumn(common),
-      createEnumColumn: () => tables.createEnumColumn({ ...common, elements: column.elements }),
-      createIntegerColumn: () => tables.createIntegerColumn({ ...common, ...(column.min !== undefined ? { min: column.min } : {}), ...(column.max !== undefined ? { max: column.max } : {}) }),
-      createBooleanColumn: () => tables.createBooleanColumn(common),
-      createDatetimeColumn: () => tables.createDatetimeColumn(common),
-    }[target.method];
-    await create();
-  }
-  const columns = await tables.listColumns(args);
-  if (columns.columns.some((column) => column.status !== 'available')) throw new Error(`${table.id}: columns pending; retry after availability; matching columns resume without modification.`);
-  const existingIndexes = await tables.listIndexes(args);
-  for (const index of table.indexes) {
-    const existing = existingIndexes.indexes.find((value) => value.key === index.key);
-    if (existing) {
-      if (existing.type !== index.type || JSON.stringify(existing.columns) !== JSON.stringify(index.columns)) throw new Error(`Index drift requires review: ${table.id}.${index.key}`);
-      continue;
+    for (const bucket of declaration.buckets) {
+      try {
+        const b = await storage.getBucket({ bucketId: bucket.id });
+        snap.buckets[bucket.id] = { permissions: b.$permissions, fileSecurity: b.fileSecurity };
+      } catch (error) {
+        if (error.code !== 404) throw error;
+      }
     }
-    await tables.createIndex({ ...args, key: index.key, type: index.type === 'unique' ? TablesDBIndexType.Unique : TablesDBIndexType.Key, columns: index.columns });
+    return snap;
   }
+  async function pool(items, size, fn) {
+    const queue = [...items];
+    await Promise.all(Array.from({ length: size }, async () => { while (queue.length) await fn(queue.shift()); }));
+  }
+  const retrying = async (fn, label) => {
+    for (let attempt = 0; ; attempt++) {
+      try {
+        return await fn();
+      } catch (error) {
+        if (error.code === 409) return log({ already: label });
+        if ((error.code === 429 || error.code >= 500) && attempt < 5) { await sleep(2000 * (attempt + 1)); continue; }
+        throw new Error(`${label}: ${error.code} ${error.type ?? ''} ${error.message}`);
+      }
+    }
+  };
+  const report = (diff) => ({ missing: diff.missing.length, drift: diff.drift, extra: diff.extra, pending: diff.pending.length });
+  let diff = diffLive(declaration, await snapshot());
+  if (checkLive && !apply) {
+    const ok = !diff.missing.length && !diff.drift.length && !diff.extra.length && !diff.pending.length;
+    console.log(JSON.stringify({ status: ok ? 'PASS' : 'DRIFT', mode: 'LIVE_DRIFT_CHECK', declarationSha256: plan.declarationSha256, project, ...report(diff), missingItems: diff.missing.slice(0, 50), pendingItems: diff.pending.slice(0, 50) }, null, 2));
+    process.exitCode = ok ? 0 : 1;
+    return;
+  }
+  if (diff.drift.length) throw new Error(`Schema drift requires review (nothing was changed): ${JSON.stringify(diff.drift)}`);
+  const created = { database: 0, tables: 0, columns: 0, indexes: 0, buckets: 0 };
+  const byTable = new Map(declaration.tables.map((t) => [t.id, t]));
+  if (diff.missing.some((m) => m.kind === 'database')) {
+    await retrying(() => tables.create({ databaseId, name: 'CocEnglish', enabled: true }), 'database');
+    created.database++;
+  }
+  const missingTables = diff.missing.filter((m) => m.kind === 'table');
+  await pool(missingTables, 4, async (m) => {
+    const table = byTable.get(m.id);
+    await retrying(() => tables.createTable({ databaseId, tableId: table.id, name: table.id, permissions: table.permissions, rowSecurity: table.rowSecurity, enabled: true }), `table ${table.id}`);
+    created.tables++;
+  });
+  const missingColumns = diff.missing.filter((m) => m.kind === 'column');
+  const columnsByTable = Object.groupBy(missingColumns, (m) => m.table);
+  await pool(Object.entries(columnsByTable), 6, async ([tableId, list]) => {
+    const table = byTable.get(tableId);
+    for (const m of list) {
+      const column = table.columns.find((c) => c.key === m.key);
+      const target = storageFor(column);
+      const common = { databaseId, tableId, key: column.key, required: column.required !== false };
+      const call = {
+        createVarcharColumn: () => tables.createVarcharColumn({ ...common, size: target.size }),
+        createTextColumn: () => tables.createTextColumn(common),
+        createMediumtextColumn: () => tables.createMediumtextColumn(common),
+        createEnumColumn: () => tables.createEnumColumn({ ...common, elements: column.elements }),
+        createIntegerColumn: () => tables.createIntegerColumn({ ...common, ...(column.min !== undefined ? { min: column.min } : {}), ...(column.max !== undefined ? { max: column.max } : {}) }),
+        createBooleanColumn: () => tables.createBooleanColumn(common),
+        createDatetimeColumn: () => tables.createDatetimeColumn(common),
+      }[target.method];
+      await retrying(call, `column ${tableId}.${column.key}`);
+      created.columns++;
+    }
+  });
+  if (created.columns) log({ createdColumns: created.columns });
+  // Indexes need available columns: wait (bounded) for columns, then create missing indexes.
+  const waitAvailable = async (kind) => {
+    for (let i = 0; i < 90; i++) {
+      diff = diffLive(declaration, await snapshot());
+      const failed = diff.pending.filter((p) => p.kind === kind && ['failed', 'stuck'].includes(p.status));
+      if (failed.length) throw new Error(`${kind} failed: ${JSON.stringify(failed)}`);
+      const waiting = diff.pending.filter((p) => p.kind === kind);
+      if (!waiting.length) return;
+      log({ waiting: kind, count: waiting.length });
+      await sleep(4000);
+    }
+    throw new Error(`${kind}s still pending; rerun apply to resume (idempotent).`);
+  };
+  if (created.columns || diff.pending.some((p) => p.kind === 'column')) await waitAvailable('column');
+  else diff = diffLive(declaration, await snapshot());
+  const missingIndexes = diff.missing.filter((m) => m.kind === 'index');
+  await pool(Object.entries(Object.groupBy(missingIndexes, (m) => m.table)), 4, async ([tableId, list]) => {
+    for (const m of list) {
+      const index = byTable.get(tableId).indexes.find((i) => i.key === m.key);
+      await retrying(() => tables.createIndex({ databaseId, tableId, key: index.key, type: index.type === 'unique' ? TablesDBIndexType.Unique : TablesDBIndexType.Key, columns: index.columns }), `index ${tableId}.${index.key}`);
+      created.indexes++;
+    }
+  });
+  if (created.indexes || diff.pending.some((p) => p.kind === 'index')) await waitAvailable('index');
+  for (const bucket of declaration.buckets) {
+    if (!diff.missing.some((m) => m.kind === 'bucket' && m.id === bucket.id)) continue;
+    await retrying(() => storage.createBucket({ bucketId: bucket.id, name: bucket.id, permissions: bucket.permissions, fileSecurity: bucket.fileSecurity, enabled: true }), `bucket ${bucket.id}`);
+    created.buckets++;
+  }
+  const final = diffLive(declaration, await snapshot());
+  const changes = Object.values(created).reduce((a, b) => a + b, 0);
+  const ok = !final.missing.length && !final.drift.length && !final.pending.length;
+  console.log(JSON.stringify({ status: ok ? (changes ? 'APPLIED' : 'NO_CHANGES') : 'INCOMPLETE', declarationSha256: plan.declarationSha256, project, created, changes, final: report(final), scope: 'admitted test project only; additive; drift is never dropped' }, null, 2));
+  process.exitCode = ok ? 0 : 1;
 }
-for (const bucket of declaration.buckets) {
-  await createIfAbsent(() => storage.getBucket({ bucketId: bucket.id }), () => storage.createBucket({ bucketId: bucket.id, name: bucket.id, permissions: bucket.permissions, fileSecurity: bucket.fileSecurity }));
-}
-console.log(JSON.stringify({ status: 'APPLIED', declarationSha256: plan.declarationSha256, tables: declaration.tables.map((table) => table.id), buckets: declaration.buckets.map((b) => b.id), scope: 'admitted test project; await index availability and run permission probes next' }));

@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CANONICAL_TABLE_COUNT, PREFIXES, VARCHAR_MAX, buildPlan, deriveDeclaration, parseColumnToken, parseTableRows, storageFor, validateDeclaration } from '../scripts/schema-lib.mjs';
+import { CANONICAL_TABLE_COUNT, PREFIXES, VARCHAR_MAX, buildPlan, columnDrift, deriveDeclaration, diffLive, parseColumnToken, parseTableRows, storageFor, validateDeclaration } from '../scripts/schema-lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
@@ -14,7 +14,7 @@ const declaration = () => JSON.parse(read('appwrite/schema/foundation.json'));
 const derived = deriveDeclaration(dataModel, permissions);
 const table = (decl, id) => decl.tables.find((t) => t.id === id);
 const column = (decl, id, key) => table(decl, id).columns.find((c) => c.key === key);
-const cleanEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('APPWRITE_') && key !== 'ALLOW_SCHEMA_APPLY'));
+const cleanEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('APPWRITE_') && key !== 'ALLOW_SCHEMA_APPLY' && key !== 'ALLOW_LIVE_PROBE'));
 const runScript = (args, env = {}) => spawnSync(process.execPath, ['appwrite/scripts/schema.mjs', ...args], { cwd: root, env: { ...cleanEnv, ...env }, encoding: 'utf8' });
 
 test('committed declaration matches every canonical table, column, index and permission in docs/data', () => {
@@ -135,5 +135,100 @@ test('apply path stays guarded before any client is created', () => {
     const result = runScript(['--apply'], env);
     assert.notEqual(result.status, 0, JSON.stringify(env));
     assert.match(result.stderr, expected);
+  }
+});
+
+// Live snapshot exactly as Appwrite Cloud 1.8 (TablesDB, sgp region) reported it for the admitted test project:
+// varchar columns report type "varchar" with size, text/mediumtext report their own type, enums report
+// type "string" + format "enum", indexes report key/type/columns/status.
+function liveFrom(decl, mutate = () => {}) {
+  const live = { database: true, tables: {}, buckets: {} };
+  for (const t of decl.tables) {
+    live.tables[t.id] = {
+      permissions: [],
+      rowSecurity: true,
+      columns: t.columns.map((c) => {
+        const target = storageFor(c);
+        const type = { createVarcharColumn: 'varchar', createTextColumn: 'text', createMediumtextColumn: 'mediumtext', createEnumColumn: 'string', createIntegerColumn: 'integer', createBooleanColumn: 'boolean', createDatetimeColumn: 'datetime' }[target.method];
+        return {
+          key: c.key,
+          type,
+          status: 'available',
+          required: c.required !== false,
+          array: false,
+          ...(target.size ? { size: target.size } : {}),
+          ...(c.type === 'enum' ? { format: 'enum', elements: c.elements } : {}),
+          ...(c.type === 'integer' ? { min: c.min ?? -9223372036854775808, max: c.max ?? 9223372036854775807 } : {}),
+        };
+      }),
+      indexes: t.indexes.map((i) => ({ key: i.key, type: i.type, columns: i.columns, status: 'available', lengths: i.columns.map(() => 0) })),
+    };
+  }
+  for (const b of decl.buckets) live.buckets[b.id] = { permissions: [], fileSecurity: true };
+  mutate(live);
+  return live;
+}
+
+test('live diff: a fully applied project reports no changes (idempotent apply)', () => {
+  const diff = diffLive(declaration(), liveFrom(declaration()));
+  assert.deepEqual(diff, { missing: [], drift: [], extra: [], pending: [] });
+});
+
+test('live diff: empty project plans every resource as additive work', () => {
+  const decl = declaration();
+  const diff = diffLive(decl, { database: false, tables: {}, buckets: {} });
+  const plan = buildPlan(decl).totals;
+  assert.equal(diff.missing.length, 1 + plan.tables + plan.columns + plan.indexes + plan.buckets);
+  assert.deepEqual(diff.drift, []);
+});
+
+test('live diff: drift and extras are reported, never treated as additive', () => {
+  const decl = declaration();
+  const cases = [
+    ['varchar size', (l) => (l.tables.p_profiles.columns.find((c) => c.key === 'nickname').size = 64), 'drift', /size/],
+    ['required flipped', (l) => (l.tables.a_jobs.columns.find((c) => c.key === 'resultJson').required = true), 'drift', /required/],
+    ['enum elements', (l) => (l.tables.a_jobs.columns.find((c) => c.key === 'dispatchState').elements = ['NOT_SENT']), 'drift', /elements/],
+    ['enum lost format', (l) => delete l.tables.a_jobs.columns.find((c) => c.key === 'dispatchState').format, 'drift', /not an enum/],
+    ['integer bound', (l) => (l.tables.p_profiles.columns.find((c) => c.key === 'dailyGoal').max = 50), 'drift', /max/],
+    ['wrong family', (l) => (l.tables.l_sessions.columns.find((c) => c.key === 'bundleSnapshotJson').type = 'varchar'), 'drift', /type varchar/],
+    ['table grant', (l) => l.tables.p_rewards.permissions.push('read("any")'), 'drift', /permissions/],
+    ['row security off', (l) => (l.tables.l_answers.rowSecurity = false), 'drift', /rowSecurity/],
+    ['index columns', (l) => (l.tables.l_outbox.indexes[0].columns = ['status']), 'drift', /\(status\)/],
+    ['bucket opened', (l) => l.buckets['learning-assets'].permissions.push('read("any")'), 'drift', /fileSecurity/],
+    ['extra table', (l) => (l.tables.l_cache = { permissions: [], rowSecurity: true, columns: [], indexes: [] }), 'extra', /l_cache/],
+    ['extra column', (l) => l.tables.l_courses.columns.push({ key: 'slug', type: 'varchar', size: 36, status: 'available', required: true }), 'extra', /slug/],
+    ['missing index', (l) => l.tables.l_inbox.indexes.pop(), 'missing', /index/],
+    ['pending column', (l) => (l.tables.l_inbox.columns[0].status = 'processing'), 'pending', /processing/],
+  ];
+  for (const [name, mutate, bucket, expected] of cases) {
+    const diff = diffLive(decl, liveFrom(decl, mutate));
+    assert.ok(diff[bucket].some((item) => expected.test(JSON.stringify(item))), `${name}: ${JSON.stringify(diff)}`);
+  }
+});
+
+test('columnDrift accepts the older generic "string" family but rejects cross-family types', () => {
+  assert.equal(columnDrift({ key: 'k', type: 'string', size: 36 }, { type: 'string', size: 36, required: true }), '');
+  assert.equal(columnDrift({ key: 'k', type: 'string', size: 8192 }, { type: 'text', required: true }), '');
+  assert.match(columnDrift({ key: 'k', type: 'string', size: 36 }, { type: 'integer', required: true }), /type integer/);
+  assert.match(columnDrift({ key: 'k', type: 'string', size: 36 }, { type: 'string', format: 'enum', size: 36, required: true }), /enum/);
+});
+
+test('live drift check is guarded like apply (test project + private config required)', () => {
+  for (const [env, expected] of [
+    [{}, /explicitly admitted test project/],
+    [{ APPWRITE_PROJECT_ENV: 'production' }, /explicitly admitted test project/],
+    [{ APPWRITE_PROJECT_ENV: 'test' }, /Missing private Appwrite test configuration/],
+  ]) {
+    const result = runScript(['--check-live'], env);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, expected);
+  }
+});
+
+test('live probes refuse to run without the explicit test-project admission', () => {
+  for (const env of [{}, { APPWRITE_PROJECT_ENV: 'test' }, { APPWRITE_PROJECT_ENV: 'production', ALLOW_LIVE_PROBE: 'reviewed-test-project' }]) {
+    const result = spawnSync(process.execPath, ['appwrite/scripts/live-probe.mjs'], { cwd: root, env: { ...cleanEnv, ...env }, encoding: 'utf8' });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /explicitly admitted test project/);
   }
 });
