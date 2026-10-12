@@ -165,3 +165,18 @@ samples from `docs/design/qa/palette_from_refs.json`). No third-party image, cha
 screenshot pixels are used. `tools/content/lesson_art/render.py` renders the SVG sources
 (`content/vi_en/media/images/src/`) to 512×512 lossless WebP; the same bytes are the content
 assets published to `learning-assets`, and `lesson_image_catalog.g.dart` lists their SHA-256.
+
+### Gap hearts / house ad (2026-10-12)
+
+`reference_art/gap-heart-earned.png` and `reference_art/gap-house-ad.png` are
+byte-identical copies of the user-supplied archived captures
+[`earn_heart_09`](../../../docs/design/refs/gap/earn_heart_09_2cdcb7104a64450c8216debeb5274e07.png)
+and [`earn_heart_06`](../../../docs/design/refs/gap/earn_heart_06_fad12a43b27d4962841ed25aa2eabeac.png).
+Only the heart and stage illustration regions are painted by ReferenceArt;
+source text, reward counts, CTA and OS chrome are excluded. All live copy and
+counts come through feature repositories/providers. No artwork was generated.
+
+`reference_art/gap-house-ad-opening.png` also preserves the supplied
+[`earn_heart_05`](../../../docs/design/refs/gap/earn_heart_05_ad9c329958244b1b9c0a9a7ba09bc098.png)
+opening frame. The final creative clips the entire source CTA and OS indicator
+before painting; the app renders its own actionable button from repository data.

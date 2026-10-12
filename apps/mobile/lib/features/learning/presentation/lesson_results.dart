@@ -6,6 +6,7 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../../core/design/reward_motion.dart';
+import '../../hearts/application/hearts_controller.dart';
 import '../application/completion_providers.dart';
 import '../application/learning_controller.dart';
 import '../domain/completion_summary.dart';
@@ -377,6 +378,16 @@ class LessonResults extends ConsumerWidget {
                           final router = GoRouter.maybeOf(context);
                           if (router == null) {
                             next();
+                            return;
+                          }
+                          if (receipt.nodeId == 'hearts-practice' &&
+                              ref
+                                  .read(heartsControllerProvider)
+                                  .practicePending) {
+                            ref
+                                .read(heartsControllerProvider.notifier)
+                                .completePractice(receipt.id);
+                            router.go('/hearts/earned');
                             return;
                           }
                           // Duolingo order: streak → gems/quests → league,

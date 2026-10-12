@@ -15,6 +15,8 @@ import 'features/learning/application/unit_skip_controller.dart';
 import 'features/learning/application/course_navigation_controller.dart';
 import 'features/learning/domain/course_catalog.dart';
 import 'features/progress/presentation/energy_screen.dart';
+import 'features/hearts/presentation/heart_earned_screen.dart';
+import 'features/ads/presentation/ad_screen.dart';
 import 'features/progress/presentation/super_screen.dart';
 import 'features/progress/presentation/max_screen.dart';
 import 'features/progress/presentation/timer_boost_screen.dart';
@@ -409,6 +411,21 @@ class _AppState extends ConsumerState<_App> {
               },
             );
           },
+        ),
+        GoRoute(
+          path: '/hearts/earned',
+          builder: (context, state) => const HeartEarnedScreen(),
+        ),
+        GoRoute(
+          path: '/ad',
+          builder: (context, state) => AdScreen(
+            placement:
+                state.uri.queryParameters['placement'] ==
+                    'REWARDED_ENERGY_REFILL'
+                ? 'REWARDED_ENERGY_REFILL'
+                : 'LESSON_END_INTERSTITIAL',
+            offerTrial: state.uri.queryParameters['trial'] == '1',
+          ),
         ),
         GoRoute(
           path: '/energy',

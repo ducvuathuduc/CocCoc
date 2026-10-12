@@ -5,6 +5,8 @@ import '../../../core/design/character_motion.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
+import '../../hearts/application/hearts_controller.dart';
+import '../../hearts/presentation/hearts_sheets.dart';
 import '../application/unit_skip_controller.dart';
 import '../domain/unit_skip.dart';
 import 'learning_visuals.dart';
@@ -130,6 +132,8 @@ class _UnitSkipScreenState extends ConsumerState<UnitSkipScreen> {
                       "You didn't unlock $target, but you can try again later!",
                   buttonLabel: 'CONTINUE',
                   onPressed: _close,
+                  onArtTap: () => showHeartsOfferSheet(context, onEnd: _close),
+                  artActionLabel: ref.read(heartsContentProvider).refillAction,
                 ),
                 UnitSkipStage.passed => _Passed(
                   state: state,
@@ -828,6 +832,8 @@ class _Terminal extends StatelessWidget {
     required this.title,
     required this.buttonLabel,
     required this.onPressed,
+    this.onArtTap,
+    this.artActionLabel,
   });
 
   final ArtRegion art;
@@ -836,13 +842,26 @@ class _Terminal extends StatelessWidget {
   final String title;
   final String buttonLabel;
   final VoidCallback onPressed;
+  final VoidCallback? onArtTap;
+  final String? artActionLabel;
 
   @override
   Widget build(BuildContext context) => _ScrollableStage(
     child: Column(
       children: [
         const Spacer(),
-        ReferenceArt(art, width: artWidth, height: artHeight),
+        if (onArtTap == null)
+          ReferenceArt(art, width: artWidth, height: artHeight)
+        else
+          Semantics(
+            button: true,
+            label: artActionLabel,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onArtTap,
+              child: ReferenceArt(art, width: artWidth, height: artHeight),
+            ),
+          ),
         const SizedBox(height: 24),
         Text(title, textAlign: TextAlign.center, style: headingStyle),
         const Spacer(flex: 2),

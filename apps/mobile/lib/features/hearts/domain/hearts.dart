@@ -20,6 +20,7 @@ class HeartsContent {
     this.earnedAdTitle = 'You gained a heart! Watch an ad to gain another.',
     this.earnAction = 'EARN 1 HEART',
     this.continueAction = 'CONTINUE',
+    this.practiceError = 'Practice unavailable. Try again.',
     this.homeTrialHearts = 76,
     this.lessonTrialHearts = 88,
     this.homeRefillCost = 500,
@@ -42,7 +43,8 @@ class HeartsContent {
       earnedTitle,
       earnedAdTitle,
       earnAction,
-      continueAction;
+      continueAction,
+      practiceError;
   final int homeRefillCost,
       lessonRefillCost,
       homeTrialHearts,
