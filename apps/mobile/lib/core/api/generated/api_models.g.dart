@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 08c1d1a83e5ee989bebc8d4011ac19ad540d9534ef8eb960292e64ab1ed7c3cf).
+// Source: docs/api/openapi.yaml (sha256 c5efb70bc1fbf038e84b06a8dd69ae37f9d6f8cee845b294e081f530ee7a7ba1).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors
@@ -3448,6 +3448,7 @@ final class TutorResult {
     required this.correction,
     required this.explanation,
     required this.source,
+    required this.assessedPronunciation,
   });
 
   /// Validates [json] against the `TutorResult` schema, then decodes it.
@@ -3465,6 +3466,7 @@ final class TutorResult {
       correction: map['correction'] == null ? null : map['correction'] as String,
       explanation: map['explanation'] as String,
       source: map['source'] as String,
+      assessedPronunciation: map['assessedPronunciation'] as bool,
     );
   }
 
@@ -3473,7 +3475,7 @@ final class TutorResult {
   final String? correction;
   final String explanation;
   final String source;
-  bool get assessedPronunciation => false;
+  final bool assessedPronunciation;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'requestId': requestId,
@@ -3757,6 +3759,7 @@ final class AssessmentRequest {
     required this.locale,
     required this.wavBase64,
     required this.audioSha256,
+    this.referenceText,
   });
 
   /// Validates [json] against the `AssessmentRequest` schema, then decodes it.
@@ -3775,6 +3778,7 @@ final class AssessmentRequest {
       locale: map['locale'] as String,
       wavBase64: map['wavBase64'] as String,
       audioSha256: map['audioSha256'] as String,
+      referenceText: map.containsKey('referenceText') ? map['referenceText'] as String : null,
     );
   }
 
@@ -3784,6 +3788,7 @@ final class AssessmentRequest {
   final String locale;
   final String wavBase64;
   final String audioSha256;
+  final String? referenceText;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'jobId': jobId,
@@ -3792,6 +3797,7 @@ final class AssessmentRequest {
         'locale': locale,
         'wavBase64': wavBase64,
         'audioSha256': audioSha256,
+        'referenceText': ?referenceText,
       };
 }
 
@@ -4580,7 +4586,7 @@ final class TurnResult {
       transcript: map['transcript'] as String,
       tutor: TutorResult._decode(map['tutor']),
       audioAssetId: map['audioAssetId'] == null ? null : map['audioAssetId'] as String,
-      score: map['score'],
+      score: map['score'] == null ? null : TurnScore._decode(map['score']),
     );
   }
 
@@ -4589,7 +4595,7 @@ final class TurnResult {
   final String transcript;
   final TutorResult tutor;
   final String? audioAssetId;
-  final Object? score;
+  final TurnScore? score;
   String get mode => 'TURN';
 
   Map<String, Object?> toJson() => <String, Object?>{
@@ -4598,7 +4604,7 @@ final class TurnResult {
         'transcript': transcript,
         'tutor': tutor.toJson(),
         'audioAssetId': audioAssetId,
-        'score': score,
+        'score': score?.toJson(),
         'mode': mode,
       };
 }
@@ -7377,6 +7383,69 @@ final class JobRunReport {
       };
 }
 
+/// Wire DTO for `#/components/schemas/TurnScore`.
+final class TurnScore {
+  const TurnScore({
+    required this.scoreState,
+    required this.referenceText,
+    required this.accuracy,
+    required this.fluency,
+    required this.completeness,
+    required this.prosody,
+    required this.words,
+    required this.scorer,
+    required this.transcriptProvider,
+    required this.unavailableReason,
+  });
+
+  /// Validates [json] against the `TurnScore` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory TurnScore.fromJson(Object? json) {
+    ContractValidator.instance.check('TurnScore', json);
+    return TurnScore._decode(json);
+  }
+
+  static TurnScore _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return TurnScore(
+      scoreState: map['scoreState'] as String,
+      referenceText: map['referenceText'] as String,
+      accuracy: map['accuracy'] == null ? null : map['accuracy'] as num,
+      fluency: map['fluency'] == null ? null : map['fluency'] as num,
+      completeness: map['completeness'] == null ? null : map['completeness'] as num,
+      prosody: map['prosody'] == null ? null : map['prosody'] as num,
+      words: List<WordScore>.unmodifiable((map['words'] as List<Object?>).map((Object? x) => WordScore._decode(x))),
+      scorer: map['scorer'] == null ? null : map['scorer'] as String,
+      transcriptProvider: map['transcriptProvider'] == null ? null : map['transcriptProvider'] as String,
+      unavailableReason: map['unavailableReason'] == null ? null : map['unavailableReason'] as String,
+    );
+  }
+
+  final String scoreState;
+  final String referenceText;
+  final num? accuracy;
+  final num? fluency;
+  final num? completeness;
+  final num? prosody;
+  final List<WordScore> words;
+  final String? scorer;
+  final String? transcriptProvider;
+  final String? unavailableReason;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'scoreState': scoreState,
+        'referenceText': referenceText,
+        'accuracy': accuracy,
+        'fluency': fluency,
+        'completeness': completeness,
+        'prosody': prosody,
+        'words': words.map((WordScore x) => x.toJson()).toList(),
+        'scorer': scorer,
+        'transcriptProvider': transcriptProvider,
+        'unavailableReason': unavailableReason,
+      };
+}
+
 /// Decoders for every `#/components/schemas` entry, keyed by schema name.
 const Map<String, Object Function(Object?)> apiContractDecoders =
     <String, Object Function(Object?)>{
@@ -7533,4 +7602,5 @@ const Map<String, Object Function(Object?)> apiContractDecoders =
   'EnergyGrantedEventPayload': EnergyGrantedEventPayload.fromJson,
   'JobTickRequest': JobTickRequest.fromJson,
   'JobRunReport': JobRunReport.fromJson,
+  'TurnScore': TurnScore.fromJson,
 };

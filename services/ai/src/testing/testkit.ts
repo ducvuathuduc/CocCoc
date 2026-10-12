@@ -5,7 +5,13 @@ export * from '../../../shared/src/service-hmac.js';
 export { createMemoryAiPersistence } from '../persistence/memory.js';
 export { createAppwriteAiPersistence } from '../persistence/appwrite.js';
 export { aiHandler, aiWiring, aiRoutes } from '../http/wiring.js';
-export { SCRIPTED_PROVIDER, uuidFrom } from '../application/deps.js';
+export { SCRIPTED_PROVIDER, speechProvider, uuidFrom } from '../application/deps.js';
+export {
+  createSpeechEngine,
+  parseAzure,
+  speechFromEnv,
+  SPEECH_GLOBAL_USER,
+} from '../application/speech.js';
 export { DEFAULT_GATES, gatesFromEnv, effectivePlan } from '../domain/plans.js';
 export { SCENARIOS, scenarioById, onTopic, usedTargetWords } from '../domain/scenarios.js';
 export { scoreConversation } from '../domain/scoring.js';

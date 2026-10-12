@@ -2372,8 +2372,7 @@ export interface components {
             explanation: string;
             /** @enum {string} */
             source: "authored" | "model" | "fallback";
-            /** @constant */
-            assessedPronunciation: false;
+            assessedPronunciation: boolean;
         };
         VoiceRequest: {
             /** Format: uuid */
@@ -2450,6 +2449,7 @@ export interface components {
             locale: "en-US";
             wavBase64: string;
             audioSha256: string;
+            referenceText?: string;
         };
         WordScore: {
             word: string;
@@ -2640,7 +2640,7 @@ export interface components {
             transcript: string;
             tutor: components["schemas"]["TutorResult"];
             audioAssetId: string | null;
-            score: null;
+            score: components["schemas"]["TurnScore"] | null;
             /** @constant */
             mode: "TURN";
         };
@@ -3181,6 +3181,19 @@ export interface components {
             skipped: number;
             nextCursor: string | null;
             needsIntervention: boolean;
+        };
+        TurnScore: {
+            /** @enum {string} */
+            scoreState: "VALID" | "NULL_UNAVAILABLE" | "NULL_LOW_CONFIDENCE" | "FAILED";
+            referenceText: string;
+            accuracy: number | null;
+            fluency: number | null;
+            completeness: number | null;
+            prosody: number | null;
+            words: components["schemas"]["WordScore"][];
+            scorer: string | null;
+            transcriptProvider: ("azure" | "assemblyai" | "deepgram") | null;
+            unavailableReason: string | null;
         };
     };
     responses: {

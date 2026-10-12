@@ -352,47 +352,52 @@ test(
         outbox: { status: practice.rows[0].status, attempt: practice.rows[0].attempt },
       };
 
-      // Scripted TURN speech + Video Call.
-      const sessionId = randomUUID();
-      const lease = await call(
-        'POST',
-        '/v1/voice-sessions',
-        { sessionId, scenarioId: 'rp_phone_pizza', mode: 'TURN', level: 'A1' },
-        randomUUID(),
-      );
-      assert.equal(lease.status, 200, JSON.stringify(lease.body));
-      const call2 = await call(
-        'POST',
-        '/v1/conversations',
-        {
-          kind: 'VIDEO_CALL',
-          courseId: 'vi_en',
-          scenarioId: 'rp_phone_pizza',
-          voiceSessionId: sessionId,
-        },
-        randomUUID(),
-      );
-      assert.equal(call2.status, 200, JSON.stringify(call2.body));
+      // Scripted TURN speech + Video Call (real speech mode is covered by speech-live.test.mjs:
+      // a silent clip is correctly not recognized there, so the script would not advance).
       const audio = wav(1);
-      const transcripts = [];
-      for (let i = 0; i < 4; i++) {
-        const turn = await call(
+      if (caps.body.pronunciation) {
+        evidence.videoCall = 'speech provider active: see speech-live.test.mjs';
+      } else {
+        const sessionId = randomUUID();
+        const lease = await call(
           'POST',
-          `/v1/voice-sessions/${sessionId}/turns`,
-          { turnId: randomUUID(), epoch: 0, ...audio },
+          '/v1/voice-sessions',
+          { sessionId, scenarioId: 'rp_phone_pizza', mode: 'TURN', level: 'A1' },
           randomUUID(),
         );
-        assert.equal(turn.status, 200, JSON.stringify(turn.body));
-        transcripts.push(turn.body.transcript);
+        assert.equal(lease.status, 200, JSON.stringify(lease.body));
+        const call2 = await call(
+          'POST',
+          '/v1/conversations',
+          {
+            kind: 'VIDEO_CALL',
+            courseId: 'vi_en',
+            scenarioId: 'rp_phone_pizza',
+            voiceSessionId: sessionId,
+          },
+          randomUUID(),
+        );
+        assert.equal(call2.status, 200, JSON.stringify(call2.body));
+        const transcripts = [];
+        for (let i = 0; i < 4; i++) {
+          const turn = await call(
+            'POST',
+            `/v1/voice-sessions/${sessionId}/turns`,
+            { turnId: randomUUID(), epoch: 0, ...audio },
+            randomUUID(),
+          );
+          assert.equal(turn.status, 200, JSON.stringify(turn.body));
+          transcripts.push(turn.body.transcript);
+        }
+        const done2 = await call(
+          'POST',
+          `/v1/conversations/${call2.body.conversationId}/complete`,
+          { endReason: 'COMPLETED' },
+          randomUUID(),
+        );
+        assert.equal(done2.body.status, 'COMPLETED', JSON.stringify(done2.body));
+        evidence.videoCall = { firstTranscript: transcripts[0], stars: done2.body.stars };
       }
-      const done2 = await call(
-        'POST',
-        `/v1/conversations/${call2.body.conversationId}/complete`,
-        { endReason: 'COMPLETED' },
-        randomUUID(),
-      );
-      assert.equal(done2.body.status, 'COMPLETED', JSON.stringify(done2.body));
-      evidence.videoCall = { firstTranscript: transcripts[0], stars: done2.body.stars };
       const jobId = randomUUID();
       const job = await call(
         'POST',

@@ -271,6 +271,15 @@ export function applyTurn(
   return { scenario, step, onTopic: hit, reply, finished };
 }
 
+/** The learner line the current step expects (Azure reference text), null when finished. */
+export function expectedLine(row: Row): string | null {
+  const scenario = scenarioById(String(row['scenarioId']));
+  if (!scenario) return null;
+  const draft = draftOf(row);
+  if (draft.stepIndex >= scenario.steps.length) return null;
+  return (scenario.steps[draft.stepIndex] as ScenarioStep).expect;
+}
+
 /** The scripted "speech recognizer": the model answer for the conversation's current step. */
 export function scriptedTranscript(row: Row): string {
   const scenario = scenarioById(String(row['scenarioId']));

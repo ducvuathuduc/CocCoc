@@ -3,23 +3,35 @@ import { createHash } from 'node:crypto';
 import type { FeatureGates } from '../domain/plans.js';
 import type { AiPersistence, Row } from '../persistence/port.js';
 import type { Deliver } from './outbox.js';
+import type { SpeechEngine } from './speech.js';
 
 /**
- * Provider configuration. Only the deterministic scripted provider exists in this build:
- * COC_AI_PROVIDER=disabled (and any other value) serves authored roleplay scripts, a scripted
- * TURN transcript and a null-score assessment. No model, STT or scorer is called.
+ * Provider configuration. The conversation script is always the deterministic authored one.
+ * Speech: with COC_AI_PROVIDER=speech and provider keys (secret function variables), recorded
+ * audio is transcribed for real (Azure, fallbacks AssemblyAI/Deepgram) and scored by Azure
+ * Pronunciation Assessment; otherwise (`scripted`) TURN transcripts are scripted and every
+ * assessment metric stays null (NULL_UNAVAILABLE, AZURE_DISABLED).
  */
 export interface ProviderConfig {
-  kind: 'scripted';
+  kind: 'scripted' | 'speech';
   configVersion: string;
-  /** Azure pronunciation scorer; always false here, so assessment metrics stay null. */
-  azureEnabled: false;
+  /** Azure pronunciation scorer configured; false keeps assessment metrics null. */
+  azureEnabled: boolean;
+  speech?: SpeechEngine | null;
 }
 export const SCRIPTED_PROVIDER: ProviderConfig = {
   kind: 'scripted',
   configVersion: 'scripted-v1',
   azureEnabled: false,
 };
+export function speechProvider(speech: SpeechEngine): ProviderConfig {
+  return {
+    kind: 'speech',
+    configVersion: speech.azure ? 'speech-azure-v1' : 'speech-stt-v1',
+    azureEnabled: speech.azure,
+    speech,
+  };
+}
 
 export interface EventRelay {
   afterCommit(eventIds: readonly string[]): Promise<void>;

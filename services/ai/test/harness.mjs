@@ -78,6 +78,7 @@ export function setup({
   gates,
   store: given,
   realClock = false,
+  provider,
 } = {}) {
   const clock = {
     fixed: start,
@@ -94,7 +95,7 @@ export function setup({
     nowMs: () => clock.now,
     newId: randomUUID,
     gates: gates ?? kit.DEFAULT_GATES,
-    provider: kit.SCRIPTED_PROVIDER,
+    provider: provider ?? kit.SCRIPTED_PROVIDER,
   };
   const wiring = kit.aiWiring(deps);
   const auth = { verify: async (jwt) => ({ userId: jwt }) };

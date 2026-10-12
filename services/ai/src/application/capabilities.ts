@@ -7,7 +7,7 @@ export function capabilities(deps: AiDeps) {
     textTutor: true,
     nativeLive: false,
     turnSpeech: true,
-    pronunciation: false,
+    pronunciation: deps.provider.azureEnabled,
     offlineShadowing: true,
     nativeLiveReason: 'NATIVE_LIVE_DISABLED',
     pronunciationReason: deps.provider.azureEnabled ? null : 'AZURE_DISABLED',

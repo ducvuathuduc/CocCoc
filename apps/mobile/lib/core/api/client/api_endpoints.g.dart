@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 08c1d1a83e5ee989bebc8d4011ac19ad540d9534ef8eb960292e64ab1ed7c3cf).
+// Source: docs/api/openapi.yaml (sha256 c5efb70bc1fbf038e84b06a8dd69ae37f9d6f8cee845b294e081f530ee7a7ba1).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import '../api_contracts.dart' as wire;
@@ -14,35 +14,21 @@ final class ApiEndpoints {
   final ApiClient client;
 
   /// `GET /v1/activities`
-  Future<wire.ActivityProgressPage> listActivityProgress({
-    String? courseId,
-    String? kind,
-    String? cursor,
-    int? limit,
-  }) => client.call(
+  Future<wire.ActivityProgressPage> listActivityProgress({String? courseId, String? kind, String? cursor, int? limit}) => client.call(
     ApiOperations.listActivityProgress,
     decode: wire.ActivityProgressPage.fromJson,
-    query: {
-      'courseId': courseId,
-      'kind': kind,
-      'cursor': cursor,
-      'limit': limit,
-    },
+    query: {'courseId': courseId, 'kind': kind, 'cursor': cursor, 'limit': limit},
   );
 
   /// `GET /v1/activity`
-  Future<wire.ActivityPage> listActivity({String? cursor, int? limit}) =>
-      client.call(
-        ApiOperations.listActivity,
-        decode: wire.ActivityPage.fromJson,
-        query: {'cursor': cursor, 'limit': limit},
-      );
+  Future<wire.ActivityPage> listActivity({String? cursor, int? limit}) => client.call(
+    ApiOperations.listActivity,
+    decode: wire.ActivityPage.fromJson,
+    query: {'cursor': cursor, 'limit': limit},
+  );
 
   /// `POST /v1/ad-events`
-  Future<wire.AdEvent> recordAdEvent(
-    wire.AdEventRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.AdEvent> recordAdEvent(wire.AdEventRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.recordAdEvent,
     decode: wire.AdEvent.fromJson,
     body: body,
@@ -56,10 +42,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/assessment-jobs`
-  Future<wire.Assessment> createAssessment(
-    wire.AssessmentRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Assessment> createAssessment(wire.AssessmentRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.createAssessment,
     decode: wire.Assessment.fromJson,
     body: body,
@@ -74,10 +57,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/billing/purchases`
-  Future<wire.Purchase> verifyPurchase(
-    wire.PurchaseRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Purchase> verifyPurchase(wire.PurchaseRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.verifyPurchase,
     decode: wire.Purchase.fromJson,
     body: body,
@@ -85,10 +65,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/blocks`
-  Future<wire.Receipt> blockUser(
-    wire.BlockRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> blockUser(wire.BlockRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.blockUser,
     decode: wire.Receipt.fromJson,
     body: body,
@@ -96,19 +73,15 @@ final class ApiEndpoints {
   );
 
   /// `DELETE /v1/blocks/{userId}`
-  Future<wire.Receipt> unblockUser(String userId, {String? idempotencyKey}) =>
-      client.call(
-        ApiOperations.unblockUser,
-        decode: wire.Receipt.fromJson,
-        pathParams: {'userId': userId},
-        idempotencyKey: idempotencyKey,
-      );
+  Future<wire.Receipt> unblockUser(String userId, {String? idempotencyKey}) => client.call(
+    ApiOperations.unblockUser,
+    decode: wire.Receipt.fromJson,
+    pathParams: {'userId': userId},
+    idempotencyKey: idempotencyKey,
+  );
 
   /// `POST /v1/classrooms/join`
-  Future<wire.ClassroomMembership> joinClassroom(
-    wire.ClassroomJoinRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.ClassroomMembership> joinClassroom(wire.ClassroomJoinRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.joinClassroom,
     decode: wire.ClassroomMembership.fromJson,
     body: body,
@@ -116,10 +89,7 @@ final class ApiEndpoints {
   );
 
   /// `DELETE /v1/classrooms/{classroomId}/membership`
-  Future<wire.Receipt> leaveClassroom(
-    String classroomId, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> leaveClassroom(String classroomId, {String? idempotencyKey}) => client.call(
     ApiOperations.leaveClassroom,
     decode: wire.Receipt.fromJson,
     pathParams: {'classroomId': classroomId},
@@ -127,27 +97,14 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/conversations`
-  Future<wire.ConversationPage> listConversations({
-    String? kind,
-    String? scenarioId,
-    String? cursor,
-    int? limit,
-  }) => client.call(
+  Future<wire.ConversationPage> listConversations({String? kind, String? scenarioId, String? cursor, int? limit}) => client.call(
     ApiOperations.listConversations,
     decode: wire.ConversationPage.fromJson,
-    query: {
-      'kind': kind,
-      'scenarioId': scenarioId,
-      'cursor': cursor,
-      'limit': limit,
-    },
+    query: {'kind': kind, 'scenarioId': scenarioId, 'cursor': cursor, 'limit': limit},
   );
 
   /// `POST /v1/conversations`
-  Future<wire.Conversation> startConversation(
-    wire.ConversationStartRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Conversation> startConversation(wire.ConversationStartRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.startConversation,
     decode: wire.Conversation.fromJson,
     body: body,
@@ -155,11 +112,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/conversations/{conversationId}/complete`
-  Future<wire.Conversation> completeConversation(
-    String conversationId,
-    wire.ConversationCompleteRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Conversation> completeConversation(String conversationId, wire.ConversationCompleteRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.completeConversation,
     decode: wire.Conversation.fromJson,
     pathParams: {'conversationId': conversationId},
@@ -168,36 +121,30 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/courses`
-  Future<wire.CoursePage> listCourses({String? cursor, int? limit}) =>
-      client.call(
-        ApiOperations.listCourses,
-        decode: wire.CoursePage.fromJson,
-        query: {'cursor': cursor, 'limit': limit},
-      );
+  Future<wire.CoursePage> listCourses({String? cursor, int? limit}) => client.call(
+    ApiOperations.listCourses,
+    decode: wire.CoursePage.fromJson,
+    query: {'cursor': cursor, 'limit': limit},
+  );
 
   /// `GET /v1/courses/{courseId}/manifest`
-  Future<wire.CourseManifest> getManifest(String courseId, {String? version}) =>
-      client.call(
-        ApiOperations.getManifest,
-        decode: wire.CourseManifest.fromJson,
-        pathParams: {'courseId': courseId},
-        query: {'version': version},
-      );
+  Future<wire.CourseManifest> getManifest(String courseId, {String? version}) => client.call(
+    ApiOperations.getManifest,
+    decode: wire.CourseManifest.fromJson,
+    pathParams: {'courseId': courseId},
+    query: {'version': version},
+  );
 
   /// `GET /v1/courses/{courseId}/path`
-  Future<wire.Path> getPath(String courseId, {String? cursor, int? limit}) =>
-      client.call(
-        ApiOperations.getPath,
-        decode: wire.Path.fromJson,
-        pathParams: {'courseId': courseId},
-        query: {'cursor': cursor, 'limit': limit},
-      );
+  Future<wire.Path> getPath(String courseId, {String? cursor, int? limit}) => client.call(
+    ApiOperations.getPath,
+    decode: wire.Path.fromJson,
+    pathParams: {'courseId': courseId},
+    query: {'cursor': cursor, 'limit': limit},
+  );
 
   /// `POST /v1/enrollments`
-  Future<wire.Enrollment> enrollCourse(
-    wire.EnrollRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Enrollment> enrollCourse(wire.EnrollRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.enrollCourse,
     decode: wire.Enrollment.fromJson,
     body: body,
@@ -205,10 +152,7 @@ final class ApiEndpoints {
   );
 
   /// `DELETE /v1/enrollments/{courseId}`
-  Future<wire.Receipt> removeCourse(
-    String courseId, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> removeCourse(String courseId, {String? idempotencyKey}) => client.call(
     ApiOperations.removeCourse,
     decode: wire.Receipt.fromJson,
     pathParams: {'courseId': courseId},
@@ -216,11 +160,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/enrollments/{courseId}/activate`
-  Future<wire.Enrollment> switchCourse(
-    String courseId,
-    wire.EnrollmentCommandRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Enrollment> switchCourse(String courseId, wire.EnrollmentCommandRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.switchCourse,
     decode: wire.Enrollment.fromJson,
     pathParams: {'courseId': courseId},
@@ -229,11 +169,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/enrollments/{courseId}/reset`
-  Future<wire.Enrollment> resetCourse(
-    String courseId,
-    wire.EnrollmentCommandRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Enrollment> resetCourse(String courseId, wire.EnrollmentCommandRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.resetCourse,
     decode: wire.Enrollment.fromJson,
     pathParams: {'courseId': courseId},
@@ -242,10 +178,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/family`
-  Future<wire.FamilyGroup> createFamily(
-    wire.FamilyCreateRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.FamilyGroup> createFamily(wire.FamilyCreateRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.createFamily,
     decode: wire.FamilyGroup.fromJson,
     body: body,
@@ -253,11 +186,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/family/{groupId}/members`
-  Future<wire.FamilyGroup> joinFamily(
-    String groupId,
-    wire.FamilyJoinRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.FamilyGroup> joinFamily(String groupId, wire.FamilyJoinRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.joinFamily,
     decode: wire.FamilyGroup.fromJson,
     pathParams: {'groupId': groupId},
@@ -266,11 +195,7 @@ final class ApiEndpoints {
   );
 
   /// `DELETE /v1/family/{groupId}/members/{userId}`
-  Future<wire.FamilyGroup> removeFamilyMember(
-    String groupId,
-    String userId, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.FamilyGroup> removeFamilyMember(String groupId, String userId, {String? idempotencyKey}) => client.call(
     ApiOperations.removeFamilyMember,
     decode: wire.FamilyGroup.fromJson,
     pathParams: {'groupId': groupId, 'userId': userId},
@@ -278,10 +203,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/feedback`
-  Future<wire.Receipt> sendFeedback(
-    wire.FeedbackRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> sendFeedback(wire.FeedbackRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.sendFeedback,
     decode: wire.Receipt.fromJson,
     body: body,
@@ -289,10 +211,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/follows`
-  Future<wire.Receipt> followUser(
-    wire.FollowRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> followUser(wire.FollowRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.followUser,
     decode: wire.Receipt.fromJson,
     body: body,
@@ -300,37 +219,29 @@ final class ApiEndpoints {
   );
 
   /// `DELETE /v1/follows/{userId}`
-  Future<wire.Receipt> unfollowUser(String userId, {String? idempotencyKey}) =>
-      client.call(
-        ApiOperations.unfollowUser,
-        decode: wire.Receipt.fromJson,
-        pathParams: {'userId': userId},
-        idempotencyKey: idempotencyKey,
-      );
+  Future<wire.Receipt> unfollowUser(String userId, {String? idempotencyKey}) => client.call(
+    ApiOperations.unfollowUser,
+    decode: wire.Receipt.fromJson,
+    pathParams: {'userId': userId},
+    idempotencyKey: idempotencyKey,
+  );
 
   /// `POST /v1/friend-quests/opt-in`
-  Future<wire.Receipt> optInFriendQuest({String? idempotencyKey}) =>
-      client.call(
-        ApiOperations.optInFriendQuest,
-        decode: wire.Receipt.fromJson,
-        idempotencyKey: idempotencyKey,
-      );
+  Future<wire.Receipt> optInFriendQuest({String? idempotencyKey}) => client.call(
+    ApiOperations.optInFriendQuest,
+    decode: wire.Receipt.fromJson,
+    idempotencyKey: idempotencyKey,
+  );
 
   /// `GET /v1/friend-streaks`
-  Future<wire.FriendStreakPage> listFriendStreaks({
-    String? cursor,
-    int? limit,
-  }) => client.call(
+  Future<wire.FriendStreakPage> listFriendStreaks({String? cursor, int? limit}) => client.call(
     ApiOperations.listFriendStreaks,
     decode: wire.FriendStreakPage.fromJson,
     query: {'cursor': cursor, 'limit': limit},
   );
 
   /// `POST /v1/friend-streaks`
-  Future<wire.FriendStreak> inviteFriendStreak(
-    wire.FriendStreakInviteRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.FriendStreak> inviteFriendStreak(wire.FriendStreakInviteRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.inviteFriendStreak,
     decode: wire.FriendStreak.fromJson,
     body: body,
@@ -338,11 +249,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/friend-streaks/{pairId}/respond`
-  Future<wire.FriendStreak> respondFriendStreak(
-    String pairId,
-    wire.FriendStreakResponseRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.FriendStreak> respondFriendStreak(String pairId, wire.FriendStreakResponseRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.respondFriendStreak,
     decode: wire.FriendStreak.fromJson,
     pathParams: {'pairId': pairId},
@@ -351,27 +258,22 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/friends`
-  Future<wire.ProfilePage> listFriends({String? cursor, int? limit}) =>
-      client.call(
-        ApiOperations.listFriends,
-        decode: wire.ProfilePage.fromJson,
-        query: {'cursor': cursor, 'limit': limit},
-      );
+  Future<wire.ProfilePage> listFriends({String? cursor, int? limit}) => client.call(
+    ApiOperations.listFriends,
+    decode: wire.ProfilePage.fromJson,
+    query: {'cursor': cursor, 'limit': limit},
+  );
 
   /// `POST /v1/gifts`
-  Future<wire.Gift> sendGift(wire.GiftRequest body, {String? idempotencyKey}) =>
-      client.call(
-        ApiOperations.sendGift,
-        decode: wire.Gift.fromJson,
-        body: body,
-        idempotencyKey: idempotencyKey,
-      );
+  Future<wire.Gift> sendGift(wire.GiftRequest body, {String? idempotencyKey}) => client.call(
+    ApiOperations.sendGift,
+    decode: wire.Gift.fromJson,
+    body: body,
+    idempotencyKey: idempotencyKey,
+  );
 
   /// `POST /v1/gifts/{giftId}/redeem`
-  Future<wire.Entitlement> redeemGift(
-    String giftId, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Entitlement> redeemGift(String giftId, {String? idempotencyKey}) => client.call(
     ApiOperations.redeemGift,
     decode: wire.Entitlement.fromJson,
     pathParams: {'giftId': giftId},
@@ -379,10 +281,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/interactions`
-  Future<wire.Interaction> sendInteraction(
-    wire.InteractionRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Interaction> sendInteraction(wire.InteractionRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.sendInteraction,
     decode: wire.Interaction.fromJson,
     body: body,
@@ -410,10 +309,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/league/result/seen`
-  Future<wire.Receipt> markLeagueResultSeen(
-    wire.LeagueResultSeenRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> markLeagueResultSeen(wire.LeagueResultSeenRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.markLeagueResultSeen,
     decode: wire.Receipt.fromJson,
     body: body,
@@ -421,23 +317,21 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/lessons/{lessonId}/bundle`
-  Future<wire.LessonBundle> getBundle(String lessonId, {String? version}) =>
-      client.call(
-        ApiOperations.getBundle,
-        decode: wire.LessonBundle.fromJson,
-        pathParams: {'lessonId': lessonId},
-        query: {'version': version},
-      );
+  Future<wire.LessonBundle> getBundle(String lessonId, {String? version}) => client.call(
+    ApiOperations.getBundle,
+    decode: wire.LessonBundle.fromJson,
+    pathParams: {'lessonId': lessonId},
+    query: {'version': version},
+  );
 
   /// `GET /v1/me`
-  Future<wire.Profile> getMe() =>
-      client.call(ApiOperations.getMe, decode: wire.Profile.fromJson);
+  Future<wire.Profile> getMe() => client.call(
+    ApiOperations.getMe,
+    decode: wire.Profile.fromJson,
+  );
 
   /// `PATCH /v1/me`
-  Future<wire.Profile> updateMe(
-    wire.ProfilePatch body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Profile> updateMe(wire.ProfilePatch body, {String? idempotencyKey}) => client.call(
     ApiOperations.updateMe,
     decode: wire.Profile.fromJson,
     body: body,
@@ -445,10 +339,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/me/boosts`
-  Future<wire.Boost> activateBoost(
-    wire.BoostRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Boost> activateBoost(wire.BoostRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.activateBoost,
     decode: wire.Boost.fromJson,
     body: body,
@@ -456,10 +347,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/me/deletion`
-  Future<wire.DeletionReceipt> deleteAccount(
-    wire.DeletionRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.DeletionReceipt> deleteAccount(wire.DeletionRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.deleteAccount,
     decode: wire.DeletionReceipt.fromJson,
     body: body,
@@ -467,8 +355,10 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/me/energy`
-  Future<wire.Energy> getEnergy() =>
-      client.call(ApiOperations.getEnergy, decode: wire.Energy.fromJson);
+  Future<wire.Energy> getEnergy() => client.call(
+    ApiOperations.getEnergy,
+    decode: wire.Energy.fromJson,
+  );
 
   /// `GET /v1/me/entitlement`
   Future<wire.Entitlement> getEntitlement() => client.call(
@@ -484,12 +374,11 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/me/initialize`
-  Future<wire.Profile> initializeProfile({String? idempotencyKey}) =>
-      client.call(
-        ApiOperations.initializeProfile,
-        decode: wire.Profile.fromJson,
-        idempotencyKey: idempotencyKey,
-      );
+  Future<wire.Profile> initializeProfile({String? idempotencyKey}) => client.call(
+    ApiOperations.initializeProfile,
+    decode: wire.Profile.fromJson,
+    idempotencyKey: idempotencyKey,
+  );
 
   /// `GET /v1/me/preferences`
   Future<wire.Preferences> getPreferences() => client.call(
@@ -498,10 +387,7 @@ final class ApiEndpoints {
   );
 
   /// `PATCH /v1/me/preferences`
-  Future<wire.Preferences> updatePreferences(
-    wire.PreferencesPatch body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Preferences> updatePreferences(wire.PreferencesPatch body, {String? idempotencyKey}) => client.call(
     ApiOperations.updatePreferences,
     decode: wire.Preferences.fromJson,
     body: body,
@@ -509,8 +395,10 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/me/referral`
-  Future<wire.Referral> getReferral() =>
-      client.call(ApiOperations.getReferral, decode: wire.Referral.fromJson);
+  Future<wire.Referral> getReferral() => client.call(
+    ApiOperations.getReferral,
+    decode: wire.Referral.fromJson,
+  );
 
   /// `GET /v1/me/rewards`
   Future<wire.Rewards> getRewards({String? completionId}) => client.call(
@@ -520,10 +408,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/me/streak-repair`
-  Future<wire.Rewards> repairStreak(
-    wire.StreakRepairRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Rewards> repairStreak(wire.StreakRepairRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.repairStreak,
     decode: wire.Rewards.fromJson,
     body: body,
@@ -538,27 +423,14 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/mistakes`
-  Future<wire.MistakePage> listMistakes({
-    String? courseId,
-    bool? includeResolved,
-    String? cursor,
-    int? limit,
-  }) => client.call(
+  Future<wire.MistakePage> listMistakes({String? courseId, bool? includeResolved, String? cursor, int? limit}) => client.call(
     ApiOperations.listMistakes,
     decode: wire.MistakePage.fromJson,
-    query: {
-      'courseId': courseId,
-      'includeResolved': includeResolved,
-      'cursor': cursor,
-      'limit': limit,
-    },
+    query: {'courseId': courseId, 'includeResolved': includeResolved, 'cursor': cursor, 'limit': limit},
   );
 
   /// `POST /v1/offline-completions`
-  Future<wire.Completion> syncOfflineCompletion(
-    wire.OfflineCompletionRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Completion> syncOfflineCompletion(wire.OfflineCompletionRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.syncOfflineCompletion,
     decode: wire.Completion.fromJson,
     body: body,
@@ -573,10 +445,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/promo-codes/redeem`
-  Future<wire.PromoRedemption> redeemPromoCode(
-    wire.PromoRedeemRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.PromoRedemption> redeemPromoCode(wire.PromoRedeemRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.redeemPromoCode,
     decode: wire.PromoRedemption.fromJson,
     body: body,
@@ -584,19 +453,14 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/quests`
-  Future<wire.QuestPage> listQuests({String? cursor, int? limit}) =>
-      client.call(
-        ApiOperations.listQuests,
-        decode: wire.QuestPage.fromJson,
-        query: {'cursor': cursor, 'limit': limit},
-      );
+  Future<wire.QuestPage> listQuests({String? cursor, int? limit}) => client.call(
+    ApiOperations.listQuests,
+    decode: wire.QuestPage.fromJson,
+    query: {'cursor': cursor, 'limit': limit},
+  );
 
   /// `POST /v1/quests/{questId}/claim`
-  Future<wire.Rewards> claimQuest(
-    String questId,
-    wire.QuestClaimRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Rewards> claimQuest(String questId, wire.QuestClaimRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.claimQuest,
     decode: wire.Rewards.fromJson,
     pathParams: {'questId': questId},
@@ -605,10 +469,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/referrals/redeem`
-  Future<wire.Receipt> redeemReferral(
-    wire.ReferralRedeemRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> redeemReferral(wire.ReferralRedeemRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.redeemReferral,
     decode: wire.Receipt.fromJson,
     body: body,
@@ -616,10 +477,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/reports`
-  Future<wire.Receipt> createReport(
-    wire.ReportRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> createReport(wire.ReportRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.createReport,
     decode: wire.Receipt.fromJson,
     body: body,
@@ -627,21 +485,14 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/review`
-  Future<wire.ReviewPage> getReview({
-    String? cursor,
-    int? limit,
-    String? courseId,
-  }) => client.call(
+  Future<wire.ReviewPage> getReview({String? cursor, int? limit, String? courseId}) => client.call(
     ApiOperations.getReview,
     decode: wire.ReviewPage.fromJson,
     query: {'cursor': cursor, 'limit': limit, 'courseId': courseId},
   );
 
   /// `POST /v1/sessions`
-  Future<wire.Session> startSession(
-    wire.SessionRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Session> startSession(wire.SessionRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.startSession,
     decode: wire.Session.fromJson,
     body: body,
@@ -656,11 +507,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/sessions/{sessionId}/abandon`
-  Future<wire.Receipt> abandonSession(
-    String sessionId,
-    wire.CompleteRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> abandonSession(String sessionId, wire.CompleteRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.abandonSession,
     decode: wire.Receipt.fromJson,
     pathParams: {'sessionId': sessionId},
@@ -669,11 +516,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/sessions/{sessionId}/answers`
-  Future<wire.AnswerResult> submitAnswer(
-    String sessionId,
-    wire.AnswerRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.AnswerResult> submitAnswer(String sessionId, wire.AnswerRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.submitAnswer,
     decode: wire.AnswerResult.fromJson,
     pathParams: {'sessionId': sessionId},
@@ -682,11 +525,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/sessions/{sessionId}/complete`
-  Future<wire.Completion> completeSession(
-    String sessionId,
-    wire.CompleteRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Completion> completeSession(String sessionId, wire.CompleteRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.completeSession,
     decode: wire.Completion.fromJson,
     pathParams: {'sessionId': sessionId},
@@ -695,14 +534,13 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/shop`
-  Future<wire.Shop> listShop() =>
-      client.call(ApiOperations.listShop, decode: wire.Shop.fromJson);
+  Future<wire.Shop> listShop() => client.call(
+    ApiOperations.listShop,
+    decode: wire.Shop.fromJson,
+  );
 
   /// `POST /v1/shop/purchases`
-  Future<wire.ShopPurchase> buyItem(
-    wire.ShopPurchaseRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.ShopPurchase> buyItem(wire.ShopPurchaseRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.buyItem,
     decode: wire.ShopPurchase.fromJson,
     body: body,
@@ -710,10 +548,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/tutor`
-  Future<wire.TutorResult> tutorFeedback(
-    wire.TutorRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.TutorResult> tutorFeedback(wire.TutorRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.tutorFeedback,
     decode: wire.TutorResult.fromJson,
     body: body,
@@ -721,10 +556,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/user-reports`
-  Future<wire.Receipt> reportUser(
-    wire.UserReportRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.Receipt> reportUser(wire.UserReportRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.reportUser,
     decode: wire.Receipt.fromJson,
     body: body,
@@ -732,10 +564,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/voice-sessions`
-  Future<wire.VoiceLease> createVoiceSession(
-    wire.VoiceRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.VoiceLease> createVoiceSession(wire.VoiceRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.createVoiceSession,
     decode: wire.VoiceLease.fromJson,
     body: body,
@@ -750,10 +579,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/voice-sessions/{sessionId}/heartbeat`
-  Future<wire.VoiceState> heartbeatVoiceSession(
-    String sessionId,
-    wire.VoiceHeartbeat body,
-  ) => client.call(
+  Future<wire.VoiceState> heartbeatVoiceSession(String sessionId, wire.VoiceHeartbeat body) => client.call(
     ApiOperations.heartbeatVoiceSession,
     decode: wire.VoiceState.fromJson,
     pathParams: {'sessionId': sessionId},
@@ -761,11 +587,7 @@ final class ApiEndpoints {
   );
 
   /// `POST /v1/voice-sessions/{sessionId}/turns`
-  Future<wire.TurnResult> submitVoiceTurn(
-    String sessionId,
-    wire.TurnRequest body, {
-    String? idempotencyKey,
-  }) => client.call(
+  Future<wire.TurnResult> submitVoiceTurn(String sessionId, wire.TurnRequest body, {String? idempotencyKey}) => client.call(
     ApiOperations.submitVoiceTurn,
     decode: wire.TurnResult.fromJson,
     pathParams: {'sessionId': sessionId},
@@ -774,19 +596,9 @@ final class ApiEndpoints {
   );
 
   /// `GET /v1/words`
-  Future<wire.WordPage> listWords({
-    String? courseId,
-    String? sort,
-    String? cursor,
-    int? limit,
-  }) => client.call(
+  Future<wire.WordPage> listWords({String? courseId, String? sort, String? cursor, int? limit}) => client.call(
     ApiOperations.listWords,
     decode: wire.WordPage.fromJson,
-    query: {
-      'courseId': courseId,
-      'sort': sort,
-      'cursor': cursor,
-      'limit': limit,
-    },
+    query: {'courseId': courseId, 'sort': sort, 'cursor': cursor, 'limit': limit},
   );
 }

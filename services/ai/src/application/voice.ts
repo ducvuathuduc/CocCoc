@@ -1,15 +1,24 @@
 // Voice sessions (FR-SPEECH-002). Native LIVE stays off (NATIVE_LIVE_DISABLED) until its account
 // and device gates pass. TURN mode runs on the scripted provider: one active slot per user
 // (a_active_slots), receipt-backed creation, advisory heartbeat, idempotent close, and recorded
-// turns that are validated (WAV, SHA-256, <= 15 s), counted, never stored, never scored.
+// turns that are validated (WAV, SHA-256, <= 15 s), counted and never stored. With the speech
+// provider the turn audio is transcribed for real (Azure, fallbacks AssemblyAI/Deepgram) and, when
+// the scenario step has an expected learner line, scored by Azure Pronunciation Assessment against
+// it (TurnResult.score); the scripted provider keeps the scripted transcript and a null score.
 import { ServiceError } from '../../../shared/src/errors.js';
 import type { ReceiptOutcome } from '../../../shared/src/ports.js';
 import { ids } from '../persistence/ids.js';
 import type { Row } from '../persistence/port.js';
 import { validateWav } from './audio.js';
-import { activeConversation, applyTurn, scriptedTranscript } from './conversations.js';
+import {
+  activeConversation,
+  applyTurn,
+  expectedLine,
+  scriptedTranscript,
+} from './conversations.js';
 import { iso, stamp, type AiDeps } from './deps.js';
-import { countUsage } from './usage.js';
+import { AZURE_SCORER, type SpeechResult } from './speech.js';
+import { countUsage, DAILY_RECORDED_SECONDS } from './usage.js';
 
 export const TURN_SESSION_TTL_MS = 15 * 60 * 1000;
 export const SCRIPTED_MODEL = 'scripted-roleplay-v1';
@@ -174,7 +183,28 @@ export async function submitVoiceTurn(
   bodyHash: string,
 ): Promise<ReceiptOutcome> {
   const seconds = validateWav(input.wavBase64, input.audioSha256);
-  await ownedSession(deps, userId, sessionId);
+  const session = await ownedSession(deps, userId, sessionId);
+  let heard: SpeechResult | null = null;
+  let reference: string | null = null;
+  const speech = deps.provider.speech;
+  if (speech && session['status'] === 'ACTIVE') {
+    const receipt = await deps.persistence.read(
+      'a_receipts',
+      ids.receipt(userId, 'submitVoiceTurn', idempotencyKey),
+    );
+    const utcDay = new Date(deps.nowMs()).toISOString().slice(0, 10);
+    const usage = await deps.persistence.read('a_usage', ids.usage(userId, utcDay));
+    const quotaOk =
+      Number(usage?.['recordedSpeechSeconds'] ?? 0) + seconds <= DAILY_RECORDED_SECONDS;
+    if (!receipt && quotaOk) {
+      reference = await peekExpectedLine(deps, userId, sessionId);
+      heard = await speech.recognize(Buffer.from(input.wavBase64, 'base64'), {
+        referenceText: reference,
+        locale: 'en-US',
+        seconds,
+      });
+    }
+  }
   return deps.persistence.commitWithReceipt(
     { userId, operation: 'submitVoiceTurn', key: idempotencyKey },
     bodyHash,
@@ -207,7 +237,7 @@ export async function submitVoiceTurn(
       let transcript = '';
       let tutor;
       if (conversation) {
-        transcript = scriptedTranscript(conversation.row);
+        transcript = heard ? heard.transcript : scriptedTranscript(conversation.row);
         const turn = applyTurn(tx, conversation, transcript, now);
         tutor = {
           requestId: input.turnId,
@@ -215,16 +245,17 @@ export async function submitVoiceTurn(
           correction: null,
           explanation: turn.step.hintVi,
           source: 'authored' as const,
-          assessedPronunciation: false as const,
+          assessedPronunciation: heard?.assessment?.scoreState === 'VALID',
         };
       } else {
+        if (heard) transcript = heard.transcript;
         tutor = {
           requestId: input.turnId,
           tutorText: 'I am listening. Start a roleplay to practice a conversation with me.',
           correction: null,
           explanation: 'Hãy bắt đầu một bài hội thoại để luyện nói.',
           source: 'fallback' as const,
-          assessedPronunciation: false as const,
+          assessedPronunciation: false,
         };
       }
       return {
@@ -235,10 +266,40 @@ export async function submitVoiceTurn(
           transcript,
           tutor,
           audioAssetId: null,
-          score: null,
+          score: turnScore(heard, reference),
           mode: 'TURN',
         },
       };
     },
   );
+}
+
+/** The expected learner line of the session's active conversation step (read outside the tx). */
+async function peekExpectedLine(deps: AiDeps, userId: string, sessionId: string) {
+  const page = await deps.persistence.list('a_conversations', {
+    equal: { userId, status: 'ACTIVE', voiceSessionId: sessionId },
+    orderDesc: 'startedAt',
+    limit: 1,
+  });
+  const first = page.items[0];
+  return first ? expectedLine(first.row) : null;
+}
+
+/** OpenAPI TurnScore: Azure metrics only when VALID; null when no speech/score was attempted. */
+function turnScore(heard: SpeechResult | null, reference: string | null) {
+  if (!heard || !reference || !heard.assessment) return null;
+  const a = heard.assessment;
+  const valid = a.scoreState === 'VALID';
+  return {
+    scoreState: a.scoreState,
+    referenceText: reference.slice(0, 300),
+    accuracy: valid ? a.accuracy : null,
+    fluency: valid ? a.fluency : null,
+    completeness: valid ? a.completeness : null,
+    prosody: valid ? a.prosody : null,
+    words: valid ? a.words : [],
+    scorer: valid ? AZURE_SCORER : null,
+    transcriptProvider: heard.provider,
+    unavailableReason: valid ? null : a.reason,
+  };
 }

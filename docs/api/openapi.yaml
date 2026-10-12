@@ -12275,7 +12275,7 @@
             ]
           },
           "assessedPronunciation": {
-            "const": false
+            "type": "boolean"
           }
         },
         "required": [
@@ -12561,6 +12561,11 @@
           "audioSha256": {
             "type": "string",
             "pattern": "^[a-f0-9]{64}$"
+          },
+          "referenceText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
           }
         },
         "required": [
@@ -13497,7 +13502,14 @@
             ]
           },
           "score": {
-            "type": "null"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TurnScore"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "mode": {
             "const": "TURN"
@@ -16463,6 +16475,130 @@
           "skipped",
           "nextCursor",
           "needsIntervention"
+        ]
+      },
+      "TurnScore": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scoreState": {
+            "type": "string",
+            "enum": [
+              "VALID",
+              "NULL_UNAVAILABLE",
+              "NULL_LOW_CONFIDENCE",
+              "FAILED"
+            ]
+          },
+          "referenceText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "accuracy": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fluency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "completeness": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "prosody": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "words": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WordScore"
+            },
+            "maxItems": 100
+          },
+          "scorer": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "transcriptProvider": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "azure",
+                  "assemblyai",
+                  "deepgram"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unavailableReason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "scoreState",
+          "referenceText",
+          "accuracy",
+          "fluency",
+          "completeness",
+          "prosody",
+          "words",
+          "scorer",
+          "transcriptProvider",
+          "unavailableReason"
         ]
       }
     },

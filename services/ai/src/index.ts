@@ -3,7 +3,9 @@
 // only when COC_AI_PERSISTENCE=appwrite with an https endpoint and project; its credential is the
 // per-execution dynamic key (`x-appwrite-key`, limited by the function scopes) first, then
 // COC_AI_APPWRITE_KEY / APPWRITE_API_KEY. Business routes need COC_AI_ADMITTED=reviewed-cloud-gate.
-// Provider: only the deterministic scripted provider exists (COC_AI_PROVIDER=disabled); no model.
+// Provider: authored scripts always; COC_AI_PROVIDER=speech + secret provider keys
+// (COC_AZURE_SPEECH_KEY/REGION, COC_ASSEMBLYAI_API_KEY, COC_DEEPGRAM_API_KEY) enables real STT and
+// Azure pronunciation scores, else the scripted transcript + null scores (COC_AI_PROVIDER=disabled).
 // Event relay: COC_PROGRESS_URL (https) + an 'ai' key in COC_SERVICE_KEYS.
 import { randomUUID } from 'node:crypto';
 import {
@@ -15,7 +17,8 @@ import {
 } from '../../shared/src/appwrite-entry.js';
 import { parseKeyring } from '../../shared/src/service-hmac.js';
 import { createHostedHandler } from '../../shared/src/transport.js';
-import { SCRIPTED_PROVIDER, type AiDeps } from './application/deps.js';
+import { SCRIPTED_PROVIDER, speechProvider, type AiDeps } from './application/deps.js';
+import { speechFromEnv } from './application/speech.js';
 import { createImmediateRelay, dispatchOutbox, httpDeliver } from './application/outbox.js';
 import { gatesFromEnv } from './domain/plans.js';
 import { aiHandler, aiWiring } from './http/wiring.js';
@@ -28,12 +31,13 @@ const config = appwriteConfigFromEnv(env, currentExecutionKey);
 const persistence: AiPersistence = config
   ? createAppwriteAiPersistence(config)
   : createDisabledAiPersistence();
+const speech = speechFromEnv(env, persistence);
 const deps: AiDeps = {
   persistence,
   nowMs: Date.now,
   newId: randomUUID,
   gates: gatesFromEnv(env),
-  provider: SCRIPTED_PROVIDER,
+  provider: speech ? speechProvider(speech) : SCRIPTED_PROVIDER,
 };
 let serviceKeys;
 try {

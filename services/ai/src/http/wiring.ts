@@ -178,7 +178,15 @@ export function aiRoutes(deps: AiDeps): Route[] {
         const b = v.object(
           c.body,
           'body',
-          ['jobId', 'referenceExerciseId', 'lessonVersion', 'locale', 'wavBase64', 'audioSha256'],
+          [
+            'jobId',
+            'referenceExerciseId',
+            'lessonVersion',
+            'locale',
+            'wavBase64',
+            'audioSha256',
+            'referenceText',
+          ],
           ['jobId', 'referenceExerciseId', 'lessonVersion', 'locale', 'wavBase64', 'audioSha256'],
         );
         const body = {
@@ -188,6 +196,9 @@ export function aiRoutes(deps: AiDeps): Route[] {
           locale: v.oneOf(b['locale'], 'locale', ['en-US'] as const),
           wavBase64: v.text(b['wavBase64'], 'wavBase64', 4, WAV_MAX),
           audioSha256: v.sha(b['audioSha256'], 'audioSha256'),
+          ...(b['referenceText'] === undefined || b['referenceText'] === null
+            ? {}
+            : { referenceText: v.text(b['referenceText'], 'referenceText', 1, 300) }),
         };
         return fromReceipt(
           await createAssessment(deps, uid, body, idempotencyKey(), hash('createAssessment', body)),
