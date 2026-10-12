@@ -24,6 +24,17 @@ export const KEYRING_SENDERS = {
   ai: ['ai', 'progress'],
 };
 export const MANAGED_RUNTIME_VARS = ['BUILD_ID'];
+/**
+ * Third-party provider keys a service may hold as SECRET function variables (never in a declaration
+ * file). Values are set at apply time from the operator's environment variable of the same name, or
+ * out-of-band (console / vault-bound sink) when the operator shell only holds a proxy sentinel; apply
+ * never generates, reads back or prints them. check-live requires each declared one to exist as secret.
+ */
+export const PROVIDER_SECRETS = {
+  learning: [],
+  progress: [],
+  ai: ['COC_AZURE_SPEECH_KEY', 'COC_ASSEMBLYAI_API_KEY', 'COC_DEEPGRAM_API_KEY'],
+};
 const SECRETISH = /(KEY|SECRET|TOKEN|PASSWORD|PRIVATE)/;
 const PUBLIC_KEY_VARS = ['COC_CONTENT_PUBLIC_KEYS'];
 const CRON_FIELD = /^(\*|\d+|\d+-\d+|\*\/\d+|\d+(,\d+)+)$/;
@@ -130,6 +141,11 @@ export function validateOps(config, ops, context = {}) {
       fail(`${id}: APPWRITE_ENDPOINT mismatch`);
     if (JSON.stringify(decl.secrets) !== '["COC_SERVICE_KEYS"]')
       fail(`${id}: secrets must be exactly COC_SERVICE_KEYS`);
+    for (const key of decl.providerSecrets ?? []) {
+      if (!PROVIDER_SECRETS[service].includes(key))
+        fail(`${id}: providerSecrets ${key} not allowlisted for ${service}`);
+      if (key in (decl.variables ?? {})) fail(`${id}: ${key} must not also be a plain variable`);
+    }
     if (JSON.stringify(decl.keyringSenders) !== JSON.stringify(KEYRING_SENDERS[service])) {
       fail(`${id}: keyringSenders must be ${KEYRING_SENDERS[service].join(',')}`);
     }
@@ -231,7 +247,7 @@ export function diffVariables(decl, liveVars) {
     else if (live.secret || live.value !== value)
       drift.push({ key, declared: value, live: live.secret ? '<secret>' : live.value });
   }
-  for (const key of decl.secrets ?? []) {
+  for (const key of [...(decl.secrets ?? []), ...(decl.providerSecrets ?? [])]) {
     const live = byKey.get(key);
     if (!live) missing.push(key);
     else if (!live.secret) drift.push({ key, declared: '<secret>', live: 'NOT SECRET' });
@@ -239,6 +255,7 @@ export function diffVariables(decl, liveVars) {
   const known = new Set([
     ...Object.keys(decl.variables ?? {}),
     ...(decl.secrets ?? []),
+    ...(decl.providerSecrets ?? []),
     ...MANAGED_RUNTIME_VARS,
   ]);
   const extra = liveVars.filter((v) => !known.has(v.key)).map((v) => v.key);
@@ -292,4 +309,11 @@ export function diffPlatforms(declared, livePlatforms) {
     .filter((p) => !declared.some((d) => d.platformId === p.$id))
     .map((p) => p.$id);
   return { missing, drift, extra };
+}
+
+/** A usable provider secret value from the operator env (a proxy sentinel or blank is not one). */
+export function providerSecretFromEnv(env, key) {
+  const value = env[key];
+  if (typeof value !== 'string' || value.length < 16 || value === 'proxy-managed') return undefined;
+  return value;
 }

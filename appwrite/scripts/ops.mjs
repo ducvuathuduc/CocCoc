@@ -24,6 +24,7 @@ import {
   diffVariables,
   functionByService,
   generateKeyrings,
+  providerSecretFromEnv,
   sha256,
   validateOps,
 } from './ops-lib.mjs';
@@ -263,6 +264,21 @@ async function apply() {
       'COC_SERVICE_KEYS exists on only some functions; rerun with --rotate-service-keys to regenerate the whole ring.',
     );
   }
+  // 3b. Provider secrets (third-party keys): set from the operator env when it holds a real value;
+  //     otherwise an existing secret is kept and a missing one is reported (set it out-of-band).
+  const providerSecretsMissing = [];
+  for (const fn of config.functions) {
+    for (const key of ops.functions[fn.$id].providerSecrets ?? []) {
+      const existing = varsById[fn.$id].find((v) => v.key === key);
+      const value = providerSecretFromEnv(process.env, key);
+      if (value) {
+        await upsertVar(fn.$id, existing, key, value, true);
+        created.secrets += 1;
+      } else if (!existing) {
+        providerSecretsMissing.push(`${fn.$id}:${key}`);
+      }
+    }
+  }
   // 4. Auth methods and policies.
   const project = await api('GET', `/projects/${projectId}`);
   for (const d of diffAuthMethods(ops.auth.methods, project.authMethods ?? [])) {
@@ -306,6 +322,7 @@ async function apply() {
         declarationSha256,
         created,
         updated,
+        providerSecretsMissing: providerSecretsMissing.length ? providerSecretsMissing : undefined,
         note:
           changed && (created.variables || updated.variables || created.secrets)
             ? 'Variable changes take effect on the next deployment: run pnpm appwrite:deploy.'

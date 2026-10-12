@@ -108,11 +108,14 @@
         "COC_DATABASE_ID": "cocenglish",
         "COC_AI_PERSISTENCE": "appwrite",
         "COC_AI_ADMITTED": "reviewed-cloud-gate",
-        "COC_AI_PROVIDER": "disabled",
+        "COC_AI_PROVIDER": "speech",
+        "COC_AZURE_SPEECH_REGION": "eastasia",
+        "COC_SPEECH_DAILY_SECONDS": "540",
         "COC_GEMINI_ENABLED": "false",
         "COC_PROGRESS_URL": "https://coccoc-progress.sgp.appwrite.run"
       },
       "secrets": ["COC_SERVICE_KEYS"],
+      "providerSecrets": ["COC_AZURE_SPEECH_KEY", "COC_ASSEMBLYAI_API_KEY", "COC_DEEPGRAM_API_KEY"],
       "keyringSenders": ["ai", "progress"]
     }
   },
