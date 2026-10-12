@@ -17,6 +17,7 @@
     "api:lint": "redocly lint docs/api/openapi.yaml",
     "audit:check": "node tools/audit/validate.mjs",
     "schema:plan": "node appwrite/scripts/schema.mjs",
+    "schema:test": "node --test appwrite/test/schema.test.mjs",
     "seed:check": "node appwrite/scripts/seed.mjs"
   },
   "engines": {
