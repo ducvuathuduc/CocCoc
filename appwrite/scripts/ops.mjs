@@ -633,13 +633,25 @@ async function probe() {
         await domainCall(domain, 'GET', route, { Authorization: `Bearer ${tampered}` }),
         401,
       );
-      // A valid JWT passes Account.get; with persistence disabled the route then fails closed.
-      expect(
-        `${service} ${route} valid JWT -> verified, persistence fails closed`,
-        await domainCall(domain, 'GET', route, { Authorization: `Bearer ${jwt}` }),
-        503,
-        'SERVICE_NOT_CONFIGURED',
-      );
+      // A valid JWT passes Account.get; with persistence disabled the route then fails closed,
+      // with persistence enabled (COC_<SERVICE>_PERSISTENCE=appwrite) it answers 200.
+      const persistent =
+        ops.functions[fns[service].$id].variables?.[`COC_${service.toUpperCase()}_PERSISTENCE`] ===
+        'appwrite';
+      if (persistent && service === 'ai') {
+        expect(
+          `${service} ${route} valid JWT -> verified, persistence enabled`,
+          await domainCall(domain, 'GET', route, { Authorization: `Bearer ${jwt}` }),
+          200,
+        );
+      } else if (!persistent) {
+        expect(
+          `${service} ${route} valid JWT -> verified, persistence fails closed`,
+          await domainCall(domain, 'GET', route, { Authorization: `Bearer ${jwt}` }),
+          503,
+          'SERVICE_NOT_CONFIGURED',
+        );
+      }
     }
     await api('DELETE', `/users/${userId}/sessions/${session.$id}`);
     for (const service of selected) {

@@ -106,9 +106,11 @@
         "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
         "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
         "COC_DATABASE_ID": "cocenglish",
-        "COC_AI_PERSISTENCE": "disabled",
+        "COC_AI_PERSISTENCE": "appwrite",
+        "COC_AI_ADMITTED": "reviewed-cloud-gate",
         "COC_AI_PROVIDER": "disabled",
-        "COC_GEMINI_ENABLED": "false"
+        "COC_GEMINI_ENABLED": "false",
+        "COC_PROGRESS_URL": "https://coccoc-progress.sgp.appwrite.run"
       },
       "secrets": ["COC_SERVICE_KEYS"],
       "keyringSenders": ["ai", "progress"]
