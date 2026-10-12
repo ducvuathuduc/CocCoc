@@ -28,8 +28,8 @@ test('committed declaration matches every canonical table, column, index and per
 test('doc-explicit constraints are carried exactly', () => {
   const decl = declaration();
   assert.deepEqual(column(decl, 'l_sessions', 'bundleSnapshotJson'), { key: 'bundleSnapshotJson', type: 'string', size: 65536, required: false });
-  assert.deepEqual(column(decl, 'l_enrollments', 'frontierNodeOrder'), { key: 'frontierNodeOrder', type: 'integer', min: 0, max: 23 });
-  assert.deepEqual(column(decl, 'p_profiles', 'dailyGoal'), { key: 'dailyGoal', type: 'integer', min: 5, max: 15, allowed: [5, 10, 15] });
+  assert.deepEqual(column(decl, 'l_enrollments', 'frontierNodeOrder'), { key: 'frontierNodeOrder', type: 'integer', min: 0, max: 9999 });
+  assert.deepEqual(column(decl, 'p_profiles', 'dailyGoal'), { key: 'dailyGoal', type: 'integer', min: 5, max: 20, allowed: [5, 10, 15, 20] });
   assert.deepEqual(column(decl, 'l_content_versions', 'manifestSha256'), { key: 'manifestSha256', type: 'string', size: 64 });
   assert.deepEqual(column(decl, 'a_jobs', 'dispatchState').elements, ['NOT_SENT', 'CLAIMED', 'SENT', 'AMBIGUOUS']);
   assert.deepEqual(column(decl, 'a_voice_sessions', 'consumedSeconds'), { key: 'consumedSeconds', type: 'integer', min: 0, max: 180 });
@@ -41,6 +41,7 @@ test('shape references resolve to the documented source table', () => {
   const decl = declaration();
   const keys = (id) => table(decl, id).columns.map((c) => c.key);
   assert.deepEqual(keys('p_outbox'), keys('l_outbox'));
+  for (const id of ['l_outbox', 'p_outbox', 'a_outbox']) assert.ok(table(decl, id).indexes.some((i) => i.type === 'unique' && i.columns.join() === 'eventId'), `${id} unique(eventId)`);
   assert.deepEqual(keys('a_outbox'), keys('l_outbox'));
   assert.deepEqual(keys('p_receipts'), keys('l_receipts'));
   assert.deepEqual(keys('a_receipts'), keys('l_receipts'));
@@ -49,7 +50,7 @@ test('shape references resolve to the documented source table', () => {
 
 test('mutable rows carry revision/createdAt/updatedAt; append-only/immutable rows do not get invented fields', () => {
   const decl = declaration();
-  for (const id of ['p_reward_ledger', 'p_freeze_ledger', 'p_zone_history', 'p_achievements']) {
+  for (const id of ['p_reward_ledger', 'p_freeze_ledger', 'p_zone_history', 'p_achievements', 'p_item_ledger', 'p_year_reviews']) {
     assert.equal(table(decl, id).mutable, false, id);
     assert.ok(!table(decl, id).columns.some((c) => c.key === 'revision'), id);
   }

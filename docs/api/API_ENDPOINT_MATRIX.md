@@ -48,3 +48,32 @@ Generated from [OpenAPI](openapi.yaml); wire DTOs/headers/errors/idempotency/rat
 | GET /internal/outbox-watermark | getOutboxWatermark / learning | FR-SOCIAL-002 | l_outbox | JWT or specified internal signature |
 
 Health/ready shapes apply to all three independent service domains; Learning is the primary OpenAPI declaration owner. Internal events have receiver-specific allowlists, not cross-owned writes.
+
+## Proposed endpoints (not yet in OpenAPI)
+
+Hand-maintained; `tools/audit/manifest.mjs` keeps this section when it regenerates the table above. These are PROPOSED for the 59-table data model (DATA_MODEL M002). None exists in openapi.yaml, generated types or handlers; each needs its OpenAPI operation, x-requirements trace, Idempotency-Key on mutations and an owner-task acceptance test before implementation. Table names are the owner tables the operation would touch.
+
+| Route (proposed) | Operation / owner | Duolingo feature | Owned tables | Planned task |
+|---|---|---|---|---|
+| GET /v1/me/energy | getEnergy / learning | Energy battery | l_energy | P6-GAME-003 |
+| POST /v1/enrollments/{courseId}/activate · /reset · DELETE /v1/enrollments/{courseId} | switchCourse, resetCourse, removeCourse / learning | multiple courses, reset/remove course | l_enrollments, l_receipts | P4-LEARN-003 |
+| GET /v1/mistakes | listMistakes / learning | Practice Hub Mistakes | l_mistakes | P6-REVIEW-002 |
+| GET /v1/words | listWords / learning | Practice Hub Words (recent/alphabetical) | l_review_items | P6-REVIEW-002 |
+| GET /v1/activities | listActivityProgress / learning | Stories, Adventures, DuoRadio, side quests, Clash library | l_activity_progress | P7-PRACTICE-001 |
+| GET/PATCH /v1/me/preferences | getPreferences, updatePreferences / progress | notification, sound, speaking/listening settings | p_preferences, p_receipts | P3-AUTH-002 |
+| GET /v1/shop · POST /v1/shop/purchases | listShop, buyItem / progress | shop power-ups, energy refill, streak repair | p_inventory, p_item_ledger, p_reward_ledger, p_rewards, p_outbox, p_receipts | P6-GAME-003 |
+| POST /v1/me/boosts | activateBoost / progress | XP boost, timer boost | p_inventory, p_item_ledger, p_boosts, p_receipts | P6-GAME-003 |
+| POST /v1/me/streak-repair | repairStreak / progress | streak repair | p_rewards, p_reward_ledger, p_item_ledger, p_receipts | P6-GAME-003 |
+| GET/POST /v1/friend-streaks · POST /v1/friend-streaks/{pairId}/respond | listFriendStreaks, inviteFriendStreak, respondFriendStreak / progress | Friend Streak | p_friend_streaks, p_follows, p_receipts | P9-SOCIAL-002 |
+| POST /v1/interactions | sendInteraction / progress | nudge, high-five, kudos, gift XP boost | p_interactions, p_reward_ledger, p_boosts, p_receipts | P9-SOCIAL-002 |
+| POST /v1/blocks · DELETE /v1/blocks/{userId} | blockUser, unblockUser / progress | block user | p_blocks, p_follows, p_friend_streaks, p_receipts | P9-SOCIAL-002 |
+| POST /v1/user-reports | reportUser / progress | report user | p_user_reports, p_receipts | P9-SOCIAL-002 |
+| GET /v1/league/result · POST /v1/league/result/seen | getLeagueResult, markLeagueResultSeen / progress | league result screen, Diamond Tournament | p_league_profiles, p_receipts | P9-LEAGUE-002 |
+| GET /v1/me/entitlement · POST /v1/billing/purchases · POST /internal/billing/notifications | getEntitlement, verifyPurchase, billingNotification / progress | Super/Max, gems purchase | p_entitlements, p_purchases, p_outbox, p_receipts | P10-BILL-001 |
+| POST /v1/family · POST /v1/family/{groupId}/members · DELETE …/members/{userId} | createFamily, joinFamily, removeFamilyMember / progress | Family Plan | p_family_groups, p_entitlements, p_receipts | P10-BILL-001 |
+| POST /v1/gifts · POST /v1/gifts/{giftId}/redeem | sendGift, redeemGift / progress | gift Super/Max | p_gifts, p_purchases, p_entitlements, p_receipts | P10-BILL-001 |
+| GET /v1/me/referral · POST /v1/referrals/redeem | getReferral, redeemReferral / progress | invite friends | p_referrals, p_entitlements, p_receipts | P10-BILL-001 |
+| GET /v1/me/year-review/{year} | getYearReview / progress | Year in Review | p_year_reviews, p_day_activity | P9-SOCIAL-002 |
+| POST /v1/feedback | sendFeedback / progress | settings feedback | p_feedback, p_receipts | P3-AUTH-002 |
+| POST /v1/classrooms/join · DELETE /v1/classrooms/{classroomId}/membership | joinClassroom, leaveClassroom / progress | Duolingo for Schools join | p_classrooms, p_classroom_members, p_receipts | P9-SOCIAL-002 |
+| GET /v1/conversations · POST /v1/conversations · POST /v1/conversations/{conversationId}/complete | listConversations, startConversation, completeConversation / ai | Roleplay, Video Call review | a_conversations, a_voice_sessions, a_outbox, a_receipts | P8-AI-003 |

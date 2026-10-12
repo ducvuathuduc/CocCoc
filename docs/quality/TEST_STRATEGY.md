@@ -9,7 +9,7 @@ Use meaningful behavior tests. No implementation-mirroring tests for reversible 
 | Widget/semantics | all12 exercise types, CHECK validity, accessible feedback, text scale2, error/offline states | tests + semantic assertions |
 | Golden |42screen fixture states, narrow/wide, light/dark, reduced motion | pinned Linux/font artifact and reviewed diff |
 | Mobile integration | onboarding→auth→path→lesson→rewards; offline kill/sync; native permission/routing | integration_test; Patrol only when native automation justified |
-| Backend unit | grader, XP/caps/zone/freeze rules, event schema/HMAC, provider output validation | Vitest fake clocks/providers |
+| Backend unit | grader, XP/caps/zone/freeze rules, event schema/HMAC, provider output validation | node:test with injected fake clocks/providers |
 | Backend integration | real TablesDB transactions/conflicts/indexes/permissions, receipt reconstruction, outbox crash/leases, deletion tombstone | disposable Appwrite environment after compatibility gate |
 | Contract | OpenAPI valid, positive/negative body/response fixture, stale client schema, all x-owner/table/requirement refs | schema validator + compatibility diff |
 | Resilience/security | EC07–EC17, negative subjects/header spoof/scheduler, ambiguous token mint, no paid fallback | fault-injection logs/ledger assertions |

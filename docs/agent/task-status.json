@@ -1,6 +1,6 @@
 {
   "updated": "2026-10-12",
-  "project": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
+  "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
     {
@@ -8,7 +8,7 @@
       "phase": "frontend slice",
       "owner": "root",
       "branch": "codex/flutter-onboarding-login",
-      "worktree": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
+      "worktree": ".",
       "dependencyGateReceipts": [
         "docs/agent/FRONTEND_FLOW_PLAN.md",
         "docs/design/flows/01_ONBOARDING.md",
@@ -120,7 +120,7 @@
       "owner": "root",
       "branch": "main",
       "baselineCommit": "8b64cdcff3365e0ae4c5401bf2e799abd3dca649",
-      "worktree": "C:\\Users\\ADMIN\\Desktop\\CocEnglish",
+      "worktree": ".",
       "status": "PASSED",
       "requirementCoverage": "research/document/scaffold/local compilation only; existing UI preserved; full production phase gates remain pending",
       "exclusivePaths": [
@@ -233,7 +233,7 @@
         "/workspace/tools/ui-sprint-completion-current-analyze-retry.log",
         "/workspace/tools/ui-sprint-completion-current-palette.log"
       ],
-      "remaining": "Scoped screen DONE under ticket40 SPEED FIRST rule:29focused tests pass; analyzer0issues; QA accepts small glyph/numeral/1\u20132px alignment differences. OS indicators outside widget captures. Whole-sprint/full-suite gate remains open;74legacy palette mismatches unchanged."
+      "remaining": "Scoped screen DONE under ticket40 SPEED FIRST rule:29focused tests pass; analyzer0issues; QA accepts small glyph/numeral/1–2px alignment differences. OS indicators outside widget captures. Whole-sprint/full-suite gate remains open;74legacy palette mismatches unchanged."
     },
     {
       "taskId": "UI-SPRINT-I-SHELL",
@@ -272,7 +272,7 @@
       "evidence": [
         "specs/top-bar-bottom-nav.md"
       ],
-      "remaining": "Implement typed shell content, preserve icon proportions and \u226548dp stats; verify repository overrides, tab state, motion, 360/430 text1/2, compare and commit."
+      "remaining": "Implement typed shell content, preserve icon proportions and ≥48dp stats; verify repository overrides, tab state, motion, 360/430 text1/2, compare and commit."
     },
     {
       "taskId": "P1-FOUND-002",
@@ -326,7 +326,7 @@
         "pnpm api:lint PASS",
         "pnpm audit:check PASS"
       ],
-      "remaining": "Cloud half of P1-FOUND-002: admitted-account Node22 runtime, live Account.get, TablesDB transaction/conflict/permission probes, durable Appwrite adapter replacing disabled adapters, scheduler provenance negative test. Hosted HMAC keyring env name COC_SERVICE_KEYS and scaffold code SERVICE_NOT_CONFIGURED are not yet in canonical docs."
+      "remaining": "Cloud half of P1-FOUND-002: admitted-account Node22 runtime, live Account.get, TablesDB transaction/conflict/permission probes, durable Appwrite adapter replacing disabled adapters, scheduler provenance negative test. COC_SERVICE_KEYS and SERVICE_NOT_CONFIGURED are now documented in docs/api/EVENTS_ERRORS.md (DATA-GAP-20261012)."
     },
     {
       "taskId": "P1-OPS-001",
@@ -425,6 +425,38 @@
         "backendVerify": "PASS: pnpm backend:verify 16/16 node tests, status PASS"
       },
       "limitations": "Contract/unit evidence only; no device, network or live-provider proof. Enum-valued fields are typed String (membership enforced by the validator), date-time fields stay wire strings. Generated Dart is emitted pre-formatted by the generator, not dart format."
+    },
+    {
+      "taskId": "DATA-GAP-20261012",
+      "phase": "P1 data model review (user-authorized)",
+      "owner": "pb/data subagent",
+      "branch": "pb/data",
+      "worktree": "wt/b-data (from origin/main 9943e31)",
+      "dependencyGateReceipts": [
+        "docs/data/DATA_MODEL.md",
+        "docs/data/PERMISSIONS.md",
+        "docs/data/MIGRATIONS.md",
+        "apps/mobile/lib/features/*/domain"
+      ],
+      "exclusivePaths": [
+        "docs/data",
+        "appwrite/schema",
+        "appwrite/scripts/schema-declare.mjs",
+        "appwrite/scripts/schema-lib.mjs",
+        "appwrite/test",
+        "docs/api/API_ENDPOINT_MATRIX.md",
+        "docs/api/EVENTS_ERRORS.md",
+        "docs/agent/IMPLEMENTATION_PLAN.md",
+        "docs/agent/DEPENDENCY_DAG.md"
+      ],
+      "requirements": [
+        "Duolingo language-learning feature coverage in the data model",
+        "59-table declaration regenerated",
+        "trivial OpenAPI range widening only"
+      ],
+      "requirementCoverage": "Docs and offline declaration only; 22 tables added (37→59); proposed endpoints/events not in OpenAPI; nothing applied to Appwrite.",
+      "status": "DONE",
+      "remaining": "Proposed tasks P4-LEARN-003, P6-GAME-003, P6-REVIEW-002, P7-PRACTICE-001, P8-AI-003, P9-SOCIAL-002, P9-LEAGUE-002, P10-BILL-001 need contract-owner review; repo/doc restructure is a separate follow-up."
     }
   ]
 }

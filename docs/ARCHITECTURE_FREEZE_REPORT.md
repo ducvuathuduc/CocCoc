@@ -51,7 +51,7 @@ Cloud boxes are design/deployment targets, not deployed resources. Local entrypo
 | Backend/data | No client XP/time authority; transaction/outbox + own inbox/ledger. Keys give logical isolation only; real conflict/row permission tests B03. |
 | AI/realtime | Single-use constrained credential is not hard spend guarantee. Legacy model earliest retirement dated; no maintained Dart Live SDK assumed; B04/B05. |
 | Platform | Windows source/tests/web and Android debug compilation pass. Default global-cache Android build failed; fresh Gradle user home passed. Licenses/device and iOS proof remain unresolved; B06. |
-| QA | 39 FR/19 NFR/42 spec screens/37 table owners/94 schemas preserve IDs. 422 callback declarations inventoried; semantic/device state acceptance still P2–P10. |
+| QA | 39 FR/19 NFR/42 spec screens/37 table owners (59 after the 2026-10-12 data-gap expansion, DATA_MODEL M002)/94 schemas preserve IDs. 422 callback declarations inventoried; semantic/device state acceptance still P2–P10. |
 | Security | Auth via Account.get, no mobile secrets, fail-closed scaffold. HMAC/entitlement/cross-account/live token misuse not implied by local tests. |
 | Cost | Four usage scenarios and expiration fallback; no free quota, balance or zero-spend guarantee. B02/B07 require actual dashboards/admission. |
 

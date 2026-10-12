@@ -1370,7 +1370,7 @@ export interface components {
             avatarId: string | null;
             publicOptIn: boolean;
             /** @enum {integer} */
-            dailyGoal: 5 | 10 | 15;
+            dailyGoal: 5 | 10 | 15 | 20;
             learningZone: string;
             pendingZone: string | null;
             zoneEffectiveAt: string | null;
@@ -1382,7 +1382,7 @@ export interface components {
             avatarId?: string | null;
             publicOptIn?: boolean;
             /** @enum {integer} */
-            dailyGoal?: 5 | 10 | 15;
+            dailyGoal?: 5 | 10 | 15 | 20;
             learningZone?: string;
             expectedRevision: number;
         };

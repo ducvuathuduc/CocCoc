@@ -56,11 +56,11 @@ One database with service-prefixed tables and one bucket deliberately fit Appwri
 
 ## Service boundaries
 
-**Learning** owns catalog/publishing, immutable lesson bundles, enrollment/node frontier, sessions/answers, mastery and review scheduling. Keeping grading, session completion and path unlock together avoids a distributed transaction on the critical learning path.
+**Learning** owns catalog/publishing, immutable lesson bundles, enrollment/node frontier and active course, sessions/answers, mastery/Legendary, review scheduling, mistakes, practice-library progress (stories/adventures/radio/side quests) and the energy battery that gates lessons. Keeping grading, session completion and path unlock together avoids a distributed transaction on the critical learning path.
 
-**Progress** owns public/private profile, learning-zone history, XP/streak/gems, quests, friendships and league projections. “Progress” means reward/social progress; course progress remains Learning's authoritative state.
+**Progress** owns public/private profile and preferences, learning-zone history, XP/streak/gems, shop inventory/boosts, quests, friendships/blocks/reports, friend streaks/interactions, league projections, achievements, entitlements/purchases/family/gifts/referrals and classrooms. “Progress” means reward/social progress; course progress remains Learning's authoritative state.
 
-**AI** owns capability configuration, tutoring/assessment requests, quota reservations and bounded voice session metadata. It does not change correct answers, course unlocks or authoritative XP.
+**AI** owns capability configuration, tutoring/assessment requests, quota reservations, bounded voice session metadata and Roleplay/Video Call conversation history. It does not change correct answers, course unlocks or authoritative XP.
 
 Auth/OAuth, database, object storage, Functions and Realtime are managed infrastructure. Notifications are a Progress module plus local device reminders. Analytics is an append-only operational event/log module. Content administration is a checked-in CLI/pipeline in Learning. No separate auth, catalog, notification, analytics, admin, speech, gateway, broker or cache service.
 

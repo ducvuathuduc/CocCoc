@@ -1,5 +1,5 @@
 // Standard error envelope and code table from docs/api/EVENTS_ERRORS.md.
-// SERVICE_NOT_CONFIGURED is the scaffold's fail-closed code (not yet in the canonical table).
+// SERVICE_NOT_CONFIGURED is the scaffold's fail-closed 503 code (documented in EVENTS_ERRORS.md).
 const CODE_STATUS = {
   VALIDATION_ERROR: 400,
   UNKNOWN_EXERCISE_TYPE: 400,

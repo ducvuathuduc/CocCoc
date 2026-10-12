@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "databaseId": "cocenglish",
-  "scope": "All 37 canonical TablesDB tables from docs/data/DATA_MODEL.md plus the learning-assets bucket. Declaration only: no client table/bucket grants, rowSecurity on every table, p_notifications owner read row grant only. Live apply, availability and permission probes remain gated on an admitted test project.",
+  "scope": "All 59 canonical TablesDB tables from docs/data/DATA_MODEL.md plus the learning-assets bucket. Declaration only: no client table/bucket grants, rowSecurity on every table, p_notifications owner read row grant only. Live apply, availability and permission probes remain gated on an admitted test project.",
   "sources": [
     "docs/data/DATA_MODEL.md",
     "docs/data/PERMISSIONS.md"
@@ -10,7 +10,7 @@
     "mutableFields": "Tables whose retention cell is not append-only/immutable carry revision (integer>=0), createdAt, updatedAt per DATA_MODEL Types.",
     "implicitTypes": "Columns without an explicit doc constraint follow appwrite/scripts/schema-lib.mjs conventionFor: *At/*Until datetime; *Id/*Identity/*Version string36; *Hash/*Sha256 string64; day keys string10; *zone string64; locale string16; type/operation/key/providerAlias/leaseOwner string64; counters integer.",
     "enums": "Documented A/B/C value sets are Appwrite enum columns.",
-    "integerSets": "Integer value sets (dailyGoal 5/10/15, friend quest target 10) are declared as min/max range plus allowed; exact set is enforced by the owning service.",
+    "integerSets": "Integer value sets (dailyGoal 5/10/15/20) are declared as min/max range plus allowed; exact set is enforced by the owning service.",
     "largeText": "String size is the doc maximum enforced by services; storage is varchar<=2048, text<=16383, mediumtext above (node-appwrite 29.2.0 varchar max 16381)."
   },
   "tables": [
@@ -48,16 +48,22 @@
       {"key": "userId", "type": "string", "size": 36},
       {"key": "courseId", "type": "string", "size": 36},
       {"key": "courseVersion", "type": "string", "size": 36},
-      {"key": "frontierNodeOrder", "type": "integer", "min": 0, "max": 23},
+      {"key": "frontierNodeOrder", "type": "integer", "min": 0, "max": 9999},
       {"key": "completedLessonsJson", "type": "string", "size": 16384},
       {"key": "masteredNodesJson", "type": "string", "size": 4096},
+      {"key": "legendaryNodesJson", "type": "string", "size": 4096},
       {"key": "placementUsed", "type": "boolean"},
+      {"key": "active", "type": "boolean"},
+      {"key": "proficiencyScore", "type": "integer", "min": 0, "max": 200},
+      {"key": "lastPracticedAt", "type": "datetime", "required": false},
+      {"key": "removedAt", "type": "datetime", "required": false},
       {"key": "revision", "type": "integer", "min": 0},
       {"key": "createdAt", "type": "datetime"},
       {"key": "updatedAt", "type": "datetime"}
     ], "indexes": [
       {"key": "u_userId_courseId", "type": "unique", "columns": ["userId", "courseId"]},
-      {"key": "k_userId", "type": "key", "columns": ["userId"]}
+      {"key": "k_userId", "type": "key", "columns": ["userId"]},
+      {"key": "k_userId_active", "type": "key", "columns": ["userId", "active"]}
     ]},
     {"id": "l_active_slots", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},
@@ -76,7 +82,7 @@
       {"key": "lessonId", "type": "string", "size": 36},
       {"key": "lessonVersion", "type": "string", "size": 36},
       {"key": "rewardIdentity", "type": "string", "size": 36},
-      {"key": "mode", "type": "enum", "elements": ["LESSON", "REVIEW", "MASTERY", "PLACEMENT"]},
+      {"key": "mode", "type": "enum", "elements": ["LESSON", "REVIEW", "MASTERY", "PLACEMENT", "JUMP", "MISTAKES", "WORDS", "LISTEN", "SPEAK", "STORY", "ADVENTURE", "RADIO", "SIDE_QUEST", "CLASH", "UNIT_REVIEW"]},
       {"key": "source", "type": "enum", "elements": ["ONLINE", "OFFLINE"]},
       {"key": "status", "type": "enum", "elements": ["ACTIVE", "COMPLETED", "ABANDONED", "EXPIRED"]},
       {"key": "bundleHash", "type": "string", "size": 64},
@@ -84,6 +90,8 @@
       {"key": "nextOriginalOrdinal", "type": "integer", "min": 0, "max": 20},
       {"key": "retryPass", "type": "integer", "min": 0, "max": 2},
       {"key": "assisted", "type": "boolean"},
+      {"key": "energySpent", "type": "integer", "min": 0},
+      {"key": "energyEarned", "type": "integer", "min": 0},
       {"key": "startedAt", "type": "datetime"},
       {"key": "expiresAt", "type": "datetime"},
       {"key": "completedAt", "type": "datetime", "required": false},
@@ -122,12 +130,17 @@
       {"key": "dueAt", "type": "datetime"},
       {"key": "firstAttemptWindowJson", "type": "string", "size": 4096},
       {"key": "lastReviewedAt", "type": "datetime"},
+      {"key": "firstSeenAt", "type": "datetime"},
+      {"key": "correctCount", "type": "integer", "min": 0},
+      {"key": "incorrectCount", "type": "integer", "min": 0},
+      {"key": "halfLifeHours", "type": "integer", "min": 0},
       {"key": "revision", "type": "integer", "min": 0},
       {"key": "createdAt", "type": "datetime"},
       {"key": "updatedAt", "type": "datetime"}
     ], "indexes": [
       {"key": "u_userId_courseId_vocabularyId", "type": "unique", "columns": ["userId", "courseId", "vocabularyId"]},
-      {"key": "k_userId_dueAt", "type": "key", "columns": ["userId", "dueAt"]}
+      {"key": "k_userId_dueAt", "type": "key", "columns": ["userId", "dueAt"]},
+      {"key": "k_userId_courseId_firstSeenAt", "type": "key", "columns": ["userId", "courseId", "firstSeenAt"]}
     ]},
     {"id": "l_reports", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},
@@ -188,23 +201,76 @@
     ], "indexes": [
       {"key": "u_eventId", "type": "unique", "columns": ["eventId"]}
     ]},
+    {"id": "l_energy", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "mode", "type": "enum", "elements": ["LIMITED", "UNLIMITED"]},
+      {"key": "balance", "type": "integer", "min": 0, "max": 100},
+      {"key": "capacity", "type": "integer", "min": 1, "max": 100},
+      {"key": "anchorAt", "type": "datetime"},
+      {"key": "entitlementRevision", "type": "integer", "min": 0},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]}
+    ]},
+    {"id": "l_mistakes", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "exerciseId", "type": "string", "size": 36},
+      {"key": "lessonVersion", "type": "string", "size": 36},
+      {"key": "skillId", "type": "string", "size": 36},
+      {"key": "lastSessionId", "type": "string", "size": 36},
+      {"key": "mistakeCount", "type": "integer", "min": 1},
+      {"key": "lastMistakeAt", "type": "datetime"},
+      {"key": "resolvedAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_courseId_exerciseId", "type": "unique", "columns": ["userId", "courseId", "exerciseId"]},
+      {"key": "k_user_cour_reso_last", "type": "key", "columns": ["userId", "courseId", "resolvedAt", "lastMistakeAt"]}
+    ]},
+    {"id": "l_activity_progress", "owner": "learning", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["STORY", "ADVENTURE", "RADIO", "SIDE_QUEST", "CLASH", "UNIT_REVIEW"]},
+      {"key": "activityId", "type": "string", "size": 36},
+      {"key": "completions", "type": "integer", "min": 0},
+      {"key": "bestScore", "type": "integer", "min": 0},
+      {"key": "stars", "type": "integer", "min": 0, "max": 3},
+      {"key": "firstCompletedAt", "type": "datetime", "required": false},
+      {"key": "lastCompletedAt", "type": "datetime", "required": false},
+      {"key": "lastSessionId", "type": "string", "size": 36, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_courseId_kind_activityId", "type": "unique", "columns": ["userId", "courseId", "kind", "activityId"]},
+      {"key": "k_userId_courseId_kind", "type": "key", "columns": ["userId", "courseId", "kind"]}
+    ]},
     {"id": "p_profiles", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},
+      {"key": "username", "type": "string", "size": 30},
       {"key": "nickname", "type": "string", "size": 40},
       {"key": "avatarId", "type": "string", "size": 36, "required": false},
+      {"key": "avatarConfigJson", "type": "string", "size": 2048, "required": false},
       {"key": "publicOptIn", "type": "boolean"},
+      {"key": "ageBand", "type": "enum", "elements": ["CHILD", "TEEN", "ADULT"]},
       {"key": "emailVerifiedSnapshot", "type": "boolean"},
-      {"key": "dailyGoal", "type": "integer", "min": 5, "max": 15, "allowed": [5, 10, 15]},
+      {"key": "dailyGoal", "type": "integer", "min": 5, "max": 20, "allowed": [5, 10, 15, 20]},
       {"key": "learningZone", "type": "string", "size": 64},
       {"key": "pendingZone", "type": "string", "size": 64, "required": false},
       {"key": "zoneEffectiveAt", "type": "datetime", "required": false},
       {"key": "lastZoneChangedAt", "type": "datetime"},
+      {"key": "onboardingJson", "type": "string", "size": 2048, "required": false},
       {"key": "deletedAt", "type": "datetime", "required": false},
       {"key": "revision", "type": "integer", "min": 0},
       {"key": "createdAt", "type": "datetime"},
       {"key": "updatedAt", "type": "datetime"}
     ], "indexes": [
       {"key": "u_userId", "type": "unique", "columns": ["userId"]},
+      {"key": "u_username", "type": "unique", "columns": ["username"]},
       {"key": "k_publicOptIn_nickname", "type": "key", "columns": ["publicOptIn", "nickname"]}
     ]},
     {"id": "p_zone_history", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
@@ -220,10 +286,15 @@
       {"key": "studyXp", "type": "integer", "min": 0},
       {"key": "leagueXpLifetime", "type": "integer", "min": 0},
       {"key": "gems", "type": "integer", "min": 0},
-      {"key": "freezeSlots", "type": "integer", "min": 0, "max": 2},
-      {"key": "currentStreak", "type": "integer", "min": 0, "max": 365},
-      {"key": "bestStreak", "type": "integer", "min": 0, "max": 365},
+      {"key": "freezeSlots", "type": "integer", "min": 0, "max": 5},
+      {"key": "currentStreak", "type": "integer", "min": 0},
+      {"key": "bestStreak", "type": "integer", "min": 0},
+      {"key": "streakStartDay", "type": "string", "size": 10, "required": false},
       {"key": "lastQualifiedDay", "type": "string", "size": 10, "required": false},
+      {"key": "lostStreak", "type": "integer", "min": 0},
+      {"key": "lostStreakDay", "type": "string", "size": 10, "required": false},
+      {"key": "streakGoal", "type": "integer", "min": 0, "max": 365},
+      {"key": "streakGoalStartDay", "type": "string", "size": 10, "required": false},
       {"key": "revision", "type": "integer", "min": 0},
       {"key": "createdAt", "type": "datetime"},
       {"key": "updatedAt", "type": "datetime"}
@@ -235,7 +306,7 @@
       {"key": "completionId", "type": "string", "size": 36},
       {"key": "userId", "type": "string", "size": 36},
       {"key": "rewardIdentity", "type": "string", "size": 36},
-      {"key": "kind", "type": "enum", "elements": ["INITIAL", "FIRST", "REPLAY", "QUEST", "FREEZE"]},
+      {"key": "kind", "type": "enum", "elements": ["INITIAL", "FIRST", "REPLAY", "QUEST", "FREEZE", "SHOP", "CHEST", "LEAGUE", "ACHIEVEMENT", "STREAK", "PRACTICE", "GIFT", "PURCHASE", "REFUND", "ADJUST"]},
       {"key": "studyXpDelta", "type": "integer"},
       {"key": "leagueXpDelta", "type": "integer"},
       {"key": "gemsDelta", "type": "integer"},
@@ -269,6 +340,8 @@
       {"key": "completedLessons", "type": "integer"},
       {"key": "originalCorrect", "type": "integer"},
       {"key": "reviewSessions", "type": "integer"},
+      {"key": "minutesSpent", "type": "integer", "min": 0},
+      {"key": "goalMet", "type": "boolean"},
       {"key": "revision", "type": "integer", "min": 0},
       {"key": "createdAt", "type": "datetime"},
       {"key": "updatedAt", "type": "datetime"}
@@ -288,7 +361,7 @@
     ]},
     {"id": "p_quests", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},
-      {"key": "period", "type": "enum", "elements": ["DAY", "MONTH", "WEEK"]},
+      {"key": "period", "type": "enum", "elements": ["DAY", "WEEK", "WEEKEND", "MONTH"]},
       {"key": "periodKey", "type": "string", "size": 10},
       {"key": "questId", "type": "string", "size": 36},
       {"key": "metricValue", "type": "integer"},
@@ -305,7 +378,7 @@
     {"id": "p_follows", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "fromUserId", "type": "string", "size": 36},
       {"key": "toUserId", "type": "string", "size": 36},
-      {"key": "status", "type": "enum", "elements": ["ACTIVE", "BLOCKED"]},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "REMOVED"]},
       {"key": "revision", "type": "integer", "min": 0},
       {"key": "createdAt", "type": "datetime"},
       {"key": "updatedAt", "type": "datetime"}
@@ -316,8 +389,9 @@
     {"id": "p_friend_quests", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "weekId", "type": "string", "size": 36},
       {"key": "pairId", "type": "string", "size": 36},
+      {"key": "templateId", "type": "string", "size": 36},
       {"key": "userIdsJson", "type": "string", "size": 128},
-      {"key": "target", "type": "integer", "min": 10, "max": 10, "allowed": [10]},
+      {"key": "target", "type": "integer", "min": 1},
       {"key": "count", "type": "integer"},
       {"key": "claimedUserIdsJson", "type": "string", "size": 128},
       {"key": "membershipFrozenAt", "type": "datetime"},
@@ -333,9 +407,11 @@
       {"key": "cohortId", "type": "string", "size": 36},
       {"key": "userId", "type": "string", "size": 36},
       {"key": "tier", "type": "integer", "min": 0, "max": 9},
+      {"key": "stage", "type": "enum", "elements": ["LEAGUE", "QUARTERFINAL", "SEMIFINAL", "FINAL"]},
       {"key": "eligibleXp", "type": "integer"},
       {"key": "lastXpAt", "type": "datetime", "required": false},
       {"key": "rank", "type": "integer", "required": false},
+      {"key": "excluded", "type": "boolean"},
       {"key": "settled", "type": "boolean"},
       {"key": "revision", "type": "integer", "min": 0},
       {"key": "createdAt", "type": "datetime"},
@@ -347,6 +423,8 @@
     {"id": "p_league_runs", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "weekId", "type": "string", "size": 36},
       {"key": "cohortId", "type": "string", "size": 36},
+      {"key": "tier", "type": "integer", "min": 0, "max": 9},
+      {"key": "stage", "type": "enum", "elements": ["LEAGUE", "QUARTERFINAL", "SEMIFINAL", "FINAL"]},
       {"key": "status", "type": "enum", "elements": ["OPEN", "SETTLING", "CLOSED"]},
       {"key": "watermarkAt", "type": "datetime", "required": false},
       {"key": "checkpointUserId", "type": "string", "size": 36, "required": false},
@@ -361,7 +439,7 @@
     {"id": "p_activity", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "eventId", "type": "string", "size": 36},
       {"key": "userId", "type": "string", "size": 36},
-      {"key": "kind", "type": "enum", "elements": ["MILESTONE", "QUEST", "STREAK"]},
+      {"key": "kind", "type": "enum", "elements": ["MILESTONE", "QUEST", "STREAK", "LEAGUE", "ACHIEVEMENT", "FRIEND_STREAK", "COURSE", "JOINED"]},
       {"key": "publicSummary", "type": "string", "size": 160},
       {"key": "visible", "type": "boolean"},
       {"key": "revision", "type": "integer", "min": 0},
@@ -374,10 +452,11 @@
     {"id": "p_achievements", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},
       {"key": "achievementId", "type": "string", "size": 36},
+      {"key": "tier", "type": "integer", "min": 0, "max": 10},
       {"key": "earnedAt", "type": "datetime"},
       {"key": "sourceEventId", "type": "string", "size": 36}
     ], "indexes": [
-      {"key": "u_userId_achievementId", "type": "unique", "columns": ["userId", "achievementId"]}
+      {"key": "u_userId_achievementId_tier", "type": "unique", "columns": ["userId", "achievementId", "tier"]}
     ]},
     {"id": "p_notifications", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [{"action": "read", "role": "user", "valueFrom": "userId"}], "columns": [
       {"key": "userId", "type": "string", "size": 36},
@@ -420,6 +499,7 @@
       {"key": "createdAt", "type": "datetime"},
       {"key": "updatedAt", "type": "datetime"}
     ], "indexes": [
+      {"key": "u_eventId", "type": "unique", "columns": ["eventId"]},
       {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]}
     ]},
     {"id": "p_receipts", "owner": "progress", "mutable": true, "columnsFrom": "l_receipts", "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
@@ -448,6 +528,268 @@
       {"key": "updatedAt", "type": "datetime"}
     ], "indexes": [
       {"key": "u_userId", "type": "unique", "columns": ["userId"]}
+    ]},
+    {"id": "p_preferences", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "notificationsOffJson", "type": "string", "size": 2048},
+      {"key": "smartScheduling", "type": "boolean"},
+      {"key": "reminderMinute", "type": "integer", "min": 0, "max": 1439},
+      {"key": "soundEffects", "type": "boolean"},
+      {"key": "haptics", "type": "boolean"},
+      {"key": "motivationalMessages", "type": "boolean"},
+      {"key": "listeningExercises", "type": "boolean"},
+      {"key": "speakingExercises", "type": "boolean"},
+      {"key": "friendStreakInvites", "type": "boolean"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]}
+    ]},
+    {"id": "p_inventory", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "itemId", "type": "string", "size": 64},
+      {"key": "quantity", "type": "integer", "min": 0, "max": 999},
+      {"key": "expiresAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_itemId", "type": "unique", "columns": ["userId", "itemId"]},
+      {"key": "k_userId", "type": "key", "columns": ["userId"]}
+    ]},
+    {"id": "p_item_ledger", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "operationId", "type": "string", "size": 36},
+      {"key": "itemId", "type": "string", "size": 64},
+      {"key": "action", "type": "enum", "elements": ["BUY", "GRANT", "CONSUME", "ACTIVATE", "EXPIRE", "GIFT_SEND", "GIFT_RECEIVE", "REFUND"]},
+      {"key": "quantityDelta", "type": "integer"},
+      {"key": "gemsDelta", "type": "integer"},
+      {"key": "source", "type": "string", "size": 64},
+      {"key": "occurredAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_operationId_itemId", "type": "unique", "columns": ["userId", "operationId", "itemId"]},
+      {"key": "k_userId_occurredAt", "type": "key", "columns": ["userId", "occurredAt"]}
+    ]},
+    {"id": "p_boosts", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "boostId", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["XP_BOOST", "HAPPY_HOUR", "TIMER_BOOST"]},
+      {"key": "multiplier", "type": "integer", "min": 1, "max": 3},
+      {"key": "startsAt", "type": "datetime"},
+      {"key": "endsAt", "type": "datetime"},
+      {"key": "sourceOperationId", "type": "string", "size": 36},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_sourceOperationId", "type": "unique", "columns": ["userId", "sourceOperationId"]},
+      {"key": "k_userId_endsAt", "type": "key", "columns": ["userId", "endsAt"]}
+    ]},
+    {"id": "p_friend_streaks", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "pairId", "type": "string", "size": 36},
+      {"key": "userAId", "type": "string", "size": 36},
+      {"key": "userBId", "type": "string", "size": 36},
+      {"key": "inviterId", "type": "string", "size": 36},
+      {"key": "status", "type": "enum", "elements": ["PENDING", "ACTIVE", "DECLINED", "ENDED"]},
+      {"key": "startDay", "type": "string", "size": 10, "required": false},
+      {"key": "length", "type": "integer", "min": 0},
+      {"key": "lastExtendedDay", "type": "string", "size": 10, "required": false},
+      {"key": "endedAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_pairId", "type": "unique", "columns": ["pairId"]},
+      {"key": "k_userAId_status", "type": "key", "columns": ["userAId", "status"]},
+      {"key": "k_userBId_status", "type": "key", "columns": ["userBId", "status"]}
+    ]},
+    {"id": "p_interactions", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "operationId", "type": "string", "size": 36},
+      {"key": "fromUserId", "type": "string", "size": 36},
+      {"key": "toUserId", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["NUDGE", "HIGH_FIVE", "KUDOS", "GIFT_BOOST", "CONGRATS"]},
+      {"key": "contextId", "type": "string", "size": 36},
+      {"key": "day", "type": "string", "size": 10},
+      {"key": "messageKey", "type": "string", "size": 64},
+      {"key": "gemsCost", "type": "integer", "min": 0},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_from_toUs_kind_cont_day", "type": "unique", "columns": ["fromUserId", "toUserId", "kind", "contextId", "day"]},
+      {"key": "k_toUserId_createdAt", "type": "key", "columns": ["toUserId", "createdAt"]}
+    ]},
+    {"id": "p_blocks", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "blockerId", "type": "string", "size": 36},
+      {"key": "blockedId", "type": "string", "size": 36},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_blockerId_blockedId", "type": "unique", "columns": ["blockerId", "blockedId"]},
+      {"key": "k_blockedId", "type": "key", "columns": ["blockedId"]}
+    ]},
+    {"id": "p_user_reports", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "reporterId", "type": "string", "size": 36},
+      {"key": "targetUserId", "type": "string", "size": 36},
+      {"key": "reason", "type": "enum", "elements": ["SPAM", "INAPPROPRIATE_NAME", "INAPPROPRIATE_AVATAR", "HARASSMENT", "CHEATING", "OTHER"]},
+      {"key": "note", "type": "string", "size": 512, "required": false},
+      {"key": "status", "type": "enum", "elements": ["OPEN", "ACTIONED", "DISMISSED"]},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_reporterId_targetUserId_reason", "type": "unique", "columns": ["reporterId", "targetUserId", "reason"]},
+      {"key": "k_status_createdAt", "type": "key", "columns": ["status", "createdAt"]}
+    ]},
+    {"id": "p_league_profiles", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "tier", "type": "integer", "min": 0, "max": 9},
+      {"key": "stage", "type": "enum", "elements": ["LEAGUE", "QUARTERFINAL", "SEMIFINAL", "FINAL"]},
+      {"key": "weeksParticipated", "type": "integer", "min": 0},
+      {"key": "topThreeFinishes", "type": "integer", "min": 0},
+      {"key": "diamondWeeks", "type": "integer", "min": 0},
+      {"key": "lastSettledWeekId", "type": "string", "size": 36, "required": false},
+      {"key": "lastResultJson", "type": "string", "size": 4096, "required": false},
+      {"key": "resultSeenWeekId", "type": "string", "size": 36, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]},
+      {"key": "k_tier_stage", "type": "key", "columns": ["tier", "stage"]}
+    ]},
+    {"id": "p_entitlements", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "plan", "type": "enum", "elements": ["FREE", "SUPER", "MAX"]},
+      {"key": "source", "type": "enum", "elements": ["NONE", "PURCHASE", "FAMILY", "GIFT", "TRIAL", "PROMO", "REFERRAL"]},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "GRACE", "HOLD", "CANCELED", "EXPIRED", "REVOKED"]},
+      {"key": "expiresAt", "type": "datetime", "required": false},
+      {"key": "autoRenew", "type": "boolean"},
+      {"key": "familyGroupId", "type": "string", "size": 36, "required": false},
+      {"key": "purchaseId", "type": "string", "size": 36, "required": false},
+      {"key": "giftId", "type": "string", "size": 36, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId", "type": "unique", "columns": ["userId"]},
+      {"key": "k_status_expiresAt", "type": "key", "columns": ["status", "expiresAt"]}
+    ]},
+    {"id": "p_purchases", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "purchaseId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "platform", "type": "enum", "elements": ["PLAY", "APP_STORE", "SIMULATION"]},
+      {"key": "productId", "type": "string", "size": 64},
+      {"key": "kind", "type": "enum", "elements": ["SUBSCRIPTION", "GEMS", "GIFT"]},
+      {"key": "purchaseToken", "type": "string", "size": 4096},
+      {"key": "purchaseTokenHash", "type": "string", "size": 64},
+      {"key": "state", "type": "enum", "elements": ["PENDING", "ACTIVE", "GRACE", "HOLD", "CANCELED", "EXPIRED", "REVOKED", "REFUNDED"]},
+      {"key": "vendorStateJson", "type": "string", "size": 8192},
+      {"key": "verifiedAt", "type": "datetime", "required": false},
+      {"key": "lastNotificationId", "type": "string", "size": 128, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_purchaseId", "type": "unique", "columns": ["purchaseId"]},
+      {"key": "u_purchaseTokenHash", "type": "unique", "columns": ["purchaseTokenHash"]},
+      {"key": "k_userId_state", "type": "key", "columns": ["userId", "state"]}
+    ]},
+    {"id": "p_family_groups", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "groupId", "type": "string", "size": 36},
+      {"key": "ownerUserId", "type": "string", "size": 36},
+      {"key": "plan", "type": "enum", "elements": ["SUPER", "MAX"]},
+      {"key": "memberIdsJson", "type": "string", "size": 512},
+      {"key": "inviteCodeHash", "type": "string", "size": 64, "required": false},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "ENDED"]},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_groupId", "type": "unique", "columns": ["groupId"]},
+      {"key": "k_ownerUserId_status", "type": "key", "columns": ["ownerUserId", "status"]}
+    ]},
+    {"id": "p_gifts", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "giftId", "type": "string", "size": 36},
+      {"key": "senderId", "type": "string", "size": 36},
+      {"key": "recipientId", "type": "string", "size": 36},
+      {"key": "plan", "type": "enum", "elements": ["SUPER", "MAX"]},
+      {"key": "durationDays", "type": "integer", "min": 1, "max": 365},
+      {"key": "note", "type": "string", "size": 160, "required": false},
+      {"key": "status", "type": "enum", "elements": ["PENDING", "DELIVERED", "REDEEMED", "REFUNDED"]},
+      {"key": "purchaseId", "type": "string", "size": 36},
+      {"key": "deliveredAt", "type": "datetime", "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_giftId", "type": "unique", "columns": ["giftId"]},
+      {"key": "k_recipientId_status", "type": "key", "columns": ["recipientId", "status"]},
+      {"key": "k_senderId_createdAt", "type": "key", "columns": ["senderId", "createdAt"]}
+    ]},
+    {"id": "p_referrals", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "inviterId", "type": "string", "size": 36},
+      {"key": "inviteeId", "type": "string", "size": 36, "required": false},
+      {"key": "codeHash", "type": "string", "size": 64},
+      {"key": "status", "type": "enum", "elements": ["ISSUED", "ACCEPTED", "QUALIFIED", "REWARDED", "EXPIRED"]},
+      {"key": "rewardOperationId", "type": "string", "size": 36, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_codeHash", "type": "unique", "columns": ["codeHash"]},
+      {"key": "k_inviterId_status", "type": "key", "columns": ["inviterId", "status"]}
+    ]},
+    {"id": "p_year_reviews", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "year", "type": "integer", "min": 2020, "max": 2100},
+      {"key": "snapshotJson", "type": "string", "size": 4096},
+      {"key": "generatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_userId_year", "type": "unique", "columns": ["userId", "year"]}
+    ]},
+    {"id": "p_feedback", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "topic", "type": "string", "size": 64},
+      {"key": "message", "type": "string", "size": 2000},
+      {"key": "appVersion", "type": "string", "size": 32},
+      {"key": "platform", "type": "enum", "elements": ["ANDROID", "IOS", "WEB"]},
+      {"key": "status", "type": "enum", "elements": ["OPEN", "CLOSED"]},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "k_status_createdAt", "type": "key", "columns": ["status", "createdAt"]},
+      {"key": "k_userId_createdAt", "type": "key", "columns": ["userId", "createdAt"]}
+    ]},
+    {"id": "p_classrooms", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "classroomId", "type": "string", "size": 36},
+      {"key": "teacherUserId", "type": "string", "size": 36},
+      {"key": "name", "type": "string", "size": 80},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "joinCodeHash", "type": "string", "size": 64},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "ARCHIVED"]},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_classroomId", "type": "unique", "columns": ["classroomId"]},
+      {"key": "u_joinCodeHash", "type": "unique", "columns": ["joinCodeHash"]},
+      {"key": "k_teacherUserId", "type": "key", "columns": ["teacherUserId"]}
+    ]},
+    {"id": "p_classroom_members", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "classroomId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "joinedAt", "type": "datetime"},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "LEFT"]},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_classroomId_userId", "type": "unique", "columns": ["classroomId", "userId"]},
+      {"key": "k_userId_status", "type": "key", "columns": ["userId", "status"]}
     ]},
     {"id": "a_voice_sessions", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},
@@ -561,6 +903,31 @@
     ], "indexes": [
       {"key": "u_eventId", "type": "unique", "columns": ["eventId"]},
       {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]}
+    ]},
+    {"id": "a_conversations", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "conversationId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["ROLEPLAY", "VIDEO_CALL"]},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "scenarioId", "type": "string", "size": 36},
+      {"key": "voiceSessionId", "type": "string", "size": 36, "required": false},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "COMPLETED", "ABANDONED", "EXPIRED"]},
+      {"key": "startedAt", "type": "datetime"},
+      {"key": "completedAt", "type": "datetime", "required": false},
+      {"key": "turnCount", "type": "integer", "min": 0, "max": 60},
+      {"key": "wordsUsed", "type": "integer", "min": 0},
+      {"key": "stars", "type": "integer", "min": 0, "max": 3},
+      {"key": "xpAwarded", "type": "integer", "min": 0},
+      {"key": "feedbackJson", "type": "string", "size": 8192, "required": false},
+      {"key": "transcriptFileId", "type": "string", "size": 36, "required": false},
+      {"key": "expiresAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_conversationId", "type": "unique", "columns": ["conversationId"]},
+      {"key": "k_userId_kind_completedAt", "type": "key", "columns": ["userId", "kind", "completedAt"]},
+      {"key": "k_userId_scenarioId", "type": "key", "columns": ["userId", "scenarioId"]}
     ]}
   ],
   "buckets": [{"id": "learning-assets", "permissions": [], "fileSecurity": true, "note": "Published l_ files get file-level read(Role.any()) at publish time; drafts and a_ audio get none."}]

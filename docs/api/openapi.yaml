@@ -5425,7 +5425,7 @@
           "order": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 23
+            "maximum": 9999
           },
           "lessonId": {
             "type": "string",
@@ -5579,7 +5579,7 @@
           "frontierNodeOrder": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 23
+            "maximum": 9999
           },
           "completedLessonIds": {
             "type": "array",
@@ -5641,7 +5641,7 @@
           "order": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 23
+            "maximum": 9999
           },
           "title": {
             "type": "string",
@@ -5751,7 +5751,7 @@
           "order": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 23
+            "maximum": 9999
           },
           "title": {
             "type": "string",
@@ -6785,7 +6785,8 @@
             "enum": [
               5,
               10,
-              15
+              15,
+              20
             ]
           },
           "learningZone": {
@@ -6872,7 +6873,8 @@
             "enum": [
               5,
               10,
-              15
+              15,
+              20
             ]
           },
           "learningZone": {
@@ -6998,12 +7000,12 @@
           "freezeSlots": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 2
+            "maximum": 5
           },
           "currentStreak": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 365
+            "maximum": 2147483647
           },
           "awardXp": {
             "anyOf": [

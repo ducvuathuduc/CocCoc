@@ -1,6 +1,6 @@
 # Migration, content publishing and seeding
 
-Schema is declared in infrastructure/appwrite during P1; exported console configuration is reviewed against this specification. Migrations have monotonic ID, owner, environment, checksum, dry-run diff and receipt. SDK method/column/index identifiers are resolved against pinned node-appwrite API; no imaginary JSON column or partial unique index.
+Schema is declared in appwrite/schema/foundation.json (regenerated from [DATA_MODEL](DATA_MODEL.md)/[PERMISSIONS](PERMISSIONS.md) by `pnpm schema:declare`, validated offline by `pnpm schema:plan` and `pnpm schema:test`, applied only by the guarded `node appwrite/scripts/schema.mjs --apply` against an admitted test project); exported console configuration is reviewed against this specification. Migrations have monotonic ID, owner, environment, checksum, dry-run diff and receipt. SDK method/column/index identifiers are resolved against pinned node-appwrite API; no imaginary JSON column or partial unique index.
 
 Procedure: validate configuration → snapshot/export private data securely → create new columns/tables/indexes → await available status → verify permission probes → backfill in cursor batches≤50 → dual-read only during reviewed transition → enable new writer/version → smoke → retain rollback reads. Schema operations are outside row transactions. Default migrate command refuses dropping a populated table/column. Production deletes/resets require a separate explicit request.
 
@@ -13,3 +13,10 @@ Fixture classes: guest intro; unlocked/locked/mastered path; perfect/mistake/ass
 Expected initial public assets≤100MB; private per-demo-user rows bounded by test cohort. Audio pre-generation is an explicit author tool run with quota preview; prefer recorded/bundled audio when no free allowance. Validate voice/speed/text cache key and asset hash before publishing. No live AI in seed generation during CI.
 
 Backup: Appwrite Education/Pro may provide managed backups; [current pricing](https://appwrite.io/pricing) lists Pro daily/7-day retention, Free none. Keep a separate encrypted daily JSON export of authoritative content/profile/progress ledgers outside Git; keys outside archive. Before benefit expiry export and rehearse restoration. Auth passwords/identities are not portable application data; restored account mapping may require user re-login/recreation. Document ID mapping and no claim of seamless auth migration.
+
+Migration log (nothing has been applied to any Appwrite project yet, so these are declaration revisions, not live migrations):
+
+| ID | Owner | Change | Apply notes |
+|---|---|---|---|
+| M001 | all | initial 37-table declaration (P1-OPS-001 local slice) | additive create-if-absent |
+| M002 | all | data-gap expansion to 59 tables: +3 Learning (l_energy, l_mistakes, l_activity_progress), +18 Progress (preferences, inventory, item ledger, boosts, friend streaks, interactions, blocks, user reports, league profiles, entitlements, purchases, family groups, gifts, referrals, year reviews, feedback, classrooms, classroom members), +1 AI (a_conversations); additive columns on l_enrollments, l_sessions, l_review_items, p_profiles, p_rewards, p_day_activity, p_friend_quests, p_league_members, p_league_runs, p_achievements; widened enums/ranges (session modes, ledger kinds, quest periods, activity kinds, dailyGoal 5/10/15/20, streak uncapped, freezeSlots0..5, frontier0..9999); p_follows status ACTIVE/BLOCKED→ACTIVE/REMOVED; p_achievements unique gains tier; p_outbox gains unique(eventId) | pre-apply, so the declaration is simply replaced. Once any project is live, the narrowing/replacing items (p_follows enum, p_achievements unique, p_friend_quests target) need expand→backfill→contract per the procedure above |
