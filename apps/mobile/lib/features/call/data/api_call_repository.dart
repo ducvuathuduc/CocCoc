@@ -9,10 +9,10 @@ import '../../roleplay/domain/server_scenarios.dart';
 import '../domain/call_models.dart';
 import 'call_repository.dart';
 
-/// Placeholder learner audio for TURN voice turns: 0.1 s of 16 kHz mono 16-bit
-/// PCM silence. The app records no audio (the call UI is timed); the server's
-/// scripted provider transcribes a TURN as the step's model answer, so the
-/// clip only has to be a valid WAV the server accepts (`validateWav`).
+/// Fallback learner audio for TURN voice turns when nothing was recorded
+/// (microphone denied/unavailable): 0.1 s of 16 kHz mono 16-bit PCM silence.
+/// The scripted provider answers it with the step's model line; the real
+/// speech provider hears nothing, so the script waits for a retry.
 final Uint8List turnPlaceholderWav = () {
   const dataBytes = 3200;
   final b = ByteData(44 + dataBytes);
@@ -133,7 +133,11 @@ class ApiCallRepository implements CallRepository, CallTurns {
   }
 
   @override
-  Future<CallTurnResult> speakTurn(String sessionId, int cursor) async {
+  Future<CallTurnResult> speakTurn(
+    String sessionId,
+    int cursor, {
+    Uint8List? wav,
+  }) async {
     final live = _live[sessionId];
     if (live == null) throw StateError('No live call $sessionId');
     final result = await api.submitVoiceTurn(
@@ -141,8 +145,10 @@ class ApiCallRepository implements CallRepository, CallTurns {
       wire.TurnRequest(
         turnId: api.client.ids.next(),
         epoch: live.epoch,
-        wavBase64: base64Encode(turnPlaceholderWav),
-        audioSha256: turnPlaceholderWavSha256,
+        wavBase64: base64Encode(wav ?? turnPlaceholderWav),
+        audioSha256: wav == null
+            ? turnPlaceholderWavSha256
+            : sha256.convert(wav).toString(),
       ),
     );
     live.spoken++;

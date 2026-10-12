@@ -5,6 +5,7 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../domain/learning_models.dart';
+import '../data/speech_assessment.dart';
 import 'learning_visuals.dart';
 
 const lessonLilyArt = ArtRegion(
@@ -125,11 +126,55 @@ class SpeakingWordsExercise extends StatelessWidget {
     required this.prompt,
     required this.onSpeak,
     required this.availableHeight,
+    this.words,
+    this.listening = false,
     super.key,
   });
   final String prompt;
   final VoidCallback? onSpeak;
   final double availableHeight;
+
+  /// Per-word pronunciation feedback (green = pronounced well, red = retry),
+  /// aligned to the prompt's words; null before an attempt is scored.
+  final List<SpokenWord>? words;
+
+  /// Microphone is recording (button shows stop).
+  final bool listening;
+
+  static const _promptStyle = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+  );
+
+  Widget _promptText() {
+    final scored = words;
+    if (scored == null || scored.isEmpty) {
+      return Text(prompt, textAlign: TextAlign.center, style: _promptStyle);
+    }
+    final tokens = prompt.split(RegExp(r'\s+'));
+    var w = 0;
+    final spans = <InlineSpan>[];
+    for (var i = 0; i < tokens.length; i++) {
+      final token = tokens[i];
+      final hasWord = RegExp(r"[A-Za-z0-9]").hasMatch(token);
+      final result = hasWord && w < scored.length ? scored[w++] : null;
+      spans.add(
+        TextSpan(
+          text: i == tokens.length - 1 ? token : '$token ',
+          style: result == null
+              ? null
+              : TextStyle(
+                  color: result.ok ? LearningColors.green : LearningColors.red,
+                ),
+        ),
+      );
+    }
+    return Text.rich(
+      TextSpan(children: spans),
+      textAlign: TextAlign.center,
+      style: _promptStyle,
+    );
+  }
 
   @override
   Widget build(BuildContext context) => Column(
@@ -163,16 +208,7 @@ class SpeakingWordsExercise extends StatelessWidget {
                         width: 2,
                       ),
                     ),
-                    child: offset == 16
-                        ? Text(
-                            prompt,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        : const SizedBox(),
+                    child: offset == 16 ? _promptText() : const SizedBox(),
                   ),
                 ),
             ],
@@ -184,15 +220,15 @@ class SpeakingWordsExercise extends StatelessWidget {
         child: SizedBox(
           width: 220,
           child: Tooltip(
-            message: 'Speak the sentence',
+            message: listening ? 'Stop and check' : 'Speak the sentence',
             child: ReferenceButton(
               label: '',
               backgroundColor: LearningColors.blue,
               edgeColor: LearningColors.blueDark,
               onPressed: onSpeak,
               minHeight: 90,
-              leading: const Icon(
-                Icons.graphic_eq_rounded,
+              leading: Icon(
+                listening ? Icons.stop_rounded : Icons.graphic_eq_rounded,
                 color: Colors.white,
                 size: 48,
               ),

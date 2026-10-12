@@ -1,15 +1,22 @@
 import 'dart:async';
 
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/audio/speech_recorder.dart';
 
 import '../data/call_repository.dart';
 import '../domain/call_models.dart';
 
 /// Drives the video-call state machine:
 /// idle → ringing → connected → ended → review → upsell.
-/// All timing comes from the [CallSession]; no real audio is used.
+/// Timing comes from the [CallSession]. In API mode ([CallTurns]) the learner
+/// turn is recorded from the microphone (tap the mic to start, tap again to
+/// send; auto-sends at [speechMaxSeconds]) and transcribed by the server.
 class CallController extends Notifier<CallState> {
   Timer? _timer;
+  Completer<void>? _stopListening;
 
   @override
   CallState build() {
@@ -70,6 +77,14 @@ class CallController extends Notifier<CallState> {
 
   /// Mic press on the learner's turn. Mock "listening" then commits the line.
   void pressMic() {
+    if (state.phase == CallPhase.connected &&
+        state.listening &&
+        _stopListening != null &&
+        !_stopListening!.isCompleted) {
+      // Second tap while recording: send the turn now.
+      _stopListening!.complete();
+      return;
+    }
     if (state.phase != CallPhase.connected ||
         !state.awaitingLearner ||
         state.listening) {
@@ -92,10 +107,22 @@ class CallController extends Notifier<CallState> {
   Future<void> _speak(CallTurns turns) async {
     final session = state.session!;
     final at = state.cursor;
+    final recorder = ref.read(speechRecorderProvider);
     try {
+      Uint8List? wav;
+      if (await recorder.start()) {
+        final stop = _stopListening = Completer<void>();
+        await Future.any<void>([
+          stop.future,
+          Future<void>.delayed(const Duration(seconds: speechMaxSeconds)),
+        ]);
+        _stopListening = null;
+        wav = await recorder.stop();
+        if (!ref.mounted || state.cursor != at) return;
+      }
       final results = await Future.wait<Object?>([
-        turns.speakTurn(session.id, at),
-        Future<void>.delayed(session.listenDuration),
+        turns.speakTurn(session.id, at, wav: wav),
+        if (wav == null) Future<void>.delayed(session.listenDuration),
       ]);
       final turn = results.first! as CallTurnResult;
       if (!ref.mounted ||

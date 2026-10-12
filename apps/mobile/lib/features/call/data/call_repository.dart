@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/active_course.dart';
@@ -17,8 +19,13 @@ abstract class CallRepository {
 /// Spoken turns an API-backed [CallRepository] sends to the server. The mock
 /// does not implement it, so its timed, offline flow is unchanged.
 abstract interface class CallTurns {
-  /// Sends the learner turn at script index [cursor] of call [sessionId].
-  Future<CallTurnResult> speakTurn(String sessionId, int cursor);
+  /// Sends the learner turn at script index [cursor] of call [sessionId];
+  /// [wav] is the recorded 16 kHz mono PCM16 clip (null: none was captured).
+  Future<CallTurnResult> speakTurn(
+    String sessionId,
+    int cursor, {
+    Uint8List? wav,
+  });
 }
 
 class MockCallRepository implements CallRepository {

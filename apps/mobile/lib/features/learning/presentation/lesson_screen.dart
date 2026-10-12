@@ -10,7 +10,9 @@ import '../../../core/design/character_motion.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../../core/design/lesson_motion.dart';
+import '../../../core/audio/speech_recorder.dart';
 import '../application/learning_controller.dart';
+import '../data/speech_assessment.dart';
 import '../../progress/application/preview_controller.dart';
 import '../domain/learning_models.dart';
 import 'learning_visuals.dart';
@@ -32,6 +34,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     with WidgetsBindingObserver {
   bool _exitOpen = false;
   final _text = TextEditingController();
+
+  /// Speaking exercise state: recording, assessing, and the latest scored
+  /// attempt (per-word feedback) for the exercise id in [_spokenId].
+  bool _recording = false;
+  bool _assessing = false;
+  String? _spokenId;
+  SpeechVerdict? _verdict;
   String? _exerciseId;
   bool _backgroundPaused = false;
   final _bankKeys = <String, GlobalKey>{};
@@ -670,16 +679,21 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           onRight: controller.selectPairRight,
         );
       case ExerciseKind.speakRepeat:
+        final assessor = ref.read(speechAssessorProvider);
         return SpeakingWordsExercise(
           prompt: exercise.prompt,
           availableHeight: availableHeight,
-          onSpeak: editable
+          listening: _recording && _spokenId == exercise.id,
+          words: _spokenId == exercise.id ? _verdict?.words : null,
+          onSpeak: !editable || _assessing
+              ? null
+              : assessor == null
               ? () => showLearningNotice(
                   context,
                   'Speaking unavailable',
                   'You can continue this exercise by typing your answer. Tap “CAN\'T SPEAK NOW” to continue.',
                 )
-              : null,
+              : () => _speak(exercise, assessor, controller),
         );
       case ExerciseKind.dialogueTurn:
         return LilyDialogueExercise(
@@ -805,6 +819,71 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
     child: Text(token.text, style: const TextStyle(fontSize: 18)),
   );
+
+  /// First tap records, second tap sends the attempt for pronunciation
+  /// assessment; the result colors the prompt words and fills the answer
+  /// (the reference when it passes, else what was heard) for CHECK.
+  Future<void> _speak(
+    Exercise exercise,
+    SpeechAssessor assessor,
+    LessonController controller,
+  ) async {
+    final recorder = ref.read(speechRecorderProvider);
+    if (!_recording) {
+      final started = await recorder.start();
+      if (!mounted) return;
+      if (!started) {
+        showLearningNotice(
+          context,
+          'Microphone unavailable',
+          'Allow microphone access to speak, or tap “CAN\'T SPEAK NOW” to type your answer.',
+        );
+        return;
+      }
+      setState(() {
+        _recording = true;
+        _spokenId = exercise.id;
+        _verdict = null;
+      });
+      return;
+    }
+    setState(() {
+      _recording = false;
+      _assessing = true;
+    });
+    final wav = await recorder.stop();
+    final reference = exercise.correctText.trim().isNotEmpty
+        ? exercise.correctText
+        : exercise.prompt;
+    SpeechVerdict? verdict;
+    try {
+      if (wav != null) {
+        verdict = await assessor.assess(
+          wav,
+          exerciseId: exercise.id,
+          referenceText: reference,
+        );
+      }
+    } catch (_) {
+      verdict = null;
+    }
+    if (!mounted) return;
+    setState(() {
+      _assessing = false;
+      _verdict = verdict;
+    });
+    if (verdict == null || verdict.transcript.trim().isEmpty) {
+      showLearningNotice(
+        context,
+        'We couldn’t hear you',
+        'Tap the button and say the sentence again, or tap “CAN\'T SPEAK NOW”.',
+      );
+      return;
+    }
+    final answer = verdict.passed ? reference : verdict.transcript;
+    _text.text = answer;
+    controller.updateText(answer);
+  }
 
   String _answer(Exercise exercise) => exerciseAnswer(exercise);
 
