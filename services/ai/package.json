@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node ../../tools/scripts/backend-check.mjs --build ai",
     "test": "node --test test/*.test.mjs",
-    "start": "node ../../tools/scripts/service-local.mjs ai"
+    "dev": "node ../../tools/scripts/dev-services.mjs ai"
   },
   "engines": {
     "node": ">=22"

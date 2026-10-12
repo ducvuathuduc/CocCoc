@@ -99,8 +99,11 @@ export interface Route {
 export interface RouterOptions {
   service: ServiceName;
   persistence: PersistencePort;
-  /** hosted: memory adapters refused, business routes need an admitted adapter. */
-  mode: 'hosted' | 'local-test';
+  /**
+   * hosted: memory adapters refused, business routes need an admitted adapter.
+   * local-test: unit tests. local-dev: `pnpm dev:services` with explicit in-memory adapters.
+   */
+  mode: 'hosted' | 'local-test' | 'local-dev';
   auth?: AuthPort | undefined;
   keyring?: Keyring | undefined;
   routes?: readonly Route[];
@@ -286,6 +289,12 @@ export function createRouter(options: RouterOptions) {
   };
 }
 
+/** Service-specific wiring shared by the hosted entrypoint and local dev (src/http/wiring.ts). */
+export interface ServiceWiring {
+  routes?: readonly Route[];
+  eventConsumer?: EventConsumer | undefined;
+}
+
 /**
  * Hosted Function entrypoint. Reads Appwrite-provided endpoint/project env for the
  * Account.get verifier and COC_SERVICE_KEYS for HMAC. Owner persistence is injected;
@@ -295,6 +304,7 @@ export function createHostedHandler(
   service: ServiceName,
   persistence: PersistencePort,
   env: Record<string, string | undefined> = process.env,
+  wiring: ServiceWiring = {},
 ) {
   const endpoint = env['APPWRITE_FUNCTION_API_ENDPOINT'];
   const project = env['APPWRITE_FUNCTION_PROJECT_ID'];
@@ -315,5 +325,7 @@ export function createHostedHandler(
     auth,
     keyring,
     buildId: env['BUILD_ID'] ?? 'local-scaffold',
+    ...(wiring.routes ? { routes: wiring.routes } : {}),
+    eventConsumer: wiring.eventConsumer,
   });
 }

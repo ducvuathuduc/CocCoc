@@ -15,3 +15,6 @@ export { LEARNING_TABLES } from '../../../learning/src/persistence/port.js';
 export { PROGRESS_TABLES } from '../../../progress/src/persistence/port.js';
 export { AI_TABLES } from '../../../ai/src/persistence/port.js';
 export { createAccountVerifier } from '../verify-jwt.js';
+export { createProgressEventConsumer } from '../../../progress/src/application/consume-events.js';
+export { firstCompletionXp } from '../../../progress/src/domain/lesson-xp.js';
+export { createInternalClient } from '../internal-client.js';

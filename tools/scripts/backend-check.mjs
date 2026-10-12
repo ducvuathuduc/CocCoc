@@ -36,8 +36,8 @@ for (const name of selected.length ? selected : names) {
 }
 await build({
   entryPoints: {
-    'mock-completion': 'services/learning/src/mock-completion.ts',
-    'mock-rewards': 'services/progress/src/mock-rewards.ts',
+    'mock-completion': 'services/learning/src/testing/mock-completion.ts',
+    'mock-rewards': 'services/progress/src/testing/mock-rewards.ts',
     'foundation-testkit': 'services/shared/src/testing/testkit.ts',
   },
   outdir: '.cache/backend-fixtures',
@@ -55,7 +55,7 @@ if (!buildOnly) {
     'services/*/src/**/*.ts',
     'services/*/test/*.mjs',
     'tools/scripts/backend*.mjs',
-    'tools/scripts/service-local.mjs',
+    'tools/scripts/dev-*.mjs',
     'tsconfig.backend.json',
     'eslint.config.mjs',
   ]);

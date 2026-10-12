@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node ../../tools/scripts/backend-check.mjs --build progress",
     "test": "node --test test/*.test.mjs",
-    "start": "node ../../tools/scripts/service-local.mjs progress"
+    "dev": "node ../../tools/scripts/dev-services.mjs progress"
   },
   "engines": {
     "node": ">=22"

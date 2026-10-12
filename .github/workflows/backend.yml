@@ -1,9 +1,9 @@
 name: Backend foundation
 on:
   pull_request:
-    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
   push:
-    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -23,6 +23,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm backend:verify
       - run: pnpm backend:smoke
+      - run: pnpm dev:smoke
       - run: pnpm contracts:check
       - run: pnpm api:lint
       - run: pnpm schema:plan

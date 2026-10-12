@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import type { components } from '../../../packages/api_contracts/generated.js';
+import type { components } from '../../../../packages/api_contracts/generated.js';
 
 type CompletionEvent = Extract<
   components['schemas']['BusinessEvent'],
