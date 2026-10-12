@@ -1,0 +1,310 @@
+{
+  "courseId": "vi_en",
+  "versionId": "v1",
+  "signatureKeyId": "dev-content-1",
+  "manifestFileId": "vi_en.v1.manifest",
+  "manifestSha256": "d3087055b68db7e0e20be72ac4d7257d1e19ce8933b811fad41ee44bdd13904f",
+  "manifestHash": "061b37db15e690a638e634d4f1bd58e9f5b61dc03b44bcf32ba0c7d89d681e00",
+  "files": [
+    {
+      "fileId": "vi_en.v1.manifest",
+      "path": "manifest.json",
+      "sha256": "d3087055b68db7e0e20be72ac4d7257d1e19ce8933b811fad41ee44bdd13904f",
+      "bytes": 14698
+    },
+    {
+      "fileId": "vi_en.v1.u1n1l1",
+      "path": "bundles/u1n1l1.json",
+      "sha256": "4c72d99dd28a0eed2a66d2be2cd41816289a8de2bc9a185a504e53c5ac101001",
+      "bytes": 10114
+    },
+    {
+      "fileId": "vi_en.v1.u1n1l2",
+      "path": "bundles/u1n1l2.json",
+      "sha256": "842266ac08cff42dad84ea4c744774f796e9a42a2321b63d082179feddd35165",
+      "bytes": 10366
+    },
+    {
+      "fileId": "vi_en.v1.u1n2l1",
+      "path": "bundles/u1n2l1.json",
+      "sha256": "811c529197d122b52fc7848da10899fa2fee49e686c71d11c54b4e2eac234b42",
+      "bytes": 10239
+    },
+    {
+      "fileId": "vi_en.v1.u1n2l2",
+      "path": "bundles/u1n2l2.json",
+      "sha256": "46c8b7a733dff63d6713250e407f86fa282700fb27756891c844df6b41d6c645",
+      "bytes": 10115
+    },
+    {
+      "fileId": "vi_en.v1.u1n3l1",
+      "path": "bundles/u1n3l1.json",
+      "sha256": "866f89c1901882a24073d78dfb700a83b854c2d3c04dc66a2bfaecff4030e0d4",
+      "bytes": 13253
+    },
+    {
+      "fileId": "vi_en.v1.u1n3l2",
+      "path": "bundles/u1n3l2.json",
+      "sha256": "65e0c470af47f82549e42b15580abcaf5e36e32b84fab2654d6d5289cf25ca1b",
+      "bytes": 13101
+    },
+    {
+      "fileId": "vi_en.v1.u1n4l1",
+      "path": "bundles/u1n4l1.json",
+      "sha256": "92d45bf1d54b6c00894113272a8d84a6861b930575c59a823b0c8082a32a56af",
+      "bytes": 13307
+    },
+    {
+      "fileId": "vi_en.v1.u1n4l2",
+      "path": "bundles/u1n4l2.json",
+      "sha256": "5e49c0858a10be08561c7a82de405dc57dde353901cc484dc72016615b577472",
+      "bytes": 13510
+    },
+    {
+      "fileId": "vi_en.v1.u2n1l1",
+      "path": "bundles/u2n1l1.json",
+      "sha256": "533d49828e0b3e3903f1c1864cf67279f28ac0a6769ef373c867bb3ed6b61195",
+      "bytes": 10156
+    },
+    {
+      "fileId": "vi_en.v1.u2n1l2",
+      "path": "bundles/u2n1l2.json",
+      "sha256": "2925e9e849cb1e20095d78f032ee1c77404f7845793ee5d42c0dbfb52b076afe",
+      "bytes": 10115
+    },
+    {
+      "fileId": "vi_en.v1.u2n2l1",
+      "path": "bundles/u2n2l1.json",
+      "sha256": "7865dbe834eb04051f2b5e5f1f09661f8d99f4896ed53f6ae93ef6a4eff07853",
+      "bytes": 7337
+    },
+    {
+      "fileId": "vi_en.v1.u2n2l2",
+      "path": "bundles/u2n2l2.json",
+      "sha256": "590a5f51e8c122a43fe9346ee212b39c319ca7e58c1feb834c99130454853bf2",
+      "bytes": 7221
+    },
+    {
+      "fileId": "vi_en.v1.u2n3l1",
+      "path": "bundles/u2n3l1.json",
+      "sha256": "b1f14868ad247c00b78e3d05fc731244a2e9ce9880bbf3e1e1103f9573367816",
+      "bytes": 13059
+    },
+    {
+      "fileId": "vi_en.v1.u2n3l2",
+      "path": "bundles/u2n3l2.json",
+      "sha256": "3d87dcdb595bcdecc8b474e28c3934cc5fb18b25f6b62a6ff2a4f0090e749d1a",
+      "bytes": 12968
+    },
+    {
+      "fileId": "vi_en.v1.u2n4l1",
+      "path": "bundles/u2n4l1.json",
+      "sha256": "84bc39f43418d209ea84d116b13200047814fa90d56cc9c0ffc22281608be2a1",
+      "bytes": 13463
+    },
+    {
+      "fileId": "vi_en.v1.u2n4l2",
+      "path": "bundles/u2n4l2.json",
+      "sha256": "694e171e90672e9202461189dd0d285226efb840c232eadbc1024fedbcdf48e5",
+      "bytes": 13484
+    },
+    {
+      "fileId": "vi_en.v1.u3n1l1",
+      "path": "bundles/u3n1l1.json",
+      "sha256": "9effee8920de85ee711acd9299dc5e6dda74dc4cfd358570e8364cceadae2bab",
+      "bytes": 10094
+    },
+    {
+      "fileId": "vi_en.v1.u3n1l2",
+      "path": "bundles/u3n1l2.json",
+      "sha256": "1e462cc9ab3b56b39a66bb33aebe639c110cf30fa60eebe1ab26fe66fea9c362",
+      "bytes": 10076
+    },
+    {
+      "fileId": "vi_en.v1.u3n2l1",
+      "path": "bundles/u3n2l1.json",
+      "sha256": "c9f8d19e1ab1a585da1eeb92f04e762e5cf325d6b82cf21502c5e10278c86abb",
+      "bytes": 10312
+    },
+    {
+      "fileId": "vi_en.v1.u3n2l2",
+      "path": "bundles/u3n2l2.json",
+      "sha256": "21f2c5c74a3f73f67fae6497703b05969aba4d23734981dec6355cee8cc64467",
+      "bytes": 10082
+    },
+    {
+      "fileId": "vi_en.v1.u3n3l1",
+      "path": "bundles/u3n3l1.json",
+      "sha256": "e167915f8659298a510d65b1ba1423859068a6fcfe9be0fc531c0071a257b0bf",
+      "bytes": 7253
+    },
+    {
+      "fileId": "vi_en.v1.u3n3l2",
+      "path": "bundles/u3n3l2.json",
+      "sha256": "d3ddc52f4d45e36fc464ad4097c574582c4f2ca1e1f7683943a4604e4df7543e",
+      "bytes": 7503
+    },
+    {
+      "fileId": "vi_en.v1.u3n4l1",
+      "path": "bundles/u3n4l1.json",
+      "sha256": "412b2de6a8075c38331bf7728bd4ce915497e1b6b15b0be082fb64bed0bd0b94",
+      "bytes": 11297
+    },
+    {
+      "fileId": "vi_en.v1.u3n4l2",
+      "path": "bundles/u3n4l2.json",
+      "sha256": "07ab0a9dd56291a4ea7fb8755586799d8d5ebc264daa5fda080325dc38c83f51",
+      "bytes": 11363
+    },
+    {
+      "fileId": "vi_en.v1.u4n1l1",
+      "path": "bundles/u4n1l1.json",
+      "sha256": "b89a054d150584e453327f360a1d75319e533aa3b6d38cbdb08bcb8468f3b1aa",
+      "bytes": 10411
+    },
+    {
+      "fileId": "vi_en.v1.u4n1l2",
+      "path": "bundles/u4n1l2.json",
+      "sha256": "e3e845063bdbcc793cc2b067bf4506cbc7b2e822a6e272469f9316c93dd85fd0",
+      "bytes": 10331
+    },
+    {
+      "fileId": "vi_en.v1.u4n2l1",
+      "path": "bundles/u4n2l1.json",
+      "sha256": "c31d70e68cf117b8a700e18262fe6618c04991aa0d450d1e70f0be5b6db0839d",
+      "bytes": 13667
+    },
+    {
+      "fileId": "vi_en.v1.u4n2l2",
+      "path": "bundles/u4n2l2.json",
+      "sha256": "95c59177affbadd2da7e87cae0d5b1197df5c934467b53f8f4f887cd8cefb873",
+      "bytes": 13527
+    },
+    {
+      "fileId": "vi_en.v1.u4n3l1",
+      "path": "bundles/u4n3l1.json",
+      "sha256": "c15f546217f3c1e8c0e3ecc5370414a53b24a7ad4fc1df031e716aee27ba2edd",
+      "bytes": 7451
+    },
+    {
+      "fileId": "vi_en.v1.u4n3l2",
+      "path": "bundles/u4n3l2.json",
+      "sha256": "33a454109f91826ab9477fafe18abf8ef3e02c64209cc388e142a1ea7b6722f6",
+      "bytes": 7456
+    },
+    {
+      "fileId": "vi_en.v1.u4n4l1",
+      "path": "bundles/u4n4l1.json",
+      "sha256": "95b9d13d24e822283edd878c533e98adcc09f75eb88f9996a6a0f6460a0c27c8",
+      "bytes": 13707
+    },
+    {
+      "fileId": "vi_en.v1.u4n4l2",
+      "path": "bundles/u4n4l2.json",
+      "sha256": "98bb673529de9265225da5360fe26a517739c5bd10976b320b69b64145d5e12a",
+      "bytes": 13753
+    },
+    {
+      "fileId": "vi_en.v1.u5n1l1",
+      "path": "bundles/u5n1l1.json",
+      "sha256": "b247b10b40eaba251da031b98a54fd06cf2d27b0e10522fcafd3200d5035e35a",
+      "bytes": 10403
+    },
+    {
+      "fileId": "vi_en.v1.u5n1l2",
+      "path": "bundles/u5n1l2.json",
+      "sha256": "7f2e55619d4e2638c507f68b66b3c2c047916c35a993fa346d5cc22da265b9cf",
+      "bytes": 10396
+    },
+    {
+      "fileId": "vi_en.v1.u5n2l1",
+      "path": "bundles/u5n2l1.json",
+      "sha256": "0e74467b455df189a8090ef11385bc321849759939ba5096cb21e8c8a5683397",
+      "bytes": 7551
+    },
+    {
+      "fileId": "vi_en.v1.u5n2l2",
+      "path": "bundles/u5n2l2.json",
+      "sha256": "72a038d5e197debbc683e478c42cd6cea20caf6e8c0f71dd570b38c4fbc40ff2",
+      "bytes": 7538
+    },
+    {
+      "fileId": "vi_en.v1.u5n3l1",
+      "path": "bundles/u5n3l1.json",
+      "sha256": "3a8b9fe3182c95b0ad5e385575125f05e050403a1ba64e767cdc1ea25edce46d",
+      "bytes": 13867
+    },
+    {
+      "fileId": "vi_en.v1.u5n3l2",
+      "path": "bundles/u5n3l2.json",
+      "sha256": "7948df6dd6a169b6136ee10a1e611f65b28c605d21c0c6fc4ea2b59417747a04",
+      "bytes": 13759
+    },
+    {
+      "fileId": "vi_en.v1.u5n4l1",
+      "path": "bundles/u5n4l1.json",
+      "sha256": "40213ca3cedb87a60b2189c092c1bffcc224da09d69489afb0607d66810dfd6e",
+      "bytes": 11519
+    },
+    {
+      "fileId": "vi_en.v1.u5n4l2",
+      "path": "bundles/u5n4l2.json",
+      "sha256": "03f62df09d5d122cc3ffebcd6cd9a43d9d636f4630dab89d104ad92bf85b0d6c",
+      "bytes": 11712
+    },
+    {
+      "fileId": "vi_en.v1.u6n1l1",
+      "path": "bundles/u6n1l1.json",
+      "sha256": "31b6ca687184f14f356eda1556fcf091fc4ef73b9a922166f84b38fbff06665f",
+      "bytes": 10503
+    },
+    {
+      "fileId": "vi_en.v1.u6n1l2",
+      "path": "bundles/u6n1l2.json",
+      "sha256": "0de1b442d9268f4017c0999f808fbd9e5c59f8a4d890d354399474e45fb4a950",
+      "bytes": 10527
+    },
+    {
+      "fileId": "vi_en.v1.u6n2l1",
+      "path": "bundles/u6n2l1.json",
+      "sha256": "7a2aa3c7413d6b6ae9d093db7b69df988629776e25c06be5b02258f6cd44d249",
+      "bytes": 13441
+    },
+    {
+      "fileId": "vi_en.v1.u6n2l2",
+      "path": "bundles/u6n2l2.json",
+      "sha256": "e4ccc9ee4d06bfd42dd678edd3e5d99f6fe015423fc642ea35faeded48d33f31",
+      "bytes": 13611
+    },
+    {
+      "fileId": "vi_en.v1.u6n3l1",
+      "path": "bundles/u6n3l1.json",
+      "sha256": "b6892bd4716612d7dc5fc5829d16c539321b7f775518c8d2af14225623cd7dfa",
+      "bytes": 7573
+    },
+    {
+      "fileId": "vi_en.v1.u6n3l2",
+      "path": "bundles/u6n3l2.json",
+      "sha256": "7e6fe1ffff5e4eff25f1c635c9dd701141c59304c20b9c33480be3a833a2fedb",
+      "bytes": 7655
+    },
+    {
+      "fileId": "vi_en.v1.u6n4l1",
+      "path": "bundles/u6n4l1.json",
+      "sha256": "1c3942cbcde78f7a749897dc2c249d891ad5ab1d5d9bd5ebc34829eafb1e6c73",
+      "bytes": 11535
+    },
+    {
+      "fileId": "vi_en.v1.u6n4l2",
+      "path": "bundles/u6n4l2.json",
+      "sha256": "4000e1b244325a55ebbf057000562effb0d2093e01c37fd968de22510187231c",
+      "bytes": 11585
+    },
+    {
+      "fileId": "vi_en.v1.placement",
+      "path": "bundles/placement.json",
+      "sha256": "8797fb2059fea2ce3a5cd73330c377f3095829c22ea370e9137a0261f79994c0",
+      "bytes": 7883
+    }
+  ]
+}

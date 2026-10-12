@@ -1,0 +1,6 @@
+# The built v1 course is committed (deterministic; Learning tests read it on a fresh checkout).
+# Re-include it against the repo-wide **/dist/ rule. Rebuild with node content/tools/build-content.mjs.
+!dist/
+# v2 build output is reproducible from source/v2 (node tools/content/build-course.mjs); the committed
+# source/v2/build-report.json pins its manifestSha256.
+next/
