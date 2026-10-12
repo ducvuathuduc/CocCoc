@@ -12,7 +12,7 @@ Read [project instructions](../../AGENTS.md) and
   `services/progress` and `services/ai`: separate packages, Function artifacts,
   strict TS/test tooling and a fake completion-to-reward workflow. Hosted business
   adapters remain disabled. A four-table schema dry-run and starter catalog seed
-  do not complete the 59-table integration (declaration only, DATA_MODEL M002) or curriculum. [Refresh evidence](../audit/VALIDATION.md).
+  do not complete the 62-table integration (M001–M002 applied to the test project; M003 declared only) or curriculum. [Refresh evidence](../audit/VALIDATION.md).
   Frontend mock results are not server authority or production authentication.
 
 ## Backend documentation map

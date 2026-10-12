@@ -232,3 +232,28 @@ test('live probes refuse to run without the explicit test-project admission', ()
     assert.match(result.stderr, /explicitly admitted test project/);
   }
 });
+
+test('M003 promo codes and mock ads: server-only, one redemption per user, idempotent capped ad events', () => {
+  const decl = declaration();
+  for (const id of ['p_promo_codes', 'p_promo_redemptions', 'p_ad_events']) {
+    const t = table(decl, id);
+    assert.equal(t.owner, 'progress', id);
+    assert.deepEqual([t.permissions, t.rowPermissions, t.rowSecurity], [[], [], true], `${id} must have no client grant`);
+  }
+  assert.deepEqual(column(decl, 'p_promo_codes', 'codeHash'), { key: 'codeHash', type: 'string', size: 64 });
+  assert.equal(column(decl, 'p_promo_codes', 'code'), undefined, 'plaintext promo code must never be stored');
+  assert.deepEqual(column(decl, 'p_promo_codes', 'rewardType').elements, ['SUPER_DAYS', 'GEMS', 'ITEM']);
+  assert.deepEqual(table(decl, 'p_promo_codes').indexes.filter((i) => i.type === 'unique').map((i) => i.columns), [['promoId'], ['codeHash']]);
+  assert.equal(column(decl, 'p_promo_codes', 'maxRedemptions').required, false);
+  assert.deepEqual(table(decl, 'p_promo_redemptions').indexes.filter((i) => i.type === 'unique').map((i) => i.columns), [['redemptionId'], ['userId', 'promoId']]);
+  assert.equal(table(decl, 'p_promo_redemptions').mutable, false);
+  assert.deepEqual(column(decl, 'p_ad_events', 'placement').elements, ['LESSON_END_INTERSTITIAL', 'REWARDED_GEMS', 'REWARDED_ENERGY_REFILL']);
+  assert.deepEqual(column(decl, 'p_ad_events', 'kind').elements, ['IMPRESSION', 'REWARDED_COMPLETION']);
+  assert.deepEqual(column(decl, 'p_ad_events', 'dailyIndex'), { key: 'dailyIndex', type: 'integer', min: 1, max: 20 });
+  assert.deepEqual(table(decl, 'p_ad_events').indexes.filter((i) => i.type === 'unique').map((i) => i.columns), [['adEventId'], ['userId', 'learningDay', 'placement', 'kind', 'dailyIndex']]);
+  assert.equal(table(decl, 'p_ad_events').mutable, false);
+  // Rewards reuse existing ledger kinds so M003 stays additive (no enum change on applied tables).
+  assert.ok(column(decl, 'p_reward_ledger', 'kind').elements.includes('ADJUST'));
+  assert.ok(column(decl, 'p_entitlements', 'source').elements.includes('PROMO'));
+  assert.ok(column(decl, 'p_purchases', 'platform').elements.includes('SIMULATION'));
+});

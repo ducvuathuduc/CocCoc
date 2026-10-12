@@ -37,4 +37,10 @@ sequenceDiagram
   P->>V: Reconcile current state after dedupe
 ```
 
+## Decisions 2026-10-12 (user): mock billing, promo codes, mock ads
+
+- **Billing stays mock.** P10-BILL-001 implements a server-side *mock billing provider* in Progress. It records `p_purchases` with platform `SIMULATION`, steps through the state table above from fixture outcomes (pending, active, grace, hold, canceled, expired, refunded and duplicate notification) and writes `p_entitlements` plus `entitlement.changed.v1` atomically through the same verifier path a real store would use. No Google Play Billing or StoreKit client, store credentials, purchase tokens or real money. The Platform store and Vendor API in the sequence above are replaced by the mock provider. Real stores require a new, explicitly authorized task.
+- **Promo codes** (P10-PROMO-001; tables `p_promo_codes` and `p_promo_redemptions` in [DATA_MODEL](../data/DATA_MODEL.md)). A code grants Super days (`p_entitlements` source PROMO), gems or a catalog item, once per user. Each code has a validity window and an optional global redemption limit. Codes are created by the maintainer CLI and stored only as hashes. The redeem endpoint is proposed in [API_ENDPOINT_MATRIX](../api/API_ENDPOINT_MATRIX.md#proposed-endpoints-not-yet-in-openapi).
+- **Ads are mock, free tier only** (P10-ADS-001; table `p_ad_events`). The placements are a lesson-end interstitial, rewarded gems and a rewarded energy refill. Ads are suppressed whenever the entitlement plan is SUPER or MAX, never gate or interrupt core learning, have per-day caps, and grant each rewarded completion exactly once. No ad SDK, ad network, tracking identifier or revenue is integrated. The client shows a local mock ad surface.
+
 OpenAPI has no enabled billing endpoints yet. Add versioned DTOs/tables through contract-owner review before implementation; this design does not silently expand service write scopes.

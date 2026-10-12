@@ -5,7 +5,7 @@ import crypto from 'node:crypto';
 
 export const OWNERS = { Learning: 'learning', Progress: 'progress', AI: 'ai' };
 export const PREFIXES = { learning: 'l_', progress: 'p_', ai: 'a_' };
-export const CANONICAL_TABLE_COUNT = 59;
+export const CANONICAL_TABLE_COUNT = 62;
 // Appwrite varchar maximum (node-appwrite 29.2.0 createVarcharColumn: "Maximum size is 16381").
 export const VARCHAR_MAX = 16381;
 // Appwrite index key length limit (same as other Appwrite keys).

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "databaseId": "cocenglish",
-  "scope": "All 59 canonical TablesDB tables from docs/data/DATA_MODEL.md plus the learning-assets bucket. Declaration only: no client table/bucket grants, rowSecurity on every table, p_notifications owner read row grant only. Live apply, availability and permission probes remain gated on an admitted test project.",
+  "scope": "All 62 canonical TablesDB tables from docs/data/DATA_MODEL.md plus the learning-assets bucket. Declaration only: no client table/bucket grants, rowSecurity on every table, p_notifications owner read row grant only. Live apply, availability and permission probes remain gated on an admitted test project.",
   "sources": [
     "docs/data/DATA_MODEL.md",
     "docs/data/PERMISSIONS.md"
@@ -741,6 +741,56 @@
     ], "indexes": [
       {"key": "u_codeHash", "type": "unique", "columns": ["codeHash"]},
       {"key": "k_inviterId_status", "type": "key", "columns": ["inviterId", "status"]}
+    ]},
+    {"id": "p_promo_codes", "owner": "progress", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "promoId", "type": "string", "size": 36},
+      {"key": "codeHash", "type": "string", "size": 64},
+      {"key": "rewardType", "type": "enum", "elements": ["SUPER_DAYS", "GEMS", "ITEM"]},
+      {"key": "superDays", "type": "integer", "min": 0, "max": 365},
+      {"key": "gems", "type": "integer", "min": 0, "max": 100000},
+      {"key": "itemId", "type": "string", "size": 64, "required": false},
+      {"key": "itemQuantity", "type": "integer", "min": 0, "max": 99},
+      {"key": "maxRedemptions", "type": "integer", "min": 1, "required": false},
+      {"key": "redeemedCount", "type": "integer", "min": 0},
+      {"key": "startsAt", "type": "datetime"},
+      {"key": "endsAt", "type": "datetime", "required": false},
+      {"key": "status", "type": "enum", "elements": ["ACTIVE", "PAUSED", "RETIRED"]},
+      {"key": "note", "type": "string", "size": 160, "required": false},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_promoId", "type": "unique", "columns": ["promoId"]},
+      {"key": "u_codeHash", "type": "unique", "columns": ["codeHash"]},
+      {"key": "k_status_endsAt", "type": "key", "columns": ["status", "endsAt"]}
+    ]},
+    {"id": "p_promo_redemptions", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "redemptionId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "promoId", "type": "string", "size": 36},
+      {"key": "rewardType", "type": "enum", "elements": ["SUPER_DAYS", "GEMS", "ITEM"]},
+      {"key": "rewardOperationId", "type": "string", "size": 36},
+      {"key": "redeemedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_redemptionId", "type": "unique", "columns": ["redemptionId"]},
+      {"key": "u_userId_promoId", "type": "unique", "columns": ["userId", "promoId"]},
+      {"key": "k_promoId_redeemedAt", "type": "key", "columns": ["promoId", "redeemedAt"]}
+    ]},
+    {"id": "p_ad_events", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "adEventId", "type": "string", "size": 36},
+      {"key": "userId", "type": "string", "size": 36},
+      {"key": "placement", "type": "enum", "elements": ["LESSON_END_INTERSTITIAL", "REWARDED_GEMS", "REWARDED_ENERGY_REFILL"]},
+      {"key": "kind", "type": "enum", "elements": ["IMPRESSION", "REWARDED_COMPLETION"]},
+      {"key": "learningDay", "type": "string", "size": 10},
+      {"key": "dailyIndex", "type": "integer", "min": 1, "max": 20},
+      {"key": "rewardGems", "type": "integer", "min": 0, "max": 50},
+      {"key": "rewardEnergy", "type": "integer", "min": 0, "max": 25},
+      {"key": "rewardOperationId", "type": "string", "size": 36, "required": false},
+      {"key": "occurredAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_adEventId", "type": "unique", "columns": ["adEventId"]},
+      {"key": "u_user_lear_plac_kind_dail", "type": "unique", "columns": ["userId", "learningDay", "placement", "kind", "dailyIndex"]},
+      {"key": "k_userId_occurredAt", "type": "key", "columns": ["userId", "occurredAt"]}
     ]},
     {"id": "p_year_reviews", "owner": "progress", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},

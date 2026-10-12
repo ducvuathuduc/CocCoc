@@ -5,8 +5,8 @@ Appwrite table and row permissions are additive: a broad table read grant defeat
 | Resource | Table/bucket permissions | Row/file permissions | Writer |
 |---|---|---|---|
 | Every l_ business table | no client read/create/update/delete | no client grant | Learning privileged adapter only |
-| Every p_ table except p_notifications (profiles, preferences, rewards, ledgers, inventory, boosts, quests, follows, blocks, friend quests/streaks, interactions, reports, leagues, achievements, entitlements, purchases, family groups, gifts, referrals, year reviews, feedback, classrooms, deletions, inbox/outbox/receipts) | no client grant, Row Security enabled | no client grant; public API projection enforces opt-in, blocks and ageBand | Progress only |
-| p_purchases.purchaseToken, p_family_groups.inviteCodeHash, p_referrals.codeHash, p_classrooms.joinCodeHash | server-only columns | never returned by any API, log or export; codes compared by hash | Progress only |
+| Every p_ table except p_notifications (profiles, preferences, rewards, ledgers, inventory, boosts, quests, follows, blocks, friend quests/streaks, interactions, reports, leagues, achievements, entitlements, purchases, family groups, gifts, referrals, promo codes/redemptions, mock ad events, year reviews, feedback, classrooms, deletions, inbox/outbox/receipts) | no client grant, Row Security enabled | no client grant; public API projection enforces opt-in, blocks and ageBand | Progress only |
+| p_purchases.purchaseToken, p_family_groups.inviteCodeHash, p_referrals.codeHash, p_classrooms.joinCodeHash, p_promo_codes.codeHash | server-only columns | never returned by any API, log or export; codes compared by hash | Progress only |
 | p_notifications | no broad table grant, Row Security enabled | read(Role.user(userId)); no client writes | Progress |
 | All a_ tables (including a_conversations and its private transcript files) | no client grant | no client grant | AI |
 | learning-assets bucket | no broad bucket read/write, File Security enabled | published l_ file read(Role.any()); drafts/private a_ none | Learning content CLI / AI within owned prefix |

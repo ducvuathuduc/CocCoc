@@ -51,7 +51,7 @@ Health/ready shapes apply to all three independent service domains; Learning is 
 
 ## Proposed endpoints (not yet in OpenAPI)
 
-Hand-maintained; `tools/audit/endpoint-matrix.mjs` (`pnpm docs:endpoints`) keeps this section when it regenerates the table above. These are PROPOSED for the 59-table data model (DATA_MODEL M002). None exists in openapi.yaml, generated types or handlers; each needs its OpenAPI operation, x-requirements trace, Idempotency-Key on mutations and an owner-task acceptance test before implementation. Table names are the owner tables the operation would touch.
+Hand-maintained; `tools/audit/endpoint-matrix.mjs` (`pnpm docs:endpoints`) keeps this section when it regenerates the table above. These are PROPOSED for the 62-table data model (MIGRATIONS M002 + M003). None exists in openapi.yaml, generated types or handlers; each needs its OpenAPI operation, x-requirements trace, Idempotency-Key on mutations and an owner-task acceptance test before implementation. Table names are the owner tables the operation would touch.
 
 | Route (proposed) | Operation / owner | Duolingo feature | Owned tables | Planned task |
 |---|---|---|---|---|
@@ -73,6 +73,8 @@ Hand-maintained; `tools/audit/endpoint-matrix.mjs` (`pnpm docs:endpoints`) keeps
 | POST /v1/family · POST /v1/family/{groupId}/members · DELETE …/members/{userId} | createFamily, joinFamily, removeFamilyMember / progress | Family Plan | p_family_groups, p_entitlements, p_receipts | P10-BILL-001 |
 | POST /v1/gifts · POST /v1/gifts/{giftId}/redeem | sendGift, redeemGift / progress | gift Super/Max | p_gifts, p_purchases, p_entitlements, p_receipts | P10-BILL-001 |
 | GET /v1/me/referral · POST /v1/referrals/redeem | getReferral, redeemReferral / progress | invite friends | p_referrals, p_entitlements, p_receipts | P10-BILL-001 |
+| POST /v1/promo-codes/redeem | redeemPromoCode / progress | promo codes (Super days, gems, items) | p_promo_codes, p_promo_redemptions, p_entitlements, p_reward_ledger, p_item_ledger, p_inventory, p_outbox, p_receipts | P10-PROMO-001 |
+| POST /v1/ad-events | recordAdEvent / progress | mock ads, free tier only (interstitial, rewarded gems, rewarded energy refill) | p_ad_events, p_entitlements (read), p_reward_ledger, p_outbox, p_receipts | P10-ADS-001 |
 | GET /v1/me/year-review/{year} | getYearReview / progress | Year in Review | p_year_reviews, p_day_activity | P9-SOCIAL-002 |
 | POST /v1/feedback | sendFeedback / progress | settings feedback | p_feedback, p_receipts | P3-AUTH-002 |
 | POST /v1/classrooms/join · DELETE /v1/classrooms/{classroomId}/membership | joinClassroom, leaveClassroom / progress | Duolingo for Schools join | p_classrooms, p_classroom_members, p_receipts | P9-SOCIAL-002 |

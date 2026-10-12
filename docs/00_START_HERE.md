@@ -6,7 +6,7 @@ This is the one documentation entry point. It replaces the former `00_READ_ME_FI
 
 The Flutter app has onboarding/authentication UI, a learning path, deterministic mock lessons, practice, progress, social/settings and subscription preview flows. Most features use local fixtures. An Appwrite Auth adapter exists, but its presence does not establish cloud identity/permissions or device proof. Lesson drafts are in memory; the planned Drift journal is not implemented. Native live voice, assessed pronunciation, server-authoritative rewards, billing and cloud asynchronous delivery remain gated.
 
-The backend is three separately bundled services: Learning, Progress and AI (`services/`). Hosted entrypoints fail closed for business routes until a durable adapter is admitted. `pnpm dev:services` runs all three locally with explicit in-memory dev adapters. The Appwrite 59-table schema is declared and applied to the test project (`appwrite/`). This is a local, runnable foundation, not a production integration.
+The backend is three separately bundled services: Learning, Progress and AI (`services/`). Hosted entrypoints fail closed for business routes until a durable adapter is admitted. `pnpm dev:services` runs all three locally with explicit in-memory dev adapters. The Appwrite schema declares 62 tables (`appwrite/`). The first 59 are applied to the test project; M003, which adds promo codes and mock ads, is declared only. Billing and ads stay mock. This is a local, runnable foundation, not a production integration.
 
 ## Repository layout
 
