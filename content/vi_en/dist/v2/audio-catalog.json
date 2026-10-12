@@ -1,0 +1,2921 @@
+{
+ "courseId": "vi_en",
+ "versionId": "v2",
+ "locale": "en-US",
+ "speeds": {
+  "n": 1,
+  "s": 0.75
+ },
+ "items": [
+  {
+   "key": "a.u1.s1",
+   "kind": "sentence",
+   "text": "Hello, Mai!"
+  },
+  {
+   "key": "a.u1.s2",
+   "kind": "sentence",
+   "text": "Hi, Nam!"
+  },
+  {
+   "key": "a.u1.s3",
+   "kind": "sentence",
+   "text": "Goodbye, Linh!"
+  },
+  {
+   "key": "a.u1.s4",
+   "kind": "sentence",
+   "text": "Yes, I am Tom."
+  },
+  {
+   "key": "a.u1.s5",
+   "kind": "sentence",
+   "text": "No, I am Nam."
+  },
+  {
+   "key": "a.u1.s6",
+   "kind": "sentence",
+   "text": "Hello, I am Anna."
+  },
+  {
+   "key": "a.u1.s7",
+   "kind": "sentence",
+   "text": "Bye, Tom!"
+  },
+  {
+   "key": "a.u1.s8",
+   "kind": "sentence",
+   "text": "What is your name?"
+  },
+  {
+   "key": "a.u1.s9",
+   "kind": "sentence",
+   "text": "My name is Mai."
+  },
+  {
+   "key": "a.u1.s10",
+   "kind": "sentence",
+   "text": "Nam is my friend."
+  },
+  {
+   "key": "a.u1.s11",
+   "kind": "sentence",
+   "text": "I am a student."
+  },
+  {
+   "key": "a.u1.s12",
+   "kind": "sentence",
+   "text": "Mr. Long is a teacher."
+  },
+  {
+   "key": "a.u1.s13",
+   "kind": "sentence",
+   "text": "Are you a student?"
+  },
+  {
+   "key": "a.u1.s14",
+   "kind": "sentence",
+   "text": "Linh is a student too."
+  },
+  {
+   "key": "a.u1.s15",
+   "kind": "sentence",
+   "text": "Thank you, Mr. Long."
+  },
+  {
+   "key": "a.u1.s16",
+   "kind": "sentence",
+   "text": "Sorry, Linh!"
+  },
+  {
+   "key": "a.u1.s17",
+   "kind": "sentence",
+   "text": "Excuse me, are you Tom?"
+  },
+  {
+   "key": "a.u1.s18",
+   "kind": "sentence",
+   "text": "Please say your name."
+  },
+  {
+   "key": "a.u1.s19",
+   "kind": "sentence",
+   "text": "Thank you, my friend."
+  },
+  {
+   "key": "a.u1.s20",
+   "kind": "sentence",
+   "text": "No, thank you."
+  },
+  {
+   "key": "a.u1.s21",
+   "kind": "sentence",
+   "text": "Good morning, Mr. Long!"
+  },
+  {
+   "key": "a.u1.s22",
+   "kind": "sentence",
+   "text": "Nice to meet you."
+  },
+  {
+   "key": "a.u1.s23",
+   "kind": "sentence",
+   "text": "Nice to meet you too."
+  },
+  {
+   "key": "a.u1.s24",
+   "kind": "sentence",
+   "text": "Good morning, my friend."
+  },
+  {
+   "key": "a.u1.s25",
+   "kind": "sentence",
+   "text": "Mr. Long is a good teacher."
+  },
+  {
+   "key": "a.u1.s26",
+   "kind": "sentence",
+   "text": "Tom is nice."
+  },
+  {
+   "key": "a.u1.s27",
+   "kind": "sentence",
+   "text": "I meet my friend in the morning."
+  },
+  {
+   "key": "a.u1.s28",
+   "kind": "sentence",
+   "text": "Where are you from?"
+  },
+  {
+   "key": "a.u1.s29",
+   "kind": "sentence",
+   "text": "I am from Vietnam."
+  },
+  {
+   "key": "a.u1.s30",
+   "kind": "sentence",
+   "text": "Tom is from Canada."
+  },
+  {
+   "key": "a.u1.s31",
+   "kind": "sentence",
+   "text": "Where is Anna from?"
+  },
+  {
+   "key": "a.u1.s32",
+   "kind": "sentence",
+   "text": "Anna is from Canada too."
+  },
+  {
+   "key": "a.u1.s33",
+   "kind": "sentence",
+   "text": "Are you from Vietnam?"
+  },
+  {
+   "key": "a.u1.s34",
+   "kind": "sentence",
+   "text": "Where is my friend?"
+  },
+  {
+   "key": "a.u1.d1",
+   "kind": "dialogueLine",
+   "text": "Hello!"
+  },
+  {
+   "key": "a.u1.d2",
+   "kind": "dialogueLine",
+   "text": "Hi! What is your name?"
+  },
+  {
+   "key": "a.u1.d3",
+   "kind": "dialogueLine",
+   "text": "Are you a student?"
+  },
+  {
+   "key": "a.u1.d4",
+   "kind": "dialogueLine",
+   "text": "Thank you, Mai!"
+  },
+  {
+   "key": "a.u1.d5",
+   "kind": "dialogueLine",
+   "text": "Nice to meet you!"
+  },
+  {
+   "key": "a.u1.d6",
+   "kind": "dialogueLine",
+   "text": "Where are you from?"
+  },
+  {
+   "key": "a.u2.s1",
+   "kind": "sentence",
+   "text": "This is my mother."
+  },
+  {
+   "key": "a.u2.s2",
+   "kind": "sentence",
+   "text": "This is my father."
+  },
+  {
+   "key": "a.u2.s3",
+   "kind": "sentence",
+   "text": "My family is from Vietnam."
+  },
+  {
+   "key": "a.u2.s4",
+   "kind": "sentence",
+   "text": "Nam is my brother."
+  },
+  {
+   "key": "a.u2.s5",
+   "kind": "sentence",
+   "text": "Hello, Mom!"
+  },
+  {
+   "key": "a.u2.s6",
+   "kind": "sentence",
+   "text": "Is he your brother?"
+  },
+  {
+   "key": "a.u2.s7",
+   "kind": "sentence",
+   "text": "Anna is Tom's sister."
+  },
+  {
+   "key": "a.u2.s8",
+   "kind": "sentence",
+   "text": "My grandmother is nice."
+  },
+  {
+   "key": "a.u2.s9",
+   "kind": "sentence",
+   "text": "Good morning, Grandpa!"
+  },
+  {
+   "key": "a.u2.s10",
+   "kind": "sentence",
+   "text": "The baby is my sister."
+  },
+  {
+   "key": "a.u2.s11",
+   "kind": "sentence",
+   "text": "My grandfather is a teacher."
+  },
+  {
+   "key": "a.u2.s12",
+   "kind": "sentence",
+   "text": "Where is the baby?"
+  },
+  {
+   "key": "a.u2.s13",
+   "kind": "sentence",
+   "text": "This is my son."
+  },
+  {
+   "key": "a.u2.s14",
+   "kind": "sentence",
+   "text": "Her daughter is a student."
+  },
+  {
+   "key": "a.u2.s15",
+   "kind": "sentence",
+   "text": "This is my husband."
+  },
+  {
+   "key": "a.u2.s16",
+   "kind": "sentence",
+   "text": "His wife is a teacher."
+  },
+  {
+   "key": "a.u2.s17",
+   "kind": "sentence",
+   "text": "Is she your daughter?"
+  },
+  {
+   "key": "a.u2.s18",
+   "kind": "sentence",
+   "text": "Yes, she is my wife."
+  },
+  {
+   "key": "a.u2.s19",
+   "kind": "sentence",
+   "text": "I have a brother."
+  },
+  {
+   "key": "a.u2.s20",
+   "kind": "sentence",
+   "text": "I love my family."
+  },
+  {
+   "key": "a.u2.s21",
+   "kind": "sentence",
+   "text": "Mai has a cat."
+  },
+  {
+   "key": "a.u2.s22",
+   "kind": "sentence",
+   "text": "Do you have a dog?"
+  },
+  {
+   "key": "a.u2.s23",
+   "kind": "sentence",
+   "text": "Her cat is Kiko."
+  },
+  {
+   "key": "a.u2.s24",
+   "kind": "sentence",
+   "text": "We have a dog and a cat."
+  },
+  {
+   "key": "a.u2.s25",
+   "kind": "sentence",
+   "text": "My aunt is a teacher."
+  },
+  {
+   "key": "a.u2.s26",
+   "kind": "sentence",
+   "text": "My uncle has a dog."
+  },
+  {
+   "key": "a.u2.s27",
+   "kind": "sentence",
+   "text": "Linh is my cousin."
+  },
+  {
+   "key": "a.u2.s28",
+   "kind": "sentence",
+   "text": "My parents love me."
+  },
+  {
+   "key": "a.u2.s29",
+   "kind": "sentence",
+   "text": "Where are your parents?"
+  },
+  {
+   "key": "a.u2.s30",
+   "kind": "sentence",
+   "text": "I have a cousin in Canada."
+  },
+  {
+   "key": "a.u2.d1",
+   "kind": "dialogueLine",
+   "text": "Who is this?"
+  },
+  {
+   "key": "a.u2.d2",
+   "kind": "dialogueLine",
+   "text": "Do you have a brother?"
+  },
+  {
+   "key": "a.u2.d3",
+   "kind": "dialogueLine",
+   "text": "Is this your cat?"
+  },
+  {
+   "key": "a.u2.d4",
+   "kind": "dialogueLine",
+   "text": "Where is your father?"
+  },
+  {
+   "key": "a.u2.d5",
+   "kind": "dialogueLine",
+   "text": "Do you love your family?"
+  },
+  {
+   "key": "a.u2.d6",
+   "kind": "dialogueLine",
+   "text": "Is Linh your sister?"
+  },
+  {
+   "key": "a.u3.s1",
+   "kind": "sentence",
+   "text": "Water, please."
+  },
+  {
+   "key": "a.u3.s2",
+   "kind": "sentence",
+   "text": "This is rice."
+  },
+  {
+   "key": "a.u3.s3",
+   "kind": "sentence",
+   "text": "I have bread."
+  },
+  {
+   "key": "a.u3.s4",
+   "kind": "sentence",
+   "text": "An apple, please."
+  },
+  {
+   "key": "a.u3.s5",
+   "kind": "sentence",
+   "text": "Mai has an apple."
+  },
+  {
+   "key": "a.u3.s6",
+   "kind": "sentence",
+   "text": "Bread and water, please."
+  },
+  {
+   "key": "a.u3.s7",
+   "kind": "sentence",
+   "text": "Tea, please."
+  },
+  {
+   "key": "a.u3.s8",
+   "kind": "sentence",
+   "text": "Coffee or tea?"
+  },
+  {
+   "key": "a.u3.s9",
+   "kind": "sentence",
+   "text": "Milk for the baby, please."
+  },
+  {
+   "key": "a.u3.s10",
+   "kind": "sentence",
+   "text": "Apple juice, please."
+  },
+  {
+   "key": "a.u3.s11",
+   "kind": "sentence",
+   "text": "This is my coffee."
+  },
+  {
+   "key": "a.u3.s12",
+   "kind": "sentence",
+   "text": "Do you have milk?"
+  },
+  {
+   "key": "a.u3.s13",
+   "kind": "sentence",
+   "text": "Mrs. Rosa has tea and coffee."
+  },
+  {
+   "key": "a.u3.s14",
+   "kind": "sentence",
+   "text": "I eat rice."
+  },
+  {
+   "key": "a.u3.s15",
+   "kind": "sentence",
+   "text": "I like tea."
+  },
+  {
+   "key": "a.u3.s16",
+   "kind": "sentence",
+   "text": "Do you want coffee?"
+  },
+  {
+   "key": "a.u3.s17",
+   "kind": "sentence",
+   "text": "Kiko likes milk."
+  },
+  {
+   "key": "a.u3.s18",
+   "kind": "sentence",
+   "text": "I want some water."
+  },
+  {
+   "key": "a.u3.s19",
+   "kind": "sentence",
+   "text": "We drink juice."
+  },
+  {
+   "key": "a.u3.s20",
+   "kind": "sentence",
+   "text": "Tom does not like coffee."
+  },
+  {
+   "key": "a.u3.s21",
+   "kind": "sentence",
+   "text": "I eat bread for breakfast."
+  },
+  {
+   "key": "a.u3.s22",
+   "kind": "sentence",
+   "text": "What do you want for lunch?"
+  },
+  {
+   "key": "a.u3.s23",
+   "kind": "sentence",
+   "text": "My mother makes dinner."
+  },
+  {
+   "key": "a.u3.s24",
+   "kind": "sentence",
+   "text": "I am hungry."
+  },
+  {
+   "key": "a.u3.s25",
+   "kind": "sentence",
+   "text": "Are you hungry?"
+  },
+  {
+   "key": "a.u3.s26",
+   "kind": "sentence",
+   "text": "Tom has rice for lunch."
+  },
+  {
+   "key": "a.u3.s27",
+   "kind": "sentence",
+   "text": "The chicken is delicious."
+  },
+  {
+   "key": "a.u3.s28",
+   "kind": "sentence",
+   "text": "Kiko likes fish."
+  },
+  {
+   "key": "a.u3.s29",
+   "kind": "sentence",
+   "text": "I eat an egg for breakfast."
+  },
+  {
+   "key": "a.u3.s30",
+   "kind": "sentence",
+   "text": "Fish or chicken?"
+  },
+  {
+   "key": "a.u3.s31",
+   "kind": "sentence",
+   "text": "This rice is delicious."
+  },
+  {
+   "key": "a.u3.s32",
+   "kind": "sentence",
+   "text": "We want chicken and rice for dinner."
+  },
+  {
+   "key": "a.u3.d1",
+   "kind": "dialogueLine",
+   "text": "What do you want?"
+  },
+  {
+   "key": "a.u3.d2",
+   "kind": "dialogueLine",
+   "text": "Do you like coffee?"
+  },
+  {
+   "key": "a.u3.d3",
+   "kind": "dialogueLine",
+   "text": "Are you hungry?"
+  },
+  {
+   "key": "a.u3.d4",
+   "kind": "dialogueLine",
+   "text": "Tea or coffee?"
+  },
+  {
+   "key": "a.u3.d5",
+   "kind": "dialogueLine",
+   "text": "What do you eat for breakfast?"
+  },
+  {
+   "key": "a.u3.d6",
+   "kind": "dialogueLine",
+   "text": "Is the fish delicious?"
+  },
+  {
+   "key": "a.u4.s1",
+   "kind": "sentence",
+   "text": "I have one brother."
+  },
+  {
+   "key": "a.u4.s2",
+   "kind": "sentence",
+   "text": "I have two cats."
+  },
+  {
+   "key": "a.u4.s3",
+   "kind": "sentence",
+   "text": "Three apples, please."
+  },
+  {
+   "key": "a.u4.s4",
+   "kind": "sentence",
+   "text": "We have four eggs."
+  },
+  {
+   "key": "a.u4.s5",
+   "kind": "sentence",
+   "text": "One coffee and two teas, please."
+  },
+  {
+   "key": "a.u4.s6",
+   "kind": "sentence",
+   "text": "Mai has three cousins."
+  },
+  {
+   "key": "a.u4.s7",
+   "kind": "sentence",
+   "text": "Tom has five cousins in Canada."
+  },
+  {
+   "key": "a.u4.s8",
+   "kind": "sentence",
+   "text": "Six eggs, please."
+  },
+  {
+   "key": "a.u4.s9",
+   "kind": "sentence",
+   "text": "My grandmother has seven cats."
+  },
+  {
+   "key": "a.u4.s10",
+   "kind": "sentence",
+   "text": "We eat dinner at eight."
+  },
+  {
+   "key": "a.u4.s11",
+   "kind": "sentence",
+   "text": "Five and two is seven."
+  },
+  {
+   "key": "a.u4.s12",
+   "kind": "sentence",
+   "text": "Six and two is eight."
+  },
+  {
+   "key": "a.u4.s13",
+   "kind": "sentence",
+   "text": "I am nine years old."
+  },
+  {
+   "key": "a.u4.s14",
+   "kind": "sentence",
+   "text": "How old are you?"
+  },
+  {
+   "key": "a.u4.s15",
+   "kind": "sentence",
+   "text": "My sister is ten years old."
+  },
+  {
+   "key": "a.u4.s16",
+   "kind": "sentence",
+   "text": "My grandfather is old."
+  },
+  {
+   "key": "a.u4.s17",
+   "kind": "sentence",
+   "text": "Kiko is three years old."
+  },
+  {
+   "key": "a.u4.s18",
+   "kind": "sentence",
+   "text": "The baby is one year old."
+  },
+  {
+   "key": "a.u4.s19",
+   "kind": "sentence",
+   "text": "What is your phone number?"
+  },
+  {
+   "key": "a.u4.s20",
+   "kind": "sentence",
+   "text": "Is this your phone?"
+  },
+  {
+   "key": "a.u4.s21",
+   "kind": "sentence",
+   "text": "My mother is twenty-eight years old."
+  },
+  {
+   "key": "a.u4.s22",
+   "kind": "sentence",
+   "text": "There are a hundred students."
+  },
+  {
+   "key": "a.u4.s23",
+   "kind": "sentence",
+   "text": "Twenty eggs, please."
+  },
+  {
+   "key": "a.u4.s24",
+   "kind": "sentence",
+   "text": "My grandmother is a hundred years old!"
+  },
+  {
+   "key": "a.u4.s25",
+   "kind": "sentence",
+   "text": "I have many books."
+  },
+  {
+   "key": "a.u4.s26",
+   "kind": "sentence",
+   "text": "How many pens do you have?"
+  },
+  {
+   "key": "a.u4.s27",
+   "kind": "sentence",
+   "text": "This is my bag."
+  },
+  {
+   "key": "a.u4.s28",
+   "kind": "sentence",
+   "text": "I have two pens and a book."
+  },
+  {
+   "key": "a.u4.s29",
+   "kind": "sentence",
+   "text": "How many cats does she have?"
+  },
+  {
+   "key": "a.u4.s30",
+   "kind": "sentence",
+   "text": "There are ten books in my bag."
+  },
+  {
+   "key": "a.u4.d1",
+   "kind": "dialogueLine",
+   "text": "How old are you?"
+  },
+  {
+   "key": "a.u4.d2",
+   "kind": "dialogueLine",
+   "text": "How many brothers do you have?"
+  },
+  {
+   "key": "a.u4.d3",
+   "kind": "dialogueLine",
+   "text": "What is your phone number?"
+  },
+  {
+   "key": "a.u4.d4",
+   "kind": "dialogueLine",
+   "text": "Is this your book?"
+  },
+  {
+   "key": "a.u4.d5",
+   "kind": "dialogueLine",
+   "text": "How many pens do you want?"
+  },
+  {
+   "key": "a.u4.d6",
+   "kind": "dialogueLine",
+   "text": "Is your grandfather old?"
+  },
+  {
+   "key": "a.u5.s1",
+   "kind": "sentence",
+   "text": "What time is it?"
+  },
+  {
+   "key": "a.u5.s2",
+   "kind": "sentence",
+   "text": "It is seven o'clock."
+  },
+  {
+   "key": "a.u5.s3",
+   "kind": "sentence",
+   "text": "It is eight o'clock now."
+  },
+  {
+   "key": "a.u5.s4",
+   "kind": "sentence",
+   "text": "I eat breakfast at six o'clock."
+  },
+  {
+   "key": "a.u5.s5",
+   "kind": "sentence",
+   "text": "Have a nice day!"
+  },
+  {
+   "key": "a.u5.s6",
+   "kind": "sentence",
+   "text": "I am hungry now."
+  },
+  {
+   "key": "a.u5.s7",
+   "kind": "sentence",
+   "text": "I get up at six o'clock."
+  },
+  {
+   "key": "a.u5.s8",
+   "kind": "sentence",
+   "text": "Mai goes to school."
+  },
+  {
+   "key": "a.u5.s9",
+   "kind": "sentence",
+   "text": "I go home at five o'clock."
+  },
+  {
+   "key": "a.u5.s10",
+   "kind": "sentence",
+   "text": "Nam gets up at seven."
+  },
+  {
+   "key": "a.u5.s11",
+   "kind": "sentence",
+   "text": "We go to school with Tom."
+  },
+  {
+   "key": "a.u5.s12",
+   "kind": "sentence",
+   "text": "My mother is at home."
+  },
+  {
+   "key": "a.u5.s13",
+   "kind": "sentence",
+   "text": "I drink tea every morning."
+  },
+  {
+   "key": "a.u5.s14",
+   "kind": "sentence",
+   "text": "We eat dinner in the evening."
+  },
+  {
+   "key": "a.u5.s15",
+   "kind": "sentence",
+   "text": "Good evening, Mrs. Rosa."
+  },
+  {
+   "key": "a.u5.s16",
+   "kind": "sentence",
+   "text": "Good night, Mom."
+  },
+  {
+   "key": "a.u5.s17",
+   "kind": "sentence",
+   "text": "What day is it today?"
+  },
+  {
+   "key": "a.u5.s18",
+   "kind": "sentence",
+   "text": "I go to school every day."
+  },
+  {
+   "key": "a.u5.s19",
+   "kind": "sentence",
+   "text": "Today is Monday."
+  },
+  {
+   "key": "a.u5.s20",
+   "kind": "sentence",
+   "text": "I go to school on Monday."
+  },
+  {
+   "key": "a.u5.s21",
+   "kind": "sentence",
+   "text": "We do not go to school on Sunday."
+  },
+  {
+   "key": "a.u5.s22",
+   "kind": "sentence",
+   "text": "I meet my grandmother every week."
+  },
+  {
+   "key": "a.u5.s23",
+   "kind": "sentence",
+   "text": "What do you do on the weekend?"
+  },
+  {
+   "key": "a.u5.s24",
+   "kind": "sentence",
+   "text": "There are seven days in a week."
+  },
+  {
+   "key": "a.u5.s25",
+   "kind": "sentence",
+   "text": "I always eat breakfast."
+  },
+  {
+   "key": "a.u5.s26",
+   "kind": "sentence",
+   "text": "Tom usually gets up at seven."
+  },
+  {
+   "key": "a.u5.s27",
+   "kind": "sentence",
+   "text": "I sometimes drink coffee."
+  },
+  {
+   "key": "a.u5.s28",
+   "kind": "sentence",
+   "text": "Kiko never eats bread."
+  },
+  {
+   "key": "a.u5.s29",
+   "kind": "sentence",
+   "text": "We usually go home at six."
+  },
+  {
+   "key": "a.u5.s30",
+   "kind": "sentence",
+   "text": "My father never drinks coffee at night."
+  },
+  {
+   "key": "a.u5.d1",
+   "kind": "dialogueLine",
+   "text": "What time is it?"
+  },
+  {
+   "key": "a.u5.d2",
+   "kind": "dialogueLine",
+   "text": "When do you get up?"
+  },
+  {
+   "key": "a.u5.d3",
+   "kind": "dialogueLine",
+   "text": "Do you go to school on Sunday?"
+  },
+  {
+   "key": "a.u5.d4",
+   "kind": "dialogueLine",
+   "text": "What day is it today?"
+  },
+  {
+   "key": "a.u5.d5",
+   "kind": "dialogueLine",
+   "text": "Where is your mother now?"
+  },
+  {
+   "key": "a.u5.d6",
+   "kind": "dialogueLine",
+   "text": "Do you drink tea every day?"
+  },
+  {
+   "key": "a.u6.s1",
+   "kind": "sentence",
+   "text": "This is my house."
+  },
+  {
+   "key": "a.u6.s2",
+   "kind": "sentence",
+   "text": "Mom is in the kitchen."
+  },
+  {
+   "key": "a.u6.s3",
+   "kind": "sentence",
+   "text": "Where is your room?"
+  },
+  {
+   "key": "a.u6.s4",
+   "kind": "sentence",
+   "text": "This is my bedroom."
+  },
+  {
+   "key": "a.u6.s5",
+   "kind": "sentence",
+   "text": "Kiko is in the bedroom."
+  },
+  {
+   "key": "a.u6.s6",
+   "kind": "sentence",
+   "text": "We have a house."
+  },
+  {
+   "key": "a.u6.s7",
+   "kind": "sentence",
+   "text": "The cat is on the table."
+  },
+  {
+   "key": "a.u6.s8",
+   "kind": "sentence",
+   "text": "There are four chairs in the kitchen."
+  },
+  {
+   "key": "a.u6.s9",
+   "kind": "sentence",
+   "text": "Kiko is on my bed."
+  },
+  {
+   "key": "a.u6.s10",
+   "kind": "sentence",
+   "text": "Where is the door?"
+  },
+  {
+   "key": "a.u6.s11",
+   "kind": "sentence",
+   "text": "The table is in the kitchen."
+  },
+  {
+   "key": "a.u6.s12",
+   "kind": "sentence",
+   "text": "I have a bed and a table in my room."
+  },
+  {
+   "key": "a.u6.s13",
+   "kind": "sentence",
+   "text": "My room has two windows."
+  },
+  {
+   "key": "a.u6.s14",
+   "kind": "sentence",
+   "text": "The lamp is on the table."
+  },
+  {
+   "key": "a.u6.s15",
+   "kind": "sentence",
+   "text": "The cat is on the sofa."
+  },
+  {
+   "key": "a.u6.s16",
+   "kind": "sentence",
+   "text": "Where is the bathroom?"
+  },
+  {
+   "key": "a.u6.s17",
+   "kind": "sentence",
+   "text": "There is a lamp in the bathroom."
+  },
+  {
+   "key": "a.u6.s18",
+   "kind": "sentence",
+   "text": "Kiko sits at the window."
+  },
+  {
+   "key": "a.u6.s19",
+   "kind": "sentence",
+   "text": "My house is big."
+  },
+  {
+   "key": "a.u6.s20",
+   "kind": "sentence",
+   "text": "The bathroom is small."
+  },
+  {
+   "key": "a.u6.s21",
+   "kind": "sentence",
+   "text": "I have a new sofa."
+  },
+  {
+   "key": "a.u6.s22",
+   "kind": "sentence",
+   "text": "My room is clean."
+  },
+  {
+   "key": "a.u6.s23",
+   "kind": "sentence",
+   "text": "The kitchen is big and clean."
+  },
+  {
+   "key": "a.u6.s24",
+   "kind": "sentence",
+   "text": "We have a small table."
+  },
+  {
+   "key": "a.u6.s25",
+   "kind": "sentence",
+   "text": "I live in Vietnam."
+  },
+  {
+   "key": "a.u6.s26",
+   "kind": "sentence",
+   "text": "Where do you live?"
+  },
+  {
+   "key": "a.u6.s27",
+   "kind": "sentence",
+   "text": "We live in an apartment."
+  },
+  {
+   "key": "a.u6.s28",
+   "kind": "sentence",
+   "text": "My grandmother has a garden."
+  },
+  {
+   "key": "a.u6.s29",
+   "kind": "sentence",
+   "text": "Our apartment is on the fifth floor."
+  },
+  {
+   "key": "a.u6.s30",
+   "kind": "sentence",
+   "text": "Tom lives in a big house in Canada."
+  },
+  {
+   "key": "a.u6.d1",
+   "kind": "dialogueLine",
+   "text": "Where do you live?"
+  },
+  {
+   "key": "a.u6.d2",
+   "kind": "dialogueLine",
+   "text": "Is your house big?"
+  },
+  {
+   "key": "a.u6.d3",
+   "kind": "dialogueLine",
+   "text": "Where is Kiko?"
+  },
+  {
+   "key": "a.u6.d4",
+   "kind": "dialogueLine",
+   "text": "How many rooms does your house have?"
+  },
+  {
+   "key": "a.u6.d5",
+   "kind": "dialogueLine",
+   "text": "Is the bathroom clean?"
+  },
+  {
+   "key": "a.u6.d6",
+   "kind": "dialogueLine",
+   "text": "Where is your bedroom?"
+  },
+  {
+   "key": "a.u7.s1",
+   "kind": "sentence",
+   "text": "Our class is big."
+  },
+  {
+   "key": "a.u7.s2",
+   "kind": "sentence",
+   "text": "I have homework today."
+  },
+  {
+   "key": "a.u7.s3",
+   "kind": "sentence",
+   "text": "Mr. Long is our English teacher."
+  },
+  {
+   "key": "a.u7.s4",
+   "kind": "sentence",
+   "text": "The classroom is clean."
+  },
+  {
+   "key": "a.u7.s5",
+   "kind": "sentence",
+   "text": "English class is on Monday."
+  },
+  {
+   "key": "a.u7.s6",
+   "kind": "sentence",
+   "text": "Tom does his homework at home."
+  },
+  {
+   "key": "a.u7.s7",
+   "kind": "sentence",
+   "text": "I read a book every evening."
+  },
+  {
+   "key": "a.u7.s8",
+   "kind": "sentence",
+   "text": "Please write your name."
+  },
+  {
+   "key": "a.u7.s9",
+   "kind": "sentence",
+   "text": "We study English at school."
+  },
+  {
+   "key": "a.u7.s10",
+   "kind": "sentence",
+   "text": "Mai learns English with Tom."
+  },
+  {
+   "key": "a.u7.s11",
+   "kind": "sentence",
+   "text": "Nam reads in the classroom."
+  },
+  {
+   "key": "a.u7.s12",
+   "kind": "sentence",
+   "text": "I write with a pen."
+  },
+  {
+   "key": "a.u7.s13",
+   "kind": "sentence",
+   "text": "Can you help me?"
+  },
+  {
+   "key": "a.u7.s14",
+   "kind": "sentence",
+   "text": "I can read English."
+  },
+  {
+   "key": "a.u7.s15",
+   "kind": "sentence",
+   "text": "I do not understand."
+  },
+  {
+   "key": "a.u7.s16",
+   "kind": "sentence",
+   "text": "Do you understand the question?"
+  },
+  {
+   "key": "a.u7.s17",
+   "kind": "sentence",
+   "text": "What is the answer?"
+  },
+  {
+   "key": "a.u7.s18",
+   "kind": "sentence",
+   "text": "I have a question."
+  },
+  {
+   "key": "a.u7.s19",
+   "kind": "sentence",
+   "text": "English is easy!"
+  },
+  {
+   "key": "a.u7.s20",
+   "kind": "sentence",
+   "text": "This question is difficult."
+  },
+  {
+   "key": "a.u7.s21",
+   "kind": "sentence",
+   "text": "What does this word mean?"
+  },
+  {
+   "key": "a.u7.s22",
+   "kind": "sentence",
+   "text": "Please read this sentence."
+  },
+  {
+   "key": "a.u7.s23",
+   "kind": "sentence",
+   "text": "I learn ten new words every day."
+  },
+  {
+   "key": "a.u7.s24",
+   "kind": "sentence",
+   "text": "The homework is not difficult."
+  },
+  {
+   "key": "a.u7.s25",
+   "kind": "sentence",
+   "text": "Please open your books."
+  },
+  {
+   "key": "a.u7.s26",
+   "kind": "sentence",
+   "text": "Can you close the door, please?"
+  },
+  {
+   "key": "a.u7.s27",
+   "kind": "sentence",
+   "text": "Listen to the teacher."
+  },
+  {
+   "key": "a.u7.s28",
+   "kind": "sentence",
+   "text": "Do you speak English?"
+  },
+  {
+   "key": "a.u7.s29",
+   "kind": "sentence",
+   "text": "I can speak English a little."
+  },
+  {
+   "key": "a.u7.s30",
+   "kind": "sentence",
+   "text": "Open the window, please."
+  },
+  {
+   "key": "a.u7.d1",
+   "kind": "dialogueLine",
+   "text": "Do you understand?"
+  },
+  {
+   "key": "a.u7.d2",
+   "kind": "dialogueLine",
+   "text": "Can you speak English?"
+  },
+  {
+   "key": "a.u7.d3",
+   "kind": "dialogueLine",
+   "text": "What is the answer?"
+  },
+  {
+   "key": "a.u7.d4",
+   "kind": "dialogueLine",
+   "text": "Is English difficult?"
+  },
+  {
+   "key": "a.u7.d5",
+   "kind": "dialogueLine",
+   "text": "Do you have homework today?"
+  },
+  {
+   "key": "a.u7.d6",
+   "kind": "dialogueLine",
+   "text": "Can I open the window?"
+  },
+  {
+   "key": "a.u8.s1",
+   "kind": "sentence",
+   "text": "It is hot today."
+  },
+  {
+   "key": "a.u8.s2",
+   "kind": "sentence",
+   "text": "I am cold."
+  },
+  {
+   "key": "a.u8.s3",
+   "kind": "sentence",
+   "text": "The water is warm."
+  },
+  {
+   "key": "a.u8.s4",
+   "kind": "sentence",
+   "text": "It is cool in the evening."
+  },
+  {
+   "key": "a.u8.s5",
+   "kind": "sentence",
+   "text": "Is it cold now?"
+  },
+  {
+   "key": "a.u8.s6",
+   "kind": "sentence",
+   "text": "Hot tea, please."
+  },
+  {
+   "key": "a.u8.s7",
+   "kind": "sentence",
+   "text": "It is sunny today."
+  },
+  {
+   "key": "a.u8.s8",
+   "kind": "sentence",
+   "text": "It is raining now."
+  },
+  {
+   "key": "a.u8.s9",
+   "kind": "sentence",
+   "text": "It is cloudy and cool."
+  },
+  {
+   "key": "a.u8.s10",
+   "kind": "sentence",
+   "text": "Today is windy."
+  },
+  {
+   "key": "a.u8.s11",
+   "kind": "sentence",
+   "text": "It is rainy on Sunday."
+  },
+  {
+   "key": "a.u8.s12",
+   "kind": "sentence",
+   "text": "It is sunny and hot in Vietnam."
+  },
+  {
+   "key": "a.u8.s13",
+   "kind": "sentence",
+   "text": "How is the weather today?"
+  },
+  {
+   "key": "a.u8.s14",
+   "kind": "sentence",
+   "text": "The weather is nice."
+  },
+  {
+   "key": "a.u8.s15",
+   "kind": "sentence",
+   "text": "Summer is hot."
+  },
+  {
+   "key": "a.u8.s16",
+   "kind": "sentence",
+   "text": "Winter in Canada is very cold."
+  },
+  {
+   "key": "a.u8.s17",
+   "kind": "sentence",
+   "text": "The south of Vietnam has two seasons."
+  },
+  {
+   "key": "a.u8.s18",
+   "kind": "sentence",
+   "text": "It is rainy in the summer."
+  },
+  {
+   "key": "a.u8.s19",
+   "kind": "sentence",
+   "text": "Spring is warm."
+  },
+  {
+   "key": "a.u8.s20",
+   "kind": "sentence",
+   "text": "Autumn is cool and beautiful."
+  },
+  {
+   "key": "a.u8.s21",
+   "kind": "sentence",
+   "text": "The sky is beautiful today."
+  },
+  {
+   "key": "a.u8.s22",
+   "kind": "sentence",
+   "text": "The sky is cloudy."
+  },
+  {
+   "key": "a.u8.s23",
+   "kind": "sentence",
+   "text": "Canada is beautiful in autumn."
+  },
+  {
+   "key": "a.u8.s24",
+   "kind": "sentence",
+   "text": "I love spring."
+  },
+  {
+   "key": "a.u8.s25",
+   "kind": "sentence",
+   "text": "Take an umbrella. It is raining."
+  },
+  {
+   "key": "a.u8.s26",
+   "kind": "sentence",
+   "text": "I wear a coat in winter."
+  },
+  {
+   "key": "a.u8.s27",
+   "kind": "sentence",
+   "text": "It is cold outside."
+  },
+  {
+   "key": "a.u8.s28",
+   "kind": "sentence",
+   "text": "Do you have an umbrella?"
+  },
+  {
+   "key": "a.u8.s29",
+   "kind": "sentence",
+   "text": "Wear your coat, Huy!"
+  },
+  {
+   "key": "a.u8.s30",
+   "kind": "sentence",
+   "text": "We eat lunch outside."
+  },
+  {
+   "key": "a.u8.d1",
+   "kind": "dialogueLine",
+   "text": "How is the weather today?"
+  },
+  {
+   "key": "a.u8.d2",
+   "kind": "dialogueLine",
+   "text": "Is it raining?"
+  },
+  {
+   "key": "a.u8.d3",
+   "kind": "dialogueLine",
+   "text": "Are you cold?"
+  },
+  {
+   "key": "a.u8.d4",
+   "kind": "dialogueLine",
+   "text": "Do you like winter?"
+  },
+  {
+   "key": "a.u8.d5",
+   "kind": "dialogueLine",
+   "text": "Is it cold in Canada?"
+  },
+  {
+   "key": "a.u8.d6",
+   "kind": "dialogueLine",
+   "text": "What do you wear in winter?"
+  },
+  {
+   "key": "a.u9.s1",
+   "kind": "sentence",
+   "text": "I want to buy bread."
+  },
+  {
+   "key": "a.u9.s2",
+   "kind": "sentence",
+   "text": "This shop is new."
+  },
+  {
+   "key": "a.u9.s3",
+   "kind": "sentence",
+   "text": "I do not have money."
+  },
+  {
+   "key": "a.u9.s4",
+   "kind": "sentence",
+   "text": "The apples are cheap."
+  },
+  {
+   "key": "a.u9.s5",
+   "kind": "sentence",
+   "text": "Mai goes shopping on Sunday."
+  },
+  {
+   "key": "a.u9.s6",
+   "kind": "sentence",
+   "text": "Where can I buy a phone?"
+  },
+  {
+   "key": "a.u9.s7",
+   "kind": "sentence",
+   "text": "This shirt is expensive."
+  },
+  {
+   "key": "a.u9.s8",
+   "kind": "sentence",
+   "text": "I want new shoes."
+  },
+  {
+   "key": "a.u9.s9",
+   "kind": "sentence",
+   "text": "How much is this dress?"
+  },
+  {
+   "key": "a.u9.s10",
+   "kind": "sentence",
+   "text": "The shoes are cheap, but the shirt is expensive."
+  },
+  {
+   "key": "a.u9.s11",
+   "kind": "sentence",
+   "text": "Anna buys a dress."
+  },
+  {
+   "key": "a.u9.s12",
+   "kind": "sentence",
+   "text": "Is this shirt cheap?"
+  },
+  {
+   "key": "a.u9.s13",
+   "kind": "sentence",
+   "text": "What color is your bag?"
+  },
+  {
+   "key": "a.u9.s14",
+   "kind": "sentence",
+   "text": "I like the red dress."
+  },
+  {
+   "key": "a.u9.s15",
+   "kind": "sentence",
+   "text": "Tom wants a blue shirt."
+  },
+  {
+   "key": "a.u9.s16",
+   "kind": "sentence",
+   "text": "My shoes are black."
+  },
+  {
+   "key": "a.u9.s17",
+   "kind": "sentence",
+   "text": "Do you have this shirt in black?"
+  },
+  {
+   "key": "a.u9.s18",
+   "kind": "sentence",
+   "text": "The sky is blue."
+  },
+  {
+   "key": "a.u9.s19",
+   "kind": "sentence",
+   "text": "Can I pay by card?"
+  },
+  {
+   "key": "a.u9.s20",
+   "kind": "sentence",
+   "text": "I pay in cash."
+  },
+  {
+   "key": "a.u9.s21",
+   "kind": "sentence",
+   "text": "The shoes are on sale."
+  },
+  {
+   "key": "a.u9.s22",
+   "kind": "sentence",
+   "text": "Do you have cash?"
+  },
+  {
+   "key": "a.u9.s23",
+   "kind": "sentence",
+   "text": "There is a big sale today."
+  },
+  {
+   "key": "a.u9.s24",
+   "kind": "sentence",
+   "text": "My mother pays for dinner."
+  },
+  {
+   "key": "a.u9.s25",
+   "kind": "sentence",
+   "text": "We buy fish at the market."
+  },
+  {
+   "key": "a.u9.s26",
+   "kind": "sentence",
+   "text": "This is a gift for my mother."
+  },
+  {
+   "key": "a.u9.s27",
+   "kind": "sentence",
+   "text": "They sell rice and eggs at the market."
+  },
+  {
+   "key": "a.u9.s28",
+   "kind": "sentence",
+   "text": "I have no money in my wallet."
+  },
+  {
+   "key": "a.u9.s29",
+   "kind": "sentence",
+   "text": "Mrs. Rosa sells coffee."
+  },
+  {
+   "key": "a.u9.s30",
+   "kind": "sentence",
+   "text": "I want to buy a gift for Anna."
+  },
+  {
+   "key": "a.u9.d1",
+   "kind": "dialogueLine",
+   "text": "How much is this shirt?"
+  },
+  {
+   "key": "a.u9.d2",
+   "kind": "dialogueLine",
+   "text": "Can I help you?"
+  },
+  {
+   "key": "a.u9.d3",
+   "kind": "dialogueLine",
+   "text": "Do you pay in cash?"
+  },
+  {
+   "key": "a.u9.d4",
+   "kind": "dialogueLine",
+   "text": "What color do you want?"
+  },
+  {
+   "key": "a.u9.d5",
+   "kind": "dialogueLine",
+   "text": "Is it on sale?"
+  },
+  {
+   "key": "a.u9.d6",
+   "kind": "dialogueLine",
+   "text": "Where do you buy fish?"
+  },
+  {
+   "key": "a.u10.s1",
+   "kind": "sentence",
+   "text": "Go straight."
+  },
+  {
+   "key": "a.u10.s2",
+   "kind": "sentence",
+   "text": "The shop is on the left."
+  },
+  {
+   "key": "a.u10.s3",
+   "kind": "sentence",
+   "text": "The school is on the right."
+  },
+  {
+   "key": "a.u10.s4",
+   "kind": "sentence",
+   "text": "What is the name of this street?"
+  },
+  {
+   "key": "a.u10.s5",
+   "kind": "sentence",
+   "text": "Go straight on this street."
+  },
+  {
+   "key": "a.u10.s6",
+   "kind": "sentence",
+   "text": "My house is on the left."
+  },
+  {
+   "key": "a.u10.s7",
+   "kind": "sentence",
+   "text": "Turn left."
+  },
+  {
+   "key": "a.u10.s8",
+   "kind": "sentence",
+   "text": "Turn right at the bank."
+  },
+  {
+   "key": "a.u10.s9",
+   "kind": "sentence",
+   "text": "Where is the hospital?"
+  },
+  {
+   "key": "a.u10.s10",
+   "kind": "sentence",
+   "text": "The park is on the right."
+  },
+  {
+   "key": "a.u10.s11",
+   "kind": "sentence",
+   "text": "We go to the park on Sunday."
+  },
+  {
+   "key": "a.u10.s12",
+   "kind": "sentence",
+   "text": "The bank is on this street."
+  },
+  {
+   "key": "a.u10.s13",
+   "kind": "sentence",
+   "text": "Is the bank near here?"
+  },
+  {
+   "key": "a.u10.s14",
+   "kind": "sentence",
+   "text": "The café is next to the bank."
+  },
+  {
+   "key": "a.u10.s15",
+   "kind": "sentence",
+   "text": "The hospital is opposite the park."
+  },
+  {
+   "key": "a.u10.s16",
+   "kind": "sentence",
+   "text": "The shop is on the corner."
+  },
+  {
+   "key": "a.u10.s17",
+   "kind": "sentence",
+   "text": "I live near the school."
+  },
+  {
+   "key": "a.u10.s18",
+   "kind": "sentence",
+   "text": "Turn left at the corner."
+  },
+  {
+   "key": "a.u10.s19",
+   "kind": "sentence",
+   "text": "Ho Chi Minh City is very big."
+  },
+  {
+   "key": "a.u10.s20",
+   "kind": "sentence",
+   "text": "Do you have a map?"
+  },
+  {
+   "key": "a.u10.s21",
+   "kind": "sentence",
+   "text": "This building is new."
+  },
+  {
+   "key": "a.u10.s22",
+   "kind": "sentence",
+   "text": "The bridge is near my house."
+  },
+  {
+   "key": "a.u10.s23",
+   "kind": "sentence",
+   "text": "I love this city."
+  },
+  {
+   "key": "a.u10.s24",
+   "kind": "sentence",
+   "text": "Look at the map."
+  },
+  {
+   "key": "a.u10.s25",
+   "kind": "sentence",
+   "text": "Is it far?"
+  },
+  {
+   "key": "a.u10.s26",
+   "kind": "sentence",
+   "text": "I walk to school."
+  },
+  {
+   "key": "a.u10.s27",
+   "kind": "sentence",
+   "text": "Excuse me, I am lost."
+  },
+  {
+   "key": "a.u10.s28",
+   "kind": "sentence",
+   "text": "I cannot find the bank."
+  },
+  {
+   "key": "a.u10.s29",
+   "kind": "sentence",
+   "text": "The park is not far from here."
+  },
+  {
+   "key": "a.u10.s30",
+   "kind": "sentence",
+   "text": "We can walk to the bridge."
+  },
+  {
+   "key": "a.u10.d1",
+   "kind": "dialogueLine",
+   "text": "Excuse me, where is the bank?"
+  },
+  {
+   "key": "a.u10.d2",
+   "kind": "dialogueLine",
+   "text": "Is the hospital far?"
+  },
+  {
+   "key": "a.u10.d3",
+   "kind": "dialogueLine",
+   "text": "How do I go to the park?"
+  },
+  {
+   "key": "a.u10.d4",
+   "kind": "dialogueLine",
+   "text": "Can you walk there?"
+  },
+  {
+   "key": "a.u10.d5",
+   "kind": "dialogueLine",
+   "text": "Are you lost?"
+  },
+  {
+   "key": "a.u10.d6",
+   "kind": "dialogueLine",
+   "text": "Do you have a map?"
+  },
+  {
+   "key": "a.u11.s1",
+   "kind": "sentence",
+   "text": "I love to travel."
+  },
+  {
+   "key": "a.u11.s2",
+   "kind": "sentence",
+   "text": "We go by plane."
+  },
+  {
+   "key": "a.u11.s3",
+   "kind": "sentence",
+   "text": "The train is cheap."
+  },
+  {
+   "key": "a.u11.s4",
+   "kind": "sentence",
+   "text": "Our trip is in the summer."
+  },
+  {
+   "key": "a.u11.s5",
+   "kind": "sentence",
+   "text": "Tom travels by train."
+  },
+  {
+   "key": "a.u11.s6",
+   "kind": "sentence",
+   "text": "The plane is big."
+  },
+  {
+   "key": "a.u11.s7",
+   "kind": "sentence",
+   "text": "We take the bus to school."
+  },
+  {
+   "key": "a.u11.s8",
+   "kind": "sentence",
+   "text": "Can I have a ticket, please?"
+  },
+  {
+   "key": "a.u11.s9",
+   "kind": "sentence",
+   "text": "The airport is far from the city."
+  },
+  {
+   "key": "a.u11.s10",
+   "kind": "sentence",
+   "text": "Let's take a taxi."
+  },
+  {
+   "key": "a.u11.s11",
+   "kind": "sentence",
+   "text": "How much is a bus ticket?"
+  },
+  {
+   "key": "a.u11.s12",
+   "kind": "sentence",
+   "text": "The taxi is at the airport."
+  },
+  {
+   "key": "a.u11.s13",
+   "kind": "sentence",
+   "text": "We stay at a small hotel."
+  },
+  {
+   "key": "a.u11.s14",
+   "kind": "sentence",
+   "text": "Do you have your passport?"
+  },
+  {
+   "key": "a.u11.s15",
+   "kind": "sentence",
+   "text": "My suitcase is very big."
+  },
+  {
+   "key": "a.u11.s16",
+   "kind": "sentence",
+   "text": "I want to visit Hanoi."
+  },
+  {
+   "key": "a.u11.s17",
+   "kind": "sentence",
+   "text": "Tom visits his grandmother in the summer."
+  },
+  {
+   "key": "a.u11.s18",
+   "kind": "sentence",
+   "text": "Where is my passport?"
+  },
+  {
+   "key": "a.u11.s19",
+   "kind": "sentence",
+   "text": "The beach is beautiful."
+  },
+  {
+   "key": "a.u11.s20",
+   "kind": "sentence",
+   "text": "I love the sea."
+  },
+  {
+   "key": "a.u11.s21",
+   "kind": "sentence",
+   "text": "There is a hotel on the island."
+  },
+  {
+   "key": "a.u11.s22",
+   "kind": "sentence",
+   "text": "The mountain is very high."
+  },
+  {
+   "key": "a.u11.s23",
+   "kind": "sentence",
+   "text": "We go to the beach every summer."
+  },
+  {
+   "key": "a.u11.s24",
+   "kind": "sentence",
+   "text": "Phu Quoc is an island in Vietnam."
+  },
+  {
+   "key": "a.u11.s25",
+   "kind": "sentence",
+   "text": "The plane arrives at nine o'clock."
+  },
+  {
+   "key": "a.u11.s26",
+   "kind": "sentence",
+   "text": "The train leaves at six."
+  },
+  {
+   "key": "a.u11.s27",
+   "kind": "sentence",
+   "text": "We go to the beach tomorrow."
+  },
+  {
+   "key": "a.u11.s28",
+   "kind": "sentence",
+   "text": "Please arrive early."
+  },
+  {
+   "key": "a.u11.s29",
+   "kind": "sentence",
+   "text": "I get up early tomorrow."
+  },
+  {
+   "key": "a.u11.s30",
+   "kind": "sentence",
+   "text": "When does the bus leave?"
+  },
+  {
+   "key": "a.u11.d1",
+   "kind": "dialogueLine",
+   "text": "How do you go to the airport?"
+  },
+  {
+   "key": "a.u11.d2",
+   "kind": "dialogueLine",
+   "text": "Can I see your passport, please?"
+  },
+  {
+   "key": "a.u11.d3",
+   "kind": "dialogueLine",
+   "text": "When does the train leave?"
+  },
+  {
+   "key": "a.u11.d4",
+   "kind": "dialogueLine",
+   "text": "Do you like the beach?"
+  },
+  {
+   "key": "a.u11.d5",
+   "kind": "dialogueLine",
+   "text": "Where do you want to visit?"
+  },
+  {
+   "key": "a.u11.d6",
+   "kind": "dialogueLine",
+   "text": "Is the hotel near the beach?"
+  },
+  {
+   "key": "a.u12.s1",
+   "kind": "sentence",
+   "text": "What is your job?"
+  },
+  {
+   "key": "a.u12.s2",
+   "kind": "sentence",
+   "text": "I work in an office."
+  },
+  {
+   "key": "a.u12.s3",
+   "kind": "sentence",
+   "text": "Linh works in an office."
+  },
+  {
+   "key": "a.u12.s4",
+   "kind": "sentence",
+   "text": "My boss is nice."
+  },
+  {
+   "key": "a.u12.s5",
+   "kind": "sentence",
+   "text": "I love my job."
+  },
+  {
+   "key": "a.u12.s6",
+   "kind": "sentence",
+   "text": "The office is on the third floor."
+  },
+  {
+   "key": "a.u12.s7",
+   "kind": "sentence",
+   "text": "My aunt is a doctor."
+  },
+  {
+   "key": "a.u12.s8",
+   "kind": "sentence",
+   "text": "She is a nurse at the hospital."
+  },
+  {
+   "key": "a.u12.s9",
+   "kind": "sentence",
+   "text": "Tom's father is an engineer."
+  },
+  {
+   "key": "a.u12.s10",
+   "kind": "sentence",
+   "text": "The taxi driver is from Hanoi."
+  },
+  {
+   "key": "a.u12.s11",
+   "kind": "sentence",
+   "text": "I want to be a doctor."
+  },
+  {
+   "key": "a.u12.s12",
+   "kind": "sentence",
+   "text": "Doctors and nurses work at the hospital."
+  },
+  {
+   "key": "a.u12.s13",
+   "kind": "sentence",
+   "text": "Linh works for a big company."
+  },
+  {
+   "key": "a.u12.s14",
+   "kind": "sentence",
+   "text": "I have a meeting at ten."
+  },
+  {
+   "key": "a.u12.s15",
+   "kind": "sentence",
+   "text": "Are you busy now?"
+  },
+  {
+   "key": "a.u12.s16",
+   "kind": "sentence",
+   "text": "My colleague is from Canada."
+  },
+  {
+   "key": "a.u12.s17",
+   "kind": "sentence",
+   "text": "I am very busy today."
+  },
+  {
+   "key": "a.u12.s18",
+   "kind": "sentence",
+   "text": "The meeting is in the office."
+  },
+  {
+   "key": "a.u12.s19",
+   "kind": "sentence",
+   "text": "I write many emails every day."
+  },
+  {
+   "key": "a.u12.s20",
+   "kind": "sentence",
+   "text": "My computer is old."
+  },
+  {
+   "key": "a.u12.s21",
+   "kind": "sentence",
+   "text": "The salary is good."
+  },
+  {
+   "key": "a.u12.s22",
+   "kind": "sentence",
+   "text": "I have a job interview today."
+  },
+  {
+   "key": "a.u12.s23",
+   "kind": "sentence",
+   "text": "Please read my email."
+  },
+  {
+   "key": "a.u12.s24",
+   "kind": "sentence",
+   "text": "Engineers work with computers."
+  },
+  {
+   "key": "a.u12.s25",
+   "kind": "sentence",
+   "text": "I worked late yesterday."
+  },
+  {
+   "key": "a.u12.s26",
+   "kind": "sentence",
+   "text": "The meeting starts at nine."
+  },
+  {
+   "key": "a.u12.s27",
+   "kind": "sentence",
+   "text": "Did you finish your work?"
+  },
+  {
+   "key": "a.u12.s28",
+   "kind": "sentence",
+   "text": "Sorry, I am late."
+  },
+  {
+   "key": "a.u12.s29",
+   "kind": "sentence",
+   "text": "Linh started her new job yesterday."
+  },
+  {
+   "key": "a.u12.s30",
+   "kind": "sentence",
+   "text": "I finish work at five."
+  },
+  {
+   "key": "a.u12.d1",
+   "kind": "dialogueLine",
+   "text": "What do you do?"
+  },
+  {
+   "key": "a.u12.d2",
+   "kind": "dialogueLine",
+   "text": "Where do you work?"
+  },
+  {
+   "key": "a.u12.d3",
+   "kind": "dialogueLine",
+   "text": "Are you busy?"
+  },
+  {
+   "key": "a.u12.d4",
+   "kind": "dialogueLine",
+   "text": "When do you finish work?"
+  },
+  {
+   "key": "a.u12.d5",
+   "kind": "dialogueLine",
+   "text": "Why are you late?"
+  },
+  {
+   "key": "a.u12.d6",
+   "kind": "dialogueLine",
+   "text": "How was your interview?"
+  },
+  {
+   "key": "a.u13.s1",
+   "kind": "sentence",
+   "text": "I like music."
+  },
+  {
+   "key": "a.u13.s2",
+   "kind": "sentence",
+   "text": "This movie is good."
+  },
+  {
+   "key": "a.u13.s3",
+   "kind": "sentence",
+   "text": "Do you like sports?"
+  },
+  {
+   "key": "a.u13.s4",
+   "kind": "sentence",
+   "text": "This game is easy."
+  },
+  {
+   "key": "a.u13.s5",
+   "kind": "sentence",
+   "text": "Nam loves sports."
+  },
+  {
+   "key": "a.u13.s6",
+   "kind": "sentence",
+   "text": "We like the same music."
+  },
+  {
+   "key": "a.u13.s7",
+   "kind": "sentence",
+   "text": "I play games on my phone."
+  },
+  {
+   "key": "a.u13.s8",
+   "kind": "sentence",
+   "text": "We watch a movie every Sunday."
+  },
+  {
+   "key": "a.u13.s9",
+   "kind": "sentence",
+   "text": "Anna can sing."
+  },
+  {
+   "key": "a.u13.s10",
+   "kind": "sentence",
+   "text": "Mai likes to dance."
+  },
+  {
+   "key": "a.u13.s11",
+   "kind": "sentence",
+   "text": "Do you want to watch TV?"
+  },
+  {
+   "key": "a.u13.s12",
+   "kind": "sentence",
+   "text": "They sing and dance."
+  },
+  {
+   "key": "a.u13.s13",
+   "kind": "sentence",
+   "text": "Nam plays football after school."
+  },
+  {
+   "key": "a.u13.s14",
+   "kind": "sentence",
+   "text": "Can you play the guitar?"
+  },
+  {
+   "key": "a.u13.s15",
+   "kind": "sentence",
+   "text": "Anna plays the piano."
+  },
+  {
+   "key": "a.u13.s16",
+   "kind": "sentence",
+   "text": "I cannot swim."
+  },
+  {
+   "key": "a.u13.s17",
+   "kind": "sentence",
+   "text": "We watch football on TV."
+  },
+  {
+   "key": "a.u13.s18",
+   "kind": "sentence",
+   "text": "Tom swims in the sea."
+  },
+  {
+   "key": "a.u13.s19",
+   "kind": "sentence",
+   "text": "What is your hobby?"
+  },
+  {
+   "key": "a.u13.s20",
+   "kind": "sentence",
+   "text": "My favorite sport is football."
+  },
+  {
+   "key": "a.u13.s21",
+   "kind": "sentence",
+   "text": "I often listen to music."
+  },
+  {
+   "key": "a.u13.s22",
+   "kind": "sentence",
+   "text": "We play games together."
+  },
+  {
+   "key": "a.u13.s23",
+   "kind": "sentence",
+   "text": "What is your favorite movie?"
+  },
+  {
+   "key": "a.u13.s24",
+   "kind": "sentence",
+   "text": "Mai and Anna often dance together."
+  },
+  {
+   "key": "a.u13.s25",
+   "kind": "sentence",
+   "text": "I have a new camera."
+  },
+  {
+   "key": "a.u13.s26",
+   "kind": "sentence",
+   "text": "Tom takes many photos."
+  },
+  {
+   "key": "a.u13.s27",
+   "kind": "sentence",
+   "text": "Huy likes to draw."
+  },
+  {
+   "key": "a.u13.s28",
+   "kind": "sentence",
+   "text": "My father cooks dinner on Sunday."
+  },
+  {
+   "key": "a.u13.s29",
+   "kind": "sentence",
+   "text": "I cooked chicken yesterday."
+  },
+  {
+   "key": "a.u13.s30",
+   "kind": "sentence",
+   "text": "Can you take a photo of us?"
+  },
+  {
+   "key": "a.u13.d1",
+   "kind": "dialogueLine",
+   "text": "What is your hobby?"
+  },
+  {
+   "key": "a.u13.d2",
+   "kind": "dialogueLine",
+   "text": "Do you play football?"
+  },
+  {
+   "key": "a.u13.d3",
+   "kind": "dialogueLine",
+   "text": "Can you swim?"
+  },
+  {
+   "key": "a.u13.d4",
+   "kind": "dialogueLine",
+   "text": "What is your favorite movie?"
+  },
+  {
+   "key": "a.u13.d5",
+   "kind": "dialogueLine",
+   "text": "Do you want to watch a movie together?"
+  },
+  {
+   "key": "a.u13.d6",
+   "kind": "dialogueLine",
+   "text": "Can you play the piano?"
+  },
+  {
+   "key": "a.u14.s1",
+   "kind": "sentence",
+   "text": "I am sick today."
+  },
+  {
+   "key": "a.u14.s2",
+   "kind": "sentence",
+   "text": "Are you tired?"
+  },
+  {
+   "key": "a.u14.s3",
+   "kind": "sentence",
+   "text": "I have a headache."
+  },
+  {
+   "key": "a.u14.s4",
+   "kind": "sentence",
+   "text": "Huy has a fever."
+  },
+  {
+   "key": "a.u14.s5",
+   "kind": "sentence",
+   "text": "My mother is sick."
+  },
+  {
+   "key": "a.u14.s6",
+   "kind": "sentence",
+   "text": "I am very tired after work."
+  },
+  {
+   "key": "a.u14.s7",
+   "kind": "sentence",
+   "text": "Take this medicine."
+  },
+  {
+   "key": "a.u14.s8",
+   "kind": "sentence",
+   "text": "Where is the pharmacy?"
+  },
+  {
+   "key": "a.u14.s9",
+   "kind": "sentence",
+   "text": "You need to rest."
+  },
+  {
+   "key": "a.u14.s10",
+   "kind": "sentence",
+   "text": "I sleep eight hours every night."
+  },
+  {
+   "key": "a.u14.s11",
+   "kind": "sentence",
+   "text": "The pharmacy is next to the hospital."
+  },
+  {
+   "key": "a.u14.s12",
+   "kind": "sentence",
+   "text": "Kiko sleeps all day."
+  },
+  {
+   "key": "a.u14.s13",
+   "kind": "sentence",
+   "text": "You should go to the doctor."
+  },
+  {
+   "key": "a.u14.s14",
+   "kind": "sentence",
+   "text": "My leg hurts."
+  },
+  {
+   "key": "a.u14.s15",
+   "kind": "sentence",
+   "text": "How do you feel today?"
+  },
+  {
+   "key": "a.u14.s16",
+   "kind": "sentence",
+   "text": "I feel sick."
+  },
+  {
+   "key": "a.u14.s17",
+   "kind": "sentence",
+   "text": "My stomach hurts."
+  },
+  {
+   "key": "a.u14.s18",
+   "kind": "sentence",
+   "text": "You should not drink coffee at night."
+  },
+  {
+   "key": "a.u14.s19",
+   "kind": "sentence",
+   "text": "I exercise every morning."
+  },
+  {
+   "key": "a.u14.s20",
+   "kind": "sentence",
+   "text": "Vegetables are healthy."
+  },
+  {
+   "key": "a.u14.s21",
+   "kind": "sentence",
+   "text": "I eat fruit every day."
+  },
+  {
+   "key": "a.u14.s22",
+   "kind": "sentence",
+   "text": "My grandfather is old but healthy."
+  },
+  {
+   "key": "a.u14.s23",
+   "kind": "sentence",
+   "text": "You should eat more vegetables."
+  },
+  {
+   "key": "a.u14.s24",
+   "kind": "sentence",
+   "text": "Exercise is good for you."
+  },
+  {
+   "key": "a.u14.s25",
+   "kind": "sentence",
+   "text": "I have a dentist appointment today."
+  },
+  {
+   "key": "a.u14.s26",
+   "kind": "sentence",
+   "text": "My tooth hurts."
+  },
+  {
+   "key": "a.u14.s27",
+   "kind": "sentence",
+   "text": "Huy has a cough."
+  },
+  {
+   "key": "a.u14.s28",
+   "kind": "sentence",
+   "text": "Brush your teeth every night."
+  },
+  {
+   "key": "a.u14.s29",
+   "kind": "sentence",
+   "text": "The dentist is very nice."
+  },
+  {
+   "key": "a.u14.s30",
+   "kind": "sentence",
+   "text": "I want to make an appointment."
+  },
+  {
+   "key": "a.u14.d1",
+   "kind": "dialogueLine",
+   "text": "How do you feel?"
+  },
+  {
+   "key": "a.u14.d2",
+   "kind": "dialogueLine",
+   "text": "What is wrong?"
+  },
+  {
+   "key": "a.u14.d3",
+   "kind": "dialogueLine",
+   "text": "Do you have a fever?"
+  },
+  {
+   "key": "a.u14.d4",
+   "kind": "dialogueLine",
+   "text": "Should I go to the doctor?"
+  },
+  {
+   "key": "a.u14.d5",
+   "kind": "dialogueLine",
+   "text": "Do you exercise?"
+  },
+  {
+   "key": "a.u14.d6",
+   "kind": "dialogueLine",
+   "text": "When is your appointment?"
+  },
+  {
+   "key": "a.u15.s1",
+   "kind": "sentence",
+   "text": "I am happy today."
+  },
+  {
+   "key": "a.u15.s2",
+   "kind": "sentence",
+   "text": "Why are you sad?"
+  },
+  {
+   "key": "a.u15.s3",
+   "kind": "sentence",
+   "text": "My father is angry."
+  },
+  {
+   "key": "a.u15.s4",
+   "kind": "sentence",
+   "text": "I am bored at home."
+  },
+  {
+   "key": "a.u15.s5",
+   "kind": "sentence",
+   "text": "Linh is happy with her new job."
+  },
+  {
+   "key": "a.u15.s6",
+   "kind": "sentence",
+   "text": "Do not be sad."
+  },
+  {
+   "key": "a.u15.s7",
+   "kind": "sentence",
+   "text": "Tom is tall."
+  },
+  {
+   "key": "a.u15.s8",
+   "kind": "sentence",
+   "text": "Nam is taller than Tom."
+  },
+  {
+   "key": "a.u15.s9",
+   "kind": "sentence",
+   "text": "My sister is short."
+  },
+  {
+   "key": "a.u15.s10",
+   "kind": "sentence",
+   "text": "Huy is younger than Mai."
+  },
+  {
+   "key": "a.u15.s11",
+   "kind": "sentence",
+   "text": "Mrs. Rosa is very kind."
+  },
+  {
+   "key": "a.u15.s12",
+   "kind": "sentence",
+   "text": "My teacher is young."
+  },
+  {
+   "key": "a.u15.s13",
+   "kind": "sentence",
+   "text": "Nam is very funny."
+  },
+  {
+   "key": "a.u15.s14",
+   "kind": "sentence",
+   "text": "Anna is smart and friendly."
+  },
+  {
+   "key": "a.u15.s15",
+   "kind": "sentence",
+   "text": "Tom is a little shy."
+  },
+  {
+   "key": "a.u15.s16",
+   "kind": "sentence",
+   "text": "My classmates are friendly."
+  },
+  {
+   "key": "a.u15.s17",
+   "kind": "sentence",
+   "text": "Kiko is smarter than Huy!"
+  },
+  {
+   "key": "a.u15.s18",
+   "kind": "sentence",
+   "text": "Is your brother shy?"
+  },
+  {
+   "key": "a.u15.s19",
+   "kind": "sentence",
+   "text": "I am worried about the test."
+  },
+  {
+   "key": "a.u15.s20",
+   "kind": "sentence",
+   "text": "We are excited about the trip."
+  },
+  {
+   "key": "a.u15.s21",
+   "kind": "sentence",
+   "text": "Mai was surprised."
+  },
+  {
+   "key": "a.u15.s22",
+   "kind": "sentence",
+   "text": "Huy is afraid of dogs."
+  },
+  {
+   "key": "a.u15.s23",
+   "kind": "sentence",
+   "text": "Are you afraid?"
+  },
+  {
+   "key": "a.u15.s24",
+   "kind": "sentence",
+   "text": "Tom is excited about the movie."
+  },
+  {
+   "key": "a.u15.s25",
+   "kind": "sentence",
+   "text": "Happy birthday, Mai!"
+  },
+  {
+   "key": "a.u15.s26",
+   "kind": "sentence",
+   "text": "I want to invite you to my party."
+  },
+  {
+   "key": "a.u15.s27",
+   "kind": "sentence",
+   "text": "When is your birthday?"
+  },
+  {
+   "key": "a.u15.s28",
+   "kind": "sentence",
+   "text": "We celebrate Tet with our family."
+  },
+  {
+   "key": "a.u15.s29",
+   "kind": "sentence",
+   "text": "The party is on Sunday."
+  },
+  {
+   "key": "a.u15.s30",
+   "kind": "sentence",
+   "text": "Thank you for inviting me."
+  },
+  {
+   "key": "a.u15.d1",
+   "kind": "dialogueLine",
+   "text": "How are you today?"
+  },
+  {
+   "key": "a.u15.d2",
+   "kind": "dialogueLine",
+   "text": "Why are you sad?"
+  },
+  {
+   "key": "a.u15.d3",
+   "kind": "dialogueLine",
+   "text": "What is your brother like?"
+  },
+  {
+   "key": "a.u15.d4",
+   "kind": "dialogueLine",
+   "text": "Are you excited?"
+  },
+  {
+   "key": "a.u15.d5",
+   "kind": "dialogueLine",
+   "text": "When is your birthday?"
+  },
+  {
+   "key": "a.u15.d6",
+   "kind": "dialogueLine",
+   "text": "Do you want to come to my party?"
+  },
+  {
+   "key": "a.u16.s1",
+   "kind": "sentence",
+   "text": "I will call you."
+  },
+  {
+   "key": "a.u16.s2",
+   "kind": "sentence",
+   "text": "What are your plans for the weekend?"
+  },
+  {
+   "key": "a.u16.s3",
+   "kind": "sentence",
+   "text": "We will travel to Hanoi soon."
+  },
+  {
+   "key": "a.u16.s4",
+   "kind": "sentence",
+   "text": "Maybe it will rain tomorrow."
+  },
+  {
+   "key": "a.u16.s5",
+   "kind": "sentence",
+   "text": "See you soon!"
+  },
+  {
+   "key": "a.u16.s6",
+   "kind": "sentence",
+   "text": "I have a plan."
+  },
+  {
+   "key": "a.u16.s7",
+   "kind": "sentence",
+   "text": "I went to the market yesterday."
+  },
+  {
+   "key": "a.u16.s8",
+   "kind": "sentence",
+   "text": "We saw a movie on Sunday."
+  },
+  {
+   "key": "a.u16.s9",
+   "kind": "sentence",
+   "text": "Tom ate pho for breakfast."
+  },
+  {
+   "key": "a.u16.s10",
+   "kind": "sentence",
+   "text": "Mai bought a new dress."
+  },
+  {
+   "key": "a.u16.s11",
+   "kind": "sentence",
+   "text": "I saw Mr. Long at the park."
+  },
+  {
+   "key": "a.u16.s12",
+   "kind": "sentence",
+   "text": "We went to the beach and ate fish."
+  },
+  {
+   "key": "a.u16.s13",
+   "kind": "sentence",
+   "text": "We will go to a concert on Saturday."
+  },
+  {
+   "key": "a.u16.s14",
+   "kind": "sentence",
+   "text": "The museum is near the park."
+  },
+  {
+   "key": "a.u16.s15",
+   "kind": "sentence",
+   "text": "I love the Mid-Autumn Festival."
+  },
+  {
+   "key": "a.u16.s16",
+   "kind": "sentence",
+   "text": "Let's have a picnic in the park."
+  },
+  {
+   "key": "a.u16.s17",
+   "kind": "sentence",
+   "text": "Tom went to the museum with Anna."
+  },
+  {
+   "key": "a.u16.s18",
+   "kind": "sentence",
+   "text": "There is a music festival in the city."
+  },
+  {
+   "key": "a.u16.s19",
+   "kind": "sentence",
+   "text": "Are you ready?"
+  },
+  {
+   "key": "a.u16.s20",
+   "kind": "sentence",
+   "text": "Please wait for me."
+  },
+  {
+   "key": "a.u16.s21",
+   "kind": "sentence",
+   "text": "Do not forget your umbrella."
+  },
+  {
+   "key": "a.u16.s22",
+   "kind": "sentence",
+   "text": "I remember your name."
+  },
+  {
+   "key": "a.u16.s23",
+   "kind": "sentence",
+   "text": "I forgot my homework."
+  },
+  {
+   "key": "a.u16.s24",
+   "kind": "sentence",
+   "text": "We waited for the bus."
+  },
+  {
+   "key": "a.u16.s25",
+   "kind": "sentence",
+   "text": "I have a dream."
+  },
+  {
+   "key": "a.u16.s26",
+   "kind": "sentence",
+   "text": "What will you do in the future?"
+  },
+  {
+   "key": "a.u16.s27",
+   "kind": "sentence",
+   "text": "I hope you can come."
+  },
+  {
+   "key": "a.u16.s28",
+   "kind": "sentence",
+   "text": "That is a good idea!"
+  },
+  {
+   "key": "a.u16.s29",
+   "kind": "sentence",
+   "text": "My dream is to travel around the world."
+  },
+  {
+   "key": "a.u16.s30",
+   "kind": "sentence",
+   "text": "I hope it will be sunny tomorrow."
+  },
+  {
+   "key": "a.u16.d1",
+   "kind": "dialogueLine",
+   "text": "What will you do this weekend?"
+  },
+  {
+   "key": "a.u16.d2",
+   "kind": "dialogueLine",
+   "text": "What did you do yesterday?"
+  },
+  {
+   "key": "a.u16.d3",
+   "kind": "dialogueLine",
+   "text": "Are you ready?"
+  },
+  {
+   "key": "a.u16.d4",
+   "kind": "dialogueLine",
+   "text": "Do you want to come to the concert?"
+  },
+  {
+   "key": "a.u16.d5",
+   "kind": "dialogueLine",
+   "text": "What is your dream?"
+  },
+  {
+   "key": "a.u16.d6",
+   "kind": "dialogueLine",
+   "text": "Can you wait for me?"
+  }
+ ]
+}

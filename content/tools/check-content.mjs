@@ -66,13 +66,13 @@ for (const courseDir of fs
   }
 }
 assert.ok(summary.length > 0, 'no content found');
-// Next course version (vi_en v2, not yet published): source-table lint + grader round-trip +
+// Published vi_en v2: source-table lint + grader round-trip +
 // OpenAPI + determinism against the committed build report (tools/content/lint-course.mjs).
 const lint = spawnSync(process.execPath, [path.join(root, 'tools/content/lint-course.mjs')], {
   encoding: 'utf8',
 });
 assert.equal(lint.status, 0, `v2 content lint failed:\n${lint.stderr}${lint.stdout}`);
-summary.push({ next: JSON.parse(lint.stdout.trim().split('\n').pop()) });
+summary.push({ lint: JSON.parse(lint.stdout.trim().split('\n').pop()) });
 console.log(
   JSON.stringify({
     status: 'PASS',

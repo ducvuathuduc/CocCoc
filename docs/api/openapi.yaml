@@ -10458,7 +10458,7 @@
               "maxLength": 36,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             },
-            "maxItems": 2
+            "maxItems": 6
           }
         },
         "required": [
@@ -10558,7 +10558,7 @@
               "maxLength": 36,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             },
-            "maxItems": 2
+            "maxItems": 6
           }
         },
         "required": [

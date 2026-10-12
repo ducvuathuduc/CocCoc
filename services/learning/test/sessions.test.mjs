@@ -92,7 +92,7 @@ test('catalog: list courses, manifest and bundle are published, signed and schem
   valid('CoursePage', list.body);
   assert.deepEqual(
     list.body.items.map((c) => [c.courseId, c.publishedVersion, c.available]),
-    [['vi_en', 'v1', true]],
+    [['vi_en', 'v2', true]],
   );
   const manifest = await a.call('GET', '/v1/courses/vi_en/manifest', { user: 'u1' });
   valid('CourseManifest', manifest.body);
@@ -103,11 +103,27 @@ test('catalog: list courses, manifest and bundle are published, signed and schem
       manifest.body.nodes.length,
       manifest.body.bundles.length,
     ],
-    [2, 6, 24, 48],
+    [2, 16, 128, 512],
   );
   const bundle = await a.call('GET', '/v1/lessons/u3n2l1/bundle', { user: 'u1' });
   valid('LessonBundle', bundle.body);
-  assert.equal(bundle.body.exercises.length, 10);
+  assert.equal(bundle.body.exercises.length, 13);
+  assert.equal(bundle.body.rewardIdentity, 'v2.u3n2l1');
+  // Duolingo-style unit: 5 levels of 4-6 lessons, then story, unit review and Legendary.
+  const unit1 = manifest.body.nodes.filter((n) => n.unitId === 'u1');
+  assert.deepEqual(
+    unit1.map((n) => [n.kind, n.lessonIds.length]),
+    [
+      ['lesson', 4],
+      ['lesson', 5],
+      ['lesson', 5],
+      ['story', 2],
+      ['lesson', 6],
+      ['lesson', 6],
+      ['mastery', 2],
+      ['mastery', 2],
+    ],
+  );
   assert.equal((await a.call('GET', '/v1/lessons/nope/bundle', { user: 'u1' })).status, 404);
   assert.equal((await a.call('GET', '/v1/courses', {})).status, 401, 'no JWT -> 401');
   assert.equal((await a.call('GET', '/v1/courses', { user: 'u1', query: 'bogus=1' })).status, 400);
@@ -124,14 +140,19 @@ test('enroll beginner: frontier at node 1; re-enroll (any key) returns the curre
     ['available', 'locked', 'locked'],
   );
   const page = await a.call('GET', '/v1/courses/vi_en/path', { user: 'amy' });
-  assert.equal(page.body.nodes.length, 24);
-  const half = await a.call('GET', '/v1/courses/vi_en/path', { user: 'amy', query: 'limit=10' });
-  const rest = await a.call('GET', '/v1/courses/vi_en/path', {
-    user: 'amy',
-    query: `limit=20&cursor=${half.body.nextCursor}`,
-  });
-  assert.equal(half.body.nodes.length + rest.body.nodes.length, 24);
-  assert.equal(rest.body.nextCursor, null);
+  assert.equal(page.body.nodes.length, 24, 'default page = 24 nodes (3 units)');
+  assert.notEqual(page.body.nextCursor, null);
+  let seen = 0;
+  let cursor = null;
+  do {
+    const r = await a.call('GET', '/v1/courses/vi_en/path', {
+      user: 'amy',
+      query: `limit=100${cursor ? `&cursor=${cursor}` : ''}`,
+    });
+    seen += r.body.nodes.length;
+    cursor = r.body.nextCursor;
+  } while (cursor);
+  assert.equal(seen, 128);
   assert.equal(
     (await a.call('GET', '/v1/courses/vi_en/path', { user: 'bob' })).status,
     404,
@@ -158,7 +179,7 @@ for (const [correct, unlocksUnit2] of [
     );
     assert.equal(a.persistence.dump('l_outbox').length, 0, 'PLACEMENT emits no lesson.completed');
     const e = await enroll(a, 'pia', 'placement', s.body.sessionId);
-    assert.equal(e.frontierNodeOrder, unlocksUnit2 ? 4 : 0);
+    assert.equal(e.frontierNodeOrder, unlocksUnit2 ? 8 : 0);
     const again = await start(a, 'pia', 'placement', 'PLACEMENT');
     assert.equal(again.body.error.code, 'NODE_LOCKED');
     const reEnroll = await enroll(a, 'pia', 'beginner');
@@ -242,7 +263,7 @@ test('lesson flow: start pins bundle; answers; complete updates frontier once; e
   valid('Completion', c.body);
   assert.deepEqual(
     [c.body.originalCount, c.body.originalCorrect, c.body.rewardStatus, c.body.needsReviewIds],
-    [10, 9, 'pending', []],
+    [13, 12, 'pending', []],
   );
   const sameKey = await post(
     a,
@@ -268,7 +289,7 @@ test('lesson flow: start pins bundle; answers; complete updates frontier once; e
       event.payload.mode,
       outbox[0].row.status,
     ],
-    [s.body.sessionId, 'leo', 9, 'LESSON', 'PENDING'],
+    [s.body.sessionId, 'leo', 12, 'LESSON', 'PENDING'],
   );
   const path = await a.call('GET', '/v1/courses/vi_en/path', { user: 'leo' });
   assert.deepEqual(
@@ -300,13 +321,21 @@ test('locks: later lessons/nodes are locked; not enrolled; stale enrollment revi
   assert.equal((await start(a, 'nia', 'u1n1l1', 'MASTERY', 0)).body.error.code, 'NODE_LOCKED');
 });
 
-test('completing both lessons advances the frontier; mastery >=80% marks the node mastered', async () => {
+test('completing every lesson of a level advances the frontier; mastery >=80% marks the node mastered', async () => {
   const a = await app();
   await enroll(a, 'max');
   await completeLesson(a, 'max', 'u1n1l1');
-  const second = await completeLesson(a, 'max', 'u1n1l2');
-  assert.equal(second.completion.enrollmentRevision, 2);
+  await completeLesson(a, 'max', 'u1n1l2');
+  await completeLesson(a, 'max', 'u1n1l3');
   let path = await a.call('GET', '/v1/courses/vi_en/path', { user: 'max' });
+  assert.deepEqual(
+    [path.body.enrollment.frontierNodeOrder, path.body.nodes[0].state],
+    [0, 'current'],
+    'level 1 has 4 lessons: 3 of 4 keeps the frontier',
+  );
+  const fourth = await completeLesson(a, 'max', 'u1n1l4');
+  assert.equal(fourth.completion.enrollmentRevision, 4);
+  path = await a.call('GET', '/v1/courses/vi_en/path', { user: 'max' });
   assert.deepEqual(
     [path.body.enrollment.frontierNodeOrder, path.body.nodes[0].state, path.body.nodes[1].state],
     [1, 'completed', 'available'],
@@ -315,9 +344,9 @@ test('completing both lessons advances the frontier; mastery >=80% marks the nod
     mode: 'MASTERY',
     wrongIds: ['u1n1l1-e01', 'u1n1l1-e02', 'u1n1l1-e03'],
   });
-  assert.equal(failed.completion.originalCorrect, 7);
+  assert.equal(failed.completion.originalCorrect, 10);
   path = await a.call('GET', '/v1/courses/vi_en/path', { user: 'max' });
-  assert.equal(path.body.nodes[0].state, 'completed', '70% is practice only');
+  assert.equal(path.body.nodes[0].state, 'completed', '10/13 (77%) is practice only');
   await completeLesson(a, 'max', 'u1n1l1', {
     mode: 'MASTERY',
     wrongIds: ['u1n1l1-e01', 'u1n1l1-e02'],
@@ -469,11 +498,8 @@ test('hint marks assisted; capability substitution grades the authored alternati
   await enroll(a, 'hal');
   await completeLesson(a, 'hal', 'u1n1l1');
   await completeLesson(a, 'hal', 'u1n1l2');
-  await completeLesson(a, 'hal', 'u1n2l1');
-  await completeLesson(a, 'hal', 'u1n2l2');
-  await completeLesson(a, 'hal', 'u1n3l1');
-  await completeLesson(a, 'hal', 'u1n3l2');
-  const s = (await start(a, 'hal', 'u1n4l1')).body; // speaking node
+  await completeLesson(a, 'hal', 'u1n1l3');
+  const s = (await start(a, 'hal', 'u1n1l4')).body; // level 1 speaking lesson
   const speak = s.bundle.exercises[0];
   assert.equal(speak.type, 'speakRepeat');
   const alt = speak.nonSpeechAlternative;
@@ -495,7 +521,7 @@ test('hint marks assisted; capability substitution grades the authored alternati
   const c = await post(a, `/v1/sessions/${s.sessionId}/complete`, 'hal', {
     expectedRevision: revision,
   });
-  assert.deepEqual([c.body.assisted, c.body.originalCorrect], [true, 10]);
+  assert.deepEqual([c.body.assisted, c.body.originalCorrect], [true, s.bundle.exercises.length]);
 });
 
 test('validation: missing/invalid Idempotency-Key, unknown body fields, wrong answer shape', async () => {

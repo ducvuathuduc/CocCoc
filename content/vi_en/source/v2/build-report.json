@@ -4,27 +4,25 @@
   "signatureKeyId": "dev-content-1",
   "sections": 2,
   "units": 16,
-  "nodes": 208,
-  "lessons": 416,
-  "exercises": 5232,
+  "nodes": 128,
+  "lessons": 512,
+  "exercises": 6384,
   "exerciseTypes": {
-    "choice": 518,
-    "dialogueTurn": 208,
-    "dictation": 512,
-    "fillBlank": 432,
+    "choice": 582,
+    "dialogueTurn": 270,
+    "dictation": 672,
+    "fillBlank": 528,
     "imageChoice": 154,
-    "listenChoice": 528,
-    "matchPairs": 320,
-    "sentenceOrder": 352,
-    "speakRepeat": 336,
+    "listenChoice": 688,
+    "matchPairs": 384,
+    "sentenceOrder": 416,
+    "speakRepeat": 466,
     "storyQuestion": 128,
-    "textTranslation": 944,
-    "wordBank": 800
+    "textTranslation": 1136,
+    "wordBank": 960
   },
   "nodeKinds": {
-    "lesson": 96,
-    "listening": 32,
-    "speaking": 32,
+    "lesson": 80,
     "story": 16,
     "mastery": 32
   },
@@ -33,9 +31,9 @@
   "dialogues": 96,
   "storyQuestions": 96,
   "audioKeys": 582,
-  "assets": 1252,
+  "assets": 1262,
   "ambiguousTiles": [],
-  "maxBundleBytes": 19772,
+  "maxBundleBytes": 19506,
   "unitsDetail": [
     {
       "unitId": "u1",
@@ -166,5 +164,5 @@
       "sentences": 30
     }
   ],
-  "manifestSha256": "ede7a535ac99df463501c21fb74d6e9be97ff127e48be87f140861e90868b498"
+  "manifestSha256": "4e9b0564d1ed5b6f6b406e05583e24e5ee2a5e33d86c489e2e5ba79961eafb81"
 }

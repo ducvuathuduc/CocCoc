@@ -140,17 +140,20 @@ The generator records the tier only in its own recipe tables.
 course vi_en v2
  └ section (sec1 A1 "Nền tảng", sec2 A2 "Cuộc sống hằng ngày")
     └ unit (8 per section; guideText = guidebook tips in Vietnamese)
-       └ 13 nodes: L1a L1b L2a L2b L3a L3b STORY L4a L4b L5a L5b REVIEW LEGENDARY
-          └ 2 lessons per node (ContentNode.lessonIds maxItems 2), 11–15 exercises each
+       └ 8 nodes: LEVEL1 LEVEL2 LEVEL3 STORY LEVEL4 LEVEL5 REVIEW LEGENDARY
+          └ levels have 4/5/5/6/6 lessons (ContentNode.lessonIds maxItems 6); story, review and
+            Legendary have 2; 10–15 exercises per lesson (32 lessons per unit)
 ```
 
 | Node | `kind` | Lessons (recipe) | Purpose |
 |---|---|---|---|
-| Level k, part a | `lesson` | intro, practice | New words (`Từ mới!` items, imageChoice when picturable) → recognition → assembly → first production |
-| Level k, part b | `lesson` / `listening` / `speaking` (by level: lesson, listening, speaking, listening, speaking) | 2 × practice / listening / speaking | Production, listening (listenChoice + dictation), speaking (speakRepeat + dialogueTurn) |
+| Level k (1–5) | `lesson` | intro, practice, listening, speaking, then practice / listening / speaking up to 4–6 lessons | New words (`Từ mới!` items, imageChoice when picturable) in lesson 1 → recognition → assembly → production, listening (listenChoice + dictation), speaking (speakRepeat + dialogueTurn; speakRepeat until 3 dialogue replies are known) |
 | Story (after level 3) | `story` | story1, story2 | 6 comprehension questions over one passage, mixed with unit review |
 | Unit review | `mastery` | review × 2 | All 12 types across the whole unit |
 | Legendary | `mastery` | legendary × 2 | Production-only, harder; hint use is flagged as assistance |
+
+A level node is completed when all of its lessons are completed (Learning unlocks lessons in order
+inside a node); the frontier then moves to the next node.
 
 Progression rules enforced by the generator and lint:
 1. A level's 4 new words are introduced by `Từ mới!` items at the start of its first lesson; no
@@ -169,7 +172,7 @@ Progression rules enforced by the generator and lint:
 | Dialogue line audio | `a.<unitId>.d<N>.n` / `.s` | partner line of a `dialogueTurn` |
 | Word image | `i.<unitId>.<wordId>` | picturable words only |
 
-`content/vi_en/next/v2/audio-catalog.json` lists every audio key with its transcript (the TTS
+`content/vi_en/dist/v2/audio-catalog.json` lists every audio key with its transcript (the TTS
 production list for P7-AUDIO-001). Media `sha256` values are deterministic placeholders until the
 files exist; every audio/speech item has a text alternative, so lessons work without media.
 
@@ -188,7 +191,7 @@ story:      { title, passage, questions: "<question> * <correct> | <wrong> | <wr
 A sentence's level is derived from the newest word it contains. Commands:
 
 ```sh
-node tools/content/build-course.mjs          # write content/vi_en/next/v2 + source/v2/build-report.json
+node tools/content/build-course.mjs          # write content/vi_en/dist/v2 + source/v2/build-report.json
 node tools/content/build-course.mjs --check  # fail if build-report.json is stale
 node tools/content/lint-course.mjs           # full content lint (also run by content/tools/check-content.mjs)
 ```

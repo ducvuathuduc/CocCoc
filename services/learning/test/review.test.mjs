@@ -51,7 +51,7 @@ test('lesson completion schedules review items; wrong first attempts reset; noth
   const { a, user, play, advance } = await setup();
   const { session } = await play('u1n1l1', 'LESSON', ['u1n1l1-e01']);
   const items = a.persistence.dump('l_review_items').map((r) => r.row);
-  assert.ok(items.length >= 5, `items=${items.length}`);
+  assert.ok(items.length >= 4, `items=${items.length}`);
   const wrongVocab = session.bundle.exercises[0].vocabularyIds[0];
   const wrong = items.find((i) => i.vocabularyId === wrongVocab);
   assert.deepEqual([wrong.stage, wrong.incorrectCount], [0, 1]);
@@ -59,8 +59,8 @@ test('lesson completion schedules review items; wrong first attempts reset; noth
   assert.equal(review.status, 200);
   assert.equal(review.body.items.length, 0, 'not due yet');
   advance(DAY + 1000);
-  review = await a.call('GET', '/v1/review', { user, query: 'courseId=vi_en&limit=5' });
-  assert.equal(review.body.items.length, 5);
+  review = await a.call('GET', '/v1/review', { user, query: 'courseId=vi_en&limit=3' });
+  assert.equal(review.body.items.length, 3);
   assert.ok(review.body.nextCursor);
   assert.equal(review.body.items[0].mastery, null, 'fewer than 5 attempts -> no percentage');
 });

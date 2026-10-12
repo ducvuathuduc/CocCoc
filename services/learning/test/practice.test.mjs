@@ -81,7 +81,7 @@ test('mistakes: first-attempt errors captured (<=10/session), listed, prioritise
   assert.deepEqual(page.body.items.map((m) => m.exerciseId).sort(), ['u1n1l1-e02', 'u1n1l1-e05']);
   assert.ok(
     page.body.items.every(
-      (m) => m.mistakeCount === 1 && m.resolvedAt === null && m.lessonVersion === 'v1.u1n1l1',
+      (m) => m.mistakeCount === 1 && m.resolvedAt === null && m.lessonVersion === 'v2.u1n1l1',
     ),
   );
   await play('u1n1l1', 'LESSON', { wrongAll: true });
@@ -116,7 +116,7 @@ test('words: learned vocabulary with lexicon term/translation, strength decay an
   const recent = await a.call('GET', '/v1/words', { user, query: 'courseId=vi_en&limit=100' });
   assert.equal(recent.status, 200, JSON.stringify(recent.body));
   valid('WordPage', recent.body);
-  assert.ok(recent.body.items.length >= 5);
+  assert.ok(recent.body.items.length >= 4, 'level 1 lesson 1 teaches 4 words');
   const hello = recent.body.items.find((w) => w.vocabularyId === 'u1.hello');
   assert.deepEqual([hello.term, hello.translation, hello.strength], ['hello', 'xin chào', 4]);
   const alpha = await a.call('GET', '/v1/words', {
@@ -180,8 +180,7 @@ test('activities: schema-valid empty library until activity sessions exist; kind
 
 test('enrollment commands: reset clears progress (revision CAS), remove hides the course, re-enroll revives it', async () => {
   const { a, user, play } = await setup();
-  await play('u1n1l1', 'LESSON');
-  await play('u1n1l2', 'LESSON');
+  for (const lessonId of ['u1n1l1', 'u1n1l2', 'u1n1l3', 'u1n1l4']) await play(lessonId, 'LESSON');
   let path = (await a.call('GET', '/v1/courses/vi_en/path', { user })).body;
   assert.equal(path.enrollment.frontierNodeOrder, 1);
   const stale = await a.call('POST', '/v1/enrollments/vi_en/reset', {

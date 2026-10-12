@@ -268,7 +268,7 @@ test('substitution grades the authored alternative; none authored -> invalid', (
 test('golden fixtures: every committed exercise accepts its own authored key and rejects a wrong one', async () => {
   const { correctAnswer, wrongAnswer } = await import('./helpers/answers.mjs');
   const fs = await import('node:fs');
-  const dir = 'content/vi_en/dist/v1/bundles';
+  const dir = 'content/vi_en/dist/v2/bundles';
   let checked = 0;
   for (const file of fs.readdirSync(dir)) {
     const bundle = JSON.parse(fs.readFileSync(`${dir}/${file}`, 'utf8'));
@@ -284,5 +284,5 @@ test('golden fixtures: every committed exercise accepts its own authored key and
       }
     }
   }
-  assert.ok(checked > 600, `checked ${checked}`);
+  assert.ok(checked > 6000, `checked ${checked}`);
 });

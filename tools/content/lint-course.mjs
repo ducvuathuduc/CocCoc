@@ -9,7 +9,8 @@
 //   grading        : the real Learning grader (services/learning/src/domain/grading.ts) accepts the
 //                    authored key and EVERY acceptedText variant, and rejects a wrong answer
 //   schema         : every bundle + the manifest validate against OpenAPI LessonBundle/CourseManifest
-//   coverage       : >= 2 sections, >= 12 units, >= 400 lessons, all 12 exercise types
+//   coverage       : >= 2 sections, >= 12 units, >= 400 lessons, all 12 exercise types; each unit =
+//                    5 levels x 4-6 lessons + story + unit review + Legendary
 //   determinism    : content/vi_en/source/v2/build-report.json equals the in-memory build (manifestSha256)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -251,6 +252,21 @@ for (const id of report.ambiguousTiles)
 if (report.sections < 2) err('course', 'needs >= 2 sections');
 if (report.units < 12) err('course', 'needs >= 12 units');
 if (report.lessons < 400) err('course', `needs >= 400 lessons (has ${report.lessons})`);
+// Duolingo-true unit shape: 5 level nodes with 4-6 lessons each, then story, unit review, Legendary.
+for (const unit of manifest.units) {
+  const nodes = unit.nodeIds.map((id) => manifest.nodes.find((n) => n.nodeId === id));
+  const levels = nodes.filter((n) => n.kind === 'lesson');
+  if (levels.length !== 5) err(unit.unitId, `${levels.length} level nodes (want 5)`);
+  for (const n of levels)
+    if (n.lessonIds.length < 4 || n.lessonIds.length > 6)
+      err(n.nodeId, `level has ${n.lessonIds.length} lessons (want 4-6)`);
+  if (nodes.filter((n) => n.kind === 'story').length !== 1) err(unit.unitId, 'needs one story');
+  const mastery = nodes.filter((n) => n.kind === 'mastery').map((n) => n.title);
+  if (!mastery.includes('Ôn tập cửa ải') || !mastery.includes('Huyền thoại'))
+    err(unit.unitId, 'needs unit review + Legendary');
+}
+if (report.exercises < 5232)
+  err('course', `exercise total fell below v2 baseline (${report.exercises})`);
 if (Object.keys(report.exerciseTypes).length !== 12)
   err('course', `types ${Object.keys(report.exerciseTypes)}`);
 

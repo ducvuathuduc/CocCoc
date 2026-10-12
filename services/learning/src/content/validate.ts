@@ -187,7 +187,7 @@ export function validateManifestStructure(manifest: CourseManifest): ContentProb
   }
   const referenced = new Set<string>();
   for (const node of manifest.nodes) {
-    if (!node.lessonIds.length || node.lessonIds.length > 2) add(node.nodeId, 'LESSON_COUNT');
+    if (!node.lessonIds.length || node.lessonIds.length > 6) add(node.nodeId, 'LESSON_COUNT');
     for (const lessonId of node.lessonIds) {
       if (!bundles.has(lessonId)) add(node.nodeId, 'BUNDLE_MISSING');
       referenced.add(lessonId);

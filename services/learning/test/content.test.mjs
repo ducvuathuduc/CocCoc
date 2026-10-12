@@ -9,8 +9,13 @@ import { loadKit } from './helpers/kit.mjs';
 const kit = await loadKit('content');
 const local = kit.loadLocalContent();
 const publication = local.publications.find((p) => p.courseId === 'vi_en');
+// v1 (the 6-unit pilot) is retired: v2 is the only committed, published version.
+assert.deepEqual(
+  local.publications.map((p) => [p.courseId, p.versionId]),
+  [['vi_en', 'v2']],
+);
 
-test('committed content: deterministic rebuild matches, OpenAPI-valid, signed, 12 types, 2/6/24/48', () => {
+test('committed content: deterministic rebuild matches, OpenAPI-valid, signed, 12 types, v2 is the only published version', () => {
   for (const args of [
     ['content/tools/build-content.mjs', '--check'],
     ['content/tools/check-content.mjs'],
@@ -69,18 +74,18 @@ test('publish: maintainer only; flips the pointer atomically; expectedPublishedV
   });
   assert.deepEqual(
     [stale.status, stale.body.error.code, stale.body.error.details.publishedVersion],
-    [409, 'REVISION_CONFLICT', 'v1'],
+    [409, 'REVISION_CONFLICT', 'v2'],
   );
   const dup = await a.call('POST', '/v1/admin/content-versions', {
     user: 'maintainer-1',
-    body: publishBody({ expectedPublishedVersion: 'v1' }),
+    body: publishBody({ expectedPublishedVersion: 'v2' }),
     key: randomUUID(),
   });
   assert.equal(dup.body.error.details.reason, 'VERSION_EXISTS');
   const courses = await a.call('GET', '/v1/courses', { user: 'x' });
   assert.deepEqual(
     courses.body.items.map((c) => c.publishedVersion),
-    ['v1'],
+    ['v2'],
   );
 });
 
@@ -130,7 +135,7 @@ test('content repository refuses a file whose bytes do not match the pinned sha2
   const a = await kit.createTestApp();
   const manifest = (await a.call('GET', '/v1/courses/vi_en/manifest', { user: 'x' })).body;
   const corrupt = await fileStore((id, t) =>
-    id.endsWith('.u5n1l1') ? t.replace('Where', 'Wh3re') : t,
+    id.endsWith('.u5n1l1') ? t.replace('"title":"', '"title":"X') : t,
   );
   const repo = kit.createContentRepository({
     persistence: a.persistence,

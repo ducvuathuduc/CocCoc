@@ -6,22 +6,22 @@ Wire shapes are owned by [OpenAPI](../docs/api/openapi.yaml) (`CourseManifest`, 
 
 | Course | Version | Structure | Exercises |
 |---|---|---|---|
-| `vi_en` (vi-VN → en-US, A1) | `v1` (published, `dist/v1`, committed) | 2 sections, 6 units, 24 nodes (lesson/listening/story/speaking/mastery), 48 lessons + 10-item placement | 480 path exercises, all 12 types, curated English alternatives, Vietnamese diacritics significant |
-| `vi_en` (vi-VN → en-US, A1→A2) | `v2` (next, not published; built to `next/v2`) | 2 sections, 16 units, 208 nodes (13/unit: 5 levels × 2 + story + unit review + legendary), 416 lessons + 10-item placement | 5,232 path exercises, all 12 types; 320 words, 486 sentences, 96 dialogue turns, 16 stories |
+| `vi_en` (vi-VN → en-US, A1→A2) | `v2` (**published**, `dist/v2`, committed) | 2 sections, 16 units, 128 nodes (8/unit: 5 levels × 4–6 lessons, story after level 3, unit review, Legendary), 512 lessons + 10-item placement | 6,384 path exercises, all 12 types; 320 words, 486 sentences, 96 dialogue turns, 16 stories |
+| `vi_en` | `v1` (6-unit pilot) | **retired** — removed from `dist/` and no longer published | — |
 
 v2 is generated from structured tables (`vi_en/source/v2/units/*.mjs`) by
-`tools/content/build-course.mjs` and gated by `tools/content/lint-course.mjs` (run from
-`check-content.mjs`). Format spec: [docs/content/EXERCISE_FORMATS.md](../docs/content/EXERCISE_FORMATS.md).
-`next/` is not loaded by Learning's local publisher (which publishes every `dist/` version);
-promoting v2 means building it into `dist/v2` and updating the tests that pin v1's shape.
+`tools/content/build-course.mjs` into `dist/v2` and gated by `tools/content/lint-course.mjs` (run from
+`check-content.mjs`), which also enforces the unit shape. Format spec:
+[docs/content/EXERCISE_FORMATS.md](../docs/content/EXERCISE_FORMATS.md). Reward identities are
+`v2.<lessonId>`. Learning's local publisher publishes every `dist/` version (only v2).
 
 ## Commands
 
 ```sh
-node content/tools/build-content.mjs          # regenerate dist/ from source (deterministic)
-node content/tools/build-content.mjs --check  # fail if dist/ is stale
+node content/tools/build-content.mjs          # = node tools/content/build-course.mjs (regenerate dist/v2)
+node content/tools/build-content.mjs --check  # fail if dist/v2 or build-report.json is stale
 node content/tools/check-content.mjs          # OpenAPI schema + sha256 + signature + answer-key gate (+ v2 lint)
-node tools/content/build-course.mjs           # regenerate v2 into content/vi_en/next/v2 + source/v2/build-report.json
+node tools/content/build-course.mjs           # regenerate content/vi_en/dist/v2 + source/v2/build-report.json
 node tools/content/lint-course.mjs            # v2 content lint (intro order, grader round-trip, OpenAPI, determinism)
 ```
 
@@ -32,7 +32,7 @@ node tools/content/lint-course.mjs            # v2 content lint (intro order, gr
 - `manifest.signature` / `bundle.signature` = Ed25519 over the canonical JSON without the
   signature fields (base64url, 86 chars). Files are stored as canonical JSON, so
   `BundleIndex.sha256` and `publish.json` hashes are hashes of the file bytes.
-- The committed `v1` is signed with the **well-known DEV key** `dev-content-1`
+- The committed `v2` is signed with the **well-known DEV key** `dev-content-1`
   (`services/learning/src/testing/dev-content-key.ts`). Dev/test keyrings trust it; a hosted
   Learning service trusts only `COC_CONTENT_PUBLIC_KEYS`. For a real release rebuild with
   `COC_CONTENT_SIGNING_SEED_HEX` + `COC_CONTENT_SIGNING_KEY_ID` (never commit the seed).

@@ -1,13 +1,10 @@
-// `node tools/content/build-course.mjs [--check]` — generate the large Duolingo-style vi_en course
-// (version v2) from the structured tables in content/vi_en/source/v2/ into the gitignored
-// content/vi_en/next/v2/ (manifest.json, bundles/*.json, publish.json, audio-catalog.json) and the
-// committed content/vi_en/source/v2/build-report.json (counts + manifestSha256). Same canonical-JSON +
-// Ed25519 signing + validateCourse as content/tools/build-content.mjs. Deterministic: no clock, no
-// randomness beyond sha256-seeded shuffles. --check rebuilds in memory and fails if the committed
-// build report differs.
-//
-// Output lives in next/ (not dist/) on purpose: Learning's local loader publishes every dist/
-// version, and its tests pin v1's 2/6/24/48 shape. Promoting v2 = move next/v2 -> dist/v2 (Learning).
+// `node tools/content/build-course.mjs [--check]` — generate the published Duolingo-style vi_en course
+// (version v2) from the structured tables in content/vi_en/source/v2/ into the committed
+// content/vi_en/dist/v2/ (manifest.json, bundles/*.json, publish.json, audio-catalog.json) and
+// content/vi_en/source/v2/build-report.json (counts + manifestSha256). Canonical JSON + Ed25519
+// signing + validateCourse (services/learning content tools). Deterministic: no clock, no randomness
+// beyond sha256-seeded shuffles. --check rebuilds in memory and fails if the committed dist/v2 or the
+// build report differ. Learning's local loader publishes every dist/ version (v2 is the only one).
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,7 +23,7 @@ import {
 
 export const VERSION = 'v2';
 const GRADING_RULES_VERSION = 'g1';
-const OUT_DIR = path.join(root, `content/${course.courseId}/next/${VERSION}`);
+const OUT_DIR = path.join(root, `content/${course.courseId}/dist/${VERSION}`);
 const REPORT_PATH = path.join(
   root,
   `content/${course.courseId}/source/${VERSION}/build-report.json`,
@@ -676,20 +673,24 @@ const RECIPES = {
   ],
 };
 
-// Unit path: 5 levels x 2 nodes x 2 lessons, story after level 3, unit review, legendary.
-const LEVEL_B_KIND = ['lesson', 'listening', 'speaking', 'listening', 'speaking'];
-const B_RECIPE = { lesson: 'practice', listening: 'listening', speaking: 'speaking' };
+// Unit path (Duolingo-style): 5 level nodes with 4-6 lessons each (the level's new words are taught in
+// its first lesson; later lessons practise, listen and speak), a story after level 3, the unit review
+// and the Legendary challenge. 8 nodes and 32 lessons per unit.
+export const LEVEL_LESSONS = [
+  ['intro', 'practice', 'listening', 'speaking'],
+  ['intro', 'practice', 'listening', 'speaking', 'practice'],
+  ['intro', 'practice', 'listening', 'speaking', 'practice'],
+  ['intro', 'practice', 'listening', 'speaking', 'practice', 'listening'],
+  ['intro', 'practice', 'listening', 'speaking', 'practice', 'speaking'],
+];
 export function unitPlan(unit) {
   const nodes = [];
   for (let L = 1; L <= 5; L++) {
-    const title = unit.levelTitles[L - 1];
-    nodes.push({ kind: 'lesson', level: L, title, lessons: ['intro', 'practice'] });
-    const kind = LEVEL_B_KIND[L - 1];
     nodes.push({
-      kind,
+      kind: 'lesson',
       level: L,
-      title: `${title} (${kind === 'lesson' ? 'luyện tập' : kind === 'listening' ? 'nghe' : 'nói'})`,
-      lessons: [B_RECIPE[kind], B_RECIPE[kind]],
+      title: unit.levelTitles[L - 1],
+      lessons: LEVEL_LESSONS[L - 1],
     });
     if (L === 3)
       nodes.push({
@@ -841,8 +842,17 @@ export async function buildCourse() {
               const dPool = pools.dialogues[source]?.length
                 ? pools.dialogues[source]
                 : seenDialogues;
-              const d = pick(dPool, seed, avoid);
-              ex = f.dialogueTurn(id, d, seenDialogues);
+              // A dialogue turn needs 3 distinct replies to choose from (its non-speech form); early
+              // in the course fall back to repeating one of this level's sentences.
+              const replies = new Set(seenDialogues.map((x) => x.reply.toLowerCase()));
+              if (replies.size >= 3) {
+                const d = pick(dPool, seed, avoid);
+                ex = f.dialogueTurn(id, d, seenDialogues);
+              } else {
+                const ok = (x) => !orderAmbiguous(x, 'en');
+                const s = pick(sPool, seed, avoid, ok) ?? pick(unitS, seed, avoid, ok);
+                ex = f.speakRepeat(id, s);
+              }
               break;
             }
             default: {
@@ -1107,17 +1117,25 @@ if (isMain) {
     { path: 'audio-catalog.json', text: `${JSON.stringify(built.audioCatalog, null, 1)}\n` },
   ];
   if (process.argv.includes('--check')) {
-    // The committed build report pins counts + manifestSha256 (the manifest embeds every bundle's
-    // sha256), so a stale or nondeterministic build fails without committing 6 MB of JSON.
-    assert.ok(
-      fs.existsSync(REPORT_PATH),
-      'build-report.json missing; run node tools/content/build-course.mjs',
-    );
+    // The committed build report and dist/v2 must match a fresh in-memory build byte for byte.
     assert.equal(
-      fs.readFileSync(REPORT_PATH, 'utf8'),
+      fs.existsSync(REPORT_PATH) ? fs.readFileSync(REPORT_PATH, 'utf8') : null,
       reportText,
       'v2 build-report.json is stale; run node tools/content/build-course.mjs',
     );
+    for (const file of all) {
+      const p = path.join(OUT_DIR, file.path);
+      assert.ok(
+        fs.existsSync(p) && fs.readFileSync(p, 'utf8') === file.text,
+        `dist/${VERSION}/${file.path} is stale; run node tools/content/build-course.mjs`,
+      );
+    }
+    const expected = new Set(all.map((f) => f.path));
+    const extra = fs
+      .readdirSync(path.join(OUT_DIR, 'bundles'))
+      .map((f) => `bundles/${f}`)
+      .filter((f) => !expected.has(f));
+    assert.deepEqual(extra, [], `dist/${VERSION} has stale files`);
   } else {
     fs.rmSync(OUT_DIR, { recursive: true, force: true });
     fs.mkdirSync(path.join(OUT_DIR, 'bundles'), { recursive: true });

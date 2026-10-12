@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import { loadKit } from './helpers/kit.mjs';
 
 const kit = await loadKit('domain');
-const manifest = JSON.parse(fs.readFileSync('content/vi_en/dist/v1/manifest.json', 'utf8'));
+const manifest = JSON.parse(fs.readFileSync('content/vi_en/dist/v2/manifest.json', 'utf8'));
 const order = ['e1', 'e2', 'e3'];
 const a = (exerciseId, attemptOrdinal, correct, assisted = false) => ({
   exerciseId,
@@ -67,7 +67,10 @@ test('frontier: lessons unlock in order, completing a node advances, completed n
   const one = kit.completeLesson(manifest, start, 'u1n1l1');
   assert.equal(one.frontierNodeOrder, 0);
   assert.equal(kit.nodeState(manifest.nodes[0], one), 'current');
-  const two = kit.completeLesson(manifest, one, 'u1n1l2');
+  const three = kit.completeLesson(manifest, kit.completeLesson(manifest, one, 'u1n1l2'), 'u1n1l3');
+  assert.equal(three.frontierNodeOrder, 0, 'level 1 has 4 lessons');
+  assert.throws(() => kit.assertLessonUnlocked(manifest, one, 'u1n1l3'), { code: 'NODE_LOCKED' });
+  const two = kit.completeLesson(manifest, three, 'u1n1l4');
   assert.equal(two.frontierNodeOrder, 1);
   assert.equal(kit.nodeState(manifest.nodes[0], two), 'completed');
   assert.equal(kit.nodeState(manifest.nodes[1], two), 'available');
