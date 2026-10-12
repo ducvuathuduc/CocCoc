@@ -23,12 +23,19 @@
     "docs:tree": "node tools/audit/tree.mjs",
     "palette:check": "python3 tools/palette_check.py",
     "schema:plan": "node appwrite/scripts/schema.mjs",
-    "schema:test": "node --test appwrite/test/schema.test.mjs",
+    "schema:test": "node --test appwrite/test/schema.test.mjs appwrite/test/ops.test.mjs",
     "schema:apply": "node appwrite/scripts/schema.mjs --apply",
     "schema:check-live": "node appwrite/scripts/schema.mjs --check-live",
     "appwrite:probe": "node appwrite/scripts/live-probe.mjs",
     "seed:check": "node appwrite/scripts/seed.mjs",
-    "schema:declare": "node appwrite/scripts/schema-declare.mjs"
+    "schema:declare": "node appwrite/scripts/schema-declare.mjs",
+    "appwrite:plan": "node appwrite/scripts/ops.mjs",
+    "appwrite:test": "node --test appwrite/test/ops.test.mjs",
+    "appwrite:apply": "node appwrite/scripts/ops.mjs --apply",
+    "appwrite:check-live": "node appwrite/scripts/ops.mjs --check-live",
+    "appwrite:deploy": "node appwrite/scripts/ops.mjs --deploy",
+    "appwrite:health": "node appwrite/scripts/ops.mjs --health",
+    "appwrite:probe-functions": "node appwrite/scripts/ops.mjs --probe"
   },
   "engines": {
     "node": ">=22"

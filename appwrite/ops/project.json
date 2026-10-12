@@ -1,0 +1,137 @@
+{
+  "$comment": "Declarative Appwrite project operations for the reviewed TEST project. Functions themselves are declared in appwrite/appwrite.config.json (Appwrite CLI format); this file holds what the CLI cannot push with a project API key: auth methods/policies, platforms, per-function variables, function domains and the scheduled-job plan. Applied by `pnpm appwrite:apply`, drift-checked by `pnpm appwrite:check-live`. Never put a secret value in this file: secret variables are generated server-side at apply time and stored only as secret function variables.",
+  "projectId": "6acc656d0025cc57bd81",
+  "projectEnv": "test",
+  "auth": {
+    "$comment": "SRS FR-AUTH-001..005 + docs/api/AUTH.md. Email/password is the baseline; JWT must stay on (every service verifies Account.get with the user JWT). Guest is a bundled local demo (FR-ONB-002, AUTH.md), so anonymous sessions stay off. Magic URL, email OTP and phone are not in the SRS and the test project has no SMTP/SMS provider. Team invites stay on for the maintainer content-publish team. OAuth providers (FR-AUTH-003) are configured only with real provider credentials (none yet).",
+    "methods": {
+      "email-password": true,
+      "jwt": true,
+      "anonymous": false,
+      "magic-url": false,
+      "email-otp": false,
+      "phone": false,
+      "invites": true,
+      "passkey": false
+    },
+    "policies": {
+      "password-strength": {
+        "min": 12,
+        "uppercase": false,
+        "lowercase": false,
+        "number": false,
+        "symbols": false
+      },
+      "password-dictionary": { "enabled": true },
+      "password-personal-data": { "enabled": true },
+      "password-history": { "total": 5 },
+      "session-limit": { "total": 10 },
+      "session-duration": { "duration": 7776000 },
+      "session-invalidation": { "enabled": true },
+      "session-alert": { "enabled": false },
+      "membership-privacy": {
+        "userId": false,
+        "userEmail": false,
+        "userPhone": false,
+        "userName": false,
+        "userMFA": false,
+        "userAccessedAt": false
+      },
+      "deny-disposable-email": { "enabled": true }
+    }
+  },
+  "platforms": [
+    {
+      "type": "android",
+      "platformId": "coc-android",
+      "name": "CocEnglish Android",
+      "applicationId": "com.cocenglish.cocenglish"
+    },
+    {
+      "type": "apple",
+      "platformId": "coc-ios",
+      "name": "CocEnglish iOS",
+      "bundleIdentifier": "com.cocenglish.cocenglish"
+    }
+  ],
+  "buckets": {
+    "$comment": "Buckets are declared in appwrite/schema/foundation.json and applied by `pnpm schema:apply` (learning-assets). Nothing extra here: private AI recordings stay unbuilt until the AI adapter exists.",
+    "fromSchema": ["learning-assets"]
+  },
+  "messaging": {
+    "$comment": "FR-NOTIFY-001 uses local OS reminders first; APNS/FCM are not required. No Messaging provider or topic is configured; check-live asserts none exist.",
+    "providers": [],
+    "topics": []
+  },
+  "functions": {
+    "coc-learning": {
+      "service": "learning",
+      "bundle": "services/learning/dist/function.mjs",
+      "functionDomain": "coccoc-learning.sgp.appwrite.run",
+      "variables": {
+        "COC_SERVICE_ID": "learning",
+        "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+        "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
+        "COC_DATABASE_ID": "cocenglish",
+        "COC_LEARNING_PERSISTENCE": "disabled",
+        "COC_LEARNING_ADMITTED": "not-admitted"
+      },
+      "secrets": ["COC_SERVICE_KEYS"],
+      "keyringSenders": ["learning", "progress"]
+    },
+    "coc-progress": {
+      "service": "progress",
+      "bundle": "services/progress/dist/function.mjs",
+      "functionDomain": "coccoc-progress.sgp.appwrite.run",
+      "variables": {
+        "COC_SERVICE_ID": "progress",
+        "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+        "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
+        "COC_DATABASE_ID": "cocenglish",
+        "COC_PROGRESS_PERSISTENCE": "disabled"
+      },
+      "secrets": ["COC_SERVICE_KEYS"],
+      "keyringSenders": ["progress", "learning", "ai"]
+    },
+    "coc-ai": {
+      "service": "ai",
+      "bundle": "services/ai/dist/function.mjs",
+      "functionDomain": "coccoc-ai.sgp.appwrite.run",
+      "variables": {
+        "COC_SERVICE_ID": "ai",
+        "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+        "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
+        "COC_DATABASE_ID": "cocenglish",
+        "COC_AI_PERSISTENCE": "disabled",
+        "COC_AI_PROVIDER": "disabled",
+        "COC_GEMINI_ENABLED": "false"
+      },
+      "secrets": ["COC_SERVICE_KEYS"],
+      "keyringSenders": ["ai", "progress"]
+    }
+  },
+  "schedules": [
+    {
+      "id": "learning-outbox-relay",
+      "functionId": "coc-learning",
+      "cron": "* * * * *",
+      "purpose": "Learning dispatcher drains due l_outbox rows (bounded batch <= 20) and delivers signed events to Progress (CONSISTENCY, ARCHITECTURE 'Scheduled bounded drain').",
+      "status": "pending-service-worker"
+    },
+    {
+      "id": "progress-streak-day-rollover",
+      "functionId": "coc-progress",
+      "cron": "5 * * * *",
+      "purpose": "Missed-day streak worker (freeze consumption / streak reset) per user local midnight; hourly so every UTC offset is covered (progress economy 'Scheduled worker step').",
+      "status": "pending-service-worker"
+    },
+    {
+      "id": "progress-league-week-close",
+      "functionId": "coc-progress",
+      "cron": "15 0 * * 1",
+      "purpose": "League week closes Monday 00:00 UTC (SRS line 67); settlement starts after the outbox watermark and retries until closed (max 24h delay).",
+      "status": "pending-service-worker"
+    }
+  ],
+  "$schedulesNote": "A function has a single cron and Appwrite invokes it at path '/' with x-appwrite-trigger: schedule. No hosted entrypoint implements a worker mode yet, and ARCHITECTURE requires worker mode to be selected only by verified platform schedule context. Until a service ships that worker, the live function schedule stays empty (check-live enforces it) so the cron cannot burn executions on 401s. To activate: implement the worker in the service, set status to 'active' (one active schedule per function; the progress jobs share one hourly cron and dispatch by time), then `pnpm appwrite:apply`."
+}

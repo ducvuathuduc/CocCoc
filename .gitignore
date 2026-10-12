@@ -63,3 +63,6 @@ desktop.ini
 **/.screenshots/
 artifacts/private/
 private-exports/
+
+# Appwrite deploy staging (appwrite/scripts/ops.mjs --deploy)
+appwrite/.build/
