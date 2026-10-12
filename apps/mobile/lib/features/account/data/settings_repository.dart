@@ -1,5 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/config/app_config.dart';
+import 'api_account_repositories.dart';
+
 /// Copy + catalog for Settings > Duolingo for Schools.
 class SchoolsContent {
   const SchoolsContent({
@@ -128,6 +132,12 @@ class MockSettingsRepository implements SettingsRepository {
   }
 }
 
-final settingsRepositoryProvider = Provider<SettingsRepository>(
-  (ref) => MockSettingsRepository(),
-);
+final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
+  if (ref.watch(appConfigProvider).isApi) {
+    return ApiSettingsRepository(
+      api: ref.watch(apiEndpointsProvider),
+      content: MockSettingsRepository(),
+    );
+  }
+  return MockSettingsRepository();
+});

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 1f0abde1778efb8d4de3aba9d38e2a218a9596574305aeb4e7dd587e8e942efc).
+// Source: docs/api/openapi.yaml (sha256 72d4d87713a6d2082ef87417541c8849da5bf3a8318917d68ad11080629e8b19).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import 'api_operation.dart';
@@ -13,10 +13,31 @@ abstract final class ApiOperations {
     ApiService.learning,
     idempotent: true,
   );
+  static const activateBoost = ApiOperation(
+    'activateBoost',
+    'POST',
+    '/v1/me/boosts',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const blockUser = ApiOperation(
+    'blockUser',
+    'POST',
+    '/v1/blocks',
+    ApiService.progress,
+    idempotent: true,
+  );
   static const buyFreeze = ApiOperation(
     'buyFreeze',
     'POST',
     '/v1/me/freezes',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const buyItem = ApiOperation(
+    'buyItem',
+    'POST',
+    '/v1/shop/purchases',
     ApiService.progress,
     idempotent: true,
   );
@@ -34,6 +55,13 @@ abstract final class ApiOperations {
     ApiService.ai,
     idempotent: false,
   );
+  static const completeConversation = ApiOperation(
+    'completeConversation',
+    'POST',
+    '/v1/conversations/{conversationId}/complete',
+    ApiService.ai,
+    idempotent: true,
+  );
   static const completeSession = ApiOperation(
     'completeSession',
     'POST',
@@ -46,6 +74,13 @@ abstract final class ApiOperations {
     'POST',
     '/v1/assessment-jobs',
     ApiService.ai,
+    idempotent: true,
+  );
+  static const createFamily = ApiOperation(
+    'createFamily',
+    'POST',
+    '/v1/family',
+    ApiService.progress,
     idempotent: true,
   );
   static const createReport = ApiOperation(
@@ -104,10 +139,31 @@ abstract final class ApiOperations {
     ApiService.ai,
     idempotent: false,
   );
+  static const getEnergy = ApiOperation(
+    'getEnergy',
+    'GET',
+    '/v1/me/energy',
+    ApiService.learning,
+    idempotent: false,
+  );
+  static const getEntitlement = ApiOperation(
+    'getEntitlement',
+    'GET',
+    '/v1/me/entitlement',
+    ApiService.progress,
+    idempotent: false,
+  );
   static const getLeague = ApiOperation(
     'getLeague',
     'GET',
     '/v1/league',
+    ApiService.progress,
+    idempotent: false,
+  );
+  static const getLeagueResult = ApiOperation(
+    'getLeagueResult',
+    'GET',
+    '/v1/league/result',
     ApiService.progress,
     idempotent: false,
   );
@@ -132,10 +188,24 @@ abstract final class ApiOperations {
     ApiService.learning,
     idempotent: false,
   );
+  static const getPreferences = ApiOperation(
+    'getPreferences',
+    'GET',
+    '/v1/me/preferences',
+    ApiService.progress,
+    idempotent: false,
+  );
   static const getPublicProfile = ApiOperation(
     'getPublicProfile',
     'GET',
     '/v1/profiles/{userId}',
+    ApiService.progress,
+    idempotent: false,
+  );
+  static const getReferral = ApiOperation(
+    'getReferral',
+    'GET',
+    '/v1/me/referral',
     ApiService.progress,
     idempotent: false,
   );
@@ -160,6 +230,13 @@ abstract final class ApiOperations {
     ApiService.learning,
     idempotent: false,
   );
+  static const getYearReview = ApiOperation(
+    'getYearReview',
+    'GET',
+    '/v1/me/year-review/{year}',
+    ApiService.progress,
+    idempotent: false,
+  );
   static const heartbeatVoiceSession = ApiOperation(
     'heartbeatVoiceSession',
     'POST',
@@ -174,10 +251,38 @@ abstract final class ApiOperations {
     ApiService.progress,
     idempotent: true,
   );
+  static const inviteFriendStreak = ApiOperation(
+    'inviteFriendStreak',
+    'POST',
+    '/v1/friend-streaks',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const joinClassroom = ApiOperation(
+    'joinClassroom',
+    'POST',
+    '/v1/classrooms/join',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const joinFamily = ApiOperation(
+    'joinFamily',
+    'POST',
+    '/v1/family/{groupId}/members',
+    ApiService.progress,
+    idempotent: true,
+  );
   static const joinLeague = ApiOperation(
     'joinLeague',
     'POST',
     '/v1/league/join',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const leaveClassroom = ApiOperation(
+    'leaveClassroom',
+    'DELETE',
+    '/v1/classrooms/{classroomId}/membership',
     ApiService.progress,
     idempotent: true,
   );
@@ -188,11 +293,32 @@ abstract final class ApiOperations {
     ApiService.progress,
     idempotent: false,
   );
+  static const listActivityProgress = ApiOperation(
+    'listActivityProgress',
+    'GET',
+    '/v1/activities',
+    ApiService.learning,
+    idempotent: false,
+  );
+  static const listConversations = ApiOperation(
+    'listConversations',
+    'GET',
+    '/v1/conversations',
+    ApiService.ai,
+    idempotent: false,
+  );
   static const listCourses = ApiOperation(
     'listCourses',
     'GET',
     '/v1/courses',
     ApiService.learning,
+    idempotent: false,
+  );
+  static const listFriendStreaks = ApiOperation(
+    'listFriendStreaks',
+    'GET',
+    '/v1/friend-streaks',
+    ApiService.progress,
     idempotent: false,
   );
   static const listFriends = ApiOperation(
@@ -202,6 +328,13 @@ abstract final class ApiOperations {
     ApiService.progress,
     idempotent: false,
   );
+  static const listMistakes = ApiOperation(
+    'listMistakes',
+    'GET',
+    '/v1/mistakes',
+    ApiService.learning,
+    idempotent: false,
+  );
   static const listQuests = ApiOperation(
     'listQuests',
     'GET',
@@ -209,11 +342,130 @@ abstract final class ApiOperations {
     ApiService.progress,
     idempotent: false,
   );
+  static const listShop = ApiOperation(
+    'listShop',
+    'GET',
+    '/v1/shop',
+    ApiService.progress,
+    idempotent: false,
+  );
+  static const listWords = ApiOperation(
+    'listWords',
+    'GET',
+    '/v1/words',
+    ApiService.learning,
+    idempotent: false,
+  );
+  static const markLeagueResultSeen = ApiOperation(
+    'markLeagueResultSeen',
+    'POST',
+    '/v1/league/result/seen',
+    ApiService.progress,
+    idempotent: true,
+  );
   static const optInFriendQuest = ApiOperation(
     'optInFriendQuest',
     'POST',
     '/v1/friend-quests/opt-in',
     ApiService.progress,
+    idempotent: true,
+  );
+  static const recordAdEvent = ApiOperation(
+    'recordAdEvent',
+    'POST',
+    '/v1/ad-events',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const redeemGift = ApiOperation(
+    'redeemGift',
+    'POST',
+    '/v1/gifts/{giftId}/redeem',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const redeemPromoCode = ApiOperation(
+    'redeemPromoCode',
+    'POST',
+    '/v1/promo-codes/redeem',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const redeemReferral = ApiOperation(
+    'redeemReferral',
+    'POST',
+    '/v1/referrals/redeem',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const removeCourse = ApiOperation(
+    'removeCourse',
+    'DELETE',
+    '/v1/enrollments/{courseId}',
+    ApiService.learning,
+    idempotent: true,
+  );
+  static const removeFamilyMember = ApiOperation(
+    'removeFamilyMember',
+    'DELETE',
+    '/v1/family/{groupId}/members/{userId}',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const repairStreak = ApiOperation(
+    'repairStreak',
+    'POST',
+    '/v1/me/streak-repair',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const reportUser = ApiOperation(
+    'reportUser',
+    'POST',
+    '/v1/user-reports',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const resetCourse = ApiOperation(
+    'resetCourse',
+    'POST',
+    '/v1/enrollments/{courseId}/reset',
+    ApiService.learning,
+    idempotent: true,
+  );
+  static const respondFriendStreak = ApiOperation(
+    'respondFriendStreak',
+    'POST',
+    '/v1/friend-streaks/{pairId}/respond',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const sendFeedback = ApiOperation(
+    'sendFeedback',
+    'POST',
+    '/v1/feedback',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const sendGift = ApiOperation(
+    'sendGift',
+    'POST',
+    '/v1/gifts',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const sendInteraction = ApiOperation(
+    'sendInteraction',
+    'POST',
+    '/v1/interactions',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const startConversation = ApiOperation(
+    'startConversation',
+    'POST',
+    '/v1/conversations',
+    ApiService.ai,
     idempotent: true,
   );
   static const startSession = ApiOperation(
@@ -237,6 +489,13 @@ abstract final class ApiOperations {
     ApiService.ai,
     idempotent: true,
   );
+  static const switchCourse = ApiOperation(
+    'switchCourse',
+    'POST',
+    '/v1/enrollments/{courseId}/activate',
+    ApiService.learning,
+    idempotent: true,
+  );
   static const syncOfflineCompletion = ApiOperation(
     'syncOfflineCompletion',
     'POST',
@@ -249,6 +508,13 @@ abstract final class ApiOperations {
     'POST',
     '/v1/tutor',
     ApiService.ai,
+    idempotent: true,
+  );
+  static const unblockUser = ApiOperation(
+    'unblockUser',
+    'DELETE',
+    '/v1/blocks/{userId}',
+    ApiService.progress,
     idempotent: true,
   );
   static const unfollowUser = ApiOperation(
@@ -265,14 +531,33 @@ abstract final class ApiOperations {
     ApiService.progress,
     idempotent: true,
   );
+  static const updatePreferences = ApiOperation(
+    'updatePreferences',
+    'PATCH',
+    '/v1/me/preferences',
+    ApiService.progress,
+    idempotent: true,
+  );
+  static const verifyPurchase = ApiOperation(
+    'verifyPurchase',
+    'POST',
+    '/v1/billing/purchases',
+    ApiService.progress,
+    idempotent: true,
+  );
 
   static const all = <ApiOperation>[
     abandonSession,
+    activateBoost,
+    blockUser,
     buyFreeze,
+    buyItem,
     claimQuest,
     closeVoiceSession,
+    completeConversation,
     completeSession,
     createAssessment,
+    createFamily,
     createReport,
     createVoiceSession,
     deleteAccount,
@@ -281,28 +566,63 @@ abstract final class ApiOperations {
     getAssessment,
     getBundle,
     getCapabilities,
+    getEnergy,
+    getEntitlement,
     getLeague,
+    getLeagueResult,
     getManifest,
     getMe,
     getPath,
+    getPreferences,
     getPublicProfile,
+    getReferral,
     getReview,
     getRewards,
     getSession,
+    getYearReview,
     heartbeatVoiceSession,
     initializeProfile,
+    inviteFriendStreak,
+    joinClassroom,
+    joinFamily,
     joinLeague,
+    leaveClassroom,
     listActivity,
+    listActivityProgress,
+    listConversations,
     listCourses,
+    listFriendStreaks,
     listFriends,
+    listMistakes,
     listQuests,
+    listShop,
+    listWords,
+    markLeagueResultSeen,
     optInFriendQuest,
+    recordAdEvent,
+    redeemGift,
+    redeemPromoCode,
+    redeemReferral,
+    removeCourse,
+    removeFamilyMember,
+    repairStreak,
+    reportUser,
+    resetCourse,
+    respondFriendStreak,
+    sendFeedback,
+    sendGift,
+    sendInteraction,
+    startConversation,
     startSession,
     submitAnswer,
     submitVoiceTurn,
+    switchCourse,
     syncOfflineCompletion,
     tutorFeedback,
+    unblockUser,
     unfollowUser,
     updateMe,
+    updatePreferences,
+    verifyPurchase,
   ];
 }

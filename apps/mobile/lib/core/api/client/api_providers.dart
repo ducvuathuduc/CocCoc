@@ -4,6 +4,7 @@ import '../../../features/auth/application/auth_controller.dart';
 import '../../config/app_config.dart';
 import 'access_token.dart';
 import 'api_client.dart';
+import 'api_endpoints.g.dart';
 import 'api_operation.dart';
 import 'api_transport.dart';
 import 'service_apis.dart';
@@ -42,4 +43,9 @@ final progressApiProvider = Provider<ProgressApi>(
 
 final aiApiProvider = Provider<AiApi>(
   (ref) => AiApi(ref.watch(apiClientProvider)),
+);
+
+/// Every client-callable operation, generated from OpenAPI.
+final apiEndpointsProvider = Provider<ApiEndpoints>(
+  (ref) => ApiEndpoints(ref.watch(apiClientProvider)),
 );

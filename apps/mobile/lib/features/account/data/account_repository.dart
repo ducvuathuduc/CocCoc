@@ -2,6 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../progress/application/preview_controller.dart';
 import '../domain/account_models.dart';
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/config/app_config.dart';
+import '../../auth/application/auth_controller.dart';
+import 'api_account_repositories.dart';
 
 /// Account boundary for signup + deletion. Swap the API implementation by
 /// overriding [accountRepositoryProvider].
@@ -16,15 +20,25 @@ abstract class AccountRepository {
   Future<String?> requestDeletion();
 }
 
-final accountRepositoryProvider = Provider<AccountRepository>(
-  (ref) => MockAccountRepository(
-    onRegister: (name, email) => ref
-        .read(previewControllerProvider.notifier)
-        .saveProfile(name, email, register: true),
-    onDelete: () =>
-        ref.read(previewControllerProvider.notifier).requestDeletion(),
-  ),
-);
+final accountRepositoryProvider = Provider<AccountRepository>((ref) {
+  String? onRegister(String name, String email) => ref
+      .read(previewControllerProvider.notifier)
+      .saveProfile(name, email, register: true);
+  void onDelete() =>
+      ref.read(previewControllerProvider.notifier).requestDeletion();
+  final mock = MockAccountRepository(
+    onRegister: onRegister,
+    onDelete: onDelete,
+  );
+  if (!ref.watch(appConfigProvider).isApi) return mock;
+  return ApiAccountRepository(
+    api: ref.watch(apiEndpointsProvider),
+    auth: ref.watch(authSessionRepositoryProvider),
+    content: mock,
+    onRegister: onRegister,
+    onDelete: onDelete,
+  );
+});
 
 /// Whether a deletion request is pending (drives the "Check your email"
 /// receipt). Mock source: preview state.

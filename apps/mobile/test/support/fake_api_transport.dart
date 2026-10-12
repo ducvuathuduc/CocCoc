@@ -94,3 +94,6 @@ ApiClient fakeClient(
 );
 
 const isoNow = '2026-10-12T08:00:00.000Z';
+
+ApiHttpResponse jsonResponse(Object? body, {int status = 200}) =>
+    ApiHttpResponse(status, jsonEncode(body));

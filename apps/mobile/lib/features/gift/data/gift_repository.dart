@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/gift_models.dart';
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/config/app_config.dart';
+import 'api_gift_repository.dart';
 
 /// Gift subscription catalog and checkout. The mock never charges anything;
 /// a store-backed implementation can override [giftRepositoryProvider].
@@ -85,6 +88,12 @@ class MockGiftRepository implements GiftRepository {
   }
 }
 
-final giftRepositoryProvider = Provider<GiftRepository>(
-  (ref) => MockGiftRepository(),
-);
+final giftRepositoryProvider = Provider<GiftRepository>((ref) {
+  if (ref.watch(appConfigProvider).isApi) {
+    return ApiGiftRepository(
+      api: ref.watch(apiEndpointsProvider),
+      catalog: MockGiftRepository(),
+    );
+  }
+  return MockGiftRepository();
+});

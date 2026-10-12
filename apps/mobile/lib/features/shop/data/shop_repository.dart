@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/shop_controller.dart';
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/config/app_config.dart';
+import 'api_shop_repository.dart';
 
 abstract class ShopRepository {
   Future<int> getWallet();
@@ -80,5 +83,8 @@ class MockShopRepository implements ShopRepository {
 }
 
 final shopRepositoryProvider = Provider<ShopRepository>((ref) {
+  if (ref.watch(appConfigProvider).isApi) {
+    return ApiShopRepository(ref.watch(apiEndpointsProvider));
+  }
   return MockShopRepository();
 });
