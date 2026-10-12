@@ -123,3 +123,71 @@ class RoleplayLibraryState {
     lastResult: lastResult ?? this.lastResult,
   );
 }
+
+/// A server-backed roleplay run (API mode): the conversation the learner's
+/// turns advance.
+class RoleplayLiveSession {
+  const RoleplayLiveSession({
+    required this.conversationId,
+    required this.cardId,
+    required this.serverScenarioId,
+  });
+  final String conversationId;
+
+  /// Library card the learner picked.
+  final String cardId;
+
+  /// Server scenario the conversation runs on.
+  final String serverScenarioId;
+}
+
+/// The server's answer to one learner turn.
+class RoleplayTurn {
+  const RoleplayTurn({
+    required this.reply,
+    required this.advanced,
+    required this.explanation,
+    this.correction,
+  });
+
+  /// Partner's next line (or "Let's try again…" / the closing line).
+  final String reply;
+
+  /// The turn was on topic and moved the script to its next step.
+  final bool advanced;
+
+  /// Vietnamese coaching for this step.
+  final String explanation;
+
+  /// Model answer when the turn was off topic.
+  final String? correction;
+}
+
+/// Server-graded outcome of a completed roleplay.
+class RoleplayServerResult {
+  const RoleplayServerResult({
+    required this.stars,
+    required this.wordsUsed,
+    required this.xp,
+  });
+  final int stars, wordsUsed, xp;
+}
+
+/// The plan does not include Roleplay / Video Call (`ENTITLEMENT_REQUIRED`):
+/// the app routes to its existing Max upsell.
+class MaxRequiredException implements Exception {
+  const MaxRequiredException(this.feature);
+  final String feature;
+  @override
+  String toString() => 'MaxRequiredException($feature)';
+}
+
+/// The server refused to complete because the script is unfinished
+/// (`SESSION_INCOMPLETE`); [completedSteps] is where the server stands.
+class RoleplayIncompleteException implements Exception {
+  const RoleplayIncompleteException(this.completedSteps, this.requiredSteps);
+  final int completedSteps, requiredSteps;
+  @override
+  String toString() =>
+      'RoleplayIncompleteException($completedSteps/$requiredSteps)';
+}

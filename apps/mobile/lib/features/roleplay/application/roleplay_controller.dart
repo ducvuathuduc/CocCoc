@@ -1,14 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/cache/snapshot_cache.dart';
-import '../data/api_roleplay_repository.dart';
 import '../data/roleplay_repository.dart';
 import '../domain/roleplay_models.dart';
 
 /// Library + per-scenario progress. Sessions report results through
-/// [RoleplayLibraryController.record].
+/// [RoleplayLibraryController.record]; in API mode the server-graded outcome
+/// then replaces the local estimate via
+/// [RoleplayLibraryController.applyServerResult].
 final roleplayLibraryControllerProvider =
     NotifierProvider<RoleplayLibraryController, RoleplayLibraryState>(
       RoleplayLibraryController.new,
@@ -59,12 +58,6 @@ class RoleplayLibraryController extends Notifier<RoleplayLibraryState> {
   RoleplayResult? record(String scenarioId, int wordsUsed) {
     if (_repo.scenario(scenarioId) == null) return null;
     final before = state.progressOf(scenarioId);
-    final repo = _repo;
-    if (repo case final RoleplayCommands commands) {
-      unawaited(
-        commands.recordConversation(scenarioId).catchError((Object _) {}),
-      );
-    }
     final stars = roleplayStarsFor(wordsUsed);
     final result = RoleplayResult(
       scenarioId: scenarioId,
@@ -88,5 +81,33 @@ class RoleplayLibraryController extends Notifier<RoleplayLibraryState> {
       },
     );
     return result;
+  }
+
+  /// Replaces the locally estimated [RoleplayLibraryState.lastResult] for
+  /// [scenarioId] with the server's graded stars, words and XP.
+  void applyServerResult(String scenarioId, RoleplayServerResult server) {
+    final last = state.lastResult;
+    if (last == null || last.scenarioId != scenarioId) return;
+    final before = state.progressOf(scenarioId);
+    final stars = server.stars.clamp(0, 3);
+    state = state.copyWith(
+      lastResult: RoleplayResult(
+        scenarioId: scenarioId,
+        wordsUsed: server.wordsUsed,
+        stars: stars,
+        xp: server.xp,
+        newRecord: last.newRecord,
+      ),
+      progress: {
+        ...state.progress,
+        scenarioId: RoleplayProgress(
+          stars: stars > before.stars ? stars : before.stars,
+          bestWords: server.wordsUsed > before.bestWords
+              ? server.wordsUsed
+              : before.bestWords,
+          completions: before.completions,
+        ),
+      },
+    );
   }
 }

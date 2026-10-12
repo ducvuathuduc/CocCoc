@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,6 +8,7 @@ import '../data/stories_repository.dart';
 import '../domain/journey_models.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../roleplay/application/roleplay_controller.dart';
+import '../../roleplay/data/api_roleplay_repository.dart';
 import '../../roleplay/data/roleplay_repository.dart';
 import '../../roleplay/domain/roleplay_models.dart';
 
@@ -42,7 +45,50 @@ class JourneyController extends Notifier<JourneyState> {
         repo.scenario(restaurantScenarioId)!;
   }
 
-  List<RoleplayLine> get roleplayLines => scenario.lines;
+  /// Session lines: the scenario script, with any partner line the server
+  /// actually replied (API mode) in its step's place.
+  List<RoleplayLine> get roleplayLines {
+    final lines = scenario.lines;
+    final overrides = state.partnerLines;
+    if (overrides.isEmpty) return lines;
+    return [for (var i = 0; i < lines.length; i++) overrides[i] ?? lines[i]];
+  }
+
+  /// API mode: the server conversation this roleplay run advances.
+  Future<RoleplayLiveSession?>? _live;
+
+  RoleplayCommands? get _commands {
+    final repo = ref.read(roleplayRepositoryProvider);
+    if (repo case final RoleplayCommands commands) return commands;
+    return null;
+  }
+
+  /// Ends an unfinished server run (picked another scenario / restarted).
+  void _dropLive() {
+    final live = _live;
+    _live = null;
+    final commands = _commands;
+    if (live == null || commands == null || state.complete) return;
+    unawaited(
+      live
+          .then((s) => s == null ? null : commands.abandon(s))
+          .catchError((Object _) {}),
+    );
+  }
+
+  Future<RoleplayLiveSession?> _open(RoleplayCommands commands, String id) =>
+      commands.startSession(id).then<RoleplayLiveSession?>((s) => s).catchError(
+        (Object error) {
+          if (!ref.mounted) return null;
+          state = error is MaxRequiredException
+              ? state.copyWith(maxRequired: true)
+              : state.copyWith(error: _turnError);
+          return null;
+        },
+      );
+
+  static const _turnError =
+      'We couldn’t reach your conversation partner. Please try again.';
 
   /// Selects a library scenario (null returns to the practice-hub restaurant).
   bool pickScenario(String? id) {
@@ -51,6 +97,7 @@ class JourneyController extends Notifier<JourneyState> {
         ref.read(roleplayRepositoryProvider).scenario(id) == null) {
       return false;
     }
+    _dropLive();
     state = JourneyState(scenarioId: id);
     return true;
   }
@@ -80,11 +127,17 @@ class JourneyController extends Notifier<JourneyState> {
     };
   }
 
-  void start() => state = JourneyState(
-    started: true,
-    storyId: state.storyId,
-    scenarioId: state.scenarioId,
-  );
+  void start() {
+    if (kind == 'roleplay') _dropLive();
+    state = JourneyState(
+      started: true,
+      storyId: state.storyId,
+      scenarioId: state.scenarioId,
+    );
+    final commands = kind == 'roleplay' ? _commands : null;
+    if (commands != null) _live = _open(commands, scenario.id);
+  }
+
   void continueReading() {
     if (state.started &&
         !state.complete &&
@@ -206,6 +259,13 @@ class JourneyController extends Notifier<JourneyState> {
       );
       return;
     }
+    final commands = _commands;
+    if (commands != null) {
+      if (state.waiting || state.maxRequired) return;
+      state = state.copyWith(waiting: true, clearError: true);
+      unawaited(_sendLive(commands, value));
+      return;
+    }
     final step = state.step + 1;
     final complete = step >= roleplayLines.length;
     state = state.copyWith(
@@ -219,6 +279,97 @@ class JourneyController extends Notifier<JourneyState> {
       ref
           .read(roleplayLibraryControllerProvider.notifier)
           .record(scenario.id, roleplayWordCount(state.replies));
+    }
+  }
+
+  /// API mode: one learner turn through the server. An on-topic turn moves to
+  /// the next step and shows the server's reply as the partner's next line;
+  /// an off-topic one keeps the step (and the learner's draft) and shows the
+  /// server's retry line. The last step completes the server conversation.
+  Future<void> _sendLive(RoleplayCommands commands, String value) async {
+    try {
+      final session = await (_live ??= _open(commands, scenario.id));
+      if (!ref.mounted) return;
+      if (session == null) {
+        // Opening failed (Max upsell or network): allow a fresh attempt.
+        _live = null;
+        state = state.copyWith(waiting: false);
+        return;
+      }
+      final turn = await commands.sendTurn(session, value);
+      if (!ref.mounted || !identical(await _live, session)) return;
+      final base = scenario.lines;
+      final at = state.step.clamp(0, base.length - 1);
+      if (!turn.advanced) {
+        state = state.copyWith(
+          waiting: false,
+          partnerLines: {
+            ...state.partnerLines,
+            at: RoleplayLine(
+              prompt: turn.reply,
+              translation: turn.explanation,
+              hints: base[at].hints,
+              tip: base[at].tip,
+            ),
+          },
+        );
+        return;
+      }
+      final step = state.step + 1;
+      final complete = step >= base.length;
+      state = state.copyWith(
+        waiting: false,
+        step: step,
+        replies: [...state.replies, value],
+        draft: '',
+        clearError: true,
+        complete: complete,
+        partnerLines: complete
+            ? state.partnerLines
+            : {
+                ...state.partnerLines,
+                step: RoleplayLine(
+                  prompt: turn.reply,
+                  translation: base[step].translation,
+                  hints: base[step].hints,
+                  tip: base[step].tip,
+                ),
+              },
+      );
+      if (complete) await _completeLive(commands, session);
+    } on MaxRequiredException {
+      if (ref.mounted) {
+        state = state.copyWith(waiting: false, maxRequired: true);
+      }
+    } catch (_) {
+      if (ref.mounted) {
+        state = state.copyWith(waiting: false, error: _turnError);
+      }
+    }
+  }
+
+  Future<void> _completeLive(
+    RoleplayCommands commands,
+    RoleplayLiveSession session,
+  ) async {
+    final library = ref.read(roleplayLibraryControllerProvider.notifier);
+    final cardId = scenario.id;
+    library.record(cardId, roleplayWordCount(state.replies));
+    try {
+      final result = await commands.complete(session);
+      if (ref.mounted) library.applyServerResult(cardId, result);
+    } on RoleplayIncompleteException catch (e) {
+      // Server and client disagree on progress: resume at the server's step.
+      if (!ref.mounted) return;
+      final step = e.completedSteps.clamp(0, scenario.lines.length - 1);
+      state = state.copyWith(
+        complete: false,
+        step: step,
+        replies: state.replies.take(step).toList(),
+        error: 'Keep going — finish the conversation to complete it.',
+      );
+    } catch (_) {
+      // Local result stays; history refresh reconciles later.
     }
   }
 }

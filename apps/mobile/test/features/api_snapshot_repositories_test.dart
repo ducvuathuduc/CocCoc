@@ -583,55 +583,57 @@ void main() {
   });
 
   group('conversations', () {
-    test('roleplay progress aggregates completed history; record starts and completes', () async {
-      transport
-        ..json(
+    test(
+      'roleplay progress maps server scenario history onto library cards',
+      () async {
+        transport.json(
           'GET /v1/conversations',
           page([
-            conversation('c1', 'restaurant', stars: 1, words: 8),
-            conversation('c2', 'restaurant', stars: 3, words: 5),
-            conversation('c3', 'hotel', status: 'ABANDONED'),
+            conversation('c1', 'rp_restaurant_dinner', stars: 1, words: 8),
+            conversation('c2', 'rp_restaurant_dinner', stars: 3, words: 5),
+            conversation('c3', 'rp_hotel_check_in', status: 'ABANDONED'),
+            conversation('c4', 'rp_doctor_visit'),
           ]),
-        )
-        ..json(
-          'POST /v1/conversations',
-          conversation('c9', 'hotel', status: 'ACTIVE'),
-        )
-        ..json(
-          'POST /v1/conversations/c9/complete',
-          conversation('c9', 'hotel'),
         );
-      final repo = ApiRoleplayRepository(api, course);
-      expect(repo.initialProgress(), isEmpty);
-      await repo.refresh();
-      final progress = repo.initialProgress();
-      expect(progress.keys, ['restaurant']);
-      expect(progress['restaurant']!.stars, 3);
-      expect(progress['restaurant']!.bestWords, 8);
-      expect(progress['restaurant']!.completions, 2);
-      expect(repo.topics(), isNotEmpty, reason: 'catalog stays bundled');
-      await repo.recordConversation('hotel');
-      expect(bodyOf(transport.to('POST /v1/conversations').single), {
-        'kind': 'ROLEPLAY',
-        'courseId': 'vi_en',
-        'scenarioId': 'hotel',
-        'voiceSessionId': null,
-      });
-      expect(
-        bodyOf(transport.to('POST /v1/conversations/c9/complete').single),
-        {'endReason': 'COMPLETED'},
-      );
-    });
+        final repo = ApiRoleplayRepository(api, course);
+        expect(repo.initialProgress(), isEmpty);
+        await repo.refresh();
+        final progress = repo.initialProgress();
+        expect(progress.keys, ['restaurant']);
+        expect(progress['restaurant']!.stars, 3);
+        expect(progress['restaurant']!.bestWords, 8);
+        expect(progress['restaurant']!.completions, 2);
+        expect(repo.topics(), isNotEmpty, reason: 'catalog stays bundled');
+      },
+    );
 
-    test('video call opens and completes a VIDEO_CALL conversation', () async {
+    test('video call opens a TURN voice session and a bound VIDEO_CALL conversation', () async {
       transport
+        ..json('POST /v1/voice-sessions', {
+          'sessionId': '00000000-0000-4000-8000-000000000001',
+          'mode': 'TURN',
+          'providerAlias': 'scripted',
+          'model': 'scripted-v1',
+          'ephemeralToken': null,
+          'connectExpiresAt': null,
+          'sessionExpiresAt': '2026-10-12T08:30:00.000Z',
+          'epoch': 0,
+          'inputSampleRate': 16000,
+          'outputSampleRate': 24000,
+          'configVersion': 'cfg-1',
+        })
         ..json(
           'POST /v1/conversations',
-          conversation('v1', 'lily', status: 'ACTIVE', kind: 'VIDEO_CALL'),
+          conversation(
+            'v1',
+            'rp_daily_routine',
+            status: 'ACTIVE',
+            kind: 'VIDEO_CALL',
+          ),
         )
         ..json(
           'POST /v1/conversations/v1/complete',
-          conversation('v1', 'lily', kind: 'VIDEO_CALL'),
+          conversation('v1', 'rp_daily_routine', kind: 'VIDEO_CALL'),
         );
       final repo = ApiCallRepository(api, course);
       final session = await repo.loadSession('lily');

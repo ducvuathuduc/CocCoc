@@ -39,6 +39,11 @@ class CallController extends Notifier<CallState> {
       if (!ref.mounted) return;
       state = CallState(session: session, phase: CallPhase.ringing);
       _after(session.ringDuration, _connect);
+    } on CallMaxRequired catch (e) {
+      // API mode without Max: straight to the existing upsell phase.
+      if (ref.mounted) {
+        state = CallState(session: e.preview, phase: CallPhase.upsell);
+      }
     } catch (error) {
       if (ref.mounted) state = state.copyWith(error: '$error');
     }
@@ -71,20 +76,76 @@ class CallController extends Notifier<CallState> {
       return;
     }
     state = state.copyWith(listening: true);
+    if (_repository case final CallTurns turns) {
+      unawaited(_speak(turns));
+      return;
+    }
     _after(state.session!.listenDuration, () {
       state = state.copyWith(listening: false, cursor: state.cursor + 1);
       _schedulePartner();
     });
   }
 
+  /// API mode: sends the learner turn; the server transcript replaces the
+  /// learner line and its reply becomes the partner's next line. The listening
+  /// state lasts at least the session's listen duration.
+  Future<void> _speak(CallTurns turns) async {
+    final session = state.session!;
+    final at = state.cursor;
+    try {
+      final results = await Future.wait<Object?>([
+        turns.speakTurn(session.id, at),
+        Future<void>.delayed(session.listenDuration),
+      ]);
+      final turn = results.first! as CallTurnResult;
+      if (!ref.mounted ||
+          state.phase != CallPhase.connected ||
+          state.session?.id != session.id ||
+          state.cursor != at) {
+        return;
+      }
+      final script = [...state.session!.script];
+      if (turn.transcript.trim().isNotEmpty) {
+        script[at] = CallLine(
+          speaker: CallSpeaker.learner,
+          text: turn.transcript,
+        );
+      }
+      if (at + 1 < script.length &&
+          script[at + 1].speaker == CallSpeaker.partner &&
+          turn.reply.trim().isNotEmpty) {
+        script[at + 1] = CallLine(
+          speaker: CallSpeaker.partner,
+          text: turn.reply,
+        );
+      }
+      state = state.copyWith(
+        session: state.session!.withScript(script),
+        listening: false,
+        cursor: at + 1,
+      );
+      _schedulePartner();
+    } catch (_) {
+      // Turn not accepted: stay on the learner's line so the mic can retry.
+      if (ref.mounted && state.cursor == at) {
+        state = state.copyWith(listening: false);
+      }
+    }
+  }
+
   void hangUp() {
-    if (state.phase != CallPhase.ringing && state.phase != CallPhase.connected) {
+    if (state.phase != CallPhase.ringing &&
+        state.phase != CallPhase.connected) {
       return;
     }
     _cancel();
     final session = state.session!;
     state = state.copyWith(phase: CallPhase.ended, listening: false);
-    unawaited(_repository.completeCall(session.id, state.cursor));
+    unawaited(
+      _repository
+          .completeCall(session.id, state.cursor)
+          .catchError((Object _) {}),
+    );
   }
 
   /// CONTINUE: ended → review → upsell.
@@ -98,6 +159,4 @@ class CallController extends Notifier<CallState> {
 }
 
 final callControllerProvider =
-    NotifierProvider.autoDispose<CallController, CallState>(
-      CallController.new,
-    );
+    NotifierProvider.autoDispose<CallController, CallState>(CallController.new);

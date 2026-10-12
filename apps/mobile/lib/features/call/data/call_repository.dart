@@ -14,6 +14,13 @@ abstract class CallRepository {
   Future<void> completeCall(String sessionId, int linesSpoken);
 }
 
+/// Spoken turns an API-backed [CallRepository] sends to the server. The mock
+/// does not implement it, so its timed, offline flow is unchanged.
+abstract interface class CallTurns {
+  /// Sends the learner turn at script index [cursor] of call [sessionId].
+  Future<CallTurnResult> speakTurn(String sessionId, int cursor);
+}
+
 class MockCallRepository implements CallRepository {
   const MockCallRepository();
 

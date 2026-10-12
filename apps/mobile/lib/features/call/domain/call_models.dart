@@ -72,6 +72,41 @@ class CallSession {
   final Duration listenDuration;
 }
 
+extension CallSessionScript on CallSession {
+  /// The same session with [script] (server transcripts / replies) swapped in.
+  CallSession withScript(List<CallLine> script) => CallSession(
+    id: id,
+    partnerName: partnerName,
+    learnerInitial: learnerInitial,
+    xpReward: xpReward,
+    script: List.unmodifiable(script),
+    copy: copy,
+    ringDuration: ringDuration,
+    partnerLineDuration: partnerLineDuration,
+    listenDuration: listenDuration,
+  );
+}
+
+/// The server's answer to one spoken learner turn (API mode).
+class CallTurnResult {
+  const CallTurnResult({required this.transcript, required this.reply});
+
+  /// What the server heard (the scripted recognizer's model answer).
+  final String transcript;
+
+  /// The partner's next line.
+  final String reply;
+}
+
+/// Video Call is not in the learner's plan (`ENTITLEMENT_REQUIRED`). [preview]
+/// is the bundled session the existing Max upsell phase renders.
+class CallMaxRequired implements Exception {
+  const CallMaxRequired(this.preview);
+  final CallSession preview;
+  @override
+  String toString() => 'CallMaxRequired';
+}
+
 class CallState {
   const CallState({
     this.session,
@@ -93,8 +128,7 @@ class CallState {
   List<CallLine> get spoken =>
       session == null ? const [] : session!.script.take(cursor).toList();
   CallLine? get caption => cursor == 0 ? null : session!.script[cursor - 1];
-  CallLine? get next =>
-      session == null || cursor >= session!.script.length
+  CallLine? get next => session == null || cursor >= session!.script.length
       ? null
       : session!.script[cursor];
   bool get awaitingLearner => next?.speaker == CallSpeaker.learner;

@@ -1,3 +1,5 @@
+import '../../roleplay/domain/roleplay_models.dart';
+
 enum JourneyKind { reading, choice, word, bank, pairs, multi }
 
 class JourneyQuestion {
@@ -33,7 +35,21 @@ class JourneyState {
     this.milestoneSeen = false,
     this.scenarioId,
     this.introSeen = false,
+    this.partnerLines = const {},
+    this.waiting = false,
+    this.maxRequired = false,
   });
+
+  /// Roleplay (API mode): server partner lines by step, overriding the
+  /// scenario's scripted prompt with what the server actually replied.
+  final Map<int, RoleplayLine> partnerLines;
+
+  /// Roleplay (API mode): a learner turn is with the server.
+  final bool waiting;
+
+  /// Roleplay (API mode): the plan lacks Roleplay (`ENTITLEMENT_REQUIRED`);
+  /// the session hands over to the existing Max upsell.
+  final bool maxRequired;
 
   /// Roleplay scenario picked from the Roleplay library. Null keeps the
   /// original practice-hub restaurant flow.
@@ -67,8 +83,14 @@ class JourneyState {
     bool? expired,
     bool? milestoneSeen,
     bool? introSeen,
+    Map<int, RoleplayLine>? partnerLines,
+    bool? waiting,
+    bool? maxRequired,
   }) => JourneyState(
     scenarioId: scenarioId,
+    partnerLines: Map.unmodifiable(partnerLines ?? this.partnerLines),
+    waiting: waiting ?? this.waiting,
+    maxRequired: maxRequired ?? this.maxRequired,
     introSeen: introSeen ?? this.introSeen,
     storyId: storyId ?? this.storyId,
     started: started ?? this.started,

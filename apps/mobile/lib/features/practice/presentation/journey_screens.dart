@@ -251,7 +251,13 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
   Widget build(BuildContext context) {
     final state = ref.watch(journeyControllerProvider(kind));
     final vm = ref.read(journeyControllerProvider(kind).notifier);
-    ref.listen(journeyControllerProvider(kind), (_, _) => syncClock());
+    ref.listen(journeyControllerProvider(kind), (before, after) {
+      syncClock();
+      // API mode: Roleplay needs Max (ENTITLEMENT_REQUIRED) -> existing upsell.
+      if (after.maxRequired && before?.maxRequired != true) {
+        GoRouter.maybeOf(context)?.pushReplacement('/max');
+      }
+    });
     syncClock();
     if (!state.started) return JourneyEntryScreen(kind: kind);
     // Scenarios picked from the Roleplay library play in the generalized
