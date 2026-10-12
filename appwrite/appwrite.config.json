@@ -31,7 +31,7 @@
       "execute": ["any"],
       "events": [],
       "scopes": ["rows.read", "rows.write", "users.read", "users.write"],
-      "schedule": "",
+      "schedule": "* * * * *",
       "timeout": 60,
       "enabled": true,
       "logging": true,

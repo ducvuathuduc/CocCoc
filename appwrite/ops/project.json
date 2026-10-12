@@ -88,7 +88,9 @@
         "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
         "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
         "COC_DATABASE_ID": "cocenglish",
-        "COC_PROGRESS_PERSISTENCE": "disabled"
+        "COC_PROGRESS_PERSISTENCE": "appwrite",
+        "COC_LEARNING_URL": "https://coccoc-learning.sgp.appwrite.run",
+        "COC_AI_URL": "https://coccoc-ai.sgp.appwrite.run"
       },
       "secrets": ["COC_SERVICE_KEYS"],
       "keyringSenders": ["progress", "learning", "ai"]
@@ -115,22 +117,15 @@
       "id": "learning-outbox-relay",
       "functionId": "coc-learning",
       "cron": "* * * * *",
-      "purpose": "Learning dispatcher drains due l_outbox rows (bounded batch <= 20) and delivers signed events to Progress (CONSISTENCY, ARCHITECTURE 'Scheduled bounded drain').",
+      "purpose": "Learning dispatcher drains due l_outbox rows (bounded batch <= 20) and delivers signed events to Progress (CONSISTENCY, ARCHITECTURE 'Scheduled bounded drain'). Worker mode shipped (services/learning/src/index.ts, x-appwrite-trigger=schedule at '/'); stays pending until Learning persistence is enabled on this project (the worker answers 503 SERVICE_NOT_CONFIGURED while disabled).",
       "status": "pending-service-worker"
     },
     {
-      "id": "progress-streak-day-rollover",
+      "id": "progress-worker",
       "functionId": "coc-progress",
-      "cron": "5 * * * *",
-      "purpose": "Missed-day streak worker (freeze consumption / streak reset) per user local midnight; hourly so every UTC offset is covered (progress economy 'Scheduled worker step').",
-      "status": "pending-service-worker"
-    },
-    {
-      "id": "progress-league-week-close",
-      "functionId": "coc-progress",
-      "cron": "15 0 * * 1",
-      "purpose": "League week closes Monday 00:00 UTC (SRS line 67); settlement starts after the outbox watermark and retries until closed (max 24h delay).",
-      "status": "pending-service-worker"
+      "cron": "* * * * *",
+      "purpose": "Progress worker (services/progress/src/http/worker.ts, x-appwrite-trigger=schedule at '/'): every minute outbox relay (account.deleted/entitlement.changed/energy.granted -> Learning/AI) and deletion purge retry; minute 5 hourly streak day rollover (missed-day freeze / streak reset; every zone's midnight falls in some UTC hour); minute 15 hourly league settlement (last ended week Monday 00:00 UTC + any SETTLING week, closes only at a zero Learning watermark, retried hourly up to the 24h intervention flag). One function schedule because a function carries one cron; the same jobs are signed /internal/jobs/* routes for a scheduler/maintainer key.",
+      "status": "active"
     }
   ],
   "$schedulesNote": "A function has a single cron and Appwrite invokes it at path '/' with x-appwrite-trigger: schedule. No hosted entrypoint implements a worker mode yet, and ARCHITECTURE requires worker mode to be selected only by verified platform schedule context. Until a service ships that worker, the live function schedule stays empty (check-live enforces it) so the cron cannot burn executions on 401s. To activate: implement the worker in the service, set status to 'active' (one active schedule per function; the progress jobs share one hourly cron and dispatch by time), then `pnpm appwrite:apply`."
