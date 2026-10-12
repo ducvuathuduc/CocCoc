@@ -19,6 +19,7 @@ export { settleLeagueWeek, cohortIdFor } from '../application/leagues.js';
 export { purgeDeletedAccount } from '../application/deletion.js';
 export { ids, operationId } from '../application/records.js';
 export * from '../domain/lesson-xp.js';
+export * from '../domain/practice-xp.js';
 export * from '../domain/streak.js';
 export * from '../domain/time.js';
 export * from '../domain/league.js';

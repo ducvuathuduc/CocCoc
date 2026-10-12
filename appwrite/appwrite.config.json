@@ -50,7 +50,7 @@
       "execute": ["any"],
       "events": [],
       "scopes": ["rows.read", "rows.write", "files.read", "files.write"],
-      "schedule": "",
+      "schedule": "* * * * *",
       "timeout": 60,
       "enabled": true,
       "logging": true,

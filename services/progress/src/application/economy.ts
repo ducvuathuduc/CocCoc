@@ -29,7 +29,8 @@ export async function getRewards(
   if (completionId) {
     ledger =
       (await tx.get('p_reward_ledger', ids.ledger(userId, completionId, 'FIRST'))) ??
-      (await tx.get('p_reward_ledger', ids.ledger(userId, completionId, 'REPLAY')));
+      (await tx.get('p_reward_ledger', ids.ledger(userId, completionId, 'REPLAY'))) ??
+      (await tx.get('p_reward_ledger', ids.ledger(userId, completionId, 'PRACTICE')));
   }
   return rewardsView(rewards, String(profile['learningZone'] ?? DEFAULT_ZONE), tx.nowIso, {
     completionId,

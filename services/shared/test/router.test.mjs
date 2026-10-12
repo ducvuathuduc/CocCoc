@@ -464,6 +464,37 @@ test('/internal/events: signed, allowlisted, deduped by inbox; substitution is 4
   const extraField = await deliver(JSON.stringify({ ...completionEvent(), userId: 'mallory' }));
   assert.equal(extraField.body.error.code, 'VALIDATION_ERROR');
   assert.equal(store.inboxSize, 1);
+  // ai.practice.completed.v1 is allowlisted for the AI producer only.
+  const practice = {
+    eventId: randomUUID(),
+    type: 'ai.practice.completed.v1',
+    schemaVersion: 1,
+    producer: 'ai',
+    aggregateId: 'alice',
+    occurredAt: '2026-10-03T10:00:00.000Z',
+    requestId: randomUUID(),
+    payload: {
+      completionId: 'conv-1',
+      userId: 'alice',
+      kind: 'ROLEPLAY',
+      courseId: 'vi_en',
+      scenarioId: 'rp_ask_directions',
+      xp: 20,
+      wordsUsed: 6,
+      stars: 3,
+    },
+  };
+  assert.equal(validateEvent(practice), true, JSON.stringify(validateEvent.errors));
+  const fromLearning = await deliver(
+    JSON.stringify({ ...practice, producer: 'learning' }),
+    learningKey,
+  );
+  assert.deepEqual([fromLearning.status, fromLearning.body.error.code], [403, 'FORBIDDEN']);
+  const spoofed = await deliver(JSON.stringify(practice), learningKey);
+  assert.deepEqual([spoofed.status, spoofed.body.error.code], [403, 'FORBIDDEN']);
+  const fromAi = await deliver(JSON.stringify(practice), aiKey);
+  assert.deepEqual([fromAi.status, fromAi.body.status], [200, 'accepted']);
+  assert.equal(store.inboxSize, 2);
 });
 
 test('/internal/events: failed commit leaves no inbox row; receivers without a consumer never ack', async () => {

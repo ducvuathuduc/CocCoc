@@ -67,6 +67,10 @@ test('validation rejects unsafe or drifting declarations', () => {
     [(c) => (c.ops.platforms[0].applicationId = 'com.example.other'), /differs from apps\/mobile/],
     [(c) => (c.ops.functions['coc-progress'].keyringSenders = ['progress']), /keyringSenders/],
     [(c) => (c.config.functions[1].path = '../services/progress/src'), /path must be/],
+    [
+      (c) => (c.config.functions.find((f) => f.$id === 'coc-ai').schedule = ''),
+      /coc-ai: schedule must equal/,
+    ],
   ];
   for (const [mutate, pattern] of cases) {
     const c = load();

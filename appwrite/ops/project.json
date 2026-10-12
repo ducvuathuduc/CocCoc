@@ -130,7 +130,14 @@
       "cron": "* * * * *",
       "purpose": "Progress worker (services/progress/src/http/worker.ts, x-appwrite-trigger=schedule at '/'): every minute outbox relay (account.deleted/entitlement.changed/energy.granted -> Learning/AI) and deletion purge retry; minute 5 hourly streak day rollover (missed-day freeze / streak reset; every zone's midnight falls in some UTC hour); minute 15 hourly league settlement (last ended week Monday 00:00 UTC + any SETTLING week, closes only at a zero Learning watermark, retried hourly up to the 24h intervention flag). One function schedule because a function carries one cron; the same jobs are signed /internal/jobs/* routes for a scheduler/maintainer key.",
       "status": "active"
+    },
+    {
+      "id": "ai-outbox-relay",
+      "functionId": "coc-ai",
+      "cron": "* * * * *",
+      "purpose": "AI dispatcher (services/ai/src/index.ts, x-appwrite-trigger=schedule at '/'): every minute drains due a_outbox rows (leased bounded batch, 20s deadline) and delivers signed ai.practice.completed.v1 / account.purged.v1 to Progress /internal/events; backstop for the bounded immediate relay after each commit (CONSISTENCY, ARCHITECTURE 'Scheduled bounded drain'). Active with AI persistence on TEST; the worker answers 503 SERVICE_NOT_CONFIGURED when persistence or the Progress relay is not configured.",
+      "status": "active"
     }
   ],
-  "$schedulesNote": "A function has a single cron and Appwrite invokes it at path '/' with x-appwrite-trigger: schedule; the hosted entries (Learning, Progress) implement that worker mode, and a forged trigger over the public domain arrives as http and gets 401. A schedule is 'active' only when its service worker runs with persistence enabled on this project (check-live enforces the live cron equals the declaration; 'pending-service-worker' keeps the live schedule empty so the cron cannot burn executions). One active schedule per function; the progress jobs share one cron and dispatch by time. To activate: set status to 'active', mirror the cron in appwrite.config.json, then `pnpm appwrite:apply`."
+  "$schedulesNote": "A function has a single cron and Appwrite invokes it at path '/' with x-appwrite-trigger: schedule; the hosted entries (Learning, Progress, AI) implement that worker mode, and a forged trigger over the public domain arrives as http and gets 401. A schedule is 'active' only when its service worker runs with persistence enabled on this project (check-live enforces the live cron equals the declaration; 'pending-service-worker' keeps the live schedule empty so the cron cannot burn executions). One active schedule per function; the progress jobs share one cron and dispatch by time. To activate: set status to 'active', mirror the cron in appwrite.config.json, then `pnpm appwrite:apply`."
 }

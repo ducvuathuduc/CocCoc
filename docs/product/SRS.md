@@ -68,6 +68,8 @@ League week is Monday00:00→next Monday00:00 UTC, independent of streak zone. E
 
 REVIEW/MASTERY sessions earn5 study XP under the30/day replay cap, zero league XP; PLACEMENT earns no XP/activity/quest credit. Daily “2lessons” counts LESSON mode only; reviewSessions counts REVIEW only. New course versions share rewardIdentity unless materially new content is explicitly mapped by author. Generated review bundle lessonId=review_dynamic, private snapshot≤64KB,5–20items; use session API for resume, never public bundle lookup.
 
+AI practice (ai.practice.completed.v1, Roleplay/Video Call): Progress credits the AI server-computed xp (0–100 by schema; AI awards 5+5×stars) once per conversationId as a PRACTICE ledger row, × an active XP boost, capped at100 PRACTICE XP per server learning day inside the shared1,200 study XP/day cap; league XP equals the credited study XP. A completed conversation marks the learning day active (streak, friend streaks, monthly active-days quest, daily goal) even when capped (award0, status capped), but never counts as a lesson (daily “2lessons”, originalCorrect, lesson achievements and the friend lesson quest stay LESSON-only).
+
 Timezone command chooses effectiveAt=00:00:00Z on the UTC date immediately after server acceptance. Before that instant use prior history row; at/after use new row. Progress chooses the latest immutable history row with effectiveAt≤event.occurredAt inside the reward transaction; delayed delivery uses event server time, never processing/device time. Reconciliation uses that same rule. Display day is the later of current zone date and most recent credited/protected day, preventing a backward-travel UI regression; stored past keys stay unchanged.
 
 ## Scope exclusions and capability gates

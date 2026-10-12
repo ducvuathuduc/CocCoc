@@ -127,12 +127,27 @@ export async function applyLessonCompletion(tx: ProgressTx, event: CompletionEve
     );
   }
 
-  const increments: Record<QuestMetric, number> = {
+  await bumpQuests(tx, userId, day, {
     lessons: isLesson ? 1 : 0,
     originalCorrect: isLesson ? p.originalCorrect : 0,
     reviewSessions: p.mode === 'REVIEW' ? 1 : 0,
     activeDays: becameActive ? 1 : 0,
-  };
+  });
+  if (isLesson) await advanceFriendQuest(tx, userId, week, rewards);
+
+  await addLeagueXp(tx, userId, week, award.leagueXp, event.occurredAt);
+
+  tx.put('p_rewards', rewardsId, rewards);
+  await putCreditedNotice(tx, userId, p.completionId, profile);
+}
+
+/** Daily/monthly quest metric increments for one credited completion (FR-QUEST-001). */
+export async function bumpQuests(
+  tx: ProgressTx,
+  userId: string,
+  day: string,
+  increments: Record<QuestMetric, number>,
+): Promise<void> {
   for (const quest of QUESTS) {
     const delta = increments[quest.metric];
     if (!delta) continue;
@@ -151,22 +166,37 @@ export async function applyLessonCompletion(tx: ProgressTx, event: CompletionEve
       claimOperationId: (row?.['claimOperationId'] as string | null | undefined) ?? null,
     });
   }
-  if (isLesson) await advanceFriendQuest(tx, userId, week, rewards);
+}
 
-  if (award.leagueXp > 0) {
-    const memberId = ids.leagueMember(week, userId);
-    const member = await tx.get('p_league_members', memberId);
-    if (member && !member['settled'] && !member['excluded']) {
-      tx.put('p_league_members', memberId, {
-        ...editable(member),
-        eligibleXp: Number(member['eligibleXp']) + award.leagueXp,
-        lastXpAt: event.occurredAt,
-      });
-    }
+/** League eligible XP for the event's UTC week; a settled or excluded member is not changed. */
+export async function addLeagueXp(
+  tx: ProgressTx,
+  userId: string,
+  week: string,
+  leagueXp: number,
+  occurredAt: string,
+): Promise<void> {
+  if (leagueXp <= 0) return;
+  const memberId = ids.leagueMember(week, userId);
+  const member = await tx.get('p_league_members', memberId);
+  if (member && !member['settled'] && !member['excluded']) {
+    tx.put('p_league_members', memberId, {
+      ...editable(member),
+      eligibleXp: Number(member['eligibleXp']) + leagueXp,
+      lastXpAt: occurredAt,
+    });
   }
+}
 
-  tx.put('p_rewards', rewardsId, rewards);
-  const notificationId = ids.notification(userId, p.completionId);
+/** Owner-readable "credited" hint for a completion (rewards status by completionId). */
+export async function putCreditedNotice(
+  tx: ProgressTx,
+  userId: string,
+  completionId: string,
+  profile: Readonly<Row> | null,
+): Promise<void> {
+  const rewardsId = ids.rewards(userId);
+  const notificationId = ids.notification(userId, completionId);
   const existing = await tx.get('p_notifications', notificationId);
   putWithReaders(
     tx,
@@ -175,7 +205,7 @@ export async function applyLessonCompletion(tx: ProgressTx, event: CompletionEve
     {
       ...(existing ? editable(existing) : {}),
       userId,
-      completionId: p.completionId,
+      completionId,
       status: 'CREDITED',
       profileRevision: Number(profile?.['revision'] ?? 0),
       rewardRevision: Number((await tx.get('p_rewards', rewardsId))?.['revision'] ?? 0),
@@ -253,12 +283,12 @@ export function putActivity(
   });
 }
 
-async function grantAchievements(
+export async function grantAchievements(
   tx: ProgressTx,
   userId: string,
   rewards: Row,
   firstCompletion: boolean,
-  event: CompletionEvent,
+  event: { eventId: string; occurredAt: string },
   visible: boolean,
 ): Promise<void> {
   const lessons = (await tx.count('p_first_rewards', { userId })) + (firstCompletion ? 1 : 0);
