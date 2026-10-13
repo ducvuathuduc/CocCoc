@@ -126,10 +126,15 @@ class XpBoostActivatedScreen extends ConsumerWidget {
             heightFactor: .82,
             child: ClipPath(
               clipper: _FlaskClipper(),
-              child: ReferenceArt(
-                ShopArt.xpBoost,
-                width: 169 * factor,
-                height: 196 * factor,
+              child: CustomPaint(
+                // Open flask (sc_269d6ffb): the cork is clipped away and the
+                // rim repainted over the mouth.
+                foregroundPainter: const _OpenFlaskRim(),
+                child: ReferenceArt(
+                  ShopArt.xpBoost,
+                  width: 169 * factor,
+                  height: 196 * factor,
+                ),
               ),
             ),
           ),
@@ -175,11 +180,10 @@ class _FlaskClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path()
-      ..moveTo(69, 12)
-      ..lineTo(110, 12)
-      ..quadraticBezierTo(119, 13, 115, 30)
-      ..lineTo(120, 32)
-      ..quadraticBezierTo(127, 35, 122, 54)
+      ..moveTo(66, 28)
+      ..lineTo(114, 28)
+      ..quadraticBezierTo(122, 28, 122, 36)
+      ..lineTo(122, 54)
       ..lineTo(110, 60)
       ..lineTo(110, 80)
       ..lineTo(149, 143)
@@ -189,8 +193,8 @@ class _FlaskClipper extends CustomClipper<Path> {
       ..lineTo(70, 79)
       ..lineTo(70, 61)
       ..lineTo(58, 55)
-      ..lineTo(58, 34)
-      ..lineTo(69, 30)
+      ..lineTo(58, 36)
+      ..quadraticBezierTo(58, 28, 66, 28)
       ..close();
     return path.transform(
       Matrix4.diagonal3Values(size.width / 180, size.height / 232, 1).storage,
@@ -199,6 +203,28 @@ class _FlaskClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(_FlaskClipper oldClipper) => false;
+}
+
+/// Rim of the open flask in ShopArt.xpBoost coordinates (180×232): the
+/// art's rim colour #EDD1FF (palette #ECCFFF) and its white highlight.
+class _OpenFlaskRim extends CustomPainter {
+  const _OpenFlaskRim();
+  static const _rim = Color(0xFFECCFFF);
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.scale(size.width / 180, size.height / 232);
+    canvas.drawRRect(
+      RRect.fromLTRBR(58, 28, 122, 60, const Radius.circular(11)),
+      Paint()..color = _rim,
+    );
+    canvas.drawRRect(
+      RRect.fromLTRBR(92, 45, 118, 56, const Radius.circular(5.5)),
+      Paint()..color = Colors.white,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_OpenFlaskRim oldDelegate) => false;
 }
 
 class BoostBubbles extends StatefulWidget {

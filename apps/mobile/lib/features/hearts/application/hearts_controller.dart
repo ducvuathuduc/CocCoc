@@ -11,6 +11,9 @@ final heartsRepositoryProvider = Provider<HeartsRepository>(
 final heartsContentProvider = Provider<HeartsContent>(
   (ref) => ref.watch(heartsRepositoryProvider).content,
 );
+final livesModelProvider = Provider<LivesModel>(
+  (ref) => ref.watch(heartsRepositoryProvider).livesModel,
+);
 final heartsControllerProvider =
     NotifierProvider<HeartsController, HeartsState>(HeartsController.new);
 

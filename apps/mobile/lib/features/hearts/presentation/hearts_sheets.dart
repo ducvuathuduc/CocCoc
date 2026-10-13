@@ -15,18 +15,101 @@ Future<void> showNeedHeartsSheet(
   BuildContext context, {
   VoidCallback? onPractice,
 }) => _show(context, lesson: false, onPractice: onPractice);
+
+/// [heartsAnchor] is the lesson's heart counter: while the sheet is up it is
+/// lifted above the scrim as the white 0-hearts pill (sc_1ae5ddcf).
 Future<void> showHeartsOfferSheet(
   BuildContext context, {
   required VoidCallback onEnd,
   int? gems,
   int? refillCost,
-}) => _show(
-  context,
-  lesson: true,
-  onEnd: onEnd,
-  gems: gems,
-  refillCost: refillCost,
-);
+  GlobalKey? heartsAnchor,
+}) async {
+  final pill = _zeroHeartsPill(context, heartsAnchor);
+  try {
+    await _show(
+      context,
+      lesson: true,
+      onEnd: onEnd,
+      gems: gems,
+      refillCost: refillCost,
+    );
+  } finally {
+    pill?.remove();
+  }
+}
+
+OverlayEntry? _zeroHeartsPill(BuildContext context, GlobalKey? anchor) {
+  final box = anchor?.currentContext?.findRenderObject();
+  final overlay = Navigator.maybeOf(context)?.overlay;
+  if (box is! RenderBox || !box.hasSize || overlay == null) return null;
+  final overlayBox = overlay.context.findRenderObject();
+  if (overlayBox is! RenderBox) return null;
+  final rect = box.localToGlobal(Offset.zero, ancestor: overlayBox) & box.size;
+  final entry = OverlayEntry(builder: (_) => ZeroHeartsPill(anchor: rect));
+  // After the sheet route is pushed, so the pill sits above its scrim.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (overlay.mounted) overlay.insert(entry);
+  });
+  return entry;
+}
+
+/// sc_1ae5ddcf (1179 px = 393 dp): white pill x 911→off the right edge,
+/// y 212–367 px (52 dp tall) centred on the progress row, #E5E5E5 heart + 0.
+class ZeroHeartsPill extends StatelessWidget {
+  const ZeroHeartsPill({required this.anchor, super.key});
+  final Rect anchor;
+  static const height = 52.0;
+  @override
+  Widget build(BuildContext context) {
+    final screen = MediaQuery.sizeOf(context).width;
+    return Positioned(
+      key: const ValueKey('zero-hearts-pill'),
+      top: anchor.center.dy - height / 2,
+      left: anchor.left - 22,
+      // Runs past the screen edge so only the left cap is rounded.
+      width: screen - anchor.left + 22 + height / 2,
+      height: height,
+      child: IgnorePointer(
+        // Overlay entries have no Material; give the text the app's style.
+        child: Material(
+          type: MaterialType.transparency,
+          child: Semantics(
+            label: '0 hearts remaining',
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: ReferenceColors.surface,
+                borderRadius: BorderRadius.circular(height / 2),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 22),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.favorite_rounded,
+                      size: 32,
+                      color: HeartsColors.emptyInk,
+                    ),
+                    const SizedBox(width: 14),
+                    Text(
+                      '0',
+                      textScaler: TextScaler.noScaling,
+                      style: const TextStyle(
+                        color: HeartsColors.emptyInk,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 Future<void> _show(
   BuildContext context, {
@@ -288,15 +371,7 @@ class _OptionCard extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                gradient: superTrial && selected
-                    ? const LinearGradient(
-                        colors: [
-                          LearningColors.green,
-                          LearningColors.blue,
-                          LearningColors.purple,
-                        ],
-                      )
-                    : null,
+                gradient: superTrial && selected ? SuperColors.border : null,
                 color: superTrial && selected
                     ? null
                     : selected
@@ -320,13 +395,7 @@ class _OptionCard extends StatelessWidget {
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(8),
                           ),
-                          gradient: LinearGradient(
-                            colors: [
-                              LearningColors.green,
-                              LearningColors.blue,
-                              LearningColors.purple,
-                            ],
-                          ),
+                          gradient: SuperColors.header,
                         ),
                         child: Text(
                           content.superLabel,
@@ -404,7 +473,7 @@ class _OptionCard extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: superTrial
-                                    ? LearningColors.purple
+                                    ? SuperColors.trialInk
                                     : ReferenceColors.muted,
                                 fontSize: 16,
                                 fontWeight: superTrial

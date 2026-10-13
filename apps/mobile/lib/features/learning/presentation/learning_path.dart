@@ -21,6 +21,7 @@ import '../../shell/presentation/app_stats_bar.dart';
 import 'learning_visuals.dart';
 import '../../connectivity/application/connectivity_provider.dart';
 import '../../connectivity/presentation/offline_banner.dart';
+import '../../hearts/presentation/hearts_dropdown.dart';
 
 export 'unit_guide_screen.dart' show UnitGuideScreen;
 
@@ -33,6 +34,7 @@ class LearningPath extends ConsumerStatefulWidget {
 class _LearningPathState extends ConsumerState<LearningPath> {
   int? _selected;
   bool _courses = false;
+  final _statsKey = GlobalKey();
   CourseTarget get _active => ref.read(courseNavigationProvider).active;
   bool get _review => _active != const CourseTarget(1, 1);
   bool _pausedFor(int node, LessonState draft) =>
@@ -48,6 +50,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
       children: [
         OfflineBanner(offline: offline),
         AppStatsBar(
+          key: _statsKey,
           offline: offline,
           onSelected: (kind) {
             switch (kind) {
@@ -59,6 +62,14 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                 context.push('/shop');
               case AppStatKind.energy:
                 context.push('/energy');
+              case AppStatKind.hearts:
+                final box = _statsKey.currentContext?.findRenderObject();
+                showHeartsDropdown(
+                  context,
+                  anchor: box is RenderBox && box.hasSize
+                      ? box.localToGlobal(Offset.zero) & box.size
+                      : null,
+                );
             }
           },
         ),
@@ -235,6 +246,16 @@ class _LearningPathState extends ConsumerState<LearningPath> {
 
   Widget _offlineTint(bool offline, Widget child) =>
       offline ? OfflinePathTint(child: child) : child;
+  Widget _offlineWash(bool wash, Widget child) => wash
+      ? ColorFiltered(
+          key: const ValueKey('offline-current-node'),
+          colorFilter: ColorFilter.mode(
+            Colors.white.withValues(alpha: .5),
+            BlendMode.srcATop,
+          ),
+          child: child,
+        )
+      : child;
 
   Widget _unitBanner(BuildContext context, int unit, String title) => Container(
     decoration: BoxDecoration(
@@ -319,15 +340,18 @@ class _LearningPathState extends ConsumerState<LearningPath> {
     final current = i == (_review ? 0 : progress.currentNode);
     final completed = !_review && progress.completedNodes.contains('node-$i');
     final centerX = width * offsets[i];
+    final offline = !ref.watch(currentOnlineProvider);
     return Positioned(
       left: centerX - 50,
       top: i * 86.0 + (current ? 0 : 46),
       width: 100,
       child: _offlineTint(
-        !ref.watch(currentOnlineProvider) && !current,
+        offline && !current,
         Column(
           children: [
-            if (current)
+            // Offline: no START bubble and the current node is washed out
+            // (sc_12b09a6c fill #ABE580 = #58CC02 half-way to white).
+            if (current && !offline)
               Container(
                 margin: const EdgeInsets.only(bottom: 3),
                 padding: const EdgeInsets.symmetric(
@@ -354,39 +378,42 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                   ),
                 ),
               ),
-            PathNode(
-              current: current,
-              completed: completed,
-              color: current && _active.unit == 2
-                  ? const Color(0xFFBA4095)
-                  : null,
-              edgeColor: current && _active.unit == 2
-                  ? const Color(0xFF962877)
-                  : null,
-              progress: _review ? .2 : (progress.lessonInNode + 1) / 5,
-              icon: i == 2
-                  ? Icons.headphones_rounded
-                  : i == 3
-                  ? Icons.mic_rounded
-                  : i == 5
-                  ? Icons.inventory_2_rounded
-                  : Icons.star_rounded,
-              tooltip: current
-                  ? 'Start lesson ${_review ? 1 : progress.lessonInNode + 1}'
-                  : completed
-                  ? 'Replay lesson $i'
-                  : 'Locked lesson $i',
-              onTap: () {
-                if (!current && !completed) {
-                  showLearningNotice(
-                    context,
-                    'Not quite yet!',
-                    'Finish the previous lessons to unlock this one.',
-                  );
-                  return;
-                }
-                setState(() => _selected = _selected == i ? null : i);
-              },
+            _offlineWash(
+              offline && current,
+              PathNode(
+                current: current,
+                completed: completed,
+                color: current && _active.unit == 2
+                    ? const Color(0xFFBA4095)
+                    : null,
+                edgeColor: current && _active.unit == 2
+                    ? const Color(0xFF962877)
+                    : null,
+                progress: _review ? .2 : (progress.lessonInNode + 1) / 5,
+                icon: i == 2
+                    ? Icons.headphones_rounded
+                    : i == 3
+                    ? Icons.mic_rounded
+                    : i == 5
+                    ? Icons.inventory_2_rounded
+                    : Icons.star_rounded,
+                tooltip: current
+                    ? 'Start lesson ${_review ? 1 : progress.lessonInNode + 1}'
+                    : completed
+                    ? 'Replay lesson $i'
+                    : 'Locked lesson $i',
+                onTap: () {
+                  if (!current && !completed) {
+                    showLearningNotice(
+                      context,
+                      'Not quite yet!',
+                      'Finish the previous lessons to unlock this one.',
+                    );
+                    return;
+                  }
+                  setState(() => _selected = _selected == i ? null : i);
+                },
+              ),
             ),
           ],
         ),

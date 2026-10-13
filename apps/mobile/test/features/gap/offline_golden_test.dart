@@ -1,6 +1,9 @@
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/connectivity/application/connectivity_provider.dart';
 import 'package:cocenglish/features/connectivity/data/connectivity_repository.dart';
+import 'package:cocenglish/features/hearts/application/hearts_controller.dart';
+import 'package:cocenglish/features/hearts/data/hearts_repository.dart';
+import 'package:cocenglish/features/hearts/domain/hearts.dart';
 import 'package:cocenglish/features/learning/presentation/learning_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +26,13 @@ void main() {
       ProviderScope(
         overrides: [
           connectivityRepositoryProvider.overrideWithValue(repository),
+          // The capture is a Hearts-model learner with 5 hearts.
+          heartsRepositoryProvider.overrideWithValue(
+            MockHeartsRepository(
+              initial: const HeartsState(balance: 5),
+              livesModel: LivesModel.hearts,
+            ),
+          ),
         ],
         child: MaterialApp(
           theme: referenceTheme(),
@@ -42,6 +52,8 @@ void main() {
     await t.pumpAndSettle();
     await settleImages(t);
     expect(find.text('YOU ARE OFFLINE'), findsOneWidget);
+    expect(find.byTooltip('Hearts'), findsOneWidget);
+    expect(find.text('START'), findsNothing);
     expect(t.takeException(), isNull);
     await expectLater(
       find.byType(MaterialApp),

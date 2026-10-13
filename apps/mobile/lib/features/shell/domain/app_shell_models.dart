@@ -1,4 +1,4 @@
-enum AppStatKind { course, streak, gems, energy }
+enum AppStatKind { course, streak, gems, energy, hearts }
 
 enum AppTabKind { home, practice, quests, league, profile }
 
@@ -10,8 +10,12 @@ class AppShellSnapshot {
     required this.energy,
     required this.unlimited,
     required this.streakActive,
+    this.hearts,
   });
   final int score, streak, gems, energy;
+
+  /// Set for Hearts-model learners: the stats bar shows hearts, not energy.
+  final int? hearts;
   final bool unlimited;
   final bool streakActive;
 }

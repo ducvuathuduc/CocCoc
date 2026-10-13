@@ -3,6 +3,7 @@ import '../domain/hearts.dart';
 /// Hearts are an archived reference preview; there is no hearts API contract.
 abstract class HeartsRepository {
   HeartsContent get content;
+  LivesModel get livesModel;
   HeartsState load();
   HeartsState beginPractice();
   HeartsState earn(String receipt);
@@ -13,7 +14,10 @@ class MockHeartsRepository implements HeartsRepository {
   MockHeartsRepository({
     HeartsState initial = const HeartsState(),
     this.content = const HeartsContent(),
+    this.livesModel = LivesModel.energy,
   }) : _state = initial;
+  @override
+  final LivesModel livesModel;
   HeartsState _state;
   @override
   final HeartsContent content;

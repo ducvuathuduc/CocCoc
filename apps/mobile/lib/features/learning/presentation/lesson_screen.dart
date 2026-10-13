@@ -44,6 +44,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   String? _spokenId;
   SpeechVerdict? _verdict;
   String? _exerciseId;
+  final _heartsKey = GlobalKey();
   bool _backgroundPaused = false;
   final _bankKeys = <String, GlobalKey>{};
 
@@ -191,6 +192,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     // In-lesson out-of-hearts offer (Gummble sc_1ae5ddcf).
     showHeartsOfferSheet(
       context,
+      heartsAnchor: _heartsKey,
       onEnd: () {
         controller.abandon();
         if (mounted) context.pop();
@@ -288,6 +290,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                         ),
                         const SizedBox(width: 16),
                         LessonHeartCounter(
+                          key: _heartsKey,
                           hearts: state.hearts,
                           ghost: const ReferenceArt(
                             LearningArt.heart,

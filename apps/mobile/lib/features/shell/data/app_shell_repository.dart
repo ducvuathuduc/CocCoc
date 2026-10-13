@@ -29,15 +29,23 @@ class MockAppShellRepository implements AppShellRepository {
       value: '${snapshot.gems}',
       semanticLabel: 'Shop, ${snapshot.gems} gems',
     ),
-    AppStat(
-      kind: AppStatKind.energy,
-      label: 'Energy',
-      value: snapshot.unlimited ? '∞' : '${snapshot.energy}',
-      semanticLabel: snapshot.unlimited
-          ? 'Energy, unlimited'
-          : 'Energy, ${snapshot.energy}',
-      unlimited: snapshot.unlimited,
-    ),
+    if (snapshot.hearts case final hearts?)
+      AppStat(
+        kind: AppStatKind.hearts,
+        label: 'Hearts',
+        value: '$hearts',
+        semanticLabel: 'Hearts, $hearts',
+      )
+    else
+      AppStat(
+        kind: AppStatKind.energy,
+        label: 'Energy',
+        value: snapshot.unlimited ? '∞' : '${snapshot.energy}',
+        semanticLabel: snapshot.unlimited
+            ? 'Energy, unlimited'
+            : 'Energy, ${snapshot.energy}',
+        unlimited: snapshot.unlimited,
+      ),
   ]);
 
   @override

@@ -1,5 +1,10 @@
 enum HeartOption { superTrial, practice, refill }
 
+/// Which lives currency the home stats bar shows. The newer Energy model is
+/// the default; Hearts-model learners (every hearts Gummble capture, e.g.
+/// sc_12b09a6c, sc_901080ed) see the heart count and its dropdown instead.
+enum LivesModel { energy, hearts }
+
 class HeartsContent {
   const HeartsContent({
     this.superLabel = 'SUPER',
@@ -21,6 +26,8 @@ class HeartsContent {
     this.earnAction = 'EARN 1 HEART',
     this.continueAction = 'CONTINUE',
     this.practiceError = 'Practice unavailable. Try again.',
+    this.unlimitedHeartsAction = 'UNLIMITED HEARTS',
+    this.fullHeartsLabel = 'You have full hearts',
     this.homeTrialHearts = 76,
     this.lessonTrialHearts = 88,
     this.homeRefillCost = 500,
@@ -44,7 +51,9 @@ class HeartsContent {
       earnedAdTitle,
       earnAction,
       continueAction,
-      practiceError;
+      practiceError,
+      unlimitedHeartsAction,
+      fullHeartsLabel;
   final int homeRefillCost,
       lessonRefillCost,
       homeTrialHearts,

@@ -50,6 +50,12 @@ void main() {
       }
       await t.pumpAndSettle();
       expect(find.byType(OfflinePathTint), findsWidgets);
+      // sc_12b09a6c: no START bubble, current node washed out.
+      expect(find.text('START'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('offline-current-node')),
+        findsOneWidget,
+      );
       // The current lesson stays usable; filtering must not block gestures.
       await t.tap(find.byTooltip('Start lesson 1'));
       await t.pumpAndSettle();
@@ -58,6 +64,8 @@ void main() {
       await t.pumpAndSettle();
       expect(find.text('YOU ARE OFFLINE'), findsNothing);
       expect(find.byType(OfflinePathTint), findsNothing);
+      expect(find.text('START'), findsOneWidget);
+      expect(find.byKey(const ValueKey('offline-current-node')), findsNothing);
       expect(t.takeException(), isNull);
       await t.pumpWidget(const SizedBox.shrink());
     });

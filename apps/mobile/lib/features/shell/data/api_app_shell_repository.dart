@@ -24,6 +24,7 @@ class ApiAppShellRepository extends MockAppShellRepository {
         energy: energy.balance,
         unlimited: energy.mode == 'UNLIMITED',
         streakActive: rewards.currentStreak > 0,
+        hearts: snapshot.hearts,
       ),
     );
   }

@@ -72,6 +72,8 @@ class AppStatsBar extends ConsumerWidget {
                                             ? LearningColors.orange
                                             : ReferenceColors.disabled,
                                       AppStatKind.gems => LearningColors.blue,
+                                      // Stays red offline (sc_12b09a6c).
+                                      AppStatKind.hearts => LearningColors.red,
                                       AppStatKind.energy =>
                                         stat.unlimited
                                             ? ReferenceColors.purple
@@ -105,6 +107,7 @@ class AppStatsBar extends ConsumerWidget {
         24.0,
       ),
       AppStatKind.gems => (LearningArt.gem, 23.0),
+      AppStatKind.hearts => (LearningArt.heart, 26.0),
       AppStatKind.energy => (
         const ArtRegion('energy-02', Rect.fromLTWH(977, 350, 160, 110)),
         30.0,

@@ -158,7 +158,7 @@ void main() {
     expect(find.text('EARN 1 HEART'), findsNothing);
     expect(find.text('CONTINUE'), findsOneWidget);
   });
-  testWidgets('house ad countdown unlocks skip and returns a reward', (
+  testWidgets('house ad countdown unlocks CONTINUE and returns a reward', (
     tester,
   ) async {
     await pump(
@@ -179,10 +179,11 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 350));
     expect(find.byTooltip('Skip ad'), findsNothing);
+    expect(find.text('CONTINUE'), findsNothing);
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
     expect(find.text('Practice makes perfect.'), findsOneWidget);
-    await tester.tap(find.byTooltip('Skip ad'));
+    await tester.tap(find.text('CONTINUE'));
     await tester.pumpAndSettle();
     expect(find.text('Home destination'), findsOneWidget);
   });

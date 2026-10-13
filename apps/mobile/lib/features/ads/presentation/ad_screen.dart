@@ -10,6 +10,8 @@ import '../application/ads_controller.dart';
 
 // sc_fad12a43 at (10,10): PIL.convert('RGB').getpixel = (30,30,30).
 const _adStage = Color(0xFF1E1E1E);
+// sc_fad12a43 CONTINUE label #020638, snapped to palette navy #0F1845.
+const _ctaInk = Color(0xFF0F1845);
 // Existing archived creative, illustration only; native title/CTA overlaid.
 const _houseStage = ArtRegion(
   'gap-house-ad',
@@ -144,15 +146,9 @@ class _AdScreenState extends ConsumerState<AdScreen>
                             ),
                           )
                         else
-                          IconButton(
-                            tooltip: ad.skipLabel,
-                            onPressed: state.busy ? null : _finish,
-                            icon: const Icon(
-                              Icons.close_rounded,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ),
+                          // The final frame has no close X (sc_fad12a43);
+                          // CONTINUE is the only way on.
+                          const SizedBox(width: 48, height: 48),
                         const Spacer(),
                         IconButton(
                           tooltip: muted ? ad.unmuteLabel : ad.muteLabel,
@@ -216,7 +212,7 @@ class _AdScreenState extends ConsumerState<AdScreen>
                     label: ad.cta,
                     backgroundColor: ReferenceColors.surface,
                     edgeColor: ReferenceColors.border,
-                    foregroundColor: ReferenceColors.ink,
+                    foregroundColor: _ctaInk,
                     minHeight: 44,
                     onPressed: state.busy ? null : _finish,
                   ),

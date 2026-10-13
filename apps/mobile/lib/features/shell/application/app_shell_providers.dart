@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../hearts/application/hearts_controller.dart';
+import '../../hearts/domain/hearts.dart';
 import '../../learning/application/learning_controller.dart';
 import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
@@ -39,6 +41,9 @@ final appStatsProvider = Provider<List<AppStat>>((ref) {
           energy: energy.$1,
           unlimited: energy.$2,
           streakActive: progress.$3,
+          hearts: ref.watch(livesModelProvider) == LivesModel.hearts
+              ? ref.watch(heartsControllerProvider.select((s) => s.balance))
+              : null,
         ),
       );
 });
