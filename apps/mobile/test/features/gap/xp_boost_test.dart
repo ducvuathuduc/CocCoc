@@ -90,8 +90,6 @@ void main() {
   testWidgets(
     'real router: activated boost route shows reward, Continue returns to Shop',
     (t) async {
-      // The Friends Chest CLAIM -> boost hand-off is not wired yet: the frozen
-      // settings_shop_taps_test expects the gems sheet to return to Shop.
       await t.pumpWidget(
         MainApp(
           initial: OnboardingState(

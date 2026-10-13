@@ -8,6 +8,7 @@ import 'package:cocenglish/features/progress/domain/preview_state.dart';
 import 'package:cocenglish/features/progress/presentation/family_subscription_screen.dart';
 import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:cocenglish/features/shop/presentation/shop_widgets.dart';
+import 'package:cocenglish/features/xp_boost/presentation/xp_boost_activated_screen.dart';
 import 'package:cocenglish/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -230,7 +231,15 @@ void main() {
           expect(find.text('+20'), findsOneWidget);
           expect(c.read(previewWalletProvider), before + 20);
           await t.tap(find.text('CONTINUE'));
+          // The boost screen's bubbles loop while motion is on: pump frames.
+          await t.pump();
+          await t.pump(const Duration(seconds: 1));
+          // Friends Chest: gems sheet -> XP Boost activated -> back to Shop.
+          expect(find.byType(XpBoostActivatedScreen), findsOneWidget);
+          expect(find.text('x2'), findsOneWidget);
+          await t.tap(find.text('CONTINUE'));
           await t.pumpAndSettle();
+          expect(find.byType(XpBoostActivatedScreen), findsNothing);
           expect(rowAction('Friends Chest', 'CLAIMED'), findsOneWidget);
           await t.tap(rowAction('Friends Chest', 'CLAIMED'));
           await t.pumpAndSettle();

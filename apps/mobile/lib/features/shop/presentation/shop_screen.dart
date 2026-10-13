@@ -12,6 +12,7 @@ import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/timer_boost_screen.dart';
 import '../application/shop_controller.dart';
+import '../../xp_boost/application/boost_controller.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../progress/domain/preview_state.dart';
 
@@ -366,14 +367,18 @@ class ShopScreen extends ConsumerWidget {
     );
   }
 
-  void _claimOffer(BuildContext context, WidgetRef ref, ShopOffer offer) {
+  Future<void> _claimOffer(
+    BuildContext context,
+    WidgetRef ref,
+    ShopOffer offer,
+  ) async {
     final gems = offer.rewardGems!;
     final ok = ref
         .read(previewControllerProvider.notifier)
         .claimShopReward(offer.id, gems);
     if (!ok) return;
     final art = _getArtForOffer(offer.id);
-    learningSheet<void>(
+    await learningSheet<void>(
       context,
       title: 'You earned $gems gems!',
       illustration: ShopRewardReveal(
@@ -394,6 +399,20 @@ class ShopScreen extends ConsumerWidget {
         ),
       ),
     );
+    final boost = offer.xpBoost;
+    if (boost == null || !context.mounted) return;
+    // Friends Chest: gems sheet -> XP Boost activated (sc_269d6ffb).
+    final activated = await ref
+        .read(boostControllerProvider.notifier)
+        .activate(boost);
+    if (!context.mounted) return;
+    if (activated) {
+      context.push('/xp-boost/activated');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(ref.read(boostCopyProvider).failureMessage)),
+      );
+    }
   }
 
   ArtRegion _getArtForOffer(String id) {
