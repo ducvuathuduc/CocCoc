@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/api/client/idempotency.dart';
 import '../../../core/design/reference_art.dart';
-import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../ads/application/ads_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
@@ -29,7 +28,7 @@ class _HeartEarnedScreenState extends ConsumerState<HeartEarnedScreen> {
         !rewarded &&
         hearts.balance < hearts.capacity;
     return Scaffold(
-      backgroundColor: ReferenceColors.surface,
+      backgroundColor: HeartsColors.page,
       body: SafeArea(
         child: Column(
           children: [

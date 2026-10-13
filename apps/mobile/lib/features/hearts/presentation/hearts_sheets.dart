@@ -375,11 +375,16 @@ class _OptionCard extends StatelessWidget {
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.diamond_rounded,
-                                  size: 16,
-                                  color: ink,
+                                // Refill is priced in gems (sc_1ae5ddcf).
+                                GreyWhenDisabled(
+                                  enabled: enabled,
+                                  child: const ReferenceArt(
+                                    LearningArt.gem,
+                                    width: 14,
+                                    height: 16,
+                                  ),
                                 ),
+                                const SizedBox(width: 4),
                                 Flexible(
                                   child: Text(
                                     '$cost',
