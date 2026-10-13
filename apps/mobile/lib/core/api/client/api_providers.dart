@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../features/auth/application/auth_controller.dart';
+import '../../../features/connectivity/application/connectivity_provider.dart';
+import '../../../features/connectivity/data/api_connectivity_repository.dart';
 import '../../config/app_config.dart';
 import 'access_token.dart';
 import 'api_client.dart';
@@ -10,9 +12,13 @@ import 'api_transport.dart';
 import 'service_apis.dart';
 
 /// HTTP transport; tests override it with a fake.
-final apiTransportProvider = Provider<ApiTransport>(
-  (ref) => ApiTransport.platformDefault(),
-);
+final apiTransportProvider = Provider<ApiTransport>((ref) {
+  final transport = ApiTransport.platformDefault();
+  final connectivity = ref.watch(connectivityRepositoryProvider);
+  return connectivity is ApiConnectivityRepository
+      ? connectivity.observe(transport)
+      : transport;
+});
 
 /// Bearer token source: the active auth repository's Appwrite JWT.
 final accessTokenProvider = Provider<AccessTokenProvider>((ref) {

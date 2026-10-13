@@ -19,6 +19,8 @@ import '../../progress/domain/score_information.dart';
 import '../../shell/domain/app_shell_models.dart';
 import '../../shell/presentation/app_stats_bar.dart';
 import 'learning_visuals.dart';
+import '../../connectivity/application/connectivity_provider.dart';
+import '../../connectivity/presentation/offline_banner.dart';
 
 export 'unit_guide_screen.dart' show UnitGuideScreen;
 
@@ -41,9 +43,12 @@ class _LearningPathState extends ConsumerState<LearningPath> {
     final progress = ref.watch(pathLearningStateProvider);
     final draft = ref.watch(lessonControllerProvider);
     final active = ref.watch(courseNavigationProvider).active;
+    final offline = !ref.watch(currentOnlineProvider);
     return Column(
       children: [
+        OfflineBanner(offline: offline),
         AppStatsBar(
+          offline: offline,
           onSelected: (kind) {
             switch (kind) {
               case AppStatKind.course:
@@ -81,31 +86,34 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                                 // The viewport reaches above the resting owl so
                                 // the jump (frames ~130-180) is not clipped.
                                 top: 183,
-                                child: DuoMotion(
-                                  pose: DuoPose.reading,
-                                  spec: const DuoMotionSpec(
-                                    asset: 'assets/motion/duo-path-jump.json',
-                                    startFrame: 0,
-                                    endFrame: 220,
-                                    loop: true,
-                                  ),
-                                  width: 118,
-                                  height: 153,
-                                  viewport: const Rect.fromLTWH(
-                                    228,
-                                    30,
-                                    625,
-                                    810,
-                                  ),
-                                  fallback: const Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: SizedBox(
-                                      width: 118,
-                                      height: 126,
-                                      child: ReferenceArt(
-                                        LearningArt.pathDuo,
-                                        width: 102,
-                                        height: 105,
+                                child: _offlineTint(
+                                  offline,
+                                  DuoMotion(
+                                    pose: DuoPose.reading,
+                                    spec: const DuoMotionSpec(
+                                      asset: 'assets/motion/duo-path-jump.json',
+                                      startFrame: 0,
+                                      endFrame: 220,
+                                      loop: true,
+                                    ),
+                                    width: 118,
+                                    height: 153,
+                                    viewport: const Rect.fromLTWH(
+                                      228,
+                                      30,
+                                      625,
+                                      810,
+                                    ),
+                                    fallback: const Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: SizedBox(
+                                        width: 118,
+                                        height: 126,
+                                        child: ReferenceArt(
+                                          LearningArt.pathDuo,
+                                          width: 102,
+                                          height: 105,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -114,17 +122,20 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                               Positioned(
                                 left: width * .7,
                                 top: 347,
-                                child: Row(
-                                  children: List.generate(
-                                    3,
-                                    (i) => Icon(
-                                      Icons.star_rounded,
-                                      size: 23,
-                                      color:
-                                          i == 0 &&
-                                              progress.completedLessons > 0
-                                          ? LearningColors.yellow
-                                          : ReferenceColors.border,
+                                child: _offlineTint(
+                                  offline,
+                                  Row(
+                                    children: List.generate(
+                                      3,
+                                      (i) => Icon(
+                                        Icons.star_rounded,
+                                        size: 23,
+                                        color:
+                                            i == 0 &&
+                                                progress.completedLessons > 0
+                                            ? LearningColors.yellow
+                                            : ReferenceColors.border,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -222,6 +233,9 @@ class _LearningPathState extends ConsumerState<LearningPath> {
     );
   }
 
+  Widget _offlineTint(bool offline, Widget child) =>
+      offline ? OfflinePathTint(child: child) : child;
+
   Widget _unitBanner(BuildContext context, int unit, String title) => Container(
     decoration: BoxDecoration(
       color: unit == 2 ? const Color(0xFFBA4095) : LearningColors.green,
@@ -309,67 +323,73 @@ class _LearningPathState extends ConsumerState<LearningPath> {
       left: centerX - 50,
       top: i * 86.0 + (current ? 0 : 46),
       width: 100,
-      child: Column(
-        children: [
-          if (current)
-            Container(
-              margin: const EdgeInsets.only(bottom: 3),
-              padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 9),
-              decoration: BoxDecoration(
-                color: ReferenceColors.surface,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: ReferenceColors.border, width: 2),
-              ),
-              child: Text(
-                _pausedFor(i, draft)
-                    ? 'RESUME'
-                    : !_review && progress.completedLessons > 0
-                    ? 'CONTINUE'
-                    : 'START',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: _active.unit == 2
-                      ? const Color(0xFF962877)
-                      : LearningColors.greenDark,
+      child: _offlineTint(
+        !ref.watch(currentOnlineProvider) && !current,
+        Column(
+          children: [
+            if (current)
+              Container(
+                margin: const EdgeInsets.only(bottom: 3),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 17,
+                  vertical: 9,
+                ),
+                decoration: BoxDecoration(
+                  color: ReferenceColors.surface,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: ReferenceColors.border, width: 2),
+                ),
+                child: Text(
+                  _pausedFor(i, draft)
+                      ? 'RESUME'
+                      : !_review && progress.completedLessons > 0
+                      ? 'CONTINUE'
+                      : 'START',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: _active.unit == 2
+                        ? const Color(0xFF962877)
+                        : LearningColors.greenDark,
+                  ),
                 ),
               ),
+            PathNode(
+              current: current,
+              completed: completed,
+              color: current && _active.unit == 2
+                  ? const Color(0xFFBA4095)
+                  : null,
+              edgeColor: current && _active.unit == 2
+                  ? const Color(0xFF962877)
+                  : null,
+              progress: _review ? .2 : (progress.lessonInNode + 1) / 5,
+              icon: i == 2
+                  ? Icons.headphones_rounded
+                  : i == 3
+                  ? Icons.mic_rounded
+                  : i == 5
+                  ? Icons.inventory_2_rounded
+                  : Icons.star_rounded,
+              tooltip: current
+                  ? 'Start lesson ${_review ? 1 : progress.lessonInNode + 1}'
+                  : completed
+                  ? 'Replay lesson $i'
+                  : 'Locked lesson $i',
+              onTap: () {
+                if (!current && !completed) {
+                  showLearningNotice(
+                    context,
+                    'Not quite yet!',
+                    'Finish the previous lessons to unlock this one.',
+                  );
+                  return;
+                }
+                setState(() => _selected = _selected == i ? null : i);
+              },
             ),
-          PathNode(
-            current: current,
-            completed: completed,
-            color: current && _active.unit == 2
-                ? const Color(0xFFBA4095)
-                : null,
-            edgeColor: current && _active.unit == 2
-                ? const Color(0xFF962877)
-                : null,
-            progress: _review ? .2 : (progress.lessonInNode + 1) / 5,
-            icon: i == 2
-                ? Icons.headphones_rounded
-                : i == 3
-                ? Icons.mic_rounded
-                : i == 5
-                ? Icons.inventory_2_rounded
-                : Icons.star_rounded,
-            tooltip: current
-                ? 'Start lesson ${_review ? 1 : progress.lessonInNode + 1}'
-                : completed
-                ? 'Replay lesson $i'
-                : 'Locked lesson $i',
-            onTap: () {
-              if (!current && !completed) {
-                showLearningNotice(
-                  context,
-                  'Not quite yet!',
-                  'Finish the previous lessons to unlock this one.',
-                );
-                return;
-              }
-              setState(() => _selected = _selected == i ? null : i);
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

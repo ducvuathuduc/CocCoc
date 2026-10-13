@@ -9,7 +9,12 @@ import '../application/app_shell_providers.dart';
 import '../domain/app_shell_models.dart';
 
 class AppStatsBar extends ConsumerWidget {
-  const AppStatsBar({required this.onSelected, super.key});
+  const AppStatsBar({
+    required this.onSelected,
+    this.offline = false,
+    super.key,
+  });
+  final bool offline;
   final ValueChanged<AppStatKind> onSelected;
 
   @override
@@ -62,7 +67,7 @@ class AppStatsBar extends ConsumerWidget {
                                     color: switch (stat.kind) {
                                       AppStatKind.course => ReferenceColors.ink,
                                       AppStatKind.streak =>
-                                        stat.active
+                                        stat.active && !offline
                                             ? LearningColors.orange
                                             : ReferenceColors.disabled,
                                       AppStatKind.gems => LearningColors.blue,
@@ -104,10 +109,19 @@ class AppStatsBar extends ConsumerWidget {
         30.0,
       ),
     };
-    return ReferenceArt(
+    final art = ReferenceArt(
       region,
       width: width,
       height: width * region.source.height / region.source.width,
     );
+    return offline && stat.kind == AppStatKind.streak
+        ? ColorFiltered(
+            colorFilter: const ColorFilter.mode(
+              ReferenceColors.disabled,
+              BlendMode.srcIn,
+            ),
+            child: art,
+          )
+        : art;
   }
 }
