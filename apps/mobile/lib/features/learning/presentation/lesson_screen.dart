@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,9 @@ import '../application/learning_controller.dart';
 import '../data/speech_assessment.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../hearts/presentation/hearts_sheets.dart';
+import '../../report/application/issue_report_provider.dart';
+import '../../report/domain/issue_report.dart';
+import '../../report/presentation/report_issue_menu.dart';
 import '../domain/learning_models.dart';
 import '../services/lesson_audio_service.dart';
 import 'learning_visuals.dart';
@@ -45,6 +49,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   SpeechVerdict? _verdict;
   String? _exerciseId;
   final _heartsKey = GlobalKey();
+  String? _reportToast;
+  Timer? _reportToastTimer;
   bool _backgroundPaused = false;
   final _bankKeys = <String, GlobalKey>{};
 
@@ -69,7 +75,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _sound.prefetch(ref.read(lessonControllerProvider).exercises);
+      if (mounted) {
+        _sound.prefetch(ref.read(lessonControllerProvider).exercises);
+      }
     });
   }
 
@@ -117,6 +125,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     WidgetsBinding.instance.removeObserver(this);
     _sound.stop();
     _text.dispose();
+    _reportToastTimer?.cancel();
     super.dispose();
   }
 
@@ -552,14 +561,22 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  child: LessonFeedbackEntrance(
-                    key: ValueKey('${exercise!.id}:${state.retryPass}'),
-                    child: state.skipped
-                        ? SkipListeningPanel(
-                            onContinue: state.busy ? null : controller.next,
-                            onReport: _report,
-                          )
-                        : _feedback(exercise, state, controller),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // sc_2082f9ab: toast sits just above the feedback panel.
+                      if (_reportToast case final message?)
+                        IssueReportedToast(message: message),
+                      LessonFeedbackEntrance(
+                        key: ValueKey('${exercise!.id}:${state.retryPass}'),
+                        child: state.skipped
+                            ? SkipListeningPanel(
+                                onContinue: state.busy ? null : controller.next,
+                                onReport: _report,
+                              )
+                            : _feedback(exercise, state, controller),
+                      ),
+                    ],
                   ),
                 ),
             ],
@@ -1025,10 +1042,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                   style: headingStyle.copyWith(color: color),
                 ),
               ),
-              IconButton(
-                tooltip: 'Report exercise',
-                onPressed: _report,
-                icon: Icon(Icons.outlined_flag_rounded, color: color),
+              Builder(
+                builder: (flag) => IconButton(
+                  tooltip: 'Report exercise',
+                  onPressed: () => _report(flag),
+                  icon: Icon(Icons.outlined_flag_rounded, color: color),
+                ),
               ),
             ],
           ),
@@ -1091,34 +1110,30 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     );
   }
 
-  Future<void> _report() async {
-    final category = await learningSheet<String>(
+  /// Report an issue (Gummble sc_f2f569c1 menu → sc_2082f9ab toast).
+  Future<void> _report([BuildContext? flag]) async {
+    final content = ref.read(issueReportContentProvider);
+    final box = flag?.findRenderObject();
+    final category = await showReportIssueMenu(
       context,
-      title: 'Report this exercise',
-      child: Column(
-        children: [
-          for (final value in [
-            'My answer should be accepted',
-            'The translation is wrong',
-            'Something else',
-          ])
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: LearningCard(
-                onTap: () => Navigator.pop(context, value),
-                child: Text(value, style: const TextStyle(fontSize: 17)),
-              ),
-            ),
-        ],
-      ),
+      content: content,
+      anchor: box is RenderBox && box.hasSize
+          ? box.localToGlobal(Offset.zero) & box.size
+          : null,
     );
-    if (category != null && mounted) {
-      ref.read(previewControllerProvider.notifier).report(category);
-      await showLearningNotice(
-        context,
-        'Report queued',
-        'Thanks for helping us improve this exercise.',
-      );
-    }
+    if (category == null || !mounted) return;
+    final exerciseId = ref.read(lessonControllerProvider).current?.id ?? '';
+    final sent = await ref
+        .read(issueReportRepositoryProvider)
+        .submit(IssueReport(exerciseId: exerciseId, category: category));
+    if (!mounted) return;
+    if (sent) ref.read(previewControllerProvider.notifier).report(category);
+    _reportToastTimer?.cancel();
+    setState(
+      () => _reportToast = sent ? content.successToast : content.failureToast,
+    );
+    _reportToastTimer = Timer(const Duration(milliseconds: 2500), () {
+      if (mounted) setState(() => _reportToast = null);
+    });
   }
 }
