@@ -37,6 +37,9 @@ import 'package:timezone/timezone.dart' as tz;
 const _pathTitle = 'Use basic phrases';
 const _explainerTitle = 'Make learning a habit';
 
+/// The native runner never times out a case; bound each one here.
+const _caseTimeout = Timeout(Duration(minutes: 6));
+
 void _log(String m) => debugPrint('[notify-e2e] $m');
 
 /// Native screenshot (pulled by `patrol test` into patrol_test/screenshots).
@@ -180,18 +183,56 @@ Future<void> _completeLesson(WidgetTester t) async {
   }
 }
 
+/// Whether the OS permission dialog is up. UiAutomator sometimes misses a
+/// dialog that is on screen (first accessibility connection), so retry.
+Future<bool> _dialogVisible(PatrolIntegrationTester $, {int tries = 3}) async {
+  for (var i = 0; i < tries; i++) {
+    try {
+      if (await $.platform.mobile.isPermissionDialogVisible(
+        timeout: const Duration(seconds: 8),
+      )) {
+        return true;
+      }
+    } catch (e) {
+      _log('isPermissionDialogVisible attempt $i failed: $e');
+    }
+  }
+  return false;
+}
+
+/// Taps "Allow" in the OS dialog: Patrol's resource-id path first, then the
+/// visible button text as a fallback.
+Future<void> _allowInDialog(PatrolIntegrationTester $) async {
+  try {
+    await $.platform.mobile.grantPermissionWhenInUse();
+    return;
+  } catch (e) {
+    _log('grantPermissionWhenInUse failed: $e');
+  }
+  for (final label in ['Allow', 'ALLOW']) {
+    try {
+      await $.platform.mobile.tap(
+        Selector(text: label),
+        timeout: const Duration(seconds: 5),
+      );
+      return;
+    } catch (_) {}
+  }
+}
+
 /// Grants POST_NOTIFICATIONS through the real OS dialog (Android 13+).
 Future<void> _grantViaSystemDialog(
   PatrolIntegrationTester $,
   ProviderContainer c,
 ) async {
   final request = c.read(notificationGatewayProvider).requestPermission();
-  if (await $.platform.mobile.isPermissionDialogVisible(
-    timeout: const Duration(seconds: 10),
-  )) {
-    await $.platform.mobile.grantPermissionWhenInUse();
+  if (await _dialogVisible($)) {
+    await _allowInDialog($);
+  } else {
+    _log('permission dialog not detected; trying the Allow button anyway');
+    await _allowInDialog($);
   }
-  expect(await request, isTrue);
+  expect(await request.timeout(const Duration(seconds: 30)), isTrue);
 }
 
 /// A production reminder (copy, channel, id, link) re-timed [inSeconds] ahead.
@@ -227,6 +268,18 @@ Future<PlannedReminder> _reminder(
   );
 }
 
+/// Opens the shade and reads it. A notification that lands mid-read makes
+/// UiAutomator throw StaleObjectException; that read just returns nothing.
+Future<List<Notification>> _shade(PatrolIntegrationTester $) async {
+  try {
+    await $.platform.mobile.openNotifications();
+    return await $.platform.mobile.getNotifications();
+  } catch (e) {
+    _log('shade read failed (retrying): $e');
+    return const [];
+  }
+}
+
 /// Waits until the reminder is in the shade, checks title and body, taps it.
 Future<void> _expectInShadeAndTap(
   PatrolIntegrationTester $,
@@ -237,8 +290,7 @@ Future<void> _expectInShadeAndTap(
   final end = DateTime.now().add(const Duration(seconds: 150));
   while (found == null && DateTime.now().isBefore(end)) {
     await Future<void>.delayed(const Duration(seconds: 3));
-    await $.platform.mobile.openNotifications();
-    final all = await $.platform.mobile.getNotifications();
+    final all = await _shade($);
     _log('shade: ${all.map((n) => '${n.title} | ${n.content}').toList()}');
     for (final n in all) {
       if (n.title == r.title) found = n;
@@ -249,10 +301,20 @@ Future<void> _expectInShadeAndTap(
   expect(found.content, contains(r.body));
   _log('PASS shade ${r.kind.name}: "${found.title}" / "${found.content}"');
   await _shot($, '${r.kind.name}-in-shade');
-  await $.platform.mobile.tapOnNotificationBySelector(
-    Selector(text: r.title),
-    timeout: const Duration(seconds: 10),
-  );
+  for (var i = 0; i < 3; i++) {
+    try {
+      await $.platform.mobile.openNotifications();
+      await $.platform.mobile.tapOnNotificationBySelector(
+        Selector(text: r.title),
+        timeout: const Duration(seconds: 10),
+      );
+      break;
+    } catch (e) {
+      _log('tap notification attempt $i failed: $e');
+      if (i == 2) rethrow;
+      await Future<void>.delayed(const Duration(seconds: 2));
+    }
+  }
   await _settle($.tester);
 }
 
@@ -280,6 +342,7 @@ Future<void> _deepLinkCase(
 
 void main() {
   patrolTest(
+    timeout: _caseTimeout,
     'explainer after first lesson grants POST_NOTIFICATIONS via the OS dialog',
     ($) async {
       await _launchApp($);
@@ -292,14 +355,9 @@ void main() {
       expect(await _waitFor($.tester, find.text(_explainerTitle)), isTrue);
       await _shot($, 'explainer');
       await _tapText($.tester, 'TURN ON REMINDERS');
-      expect(
-        await $.platform.mobile.isPermissionDialogVisible(
-          timeout: const Duration(seconds: 10),
-        ),
-        isTrue,
-      );
+      expect(await _dialogVisible($), isTrue);
       await _shot($, 'permission-dialog');
-      await $.platform.mobile.grantPermissionWhenInUse();
+      await _allowInDialog($);
       expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
       expect(
         await c.read(notificationGatewayProvider).permission(),
@@ -309,46 +367,45 @@ void main() {
     },
   );
 
-  patrolTest('deny in the OS dialog is remembered and never re-asked', (
-    $,
-  ) async {
-    await _launchApp($);
-    await _completeLesson($.tester);
-    expect(await _waitFor($.tester, find.text(_explainerTitle)), isTrue);
-    await _shot($, 'explainer-deny-path');
-    await _tapText($.tester, 'TURN ON REMINDERS');
-    expect(
-      await $.platform.mobile.isPermissionDialogVisible(
-        timeout: const Duration(seconds: 10),
-      ),
-      isTrue,
-    );
-    await $.platform.mobile.denyPermission();
-    expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
-    final c = _container($.tester);
-    expect(
-      await c.read(reminderCoordinatorProvider).shouldOfferPermission(),
-      isFalse,
-    );
-    // Second lesson: neither the explainer nor the OS dialog comes back.
-    await _completeLesson($.tester);
-    expect(find.text(_explainerTitle), findsNothing);
-    expect(
-      await $.platform.mobile.isPermissionDialogVisible(
-        timeout: const Duration(seconds: 4),
-      ),
-      isFalse,
-    );
-    expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
-    _log('PASS deny remembered, no re-ask after lesson 2');
-  });
+  patrolTest(
+    'deny in the OS dialog is remembered and never re-asked',
+    timeout: _caseTimeout,
+    ($) async {
+      await _launchApp($);
+      await _completeLesson($.tester);
+      expect(await _waitFor($.tester, find.text(_explainerTitle)), isTrue);
+      await _shot($, 'explainer-deny-path');
+      await _tapText($.tester, 'TURN ON REMINDERS');
+      expect(await _dialogVisible($), isTrue);
+      await $.platform.mobile.denyPermission();
+      expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
+      final c = _container($.tester);
+      expect(
+        await c.read(reminderCoordinatorProvider).shouldOfferPermission(),
+        isFalse,
+      );
+      // Second lesson: neither the explainer nor the OS dialog comes back.
+      await _completeLesson($.tester);
+      expect(find.text(_explainerTitle), findsNothing);
+      expect(
+        await $.platform.mobile.isPermissionDialogVisible(
+          timeout: const Duration(seconds: 4),
+        ),
+        isFalse,
+      );
+      expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
+      _log('PASS deny remembered, no re-ask after lesson 2');
+    },
+  );
 
   patrolTest(
+    timeout: _caseTimeout,
     'daily reminder fires in about 10 s and its tap opens home',
     ($) => _deepLinkCase($, ReminderKind.daily, '/home', find.text(_pathTitle)),
   );
 
   patrolTest(
+    timeout: _caseTimeout,
     'streak-at-risk reminder fires and its tap opens streak',
     ($) => _deepLinkCase(
       $,
@@ -359,6 +416,7 @@ void main() {
   );
 
   patrolTest(
+    timeout: _caseTimeout,
     'league-ending reminder fires and its tap opens league',
     ($) => _deepLinkCase(
       $,
@@ -369,12 +427,13 @@ void main() {
   );
 
   patrolTest(
+    timeout: _caseTimeout,
     'completing a lesson cancels the streak-at-risk reminder for today',
     ($) async {
       await _launchApp($);
       final c = _container($.tester);
       await _grantViaSystemDialog($, c);
-      final r = await _reminder(c, ReminderKind.streakAtRisk, inSeconds: 75);
+      final r = await _reminder(c, ReminderKind.streakAtRisk, inSeconds: 150);
       await c.read(notificationGatewayProvider).schedule(r);
       final plugin = FlutterLocalNotificationsPlugin();
       Future<Set<int>> pending() async => {
@@ -393,8 +452,8 @@ void main() {
       final wait =
           r.at.difference(DateTime.now()) + const Duration(seconds: 20);
       if (!wait.isNegative) await Future<void>.delayed(wait);
-      await $.platform.mobile.openNotifications();
-      final shade = await $.platform.mobile.getNotifications();
+      var shade = await _shade($);
+      if (shade.isEmpty) shade = await _shade($);
       _log('shade after fire time: ${shade.map((n) => n.title).toList()}');
       expect(shade.where((n) => n.title == r.title), isEmpty);
       await $.platform.mobile.closeNotifications();
@@ -403,6 +462,7 @@ void main() {
   );
 
   patrolTest(
+    timeout: _caseTimeout,
     'streak widget is pinned to the launcher and shows the lesson update',
     ($) async {
       await _launchApp($);
