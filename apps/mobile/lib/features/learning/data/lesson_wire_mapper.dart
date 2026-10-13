@@ -85,8 +85,66 @@ final class LessonWireMapper {
 
   /// UI exercises in bundle order (speech replaced by alternatives).
   List<Exercise> toDomain() => [
-    for (final exercise in exercises) _toDomain(_effective(exercise)),
+    for (final exercise in exercises)
+      _withAudio(_effective(exercise), _toDomain(_effective(exercise))),
   ];
+
+  /// `a.w.<slug>.n` word clips listed in the bundle `assets`, by slug.
+  late final Map<String, LessonAudio> wordAudio = {
+    for (final entry in _assetHashes.entries)
+      if (entry.key.startsWith('a.w.') && entry.key.endsWith('.n'))
+        entry.key.substring(4, entry.key.length - 2): LessonAudio(
+          entry.key,
+          entry.value,
+        ),
+  };
+
+  /// A hash-pinned clip when [fileId] is listed in the bundle `assets`.
+  LessonAudio? audioFor(String? fileId) {
+    if (fileId == null) return null;
+    final hash = _assetHashes[fileId];
+    return hash == null ? null : LessonAudio(fileId, hash);
+  }
+
+  static final _quoted = RegExp('"([^"]+)"');
+
+  /// Prompt audio (`prompt.audioAssetId`, `.n` + its `.s` slow twin), or for a
+  /// "Từ mới!" item the clip of the quoted English word, plus the bundle's
+  /// tile-word clips.
+  Exercise _withAudio(Map<String, Object?> json, Exercise exercise) {
+    final promptJson = _map(json['prompt']);
+    final promptText = (promptJson['text'] as String?) ?? '';
+    var normal = audioFor(promptJson['audioAssetId'] as String?);
+    LessonAudio? slow;
+    if (normal != null && normal.fileId.endsWith('.n')) {
+      slow = audioFor(
+        '${normal.fileId.substring(0, normal.fileId.length - 2)}.s',
+      );
+    }
+    if (normal == null && promptText.startsWith('Từ mới')) {
+      final word = _quoted.firstMatch(promptText)?.group(1);
+      if (word != null) normal = wordAudio[wordAudioSlug(word)];
+    }
+    if (normal == null && wordAudio.isEmpty) return exercise;
+    return Exercise(
+      id: exercise.id,
+      kind: exercise.kind,
+      title: exercise.title,
+      prompt: exercise.prompt,
+      choices: exercise.choices,
+      tokens: exercise.tokens,
+      correctIds: exercise.correctIds,
+      correctText: exercise.correctText,
+      pairs: exercise.pairs,
+      hint: exercise.hint,
+      meaning: exercise.meaning,
+      audioPairs: exercise.audioPairs,
+      pairLabels: exercise.pairLabels,
+      audio: normal,
+      slowAudio: slow,
+      wordAudio: wordAudio,
+    );
+  }
 
   Map<String, Object?>? wireJson(String exerciseId) => _byId[exerciseId];
 

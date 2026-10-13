@@ -15,6 +15,7 @@ import '../application/learning_controller.dart';
 import '../data/speech_assessment.dart';
 import '../../progress/application/preview_controller.dart';
 import '../domain/learning_models.dart';
+import '../services/lesson_audio_service.dart';
 import 'learning_visuals.dart';
 import 'lesson_image_view.dart';
 import '../data/english_explanations.dart';
@@ -44,11 +45,57 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   String? _exerciseId;
   bool _backgroundPaused = false;
   final _bankKeys = <String, GlobalKey>{};
+
+  /// The next speaker tap plays the slow (0.75x) clip: like the reference
+  /// app, tapping the speaker again after hearing the prompt slows it down,
+  /// and the following tap is back at normal speed.
+  bool _slowNext = false;
+  late final LessonAudioService _sound = ref.read(lessonAudioServiceProvider);
+
+  /// Exercise kinds whose prompt plays as soon as the exercise appears.
+  static const _autoplayKinds = {
+    ExerciseKind.listenChoice,
+    ExerciseKind.dictation,
+    ExerciseKind.speakRepeat,
+    ExerciseKind.dialogueTurn,
+    ExerciseKind.imageChoice,
+    ExerciseKind.choice,
+  };
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _sound.prefetch(ref.read(lessonControllerProvider).exercises);
+    });
   }
+
+  void _autoplay(String identity) {
+    if (!mounted || _exerciseId != identity) return;
+    final state = ref.read(lessonControllerProvider);
+    final exercise = state.current;
+    if (exercise == null ||
+        exercise.audio == null ||
+        state.textAlternative ||
+        state.stage != LessonStage.answering ||
+        !_autoplayKinds.contains(exercise.kind)) {
+      return;
+    }
+    _sound.play(exercise.audio);
+    _slowNext = exercise.slowAudio != null;
+  }
+
+  /// Speaker button: normal speed, then slow on the next tap, alternating.
+  void _replay(Exercise exercise) {
+    final slow = _slowNext && exercise.slowAudio != null;
+    _sound.play(slow ? exercise.slowAudio : exercise.audio);
+    _slowNext = exercise.slowAudio != null && !slow;
+  }
+
+  /// Tap-to-hear for an English tile or option (no-op without a clip).
+  void _speakWord(Exercise exercise, String text) =>
+      _sound.playWord(exercise, text);
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState lifecycle) {
@@ -66,6 +113,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _sound.stop();
     _text.dispose();
     super.dispose();
   }
@@ -157,13 +205,24 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           previous?.stage == LessonStage.checking) {
         if (next.correct == true) {
           HapticFeedback.lightImpact();
+          // Every 5th answer in a row plays the combo sparkle instead.
+          final combo = next.correctStreak >= 5 && next.correctStreak % 5 == 0;
+          _sound.effect(combo ? LessonSfx.combo : LessonSfx.correct);
         } else {
           HapticFeedback.mediumImpact();
+          _sound.effect(LessonSfx.incorrect);
+          if (previous != null && next.hearts < previous.hearts) {
+            _sound.effectAfter(
+              LessonSfx.heartLoss,
+              const Duration(milliseconds: 180),
+            );
+          }
           if (next.showHeartsIntro) _showHeartsIntro();
         }
       }
       if (next.stage == LessonStage.completed &&
           previous?.stage != LessonStage.completed) {
+        _sound.effect(LessonSfx.lessonComplete);
         context.replace('/results/${next.receipt!.id}');
       }
     });
@@ -177,6 +236,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         text: state.text,
         selection: TextSelection.collapsed(offset: state.text.length),
       );
+      _slowNext = false;
+      if (editorIdentity != null) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _autoplay(editorIdentity),
+        );
+      }
     }
     final feedback = state.stage == LessonStage.feedback;
     return PopScope(
@@ -214,11 +279,19 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                             shineColor: state.correctStreak >= 5
                                 ? LessonMotionTokens.orangeShine
                                 : LessonMotionTokens.greenShine,
+                            comboPulse: state.correctStreak >= 5
+                                ? state.correctStreak
+                                : null,
                           ),
                         ),
                         const SizedBox(width: 16),
                         LessonHeartCounter(
                           hearts: state.hearts,
+                          ghost: const ReferenceArt(
+                            LearningArt.heart,
+                            width: 26,
+                            height: 24,
+                          ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -284,12 +357,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                         padding: const EdgeInsets.only(
                                           bottom: 12,
                                         ),
-                                        child: Text(
-                                          '${state.correctStreak} IN A ROW',
-                                          style: const TextStyle(
-                                            color: LearningColors.orange,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
+                                        child: LessonPop(
+                                          trigger: state.correctStreak,
+                                          child: Text(
+                                            '${state.correctStreak} IN A ROW',
+                                            style: const TextStyle(
+                                              color: LearningColors.orange,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -502,7 +578,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           children: [
             Row(
               children: [
-                _audio(exercise.prompt),
+                _audio(exercise),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -548,7 +624,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                           ? state.correct
                           : null,
                       onTap: editable
-                          ? () => controller.select(option.id)
+                          ? () {
+                              _speakWord(exercise, option.text);
+                              controller.select(option.id);
+                            }
                           : null,
                       padding: const EdgeInsets.fromLTRB(12, 17, 12, 13),
                       child: Column(
@@ -596,7 +675,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                   correct: state.stage == LessonStage.feedback
                       ? state.correct
                       : null,
-                  onTap: editable ? () => controller.select(option.id) : null,
+                  onTap: editable
+                      ? () {
+                          if (exercise.kind == ExerciseKind.choice) {
+                            _speakWord(exercise, option.text);
+                          }
+                          controller.select(option.id);
+                        }
+                      : null,
                   child: Center(
                     child: Text(
                       option.text,
@@ -657,7 +743,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                         opacity: state.tokenIds.contains(token.id) ? .2 : 1,
                         child: _token(
                           token,
-                          () => controller.toggleToken(token.id),
+                          () {
+                            _speakWord(exercise, token.text);
+                            controller.toggleToken(token.id);
+                          },
                           editable && !state.tokenIds.contains(token.id),
                           false,
                         ),
@@ -675,7 +764,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           matched: state.matchedPairs,
           selectedLeft: state.selectedPairLeft,
           editable: editable,
-          onLeft: controller.selectPairLeft,
+          onLeft: (key) {
+            _speakWord(exercise, exercise.pairLabel(key));
+            controller.selectPairLeft(key);
+          },
           onRight: controller.selectPairRight,
         );
       case ExerciseKind.speakRepeat:
@@ -703,11 +795,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           availableHeight: availableHeight,
           onChanged: controller.updateText,
           onListen: editable
-              ? () => showLearningNotice(
-                  context,
-                  'Audio unavailable',
-                  'Read Lily’s message and reply in English. You can use “CAN\'T SPEAK NOW” to type your answer.',
-                )
+              ? exercise.audio != null
+                    ? () => _replay(exercise)
+                    : () => showLearningNotice(
+                        context,
+                        'Audio unavailable',
+                        'Read Lily’s message and reply in English. You can use “CAN\'T SPEAK NOW” to type your answer.',
+                      )
               : null,
         );
       case ExerciseKind.textTranslation:
@@ -756,7 +850,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     }
   }
 
-  Widget _audio(String prompt) => SizedBox(
+  Widget _audio(Exercise exercise) => SizedBox(
     width: 42,
     height: 42,
     child: IconButton.filled(
@@ -765,11 +859,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         backgroundColor: LearningColors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
       ),
-      onPressed: () => showLearningNotice(
-        context,
-        'Listening alternative',
-        'Audio is unavailable. Read the prompt: $prompt',
-      ),
+      onPressed: exercise.audio != null
+          ? () => _replay(exercise)
+          : () => showLearningNotice(
+              context,
+              'Listening alternative',
+              'Audio is unavailable. Read the prompt: ${exercise.prompt}',
+            ),
       icon: const Icon(Icons.volume_up_rounded, color: Colors.white, size: 28),
     ),
   );
@@ -778,7 +874,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       if (audio) ...[
-        _audio(exercise.prompt),
+        _audio(exercise),
         const SizedBox(width: 14),
       ] else ...[
         CharacterMotion(
@@ -909,10 +1005,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         children: [
           Row(
             children: [
-              Icon(
-                correct ? Icons.check_circle_rounded : Icons.cancel_rounded,
-                color: color,
-                size: 27,
+              LessonPop(
+                trigger: '${exercise.id}:${state.retryPass}',
+                child: Icon(
+                  correct ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                  color: color,
+                  size: 27,
+                ),
               ),
               const SizedBox(width: 10),
               Expanded(

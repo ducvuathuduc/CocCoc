@@ -54,6 +54,35 @@ class LessonImage {
   String toString() => 'LessonImage($fileId)';
 }
 
+/// A lesson audio clip: `fileId` (`a.<unitId>.s<N>.n|s`, `a.w.<slug>.n`,
+/// EXERCISE_FORMATS section 5) and the bundle's `sha256` of its bytes (null for
+/// mock content, which only plays clips shipped with the app).
+class LessonAudio {
+  const LessonAudio(this.fileId, [this.sha256]);
+
+  final String fileId;
+  final String? sha256;
+
+  @override
+  bool operator ==(Object other) =>
+      other is LessonAudio && other.fileId == fileId && other.sha256 == sha256;
+
+  @override
+  int get hashCode => Object.hash(fileId, sha256);
+
+  @override
+  String toString() => 'LessonAudio($fileId)';
+}
+
+/// Word-audio key of a tile/option text (`a.w.<slug>.n`): lower case,
+/// typographic apostrophes folded, every other run of non `[a-z0-9]`
+/// characters becomes `_` (tools/content/build-course.mjs `wordSlug`).
+String wordAudioSlug(String text) => text
+    .toLowerCase()
+    .replaceAll(RegExp('[\u2018\u2019]'), "'")
+    .replaceAll(RegExp('[^a-z0-9]+'), '_')
+    .replaceAll(RegExp(r'^_+|_+$'), '');
+
 class Exercise {
   const Exercise({
     required this.id,
@@ -69,6 +98,9 @@ class Exercise {
     this.meaning,
     this.audioPairs = false,
     this.pairLabels = const <String, String>{},
+    this.audio,
+    this.slowAudio,
+    this.wordAudio = const <String, LessonAudio>{},
   });
 
   final String id;
@@ -89,6 +121,16 @@ class Exercise {
   /// Display text for [pairs] keys/values when they are wire ids (API mode).
   /// Empty when the pairs are keyed by their text (mock fixtures).
   final Map<String, String> pairLabels;
+
+  /// Prompt audio at normal speed (listen, dictation, speak, dialogue and
+  /// new-word items); played automatically when the exercise appears.
+  final LessonAudio? audio;
+
+  /// The same prompt at 0.75x for the slow ("turtle") replay.
+  final LessonAudio? slowAudio;
+
+  /// Tap-to-hear clips for English tiles/options, keyed by [wordAudioSlug].
+  final Map<String, LessonAudio> wordAudio;
 
   /// Text shown for a pair side ([id] itself when it is already text).
   String pairLabel(String id) => pairLabels[id] ?? id;
@@ -119,6 +161,9 @@ class Exercise {
       meaning: meaning ?? this.meaning,
       audioPairs: audioPairs,
       pairLabels: pairLabels,
+      audio: audio,
+      slowAudio: slowAudio,
+      wordAudio: wordAudio,
     );
   }
 }

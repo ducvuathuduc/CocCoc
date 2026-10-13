@@ -144,6 +144,7 @@ const mockEnglishExercises = <Exercise>[
     kind: ExerciseKind.imageChoice,
     title: 'Select the correct image',
     prompt: 'the woman',
+    audio: LessonAudio('a.w.the_woman.n'),
     choices: [
       ExerciseChoice(id: 'boy', text: 'the boy', art: 'boy'),
       ExerciseChoice(id: 'girl', text: 'the girl', art: 'girl'),
@@ -199,6 +200,8 @@ const mockEnglishExercises = <Exercise>[
     kind: ExerciseKind.listenChoice,
     title: 'Listen and choose',
     prompt: 'Audio: a girl',
+    audio: LessonAudio('m.a_girl.n'),
+    slowAudio: LessonAudio('m.a_girl.s'),
     choices: [
       ExerciseChoice(id: 'girl', text: 'A girl', art: 'girl'),
       ExerciseChoice(id: 'woman', text: 'A woman', art: 'woman'),
@@ -232,6 +235,8 @@ const mockEnglishExercises = <Exercise>[
     kind: ExerciseKind.dialogueTurn,
     title: 'Respond to Lily',
     prompt: 'Hello!',
+    audio: LessonAudio('m.hello.n'),
+    slowAudio: LessonAudio('m.hello.s'),
     correctText: 'Hello',
     meaning: 'Xin chào!',
   ),
@@ -250,6 +255,8 @@ const mockPracticeExercises = <Exercise>[
     kind: ExerciseKind.dictation,
     title: 'Write what you hear',
     prompt: 'Audio: I am here.',
+    audio: LessonAudio('m.i_am_here.n'),
+    slowAudio: LessonAudio('m.i_am_here.s'),
     correctText: 'I am here.',
   ),
   Exercise(
@@ -257,6 +264,8 @@ const mockPracticeExercises = <Exercise>[
     kind: ExerciseKind.speakRepeat,
     title: 'Speak this sentence',
     prompt: 'Hello, I am Sam.',
+    audio: LessonAudio('m.hello_i_am_sam.n'),
+    slowAudio: LessonAudio('m.hello_i_am_sam.s'),
     correctText: 'Hello, I am Sam.',
     meaning: 'Xin chào, tôi là Sam.',
   ),

@@ -1,0 +1,210 @@
+{
+ "courseId": "vi_en",
+ "format": "audio/aac",
+ "files": {
+  "a.w.a.n": {
+   "text": "a",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "c7a3375bfe0e499d3a486096eb060802756689cc6c01bd9c06c40494f3623385",
+   "bytes": 3288,
+   "durationMs": 550
+  },
+  "a.w.am.n": {
+   "text": "am",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "a4c352e7c882bdae0cdb22ea83048958b1f938b78d29b7bfa439f992cfd6d52c",
+   "bytes": 4166,
+   "durationMs": 680
+  },
+  "a.w.and.n": {
+   "text": "and",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "19d5902593a52d8239b0aaf38b0c3ca27327b2c3ad64898b6446961063f133e8",
+   "bytes": 4404,
+   "durationMs": 680
+  },
+  "a.w.bear.n": {
+   "text": "bear",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "65322ba26b23cf606431caf6d8989618a63ab84bb1675dde7868cfa9f0d24596",
+   "bytes": 3882,
+   "durationMs": 590
+  },
+  "a.w.boy.n": {
+   "text": "boy",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "66d40e30e9b29c291ccc24f177c57f1fa5f9d25bc5375390b81918e071ebe672",
+   "bytes": 4146,
+   "durationMs": 680
+  },
+  "a.w.cat.n": {
+   "text": "cat",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "68031cbbc475eba2af9faf5a724914daa56a6b7e67b99f2f54d475aeb97c05ed",
+   "bytes": 3653,
+   "durationMs": 550
+  },
+  "a.w.girl.n": {
+   "text": "girl",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "43747b4fdfbc9278c4e399967419005835c95338086670d4ccb992ea10cf74a4",
+   "bytes": 4096,
+   "durationMs": 640
+  },
+  "a.w.here.n": {
+   "text": "here",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "af8e642a9f708af459729570d154eed5481f7f8b35950ef7d2ded9c079bd0e00",
+   "bytes": 3900,
+   "durationMs": 590
+  },
+  "a.w.i.n": {
+   "text": "I",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "39f9dcee15c39c097ac55b1d7c2a166b2e1721e2ce6f9b91a1caa108cc5ca5fc",
+   "bytes": 3377,
+   "durationMs": 510
+  },
+  "a.w.is.n": {
+   "text": "is",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "e76610a35b7e6c7206f2c8e0270508766e6fcc48814251d4f7e6c180204db107",
+   "bytes": 4031,
+   "durationMs": 640
+  },
+  "a.w.man.n": {
+   "text": "man",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "da855b047b57647771789b3bef53955288f192f7fba25777c6f35347096f095f",
+   "bytes": 4424,
+   "durationMs": 680
+  },
+  "a.w.the.n": {
+   "text": "the",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "51d36ee47ddcbd0a95fea49c4ab5143ff042c1be4297ea7926491d934195a01b",
+   "bytes": 3305,
+   "durationMs": 510
+  },
+  "a.w.the_woman.n": {
+   "text": "the woman",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "34ad61f9616e83c98bd4bd2eacbd80a8545f5e79a5cf54552d2998f94a1d37c2",
+   "bytes": 5182,
+   "durationMs": 810
+  },
+  "a.w.woman.n": {
+   "text": "woman",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "ee4e6f2336e2ee3d1316cb132b50501566b07ee3cb3ff9be3b89c7b9a48c722a",
+   "bytes": 4585,
+   "durationMs": 720
+  },
+  "m.a_girl.n": {
+   "text": "a girl",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "c8dda77b759af12fe87fe233b5b59a8af5b9d23c4b396d1d70fdf6948d7d3dc1",
+   "bytes": 5447,
+   "durationMs": 850
+  },
+  "m.a_girl.s": {
+   "text": "a girl",
+   "voice": "en-US-AvaNeural",
+   "speed": 0.75,
+   "provider": "azure-tts",
+   "sha256": "494d735507e79e88f48bbf00c86649457f5aad780dbb4174d6e56228a2d155c5",
+   "bytes": 6519,
+   "durationMs": 1020
+  },
+  "m.hello.n": {
+   "text": "Hello!",
+   "voice": "en-US-EmmaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "e3db326af76b23ae1b87380a0510cf4b0970b737253cfdadb64070e98039770d",
+   "bytes": 4441,
+   "durationMs": 680
+  },
+  "m.hello.s": {
+   "text": "Hello!",
+   "voice": "en-US-EmmaNeural",
+   "speed": 0.75,
+   "provider": "azure-tts",
+   "sha256": "b35d284b323d57473ff3485d5a24fc4477bda3436806ddb3161c84345ecbf151",
+   "bytes": 5234,
+   "durationMs": 850
+  },
+  "m.hello_i_am_sam.n": {
+   "text": "Hello, I am Sam.",
+   "voice": "en-US-AvaNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "12aaf752915f7d79148453138c3dba8fca538a65c4f0deab170eb56a4fbf4750",
+   "bytes": 8800,
+   "durationMs": 1450
+  },
+  "m.hello_i_am_sam.s": {
+   "text": "Hello, I am Sam.",
+   "voice": "en-US-AvaNeural",
+   "speed": 0.75,
+   "provider": "azure-tts",
+   "sha256": "f80495ac3055492bf20d20b20714da77a1ddb5ee6943e217e315f533627fdc0b",
+   "bytes": 11490,
+   "durationMs": 1830
+  },
+  "m.i_am_here.n": {
+   "text": "I am here.",
+   "voice": "en-US-AndrewNeural",
+   "speed": 1,
+   "provider": "azure-tts",
+   "sha256": "ad6ad3f2cfa887e53cad043736217c318453b83b2e7cace91000b6f8faa18240",
+   "bytes": 4891,
+   "durationMs": 760
+  },
+  "m.i_am_here.s": {
+   "text": "I am here.",
+   "voice": "en-US-AndrewNeural",
+   "speed": 0.75,
+   "provider": "azure-tts",
+   "sha256": "19586d111464781f65287ddbe5e916d199e31b6dfd02e4b8b097bbdd31442d89",
+   "bytes": 5836,
+   "durationMs": 930
+  }
+ },
+ "voices": {
+  "narrator": "en-US-AvaNeural",
+  "male": "en-US-AndrewNeural",
+  "partner": "en-US-EmmaNeural"
+ },
+ "slowRate": "-25%"
+}

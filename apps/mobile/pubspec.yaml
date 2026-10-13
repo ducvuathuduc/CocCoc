@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   appwrite: 27.0.0
+  audioplayers: 6.5.1
   crypto: 3.0.7
   cupertino_icons: 1.0.9
   flutter:
@@ -70,6 +71,9 @@ flutter:
     - assets/reference_art/unit-skip-result.png
     - assets/reference_art/lesson-lily-source.png
     - assets/lesson_images/
+    # Lesson audio for the mock course + original lesson SFX (assets/PROVENANCE.md).
+    - assets/lesson_audio/
+    - assets/sfx/
     - assets/motion/
     - assets/avatar/
   fonts:
