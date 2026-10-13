@@ -5,8 +5,10 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../../progress/application/preview_controller.dart';
 import '../application/quests_controller.dart';
 import '../domain/quest_models.dart';
+import 'chest_opening.dart';
 import 'quest_art.dart';
 
 class QuestsScreen extends ConsumerWidget {
@@ -301,7 +303,19 @@ class QuestsScreen extends ConsumerWidget {
                 for (final quest in questState.dailyQuests)
                   _DailyQuestTile(
                     quest: quest,
-                    onClaim: () => controller.claimQuest(quest.id),
+                    onClaim: () {
+                      // Row 17: open the chest when the claim credited gems.
+                      final before = ref.read(previewWalletProvider);
+                      if (!controller.claimQuest(quest.id)) return;
+                      final gems = ref.read(previewWalletProvider) - before;
+                      if (gems > 0) {
+                        showChestOpening(
+                          context,
+                          type: quest.chestType,
+                          gems: gems,
+                        );
+                      }
+                    },
                   ),
               ],
             ),
