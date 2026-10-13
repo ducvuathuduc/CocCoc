@@ -18,6 +18,7 @@ import {
   SERVICES,
   activeSchedule,
   diffAuthMethods,
+  diffOAuthProviders,
   diffFunction,
   diffPlatforms,
   diffPolicies,
@@ -117,6 +118,7 @@ if (mode === 'plan') {
           secrets: ops.functions[f.$id].secrets,
         })),
         auth: ops.auth.methods,
+        oauth2: ops.auth.oauth2 ?? {},
         policies: Object.keys(ops.auth.policies),
         platforms: ops.platforms.map((p) => `${p.type}:${p.applicationId ?? p.bundleIdentifier}`),
         schedules: ops.schedules.map((s) => ({
@@ -376,7 +378,12 @@ async function checkLive() {
     ops.auth.policies,
     (await api('GET', '/project/policies')).policies ?? [],
   );
-  if (report.auth.methods.length || report.auth.policies.length) ok = false;
+  report.auth.oauth2 = diffOAuthProviders(
+    ops.auth.oauth2,
+    (await api('GET', '/project/oauth2')).providers ?? [],
+  );
+  if (report.auth.methods.length || report.auth.policies.length || report.auth.oauth2.length)
+    ok = false;
   report.platforms = diffPlatforms(
     ops.platforms,
     (await api('GET', '/project/platforms')).platforms ?? [],

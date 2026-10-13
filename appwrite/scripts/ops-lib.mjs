@@ -171,6 +171,12 @@ export function validateOps(config, ops, context = {}) {
   if (auth.methods?.jwt !== true) fail('auth: jwt must be enabled (services verify user JWTs)');
   if (auth.methods?.anonymous !== false)
     fail('auth: anonymous must be off (guest is a local demo)');
+  for (const [id, p] of Object.entries(auth.oauth2 ?? {})) {
+    if (typeof p?.enabled !== 'boolean') fail(`auth.oauth2.${id}: enabled must be boolean`);
+    for (const k of Object.keys(p ?? {}))
+      if (/secret|key|p8/i.test(k))
+        fail(`auth.oauth2.${id}.${k}: never declare provider secrets in git`);
+  }
   if (!(auth.policies?.['password-strength']?.min >= 12))
     fail('auth: password-strength.min must be >= 12 (FR-AUTH-001)');
   for (const platform of ops.platforms ?? []) {
@@ -283,6 +289,27 @@ export function diffAuthMethods(declared, liveMethods) {
   return Object.entries(declared)
     .filter(([id, enabled]) => byId.get(id) !== enabled)
     .map(([id, enabled]) => ({ method: id, declared: enabled, live: byId.get(id) }));
+}
+
+// OAuth2 providers: only the public half (enabled + clientId) is declared; secrets stay in Appwrite.
+export function diffOAuthProviders(declared = {}, liveProviders = []) {
+  const byId = new Map(liveProviders.map((p) => [p.$id, p]));
+  const drift = [];
+  for (const [id, want] of Object.entries(declared)) {
+    const live = byId.get(id);
+    if (!live) {
+      drift.push({ provider: id, missing: true });
+      continue;
+    }
+    if (live.enabled !== want.enabled)
+      drift.push({ provider: id, field: 'enabled', declared: want.enabled, live: live.enabled });
+    if (want.clientId !== undefined && live.clientId !== want.clientId)
+      drift.push({ provider: id, field: 'clientId', declared: want.clientId, live: live.clientId });
+  }
+  for (const live of liveProviders)
+    if (live.enabled && !(live.$id in declared))
+      drift.push({ provider: live.$id, field: 'enabled', declared: undefined, live: true });
+  return drift;
 }
 
 export function diffPlatforms(declared, livePlatforms) {

@@ -3,16 +3,22 @@
   "projectId": "6acc656d0025cc57bd81",
   "projectEnv": "test",
   "auth": {
-    "$comment": "SRS FR-AUTH-001..005 + docs/api/AUTH.md. Email/password is the baseline; JWT must stay on (every service verifies Account.get with the user JWT). Guest is a bundled local demo (FR-ONB-002, AUTH.md), so anonymous sessions stay off. Magic URL, email OTP and phone are not in the SRS and the test project has no SMTP/SMS provider. Team invites stay on for the maintainer content-publish team. OAuth providers (FR-AUTH-003) are configured only with real provider credentials (none yet).",
+    "$comment": "SRS FR-AUTH-001..005 + docs/api/AUTH.md. Email/password is the baseline; JWT must stay on (every service verifies Account.get with the user JWT). Guest is a bundled local demo (FR-ONB-002, AUTH.md), so anonymous sessions stay off. Email OTP is on (passwordless 'sign in with email code', Appwrite Cloud default mailer); magic URL and phone stay off (phone needs a paid SMS provider). Team invites stay on for the maintainer content-publish team. OAuth providers (FR-AUTH-003): Google is enabled on TEST with a Web client from GCP project coccoc-english; only the public clientId is declared here, the client secret lives in Appwrite (and the vault), never in git. check-live compares enabled + clientId; apply never writes OAuth providers.",
     "methods": {
       "email-password": true,
       "jwt": true,
       "anonymous": false,
       "magic-url": false,
-      "email-otp": false,
+      "email-otp": true,
       "phone": false,
       "invites": true,
       "passkey": false
+    },
+    "oauth2": {
+      "google": {
+        "enabled": true,
+        "clientId": "972045293285-ffrbdbfg6s0rk3rfueonivndmqmmdcl4.apps.googleusercontent.com"
+      }
     },
     "policies": {
       "password-strength": {

@@ -8,6 +8,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
   KEYRING_SENDERS,
   SERVICES,
+  diffOAuthProviders,
   diffVariables,
   generateKeyrings,
   isCron,
@@ -59,6 +60,7 @@ test('validation rejects unsafe or drifting declarations', () => {
       (c) => (c.ops.functions['coc-ai'].variables.COC_GEMINI_ENABLED = 'true'),
       /Gemini must stay disabled/,
     ],
+    [(c) => (c.ops.auth.oauth2.google.clientSecret = 'x'), /never declare provider secrets/],
     [(c) => (c.ops.functions['coc-learning'].variables.COC_X = 'a'.repeat(64)), /key material/],
     [(c) => (c.ops.schedules[0].status = 'pending-service-worker'), /schedule must equal/],
     [(c) => (c.config.functions[0].schedule = '*/5 * * * *'), /schedule must equal/],
@@ -158,4 +160,20 @@ test('runtime adapter tolerates Appwrite lazy getters and passes a plain request
   assert.equal(seen.bodyText, '');
   assert.equal(seen.headers['x-request-id'], 'r1');
   assert.ok(!('bodyJson' in seen));
+});
+
+test('oauth2 diff compares only enabled + public clientId', () => {
+  const declared = { google: { enabled: true, clientId: 'cid.apps.googleusercontent.com' } };
+  const live = [
+    { $id: 'google', enabled: true, clientId: 'cid.apps.googleusercontent.com', clientSecret: '' },
+    { $id: 'apple', enabled: false, clientId: '' },
+  ];
+  assert.deepEqual(diffOAuthProviders(declared, live), []);
+  assert.deepEqual(diffOAuthProviders(declared, [{ ...live[0], enabled: false }]), [
+    { provider: 'google', field: 'enabled', declared: true, live: false },
+  ]);
+  const extra = diffOAuthProviders(declared, [...live, { $id: 'github', enabled: true }]);
+  assert.equal(extra.length, 1);
+  assert.equal(extra[0].provider, 'github');
+  assert.ok(!JSON.stringify(diffOAuthProviders(declared, live)).includes('Secret'));
 });
