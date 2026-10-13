@@ -197,3 +197,16 @@ class QuestsTabState {
     feedbackMessage: feedbackMessage ?? this.feedbackMessage,
   );
 }
+
+/// Copy for the daily-quest chest opening (audit row 17).
+class ChestRewardCopy {
+  const ChestRewardCopy({
+    this.amountPrefix = '+',
+    this.earnedPrefix = 'You earned ',
+    this.earnedSuffix = ' gems!',
+    this.continueAction = 'CONTINUE',
+  });
+  final String amountPrefix, earnedPrefix, earnedSuffix, continueAction;
+  String amount(int gems) => '$amountPrefix$gems';
+  String earned(int gems) => '$earnedPrefix$gems$earnedSuffix';
+}

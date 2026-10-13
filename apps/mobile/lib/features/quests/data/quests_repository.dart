@@ -8,8 +8,11 @@ abstract interface class QuestsRepository {
   });
 }
 
-class MockQuestsRepository implements QuestsRepository {
+class MockQuestsRepository implements QuestsRepository, QuestCopySource {
   const MockQuestsRepository();
+
+  @override
+  ChestRewardCopy get chestCopy => const ChestRewardCopy();
 
   @override
   QuestsTabState loadQuests({
@@ -30,4 +33,10 @@ class MockQuestsRepository implements QuestsRepository {
 /// The local preview ledger keeps the optimistic UI either way.
 abstract interface class QuestCommands {
   Future<bool> claim(String questId);
+}
+
+/// Optional copy source; repositories without it fall back to the default
+/// [ChestRewardCopy].
+abstract interface class QuestCopySource {
+  ChestRewardCopy get chestCopy;
 }

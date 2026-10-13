@@ -20,7 +20,10 @@ Future<void> showHeartsDropdown(BuildContext context, {Rect? anchor}) {
   return showGeneralDialog<void>(
     context: context,
     barrierDismissible: true,
-    barrierLabel: 'Close hearts',
+    barrierLabel: ProviderScope.containerOf(
+      context,
+      listen: false,
+    ).read(heartsContentProvider).closeHeartsLabel,
     barrierColor: Colors.transparent,
     transitionDuration: reduced ? Duration.zero : HeartsDropdownMotion.duration,
     pageBuilder: (dialogContext, _, _) => HeartsDropdown(top: top),
@@ -173,8 +176,10 @@ class _HeartsDropdownState extends ConsumerState<HeartsDropdown> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Semantics(
-                            label:
-                                '${state.balance} of ${state.capacity} hearts',
+                            label: content.heartsCount(
+                              state.balance,
+                              state.capacity,
+                            ),
                             child: ExcludeSemantics(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -330,7 +335,7 @@ class _HeartsDropdownState extends ConsumerState<HeartsDropdown> {
               onTap: () => Navigator.pop(context),
               child: Semantics(
                 button: true,
-                label: 'Close hearts',
+                label: content.closeHeartsLabel,
                 child: const SizedBox.expand(),
               ),
             ),

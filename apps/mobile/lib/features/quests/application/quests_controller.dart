@@ -19,6 +19,13 @@ final questsRepositoryProvider = Provider<QuestsRepository>((ref) {
   );
 });
 
+final chestRewardCopyProvider = Provider<ChestRewardCopy>((ref) {
+  return switch (ref.watch(questsRepositoryProvider)) {
+    QuestCopySource(:final chestCopy) => chestCopy,
+    _ => const ChestRewardCopy(),
+  };
+});
+
 final questsControllerProvider =
     NotifierProvider<QuestsController, QuestsTabState>(QuestsController.new);
 

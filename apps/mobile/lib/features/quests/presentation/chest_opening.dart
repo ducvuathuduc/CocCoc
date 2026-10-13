@@ -20,6 +20,7 @@ Future<void> showChestOpening(
   BuildContext context, {
   required QuestChestType type,
   required int gems,
+  ChestRewardCopy copy = const ChestRewardCopy(),
 }) {
   final reduced = MediaQuery.disableAnimationsOf(context);
   return showGeneralDialog<void>(
@@ -29,7 +30,7 @@ Future<void> showChestOpening(
     transitionDuration: reduced
         ? Duration.zero
         : const Duration(milliseconds: 200),
-    pageBuilder: (_, _, _) => ChestOpening(type: type, gems: gems),
+    pageBuilder: (_, _, _) => ChestOpening(type: type, gems: gems, copy: copy),
     transitionBuilder: (_, animation, _, child) =>
         FadeTransition(opacity: animation, child: child),
   );
@@ -46,9 +47,15 @@ abstract final class ChestOpeningMotion {
 }
 
 class ChestOpening extends StatefulWidget {
-  const ChestOpening({required this.type, required this.gems, super.key});
+  const ChestOpening({
+    required this.type,
+    required this.gems,
+    this.copy = const ChestRewardCopy(),
+    super.key,
+  });
   final QuestChestType type;
   final int gems;
+  final ChestRewardCopy copy;
   @override
   State<ChestOpening> createState() => _ChestOpeningState();
 }
@@ -208,7 +215,7 @@ class _ChestOpeningState extends State<ChestOpening>
                   child: Column(
                     children: [
                       Text(
-                        '+${widget.gems}',
+                        widget.copy.amount(widget.gems),
                         key: const ValueKey('chest-gems'),
                         style: headingStyle.copyWith(
                           color: LearningColors.blue,
@@ -219,7 +226,7 @@ class _ChestOpeningState extends State<ChestOpening>
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: Text(
-                          'You earned ${widget.gems} gems!',
+                          widget.copy.earned(widget.gems),
                           textAlign: TextAlign.center,
                           style: headingStyle.copyWith(fontSize: 22),
                         ),
@@ -234,7 +241,7 @@ class _ChestOpeningState extends State<ChestOpening>
                     child: Opacity(
                       opacity: copy,
                       child: ReferenceButton(
-                        label: 'CONTINUE',
+                        label: widget.copy.continueAction,
                         backgroundColor: LearningColors.blue,
                         edgeColor: LearningColors.blueDark,
                         onPressed: () => Navigator.pop(context),
@@ -274,20 +281,14 @@ class _SplitChest extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          ClipRect(
-            clipper: const _Band(split, 1),
-            child: image,
-          ),
+          ClipRect(clipper: const _Band(split, 1), child: image),
           Transform.translate(
             offset: Offset(18 * lid, -70 * lid),
             child: Transform.rotate(
               angle: .5 * lid,
               child: Opacity(
                 opacity: 1 - lid * .5,
-                child: ClipRect(
-                  clipper: const _Band(0, split),
-                  child: image,
-                ),
+                child: ClipRect(clipper: const _Band(0, split), child: image),
               ),
             ),
           ),

@@ -313,6 +313,7 @@ class QuestsScreen extends ConsumerWidget {
                           context,
                           type: quest.chestType,
                           gems: gems,
+                          copy: ref.read(chestRewardCopyProvider),
                         );
                       }
                     },

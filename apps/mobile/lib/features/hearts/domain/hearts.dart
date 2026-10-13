@@ -28,6 +28,9 @@ class HeartsContent {
     this.practiceError = 'Practice unavailable. Try again.',
     this.unlimitedHeartsAction = 'UNLIMITED HEARTS',
     this.fullHeartsLabel = 'You have full hearts',
+    this.closeHeartsLabel = 'Close hearts',
+    this.heartsCountJoin = ' of ',
+    this.heartsCountSuffix = ' hearts',
     this.homeTrialHearts = 76,
     this.lessonTrialHearts = 88,
     this.homeRefillCost = 500,
@@ -53,7 +56,12 @@ class HeartsContent {
       continueAction,
       practiceError,
       unlimitedHeartsAction,
-      fullHeartsLabel;
+      fullHeartsLabel,
+      closeHeartsLabel,
+      heartsCountJoin,
+      heartsCountSuffix;
+  String heartsCount(int balance, int capacity) =>
+      '$balance$heartsCountJoin$capacity$heartsCountSuffix';
   final int homeRefillCost,
       lessonRefillCost,
       homeTrialHearts,

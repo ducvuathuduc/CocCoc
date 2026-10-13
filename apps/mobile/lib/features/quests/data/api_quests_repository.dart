@@ -11,7 +11,11 @@ import 'quests_repository.dart';
 /// Server-owned: daily quests (DAY), the monthly challenge (MONTH) and the
 /// friends quest (WEEK, `friend_*`). The weekend XP quest has no endpoint yet,
 /// so it renders as a zero-progress card rather than a fixture value.
-class ApiQuestsRepository implements QuestsRepository, QuestCommands {
+class ApiQuestsRepository
+    implements QuestsRepository, QuestCommands, QuestCopySource {
+  @override
+  ChestRewardCopy get chestCopy => const ChestRewardCopy();
+
   ApiQuestsRepository(this.api, {SnapshotHost? host, DateTime Function()? now})
     : _now = now ?? DateTime.now,
       cache = SnapshotCache<wire.QuestPage>(
