@@ -88,8 +88,20 @@ Future<void> _tapText(WidgetTester t, String text) async {
 /// already finished, exactly as a learner who reached the path.
 Future<void> _launchApp(PatrolIntegrationTester $) async {
   final repository = PreferencesOnboardingRepository(SharedPreferencesAsync());
+  // Must survive OnboardingState.fromJson validation (allowed language and
+  // every required answer), otherwise the app resumes at an earlier step.
   await repository.save(
-    OnboardingState(step: OnboardingStep.lessonEntry, language: 'English'),
+    OnboardingState(
+      step: OnboardingStep.lessonEntry,
+      language: 'Spanish',
+      knowledge: 0,
+      reasonIds: const {0},
+      goal: 10,
+      reminders: true,
+      widgetRequested: false,
+      plan: 0,
+      startPoint: 0,
+    ),
   );
   await $.tester.pumpWidget(AppBootstrap(repository: repository));
   expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
