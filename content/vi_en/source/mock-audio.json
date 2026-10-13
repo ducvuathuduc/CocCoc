@@ -1,0 +1,26 @@
+{
+ "courseId": "vi_en",
+ "versionId": "mock",
+ "locale": "en-US",
+ "speeds": { "n": 1, "s": 0.75 },
+ "items": [
+  { "key": "m.a_girl", "kind": "sentence", "text": "a girl" },
+  { "key": "m.i_am_here", "kind": "sentence", "text": "I am here." },
+  { "key": "m.hello_i_am_sam", "kind": "sentence", "text": "Hello, I am Sam." },
+  { "key": "m.hello", "kind": "dialogueLine", "text": "Hello!" },
+  { "key": "a.w.a", "kind": "word", "text": "a" },
+  { "key": "a.w.am", "kind": "word", "text": "am" },
+  { "key": "a.w.and", "kind": "word", "text": "and" },
+  { "key": "a.w.bear", "kind": "word", "text": "bear" },
+  { "key": "a.w.boy", "kind": "word", "text": "boy" },
+  { "key": "a.w.cat", "kind": "word", "text": "cat" },
+  { "key": "a.w.girl", "kind": "word", "text": "girl" },
+  { "key": "a.w.here", "kind": "word", "text": "here" },
+  { "key": "a.w.i", "kind": "word", "text": "I" },
+  { "key": "a.w.is", "kind": "word", "text": "is" },
+  { "key": "a.w.man", "kind": "word", "text": "man" },
+  { "key": "a.w.the", "kind": "word", "text": "the" },
+  { "key": "a.w.woman", "kind": "word", "text": "woman" },
+  { "key": "a.w.the_woman", "kind": "word", "text": "the woman" }
+ ]
+}

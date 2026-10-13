@@ -109,11 +109,36 @@ const TEXT_RULE = { caseSensitive: false, ignorePunctuation: true, ignoreDiacrit
 const KEY_RULE = { caseSensitive: false, ignorePunctuation: false, ignoreDiacritics: false };
 const wc = (s) => tokenize(s).length;
 
-function audioAssets(key, transcript, locale = 'en-US') {
+// Real lesson audio (tools/content/generate-audio.mjs): content/<course>/media/audio-manifest.json maps
+// each audio fileId to the committed AAC file's sha256/bytes/duration/voice. A clip without an entry
+// (or whose transcript changed) keeps a deterministic placeholder hash until audio is regenerated.
+const AUDIO_MANIFEST = path.join(root, `content/${course.courseId}/media/audio-manifest.json`);
+const audioMedia = fs.existsSync(AUDIO_MANIFEST)
+  ? JSON.parse(fs.readFileSync(AUDIO_MANIFEST, 'utf8')).files
+  : {};
+function audioAsset(fileId, transcript, speed, perWord, locale) {
+  const real = audioMedia[fileId];
+  if (real && real.text === transcript) {
+    return {
+      fileId,
+      sha256: real.sha256,
+      mime: 'audio/aac',
+      bytes: real.bytes,
+      durationMs: real.durationMs,
+      width: null,
+      height: null,
+      locale,
+      voice: real.voice,
+      speed,
+      provider: real.provider,
+      modelVersion: null,
+      altText: transcript.slice(0, 256),
+    };
+  }
   const n = wc(transcript);
-  const make = (suffix, speed, perWord) => ({
-    fileId: `${key}.${suffix}`,
-    sha256: tools.sha256(`placeholder-audio:${key}.${suffix}:${transcript}`),
+  return {
+    fileId,
+    sha256: tools.sha256(`placeholder-audio:${fileId}:${transcript}`),
     mime: 'audio/aac',
     bytes: 4000 + n * 3000,
     durationMs: 600 + n * perWord,
@@ -125,8 +150,55 @@ function audioAssets(key, transcript, locale = 'en-US') {
     provider: null,
     modelVersion: null,
     altText: transcript.slice(0, 256),
-  });
-  return [make('n', 1, 420), make('s', 0.75, 560)];
+  };
+}
+function audioAssets(key, transcript, locale = 'en-US') {
+  return [
+    audioAsset(`${key}.n`, transcript, 1, 420, locale),
+    audioAsset(`${key}.s`, transcript, 0.75, 560, locale),
+  ];
+}
+// Tap-to-hear word audio: every English tile word (wordBank/sentenceOrder with an English answer),
+// matchPairs left word and single-word English choice option gets `a.w.<slug>.n` in its bundle's
+// assets. The app derives the same slug from the tile text (wordAudioSlug in the mobile app).
+const VI_CHARS = /[À-ỹđĐ]/;
+export const wordSlug = (text) =>
+  text
+    .toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+const wordAudioTexts = new Map();
+function englishTileWords(exercise) {
+  const out = [];
+  const c = exercise.content ?? {};
+  if (exercise.type === 'wordBank' || exercise.type === 'sentenceOrder') {
+    const ids = new Set(exercise.gradingRule.correctTokenIds);
+    const answer = c.tokens.filter((t) => ids.has(t.id)).map((t) => t.text).join(' ');
+    if (!VI_CHARS.test(answer)) out.push(...c.tokens.map((t) => t.text));
+  } else if (exercise.type === 'matchPairs') {
+    out.push(...c.pairs.map((p) => p.left.text));
+  } else if (exercise.type === 'choice' || exercise.type === 'imageChoice') {
+    if (!c.choices.some((o) => VI_CHARS.test(o.text)))
+      out.push(...c.choices.filter((o) => !/\s/.test(o.text.trim())).map((o) => o.text));
+  }
+  for (const alt of [exercise.nonAudioAlternative, exercise.nonSpeechAlternative])
+    if (alt) out.push(...englishTileWords(alt));
+  return out;
+}
+function addWordAudio(draft) {
+  const assets = new Map(draft.assets.map((a) => [a.fileId, a]));
+  for (const ex of draft.exercises) {
+    for (const raw of englishTileWords(ex)) {
+      const slug = wordSlug(raw);
+      if (!slug) continue;
+      const text = raw.replace(/[’‘]/g, "'");
+      if (!wordAudioTexts.has(slug)) wordAudioTexts.set(slug, slug === 'i' ? 'I' : text);
+      const a = audioAsset(`a.w.${slug}.n`, wordAudioTexts.get(slug), 1, 420, 'en-US');
+      assets.set(a.fileId, a);
+    }
+  }
+  return { ...draft, assets: [...assets.values()].sort((a, b) => (a.fileId < b.fileId ? -1 : 1)) };
 }
 // Word illustrations (imageChoice art) live in content/<course>/media/images/<fileId>.webp
 // (drawn by tools/content/lesson_art/render.py, 512x512 WebP). A committed file contributes its real
@@ -1016,8 +1088,8 @@ export async function buildCourse() {
       },
     };
   };
-  const finished = drafts.map(finish);
-  const placement = finish(placementDraft);
+  const finished = drafts.map((d) => finish(addWordAudio(d)));
+  const placement = finish(addWordAudio(placementDraft));
   const unsignedManifest = {
     ...structure,
     bundles: finished.map((f) => f.index),
@@ -1045,7 +1117,11 @@ export async function buildCourse() {
     items: units.flatMap((u) => [
       ...u.sentences.map((s) => ({ key: s.audioKey, kind: 'sentence', text: s.en })),
       ...u.dialogues.map((d) => ({ key: d.audioKey, kind: 'dialogueLine', text: d.line })),
-    ]),
+    ]).concat(
+      [...wordAudioTexts.entries()]
+        .sort(([a], [b]) => (a < b ? -1 : 1))
+        .map(([slug, text]) => ({ key: `a.w.${slug}`, kind: 'word', text })),
+    ),
   };
   const typeCounts = {};
   for (const f of finished)
