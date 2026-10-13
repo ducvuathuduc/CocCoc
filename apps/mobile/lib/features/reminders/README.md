@@ -64,7 +64,7 @@ prompted); otherwise `inexactAllowWhileIdle`, and an exact failure retries inexa
 ## Widget
 
 Android: `StreakWidgetProvider.kt` + `res/layout/streak_widget.xml`. iOS: see
-[ios/StreakWidget/README.md](../../../../ios/StreakWidget/README.md) (Xcode target still to add).
+[ios/StreakWidget/README.md](../../../ios/StreakWidget/README.md) (Xcode target still to add).
 Updated after each lesson and on every sync (app start/resume).
 
 ## Next step: server push (not implemented)
