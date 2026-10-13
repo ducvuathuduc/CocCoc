@@ -30,13 +30,26 @@ abstract interface class AuthSessionRepository {
   Future<String?> accessToken();
 }
 
+/// Passwordless email sign-in (Appwrite Email OTP): a 6-digit code is emailed
+/// and exchanged for a session. Separate from [AuthRepository] so existing
+/// fakes stay valid; the UI offers the flow only when the active repository
+/// implements it.
+abstract interface class EmailCodeAuthRepository {
+  /// Emails a 6-digit code to [email]; returns the user id the code belongs to.
+  Future<String> sendEmailCode(String email);
+
+  /// Exchanges the emailed [code] for a session and returns the signed-in user.
+  Future<AuthUser> verifyEmailCode(String userId, String code);
+}
+
 class AuthFailure implements Exception {
   const AuthFailure(this.message);
 
   final String message;
 }
 
-class AppwriteAuthRepository implements AuthRepository, AuthSessionRepository {
+class AppwriteAuthRepository
+    implements AuthRepository, AuthSessionRepository, EmailCodeAuthRepository {
   AppwriteAuthRepository(this.service, [SharedPreferencesAsync? preferences])
     : _preferences = preferences;
 
@@ -93,6 +106,30 @@ class AppwriteAuthRepository implements AuthRepository, AuthSessionRepository {
   Future<AuthUser> socialSignIn(AuthProvider provider) async {
     try {
       final user = await service.socialSignIn(provider);
+      await _rememberBestEffort(user);
+      return user;
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<String> sendEmailCode(String email) async {
+    try {
+      return await service.sendEmailCode(email);
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<AuthUser> verifyEmailCode(String userId, String code) async {
+    try {
+      final user = await service.verifyEmailCode(userId, code);
       await _rememberBestEffort(user);
       return user;
     } on AppwriteAuthServiceException catch (error) {

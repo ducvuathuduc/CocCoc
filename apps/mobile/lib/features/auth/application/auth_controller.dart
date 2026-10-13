@@ -39,6 +39,17 @@ final authSessionRepositoryProvider = Provider<AuthSessionRepository?>((ref) {
       : null;
 });
 
+/// Passwordless email-code commands of the active repository; null when a
+/// fake does not implement them (the entry point is then hidden).
+final authEmailCodeRepositoryProvider = Provider<EmailCodeAuthRepository?>((
+  ref,
+) {
+  final repository = ref.watch(authRepositoryProvider);
+  return repository is EmailCodeAuthRepository
+      ? repository as EmailCodeAuthRepository
+      : null;
+});
+
 final authControllerProvider = NotifierProvider<AuthController, AuthState>(
   AuthController.new,
 );
@@ -48,6 +59,13 @@ class AuthController extends Notifier<AuthState> {
   bool _commandInFlight = false;
   bool _initializing = false;
   int _revision = 0;
+  DateTime? _lastCodeSentAt;
+
+  /// UI cooldown between code emails; Appwrite rate limits stay authoritative.
+  static const codeResendCooldown = Duration(seconds: 30);
+
+  @visibleForTesting
+  DateTime Function() clock = DateTime.now;
   AuthStage _busyReturnStage = AuthStage.details;
 
   @override
@@ -146,6 +164,116 @@ class AuthController extends Notifier<AuthState> {
     );
   }
 
+  void showEmailCode() {
+    if (state.busy) return;
+    _leavePendingCommand();
+    state = state.copyWith(
+      stage: AuthStage.emailCode,
+      busy: false,
+      code: '',
+      codeUserId: '',
+      codeResent: false,
+      clearError: true,
+    );
+  }
+
+  void updateCode(String value) {
+    if (state.busy) return;
+    final digits = value.replaceAll(RegExp(r'\D'), '');
+    state = state.copyWith(
+      code: digits.length > 6 ? digits.substring(0, 6) : digits,
+      clearError: true,
+    );
+  }
+
+  /// Emails a 6-digit code and moves to the code screen.
+  Future<void> sendEmailCode() => _sendCode(resend: false);
+
+  /// Sends a fresh code from the code screen (after a short UI cooldown).
+  Future<void> resendEmailCode() => _sendCode(resend: true);
+
+  Future<void> _sendCode({required bool resend}) async {
+    if (_commandInFlight) return;
+    final repository = ref.read(authEmailCodeRepositoryProvider);
+    if (repository == null) return;
+    if (!state.canRecover) {
+      state = state.copyWith(error: 'Enter a valid email address.');
+      return;
+    }
+    final last = _lastCodeSentAt;
+    if (resend &&
+        last != null &&
+        clock().difference(last) < codeResendCooldown) {
+      state = state.copyWith(
+        error: 'Please wait a moment before requesting another code.',
+      );
+      return;
+    }
+    final returnStage = resend
+        ? AuthStage.emailCodeVerify
+        : AuthStage.emailCode;
+    final revision = _beginCommand(returnStage);
+    try {
+      final userId = await repository.sendEmailCode(state.email.trim());
+      if (!_finishCommand(revision)) return;
+      _lastCodeSentAt = clock();
+      state = state.copyWith(
+        stage: AuthStage.emailCodeVerify,
+        codeUserId: userId,
+        code: '',
+        codeResent: resend,
+        busy: false,
+        clearError: true,
+      );
+    } on Object catch (error) {
+      if (!_finishCommand(revision)) return;
+      state = state.copyWith(
+        stage: returnStage,
+        busy: false,
+        error: _message(error),
+      );
+    }
+  }
+
+  /// Exchanges the typed code for a session.
+  Future<void> verifyEmailCode() async {
+    if (_commandInFlight) return;
+    final repository = ref.read(authEmailCodeRepositoryProvider);
+    if (repository == null) return;
+    if (!state.canVerifyCode) {
+      state = state.copyWith(error: 'Enter the 6-digit code from the email.');
+      return;
+    }
+    final revision = _beginCommand(AuthStage.emailCodeVerify, showBusy: true);
+    try {
+      final user = await repository.verifyEmailCode(
+        state.codeUserId,
+        state.code,
+      );
+      if (!_finishCommand(revision)) return;
+      state = state.copyWith(
+        stage: AuthStage.signedIn,
+        user: user,
+        remembered: user,
+        password: '',
+        code: '',
+        codeUserId: '',
+        codeResent: false,
+        busy: false,
+        clearError: true,
+      );
+    } on Object catch (error) {
+      if (!_finishCommand(revision)) return;
+      state = state.copyWith(
+        stage: AuthStage.emailCodeVerify,
+        code: '',
+        codeResent: false,
+        busy: false,
+        error: _message(error),
+      );
+    }
+  }
+
   bool back() {
     if (state.busy) return true;
     if (state.stage == AuthStage.choice) {
@@ -154,6 +282,8 @@ class AuthController extends Notifier<AuthState> {
     final destination = switch (state.stage) {
       AuthStage.details => AuthStage.choice,
       AuthStage.forgot || AuthStage.reset => AuthStage.details,
+      AuthStage.emailCode => AuthStage.details,
+      AuthStage.emailCodeVerify => AuthStage.emailCode,
       AuthStage.busy => _busyReturnStage,
       AuthStage.choice || AuthStage.signedIn => AuthStage.choice,
     };

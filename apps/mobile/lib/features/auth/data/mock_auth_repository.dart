@@ -1,7 +1,8 @@
 import '../domain/auth_state.dart';
 import 'auth_repository.dart';
 
-class MockAuthRepository implements AuthRepository, AuthSessionRepository {
+class MockAuthRepository
+    implements AuthRepository, AuthSessionRepository, EmailCodeAuthRepository {
   MockAuthRepository({this.delay = const Duration(milliseconds: 650)});
 
   static const demoUser = AuthUser(
@@ -15,11 +16,17 @@ class MockAuthRepository implements AuthRepository, AuthSessionRepository {
   static const _requestFailure =
       'We couldn’t complete that request. Please try again.';
 
+  /// The only code the mock accepts for passwordless email sign-in.
+  static const demoEmailCode = '123456';
+  static const _codeFailure =
+      'That code didn’t work. Check the latest email and try again.';
+
   final Duration delay;
   final Map<String, String> _passwords = {};
   AuthUser? _remembered;
   AuthUser? _session;
   String? _recoveryEmail;
+  final Map<String, String> _codeEmails = {};
   int _guestSequence = 0;
 
   @override
@@ -74,6 +81,32 @@ class MockAuthRepository implements AuthRepository, AuthSessionRepository {
     _remembered = demoUser;
     _session = demoUser;
     return demoUser;
+  }
+
+  @override
+  Future<String> sendEmailCode(String email) async {
+    await Future<void>.delayed(delay);
+    final normalizedEmail = email.trim();
+    if (!_validEmail(normalizedEmail)) {
+      throw const AuthFailure(_requestFailure);
+    }
+    final userId = 'demo-user-${normalizedEmail.hashCode.toUnsigned(32)}';
+    _codeEmails[userId] = normalizedEmail;
+    return userId;
+  }
+
+  @override
+  Future<AuthUser> verifyEmailCode(String userId, String code) async {
+    await Future<void>.delayed(delay);
+    final email = _codeEmails[userId];
+    if (email == null || code.trim() != demoEmailCode) {
+      throw const AuthFailure(_codeFailure);
+    }
+    _codeEmails.remove(userId);
+    final user = AuthUser(id: userId, email: email, name: demoUser.name);
+    _remembered = user;
+    _session = user;
+    return user;
   }
 
   /// Mock sessions do not survive a restart (in-memory only).

@@ -72,6 +72,8 @@ class AppwriteAuthService {
       'We couldn’t complete that request. Please try again.';
   static const signUpMessage =
       'We couldn’t create your account. Check your details and try again.';
+  static const codeMessage =
+      'That code didn’t work. Check the latest email and try again.';
   static const socialMessage =
       'That sign-in option isn’t available right now. Please try again.';
 
@@ -110,6 +112,44 @@ class AppwriteAuthService {
       return _toAuthUser(await account.get());
     } on Object {
       throw const AppwriteAuthServiceException(signInMessage);
+    }
+  }
+
+  /// Emails a 6-digit sign-in code (Appwrite Email OTP). New emails get an
+  /// account on first successful code; returns the token's user id.
+  Future<String> sendEmailCode(String email) async {
+    final account = _configuredAccount();
+    final value = email.trim();
+    if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value)) {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+    try {
+      final token = await account.createEmailToken(
+        userId: ID.unique(),
+        email: value,
+      );
+      return token.userId;
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  /// Exchanges the emailed code for a session (account.createSession).
+  Future<AuthUser> verifyEmailCode(String userId, String code) async {
+    final account = _configuredAccount();
+    final secret = code.trim();
+    if (userId.trim().isEmpty || !RegExp(r'^\d{6}$').hasMatch(secret)) {
+      throw const AppwriteAuthServiceException(codeMessage);
+    }
+    try {
+      await account.createSession(userId: userId, secret: secret);
+    } on Object {
+      throw const AppwriteAuthServiceException(codeMessage);
+    }
+    try {
+      return _toAuthUser(await account.get());
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
     }
   }
 

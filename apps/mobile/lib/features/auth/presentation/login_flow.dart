@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/design/duo_illustration.dart';
@@ -33,7 +34,7 @@ class LoginFlow extends ConsumerStatefulWidget {
 }
 
 class _LoginFlowState extends ConsumerState<LoginFlow> {
-  final _fields = List.generate(4, (_) => TextEditingController());
+  final _fields = List.generate(5, (_) => TextEditingController());
   int _errorTick = 0;
   String? _lastError;
   AuthController get c => ref.read(authControllerProvider.notifier);
@@ -77,8 +78,14 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
       if (s.error != null) _errorTick++;
       _lastError = s.error;
     }
-    final values = [s.email, s.password, s.newPassword, s.confirmPassword];
-    for (var i = 0; i < 4; i++) {
+    final values = [
+      s.email,
+      s.password,
+      s.newPassword,
+      s.confirmPassword,
+      s.code,
+    ];
+    for (var i = 0; i < values.length; i++) {
       if (_fields[i].text != values[i]) {
         _fields[i].value = TextEditingValue(
           text: values[i],
@@ -135,6 +142,8 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
                             AuthStage.forgot => _recovery(s),
                             AuthStage.reset => _reset(s),
                             AuthStage.signedIn => _signedIn(s),
+                            AuthStage.emailCode => _emailCode(s),
+                            AuthStage.emailCodeVerify => _emailCodeVerify(s),
                             AuthStage.busy => const SigningInView(),
                           },
                         ),
@@ -338,6 +347,20 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
             ),
           ),
         ),
+        if (ref.watch(authEmailCodeRepositoryProvider) != null)
+          TextButton(
+            key: const ValueKey('auth-email-code-entry'),
+            onPressed: c.showEmailCode,
+            child: const Text(
+              'SIGN IN WITH EMAIL CODE',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: authBlue,
+                letterSpacing: .8,
+              ),
+            ),
+          ),
         if (s.error != null) authError(s.error!),
       ],
     ),
@@ -431,6 +454,161 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
               }
             }
           : null,
+    ),
+  );
+  Widget _emailCode(AuthState s) => _split(
+    bottomInset: 0,
+    top: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        gap(6),
+        heading('Sign in with email code', align: TextAlign.left),
+        gap(14),
+        JoinedAuthPanel(
+          error: s.error != null,
+          children: [
+            _field(
+              0,
+              'Email',
+              c.updateEmail,
+              email: true,
+              autofill: const [AutofillHints.email],
+              submit: s.canRecover ? _sendCode : null,
+            ),
+          ],
+        ),
+        gap(8),
+        const Text(
+          'We’ll email you a 6-digit code to sign in. No password needed.',
+          key: ValueKey('auth-email-code-hint'),
+          style: TextStyle(
+            fontSize: 16.5,
+            color: ReferenceColors.muted,
+            height: 1.6,
+          ),
+        ),
+        if (s.error != null) authError(s.error!),
+      ],
+    ),
+    bottom: KeyedSubtree(
+      key: const ValueKey('auth-email-code-send'),
+      child: blueButton(
+        s.busy ? 'SENDING…' : 'SEND CODE',
+        s.canRecover && !s.busy ? _sendCode : null,
+      ),
+    ),
+  );
+  void _sendCode() {
+    FocusScope.of(context).unfocus();
+    c.sendEmailCode();
+  }
+
+  void _verifyCode() {
+    FocusScope.of(context).unfocus();
+    c.verifyEmailCode();
+  }
+
+  Widget _emailCodeVerify(AuthState s) => _split(
+    bottomInset: 0,
+    top: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        gap(6),
+        heading('Enter the 6-digit code', align: TextAlign.left),
+        gap(14),
+        Text.rich(
+          TextSpan(
+            children: [
+              const TextSpan(text: 'We sent a code to '),
+              TextSpan(
+                text: s.email.trim(),
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+              const TextSpan(text: '. It expires in 15 minutes.'),
+            ],
+          ),
+          style: const TextStyle(
+            fontSize: 16.5,
+            color: ReferenceColors.muted,
+            height: 1.6,
+          ),
+        ),
+        gap(14),
+        DuoShake(
+          trigger: _errorTick,
+          child: JoinedAuthPanel(
+            error: s.error != null,
+            children: [
+              TextField(
+                key: const ValueKey('auth-email-code-field'),
+                controller: _fields[4],
+                onChanged: c.updateCode,
+                autofocus: true,
+                keyboardType: TextInputType.number,
+                autofillHints: const [AutofillHints.oneTimeCode],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                maxLength: 6,
+                textInputAction: TextInputAction.done,
+                onSubmitted: s.canVerifyCode ? (_) => _verifyCode() : null,
+                enabled: !s.busy,
+                style: const TextStyle(
+                  fontSize: 20,
+                  height: 1.1,
+                  letterSpacing: 4,
+                  color: ReferenceColors.ink,
+                ),
+                decoration: const InputDecoration(
+                  constraints: BoxConstraints(minHeight: 48),
+                  hintText: '6-digit code',
+                  hintStyle: TextStyle(
+                    color: ReferenceColors.disabled,
+                    letterSpacing: 0,
+                  ),
+                  counterText: '',
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 19,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (s.error != null) authError(s.error!),
+        if (s.codeResent && s.error == null)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              'We sent you a new code.',
+              key: ValueKey('auth-email-code-resent'),
+              style: TextStyle(fontSize: 16, color: ReferenceColors.muted),
+            ),
+          ),
+        gap(6),
+        TextButton(
+          key: const ValueKey('auth-email-code-resend'),
+          onPressed: s.busy ? null : c.resendEmailCode,
+          child: const Text(
+            'RESEND CODE',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: authBlue,
+              letterSpacing: .8,
+            ),
+          ),
+        ),
+      ],
+    ),
+    bottom: KeyedSubtree(
+      key: const ValueKey('auth-email-code-verify'),
+      child: blueButton(
+        'SIGN IN',
+        s.canVerifyCode && !s.busy ? _verifyCode : null,
+      ),
     ),
   );
   Widget _reset(AuthState s) => _split(

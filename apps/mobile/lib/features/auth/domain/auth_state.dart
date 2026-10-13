@@ -1,4 +1,17 @@
-enum AuthStage { choice, details, forgot, reset, busy, signedIn }
+enum AuthStage {
+  choice,
+  details,
+  forgot,
+  reset,
+  busy,
+  signedIn,
+
+  /// Passwordless sign-in: enter the email that receives a 6-digit code.
+  emailCode,
+
+  /// Passwordless sign-in: enter the 6-digit code from the email.
+  emailCodeVerify,
+}
 
 enum AuthProvider { google, facebook, apple }
 
@@ -47,6 +60,9 @@ class AuthState {
     this.resetComplete = false,
     this.recoveryUserId = '',
     this.recoverySecret = '',
+    this.code = '',
+    this.codeUserId = '',
+    this.codeResent = false,
   });
 
   final AuthStage stage;
@@ -65,12 +81,24 @@ class AuthState {
   final String recoveryUserId;
   final String recoverySecret;
 
+  /// Digits typed on the email-code screen.
+  final String code;
+
+  /// Appwrite user id returned with the emailed token (createEmailToken).
+  final String codeUserId;
+
+  /// A fresh code was sent from the code screen.
+  final bool codeResent;
+
   bool get canSignIn => email.trim().isNotEmpty && password.isNotEmpty;
 
   bool get canRecover {
     final value = email.trim();
     return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value);
   }
+
+  bool get canVerifyCode =>
+      codeUserId.isNotEmpty && RegExp(r'^\d{6}$').hasMatch(code);
 
   bool get canReset =>
       recoveryUserId.isNotEmpty &&
@@ -97,6 +125,9 @@ class AuthState {
     bool? resetComplete,
     String? recoveryUserId,
     String? recoverySecret,
+    String? code,
+    String? codeUserId,
+    bool? codeResent,
   }) => AuthState(
     stage: stage ?? this.stage,
     email: email ?? this.email,
@@ -113,5 +144,8 @@ class AuthState {
     resetComplete: resetComplete ?? this.resetComplete,
     recoveryUserId: recoveryUserId ?? this.recoveryUserId,
     recoverySecret: recoverySecret ?? this.recoverySecret,
+    code: code ?? this.code,
+    codeUserId: codeUserId ?? this.codeUserId,
+    codeResent: codeResent ?? this.codeResent,
   );
 }
