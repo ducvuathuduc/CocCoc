@@ -10,15 +10,15 @@ Priority: P0 = a Free user hits it in a normal session; P1 = common secondary st
 
 | # | Screen / state | Gummble ref | Status | Priority | Notes |
 |---|---|---|---|---|---|
-| 1 | Out of hearts **in lesson** (Super trial vs Refill gems, "TRY 1 WEEK FOR FREE"/"NO THANKS") | sc_1ae5ddcf · `refs/gap/hearts_02_out_of_hearts_in_lesson.png` | Partial → planned | P0 | `showOutOfHeartsSheet` was a self-declared UNKNOWN placeholder. |
-| 2 | "You need hearts to start new lessons!" (Next heart in, Super / +1 Heart Practice / Refill) | sc_fb07ca98 · `refs/gap/hearts_03_need_hearts_home.png` | Missing → planned | P0 | |
-| 3 | Practice to earn a heart → "You gained a heart! Watch an ad to gain another" | 68cd5891 · `refs/gap/earn_heart_01..04,09` | Missing → planned | P0 | Practice session reuses the existing lesson; result screen is new. |
-| 4 | Ad interstitial for Free users (house ad + skip) | sc_ad9c3299, sc_fad12a43 · `refs/gap/earn_heart_05,06` | Missing → planned | P0 | Only Duolingo house-ad captures exist; no third-party ad. Mock ad provider; no ad SDK. |
+| 1 | Out of hearts **in lesson** (Super trial vs Refill gems, "TRY 1 WEEK FOR FREE"/"NO THANKS") | sc_1ae5ddcf · `refs/gap/hearts_02_out_of_hearts_in_lesson.png` | **Present** (`a637228`, `0729755`, `462c136`) | P0 | Placeholder removed; lesson GOT IT at 0 hearts opens `showHeartsOfferSheet`. Golden `ui_master/sprint_lesson_out_of_hearts_430.png` regenerated (owner-approved). Refill in-lesson ends the session (no lesson-hearts refill API yet). |
+| 2 | "You need hearts to start new lessons!" (Next heart in, Super / +1 Heart Practice / Refill) | sc_fb07ca98 · `refs/gap/hearts_03_need_hearts_home.png` | **Present** (`7726217`, `a637228`, `462c136`) | P0 | `showNeedHeartsSheet`; home uses Energy, so no shared zero-heart start gate triggers it yet. |
+| 3 | Practice to earn a heart → "You gained a heart! Watch an ad to gain another" | 68cd5891 · `refs/gap/earn_heart_01..04,09` | **Present** (`a637228`, `462c136`) | P0 | Practice session reuses the existing lesson; `/hearts/earned` result screen is new. |
+| 4 | Ad interstitial for Free users (house ad + skip) | sc_ad9c3299, sc_fad12a43 · `refs/gap/earn_heart_05,06` | **Present** (`7726217`, `a637228`) | P0 | Only Duolingo house-ad captures exist; no third-party ad. Mock ad provider; no ad SDK. |
 | 5 | Super free-trial interstitial after ad ("Get started with a 7 day free trial") | sc_02a1e078, sc_e4a392e0 · `refs/gap/earn_heart_07,08` | Partial | P1 | `/super` paywall exists; post-ad entry routes there. |
-| 6 | Energy refill actions (+5 energy WATCH AD, +2 FREE, Recharge 500) | sc_365781ef · `refs/gap/energy_refill_options.png` | Partial → planned (actions) | P0 | Rows were static constants (G-DATA); layout unchanged, rows now act via repository. |
+| 6 | Energy refill actions (+5 energy WATCH AD, +2 FREE, Recharge 500) | sc_365781ef · `refs/gap/energy_refill_options.png` | **Present** (`c5599f7`) | P0 | Rows were static constants (G-DATA); layout unchanged, rows now act via repository. |
 | 7 | Hearts dropdown from stats bar | sc_901080ed · `refs/gap/hearts_dropdown.png` | Partial | P2 | Home uses the newer Energy model; energy popover exists. Hearts only in checks/legendary. |
-| 8 | Offline banner "YOU ARE OFFLINE" + greyed path | sc_12b09a6c · `refs/gap/offline_banner.png` | Missing → planned | P0 | Connectivity repository (mock + API-failure signal); no new plugin. |
-| 9 | XP Boost activated (x2, 15 minutes) after claiming a chest | sc_269d6ffb, sc_b4ac42c6 · `refs/gap/xp_boost_activated*.png` | Missing → planned | P1 | Shop claim showed a gems sheet only. |
+| 8 | Offline banner "YOU ARE OFFLINE" + greyed path | sc_12b09a6c · `refs/gap/offline_banner.png` | **Present** (`50af76c`, `462c136`) | P0 | Connectivity repository (mock + API-failure signal); no new plugin. Golden `gap/offline_path_360.png`. Current node keeps color + START bubble (ref lightens it). |
+| 9 | XP Boost activated (x2, 15 minutes) after claiming a chest | sc_269d6ffb, sc_b4ac42c6 · `refs/gap/xp_boost_activated*.png` | **Present** (`3497411`, `98d08ad`) | P1 | Friends Chest: gems sheet → `/xp-boost/activated`. Flask art has a cork (ref open flask). |
 | 10 | Report an issue: iOS action list + "Issue successfully reported" toast | sc_f2f569c1, sc_2082f9ab · `refs/gap/report_issue_*.png` | Partial | P2 | A report sheet exists in `lesson_screen.dart`; lesson screen is concurrently edited by b-lesson-av, so it is not touched. |
 | 11 | Streak Society locked card / app-icon sheet | `refs/gap/streak_society_locked_ios.png`, `streak_app_icon_sheet_ios.png`, `streak_society_android.png` | Present | — | `streak_screen.dart`, `app_icon_sheet.dart`. |
 | 12 | Streak freeze / Streak Shield / Perfect streak / "less than 3 hours" | Personal streak 1bc25485 | Present | — | `streak_screen.dart`. |
@@ -46,6 +46,6 @@ Priority: P0 = a Free user hits it in a normal session; P1 = common secondary st
 
 ## Counts
 
-- Rows: 33.
-- Present: 19 · Partial: 5 (rows 5, 7, 10, 17, plus 6 before this task) · Missing: 5 (rows 2, 3, 4, 8, 9) · Owned: 2 · No ref: 3 (13, 32, 33).
-- Planned in this task: rows 1, 2, 3, 4, 6, 8, 9.
+- Rows: 33. Updated 2026-10-13 (main `462c136`).
+- Present: 26 (rows 1, 2, 3, 4, 6, 8, 9 added) · Partial: 4 (rows 5, 7, 10, 17) · Owned: 2 (21, 22) · No ref: 3 (13, 32, 33) · Missing: 0.
+- Side-by-side QA (ours vs Gummble) for rows 1–4, 8, 9: [GAP_HEARTS_ADS_RECEIPT](qa/GAP_HEARTS_ADS_RECEIPT.md), [GAP_SLICE_B_RECEIPT](qa/GAP_SLICE_B_RECEIPT.md).
