@@ -7,6 +7,7 @@ import 'package:cocenglish/features/hearts/application/hearts_controller.dart';
 import 'package:cocenglish/features/hearts/presentation/hearts_sheets.dart';
 import 'package:cocenglish/features/hearts/presentation/heart_earned_screen.dart';
 import 'package:cocenglish/features/ads/presentation/ad_screen.dart';
+import 'package:cocenglish/features/super_trial/presentation/super_trial_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -80,6 +81,10 @@ void main() {
       await tester.pump(const Duration(seconds: 5));
       await tester.pumpAndSettle();
       await tester.tap(find.text('CONTINUE'));
+      await tester.pumpAndSettle();
+      // Row 5: the Super trial interstitial follows the ad (sc_e4a392e0).
+      expect(find.byType(SuperTrialScreen), findsOneWidget);
+      await tester.tap(find.text('NO THANKS'));
       await tester.pumpAndSettle();
       expect(find.byType(HeartEarnedScreen), findsOneWidget);
       expect(container.read(heartsControllerProvider).balance, 2);

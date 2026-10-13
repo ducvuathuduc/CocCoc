@@ -184,3 +184,16 @@ before painting; the app renders its own actionable button from repository data.
 ## Launcher, notification and widget art (original)
 
 The launcher icon (Android adaptive + legacy mipmaps, iOS AppIcon set), the Android 12 splash icon, the notification small icon `ic_stat_coc`, the notification large icon `ic_notification_mascot` and the streak-widget flames were drawn for this repository (original toad mascot in `tool/brand/mascot.svg`, flames as Android vectors). Regenerate the PNGs with `python3 tool/brand/render.py` from `apps/mobile`. Colours come from the existing palette (`ReferenceColors.green` #5BCD05, ink #4D4B4E, surface #FFFDFE); no third-party art is used.
+
+### Gap Super trial interstitial (2026-10-13)
+
+`reference_art/gap-super-trial.png` is derived from the archived capture
+[`earn_heart_08`](../../../docs/design/refs/gap/earn_heart_08_e4a392e0b77d426b945bc566bf8dc7ca.png)
+(Gummble sc_e4a392e0, flow 68cd5891 "Practicing to get a heart"). All text and
+both actions (title, footnote, TRY FOR $0.00, NO THANKS, home indicator) were
+cleared to the background gradient; the speech bubble is kept and only its two
+text lines were erased (bubble x 249–930, y 828–1199; interior pixels refilled
+with the bubble fill interpolated per row). The gradient, SUPER badge, bubble,
+Duo and bell are the source pixels. `SuperTrialScreen` paints the whole image
+(cover-cropped) and draws every string natively from `SuperTrialRepository`.
+No artwork was generated. SHA-256 (asset): e0e4d441b3e25cc9e39ca93b363fa2fea35f4d1faf4eec383852a6d769264454; source: 832aed3e947b6766bd017b9e4dcc0806b6b535292181fe124800598eb3e8cb93.

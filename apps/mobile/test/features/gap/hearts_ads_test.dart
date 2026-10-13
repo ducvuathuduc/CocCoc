@@ -4,6 +4,7 @@ import 'package:cocenglish/features/hearts/presentation/hearts_sheets.dart';
 import 'package:cocenglish/features/hearts/presentation/heart_earned_screen.dart';
 import 'package:cocenglish/features/ads/presentation/ad_screen.dart';
 import 'package:cocenglish/features/progress/application/extended_controller.dart';
+import 'package:cocenglish/features/super_trial/presentation/super_trial_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,6 +37,10 @@ Future<ProviderContainer> pump(
         builder: (_, _) => const Scaffold(body: Text('Practice destination')),
       ),
       GoRoute(path: '/ad', builder: (_, _) => const AdScreen()),
+      GoRoute(
+        path: SuperTrialScreen.route,
+        builder: (_, _) => const SuperTrialScreen(),
+      ),
       GoRoute(
         path: '/home',
         builder: (_, _) => const Scaffold(body: Text('Home destination')),
@@ -187,13 +192,16 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Home destination'), findsOneWidget);
   });
-  testWidgets('house-ad CTA can open the optional existing Super trial', (
+  testWidgets('house-ad CTA opens the Super trial, TRY opens the plans', (
     tester,
   ) async {
     await pump(tester, const AdScreen(offerTrial: true), reduced: true);
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
     await tester.tap(find.text('CONTINUE'));
+    await tester.pumpAndSettle();
+    expect(find.byType(SuperTrialScreen), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('super-trial-accept')));
     await tester.pumpAndSettle();
     expect(find.text('Super destination'), findsOneWidget);
     GoRouter.of(tester.element(find.text('Super destination'))).pop();

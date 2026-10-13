@@ -6,6 +6,7 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../../super_trial/presentation/super_trial_screen.dart';
 import '../application/ads_controller.dart';
 
 // sc_fad12a43 at (10,10): PIL.convert('RGB').getpixel = (30,30,30).
@@ -82,8 +83,14 @@ class _AdScreenState extends ConsumerState<AdScreen>
     final rewarded = await ref.read(adControllerProvider.notifier).finish();
     if (!mounted || !rewarded) return;
     if (widget.offerTrial) {
-      await context.push('/super');
+      // Row 5: the Super trial interstitial (sc_e4a392e0); TRY opens the
+      // existing plan screen, NO THANKS returns here.
+      final accepted = await context.push<bool>(SuperTrialScreen.route);
       if (!mounted) return;
+      if (accepted == true) {
+        await context.push('/super');
+        if (!mounted) return;
+      }
     }
     _leave(true);
   }

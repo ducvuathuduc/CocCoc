@@ -639,6 +639,30 @@ class SubscriptionScreen extends ConsumerWidget {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 15, color: ReferenceColors.muted),
         ),
+        // Rows 32/33 (no Gummble capture): settings-style rows below the fold.
+        const SizedBox(height: 26),
+        const Divider(color: ReferenceColors.border, thickness: 2),
+        for (final (key, title, route) in const [
+          (
+            'subscription-manage-features',
+            'Manage features',
+            '/settings/super-features',
+          ),
+          ('subscription-promo', 'Redeem a promo code', '/settings/promo'),
+        ])
+          ListTile(
+            key: ValueKey(key),
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              title,
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+            ),
+            trailing: const Icon(
+              Icons.chevron_right,
+              color: ReferenceColors.disabled,
+            ),
+            onTap: () => context.push(route),
+          ),
       ],
     );
   }

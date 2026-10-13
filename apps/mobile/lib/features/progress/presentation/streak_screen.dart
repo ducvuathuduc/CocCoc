@@ -10,6 +10,7 @@ import '../../learning/application/learning_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../application/preview_controller.dart';
 import '../application/streak_controller.dart';
+import '../../streak_repair/presentation/streak_repair_screen.dart';
 
 const streakOrange = Color(0xFFFF6A22);
 const streakBlue = Color(0xFF1CB0F6);
@@ -213,6 +214,8 @@ class _PersonalStreak extends ConsumerWidget {
       key: const PageStorageKey('personal-streak'),
       padding: EdgeInsets.zero,
       children: [
+        // Row 13: only while a lost streak can still be repaired.
+        const StreakRepairBanner(),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 20, 20, 18),
           child: Row(

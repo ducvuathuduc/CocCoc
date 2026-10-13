@@ -116,7 +116,7 @@ class _HeartEarnedScreenState extends ConsumerState<HeartEarnedScreen> {
                         }
                         setState(() => watching = true);
                         final receipt = UuidV4Generator().next();
-                        final result = await context.push<bool>('/ad');
+                        final result = await context.push<bool>('/ad?trial=1');
                         if (!context.mounted) return;
                         if (result == true) {
                           ref

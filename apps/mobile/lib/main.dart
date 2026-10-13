@@ -68,6 +68,10 @@ import 'features/notifications/application/notification_settings_controller.dart
 import 'features/auth/application/auth_controller.dart';
 import 'features/learning/domain/learning_models.dart';
 import 'core/cache/snapshot_cache.dart';
+import 'features/super_trial/presentation/super_trial_screen.dart';
+import 'features/streak_repair/presentation/streak_repair_screen.dart';
+import 'features/promo/presentation/promo_code_screen.dart';
+import 'features/super_features/presentation/super_features_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -448,6 +452,10 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
           builder: (context, state) => const SuperScreen(),
         ),
         GoRoute(
+          path: SuperTrialScreen.route,
+          builder: (context, state) => const SuperTrialScreen(),
+        ),
+        GoRoute(
           path: '/super/tour',
           builder: (context, state) => const SuperTourScreen(),
         ),
@@ -500,6 +508,10 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         GoRoute(
           path: '/streak',
           builder: (context, state) => const StreakScreen(),
+        ),
+        GoRoute(
+          path: StreakRepairScreen.route,
+          builder: (context, state) => const StreakRepairScreen(),
         ),
         GoRoute(
           path: '/streak/widgets',
@@ -655,6 +667,14 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         GoRoute(
           path: '/settings',
           builder: (context, state) => const SettingsScreen(),
+        ),
+        GoRoute(
+          path: PromoCodeScreen.route,
+          builder: (context, state) => const PromoCodeScreen(),
+        ),
+        GoRoute(
+          path: SuperFeaturesScreen.route,
+          builder: (context, state) => const SuperFeaturesScreen(),
         ),
         GoRoute(
           path: '/settings/courses',

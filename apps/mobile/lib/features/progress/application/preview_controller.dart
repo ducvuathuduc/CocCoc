@@ -87,6 +87,9 @@ class PreviewController extends Notifier<PreviewState> {
     return true;
   }
 
+  /// Mock-only gem spend for a priced action (e.g. streak repair).
+  bool spendGems(int cost) => spendRefillGems(cost);
+
   void dismissQuestIntro() => state = state.copyWith(questIntroSeen: true);
   bool claimQuest(String id, {required bool eligible}) {
     if (!eligible ||
