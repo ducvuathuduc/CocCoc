@@ -297,47 +297,43 @@ void main() {
     },
   );
 
-  patrolTest(
-    'deny in the OS dialog is remembered and never re-asked',
-    ($) async {
-      await _launchApp($);
-      await _completeLesson($.tester);
-      expect(await _waitFor($.tester, find.text(_explainerTitle)), isTrue);
-      await _shot($, 'explainer-deny-path');
-      await _tapText($.tester, 'TURN ON REMINDERS');
-      expect(
-        await $.platform.mobile.isPermissionDialogVisible(
-          timeout: const Duration(seconds: 10),
-        ),
-        isTrue,
-      );
-      await $.platform.mobile.denyPermission();
-      expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
-      final c = _container($.tester);
-      expect(await c.read(reminderCoordinatorProvider).shouldOfferPermission(),
-          isFalse);
-      // Second lesson: neither the explainer nor the OS dialog comes back.
-      await _completeLesson($.tester);
-      expect(find.text(_explainerTitle), findsNothing);
-      expect(
-        await $.platform.mobile.isPermissionDialogVisible(
-          timeout: const Duration(seconds: 4),
-        ),
-        isFalse,
-      );
-      expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
-      _log('PASS deny remembered, no re-ask after lesson 2');
-    },
-  );
+  patrolTest('deny in the OS dialog is remembered and never re-asked', (
+    $,
+  ) async {
+    await _launchApp($);
+    await _completeLesson($.tester);
+    expect(await _waitFor($.tester, find.text(_explainerTitle)), isTrue);
+    await _shot($, 'explainer-deny-path');
+    await _tapText($.tester, 'TURN ON REMINDERS');
+    expect(
+      await $.platform.mobile.isPermissionDialogVisible(
+        timeout: const Duration(seconds: 10),
+      ),
+      isTrue,
+    );
+    await $.platform.mobile.denyPermission();
+    expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
+    final c = _container($.tester);
+    expect(
+      await c.read(reminderCoordinatorProvider).shouldOfferPermission(),
+      isFalse,
+    );
+    // Second lesson: neither the explainer nor the OS dialog comes back.
+    await _completeLesson($.tester);
+    expect(find.text(_explainerTitle), findsNothing);
+    expect(
+      await $.platform.mobile.isPermissionDialogVisible(
+        timeout: const Duration(seconds: 4),
+      ),
+      isFalse,
+    );
+    expect(await _waitFor($.tester, find.text(_pathTitle)), isTrue);
+    _log('PASS deny remembered, no re-ask after lesson 2');
+  });
 
   patrolTest(
     'daily reminder fires in about 10 s and its tap opens home',
-    ($) => _deepLinkCase(
-      $,
-      ReminderKind.daily,
-      '/home',
-      find.text(_pathTitle),
-    ),
+    ($) => _deepLinkCase($, ReminderKind.daily, '/home', find.text(_pathTitle)),
   );
 
   patrolTest(
@@ -382,7 +378,8 @@ void main() {
       _log('pending after lesson: $after');
       expect(after, isNot(contains(r.id)));
       // Wait past the original fire time: nothing appears in the shade.
-      final wait = r.at.difference(DateTime.now()) + const Duration(seconds: 20);
+      final wait =
+          r.at.difference(DateTime.now()) + const Duration(seconds: 20);
       if (!wait.isNegative) await Future<void>.delayed(wait);
       await $.platform.mobile.openNotifications();
       final shade = await $.platform.mobile.getNotifications();
@@ -407,10 +404,12 @@ void main() {
       // Data the app published after the lesson (production gateway).
       await c.read(reminderCoordinatorProvider).sync();
       final headline = await HomeWidget.getWidgetData<String>('coc_headline');
-      final stored =
-          (await HomeWidget.getWidgetData<Object>('coc_streak') as num?)
-              ?.toInt();
-      _log('widget data: streak=$stored headline=$headline (app streak $streak)');
+      final stored = (await HomeWidget.getWidgetData<Object>(
+        'coc_streak',
+      ) as num?)?.toInt();
+      _log(
+        'widget data: streak=$stored headline=$headline (app streak $streak)',
+      );
       expect(stored, streak);
       if (Platform.isAndroid &&
           await HomeWidget.isRequestPinWidgetSupported() == true) {
