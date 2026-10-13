@@ -331,7 +331,7 @@ void main() {
   );
 
   patrolTest(
-    'daily reminder fires in ~10 s and its tap opens /home',
+    'daily reminder fires in about 10 s and its tap opens home',
     ($) => _deepLinkCase(
       $,
       ReminderKind.daily,
@@ -341,7 +341,7 @@ void main() {
   );
 
   patrolTest(
-    'streak-at-risk reminder fires and its tap opens /streak',
+    'streak-at-risk reminder fires and its tap opens streak',
     ($) => _deepLinkCase(
       $,
       ReminderKind.streakAtRisk,
@@ -351,7 +351,7 @@ void main() {
   );
 
   patrolTest(
-    'league-ending reminder fires and its tap opens /league',
+    'league-ending reminder fires and its tap opens league',
     ($) => _deepLinkCase(
       $,
       ReminderKind.leagueEnding,
@@ -361,7 +361,7 @@ void main() {
   );
 
   patrolTest(
-    'completing a lesson cancels today\'s streak-at-risk reminder',
+    'completing a lesson cancels the streak-at-risk reminder for today',
     ($) async {
       await _launchApp($);
       final c = _container($.tester);
