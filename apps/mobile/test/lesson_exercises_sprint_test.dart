@@ -78,6 +78,7 @@ void main() {
       'lesson-05',
       'lesson-07',
       'practice-01',
+      'gap-heart-earned',
     ]);
   });
 
@@ -247,6 +248,7 @@ void main() {
       await tester.tap(find.text('GOT IT'));
       await tester.pumpAndSettle();
       expect(find.text('You ran out of hearts!'), findsOneWidget);
+      expect(find.text('TRY 1 WEEK FOR FREE'), findsOneWidget);
       await _golden('out_of_hearts');
     });
   });

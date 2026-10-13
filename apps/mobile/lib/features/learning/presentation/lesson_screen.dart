@@ -14,6 +14,7 @@ import '../../../core/audio/speech_recorder.dart';
 import '../application/learning_controller.dart';
 import '../data/speech_assessment.dart';
 import '../../progress/application/preview_controller.dart';
+import '../../hearts/presentation/hearts_sheets.dart';
 import '../domain/learning_models.dart';
 import '../services/lesson_audio_service.dart';
 import 'learning_visuals.dart';
@@ -187,7 +188,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       controller.next();
       return;
     }
-    showOutOfHeartsSheet(
+    // In-lesson out-of-hearts offer (Gummble sc_1ae5ddcf).
+    showHeartsOfferSheet(
       context,
       onEnd: () {
         controller.abandon();

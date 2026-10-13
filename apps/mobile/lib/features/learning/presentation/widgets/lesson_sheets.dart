@@ -134,30 +134,6 @@ Future<void> showHeartsIntroSheet(
   ),
 );
 
-/// Shown when the last heart is gone; the only way out ends the session.
-/// No archived reference capture exists for this state: layout reuses the
-/// lesson/08 hearts sheet (UNKNOWN exact Duolingo copy, see spec).
-Future<void> showOutOfHeartsSheet(
-  BuildContext context, {
-  required VoidCallback onEnd,
-}) => _lessonSheet(
-  context,
-  dismissible: false,
-  child: Builder(
-    builder: (sheet) => _sheetBody(
-      sheet,
-      hearts: 0,
-      title: 'You ran out of hearts!',
-      body: 'Hearts refill over time. Come back later to finish this lesson.',
-      action: 'END SESSION',
-      onAction: () {
-        Navigator.pop(sheet);
-        onEnd();
-      },
-    ),
-  ),
-);
-
 /// Yellow feedback panel after "CAN'T LISTEN NOW" (reference lesson/11).
 class SkipListeningPanel extends StatelessWidget {
   const SkipListeningPanel({
