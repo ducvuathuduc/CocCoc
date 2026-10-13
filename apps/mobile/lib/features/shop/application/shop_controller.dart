@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/shop_repository.dart';
+import '../../xp_boost/domain/boost.dart';
 
 class ShopOffer {
   const ShopOffer({
@@ -10,6 +11,7 @@ class ShopOffer {
     this.price,
     this.popular = false,
     this.rewardGems,
+    this.xpBoost,
   });
   final String id;
   final String title;
@@ -19,6 +21,7 @@ class ShopOffer {
 
   /// Gems granted when a CLAIM offer is opened (mock data until the API).
   final int? rewardGems;
+  final BoostReward? xpBoost;
 }
 
 class ShopState {

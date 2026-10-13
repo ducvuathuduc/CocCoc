@@ -31,6 +31,7 @@ import 'features/results/presentation/results_extra_screens.dart';
 import 'features/learning/presentation/session_entry.dart';
 import 'features/progress/presentation/hub_screens.dart';
 import 'features/shop/presentation/shop_screen.dart';
+import 'features/xp_boost/presentation/xp_boost_activated_screen.dart';
 import 'features/progress/presentation/learning_shell.dart';
 import 'features/progress/presentation/streak_screen.dart';
 import 'features/progress/presentation/streak_widgets_screen.dart';
@@ -530,6 +531,10 @@ class _AppState extends ConsumerState<_App> {
           builder: (context, state) => const ClashScreen(),
         ),
         GoRoute(path: '/shop', builder: (context, state) => const ShopScreen()),
+        GoRoute(
+          path: '/xp-boost/activated',
+          builder: (context, state) => const XpBoostActivatedScreen(),
+        ),
         GoRoute(
           path: '/timer-boost/success',
           builder: (context, state) => TimerBoostSuccessScreen(

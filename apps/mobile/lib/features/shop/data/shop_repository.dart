@@ -4,6 +4,7 @@ import '../application/shop_controller.dart';
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/config/app_config.dart';
 import 'api_shop_repository.dart';
+import '../../xp_boost/domain/boost.dart';
 
 abstract class ShopRepository {
   Future<int> getWallet();
@@ -47,6 +48,7 @@ class MockShopRepository implements ShopRepository {
         title: 'Friends Chest',
         actionLabel: 'CLAIM',
         rewardGems: 20,
+        xpBoost: BoostReward(itemId: 'xp-boost', multiplier: 2, minutes: 15),
       ),
       ShopOffer(
         id: 'widget-reward',
