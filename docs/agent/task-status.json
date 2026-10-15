@@ -1,8 +1,28 @@
 {
-  "updated": "2026-10-12",
+  "updated": "2026-10-15",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
+    {
+      "taskId": "P8-FE-PRONUNCIATION-PRACTICE",
+      "phase": "P8 scoped follow-up",
+      "owner": "Codex",
+      "branch": "feat/pronunciation-assessment",
+      "worktree": ".",
+      "status": "VERIFYING",
+      "dependencyGateReceipts": ["7097db8", "b5edb59", "69f7ef3"],
+      "exclusivePaths": [
+        "apps/mobile/lib/features/practice/application/pronunciation_controller.dart",
+        "apps/mobile/lib/features/practice/presentation/pronunciation_practice_screen.dart",
+        "apps/mobile/lib/features/learning/data/speech_assessment.dart",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": ["FR-SPEECH-001", "FR-SPEECH-003"],
+      "interfaces": ["SpeechRecorder", "SpeechAssessor", "createAssessment"],
+      "testCommand": "flutter test --no-pub test/pronunciation_practice_test.dart test/speech_assessment_test.dart test/practice_flow_test.dart test/english_spoken_lesson_test.dart --dart-define=ENABLE_MASCOT_MOTION=false",
+      "evidence": ["docs/quality/PRONUNCIATION_PRACTICE.md"],
+      "limitations": "Scoped software implementation; full phase gates, physical microphone/provider benchmark and iOS build remain separate. Baseline formatting/golden and CRLF-generated-contract checks are recorded in the receipt."
+    },
     {
       "taskId": "UI-ONBOARDING-LOGIN-SLICE",
       "phase": "frontend slice",

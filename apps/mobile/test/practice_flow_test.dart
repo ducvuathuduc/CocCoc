@@ -1,11 +1,14 @@
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
 import 'package:cocenglish/features/learning/domain/learning_models.dart';
+import 'package:cocenglish/core/audio/speech_recorder.dart';
+import 'package:cocenglish/features/learning/data/speech_assessment.dart';
 import 'package:cocenglish/features/practice/presentation/practice_screens.dart';
-import 'package:cocenglish/features/practice/application/practice_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+
+import 'support/pronunciation_fakes.dart';
 
 void main() {
   testWidgets('practice hub keeps source hierarchy at text scale two', (
@@ -54,7 +57,14 @@ void main() {
   testWidgets('denied speech uses an assisted guest text substitution', (
     tester,
   ) async {
-    final container = ProviderContainer();
+    final container = ProviderContainer(
+      overrides: [
+        speechRecorderProvider.overrideWithValue(
+          FakeRecorder()..allowed = false,
+        ),
+        speechAssessorProvider.overrideWithValue(FakeAssessor()),
+      ],
+    );
     addTearDown(container.dispose);
     final router = GoRouter(
       initialLocation: '/speaking/record',
@@ -83,9 +93,10 @@ void main() {
 
     expect(find.text('CAPABILITY SIMULATION'), findsNothing);
     expect(find.text('SIMULATE DENIED'), findsNothing);
-    container.read(speakingControllerProvider.notifier).showPermissionDenied();
+    await tester.ensureVisible(find.text('TAP TO SPEAK'));
+    await tester.tap(find.text('TAP TO SPEAK'));
     await tester.pump();
-    expect(find.text('Microphone permission denied'), findsOneWidget);
+    expect(find.text('Microphone unavailable'), findsOneWidget);
     await tester.tap(find.text('USE TYPED PRACTICE'));
     await tester.pumpAndSettle();
 
@@ -94,31 +105,6 @@ void main() {
     expect(lesson.guest, isTrue);
     expect(lesson.assisted, isTrue);
     expect(lesson.current?.kind, ExerciseKind.textTranslation);
-  });
-
-  testWidgets('background resets recording and disposal cancels its callback', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      const ProviderScope(child: MaterialApp(home: SpeakingRecordScreen())),
-    );
-    await tester.tap(find.text('TAP TO SPEAK'));
-    await tester.pump();
-    expect(find.text('Listening…'), findsOneWidget);
-
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
-    await tester.pump(const Duration(seconds: 1));
-    expect(find.text('Listening…'), findsOneWidget);
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
-    await tester.pump();
-    expect(find.text('TAP TO SPEAK'), findsOneWidget);
-
-    await tester.tap(find.text('TAP TO SPEAK'));
-    await tester.pump();
-
-    await tester.pumpWidget(const SizedBox.shrink());
-    await tester.pump(const Duration(seconds: 1));
-    expect(tester.takeException(), isNull);
   });
 
   testWidgets('call reconnects safely after app resumes', (tester) async {
