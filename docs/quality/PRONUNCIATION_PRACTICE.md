@@ -63,6 +63,8 @@ flutter analyze --no-pub
 | `node tools/blueprint/generate-dart-contracts.mjs --check` | FAIL from checkout CRLF differences. In-memory LF-normalized diagnostic PASS, 154 schemas / 165 classes; generated source files unchanged |
 | `node tools/blueprint/validate.mjs`, `node tools/audit/validate.mjs` | PASS; 39 requirements, 62 tables, 88 operations; audit links/Mermaid valid |
 | Native XML parsing / `git diff --check` | PASS |
+| `flutter build apk --debug --no-pub` | No APK: stopped after 1184.2 seconds waiting for Gradle dependency downloads; thread dump confirms HTTP artifact download |
+| `gradlew.bat --offline --console=plain --no-daemon assembleDebug` from `apps/mobile/android` | FAIL at `:integration_test` classpath: no cached Android Gradle Plugin 8.11.0 JARs (`gradle`, `builder`, `databinding-compiler-common`, `sdk-common`, `sdklib`, `ddmlib`, `aapt2-proto`, `protos`, `apksig`); 1m28s. Android compilation is not certified |
 
 Host SDK is Flutter 3.47.2/Dart 3.13.2; repository pins 3.47.0/3.13.0. The exact
 cause of every golden difference is not established by this run. No unrelated
@@ -72,8 +74,11 @@ An earlier full run while feature files were changing is discarded; the counts
 above come from the final source state (`mobile-final-tests.jsonl`).
 
 Repository-wide gates retain these baseline failures; no full P8 or release
-sign-off follows from focused tests. Android build result is recorded separately
-when Gradle finishes.
+sign-off follows from focused tests. Gradle needs the missing artifacts downloaded
+before retrying `flutter build apk --debug --no-pub`; no toolchain/lock change was
+made to bypass that dependency failure. The offline log also includes cascading
+Kotlin plugin/NPE errors during configuration; their independent cause has not
+been established. Both build processes have exited.
 
 ## Device and provider acceptance still required
 
