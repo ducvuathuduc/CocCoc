@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# No installs or authentication are needed on wake. Check the persisted login
+# environment in a child shell, rather than changing this process's environment.
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd -- "$repo_root"
+exec /bin/bash -lc '
+  if [[ -z ${FLUTTER_ROOT:-} || -z ${ANDROID_HOME:-} ]] ||
+     [[ ! -x "$FLUTTER_ROOT/bin/cache/dart-sdk/bin/dart" ]] ||
+     ! command -v sdkmanager >/dev/null ||
+     [[ ! -d node_modules || ! -f apps/mobile/.dart_tool/package_config.json ]]; then
+    echo "[resume] Toolchain or dependencies missing; run .agents/setup to repair this orb." >&2
+    exit 1
+  fi
+  printf "[resume] Cached toolchains and dependencies ready (Node %s).\n" "$(node --version)"
+'

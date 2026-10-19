@@ -38,6 +38,7 @@ build/
 # Tool caches and transient reports
 .cache/
 **/.cache/
+.amp/portals/*
 coverage/
 **/coverage/
 tmp/

@@ -1,0 +1,200 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Snapshot preparation only: no user authentication, cloud writes, or servers.
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd -- "$repo_root"
+[[ $(uname -s) == Linux && $(uname -m) == x86_64 ]] || {
+  echo 'CocEnglish orb setup requires Linux x86_64.' >&2
+  exit 1
+}
+started=$SECONDS
+step() {
+  local label=$1 before=$SECONDS
+  shift
+  printf '\n[setup] %s\n' "$label"
+  "$@"
+  printf '[setup] %s completed in %ss\n' "$label" "$((SECONDS - before))"
+}
+
+system_packages() {
+  local package missing=()
+  for package in ca-certificates curl git unzip xz-utils python3 libglu1-mesa openjdk-17-jdk-headless build-essential clang cmake ninja-build pkg-config libgtk-3-dev uuid-dev libvulkan-dev; do
+    if [[ $(dpkg-query -W -f='${Status}' "$package" 2>/dev/null || true) != 'install ok installed' ]]; then
+      missing+=("$package")
+    fi
+  done
+  if ((${#missing[@]})); then
+    sudo apt-get update -qq
+    sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "${missing[@]}"
+  fi
+}
+step 'System prerequisites' system_packages
+
+# Use the repository's version owners, not the orb template's Node version.
+node_version=$(node -p 'require("./tools/toolchain.json").backendNodeVerifiedLocal')
+flutter_version=$(node -p 'require("./tools/toolchain.json").flutter')
+dart_version=$(node -p 'require("./tools/toolchain.json").dart')
+android_api=$(node -p 'require("./tools/toolchain.json").androidCompileSdk')
+pnpm_version=$(node -p 'require("./package.json").packageManager.split("@")[1]')
+android_tools_version=19.0
+tools="$HOME/.local/share/cocenglish-orb"
+export FLUTTER_ROOT="$tools/flutter-$flutter_version"
+export ANDROID_HOME="$tools/android-sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export FLUTTER_SUPPRESS_ANALYTICS=true DART_SUPPRESS_ANALYTICS=true
+export PATH="$tools/node-v$node_version/bin:$tools/bin:$FLUTTER_ROOT/bin:$ANDROID_HOME/cmdline-tools/$android_tools_version/bin:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin:$PATH"
+mkdir -p "$tools/bin"
+scratch=$(mktemp -d)
+trap 'rm -rf -- "$scratch"' EXIT
+download() {
+  curl --fail --location --silent --show-error --retry 3 --connect-timeout 20 --max-time 300 "$1" -o "$2"
+}
+
+node_toolchain() {
+  if [[ ! -x "$tools/node-v$node_version/bin/node" ]]; then
+    local archive="node-v$node_version-linux-x64.tar.xz"
+    download "https://nodejs.org/dist/v$node_version/$archive" "$scratch/$archive"
+    download "https://nodejs.org/dist/v$node_version/SHASUMS256.txt" "$scratch/node-shasums"
+    (cd -- "$scratch"; grep "  $archive$" node-shasums | sha256sum --check -)
+    mkdir "$scratch/node"
+    tar -xJf "$scratch/$archive" -C "$scratch/node" --strip-components=1
+    mv -- "$scratch/node" "$tools/node-v$node_version"
+  fi
+  if [[ ! -x "$tools/bin/pnpm" || $("$tools/bin/pnpm" --version) != "$pnpm_version" ]]; then
+    npm install --global --prefix "$tools" "pnpm@$pnpm_version" --no-audit --no-fund
+  fi
+  node --version
+  pnpm --version
+}
+step 'Pinned Node and pnpm' node_toolchain
+
+flutter_toolchain() {
+  if [[ ! -x "$FLUTTER_ROOT/bin/flutter" ]]; then
+    download https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json "$scratch/flutter-releases.json"
+    local archive checksum
+    read -r archive checksum < <(node -e '
+      const releases = require(process.argv[1]).releases;
+      const release = releases.find(r => r.version === process.argv[2] && r.channel === "stable" && r.dart_sdk_arch === "x64");
+      if (!release) throw new Error("Pinned Flutter release not found");
+      console.log(release.archive, release.sha256);
+    ' "$scratch/flutter-releases.json" "$flutter_version")
+    download "https://storage.googleapis.com/flutter_infra_release/releases/$archive" "$scratch/flutter.tar.xz"
+    printf '%s  %s\n' "$checksum" "$scratch/flutter.tar.xz" | sha256sum --check -
+    tar -xJf "$scratch/flutter.tar.xz" -C "$scratch"
+    mv -- "$scratch/flutter" "$FLUTTER_ROOT"
+  fi
+  flutter config --no-analytics --android-sdk "$ANDROID_HOME" --jdk-dir "$JAVA_HOME"
+  flutter --version --machine > "$scratch/flutter-version.json"
+  node -e '
+    const v = require(process.argv[1]);
+    if (v.frameworkVersion !== process.argv[2] || v.dartSdkVersion !== process.argv[3])
+      throw new Error("Installed Flutter/Dart do not match tools/toolchain.json");
+  ' "$scratch/flutter-version.json" "$flutter_version" "$dart_version"
+  flutter precache --android --web --linux
+}
+step 'Pinned Flutter, Dart, and engine caches' flutter_toolchain
+
+android_toolchain() {
+  if [[ ! -x "$ANDROID_HOME/cmdline-tools/$android_tools_version/bin/sdkmanager" ]]; then
+    # 19.0 retains the license output expected by this Flutter version.
+    # Fixed Google release; checksum from repository2-3.xml.
+    download https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip "$scratch/android-tools.zip"
+    printf '%s  %s\n' 5fdcc763663eefb86a5b8879697aa6088b041e70 "$scratch/android-tools.zip" | sha1sum --check -
+    unzip -q "$scratch/android-tools.zip" -d "$scratch/android-tools"
+    mkdir -p "$ANDROID_HOME/cmdline-tools"
+    mv -- "$scratch/android-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/$android_tools_version"
+  fi
+  local ndk package missing=()
+  ndk=$(sed -n 's/.*val ndkVersion: String = "\([^"]*\)".*/\1/p' "$FLUTTER_ROOT/packages/flutter_tools/gradle/src/main/kotlin/FlutterExtension.kt")
+  : "${ndk:?Cannot determine the NDK pinned by Flutter}"
+  # Locked Flutter plugins also compile against API 35.
+  for package in platform-tools "platforms;android-$android_api" 'platforms;android-35' 'build-tools;36.0.0' 'cmake;3.22.1' "ndk;$ndk"; do
+    if [[ ! -f "$ANDROID_HOME/${package//;/\/}/package.xml" ]]; then
+      missing+=("$package")
+    fi
+  done
+  if ((${#missing[@]})); then
+    # Finite input avoids yes/SIGPIPE failures under pipefail.
+    printf 'y\n%.0s' {1..100} | sdkmanager --sdk_root="$ANDROID_HOME" --licenses > /dev/null
+    sdkmanager --sdk_root="$ANDROID_HOME" --install "${missing[@]}"
+  fi
+}
+step 'Android SDK and Flutter-pinned NDK (no emulator)' android_toolchain
+
+# The checked-in Gradle heap alone exceeds smaller orbs' RAM. User-home
+# properties take precedence without editing the app or clobbering local tuning.
+mkdir -p "$HOME/.gradle"
+if [[ ! -f "$HOME/.gradle/gradle.properties" ]]; then
+  cat > "$HOME/.gradle/gradle.properties" <<'EOF'
+org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=768m -XX:ReservedCodeCacheSize=256m
+org.gradle.workers.max=2
+kotlin.daemon.jvmargs=-Xmx1g
+EOF
+fi
+
+dependencies() {
+  pnpm install --frozen-lockfile --prefer-offline
+  (
+    cd -- "$repo_root/apps/mobile"
+    flutter pub get --enforce-lockfile
+    dart run rive_native:setup --platform android
+    local rive_package rive_library
+    rive_package=$(node -e '
+      const fs = require("node:fs"), url = require("node:url"), path = require("node:path");
+      const config = path.resolve(".dart_tool/package_config.json");
+      const pkg = JSON.parse(fs.readFileSync(config)).packages.find(p => p.name === "rive_native");
+      console.log(url.fileURLToPath(new URL(pkg.rootUri, url.pathToFileURL(config))));
+    ')
+    rive_library="$rive_package/linux/bin/lib/debug_shared/librive_native.so"
+    # The published binary needs glibc 2.38; build the lockfile's source on
+    # Debian 12 instead. Reuse it on warm runs, and repair older binary caches.
+    if [[ ! -f "$rive_library" ]] || ! ldd "$rive_library" > "$scratch/rive-ldd.log" 2>&1 || grep -q 'not found' "$scratch/rive-ldd.log"; then
+      # Use Rive's own shared build, skipping its unused desktop static build.
+      # Pub ships the shader Makefile under this name (as in Rive's setup CLI).
+      if [[ ! -f "$rive_package/runtime/renderer/src/shaders/Makefile" ]]; then
+        cp -- "$rive_package/runtime/renderer/src/shaders/Makefile.rive" "$rive_package/runtime/renderer/src/shaders/Makefile"
+      fi
+      (
+        cd -- "$rive_package/native"
+        step 'Rive Linux shared runtime source build' ./build.sh shared flutter-runtime
+      )
+    fi
+    ldd "$rive_library" > "$scratch/rive-ldd.log" 2>&1
+    if grep -q 'not found' "$scratch/rive-ldd.log"; then
+      cat "$scratch/rive-ldd.log" >&2
+      exit 1
+    fi
+    # Flutter clean can remove the app copy but leave the Pub-cache markers.
+    install -Dm755 "$rive_library" build/rive_native/native/build/linux/bin/lib/debug_shared/librive_native.so
+  )
+}
+step 'Locked workspace, Flutter, and Rive test dependencies' dependencies
+
+(
+  cd -- "$repo_root/apps/mobile/android"
+  step 'Pinned Gradle wrapper' ./gradlew --no-daemon --version
+)
+
+# Login shells are used by subsequent agent commands and supervised services.
+# Export the whole toolchain, scoped to this checkout and its subdirectories.
+tool_path="$tools/node-v$node_version/bin:$tools/bin:$FLUTTER_ROOT/bin:$ANDROID_HOME/cmdline-tools/$android_tools_version/bin:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin"
+{
+  printf '# Generated by CocEnglish .agents/setup; no credentials.\n'
+  for variable in FLUTTER_ROOT ANDROID_HOME ANDROID_SDK_ROOT JAVA_HOME FLUTTER_SUPPRESS_ANALYTICS DART_SUPPRESS_ANALYTICS; do
+    printf 'export %s=%q\n' "$variable" "${!variable}"
+  done
+  # /etc/profile can reset PATH in a nested login shell; inspect PATH itself.
+  printf 'case "$PATH" in\n  %q|%q:*) ;;\n  *) export PATH=%q:"$PATH" ;;\nesac\n' "$tool_path" "$tool_path" "$tool_path"
+} > "$tools/env.sh"
+profile_marker='# CocEnglish orb toolchain'
+if ! grep -Fqx "$profile_marker" "$HOME/.bash_profile" 2>/dev/null; then
+  {
+    printf '\n%s\n' "$profile_marker"
+    printf 'if [[ "$PWD" == %q || "$PWD" == %q/* ]] && [[ -f %q ]]; then\n' "$repo_root" "$repo_root" "$tools/env.sh"
+    printf '  . %q\nfi\n' "$tools/env.sh"
+  } >> "$HOME/.bash_profile"
+fi
+
+printf '\n[setup] Ready in %ss. Toolchains and package caches are reusable in orb snapshots.\n' "$((SECONDS - started))"
