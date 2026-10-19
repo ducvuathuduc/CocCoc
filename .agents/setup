@@ -188,13 +188,6 @@ tool_path="$tools/node-v$node_version/bin:$tools/bin:$FLUTTER_ROOT/bin:$ANDROID_
   # /etc/profile can reset PATH in a nested login shell; inspect PATH itself.
   printf 'case "$PATH" in\n  %q|%q:*) ;;\n  *) export PATH=%q:"$PATH" ;;\nesac\n' "$tool_path" "$tool_path" "$tool_path"
 } > "$tools/env.sh"
-profile_marker='# CocEnglish orb toolchain'
-if ! grep -Fqx "$profile_marker" "$HOME/.bash_profile" 2>/dev/null; then
-  {
-    printf '\n%s\n' "$profile_marker"
-    printf 'if [[ "$PWD" == %q || "$PWD" == %q/* ]] && [[ -f %q ]]; then\n' "$repo_root" "$repo_root" "$tools/env.sh"
-    printf '  . %q\nfi\n' "$tools/env.sh"
-  } >> "$HOME/.bash_profile"
-fi
+# Resume installs the login hook after Amp has applied its runtime environment.
 
 printf '\n[setup] Ready in %ss. Toolchains and package caches are reusable in orb snapshots.\n' "$((SECONDS - started))"

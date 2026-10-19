@@ -1,10 +1,30 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# No installs or authentication are needed on wake. Check the persisted login
-# environment in a child shell, rather than changing this process's environment.
+# Amp applies its runtime environment after setup and can append a PATH reset
+# to .bash_profile. Keep our scoped hook last after activation and every wake.
 repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd -- "$repo_root"
+tools="$HOME/.local/share/cocenglish-orb"
+hook=$(
+  printf '# CocEnglish orb toolchain\n'
+  printf 'if [[ "$PWD" == %q || "$PWD" == %q/* ]] && [[ -f %q ]]; then\n' "$repo_root" "$repo_root" "$tools/env.sh"
+  printf '  . %q\nfi' "$tools/env.sh"
+)
+python3 - "$HOME/.bash_profile" "$hook" <<'PY'
+from pathlib import Path
+import sys
+
+profile = Path(sys.argv[1])
+hook = sys.argv[2] + "\n"
+text = profile.read_text() if profile.exists() else ""
+if not text.endswith(hook):
+    # Move only our exact block, preserving Amp's and the user's other edits.
+    text = text.replace(hook, "")
+    profile.write_text(text + ("\n" if text.endswith("\n") else "\n\n") + hook)
+PY
+
+# Check a new login shell; never install dependencies or authenticate on wake.
 exec /bin/bash -lc '
   if [[ -z ${FLUTTER_ROOT:-} || -z ${ANDROID_HOME:-} ]] ||
      [[ ! -x "$FLUTTER_ROOT/bin/cache/dart-sdk/bin/dart" ]] ||

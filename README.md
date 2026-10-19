@@ -15,7 +15,7 @@ Local browser preview: set `FLUTTER_ROOT` to your Flutter SDK directory, then ru
 
 Amp orbs use executable [setup](.agents/setup) and [resume](.agents/resume) hooks. Setup caches the pinned toolchains from [tools/toolchain.json](tools/toolchain.json), pnpm from `package.json`, locked Node/Flutter dependencies, the Rive Linux test runtime, and Android SDK/NDK with Java 17. The first uncached setup builds Rive from the locked source for Debian 12 compatibility; later runs reuse the library. Orb-local Gradle defaults limit memory without changing the app's configuration or existing user tuning. Run APK builds and full Flutter tests sequentially on small orbs.
 
-New login shells receive the toolchain paths automatically inside this checkout. Setup is safe to rerun after dependency changes; resume only checks cached prerequisites. No secrets, cloud resources, servers, or emulators are required. Android device tests need a connected runner; iOS builds need macOS.
+New login shells receive the toolchain paths automatically inside this checkout. Setup is safe to rerun after dependency changes; resume repairs the login-hook ordering after Amp applies its runtime environment, then checks cached prerequisites. No secrets, cloud resources, servers, or emulators are required. Android device tests need a connected runner; iOS builds need macOS.
 
 Debug builds use local mock data by default. Demo email: `demo@cocenglish.test`; password: `duolingo-demo`. Google, Facebook and Apple buttons simulate the demo account. Mock recovery advances to an in-app password-reset preview. No cloud account is created and no email is sent. See the module README for runtime switches and limitations.
 
