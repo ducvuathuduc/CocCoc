@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../billing/application/billing_controller.dart';
+
 class ExtendedState {
   const ExtendedState({
     this.selectedPlan,
@@ -21,7 +23,27 @@ final extendedControllerProvider =
 
 class ExtendedController extends Notifier<ExtendedState> {
   @override
-  ExtendedState build() => const ExtendedState();
+  ExtendedState build() {
+    ref.listen(billingControllerProvider, (before, after) {
+      if (!after.loaded && !after.busy) {
+        state = ExtendedState(energy: state.energy);
+        return;
+      }
+      if (!after.loaded || after.busy || after.hasError) {
+        return;
+      }
+      final plan = after.snapshot.selection;
+      state = ExtendedState(
+        selectedPlan: state.selectedPlan,
+        plan: plan,
+        energy: state.energy,
+        invited: plan == 'family' || plan == 'max-family'
+            ? state.invited
+            : const {},
+      );
+    });
+    return const ExtendedState();
+  }
 
   void setEnergy(int balance) {
     state = ExtendedState(

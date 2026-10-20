@@ -192,6 +192,8 @@ export function emptyBody(body: unknown): void {
 }
 
 export const PROGRESS_ROUTE_TEMPLATES: readonly RouteTemplate[] = [
+  { method: 'GET', path: '/v1/billing/purchases/{purchaseId}' },
+  { method: 'POST', path: '/v1/billing/subscription/cancel', noBody: true },
   { method: 'POST', path: '/v1/friend-streaks/{pairId}/respond' },
   { method: 'DELETE', path: '/v1/blocks/{userId}', noBody: true },
   { method: 'DELETE', path: '/v1/classrooms/{classroomId}/membership', noBody: true },

@@ -1,6 +1,6 @@
 # Commercialization and billing contract
 
-Current coursework baseline: core language learning always works without a purchase account; Super/Max/family/cancel screens are fixture previews. No live billing dependency or credentials were added. Live implementation is gated after core learning/progress, with its own acceptance task and platform access. Design owner is this document; no duplicate billing architecture file.
+Current coursework baseline: core language learning always works without a purchase account. Super/Max checkout uses explicit SIMULATION orders; receipts and cancellation are implemented on the payment branch. No live billing dependency or credentials were added. Live implementation is gated after core learning/progress, with its own acceptance task and platform access. Design owner is this document; no duplicate billing architecture file.
 
 Primary later adapter: maintained Flutter [in_app_purchase](https://pub.dev/packages/in_app_purchase), platform Google Play first and StoreKit for iOS. Progress owns entitlements/purchase receipts; AI consumes an entitlement decision through Progress API rather than reading/writing its tables. Provider secrets/customer verification keys never reach Flutter. RevenueCat is optional only when integration effort and actual current price justify a reviewed change.
 
@@ -43,4 +43,32 @@ sequenceDiagram
 - **Promo codes** (P10-PROMO-001; tables `p_promo_codes` and `p_promo_redemptions` in [DATA_MODEL](../data/DATA_MODEL.md)). A code grants Super days (`p_entitlements` source PROMO), gems or a catalog item, once per user. Each code has a validity window and an optional global redemption limit. Codes are created by the maintainer CLI and stored only as hashes. The redeem endpoint is proposed in [API_ENDPOINT_MATRIX](../api/API_ENDPOINT_MATRIX.md#proposed-endpoints).
 - **Ads are mock, free tier only** (P10-ADS-001; table `p_ad_events`). The placements are a lesson-end interstitial, rewarded gems and a rewarded energy refill. Ads are suppressed whenever the entitlement plan is SUPER or MAX, never gate or interrupt core learning, have per-day caps, and grant each rewarded completion exactly once. No ad SDK, ad network, tracking identifier or revenue is integrated. The client shows a local mock ad surface.
 
-OpenAPI has no enabled billing endpoints yet. Add versioned DTOs/tables through contract-owner review before implementation; this design does not silently expand service write scopes.
+## Local payment follow-up — 2026-10-21
+
+The user selected completing simulated billing and instructed that this branch
+must remain local until push is explicitly permitted. Checkout now shows the
+selected product and illustrative price, labels the transaction as a demo, and
+requires explicit confirmation. Success, pending and declined outcomes are
+available. No real trial, renewal charge, card data or payment SDK is involved.
+
+Catalog additions `super_family` and `max_family` provide annual simulated family
+products alongside the existing individual products. This task changes purchase
+selection; the existing family invitation screens remain a separate feature.
+
+Mock mode persists a receipt and its active entitlement in account-specific local
+storage. A pending upgrade retains an existing paid plan. Explicitly checking a
+pending local demo settles that same receipt once. API mode uses the existing
+Progress verifier, persists an unresolved request/key before sending it, and
+replays that exact request after an uncertain response. Reading an API pending
+order does not fabricate settlement: only the existing signed simulated provider
+notification can change it.
+
+The existing OpenAPI billing operations are supplemented with owner-only
+`getPurchase` and idempotent `cancelSubscription`. Restore rechecks the current
+server entitlement. Cancellation disables renewal and preserves access through
+the recorded expiry; duplicate ACTIVE notifications do not extend that expiry,
+and terminal refunded/revoked/expired purchases cannot be resurrected by hints.
+Tokens remain private to Progress. No storage schema migration is needed.
+
+The [payment validation receipt](../quality/MOCK_PAYMENT.md) records software
+checks and limitations; it does not assert Google Play/App Store integration.

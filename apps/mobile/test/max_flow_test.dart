@@ -4,6 +4,8 @@ import 'package:cocenglish/features/progress/application/max_controller.dart';
 import 'package:cocenglish/features/progress/presentation/max_screen.dart';
 import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/core/cache/snapshot_cache.dart';
+import 'package:cocenglish/features/billing/data/billing_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -68,10 +70,17 @@ void main() {
     'routed mock checkout dismiss preserves selection and confirms only explicitly',
     (tester) async {
       await tester.pumpWidget(
-        MainApp(
-          initial: OnboardingState(
-            step: OnboardingStep.lessonEntry,
-            language: 'English',
+        ProviderScope(
+          overrides: [
+            billingRepositoryProvider.overrideWithValue(
+              LocalBillingRepository(MemorySnapshotStore()),
+            ),
+          ],
+          child: MainApp(
+            initial: OnboardingState(
+              step: OnboardingStep.lessonEntry,
+              language: 'English',
+            ),
           ),
         ),
       );
@@ -104,13 +113,10 @@ void main() {
       expect(c.read(maxControllerProvider).selectedPlan, 'max-family');
       await tester.tap(find.text('START MY FREE WEEK'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('CONFIRM'));
-      await tester.tap(find.text('CONFIRM'));
+      await tester.ensureVisible(find.text('CONFIRM DEMO PAYMENT'));
+      await tester.tap(find.text('CONFIRM DEMO PAYMENT'));
       await tester.pumpAndSettle();
       expect(c.read(extendedControllerProvider).plan, 'max-family');
-      expect(find.text('Your plan is ready.'), findsOneWidget);
-      await tester.tap(find.text('OK'));
-      await tester.pumpAndSettle();
       await tester.tap(find.text('LET’S GO'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('SKIP'));

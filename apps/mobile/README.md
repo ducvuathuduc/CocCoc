@@ -4,6 +4,14 @@ Flutter 3.47.0 / Dart 3.13.0; feature-first manual Riverpod MVVM and go_router. 
 
 Run `flutter pub get` then `flutter run` from this directory. Run `pnpm verify` from the repository root for the complete local gate. Direct regression command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false`. Dedicated Duo tests enable the actual animation explicitly.
 
+Simulated payments: open Super/Max → select a plan → confirm demo payment. The
+checkout supports success, pending and declined outcomes, with no real money.
+Settings → Manage Subscription provides restore, receipt details and cancellation
+of renewal while access continues until expiry. Receipts persist per local
+account; API mode uses the Progress simulated verifier and signed-in JWT. See
+the [payment receipt](../../docs/quality/MOCK_PAYMENT.md) for tests, retry behavior
+and the distinction between local settlement and signed API notifications.
+
 Debug mock login uses `demo@cocenglish.test` / `duolingo-demo`. Any valid demo email accepts that password until reset. Google, Facebook and Apple buttons simulate a demo sign-in. Forgot Password → Next → Okay opens the local reset form; matching passwords must have at least 12 characters. The changed password works for that email in this app instance. Restart resets demo authentication; onboarding choices are stored locally and restored. There is no cloud email, real OAuth or account creation.
 
 `USE_MOCK_AUTH=false` selects the prepared Appwrite adapter. It requires public `APPWRITE_ENDPOINT`, `APPWRITE_PROJECT_ID`, and an HTTPS `APPWRITE_RECOVERY_URL`; providers additionally require their explicit enable flags and server configuration. Never supply API keys in the app. Real authentication/recovery links are not verified in this slice.
