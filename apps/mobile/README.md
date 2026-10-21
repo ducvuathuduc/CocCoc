@@ -12,6 +12,35 @@ account; API mode uses the Progress simulated verifier and signed-in JWT. See
 the [payment receipt](../../docs/quality/MOCK_PAYMENT.md) for tests, retry behavior
 and the distinction between local settlement and signed API notifications.
 
+## Recorded pronunciation practice
+
+Open Practice → Speak → Practice speaking. In API mode (`DATA_SOURCE=api`),
+the record button asks for microphone access and captures up to 15 seconds of
+16 kHz mono PCM WAV. Stop submits that recording and the displayed reference to
+the existing AI assessment endpoint using the signed-in Appwrite JWT. Configure
+`AI_API_URL` with the AI service URL, alongside the other service URLs described
+in [local setup](../../docs/devops/LOCAL_SETUP_WINDOWS.md). Provider secrets stay
+in the AI Function; this feature does not enable a provider or deploy a service.
+
+The result shows the recognized text and the dedicated scorer's accuracy,
+fluency, completeness and optional prosody. Expand a word for returned phoneme
+scores. Transcript-only, low-confidence, failed and expired results do not show
+numeric pronunciation scores. This practice gives feedback without awarding XP.
+Three authored reference sentences are included; try again or advance to the
+next sentence. Mock mode explicitly offers typed practice instead of simulated
+recording success.
+
+Leaving the screen or backgrounding stops capture and discards late results.
+Microphone denial, empty audio and service failure keep the sentence available
+for retry or typed practice. Captured bytes stay in memory and are uploaded only
+after the learner starts recording and stops or reaches the limit. API request
+retries reuse the same assessment job and idempotency key.
+
+See the [implementation and validation receipt](../../docs/quality/PRONUNCIATION_PRACTICE.md)
+for tests and device/provider limitations. Native microphone and service quality
+must still be checked with a consenting speaker on the target phone; unit tests
+do not establish speech accuracy.
+
 Debug mock login uses `demo@cocenglish.test` / `duolingo-demo`. Any valid demo email accepts that password until reset. Google, Facebook and Apple buttons simulate a demo sign-in. Forgot Password → Next → Okay opens the local reset form; matching passwords must have at least 12 characters. The changed password works for that email in this app instance. Restart resets demo authentication; onboarding choices are stored locally and restored. There is no cloud email, real OAuth or account creation.
 
 `USE_MOCK_AUTH=false` selects the prepared Appwrite adapter. It requires public `APPWRITE_ENDPOINT`, `APPWRITE_PROJECT_ID`, and an HTTPS `APPWRITE_RECOVERY_URL`; providers additionally require their explicit enable flags and server configuration. Never supply API keys in the app. Real authentication/recovery links are not verified in this slice.

@@ -4,18 +4,78 @@
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
     {
+      "taskId": "P8-FE-PRONUNCIATION-PRACTICE",
+      "phase": "P8 scoped follow-up",
+      "owner": "Codex",
+      "branch": "feat/pronunciation-assessment",
+      "worktree": ".",
+      "status": "VERIFYING",
+      "dependencyGateReceipts": [
+        "7097db8",
+        "b5edb59",
+        "69f7ef3"
+      ],
+      "exclusivePaths": [
+        "apps/mobile/lib/features/practice/application/pronunciation_controller.dart",
+        "apps/mobile/lib/features/practice/presentation/pronunciation_practice_screen.dart",
+        "apps/mobile/lib/features/learning/data/speech_assessment.dart",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": [
+        "FR-SPEECH-001",
+        "FR-SPEECH-003"
+      ],
+      "interfaces": [
+        "SpeechRecorder",
+        "SpeechAssessor",
+        "createAssessment"
+      ],
+      "testCommand": "flutter test --no-pub test/pronunciation_practice_test.dart test/speech_assessment_test.dart test/practice_flow_test.dart test/english_spoken_lesson_test.dart --dart-define=ENABLE_MASCOT_MOTION=false",
+      "evidence": [
+        "docs/quality/PRONUNCIATION_PRACTICE.md"
+      ],
+      "checks": {
+        "targetedFlutter": "PASS 42/42",
+        "aiSpeechProviderFixtures": "PASS 7/7, no external provider calls",
+        "analyzer": "PASS, no issues",
+        "fullMobile": "960 passed / 273 golden failures, same baseline failure count",
+        "blueprintAndAudit": "PASS",
+        "androidBuild": "Not certified: online dependency download stopped at 1184.2s; offline check confirms uncached AGP 8.11.0 artifacts in integration_test"
+      },
+      "limitations": "Scoped software implementation; full phase gates, physical microphone/provider benchmark and iOS build remain separate. Baseline formatting/golden and CRLF-generated-contract checks are recorded in the receipt."
+    },
+    {
       "taskId": "P10-BILL-LOCAL-20261021",
       "phase": "P10 scoped mock payment follow-up",
       "owner": "Codex",
       "branch": "feat/payment",
       "worktree": ".",
       "status": "VERIFYING",
-      "dependencyGateReceipts": ["c407f46", "docs/product/MONETIZATION.md"],
-      "exclusivePaths": ["docs/api/openapi.yaml", "packages/api_contracts/generated.ts", "apps/mobile/lib/core/api/generated", "apps/mobile/lib/core/api/client/api_endpoints.g.dart", "apps/mobile/lib/core/api/client/api_operations.g.dart", "docs/agent/task-status.json"],
-      "requirements": ["FR-SET-001"],
-      "interfaces": ["BillingRepository", "verifyPurchase", "getPurchase", "cancelSubscription"],
+      "dependencyGateReceipts": [
+        "c407f46",
+        "docs/product/MONETIZATION.md"
+      ],
+      "exclusivePaths": [
+        "docs/api/openapi.yaml",
+        "packages/api_contracts/generated.ts",
+        "apps/mobile/lib/core/api/generated",
+        "apps/mobile/lib/core/api/client/api_endpoints.g.dart",
+        "apps/mobile/lib/core/api/client/api_operations.g.dart",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": [
+        "FR-SET-001"
+      ],
+      "interfaces": [
+        "BillingRepository",
+        "verifyPurchase",
+        "getPurchase",
+        "cancelSubscription"
+      ],
       "testCommand": "flutter test --no-pub test/billing_test.dart test/billing_api_test.dart test/max_flow_test.dart test/core/api/api_operations_sync_test.dart test/api_contracts_round_trip_test.dart --dart-define=ENABLE_MASCOT_MOTION=false",
-      "evidence": ["docs/quality/MOCK_PAYMENT.md"],
+      "evidence": [
+        "docs/quality/MOCK_PAYMENT.md"
+      ],
       "checks": {
         "targetedFlutter": "PASS 155 tests including billing, existing Max/settings navigation and generated contracts",
         "billingCommerceBackend": "PASS 15 tests",
