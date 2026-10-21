@@ -18,6 +18,7 @@ final class JournalAnswer {
     required this.idempotencyKey,
     this.synced = false,
     this.correct,
+    this.expectedRevision,
   });
 
   factory JournalAnswer.fromJson(Map<String, Object?> json) => JournalAnswer(
@@ -29,6 +30,7 @@ final class JournalAnswer {
     idempotencyKey: json['idempotencyKey']! as String,
     synced: json['synced'] as bool? ?? false,
     correct: json['correct'] as bool?,
+    expectedRevision: (json['expectedRevision'] as num?)?.toInt(),
   );
 
   final String exerciseId;
@@ -43,6 +45,7 @@ final class JournalAnswer {
 
   /// Last known grade (provisional when graded offline).
   final bool? correct;
+  final int? expectedRevision;
 
   JournalAnswer copyWith({bool? synced, bool? correct}) => JournalAnswer(
     exerciseId: exerciseId,
@@ -53,6 +56,7 @@ final class JournalAnswer {
     idempotencyKey: idempotencyKey,
     synced: synced ?? this.synced,
     correct: correct ?? this.correct,
+    expectedRevision: expectedRevision,
   );
 
   /// Wire `OfflineAnswer` JSON.
@@ -69,6 +73,7 @@ final class JournalAnswer {
     'idempotencyKey': idempotencyKey,
     'synced': synced,
     'correct': correct,
+    'expectedRevision': expectedRevision,
   };
 }
 
