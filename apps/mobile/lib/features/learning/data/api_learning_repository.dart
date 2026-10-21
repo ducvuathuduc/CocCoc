@@ -6,6 +6,10 @@ import '../../../core/cache/lesson_journal.dart';
 import '../domain/learning_models.dart';
 import 'learning_repository.dart';
 import 'lesson_wire_mapper.dart';
+import '../domain/review_resume.dart';
+
+const mistakeReviewNodeId = 'mistake-review';
+const reviewLessonId = 'review_dynamic';
 
 /// [LearningRepository] backed by the Learning service (P4-FE-001,
 /// P5-FE-001, P6-FE-001).
@@ -19,7 +23,8 @@ import 'lesson_wire_mapper.dart';
 ///   [syncPending] replays with the same `operationId`.
 /// * XP is never computed on the client: the receipt carries the reward the
 ///   Progress service credited (0 while it is still pending).
-class ApiLearningRepository implements LearningRepository {
+class ApiLearningRepository
+    implements LearningRepository, EvidenceLearningRepository {
   ApiLearningRepository({
     required this.learning,
     required this.journal,
@@ -54,8 +59,14 @@ class ApiLearningRepository implements LearningRepository {
 
   @override
   Future<List<Exercise>> loadLesson(String nodeId) async {
+    if (nodeId == mistakeReviewNodeId) return _loadReview();
     await syncPending();
     final journaled = await journal.active();
+    if (journaled?.lessonId == reviewLessonId) {
+      throw const LearningFailure(
+        'Finish your saved review from Practice → Mistakes first.',
+      );
+    }
     try {
       final course = await _courseId();
       final path = await learning.getPath(course);
@@ -82,6 +93,166 @@ class ApiLearningRepository implements LearningRepository {
       }
       throw LearningFailure(error.userMessage);
     }
+  }
+
+  Future<List<Exercise>> _loadReview() async {
+    try {
+      await syncPending();
+      var saved = await journal.active();
+      final course = await _courseId();
+      if (saved != null &&
+          (saved.lessonId != reviewLessonId || saved.courseId != course)) {
+        throw const LearningFailure(
+          'Finish your current lesson before starting a review.',
+        );
+      }
+      if (saved?.sessionId case final sessionId?) {
+        final server = await learning.getSession(sessionId);
+        if (server.status == 'ACTIVE' || server.status == 'COMPLETED') {
+          var current = _reviewJournal(
+            server,
+            saved!.enrollmentRevision,
+            saved.startKey,
+            saved.completeKey,
+            saved,
+          );
+          if (server.status == 'ACTIVE') {
+            current = await _replayUnsynced(current);
+          }
+          await _save(current);
+          return _activate(current);
+        }
+        saved =
+            null; // Expired/abandoned reviews start a fresh private snapshot.
+      }
+      final path = await learning.getPath(course);
+      final intent =
+          saved ??
+          JournalSession(
+            nodeId: mistakeReviewNodeId,
+            courseId: course,
+            lessonId: reviewLessonId,
+            lessonVersion: 'review.pending',
+            bundleHash: '',
+            enrollmentRevision: path.enrollment.revision,
+            bundle: const {},
+            startKey: ids.next(),
+            completeKey: ids.next(),
+          );
+      // Persist the exact start identity before sending: a killed/lost POST
+      // replays the same request rather than creating another active session.
+      await _save(intent);
+      wire.Session server;
+      try {
+        server = await learning.startSession(
+          wire.SessionRequest(
+            courseId: course,
+            lessonId: reviewLessonId,
+            mode: 'REVIEW',
+            expectedEnrollmentRevision: intent.enrollmentRevision,
+          ),
+          idempotencyKey: intent.startKey,
+        );
+      } on ApiException catch (error) {
+        final active = error.details['activeSessionId'];
+        if (error.code != 'SESSION_CONFLICT' || active is! String) rethrow;
+        server = await learning.getSession(active);
+        if (server.mode != 'REVIEW' || server.courseId != course) {
+          await journal.clearActive();
+          _session = null;
+          throw const LearningFailure(
+            'Finish the lesson already open on your account first.',
+          );
+        }
+      }
+      final current = _reviewJournal(
+        server,
+        intent.enrollmentRevision,
+        intent.startKey,
+        intent.completeKey,
+        null,
+      );
+      await _save(current);
+      return _activate(current);
+    } on ApiException catch (error) {
+      if (error.details['reason'] == 'REVIEW_POOL_EMPTY' ||
+          error.code == 'REVISION_CONFLICT') {
+        final pending = await journal.active();
+        if (pending?.lessonId == reviewLessonId && pending?.sessionId == null) {
+          await journal.clearActive();
+          _session = null;
+        }
+      }
+      if (error.details['reason'] == 'REVIEW_POOL_EMPTY') {
+        throw const LearningFailure(
+          'Complete a lesson before starting a review.',
+        );
+      }
+      throw LearningFailure(error.userMessage);
+    }
+  }
+
+  JournalSession _reviewJournal(
+    wire.Session server,
+    int enrollmentRevision,
+    String startKey,
+    String completeKey,
+    JournalSession? saved,
+  ) {
+    final mapper = LessonWireMapper(
+      server.bundle.exercises,
+      assets: server.bundle.assets,
+    );
+    final answers = <JournalAnswer>[];
+    for (final history in server.answerHistory) {
+      final previous = saved?.answers
+          .where(
+            (a) =>
+                a.exerciseId == history.exerciseId &&
+                a.attemptOrdinal == history.attemptOrdinal,
+          )
+          .firstOrNull;
+      answers.add(
+        JournalAnswer(
+          exerciseId: history.exerciseId,
+          attemptOrdinal: history.attemptOrdinal,
+          answer: history.answer.toJson(),
+          assisted: history.assisted,
+          substituted: history.substituted,
+          idempotencyKey: previous?.idempotencyKey ?? ids.next(),
+          synced: true,
+          correct:
+              previous?.correct ??
+              mapper.gradeLocally(history.exerciseId, history.answer.toJson()),
+          expectedRevision: previous?.expectedRevision,
+        ),
+      );
+    }
+    for (final answer in saved?.answers ?? <JournalAnswer>[]) {
+      if (!answers.any(
+        (a) =>
+            a.exerciseId == answer.exerciseId &&
+            a.attemptOrdinal == answer.attemptOrdinal,
+      )) {
+        answers.add(answer);
+      }
+    }
+    return JournalSession(
+      nodeId: mistakeReviewNodeId,
+      courseId: server.courseId,
+      lessonId: server.lessonId,
+      lessonVersion: server.lessonVersion,
+      bundleHash: server.bundle.manifestHash,
+      enrollmentRevision: enrollmentRevision,
+      bundle: server.bundle.toJson(),
+      startKey: startKey,
+      completeKey: completeKey,
+      sessionId: server.sessionId,
+      revision: server.status == 'COMPLETED'
+          ? (saved?.revision ?? (server.revision - 1).clamp(0, server.revision))
+          : server.revision,
+      answers: answers,
+    );
   }
 
   Future<JournalSession> _startOrResume({
@@ -148,7 +319,7 @@ class ApiLearningRepository implements LearningRepository {
           answer: wire.Answer.fromJson(item.answer),
           assisted: item.assisted,
           substituted: item.substituted,
-          expectedRevision: current.revision,
+          expectedRevision: item.expectedRevision ?? current.revision,
         ),
         idempotencyKey: item.idempotencyKey,
       );
@@ -166,6 +337,9 @@ class ApiLearningRepository implements LearningRepository {
     final bundle = wire.LessonBundle.fromJson(session.bundle);
     final mapper = LessonWireMapper(bundle.exercises, assets: bundle.assets);
     _mapper = mapper;
+    _draft = session.lessonId == reviewLessonId
+        ? restoreReviewState(session, mapper.toDomain())
+        : null;
     _attempts
       ..clear()
       ..addAll({
@@ -177,23 +351,49 @@ class ApiLearningRepository implements LearningRepository {
 
   @override
   Future<bool> grade(Exercise exercise, LessonAnswer answer) async {
+    return gradeWithEvidence(
+      exercise,
+      answer,
+      assisted: false,
+      substituted: false,
+    );
+  }
+
+  @override
+  Future<bool> gradeWithEvidence(
+    Exercise exercise,
+    LessonAnswer answer, {
+    required bool assisted,
+    required bool substituted,
+  }) async {
     final session = _session;
     final mapper = _mapper;
     if (session == null || mapper == null) {
       throw const LearningFailure('This lesson isn’t ready yet.');
     }
     final ordinal = (_attempts[exercise.id] ?? 0).clamp(0, 2);
-    _attempts[exercise.id] = ordinal + 1;
     final wireAnswer = mapper.toWireAnswer(exercise.id, answer);
-    final entry = JournalAnswer(
-      exerciseId: exercise.id,
-      attemptOrdinal: ordinal,
-      answer: wireAnswer.toJson(),
-      assisted: false,
-      substituted: mapper.substitutedIds.contains(exercise.id),
-      idempotencyKey: ids.next(),
-    );
-    var journaled = session.copyWith(answers: [...session.answers, entry]);
+    final pending = session.lessonId == reviewLessonId
+        ? session.answers
+              .where((a) => a.exerciseId == exercise.id && !a.synced)
+              .firstOrNull
+        : null;
+    final entry =
+        pending ??
+        JournalAnswer(
+          exerciseId: exercise.id,
+          attemptOrdinal: ordinal,
+          answer: wireAnswer.toJson(),
+          assisted: assisted,
+          substituted:
+              substituted || mapper.substitutedIds.contains(exercise.id),
+          idempotencyKey: ids.next(),
+          expectedRevision: session.revision,
+        );
+    _attempts[exercise.id] = entry.attemptOrdinal + 1;
+    var journaled = pending == null
+        ? session.copyWith(answers: [...session.answers, entry])
+        : session;
     await _save(journaled);
 
     final sessionId = journaled.sessionId;
@@ -204,10 +404,10 @@ class ApiLearningRepository implements LearningRepository {
           wire.AnswerRequest(
             exerciseId: entry.exerciseId,
             attemptOrdinal: entry.attemptOrdinal,
-            answer: wireAnswer,
+            answer: wire.Answer.fromJson(entry.answer),
             assisted: entry.assisted,
             substituted: entry.substituted,
-            expectedRevision: journaled.revision,
+            expectedRevision: entry.expectedRevision ?? journaled.revision,
           ),
           idempotencyKey: entry.idempotencyKey,
         );
@@ -220,6 +420,13 @@ class ApiLearningRepository implements LearningRepository {
         await _save(journaled);
         return result.correct;
       } on ApiException catch (error) {
+        if (session.lessonId == reviewLessonId) {
+          throw LearningFailure(
+            error.isOffline
+                ? 'Review answer saved. Reconnect and retry to send the saved answer.'
+                : error.userMessage,
+          );
+        }
         if (!error.isOffline) throw LearningFailure(error.userMessage);
         // Fall through to provisional offline grading.
       }
@@ -268,7 +475,10 @@ class ApiLearningRepository implements LearningRepository {
       try {
         session = await _replayUnsynced(session);
         await _save(session);
-      } on ApiException {
+      } on ApiException catch (error) {
+        if (session.lessonId == reviewLessonId) {
+          throw LearningFailure(error.userMessage);
+        }
         // Still offline (or rejected): the completion is queued below.
       }
     }
@@ -291,13 +501,20 @@ class ApiLearningRepository implements LearningRepository {
               ? 0
               : completion.originalCorrect / completion.originalCount,
           elapsed: elapsed,
-          firstCompletion: completion.rewardStatus == 'pending',
+          firstCompletion:
+              session.lessonId != reviewLessonId &&
+              completion.rewardStatus == 'pending',
           guest: guest,
           placement: placement,
         );
       } on ApiException catch (error) {
         if (!error.isOffline) throw LearningFailure(error.userMessage);
       }
+    }
+    if (session.lessonId == reviewLessonId) {
+      throw const LearningFailure(
+        'Reconnect to finish this review. Your answers are saved.',
+      );
     }
     return _queueOffline(
       session,

@@ -1,5 +1,7 @@
 # CocEnglish mobile frontend
 
+Persistent mistake review: finish a lesson with an incorrect first answer, then open Practice → Mistakes. Demo history persists locally; API mode reads saved account mistakes and starts/resumes the server REVIEW session. Hints and same-lesson retries do not silently resolve mistakes. See [workflow, offline policy and acceptance evidence](../../docs/quality/PERSISTENT_MISTAKE_REVIEW.md).
+
 Flutter 3.47.0 / Dart 3.13.0; feature-first manual Riverpod MVVM and go_router. Android/iOS platform projects are generated; recorded Android evidence is kept in QA receipts, and iOS needs macOS/Xcode. New collaborators should start with the [developer handoff](../../docs/agent/DEVELOPER_HANDOFF.md).
 
 Run `flutter pub get` then `flutter run` from this directory. Run `pnpm verify` from the repository root for the complete local gate. Direct regression command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false`. Dedicated Duo tests enable the actual animation explicitly.

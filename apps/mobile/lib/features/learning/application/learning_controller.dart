@@ -1,12 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/api_providers.dart';
+import '../../../core/api/client/idempotency.dart';
 import '../../../core/cache/lesson_journal.dart';
 import '../../../core/config/app_config.dart';
 import '../../auth/application/auth_controller.dart';
 import '../data/api_learning_repository.dart';
 import '../data/learning_repository.dart';
 import '../domain/learning_models.dart';
+import '../../practice/application/mistake_history_controller.dart';
+import '../../practice/data/mistake_history_repository.dart';
 
 final learningRepositoryProvider = Provider<LearningRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return MockLearningRepository();
@@ -64,11 +67,17 @@ class LessonController extends Notifier<LessonState> {
   int _originalTotal = 0;
   List<Exercise> _mistakes = <Exercise>[];
   List<Exercise> _nextRetry = <Exercise>[];
+  final Map<String, MistakeEvidence> _firstEvidence = {};
+  String _evidenceId = '';
+  MistakeHistoryRepository? _historyRepository;
 
   LearningRepository get _repository => ref.read(learningRepositoryProvider);
 
   @override
   LessonState build() {
+    ref.watch(authControllerProvider.select((s) => s.user?.id));
+    _revision++;
+    _commandActive = false;
     _disposed = false;
     ref.onDispose(() {
       _disposed = true;
@@ -90,7 +99,20 @@ class LessonController extends Notifier<LessonState> {
     try {
       final loaded = exercises ?? await _repository.loadLesson(nodeId);
       if (!_isCurrent(revision)) return;
+      final restored = nodeId == mistakeReviewNodeId
+          ? _repository.loadDraft()
+          : null;
+      if (restored != null) {
+        _originalTotal = restored.originalTotal;
+        _mistakes = [...restored.pendingMistakes];
+        _nextRetry = [...restored.nextMistakes];
+        state = restored;
+        return;
+      }
       _originalTotal = loaded.length;
+      _firstEvidence.clear();
+      _evidenceId = UuidV4Generator().next();
+      _historyRepository = ref.read(mistakeRepositoryProvider);
       _mistakes = <Exercise>[];
       _nextRetry = <Exercise>[];
       _repository.clearDraft();
@@ -116,7 +138,7 @@ class LessonController extends Notifier<LessonState> {
         );
       }
     } finally {
-      _commandActive = false;
+      if (_isCurrent(revision)) _commandActive = false;
     }
   }
 
@@ -246,8 +268,23 @@ class LessonController extends Notifier<LessonState> {
       clearError: true,
     );
     try {
-      final correct = await _repository.grade(exercise, answer);
+      final repository = _repository;
+      final correct = repository is EvidenceLearningRepository
+          ? await (repository as EvidenceLearningRepository).gradeWithEvidence(
+              exercise,
+              answer,
+              assisted: state.assisted,
+              substituted: state.textAlternative,
+            )
+          : await repository.grade(exercise, answer);
       if (!_isCurrent(revision)) return;
+      if (!state.isRetry) {
+        _firstEvidence[exercise.id] = MistakeEvidence(
+          exercise,
+          correct: correct,
+          assisted: state.assisted,
+        );
+      }
       var originalCorrect = state.originalCorrect;
       var attempted = state.attempted;
       if (state.isRetry) {
@@ -287,7 +324,7 @@ class LessonController extends Notifier<LessonState> {
         );
       }
     } finally {
-      _commandActive = false;
+      if (_isCurrent(revision)) _commandActive = false;
     }
   }
 
@@ -404,6 +441,14 @@ class LessonController extends Notifier<LessonState> {
       clearError: true,
     );
     try {
+      if (_repository is! ApiLearningRepository) {
+        await _historyRepository?.record(
+          _evidenceId,
+          _firstEvidence.values.toList(),
+          review: state.nodeId == mistakeReviewNodeId,
+        );
+        if (!_isCurrent(revision)) return;
+      }
       final receipt = await _repository.complete(
         nodeId: state.nodeId,
         originalCorrect: state.originalCorrect,
@@ -413,6 +458,7 @@ class LessonController extends Notifier<LessonState> {
         placement: state.placement,
       );
       if (!_isCurrent(revision)) return;
+      ref.invalidate(mistakeHistoryProvider);
       _repository.clearDraft();
       state = state.copyWith(
         stage: LessonStage.completed,
@@ -437,7 +483,7 @@ class LessonController extends Notifier<LessonState> {
         );
       }
     } finally {
-      _commandActive = false;
+      if (_isCurrent(revision)) _commandActive = false;
     }
   }
 }

@@ -12,6 +12,7 @@ import '../../learning/presentation/learning_visuals.dart';
 import '../application/practice_controller.dart';
 import '../domain/practice_models.dart';
 import 'words_screen.dart';
+import 'mistake_history_panel.dart';
 
 const _callLily = ArtRegion('call-04', Rect.fromLTWH(0, 300, 1180, 1800));
 
@@ -293,7 +294,7 @@ class PracticeDetailScreen extends ConsumerWidget {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 560),
                     child: switch (kind) {
-                      'mistakes' => _MistakesPractice(ref: ref),
+                      'mistakes' => const MistakeHistoryPanel(),
                       'listen' => _MediaPractice(kind: kind, ref: ref),
                       'speak' => _MediaPractice(kind: kind, ref: ref),
                       _ => const _WordPractice(),
@@ -383,75 +384,6 @@ class _WordPractice extends ConsumerWidget {
             onPressed: controller.practiceAgain,
           ),
         ],
-      ],
-    );
-  }
-}
-
-class _MistakesPractice extends StatelessWidget {
-  const _MistakesPractice({required this.ref});
-
-  final WidgetRef ref;
-
-  @override
-  Widget build(BuildContext context) {
-    final mistakes = ref.watch(lessonControllerProvider).pendingMistakes;
-    if (mistakes.isEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const ReferenceArt(LearningArt.mistakes, width: 132, height: 132),
-          const SizedBox(height: 18),
-          const Text(
-            'No mistakes to review',
-            textAlign: TextAlign.center,
-            style: headingStyle,
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Missed lesson questions will appear here.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: ReferenceColors.muted, fontSize: 17),
-          ),
-          const SizedBox(height: 24),
-          ReferenceButton(
-            label: 'PRACTICE WORDS',
-            outlined: true,
-            foregroundColor: ReferenceColors.blue,
-            onPressed: () => context.go('/practice/words'),
-          ),
-        ],
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          '${mistakes.length} question${mistakes.length == 1 ? '' : 's'} ready',
-          style: headingStyle,
-        ),
-        const SizedBox(height: 14),
-        for (final mistake in mistakes)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: LearningCard(
-              child: Text(mistake.prompt, style: const TextStyle(fontSize: 17)),
-            ),
-          ),
-        const SizedBox(height: 12),
-        ReferenceButton(
-          label: 'REVIEW MISTAKES',
-          onPressed: () async {
-            await ref
-                .read(lessonControllerProvider.notifier)
-                .start(
-                  nodeId: 'mistake-practice',
-                  guest: true,
-                  exercises: mistakes,
-                );
-            if (context.mounted) context.push('/lesson/practice');
-          },
-        ),
       ],
     );
   }

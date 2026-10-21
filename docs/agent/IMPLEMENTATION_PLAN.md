@@ -1,6 +1,8 @@
 # CocEnglish Implementation Plan
 
 Goal: implement the frozen Flutter language platform in small verified tasks.
+
+2026-10-21 user-authorized slice: persistent Mistakes UI and existing backend REVIEW integration on local `feat/persistent-mistake-review`. Implements account-scoped demo persistence, server history/cache, assisted first-attempt evidence, bounded resume queues and duplicate-safe start/answer/completion recovery. [Acceptance evidence and limitations](../quality/PERSISTENT_MISTAKE_REVIEW.md). No global phase gate advances; no push, deployment or schema change is authorized.
 Architecture: Riverpod MVVM mobile; Learning/Progress/AI services; Appwrite platform; offline journal and transactional events.
 Tech stack: [STACK](../architecture/STACK.md). Spec: [SRS](../product/SRS.md), [OpenAPI](../api/openapi.yaml).
 Worker method: native thin slices with meaningful behavior tests; an isolated reviewer when context split helps. No application implementation performed in Phase0.
