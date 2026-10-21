@@ -9046,6 +9046,198 @@
           }
         }
       }
+    },
+    "/v1/billing/purchases/{purchaseId}": {
+      "get": {
+        "operationId": "getPurchase",
+        "summary": "Read an owned simulated receipt; never expose purchase tokens.",
+        "description": "Read an owned simulated receipt; never expose purchase tokens.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_purchases",
+          "p_entitlements",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "purchaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchase"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/billing/subscription/cancel": {
+      "post": {
+        "operationId": "cancelSubscription",
+        "summary": "Cancel renewal of the current SIMULATION subscription; preserve access until expiry.",
+        "description": "Cancel renewal of the current SIMULATION subscription; preserve access until expiry.",
+        "tags": [
+          "progress"
+        ],
+        "x-owner": "progress",
+        "x-requirements": [
+          "FR-SET-001"
+        ],
+        "x-tables": [
+          "p_purchases",
+          "p_entitlements",
+          "p_outbox",
+          "p_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://progress.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entitlement"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
     }
   },
   "components": {

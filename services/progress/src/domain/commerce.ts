@@ -81,6 +81,8 @@ export interface ProductConfig {
   gems?: number;
 }
 export const PRODUCTS: readonly ProductConfig[] = [
+  { productId: 'super_family', kind: 'SUBSCRIPTION', plan: 'SUPER', days: 365 },
+  { productId: 'max_family', kind: 'SUBSCRIPTION', plan: 'MAX', days: 365 },
   { productId: 'super_monthly', kind: 'SUBSCRIPTION', plan: 'SUPER', days: 30 },
   { productId: 'super_annual', kind: 'SUBSCRIPTION', plan: 'SUPER', days: 365 },
   { productId: 'max_monthly', kind: 'SUBSCRIPTION', plan: 'MAX', days: 30 },

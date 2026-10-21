@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../billing/presentation/billing_checkout.dart';
+
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
-import '../../learning/presentation/learning_visuals.dart';
 import '../application/extended_controller.dart';
 import '../application/max_controller.dart';
 
@@ -195,108 +196,11 @@ class MaxScreen extends ConsumerWidget {
   }
 
   Future<void> _checkout(BuildContext context, WidgetRef ref) async {
-    final confirmed = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: const Color(0xFFEDEDEF),
-      builder: (sheetContext) {
-        final plan = ref.read(maxControllerProvider).selectedPlan;
-        return SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Expanded(
-                      child: Text('Duolingo Max', style: headingStyle),
-                    ),
-                    IconButton(
-                      tooltip: 'Close checkout',
-                      onPressed: () => Navigator.pop(sheetContext, false),
-                      icon: const Icon(Icons.close_rounded),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const ReferenceArt(maxAppIcon, width: 50, height: 52),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              plan == 'max-family'
-                                  ? 'Duolingo Max Family'
-                                  : 'Duolingo Max',
-                              style: headingStyle.copyWith(fontSize: 22),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(height: 32),
-                      const Text('1-week free trial', style: headingStyle),
-                      const Text(
-                        'Starting today',
-                        style: TextStyle(
-                          color: ReferenceColors.muted,
-                          fontSize: 17,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        plan == 'max-family'
-                            ? '\$239.99 per year'
-                            : '\$167.99 per year',
-                        style: headingStyle,
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Practice with Video Call, Roleplay and personalized explanations.',
-                        style: TextStyle(fontSize: 17, height: 1.4),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ReferenceButton(
-                  label: 'CONFIRM',
-                  backgroundColor: LearningColors.blue,
-                  edgeColor: LearningColors.blueDark,
-                  onPressed: () => Navigator.pop(sheetContext, true),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+    final paid = await showBillingCheckout(
+      context,
+      ref.read(maxControllerProvider).selectedPlan,
     );
-    if (!context.mounted || confirmed != true) return;
-    if (!ref.read(maxControllerProvider.notifier).confirmCheckout()) return;
-    await showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('You’re all set.'),
-        content: const Text('Your plan is ready.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-    if (context.mounted) context.pushReplacement('/max/tour');
+    if (context.mounted && paid) context.pushReplacement('/max/tour');
   }
 }
 

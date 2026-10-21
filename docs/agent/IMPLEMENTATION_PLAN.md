@@ -13,6 +13,13 @@ Current user-authorized task, 2026-10-04: [FRONTEND_FLOW_PLAN](FRONTEND_FLOW_PLA
 
 Global constraints: Flutter Android/iOS; TypeScript/Node22; no provider keys in mobile; no live AI in deterministic CI; no paid/external release action without request; fixed contracts/owners; strict predecessor gates.
 
+2026-10-21 scoped P10-BILL-001 follow-up on local `feat/payment`: explicit mock
+checkout/receipts, restore, pending and declined outcomes, cancellation preserving
+paid expiry, owner-only receipt reads and notification replay fixes are implemented.
+See the [payment receipt](../quality/MOCK_PAYMENT.md) and task status for checks;
+this does not advance the full P10 gate or enable live store payments. The user
+requires explicit permission before pushing this branch.
+
 Review focus: uncertain commit/duplicate award; user cache/auth switch; timezone/late event; short credential expiry/ambiguous mint; native mic/PCM/audio-focus mismatch. Owning tasks below name acceptance cases.
 
 ## Phase gates

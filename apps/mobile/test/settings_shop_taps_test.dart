@@ -10,6 +10,8 @@ import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:cocenglish/features/shop/presentation/shop_widgets.dart';
 import 'package:cocenglish/features/xp_boost/presentation/xp_boost_activated_screen.dart';
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/core/cache/snapshot_cache.dart';
+import 'package:cocenglish/features/billing/data/billing_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,10 +24,17 @@ void main() {
     addTearDown(t.view.resetPhysicalSize);
     addTearDown(t.view.resetDevicePixelRatio);
     await t.pumpWidget(
-      MainApp(
-        initial: OnboardingState(
-          step: OnboardingStep.lessonEntry,
-          language: 'English',
+      ProviderScope(
+        overrides: [
+          billingRepositoryProvider.overrideWithValue(
+            LocalBillingRepository(MemorySnapshotStore()),
+          ),
+        ],
+        child: MainApp(
+          initial: OnboardingState(
+            step: OnboardingStep.lessonEntry,
+            language: 'English',
+          ),
         ),
       ),
     );
@@ -69,29 +78,39 @@ void main() {
       await t.pumpAndSettle();
       await t.tap(join);
       await t.pumpAndSettle();
-      expect(find.text('Classroom codes have 6 letters or numbers.'),
-          findsOneWidget);
+      expect(
+        find.text('Classroom codes have 6 letters or numbers.'),
+        findsOneWidget,
+      );
 
       await t.enterText(find.byKey(const ValueKey('schools-code')), 'zzz999');
       await t.pumpAndSettle();
       await t.tap(join);
       await t.pumpAndSettle();
-      expect(find.textContaining('couldn’t find that classroom'),
-          findsOneWidget);
+      expect(
+        find.textContaining('couldn’t find that classroom'),
+        findsOneWidget,
+      );
 
       await t.enterText(find.byKey(const ValueKey('schools-code')), 'abc123');
       await t.pumpAndSettle();
       await t.tap(join);
       await t.pumpAndSettle();
-      expect(find.text('You joined Ms. Rivera’s English class'),
-          findsOneWidget);
-      expect(container(t).read(settingsExtrasControllerProvider).classroom,
-          'Ms. Rivera’s English class');
+      expect(
+        find.text('You joined Ms. Rivera’s English class'),
+        findsOneWidget,
+      );
+      expect(
+        container(t).read(settingsExtrasControllerProvider).classroom,
+        'Ms. Rivera’s English class',
+      );
 
       await t.tap(find.text('LEAVE CLASSROOM'));
       await t.pumpAndSettle();
-      expect(container(t).read(settingsExtrasControllerProvider).classroom,
-          isNull);
+      expect(
+        container(t).read(settingsExtrasControllerProvider).classroom,
+        isNull,
+      );
       expect(find.byKey(const ValueKey('schools-code')), findsOneWidget);
       expect(t.takeException(), isNull);
     });
@@ -105,17 +124,21 @@ void main() {
       expect(find.text('Facebook'), findsOneWidget);
       await t.tap(find.text('Google'));
       await t.pumpAndSettle();
-      expect(container(t).read(settingsExtrasControllerProvider).connected,
-          {'google'});
+      expect(container(t).read(settingsExtrasControllerProvider).connected, {
+        'google',
+      });
       await t.tap(find.text('Google'));
       await t.pumpAndSettle();
-      expect(container(t).read(settingsExtrasControllerProvider).connected,
-          isEmpty);
+      expect(
+        container(t).read(settingsExtrasControllerProvider).connected,
+        isEmpty,
+      );
       expect(t.takeException(), isNull);
     });
 
-    testWidgets('Feedback submits through the repository and returns',
-        (t) async {
+    testWidgets('Feedback submits through the repository and returns', (
+      t,
+    ) async {
       final repo = MockSettingsRepository(latency: Duration.zero);
       t.view.physicalSize = const Size(390, 844);
       t.view.devicePixelRatio = 1;
@@ -124,10 +147,7 @@ void main() {
       final router = GoRouter(
         initialLocation: '/settings',
         routes: [
-          GoRoute(
-            path: '/settings',
-            builder: (_, _) => const SettingsScreen(),
-          ),
+          GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
           GoRoute(
             path: '/support/feedback',
             builder: (_, _) => const FeedbackScreen(),
@@ -172,16 +192,18 @@ void main() {
       expect(t.takeException(), isNull);
     });
 
-    testWidgets('Restore subscription gives feedback instead of nothing',
-        (t) async {
+    testWidgets('Restore subscription gives feedback instead of nothing', (
+      t,
+    ) async {
       final router = await boot(t);
       router.push('/settings');
       await t.pumpAndSettle();
       await open(t, 'RESTORE SUBSCRIPTION');
-      expect(find.text('No subscription found'), findsOneWidget);
-      await t.tap(find.text('GOT IT'));
-      await t.pumpAndSettle();
-      expect(find.text('No subscription found'), findsNothing);
+      expect(find.text('Subscription checked.'), findsOneWidget);
+      expect(
+        container(t).read(billingRepositoryProvider),
+        isA<LocalBillingRepository>(),
+      );
       expect(t.takeException(), isNull);
     });
   });
@@ -209,59 +231,57 @@ void main() {
     }
 
     for (final reduced in [false, true]) {
-      testWidgets(
-        'Friends Chest and Genshin CLAIM credit the wallet once '
-        '(reduced motion: $reduced)',
-        (t) async {
-          t.platformDispatcher.accessibilityFeaturesTestValue = reduced
-              ? const FakeAccessibilityFeatures(disableAnimations: true)
-              : const FakeAccessibilityFeatures();
-          addTearDown(t.platformDispatcher.clearAccessibilityFeaturesTestValue);
-          await boot(t);
-          final c = container(t);
-          await openShop(t);
-          final before = c.read(previewWalletProvider);
+      testWidgets('Friends Chest and Genshin CLAIM credit the wallet once '
+          '(reduced motion: $reduced)', (t) async {
+        t.platformDispatcher.accessibilityFeaturesTestValue = reduced
+            ? const FakeAccessibilityFeatures(disableAnimations: true)
+            : const FakeAccessibilityFeatures();
+        addTearDown(t.platformDispatcher.clearAccessibilityFeaturesTestValue);
+        await boot(t);
+        final c = container(t);
+        await openShop(t);
+        final before = c.read(previewWalletProvider);
 
-          await scrollTo(t, 'Friends Chest');
-          await t.tap(rowAction('Friends Chest', 'CLAIM'));
-          await t.pump();
-          expect(find.byType(ShopRewardReveal), findsOneWidget);
-          await t.pumpAndSettle();
-          expect(find.text('You earned 20 gems!'), findsOneWidget);
-          expect(find.text('+20'), findsOneWidget);
-          expect(c.read(previewWalletProvider), before + 20);
-          await t.tap(find.text('CONTINUE'));
-          // The boost screen's bubbles loop while motion is on: pump frames.
-          await t.pump();
-          await t.pump(const Duration(seconds: 1));
-          // Friends Chest: gems sheet -> XP Boost activated -> back to Shop.
-          expect(find.byType(XpBoostActivatedScreen), findsOneWidget);
-          expect(find.text('x2'), findsOneWidget);
-          await t.tap(find.text('CONTINUE'));
-          await t.pumpAndSettle();
-          expect(find.byType(XpBoostActivatedScreen), findsNothing);
-          expect(rowAction('Friends Chest', 'CLAIMED'), findsOneWidget);
-          await t.tap(rowAction('Friends Chest', 'CLAIMED'));
-          await t.pumpAndSettle();
-          expect(find.byType(ShopRewardReveal), findsNothing);
-          expect(c.read(previewWalletProvider), before + 20);
+        await scrollTo(t, 'Friends Chest');
+        await t.tap(rowAction('Friends Chest', 'CLAIM'));
+        await t.pump();
+        expect(find.byType(ShopRewardReveal), findsOneWidget);
+        await t.pumpAndSettle();
+        expect(find.text('You earned 20 gems!'), findsOneWidget);
+        expect(find.text('+20'), findsOneWidget);
+        expect(c.read(previewWalletProvider), before + 20);
+        await t.tap(find.text('CONTINUE'));
+        // The boost screen's bubbles loop while motion is on: pump frames.
+        await t.pump();
+        await t.pump(const Duration(seconds: 1));
+        // Friends Chest: gems sheet -> XP Boost activated -> back to Shop.
+        expect(find.byType(XpBoostActivatedScreen), findsOneWidget);
+        expect(find.text('x2'), findsOneWidget);
+        await t.tap(find.text('CONTINUE'));
+        await t.pumpAndSettle();
+        expect(find.byType(XpBoostActivatedScreen), findsNothing);
+        expect(rowAction('Friends Chest', 'CLAIMED'), findsOneWidget);
+        await t.tap(rowAction('Friends Chest', 'CLAIMED'));
+        await t.pumpAndSettle();
+        expect(find.byType(ShopRewardReveal), findsNothing);
+        expect(c.read(previewWalletProvider), before + 20);
 
-          await scrollTo(t, 'Genshin Impact\nReward');
-          await t.tap(rowAction('Genshin Impact\nReward', 'CLAIM'));
-          await t.pumpAndSettle();
-          expect(find.text('You earned 50 gems!'), findsOneWidget);
-          await t.tap(find.text('CONTINUE'));
-          await t.pumpAndSettle();
-          expect(c.read(previewWalletProvider), before + 70);
-          // Header balance follows the wallet.
-          expect(find.text('${before + 70}'), findsOneWidget);
-          expect(t.takeException(), isNull);
-        },
-      );
+        await scrollTo(t, 'Genshin Impact\nReward');
+        await t.tap(rowAction('Genshin Impact\nReward', 'CLAIM'));
+        await t.pumpAndSettle();
+        expect(find.text('You earned 50 gems!'), findsOneWidget);
+        await t.tap(find.text('CONTINUE'));
+        await t.pumpAndSettle();
+        expect(c.read(previewWalletProvider), before + 70);
+        // Header balance follows the wallet.
+        expect(find.text('${before + 70}'), findsOneWidget);
+        expect(t.takeException(), isNull);
+      });
     }
 
-    testWidgets('Max Family Plan UPGRADE opens the Family plan screen',
-        (t) async {
+    testWidgets('Max Family Plan UPGRADE opens the Family plan screen', (
+      t,
+    ) async {
       await boot(t);
       await openShop(t);
       await scrollTo(t, 'UPGRADE');
@@ -271,8 +291,9 @@ void main() {
       expect(t.takeException(), isNull);
     });
 
-    testWidgets('Streak Freeze at 2/2 shows maxed feedback, no purchase',
-        (t) async {
+    testWidgets('Streak Freeze at 2/2 shows maxed feedback, no purchase', (
+      t,
+    ) async {
       t.view.physicalSize = const Size(390, 1600);
       t.view.devicePixelRatio = 1;
       addTearDown(t.view.resetPhysicalSize);

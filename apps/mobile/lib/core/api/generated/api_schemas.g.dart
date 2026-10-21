@@ -1,10 +1,10 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 c5efb70bc1fbf038e84b06a8dd69ae37f9d6f8cee845b294e081f530ee7a7ba1).
+// Source: docs/api/openapi.yaml (sha256 2ec5710437e8486bf0e32b1320f1740edd04701fef4d787a5470bad941890ab0).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (schemas).
 
 
 /// SHA-256 of docs/api/openapi.yaml this output was generated from.
-const String apiContractSourceSha256 = 'c5efb70bc1fbf038e84b06a8dd69ae37f9d6f8cee845b294e081f530ee7a7ba1';
+const String apiContractSourceSha256 = '2ec5710437e8486bf0e32b1320f1740edd04701fef4d787a5470bad941890ab0';
 
 /// `components.schemas` from docs/api/openapi.yaml, verbatim, for runtime validation.
 const String apiSchemasJson = r'''{

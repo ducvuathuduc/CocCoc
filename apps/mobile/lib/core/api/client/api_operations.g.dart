@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 c5efb70bc1fbf038e84b06a8dd69ae37f9d6f8cee845b294e081f530ee7a7ba1).
+// Source: docs/api/openapi.yaml (sha256 2ec5710437e8486bf0e32b1320f1740edd04701fef4d787a5470bad941890ab0).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import 'api_operation.dart';
@@ -11,6 +11,7 @@ abstract final class ApiOperations {
   static const blockUser = ApiOperation('blockUser', 'POST', '/v1/blocks', ApiService.progress, idempotent: true);
   static const buyFreeze = ApiOperation('buyFreeze', 'POST', '/v1/me/freezes', ApiService.progress, idempotent: true);
   static const buyItem = ApiOperation('buyItem', 'POST', '/v1/shop/purchases', ApiService.progress, idempotent: true);
+  static const cancelSubscription = ApiOperation('cancelSubscription', 'POST', '/v1/billing/subscription/cancel', ApiService.progress, idempotent: true);
   static const claimQuest = ApiOperation('claimQuest', 'POST', '/v1/quests/{questId}/claim', ApiService.progress, idempotent: true);
   static const closeVoiceSession = ApiOperation('closeVoiceSession', 'POST', '/v1/voice-sessions/{sessionId}/close', ApiService.ai, idempotent: false);
   static const completeConversation = ApiOperation('completeConversation', 'POST', '/v1/conversations/{conversationId}/complete', ApiService.ai, idempotent: true);
@@ -34,6 +35,7 @@ abstract final class ApiOperations {
   static const getPath = ApiOperation('getPath', 'GET', '/v1/courses/{courseId}/path', ApiService.learning, idempotent: false);
   static const getPreferences = ApiOperation('getPreferences', 'GET', '/v1/me/preferences', ApiService.progress, idempotent: false);
   static const getPublicProfile = ApiOperation('getPublicProfile', 'GET', '/v1/profiles/{userId}', ApiService.progress, idempotent: false);
+  static const getPurchase = ApiOperation('getPurchase', 'GET', '/v1/billing/purchases/{purchaseId}', ApiService.progress, idempotent: false);
   static const getReferral = ApiOperation('getReferral', 'GET', '/v1/me/referral', ApiService.progress, idempotent: false);
   static const getReview = ApiOperation('getReview', 'GET', '/v1/review', ApiService.learning, idempotent: false);
   static const getRewards = ApiOperation('getRewards', 'GET', '/v1/me/rewards', ApiService.progress, idempotent: false);
@@ -90,6 +92,7 @@ abstract final class ApiOperations {
     blockUser,
     buyFreeze,
     buyItem,
+    cancelSubscription,
     claimQuest,
     closeVoiceSession,
     completeConversation,
@@ -113,6 +116,7 @@ abstract final class ApiOperations {
     getPath,
     getPreferences,
     getPublicProfile,
+    getPurchase,
     getReferral,
     getReview,
     getRewards,

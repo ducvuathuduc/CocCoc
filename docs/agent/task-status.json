@@ -1,8 +1,33 @@
 {
-  "updated": "2026-10-12",
+  "updated": "2026-10-21",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
+    {
+      "taskId": "P10-BILL-LOCAL-20261021",
+      "phase": "P10 scoped mock payment follow-up",
+      "owner": "Codex",
+      "branch": "feat/payment",
+      "worktree": ".",
+      "status": "VERIFYING",
+      "dependencyGateReceipts": ["c407f46", "docs/product/MONETIZATION.md"],
+      "exclusivePaths": ["docs/api/openapi.yaml", "packages/api_contracts/generated.ts", "apps/mobile/lib/core/api/generated", "apps/mobile/lib/core/api/client/api_endpoints.g.dart", "apps/mobile/lib/core/api/client/api_operations.g.dart", "docs/agent/task-status.json"],
+      "requirements": ["FR-SET-001"],
+      "interfaces": ["BillingRepository", "verifyPurchase", "getPurchase", "cancelSubscription"],
+      "testCommand": "flutter test --no-pub test/billing_test.dart test/billing_api_test.dart test/max_flow_test.dart test/core/api/api_operations_sync_test.dart test/api_contracts_round_trip_test.dart --dart-define=ENABLE_MASCOT_MOTION=false",
+      "evidence": ["docs/quality/MOCK_PAYMENT.md"],
+      "checks": {
+        "targetedFlutter": "PASS 155 tests including billing, existing Max/settings navigation and generated contracts",
+        "billingCommerceBackend": "PASS 15 tests",
+        "analyzer": "PASS, no issues",
+        "webBuild": "PASS release compilation 121.4s",
+        "fullFlutter": "948 pass / 273 golden failures (same previous baseline failure count)",
+        "fullBackend": "168 pass / 1 pre-existing content stdout failure on Windows / 12 skipped",
+        "contractsBlueprintAuditSmoke": "PASS",
+        "fullFormatGates": "Remain failed: 20 mobile / 156 backend baseline format differences"
+      },
+      "limitations": "SIMULATION only. No push until explicit user permission. No real payment, cloud deployment or store acceptance claim."
+    },
     {
       "taskId": "UI-ONBOARDING-LOGIN-SLICE",
       "phase": "frontend slice",

@@ -7,7 +7,6 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../auth/application/auth_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
-import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/hub_screens.dart';
 import '../application/profile_editor_controller.dart';
@@ -18,6 +17,7 @@ import '../../notifications/presentation/notification_screens.dart';
 import '../../phone/application/phone_verification_controller.dart';
 import '../../phone/presentation/phone_verification_screens.dart';
 import 'avatar_motion.dart';
+import '../../billing/presentation/billing_checkout.dart';
 
 export 'delete_account_screen.dart';
 export 'signup_flow.dart';
@@ -156,21 +156,7 @@ class SettingsScreen extends ConsumerWidget {
           subtitle: 'Super Duolingo 12 months',
         ),
         const SizedBox(height: 16),
-        ReferenceButton(
-          label: 'RESTORE SUBSCRIPTION',
-          outlined: true,
-          foregroundColor: LearningColors.blue,
-          onPressed: () {
-            final active = ref.read(extendedControllerProvider).unlimited;
-            showLearningNotice(
-              context,
-              active ? 'Subscription restored' : 'No subscription found',
-              active
-                  ? 'Your subscription is active on this account.'
-                  : 'We couldn’t find a purchase to restore for this account.',
-            );
-          },
-        ),
+        const BillingManagement(),
         const SizedBox(height: 25),
         const Divider(),
         const SizedBox(height: 25),
