@@ -47,6 +47,7 @@ flutter build web --release --no-pub --dart-define=USE_MOCK_AUTH=true --dart-def
 - Focused tests: **20 pass**, including five existing practice regression tests.
 - Analyzer: **PASS, no issues**, final rerun in 20.3s.
 - Release web build: **PASS**, 169.7s, with mock authentication. This is compilation evidence, not a physical-device or cloud receipt.
+- `pnpm blueprint:check`: **PASS**, 39 requirements / 48 tasks / 88 operations. `pnpm audit:check`: syntax/link checks pass (960 local links), but its endpoint-matrix check fails because the existing generated matrix is stale. No API source or endpoint matrix changed on this branch.
 - Extra lesson screenshot regression: **6 pass / 11 golden mismatches**. Golden baselines were not updated. Feedback visuals intentionally changed; this run does not prove every mismatch predates this feature. Diffs retained locally in Git metadata under `testagent/vocabulary/golden-diffs`.
 - Full repository suite, physical-device restart, Android/iOS builds and real Appwrite flows were not run for this slice.
 
