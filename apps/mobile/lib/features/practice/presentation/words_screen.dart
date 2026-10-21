@@ -8,6 +8,7 @@ import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../application/practice_controller.dart';
 import '../domain/practice_models.dart';
+import '../../vocabulary/presentation/notebook_screen.dart';
 
 class WordsScreen extends ConsumerWidget {
   const WordsScreen({super.key});
@@ -55,6 +56,15 @@ class WordsScreen extends ConsumerWidget {
                           ],
                         ),
                         const SizedBox(height: 32),
+                        OutlinedButton.icon(
+                          icon: const Icon(Icons.bookmark_outline),
+                          label: const Text('MY VOCABULARY'),
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => const NotebookScreen(),
+                            ),
+                          ),
+                        ),
                         DecoratedBox(
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
@@ -167,6 +177,18 @@ class WordsScreen extends ConsumerWidget {
                                       color: state.recalledIds.contains(word.id)
                                           ? LearningColors.green
                                           : LearningColors.red,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    tooltip:
+                                        'Save ${word.term} to my vocabulary',
+                                    icon: const Icon(
+                                      Icons.bookmark_add_outlined,
+                                    ),
+                                    onPressed: () => editVocabulary(
+                                      context,
+                                      term: word.term,
+                                      meaning: word.meaning,
                                     ),
                                   ),
                                 ],

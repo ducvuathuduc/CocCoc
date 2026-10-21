@@ -29,6 +29,7 @@ import 'exercises/match_pairs_exercise.dart';
 import 'widgets/lesson_choice_tile.dart';
 import 'widgets/lesson_sheets.dart';
 import 'widgets/token_fly_in.dart';
+import '../../vocabulary/presentation/notebook_screen.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({super.key});
@@ -565,6 +566,19 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // sc_2082f9ab: toast sits just above the feedback panel.
+                      if (!state.skipped)
+                        Material(
+                          child: TextButton.icon(
+                            icon: const Icon(Icons.bookmark_add_outlined),
+                            label: const Text('SAVE TO MY VOCABULARY'),
+                            onPressed: () => editVocabulary(
+                              context,
+                              term: exercise!.correctText,
+                              meaning: exercise.meaning ?? '',
+                              example: exercise.correctText,
+                            ),
+                          ),
+                        ),
                       if (_reportToast case final message?)
                         IssueReportedToast(message: message),
                       LessonFeedbackEntrance(
