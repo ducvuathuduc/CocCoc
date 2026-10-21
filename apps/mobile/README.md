@@ -1,5 +1,7 @@
 # CocEnglish mobile frontend
 
+Personal notebook: Practice → Words → MY VOCABULARY, or bookmark a Words row / answered lesson. Words, meanings and examples persist locally per account/course. Due-only reviews use the canonical spacing heuristic and award no XP. See [workflow and checks](../../docs/quality/PERSONAL_VOCABULARY.md).
+
 Flutter 3.47.0 / Dart 3.13.0; feature-first manual Riverpod MVVM and go_router. Android/iOS platform projects are generated; recorded Android evidence is kept in QA receipts, and iOS needs macOS/Xcode. New collaborators should start with the [developer handoff](../../docs/agent/DEVELOPER_HANDOFF.md).
 
 Run `flutter pub get` then `flutter run` from this directory. Run `pnpm verify` from the repository root for the complete local gate. Direct regression command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false`. Dedicated Duo tests enable the actual animation explicitly.

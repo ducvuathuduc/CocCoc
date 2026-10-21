@@ -1,6 +1,8 @@
 # CocEnglish Implementation Plan
 
 Goal: implement the frozen Flutter language platform in small verified tasks.
+
+2026-10-21 user-authorized addition: personal vocabulary notebook on local branch `feat/personal-vocabulary-srs`, scoped to Flutter local persistence and FR-PRACTICE-002 review scheduling. Words and lesson feedback entry points, per-account/course storage, assisted/wrong resets and zero-XP reviews are implemented. [Acceptance evidence and remaining limits](../quality/PERSONAL_VOCABULARY.md). No global phase gate is advanced; no cloud sync, deployment or push is authorized.
 Architecture: Riverpod MVVM mobile; Learning/Progress/AI services; Appwrite platform; offline journal and transactional events.
 Tech stack: [STACK](../architecture/STACK.md). Spec: [SRS](../product/SRS.md), [OpenAPI](../api/openapi.yaml).
 Worker method: native thin slices with meaningful behavior tests; an isolated reviewer when context split helps. No application implementation performed in Phase0.
