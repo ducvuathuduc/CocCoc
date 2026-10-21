@@ -5,6 +5,7 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reward_motion.dart';
 import '../application/completion_providers.dart';
+import '../application/learning_controller.dart';
 import '../domain/learning_models.dart';
 import 'completion_colors.dart';
 import 'learning_visuals.dart';
@@ -115,6 +116,20 @@ class LessonSummary extends ConsumerWidget {
               ),
             ],
             SizedBox(height: 44 * scale),
+            if (receipt.rewardPending) ...[
+              const Text(
+                'XP is waiting to sync. Your server balance updates after confirmation.',
+                textAlign: TextAlign.center,
+              ),
+              TextButton(
+                onPressed: ref.watch(lessonControllerProvider).busy
+                    ? null
+                    : () => ref
+                          .read(lessonControllerProvider.notifier)
+                          .refreshReceiptReward(),
+                child: const Text('CHECK SYNC'),
+              ),
+            ],
             if (compact)
               Column(
                 children: [

@@ -10,6 +10,9 @@ import '../data/learning_repository.dart';
 import '../domain/learning_models.dart';
 import '../../practice/application/mistake_history_controller.dart';
 import '../../practice/data/mistake_history_repository.dart';
+import '../../session/application/real_learning_session.dart';
+import '../data/path_repository.dart';
+import '../../progress/data/progress_snapshot.dart';
 
 final learningRepositoryProvider = Provider<LearningRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return MockLearningRepository();
@@ -37,9 +40,25 @@ final lessonControllerProvider =
 
 class LearningStateController extends Notifier<LearningState> {
   @override
-  LearningState build() => const LearningState();
+  LearningState build() {
+    final userId = ref.watch(authControllerProvider.select((s) => s.user?.id));
+    if (!ref.watch(appConfigProvider).isApi) return const LearningState();
+    final prepared = ref.watch(realLearningSessionProvider).value;
+    final rewards =
+        ref.watch(realRewardsProvider(userId)).value ??
+        (prepared?.profile.userId == userId ? prepared?.rewards : null);
+    return LearningState(
+      xp: rewards?.studyXp ?? 0,
+      gems: rewards?.gems ?? 0,
+      streak: rewards?.currentStreak ?? 0,
+    );
+  }
 
   void claim(SessionReceipt receipt) {
+    if (ref.read(appConfigProvider).isApi) {
+      ref.invalidate(realRewardsProvider);
+      return;
+    }
     if (state.claimedReceiptIds.contains(receipt.id)) return;
     final claimed = <String>{...state.claimedReceiptIds, receipt.id};
     if (!receipt.firstCompletion || receipt.guest || receipt.placement) {
@@ -61,6 +80,7 @@ class LearningStateController extends Notifier<LearningState> {
 }
 
 class LessonController extends Notifier<LessonState> {
+  bool _syncing = false;
   bool _disposed = false;
   bool _commandActive = false;
   int _revision = 0;
@@ -72,6 +92,60 @@ class LessonController extends Notifier<LessonState> {
   MistakeHistoryRepository? _historyRepository;
 
   LearningRepository get _repository => ref.read(learningRepositoryProvider);
+
+  Future<void> syncProgress() async {
+    if (!ref.read(appConfigProvider).isApi || _syncing) return;
+    final userId = ref.read(authControllerProvider).user?.id;
+    if (userId == null) return;
+    _syncing = true;
+    final repository = _repository;
+    final path = ref.read(pathRepositoryProvider);
+    final progress = ref.read(progressSnapshotSourceProvider);
+    try {
+      if (repository is ApiLearningRepository) await repository.syncPending();
+      if (!ref.mounted || ref.read(authControllerProvider).user?.id != userId) {
+        return;
+      }
+      ref.invalidate(realRewardsProvider);
+      await Future.wait([
+        if (path is ApiPathRepository) path.refresh(),
+        progress.refresh(),
+      ]);
+    } finally {
+      _syncing = false;
+    }
+  }
+
+  Future<void> refreshReceiptReward() async {
+    final receipt = state.receipt;
+    if (receipt == null || !receipt.rewardPending || state.busy) return;
+    if (receipt.id.startsWith('offline-')) {
+      await syncProgress();
+      return;
+    }
+    final revision = _revision;
+    state = state.copyWith(busy: true, clearError: true);
+    try {
+      final rewards = await ref
+          .read(progressApiProvider)
+          .getRewards(completionId: receipt.id);
+      if (!_isCurrent(revision)) return;
+      state = state.copyWith(
+        busy: false,
+        receipt: rewards.status == 'pending'
+            ? receipt
+            : receipt.withReward(rewards.awardXp ?? 0),
+      );
+      ref.invalidate(realRewardsProvider);
+    } catch (_) {
+      if (_isCurrent(revision)) {
+        state = state.copyWith(
+          busy: false,
+          error: 'XP has not synced yet. Please retry when connected.',
+        );
+      }
+    }
+  }
 
   @override
   LessonState build() {
@@ -99,7 +173,7 @@ class LessonController extends Notifier<LessonState> {
     try {
       final loaded = exercises ?? await _repository.loadLesson(nodeId);
       if (!_isCurrent(revision)) return;
-      final restored = nodeId == mistakeReviewNodeId
+      final restored = _repository is ApiLearningRepository
           ? _repository.loadDraft()
           : null;
       if (restored != null) {
@@ -459,6 +533,12 @@ class LessonController extends Notifier<LessonState> {
       );
       if (!_isCurrent(revision)) return;
       ref.invalidate(mistakeHistoryProvider);
+      if (ref.read(appConfigProvider).isApi) {
+        ref.invalidate(realRewardsProvider);
+        final path = ref.read(pathRepositoryProvider);
+        if (path is ApiPathRepository) path.refresh().ignore();
+        ref.read(progressSnapshotSourceProvider).refresh().ignore();
+      }
       _repository.clearDraft();
       state = state.copyWith(
         stage: LessonStage.completed,

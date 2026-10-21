@@ -66,3 +66,7 @@ Completed mock families and individual source steps are kept in the
 [persistent checklist](../../docs/design/qa/FLOW_CHECKLIST.md); reuse them before
 implementing a pending variant. Original avatar resources and their verified
 catalog are documented in the [avatar analysis](../../docs/design/flows/24_AVATAR_ASSET_RESEARCH.md).
+
+## Native real learning flow
+
+Use `flutter run --dart-define-from-file=config/real.public.json` from this folder for the existing coccoc-test project. See [scope, limits and acceptance](../../docs/quality/REAL_LEARNING_FLOW.md). The browser preview remains a fixture preview; billing remains simulated.

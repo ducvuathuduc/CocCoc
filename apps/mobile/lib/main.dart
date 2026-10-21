@@ -68,6 +68,9 @@ import 'features/notifications/application/notification_settings_controller.dart
 import 'features/auth/application/auth_controller.dart';
 import 'features/learning/domain/learning_models.dart';
 import 'core/cache/snapshot_cache.dart';
+import 'core/config/app_config.dart';
+import 'features/session/application/real_learning_session.dart';
+import 'features/session/presentation/real_connection_screen.dart';
 import 'features/super_trial/presentation/super_trial_screen.dart';
 import 'features/streak_repair/presentation/streak_repair_screen.dart';
 import 'features/promo/presentation/promo_code_screen.dart';
@@ -207,14 +210,41 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     final initial = ref.read(onboardingControllerProvider);
     _router = GoRouter(
-      initialLocation: _location(initial.step),
+      initialLocation: ref.read(appConfigProvider).isApi
+          ? '/connecting'
+          : _location(initial.step),
+      redirect: (context, state) {
+        if (!ref.read(appConfigProvider).isApi) return null;
+        final prepared = ref.read(realLearningSessionProvider);
+        final userId = ref.read(authControllerProvider).user?.id;
+        return realLearningRedirect(
+          path: state.uri.path,
+          api: true,
+          restoring: ref.read(authStartupProvider).isLoading,
+          signedIn: ref.read(authControllerProvider).user != null,
+          ready:
+              !prepared.isLoading &&
+              !prepared.hasError &&
+              userId != null &&
+              prepared.value?.profile.userId == userId,
+        );
+      },
       errorBuilder: (context, state) => const RecoveryScreen(),
       routes: [
         GoRoute(
+          path: '/connecting',
+          builder: (context, state) => const RealConnectionScreen(),
+        ),
+        GoRoute(
           path: '/welcome',
           builder: (context, state) => WelcomeScreen(
-            onStart: () =>
-                ref.read(onboardingControllerProvider.notifier).advance(),
+            onStart: () {
+              if (ref.read(appConfigProvider).isApi) {
+                context.go('/auth/register');
+                return;
+              }
+              ref.read(onboardingControllerProvider.notifier).advance();
+            },
             onLogin: () => context.push('/login'),
           ),
         ),
@@ -350,6 +380,9 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         GoRoute(
           path: '/units/:id/skip',
           builder: (context, state) {
+            if (ref.read(appConfigProvider).isApi) {
+              return const CourseUnavailableScreen();
+            }
             final target = guideTarget(
               state.pathParameters['id'] ?? '',
               state.uri.queryParameters['section'],
@@ -399,6 +432,9 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         GoRoute(
           path: '/sections/:section/check',
           builder: (context, state) {
+            if (ref.read(appConfigProvider).isApi) {
+              return const CourseUnavailableScreen();
+            }
             final section =
                 int.tryParse(state.pathParameters['section'] ?? '') ?? 0;
             if (section < 2 || section > 8) {
@@ -817,6 +853,10 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed && _remindersStarted) {
       ref.read(reminderCoordinatorProvider).sync();
     }
+    if (state == AppLifecycleState.resumed &&
+        ref.read(appConfigProvider).isApi) {
+      ref.read(lessonControllerProvider.notifier).syncProgress().ignore();
+    }
   }
 
   void _listenForReminders() {
@@ -851,6 +891,35 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(appConfigProvider).isApi) {
+      ref.watch(authStartupProvider);
+      ref.watch(realLearningSessionProvider);
+      void refresh() => WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _router.refresh();
+      });
+      ref.listen(authStartupProvider, (_, _) => refresh());
+      ref.listen(realLearningSessionProvider, (_, next) {
+        refresh();
+        if (!next.isLoading &&
+            !next.hasError &&
+            next.value != null &&
+            next.value?.profile.userId ==
+                ref.read(authControllerProvider).user?.id) {
+          Future.microtask(() {
+            if (mounted) {
+              ref
+                  .read(lessonControllerProvider.notifier)
+                  .syncProgress()
+                  .ignore();
+            }
+          });
+        }
+      });
+      ref.listen(
+        authControllerProvider.select((s) => s.user),
+        (_, _) => refresh(),
+      );
+    }
     _startReminders();
     _listenForReminders();
     ref.listen(onboardingControllerProvider, (previous, next) {

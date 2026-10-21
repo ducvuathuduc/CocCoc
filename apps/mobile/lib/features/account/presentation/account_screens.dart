@@ -181,9 +181,20 @@ class SettingsScreen extends ConsumerWidget {
                   label: 'SIGN OUT',
                   backgroundColor: LearningColors.blue,
                   edgeColor: LearningColors.blueDark,
-                  onPressed: () {
-                    ref.read(authSessionRepositoryProvider)?.signOut().ignore();
-                    ref.invalidate(authControllerProvider);
+                  onPressed: () async {
+                    await ref.read(authControllerProvider.notifier).signOut();
+                    if (!context.mounted) return;
+                    final auth = ref.read(authControllerProvider);
+                    if (auth.user != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            auth.error ?? 'Could not sign out. Please retry.',
+                          ),
+                        ),
+                      );
+                      return;
+                    }
                     Navigator.pop(context);
                     context.go('/welcome');
                   },

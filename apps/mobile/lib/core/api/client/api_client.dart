@@ -27,6 +27,7 @@ final class ApiClient {
     this.timeout = const Duration(seconds: 15),
     this.maxRetries = 2,
     this.retryDelay = const Duration(milliseconds: 300),
+    this.onUnauthenticated,
   }) : ids = ids ?? UuidV4Generator();
 
   final ApiTransport transport;
@@ -36,6 +37,7 @@ final class ApiClient {
   final Duration timeout;
   final int maxRetries;
   final Duration retryDelay;
+  final void Function()? onUnauthenticated;
 
   /// Calls [operation] and decodes a 2xx JSON body with [decode].
   Future<T> call<T>(
@@ -68,6 +70,10 @@ final class ApiClient {
           reauthenticated = true;
           tokens.invalidate();
           continue;
+        }
+        if (error.isUnauthenticated) {
+          onUnauthenticated?.call();
+          rethrow;
         }
         final canRetry =
             error.retryable &&

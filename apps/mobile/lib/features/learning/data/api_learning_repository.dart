@@ -69,7 +69,38 @@ class ApiLearningRepository
     }
     try {
       final course = await _courseId();
-      final path = await learning.getPath(course);
+      if (journaled != null && journaled.courseId == course) {
+        if (journaled.nodeId != nodeId) {
+          throw const LearningFailure(
+            'Finish your saved lesson before starting another one.',
+          );
+        }
+        final resumed = await _startOrResume(
+          course: course,
+          lessonId: journaled.lessonId,
+          nodeId: nodeId,
+          enrollmentRevision: journaled.enrollmentRevision,
+          resume: journaled,
+        );
+        return _activate(resumed);
+      }
+      final pages = [await learning.getPath(course, limit: 100)];
+      final cursors = <String>{};
+      while (pages.last.nextCursor != null) {
+        final cursor = pages.last.nextCursor!;
+        if (!cursors.add(cursor) || pages.length >= 20) {
+          throw const LearningFailure(
+            'Could not load the complete course path.',
+          );
+        }
+        pages.add(await learning.getPath(course, cursor: cursor, limit: 100));
+      }
+      final path = wire.Path(
+        enrollment: pages.last.enrollment,
+        nodes: [for (final page in pages) ...page.nodes],
+        asOf: pages.last.asOf,
+        nextCursor: null,
+      );
       final node = _pickNode(path, nodeId);
       final lessonId = _pickLesson(node, path.enrollment);
       final resume =
@@ -87,7 +118,11 @@ class ApiLearningRepository
       );
       return _activate(session);
     } on ApiException catch (error) {
-      if (error.isOffline && journaled != null) {
+      if (error.isConflict) {
+        final pending = await journal.active();
+        if (pending?.sessionId == null) await journal.clearActive();
+      }
+      if (error.isOffline && journaled != null && journaled.bundle.isNotEmpty) {
         // Offline restart of the journaled lesson: regrade from the bundle.
         return _activate(journaled);
       }
@@ -238,7 +273,7 @@ class ApiLearningRepository
       }
     }
     return JournalSession(
-      nodeId: mistakeReviewNodeId,
+      nodeId: saved?.nodeId ?? mistakeReviewNodeId,
       courseId: server.courseId,
       lessonId: server.lessonId,
       lessonVersion: server.lessonVersion,
@@ -265,19 +300,41 @@ class ApiLearningRepository
     if (resume?.sessionId case final sessionId?) {
       try {
         final server = await learning.getSession(sessionId);
-        if (server.status == 'ACTIVE') {
-          final replayed = await _replayUnsynced(
-            resume!.copyWith(revision: server.revision),
+        if (server.status == 'ACTIVE' || server.status == 'COMPLETED') {
+          final restored = _reviewJournal(
+            server,
+            enrollmentRevision,
+            resume!.startKey,
+            resume.completeKey,
+            resume,
           );
+          final replayed = server.status == 'ACTIVE'
+              ? await _replayUnsynced(restored)
+              : restored;
           await journal.saveActive(replayed);
           return replayed;
         }
       } on ApiException catch (error) {
-        if (error.isOffline) rethrow;
+        if (!error.isNotFound) rethrow;
         // Expired or unknown: start a fresh attempt below.
       }
+      resume = null;
     }
     final startKey = resume?.startKey ?? ids.next();
+    final intent =
+        resume ??
+        JournalSession(
+          nodeId: nodeId,
+          courseId: course,
+          lessonId: lessonId,
+          lessonVersion: '',
+          bundleHash: '',
+          enrollmentRevision: enrollmentRevision,
+          bundle: const {},
+          startKey: startKey,
+          completeKey: ids.next(),
+        );
+    await journal.saveActive(intent);
     final session = await learning.startSession(
       wire.SessionRequest(
         courseId: course,
@@ -296,7 +353,7 @@ class ApiLearningRepository
       enrollmentRevision: enrollmentRevision,
       bundle: session.bundle.toJson(),
       startKey: startKey,
-      completeKey: ids.next(),
+      completeKey: intent.completeKey,
       sessionId: session.sessionId,
       revision: session.revision,
     );
@@ -337,9 +394,11 @@ class ApiLearningRepository
     final bundle = wire.LessonBundle.fromJson(session.bundle);
     final mapper = LessonWireMapper(bundle.exercises, assets: bundle.assets);
     _mapper = mapper;
-    _draft = session.lessonId == reviewLessonId
-        ? restoreReviewState(session, mapper.toDomain())
-        : null;
+    _draft = restoreReviewState(
+      session,
+      mapper.toDomain(),
+      includeProvisional: session.lessonId != reviewLessonId,
+    );
     _attempts
       ..clear()
       ..addAll({
@@ -497,6 +556,8 @@ class ApiLearningRepository
           id: completion.completionId,
           nodeId: nodeId,
           xp: rewards?.awardXp ?? 0,
+          rewardPending:
+              completion.rewardStatus == 'pending' && rewards == null,
           accuracy: completion.originalCount == 0
               ? 0
               : completion.originalCorrect / completion.originalCount,
@@ -572,6 +633,7 @@ class ApiLearningRepository
     _session = null;
     return SessionReceipt(
       id: 'offline-$localId',
+      rewardPending: true,
       nodeId: nodeId,
       xp: 0,
       accuracy: originalTotal == 0 ? 0 : originalCorrect / originalTotal,
@@ -636,22 +698,37 @@ class ApiLearningRepository
       );
     }
     for (final node in nodes) {
-      if (node.nodeId == nodeId) return node;
+      if (node.nodeId == nodeId && node.state != 'locked') return node;
+    }
+    final unitMatch = RegExp(r'^section-(\d+)-unit-(\d+)-review-(\d+)$')
+        .firstMatch(nodeId);
+    final sections = <String, Map<String, List<wire.Node>>>{};
+    for (final node in nodes) {
+      sections
+          .putIfAbsent(node.sectionId, () => {})
+          .putIfAbsent(node.unitId, () => [])
+          .add(node);
     }
     final ordinal = int.tryParse(
-      RegExp(r'(\d+)$').firstMatch(nodeId)?.group(1) ?? '',
+      RegExp(r'^node-(\d+)$').firstMatch(nodeId)?.group(1) ?? '',
     );
-    if (ordinal != null && ordinal < nodes.length) {
-      final node = nodes[ordinal];
+    final section = unitMatch == null ? 0 : int.parse(unitMatch.group(1)!) - 1;
+    final unit = unitMatch == null ? 0 : int.parse(unitMatch.group(2)!) - 1;
+    final index = unitMatch == null ? ordinal : int.parse(unitMatch.group(3)!);
+    final candidates = section < 0 || unit < 0
+        ? null
+        : sections.values
+              .elementAtOrNull(section)
+              ?.values
+              .elementAtOrNull(unit);
+    if (index != null &&
+        index >= 0 &&
+        candidates != null &&
+        index < candidates.length) {
+      final node = candidates[index];
       if (node.state != 'locked' && node.lessonIds.isNotEmpty) return node;
     }
-    return nodes.firstWhere(
-      (node) => node.state == 'current' && node.lessonIds.isNotEmpty,
-      orElse: () => nodes.firstWhere(
-        (node) => node.state != 'locked' && node.lessonIds.isNotEmpty,
-        orElse: () => nodes.first,
-      ),
-    );
+    throw const LearningFailure('This lesson is locked or unavailable.');
   }
 
   static String _pickLesson(wire.Node node, wire.Enrollment enrollment) {

@@ -5,10 +5,11 @@ import 'learning_models.dart';
 /// This controls navigation only; the server owns grades, resolution and XP.
 LessonState? restoreReviewState(
   JournalSession session,
-  List<Exercise> originals,
-) {
+  List<Exercise> originals, {
+  bool includeProvisional = false,
+}) {
   final answers = session.answers
-      .where((a) => a.synced && a.correct != null)
+      .where((a) => (a.synced || includeProvisional) && a.correct != null)
       .toList();
   if (answers.isEmpty || originals.isEmpty) return null;
   JournalAnswer? attempt(Exercise exercise, int pass) => answers

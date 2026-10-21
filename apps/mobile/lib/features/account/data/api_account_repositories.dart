@@ -20,6 +20,7 @@ class ApiAccountRepository implements AccountRepository {
     required this.content,
     this.onRegister,
     this.onDelete,
+    this.createAccount,
   });
 
   final ApiEndpoints api;
@@ -29,6 +30,8 @@ class ApiAccountRepository implements AccountRepository {
   /// Mirrors the result into local UI state (preview controller).
   final String? Function(String name, String email)? onRegister;
   final void Function()? onDelete;
+  final Future<void> Function(String email, String password, String name)?
+  createAccount;
 
   @override
   SignupContent get signupContent => content.signupContent;
@@ -39,6 +42,15 @@ class ApiAccountRepository implements AccountRepository {
   @override
   Future<String?> createProfile(NewProfile profile) async {
     try {
+      if (createAccount != null) {
+        await createAccount!(
+          profile.email,
+          profile.password,
+          profile.displayName,
+        );
+        // The root session preparation uses a fresh, identity-scoped client.
+        return null;
+      }
       await auth?.signUp(profile.email, profile.password, profile.displayName);
       final created = await api.initializeProfile();
       final nickname = profile.displayName.length > 40

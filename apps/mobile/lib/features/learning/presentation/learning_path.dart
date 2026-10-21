@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/design/duo_motion.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
@@ -454,14 +455,21 @@ class _LearningPathState extends ConsumerState<LearningPath> {
         ReferenceButton(
           label: _pausedFor(i, draft)
               ? 'RESUME LESSON'
-              : _review
+              : _review || ref.read(appConfigProvider).isApi
               ? 'START'
               : 'START +20 XP',
           backgroundColor: Colors.white,
           edgeColor: const Color(0xFFD7FFB8),
           foregroundColor: LearningColors.green,
-          onPressed: () {
-            ref.read(courseNavigationProvider.notifier).startLesson(i);
+          onPressed: () async {
+            await ref.read(courseNavigationProvider.notifier).startLesson(i);
+            if (!mounted || !context.mounted) return;
+            final lesson = ref.read(lessonControllerProvider);
+            if (lesson.error != null) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(lesson.error!)));
+              return;
+            }
             setState(() => _selected = null);
             context.push('/lesson/${courseNodeId(_active, i)}');
           },

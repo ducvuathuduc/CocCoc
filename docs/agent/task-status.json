@@ -4,6 +4,37 @@
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
     {
+      "taskId": "REAL-LEARNING-FLOW-20261021",
+      "phase": "Native real learning integration — local code scope only",
+      "owner": "Codex",
+      "branch": "feat/real-learning-flow",
+      "worktree": ".",
+      "status": "DONE",
+      "requirements": [
+        "FR-AUTH-001",
+        "FR-LESSON-001",
+        "FR-LESSON-004",
+        "FR-LESSON-006",
+        "FR-SYNC-001"
+      ],
+      "evidence": [
+        "docs/quality/REAL_LEARNING_FLOW.md"
+      ],
+      "testCommand": "flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false test/real_account_session_test.dart test/real_learning_flow_test.dart test/real_session_token_test.dart",
+      "limitations": "User selected code completion first on coccoc-test. No authenticated cloud/device acceptance or deployment. Billing remains simulated. No push authorization for either new branch.",
+      "checks": {
+        "newRegressions": "PASS 15/15",
+        "relatedFlutter": "PASS 92/92 on final source",
+        "fullFlutter": "1032 passed, 273 golden/UI baseline failures; no failures outside golden/UI group",
+        "analyzer": "PASS flutter analyze --no-pub; no issues",
+        "format": "PASS changed Dart sources",
+        "android": "PASS flutter build apk --debug --no-pub --dart-define-from-file=config/real.public.json",
+        "backend": "tsc, bundles and eslint PASS; backend:verify stops at existing Prettier issues (161 files); separate node tests: 168 pass, 1 content check fail, 12 live skips",
+        "contracts": "154 schemas / 105 fixtures PASS; byte comparison fails on CRLF; read-only LF-normalized generation matches",
+        "docs": "audit syntax/links and blueprint PASS; raw endpoint matrix comparison remains stale"
+      }
+    },
+    {
       "taskId": "P8-FE-PRONUNCIATION-PRACTICE",
       "phase": "P8 scoped follow-up",
       "owner": "Codex",

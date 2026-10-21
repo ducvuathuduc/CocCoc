@@ -1,0 +1,13 @@
+{
+  "DATA_SOURCE": "api",
+  "USE_MOCK_AUTH": "false",
+  "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+  "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
+  "LEARNING_API_URL": "https://coccoc-learning.sgp.appwrite.run",
+  "PROGRESS_API_URL": "https://coccoc-progress.sgp.appwrite.run",
+  "AI_API_URL": "https://coccoc-ai.sgp.appwrite.run",
+  "APPWRITE_GOOGLE_ENABLED": "false",
+  "APPWRITE_FACEBOOK_ENABLED": "false",
+  "APPWRITE_APPLE_ENABLED": "false",
+  "RIVE_NATIVE_WASM_HOST": "rive/"
+}
