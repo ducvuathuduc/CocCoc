@@ -107,3 +107,7 @@ Acceptance fixture: launch FakeAuthRepository as signedOut → welcome; override
 ## Scoped real learning integration (2026-10-21)
 
 `feat/real-learning-flow` integrates the four completed feature branches on local `int/real-learning-features` and wires native account, enrollment, lesson, server progress and recovery-safe journal behavior. See [implementation and acceptance receipt](../quality/REAL_LEARNING_FLOW.md). Code verification is separate from hosted/device acceptance; neither new branch is pushed and no deployment is authorized.
+
+## Real placement follow-up (2026-10-22)
+
+`feat/real-placement-test` adds the native choice, server placement session, replay-safe enrollment and current-unit navigation for FR-COURSE-002. See [implementation and acceptance receipt](../quality/REAL_PLACEMENT_TEST.md). Local code work only; merge is handled separately by the user's teammate.

@@ -1,8 +1,38 @@
 {
-  "updated": "2026-10-21",
+  "updated": "2026-10-22",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
+    {
+      "taskId": "REAL-PLACEMENT-20261022",
+      "phase": "Native placement — local implementation",
+      "owner": "Codex",
+      "branch": "feat/real-placement-test",
+      "worktree": ".",
+      "status": "DONE",
+      "requirements": [
+        "FR-COURSE-002",
+        "FR-LESSON-004",
+        "FR-SYNC-001"
+      ],
+      "dependencyGateReceipts": [
+        "f2ffe88"
+      ],
+      "evidence": [
+        "docs/quality/REAL_PLACEMENT_TEST.md"
+      ],
+      "testCommand": "flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false test/real_placement_test.dart test/real_placement_ui_test.dart test/real_learning_flow_test.dart test/real_account_session_test.dart test/features/learning test/learning_controller_test.dart",
+      "checks": {
+        "targeted": "PASS 76/76 on final source; 19 new feature cases",
+        "backendPlacement": "PASS 3/3 including 7/10 and 8/10 boundaries; no cloud calls",
+        "analyze": "PASS flutter analyze --no-pub, no issues",
+        "android": "PASS debug APK with config/real.public.json",
+        "fullFlutter": "1051 passed / 273 existing golden/UI baseline failures; no failures outside that group",
+        "docs": "PASS audit syntax/links and blueprint",
+        "format": "PASS changed Dart sources"
+      },
+      "limitations": "No authenticated cloud/device validation or deployment. Existing journal uses preferences. No push authorization for this new branch; teammate owns merging."
+    },
     {
       "taskId": "REAL-LEARNING-FLOW-20261021",
       "phase": "Native real learning integration — local code scope only",

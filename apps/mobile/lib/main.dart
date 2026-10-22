@@ -71,6 +71,7 @@ import 'core/cache/snapshot_cache.dart';
 import 'core/config/app_config.dart';
 import 'features/session/application/real_learning_session.dart';
 import 'features/session/presentation/real_connection_screen.dart';
+import 'features/placement/presentation/placement_screens.dart';
 import 'features/super_trial/presentation/super_trial_screen.dart';
 import 'features/streak_repair/presentation/streak_repair_screen.dart';
 import 'features/promo/presentation/promo_code_screen.dart';
@@ -222,10 +223,14 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
           api: true,
           restoring: ref.read(authStartupProvider).isLoading,
           signedIn: ref.read(authControllerProvider).user != null,
+          placementPending:
+              prepared.value?.profile.userId == userId &&
+              prepared.value?.hasSavedPlacement == true,
           ready:
               !prepared.isLoading &&
               !prepared.hasError &&
               userId != null &&
+              prepared.value?.needsEnrollment == false &&
               prepared.value?.profile.userId == userId,
         );
       },
@@ -279,8 +284,13 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         ),
         GoRoute(
           path: '/placement',
-          builder: (context, state) =>
-              const SessionEntryScreen(nodeId: 'placement', placement: true),
+          builder: (context, state) => ref.read(appConfigProvider).isApi
+              ? const PlacementEntryScreen()
+              : const SessionEntryScreen(nodeId: 'placement', placement: true),
+        ),
+        GoRoute(
+          path: '/placement/result',
+          builder: (context, state) => const PlacementResultScreen(),
         ),
         GoRoute(
           path: '/onboarding/demo',
@@ -903,6 +913,7 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         if (!next.isLoading &&
             !next.hasError &&
             next.value != null &&
+            next.value?.needsEnrollment == false &&
             next.value?.profile.userId ==
                 ref.read(authControllerProvider).user?.id) {
           Future.microtask(() {

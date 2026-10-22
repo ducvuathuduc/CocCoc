@@ -70,3 +70,7 @@ catalog are documented in the [avatar analysis](../../docs/design/flows/24_AVATA
 ## Native real learning flow
 
 Use `flutter run --dart-define-from-file=config/real.public.json` from this folder for the existing coccoc-test project. See [scope, limits and acceptance](../../docs/quality/REAL_LEARNING_FLOW.md). The browser preview remains a fixture preview; billing remains simulated.
+
+## Real placement test (native API mode)
+
+New learners can choose a 10-question placement test before enrollment. Completed tests select the server starting point and award no XP. Existing progress is preserved. See [usage, recovery and verification](../../docs/quality/REAL_PLACEMENT_TEST.md).

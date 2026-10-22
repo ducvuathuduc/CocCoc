@@ -13,6 +13,7 @@ import 'features/learning/api_learning_repository_test.dart' as learning;
 import 'package:cocenglish/features/learning/presentation/learning_path.dart';
 import 'package:cocenglish/core/api/client/active_course.dart';
 import 'package:cocenglish/core/cache/snapshot_cache.dart';
+import 'package:cocenglish/core/cache/lesson_journal.dart';
 
 import 'package:cocenglish/features/auth/application/auth_controller.dart';
 import 'package:cocenglish/features/auth/data/auth_repository.dart';
@@ -72,6 +73,7 @@ void main() {
           authRepositoryProvider.overrideWithValue(repository),
           apiTransportProvider.overrideWithValue(transport),
           snapshotStoreProvider.overrideWithValue(MemorySnapshotStore()),
+          lessonJournalProvider.overrideWithValue(InMemoryLessonJournal()),
           activeCourseProvider.overrideWith(
             (ref) =>
                 ActiveCourse(ref.watch(apiEndpointsProvider), fixed: 'vi_en'),

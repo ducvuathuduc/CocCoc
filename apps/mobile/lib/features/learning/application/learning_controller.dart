@@ -167,6 +167,9 @@ class LessonController extends Notifier<LessonState> {
     List<Exercise>? exercises,
   }) async {
     if (_commandActive) return;
+    if (nodeId == placementNodeId && ref.read(appConfigProvider).isApi) {
+      placement = true;
+    }
     _commandActive = true;
     final revision = ++_revision;
     state = state.copyWith(busy: true, clearError: true);
@@ -408,7 +411,7 @@ class LessonController extends Notifier<LessonState> {
       _showExercise(state.index + 1);
       return;
     }
-    if (!state.isRetry && _mistakes.isNotEmpty) {
+    if (!state.placement && !state.isRetry && _mistakes.isNotEmpty) {
       final retry = List<Exercise>.unmodifiable(_mistakes);
       _mistakes = <Exercise>[];
       _nextRetry = <Exercise>[];
@@ -533,6 +536,9 @@ class LessonController extends Notifier<LessonState> {
       );
       if (!_isCurrent(revision)) return;
       ref.invalidate(mistakeHistoryProvider);
+      if (state.placement && ref.read(appConfigProvider).isApi) {
+        ref.invalidate(realLearningSessionProvider);
+      }
       if (ref.read(appConfigProvider).isApi) {
         ref.invalidate(realRewardsProvider);
         final path = ref.read(pathRepositoryProvider);

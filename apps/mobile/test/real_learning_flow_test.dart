@@ -34,7 +34,7 @@ void main() {
     },
   );
   test(
-    'new account initializes profile and enrolls only after missing reads',
+    'new account initializes profile and waits for a starting point choice',
     () async {
       final transport = FakeApiTransport()
         ..json('POST /base/v1/me/initialize', snapshots.profile())
@@ -47,7 +47,7 @@ void main() {
       );
       transport.json('GET /v1/courses/vi_en/path', f.path());
       final api = ApiEndpoints(fakeClient(transport));
-      await RealLearningSessionRepository(
+      final prepared = await RealLearningSessionRepository(
         api,
         ActiveCourse(api, fixed: 'vi_en'),
         ids: SequenceIds(),
@@ -56,9 +56,8 @@ void main() {
         bodyOf(transport.to('PATCH /base/v1/me').single)['nickname'],
         'New learner',
       );
-      final enrollment = transport.to('POST /v1/enrollments').single;
-      expect(bodyOf(enrollment)['startPoint'], 'beginner');
-      expect(enrollment.headers['Idempotency-Key'], isNotEmpty);
+      expect(prepared.needsEnrollment, true);
+      expect(transport.to('POST /v1/enrollments'), isEmpty);
     },
   );
   test(

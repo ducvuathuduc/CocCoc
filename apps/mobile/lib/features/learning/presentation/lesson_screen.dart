@@ -12,6 +12,7 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../../core/design/lesson_motion.dart';
 import '../../../core/audio/speech_recorder.dart';
+import '../../../core/config/app_config.dart';
 import '../application/learning_controller.dart';
 import '../data/speech_assessment.dart';
 import '../../progress/application/preview_controller.dart';
@@ -237,7 +238,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       if (next.stage == LessonStage.completed &&
           previous?.stage != LessonStage.completed) {
         _sound.effect(LessonSfx.lessonComplete);
-        context.replace('/results/${next.receipt!.id}');
+        context.replace(
+          next.placement && ref.read(appConfigProvider).isApi
+              ? '/placement/result'
+              : '/results/${next.receipt!.id}',
+        );
       }
     });
     final exercise = state.current;

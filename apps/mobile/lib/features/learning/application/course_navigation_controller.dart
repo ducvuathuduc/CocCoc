@@ -31,6 +31,7 @@ final courseNavigationProvider =
 class CourseNavigationController extends Notifier<CourseNavigationState> {
   final _consumedChecks = Set<UnitSkipState>.identity();
   String? _userId;
+  bool _hasSelection = false;
   CourseTarget _activeTarget = const CourseTarget(1, 1);
   @override
   CourseNavigationState build() {
@@ -38,6 +39,7 @@ class CourseNavigationController extends Notifier<CourseNavigationState> {
     if (_userId != userId) {
       _userId = userId;
       _activeTarget = const CourseTarget(1, 1);
+      _hasSelection = false;
       _consumedChecks.clear();
     }
     if (!ref.watch(appConfigProvider).isApi) return CourseNavigationState();
@@ -62,14 +64,49 @@ class CourseNavigationController extends Notifier<CourseNavigationState> {
         if (open) unlocked.add(CourseTarget(section, unit));
       }
     }
+    if (!_hasSelection && ordered.isNotEmpty) {
+      final current = ordered.where((n) => n.state == 'current').firstOrNull;
+      if (current != null) {
+        _activeTarget = CourseTarget(
+          sections.keys.toList().indexOf(current.sectionId) + 1,
+          sections[current.sectionId]!.keys.toList().indexOf(current.unitId) +
+              1,
+        );
+        _hasSelection = true;
+      }
+    }
     return CourseNavigationState(active: _activeTarget, unlocked: unlocked);
   }
 
   bool select(CourseTarget target) {
     if (!target.valid || !state.unlocked.contains(target)) return false;
     _activeTarget = target;
+    _hasSelection = true;
     state = CourseNavigationState(active: target, unlocked: state.unlocked);
     return true;
+  }
+
+  bool selectFrontier() {
+    final path = ref.read(pathRepositoryProvider);
+    if (path is! ApiPathRepository) return false;
+    final ordered = [for (final page in path.cache.value ?? []) ...page.nodes]
+      ..sort((a, b) => a.order.compareTo(b.order));
+    final sections = <String, List<String>>{};
+    for (final node in ordered) {
+      final units = sections.putIfAbsent(node.sectionId, () => []);
+      if (!units.contains(node.unitId)) units.add(node.unitId);
+    }
+    final current =
+        ordered.where((n) => n.state == 'current').firstOrNull ??
+        ordered.where((n) => n.state == 'available').firstOrNull;
+    if (current == null) return false;
+    final section = sections.keys.toList().indexOf(current.sectionId);
+    return select(
+      CourseTarget(
+        section + 1,
+        sections[current.sectionId]!.indexOf(current.unitId) + 1,
+      ),
+    );
   }
 
   bool acceptCompletedCheck(CourseTarget target, UnitSkipState result) {

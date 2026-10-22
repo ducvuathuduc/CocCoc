@@ -3,26 +3,35 @@ import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_exception.dart';
 import '../../../core/api/client/idempotency.dart';
 import '../../../core/api/client/active_course.dart';
+import '../../../core/cache/lesson_journal.dart';
 
 class PreparedLearningSession {
   const PreparedLearningSession({
     required this.profile,
     required this.paths,
     required this.rewards,
+    this.hasSavedPlacement = false,
   });
   final wire.Profile profile;
   final List<wire.Path> paths;
   final wire.Rewards rewards;
+  final bool hasSavedPlacement;
+  bool get needsEnrollment => paths.isEmpty;
 }
 
 /// Prepares only missing server resources. Existing nickname, timezone and
 /// enrollment are preserved. A failed service never falls back to fixtures.
 class RealLearningSessionRepository {
-  RealLearningSessionRepository(this.api, this.course, {IdGenerator? ids})
-    : ids = ids ?? UuidV4Generator();
+  RealLearningSessionRepository(
+    this.api,
+    this.course, {
+    IdGenerator? ids,
+    this.journal,
+  }) : ids = ids ?? UuidV4Generator();
   final ApiEndpoints api;
   final ActiveCourse course;
   final IdGenerator ids;
+  final LessonJournal? journal;
   String? _profileKey, _enrollKey;
 
   Future<PreparedLearningSession> prepare(String userId, String name) async {
@@ -58,17 +67,23 @@ class RealLearningSessionRepository {
       paths = await readPathPages(api, courseId);
     } on ApiException catch (error) {
       if (!error.isNotFound) rethrow;
-      await api.enrollCourse(
-        wire.EnrollRequest(courseId: courseId, startPoint: 'beginner'),
-        idempotencyKey: _enrollKey ??= ids.next(),
-      );
-      paths = await readPathPages(api, courseId);
+      paths = const [];
     }
     final rewards = await api.getRewards();
+    final saved = await journal?.active();
     return PreparedLearningSession(
       profile: profile,
       paths: paths,
       rewards: rewards,
+      hasSavedPlacement:
+          saved?.nodeId == 'placement' && saved?.courseId == courseId,
+    );
+  }
+
+  Future<void> enrollBeginner() async {
+    await api.enrollCourse(
+      wire.EnrollRequest(courseId: await course.id(), startPoint: 'beginner'),
+      idempotencyKey: _enrollKey ??= ids.next(),
     );
   }
 }

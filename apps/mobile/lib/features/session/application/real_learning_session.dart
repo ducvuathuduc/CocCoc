@@ -6,6 +6,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/api/api_contracts.dart' as wire;
 import '../../auth/application/auth_controller.dart';
 import '../../learning/data/path_repository.dart';
+import '../../learning/application/learning_controller.dart';
 import '../data/real_learning_session_repository.dart';
 
 final authStartupProvider = FutureProvider<void>((ref) async {
@@ -18,6 +19,7 @@ final realLearningSessionRepositoryProvider =
       (ref) => RealLearningSessionRepository(
         ref.watch(apiEndpointsProvider),
         ref.watch(activeCourseProvider),
+        journal: ref.watch(lessonJournalProvider),
       ),
     );
 final realLearningSessionProvider = FutureProvider<PreparedLearningSession?>((
@@ -31,7 +33,9 @@ final realLearningSessionProvider = FutureProvider<PreparedLearningSession?>((
       .prepare(user.id, user.name);
   if (!ref.mounted) return null;
   final path = ref.read(pathRepositoryProvider);
-  if (path is ApiPathRepository) path.cache.put(result.paths);
+  if (path is ApiPathRepository && !result.needsEnrollment) {
+    path.cache.put(result.paths);
+  }
   return result;
 });
 
@@ -54,6 +58,7 @@ String? realLearningRedirect({
   required bool restoring,
   required bool signedIn,
   required bool ready,
+  bool placementPending = false,
 }) {
   if (!api) return null;
   if (path == '/onboarding') return signedIn ? '/home' : '/auth/register';
@@ -67,10 +72,14 @@ String? realLearningRedirect({
   if (public.contains(path)) return null;
   if (restoring) return path == '/connecting' ? null : '/connecting';
   if (!signedIn) return '/login';
+  if (path == '/placement' ||
+      path == '/lesson/placement' ||
+      path == '/placement/result') {
+    return null;
+  }
+  if (placementPending) return '/placement';
   if (!ready) return path == '/connecting' ? null : '/connecting';
-  if (path == '/onboarding/demo' ||
-      path == '/placement' ||
-      path == '/auth/verify') {
+  if (path == '/onboarding/demo' || path == '/auth/verify') {
     return '/home';
   }
   return path == '/connecting' ? '/home' : null;
