@@ -94,6 +94,7 @@ Generated from [OpenAPI](openapi.yaml); wire DTOs/headers/errors/idempotency/rat
 | POST /internal/jobs/learning-outbox-dispatch | runLearningOutboxDispatch / learning | FR-GAME-001 | l_outbox | JWT or specified internal signature |
 | GET /v1/billing/purchases/{purchaseId} | getPurchase / progress | FR-SET-001 | p_purchases, p_entitlements, p_outbox, p_receipts | JWT or specified internal signature |
 | POST /v1/billing/subscription/cancel | cancelSubscription / progress | FR-SET-001 | p_purchases, p_entitlements, p_outbox, p_receipts | JWT or specified internal signature |
+| GET /v1/me/learning-stats | getLearningStats / progress | FR-GAME-001 | p_profiles, p_day_activity, p_zone_history | JWT or specified internal signature |
 
 Health/ready shapes apply to all three independent service domains; Learning is the primary OpenAPI declaration owner. Internal events have receiver-specific allowlists, not cross-owned writes.
 

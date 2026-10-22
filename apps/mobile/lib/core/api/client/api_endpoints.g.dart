@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 2ec5710437e8486bf0e32b1320f1740edd04701fef4d787a5470bad941890ab0).
+// Source: docs/api/openapi.yaml (sha256 21c9c5aec06b83ba9154cc7e8ca21af1ea2038d1ab03d170e8a54265929b7ba9).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import '../api_contracts.dart' as wire;
@@ -392,6 +392,12 @@ final class ApiEndpoints {
     ApiOperations.initializeProfile,
     decode: wire.Profile.fromJson,
     idempotencyKey: idempotencyKey,
+  );
+
+  /// `GET /v1/me/learning-stats`
+  Future<wire.LearningStats> getLearningStats() => client.call(
+    ApiOperations.getLearningStats,
+    decode: wire.LearningStats.fromJson,
   );
 
   /// `GET /v1/me/preferences`

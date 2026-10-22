@@ -339,6 +339,8 @@
       {"key": "replayXp", "type": "integer"},
       {"key": "completedLessons", "type": "integer"},
       {"key": "originalCorrect", "type": "integer"},
+      {"key": "trackedOriginalCount", "type": "integer", "min": 0, "required": false},
+      {"key": "trackedOriginalCorrect", "type": "integer", "min": 0, "required": false},
       {"key": "reviewSessions", "type": "integer"},
       {"key": "minutesSpent", "type": "integer", "min": 0},
       {"key": "goalMet", "type": "boolean"},

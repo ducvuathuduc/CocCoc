@@ -126,6 +126,8 @@ export const PROGRESS_SCHEMA = {
       replayXp: { type: 'integer', required: true },
       completedLessons: { type: 'integer', required: true },
       originalCorrect: { type: 'integer', required: true },
+      trackedOriginalCount: { type: 'integer', required: false, min: 0 },
+      trackedOriginalCorrect: { type: 'integer', required: false, min: 0 },
       reviewSessions: { type: 'integer', required: true },
       minutesSpent: { type: 'integer', required: true, min: 0 },
       goalMet: { type: 'boolean', required: true },

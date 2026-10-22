@@ -1740,6 +1740,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/learning-stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Own last 28 learning days, ending at the server learning day.
+         * @description Private daily learning history. Accuracy uses tracked originals only; legacy records are excluded from its denominator.
+         */
+        get: operations["getLearningStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3234,6 +3254,22 @@ export interface components {
             scorer: string | null;
             transcriptProvider: ("azure" | "assemblyai" | "deepgram") | null;
             unavailableReason: string | null;
+        };
+        LearningStatsDay: {
+            day: string;
+            studyXp: number;
+            completedLessons: number;
+            reviewSessions: number;
+            originalCorrect: number;
+            active: boolean;
+            trackedOriginalCount: number;
+            trackedOriginalCorrect: number;
+        };
+        LearningStats: {
+            /** Format: date-time */
+            asOf: string;
+            learningZone: string;
+            days: components["schemas"]["LearningStatsDay"][];
         };
     };
     responses: {
@@ -6670,6 +6706,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Entitlement"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    getLearningStats: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningStats"];
                 };
             };
             400: components["responses"]["Failure"];

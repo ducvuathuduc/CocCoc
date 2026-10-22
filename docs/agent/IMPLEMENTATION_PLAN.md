@@ -111,3 +111,7 @@ Acceptance fixture: launch FakeAuthRepository as signedOut → welcome; override
 ## Real placement follow-up (2026-10-22)
 
 `feat/real-placement-test` adds the native choice, server placement session, replay-safe enrollment and current-unit navigation for FR-COURSE-002. See [implementation and acceptance receipt](../quality/REAL_PLACEMENT_TEST.md). Local code work only; merge is handled separately by the user's teammate.
+
+## 2026-10-22 — real learning statistics
+
+Local branch `feat/real-learning-stats`: private Progress read of the last 28 server learning days; mobile 7/28-day XP chart, lesson/review history and tracked first-attempt accuracy. M004 declares two optional counters; legacy records remain excluded from accuracy. See [implementation receipt](../quality/REAL_LEARNING_STATS.md). Cloud schema apply, deployment and account/device validation remain separate.

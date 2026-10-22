@@ -4,6 +4,29 @@
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
     {
+      "taskId": "REAL-STATS-20261022",
+      "phase": "Real learning statistics — local code",
+      "owner": "Codex",
+      "branch": "feat/real-learning-stats",
+      "worktree": ".",
+      "status": "DONE",
+      "requirements": [
+        "FR-GAME-001"
+      ],
+      "requirementCoverage": "Private server-owned 28-day data; mobile 7/28-day XP, lessons, reviews, active days and weighted tracked accuracy. History is daily aggregates. M004 nullable counters exclude legacy originals.",
+      "evidence": [
+        "docs/quality/REAL_LEARNING_STATS.md",
+        "TypeScript compilation PASS",
+        "Progress backend build PASS",
+        "OpenAPI lint PASS",
+        "Contracts check PASS (156 schemas, 105 fixtures)",
+        "Blueprint and docs audit PASS",
+        "schema dry-run PASS; no network",
+        "Final flutter analyze --no-pub PASS (12.1s)"
+      ],
+      "remaining": "No functional or regression tests added/run. M004 schema apply and Progress deployment required before hosted use; cloud/account/device verification pending. No push."
+    },
+    {
       "taskId": "REAL-PLACEMENT-20261022",
       "phase": "Native placement — local implementation",
       "owner": "Codex",

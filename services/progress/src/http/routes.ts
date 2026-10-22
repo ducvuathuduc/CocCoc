@@ -1,3 +1,4 @@
+import { getLearningStats } from '../application/learning-stats.js';
 // Progress business routes: one per docs/api/openapi.yaml operation tagged progress.
 // Every mutation requires a UUID Idempotency-Key and commits through p_receipts (same key +
 // same body replays; changed body is IDEMPOTENCY_CONFLICT). Subject = verified JWT only.
@@ -232,6 +233,10 @@ export function progressRoutes(store: ProgressPersistence): Route[] {
         status: 200,
         body: await initializeProfile(tx, u),
       }));
+    }),
+    user('GET', '/v1/me/learning-stats', (c) => {
+      parseQuery(c.query, []);
+      return read(store, c, (tx, u) => getLearningStats(tx, u));
     }),
     user('GET', '/v1/me/rewards', (c) => {
       const q = parseQuery(c.query, ['completionId']);

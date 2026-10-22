@@ -93,6 +93,10 @@ export async function applyLessonCompletion(tx: ProgressTx, event: CompletionEve
     replayXp: Number(dayRow?.['replayXp'] ?? 0) + award.replayXp,
     completedLessons: Number(dayRow?.['completedLessons'] ?? 0) + (isLesson ? 1 : 0),
     originalCorrect: Number(dayRow?.['originalCorrect'] ?? 0) + (isLesson ? p.originalCorrect : 0),
+    trackedOriginalCount:
+      Number(dayRow?.['trackedOriginalCount'] ?? 0) + (isLesson ? p.originalCount : 0),
+    trackedOriginalCorrect:
+      Number(dayRow?.['trackedOriginalCorrect'] ?? 0) + (isLesson ? p.originalCorrect : 0),
     reviewSessions: Number(dayRow?.['reviewSessions'] ?? 0) + (p.mode === 'REVIEW' ? 1 : 0),
     minutesSpent: Number(dayRow?.['minutesSpent'] ?? 0),
     goalMet: false,

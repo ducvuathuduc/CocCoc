@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 2ec5710437e8486bf0e32b1320f1740edd04701fef4d787a5470bad941890ab0).
+// Source: docs/api/openapi.yaml (sha256 21c9c5aec06b83ba9154cc7e8ca21af1ea2038d1ab03d170e8a54265929b7ba9).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import 'api_operation.dart';
@@ -30,6 +30,7 @@ abstract final class ApiOperations {
   static const getEntitlement = ApiOperation('getEntitlement', 'GET', '/v1/me/entitlement', ApiService.progress, idempotent: false);
   static const getLeague = ApiOperation('getLeague', 'GET', '/v1/league', ApiService.progress, idempotent: false);
   static const getLeagueResult = ApiOperation('getLeagueResult', 'GET', '/v1/league/result', ApiService.progress, idempotent: false);
+  static const getLearningStats = ApiOperation('getLearningStats', 'GET', '/v1/me/learning-stats', ApiService.progress, idempotent: false);
   static const getManifest = ApiOperation('getManifest', 'GET', '/v1/courses/{courseId}/manifest', ApiService.learning, idempotent: false);
   static const getMe = ApiOperation('getMe', 'GET', '/v1/me', ApiService.progress, idempotent: false);
   static const getPath = ApiOperation('getPath', 'GET', '/v1/courses/{courseId}/path', ApiService.learning, idempotent: false);
@@ -111,6 +112,7 @@ abstract final class ApiOperations {
     getEntitlement,
     getLeague,
     getLeagueResult,
+    getLearningStats,
     getManifest,
     getMe,
     getPath,
