@@ -105,3 +105,65 @@ test('newer ACTIVE notification cannot resurrect a refunded purchase', async () 
   assert.equal(ent.body.status, 'REVOKED');
   assert.equal(ent.body.adFree, false);
 });
+
+for (const [currentState, staleState] of [
+  ['ACTIVE', 'REVOKED'],
+  ['CANCELED', 'ACTIVE'],
+]) {
+  test(`newer duplicate ${currentState} keeps older ${staleState} notification from changing access`, async () => {
+    const h = setup();
+    await initUser(h, 'alice');
+    const p = await purchase(h);
+    const notify = h.kit
+      .progressWiring(h.store)
+      .routes.find((r) => r.path === '/internal/billing/notifications');
+    const start = h.clock.now;
+    const send = (state, offset) =>
+      notify.handle({
+        body: {
+          notificationId: randomUUID(),
+          purchaseId: p.purchaseId,
+          platform: 'SIMULATION',
+          state,
+          occurredAt: new Date(start + offset).toISOString(),
+        },
+        requestId: 'r',
+        sender: 'maintainer',
+      });
+    await send(currentState, 1000);
+    const before = await h.call('GET', '/v1/me/entitlement', { user: 'alice' });
+    const eventCount = h.store.dump('p_outbox').length;
+    await send(currentState, 3000);
+    await send(staleState, 2000);
+    const after = await h.call('GET', '/v1/me/entitlement', { user: 'alice' });
+    assert.deepEqual(after.body, before.body);
+    assert.equal(h.store.dump('p_outbox').length, eventCount);
+    const receipt = await h.call('GET', `/v1/billing/purchases/${p.purchaseId}`, { user: 'alice' });
+    assert.equal(receipt.body.state, currentState);
+  });
+}
+
+test('invalid billing notification timestamp is rejected without poisoning ordering', async () => {
+  const h = setup();
+  await initUser(h, 'alice');
+  const p = await purchase(h);
+  const notify = h.kit
+    .progressWiring(h.store)
+    .routes.find((r) => r.path === '/internal/billing/notifications');
+  await assert.rejects(
+    notify.handle({
+      body: {
+        notificationId: randomUUID(),
+        purchaseId: p.purchaseId,
+        platform: 'SIMULATION',
+        state: 'CANCELED',
+        occurredAt: '2026-99-12T03:00:00.000Z',
+      },
+      requestId: 'r',
+      sender: 'maintainer',
+    }),
+    { code: 'VALIDATION_ERROR' },
+  );
+  const receipt = await h.call('GET', `/v1/billing/purchases/${p.purchaseId}`, { user: 'alice' });
+  assert.equal(receipt.body.state, 'ACTIVE');
+});

@@ -562,6 +562,10 @@ export async function applyBillingNotification(
   },
   bodyHash: string,
 ) {
+  const occurredAtMs = Date.parse(notification.occurredAt);
+  if (!Number.isFinite(occurredAtMs))
+    throw new ServiceError('VALIDATION_ERROR', { details: { field: 'occurredAt' } });
+  const occurredAt = new Date(occurredAtMs).toISOString();
   const eventId = operationId('billing-notification', notification.notificationId);
   return store.applyInboxEvent({ eventId, type: 'billing.notification', bodyHash }, async (tx) => {
     const id = rowId('p_purchases', notification.purchaseId);
@@ -572,21 +576,18 @@ export async function applyBillingNotification(
     const vendor = JSON.parse(String(purchase['vendorStateJson'] ?? '{}')) as {
       lastOccurredAt?: string;
     };
-    if (
-      vendor.lastOccurredAt &&
-      Date.parse(notification.occurredAt) <= Date.parse(vendor.lastOccurredAt)
-    )
-      return;
-    if (purchase['state'] === notification.state) return;
+    if (vendor.lastOccurredAt && occurredAtMs <= Date.parse(vendor.lastOccurredAt)) return;
+    const stateChanged = purchase['state'] !== notification.state;
     const next = {
       ...editable(purchase),
       state: notification.state,
-      verifiedAt: notification.state === 'PENDING' ? purchase['verifiedAt'] : tx.nowIso,
+      verifiedAt:
+        notification.state === 'PENDING' || !stateChanged ? purchase['verifiedAt'] : tx.nowIso,
       lastNotificationId: notification.notificationId,
-      vendorStateJson: JSON.stringify({ ...vendor, lastOccurredAt: notification.occurredAt }),
+      vendorStateJson: JSON.stringify({ ...vendor, lastOccurredAt: occurredAt }),
     };
     tx.put('p_purchases', id, next);
-    await applyPurchaseState(tx, next, notification.state);
+    if (stateChanged) await applyPurchaseState(tx, next, notification.state);
   });
 }
 
