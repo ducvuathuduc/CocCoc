@@ -101,9 +101,7 @@ void main() {
     await t.pump(const Duration(milliseconds: 250));
     expect(find.byKey(const ValueKey('chest-opening')), findsOneWidget);
     Opacity copy() => t.widget<Opacity>(
-      find
-          .ancestor(of: find.text('+10'), matching: find.byType(Opacity))
-          .first,
+      find.ancestor(of: find.text('+10'), matching: find.byType(Opacity)).first,
     );
     expect(copy().opacity, 0);
     // CONTINUE is not tappable mid-animation.

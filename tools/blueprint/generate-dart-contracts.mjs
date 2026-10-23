@@ -203,7 +203,7 @@ for (const entry of classes.values()) {
 }
 
 const sha = crypto.createHash('sha256').update(openapiText).digest('hex');
-const header = (purpose) => `// GENERATED CODE - DO NOT EDIT BY HAND.\n// Source: docs/api/openapi.yaml (sha256 ${sha}).\n// Generator: tools/blueprint/generate-dart-contracts.mjs (${purpose}).\n`;
+const header = (purpose) => `// GENERATED CODE - DO NOT EDIT BY HAND.\n// dart format off\n// Source: docs/api/openapi.yaml (sha256 ${sha}).\n// Generator: tools/blueprint/generate-dart-contracts.mjs (${purpose}).\n`;
 
 function emitObject(c) {
   const lines = [];

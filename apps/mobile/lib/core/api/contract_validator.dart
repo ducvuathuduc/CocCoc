@@ -133,7 +133,9 @@ final class ContractValidator {
     }
     final Object? oneOf = s['oneOf'];
     if (oneOf is List) {
-      final int matches = oneOf.where((Object? sub) => _valid(sub, value)).length;
+      final int matches = oneOf
+          .where((Object? sub) => _valid(sub, value))
+          .length;
       if (matches != 1) {
         errors.add('$at: matches $matches oneOf branches (expected exactly 1)');
       }
@@ -260,7 +262,9 @@ final class ContractValidator {
     'number' => value is num && value.isFinite,
     'integer' =>
       value is int ||
-          (value is double && value.isFinite && value == value.truncateToDouble()),
+          (value is double &&
+              value.isFinite &&
+              value == value.truncateToDouble()),
     _ => throw StateError('Unsupported JSON Schema type $type'),
   };
 
@@ -293,8 +297,25 @@ final class ContractValidator {
     r'^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$',
     caseSensitive: false,
   );
-  static final RegExp _dateTimeSeparator = RegExp(r't|\s', caseSensitive: false);
-  static const List<int> _days = <int>[0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  static final RegExp _dateTimeSeparator = RegExp(
+    r't|\s',
+    caseSensitive: false,
+  );
+  static const List<int> _days = <int>[
+    0,
+    31,
+    28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
 
   static bool _isDateTime(String value) {
     final List<String> parts = value.split(_dateTimeSeparator);

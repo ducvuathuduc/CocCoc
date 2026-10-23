@@ -120,11 +120,7 @@ void main() {
   ) async {
     var exited = 0;
     var upgraded = 0;
-    await pumpCall(
-      tester,
-      onExit: () => exited++,
-      onUpgrade: () => upgraded++,
-    );
+    await pumpCall(tester, onExit: () => exited++, onUpgrade: () => upgraded++);
     await toConnectedCaption(tester);
     // Speak a few turns so the review has a conversation to show.
     for (var turn = 0; turn < 2; turn++) {
@@ -227,9 +223,7 @@ void main() {
     await tester.pump(_page);
   });
 
-  testWidgets('screen reads data from the repository provider', (
-    tester,
-  ) async {
+  testWidgets('screen reads data from the repository provider', (tester) async {
     phone(tester);
     await tester.pumpWidget(
       ProviderScope(

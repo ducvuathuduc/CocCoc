@@ -160,11 +160,7 @@ class _RingingView extends StatelessWidget {
         child: ReferenceArt(CallArt.maxWordmark, width: 162, height: 86),
       ),
       const Positioned(left: 37, top: 185, child: GlowBars(heights: [57])),
-      const Positioned(
-        right: 37,
-        top: 173,
-        child: GlowBars(heights: [20, 48]),
-      ),
+      const Positioned(right: 37, top: 173, child: GlowBars(heights: [20, 48])),
       const _At(
         refTop: 369 - 47,
         child: RingingAvatar(art: CallArt.ringingAvatar),
@@ -212,7 +208,9 @@ class _InCallView extends StatelessWidget {
               child: AnimatedSwitcher(
                 duration: reduced ? Duration.zero : CallMotion.caption,
                 child: ReferenceArt(
-                  state.listening ? CallArt.videoListening : CallArt.videoTalking,
+                  state.listening
+                      ? CallArt.videoListening
+                      : CallArt.videoTalking,
                   key: ValueKey(state.listening),
                   width: c.maxWidth,
                   height: videoHeight,
@@ -295,11 +293,7 @@ class _EndedView extends StatelessWidget {
     fit: StackFit.expand,
     children: [
       const Positioned(left: 20, top: 395, child: GlowBars(heights: [57])),
-      const Positioned(
-        right: 37,
-        top: 360,
-        child: GlowBars(heights: [20, 48]),
-      ),
+      const Positioned(right: 37, top: 360, child: GlowBars(heights: [20, 48])),
       const _At(
         refTop: 329,
         child: ClipOval(
@@ -428,7 +422,10 @@ class _UpsellView extends StatelessWidget {
           left: 17,
           right: 17,
           bottom: 116,
-          child: CallSolidButton(label: copy.upgradeLabel, onPressed: onUpgrade),
+          child: CallSolidButton(
+            label: copy.upgradeLabel,
+            onPressed: onUpgrade,
+          ),
         ),
         Positioned(
           left: 17,

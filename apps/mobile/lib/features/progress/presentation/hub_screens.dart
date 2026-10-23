@@ -317,7 +317,6 @@ class ActivityScreen extends ConsumerWidget {
   }
 }
 
-
 class CoursesScreen extends ConsumerWidget {
   const CoursesScreen({super.key});
   @override

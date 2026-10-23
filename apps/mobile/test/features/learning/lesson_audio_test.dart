@@ -41,12 +41,11 @@ class RecordingOutput implements LessonSoundOutput {
   final effects = <String>[];
 
   @override
-  Future<void> playVoice(LessonAudioSource source) async => voice.add(
-    switch (source) {
-      BundledLessonAudio(:final path) => path,
-      CachedLessonAudio(:final path) => path,
-    },
-  );
+  Future<void> playVoice(LessonAudioSource source) async =>
+      voice.add(switch (source) {
+        BundledLessonAudio(:final path) => path,
+        CachedLessonAudio(:final path) => path,
+      });
 
   @override
   Future<void> playEffect(String asset) async => effects.add(asset);
@@ -79,55 +78,64 @@ void main() {
       },
     );
 
-    test('uses the shipped clip when its hash matches (or mock has none)',
-        () async {
-      final s = store();
-      expect(
-        await s.resolve(LessonAudio('a.u1.s1.n', clipHash)),
-        const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
-      );
-      expect(
-        await s.resolve(const LessonAudio('a.u1.s1.n')),
-        const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
-      );
-      expect(await s.resolve(const LessonAudio('a.u9.s9.n')), isNull);
-    });
+    test(
+      'uses the shipped clip when its hash matches (or mock has none)',
+      () async {
+        final s = store();
+        expect(
+          await s.resolve(LessonAudio('a.u1.s1.n', clipHash)),
+          const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
+        );
+        expect(
+          await s.resolve(const LessonAudio('a.u1.s1.n')),
+          const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
+        );
+        expect(await s.resolve(const LessonAudio('a.u9.s9.n')), isNull);
+      },
+    );
 
-    test('downloads a published clip by fileId, verifies and caches it',
-        () async {
-      final requests = <Uri>[];
-      final cache = MemoryAudioCache();
-      final s = store(served: clipBytes, cache: cache, requests: requests);
-      final clip = LessonAudio('a.u2.s3.s', clipHash);
-      expect(
-        await s.resolve(clip),
-        CachedLessonAudio('/cache/$clipHash.aac'),
-      );
-      expect(
-        requests.single.toString(),
-        'https://sgp.cloud.appwrite.io/v1/storage/buckets/learning-assets/'
-        'files/a.u2.s3.s/view?project=p1',
-      );
-      expect(cache.files[clipHash], clipBytes);
-      // Second time: served from the cache, no network.
-      expect(await s.resolve(clip), CachedLessonAudio('/cache/$clipHash.aac'));
-      expect(requests, hasLength(1));
-    });
+    test(
+      'downloads a published clip by fileId, verifies and caches it',
+      () async {
+        final requests = <Uri>[];
+        final cache = MemoryAudioCache();
+        final s = store(served: clipBytes, cache: cache, requests: requests);
+        final clip = LessonAudio('a.u2.s3.s', clipHash);
+        expect(
+          await s.resolve(clip),
+          CachedLessonAudio('/cache/$clipHash.aac'),
+        );
+        expect(
+          requests.single.toString(),
+          'https://sgp.cloud.appwrite.io/v1/storage/buckets/learning-assets/'
+          'files/a.u2.s3.s/view?project=p1',
+        );
+        expect(cache.files[clipHash], clipBytes);
+        // Second time: served from the cache, no network.
+        expect(
+          await s.resolve(clip),
+          CachedLessonAudio('/cache/$clipHash.aac'),
+        );
+        expect(requests, hasLength(1));
+      },
+    );
 
-    test('rejects bytes whose hash differs; falls back to the shipped clip',
-        () async {
-      final tampered = Uint8List.fromList(utf8.encode('other bytes'));
-      final cache = MemoryAudioCache();
-      final s = store(served: tampered, cache: cache);
-      // Newer published hash than the shipped clip: download is bad, so the
-      // shipped clip with the same fileId plays.
-      expect(
-        await s.resolve(LessonAudio('a.u1.s1.n', hashOf(utf8.encode('v2')))),
-        const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
-      );
-      expect(await s.resolve(LessonAudio('a.u5.d1.n', clipHash)), isNull);
-      expect(cache.files, isEmpty);
-    });
+    test(
+      'rejects bytes whose hash differs; falls back to the shipped clip',
+      () async {
+        final tampered = Uint8List.fromList(utf8.encode('other bytes'));
+        final cache = MemoryAudioCache();
+        final s = store(served: tampered, cache: cache);
+        // Newer published hash than the shipped clip: download is bad, so the
+        // shipped clip with the same fileId plays.
+        expect(
+          await s.resolve(LessonAudio('a.u1.s1.n', hashOf(utf8.encode('v2')))),
+          const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
+        );
+        expect(await s.resolve(LessonAudio('a.u5.d1.n', clipHash)), isNull);
+        expect(cache.files, isEmpty);
+      },
+    );
 
     test('word slugs match the content generator', () {
       expect(wordAudioSlug('Hello'), 'hello');
@@ -157,11 +165,9 @@ void main() {
   group('LessonWireMapper audio', () {
     final bundle = wire.LessonBundle.fromJson(
       jsonDecode(
-            File(
-              '../../content/vi_en/dist/v2/bundles/u1n1l3.json',
-            ).readAsStringSync(),
-          )
-          as Map<String, Object?>,
+        File('../../content/vi_en/dist/v2/bundles/u1n1l3.json')
+            .readAsStringSync(),
+      ) as Map<String, Object?>,
     );
     final mapper = LessonWireMapper(bundle.exercises, assets: bundle.assets);
     final hashes = {for (final a in bundle.assets) a.fileId: a.sha256};
@@ -235,9 +241,7 @@ void main() {
     testWidgets('listen prompt autoplays; speaker alternates normal/slow', (
       tester,
     ) async {
-      final (_, output) = await pumpLesson(tester, [
-        byId('english-06-listen'),
-      ]);
+      final (_, output) = await pumpLesson(tester, [byId('english-06-listen')]);
       expect(output.voice, ['lesson_audio/m.a_girl.n.aac']);
       await tester.tap(find.byTooltip('Listen'));
       await tester.pump();

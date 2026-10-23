@@ -24,10 +24,9 @@ void main() {
 
     final ranking = container.read(leagueRankingProvider);
     expect(ranking.entries, hasLength(8 + demoLeagueRoster.length));
-    expect(
-      ranking.entries.map((entry) => entry.rank),
-      [for (var i = 1; i <= ranking.entries.length; i++) i],
-    );
+    expect(ranking.entries.map((entry) => entry.rank), [
+      for (var i = 1; i <= ranking.entries.length; i++) i,
+    ]);
   });
   test('ranking is immutable, descending and assigns all eight ranks', () {
     final container = ProviderContainer(

@@ -6,11 +6,7 @@ import '../application/friends_provider.dart';
 import '../domain/friend.dart';
 
 class FriendsScreen extends ConsumerWidget {
-  const FriendsScreen({
-    this.onBack,
-    this.onAddFriends,
-    super.key,
-  });
+  const FriendsScreen({this.onBack, this.onAddFriends, super.key});
 
   final VoidCallback? onBack;
   final VoidCallback? onAddFriends;
@@ -26,7 +22,11 @@ class FriendsScreen extends ConsumerWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: ReferenceColors.disabled, size: 28),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: ReferenceColors.disabled,
+            size: 28,
+          ),
           onPressed: onBack ?? () => Navigator.of(context).pop(),
           tooltip: 'Back',
         ),
@@ -41,7 +41,11 @@ class FriendsScreen extends ConsumerWidget {
         centerTitle: true,
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1),
-          child: Divider(height: 1, thickness: 2, color: ReferenceColors.border),
+          child: Divider(
+            height: 1,
+            thickness: 2,
+            color: ReferenceColors.border,
+          ),
         ),
       ),
       body: friendsAsync.when(
@@ -76,7 +80,8 @@ class _FriendsBody extends StatefulWidget {
   State<_FriendsBody> createState() => _FriendsBodyState();
 }
 
-class _FriendsBodyState extends State<_FriendsBody> with SingleTickerProviderStateMixin {
+class _FriendsBodyState extends State<_FriendsBody>
+    with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
@@ -128,8 +133,10 @@ class _FriendsBodyState extends State<_FriendsBody> with SingleTickerProviderSta
                   animation: _tabController,
                   builder: (context, _) {
                     final isFollowing = _tabController.index == 0;
-                    final list = isFollowing ? widget.following : widget.followers;
-                    
+                    final list = isFollowing
+                        ? widget.following
+                        : widget.followers;
+
                     if (list.isEmpty) {
                       return const Padding(
                         padding: EdgeInsets.all(32),
@@ -145,12 +152,16 @@ class _FriendsBodyState extends State<_FriendsBody> with SingleTickerProviderSta
                         ),
                       );
                     }
-                    
+
                     return Column(
                       children: [
                         for (var i = 0; i < list.length; i++) ...[
                           if (i > 0)
-                            const Divider(height: 2, thickness: 2, color: ReferenceColors.border),
+                            const Divider(
+                              height: 2,
+                              thickness: 2,
+                              color: ReferenceColors.border,
+                            ),
                           _FriendRow(friend: list[i]),
                         ],
                       ],
@@ -200,7 +211,11 @@ class _FriendRow extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
-              child: const Icon(Icons.face_rounded, color: Colors.white, size: 40),
+              child: const Icon(
+                Icons.face_rounded,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -262,8 +277,7 @@ class _FlagIcon extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (final c in colors)
-            Expanded(child: ColoredBox(color: c)),
+          for (final c in colors) Expanded(child: ColoredBox(color: c)),
         ],
       ),
     );
