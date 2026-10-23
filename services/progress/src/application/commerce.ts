@@ -485,7 +485,8 @@ async function applyPurchaseState(
   }
   const expiresAt =
     status === 'ACTIVE' || status === 'GRACE'
-      ? new Date(tx.nowMs + (product.days ?? 30) * DAY_MS).toISOString()
+      ? ((current?.['purchaseId'] === purchaseId ? current?.['expiresAt'] : null) ??
+        new Date(tx.nowMs + (product.days ?? 30) * DAY_MS).toISOString())
       : (((current?.['purchaseId'] === purchaseId ? current?.['expiresAt'] : null) as
           string | null) ?? tx.nowIso);
   await changeEntitlement(tx, userId, {
@@ -566,10 +567,17 @@ export async function applyBillingNotification(
     const id = rowId('p_purchases', notification.purchaseId);
     const purchase = await tx.get('p_purchases', id);
     if (!purchase) throw new ServiceError('NOT_FOUND');
+    // Terminal receipts cannot be reactivated by a late or repeated hint.
+    if (['REFUNDED', 'REVOKED', 'EXPIRED'].includes(String(purchase['state']))) return;
     const vendor = JSON.parse(String(purchase['vendorStateJson'] ?? '{}')) as {
       lastOccurredAt?: string;
     };
-    if (vendor.lastOccurredAt && notification.occurredAt < vendor.lastOccurredAt) return; // stale
+    if (
+      vendor.lastOccurredAt &&
+      Date.parse(notification.occurredAt) <= Date.parse(vendor.lastOccurredAt)
+    )
+      return;
+    if (purchase['state'] === notification.state) return;
     const next = {
       ...editable(purchase),
       state: notification.state,
@@ -580,6 +588,32 @@ export async function applyBillingNotification(
     tx.put('p_purchases', id, next);
     await applyPurchaseState(tx, next, notification.state);
   });
+}
+
+/** Owner-only receipt projection; raw simulated tokens never leave Progress. */
+export async function getPurchase(tx: ProgressTx, userId: string, purchaseId: string) {
+  await requireProfile(tx, userId);
+  const row = await tx.get('p_purchases', rowId('p_purchases', purchaseId));
+  if (!row || row['userId'] !== userId) throw new ServiceError('NOT_FOUND');
+  return purchaseView(row, null, await getEntitlement(tx, userId));
+}
+
+export async function cancelSubscription(tx: ProgressTx, userId: string) {
+  const entitlement = await getEntitlement(tx, userId);
+  const current = await tx.get('p_entitlements', ids.entitlement(userId));
+  if (!current?.['purchaseId'] || !entitlement.unlimitedEnergy) return entitlement;
+  const id = rowId('p_purchases', String(current['purchaseId']));
+  const purchase = await tx.get('p_purchases', id);
+  if (!purchase || purchase['userId'] !== userId || purchase['platform'] !== 'SIMULATION') {
+    throw new ServiceError('NOT_FOUND');
+  }
+  if (purchase['state'] === 'CANCELED') return entitlement;
+  tx.put('p_purchases', id, {
+    ...editable(purchase),
+    state: 'CANCELED',
+    vendorStateJson: JSON.stringify({ simulation: true, lastOccurredAt: tx.nowIso }),
+  });
+  return changeEntitlement(tx, userId, { status: 'CANCELED', autoRenew: false });
 }
 
 // ---------------------------------------------------------------- promo codes (P10-PROMO-001)

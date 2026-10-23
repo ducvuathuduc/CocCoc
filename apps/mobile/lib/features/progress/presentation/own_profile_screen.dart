@@ -1,3 +1,5 @@
+import '../../../core/config/app_config.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -89,6 +91,14 @@ class OwnProfileScreen extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
+                    if (ref.watch(appConfigProvider).isApi)
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.bar_chart),
+                        title: const Text('Learning statistics'),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push('/learning-stats'),
+                      ),
                     _ProfileCounters(
                       following: preview.following.length,
                       followers: surface.followers.length,

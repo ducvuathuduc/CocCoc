@@ -15,11 +15,15 @@ final class CachingTokenProvider implements AccessTokenProvider {
     this.mint, {
     this.lifetime = const Duration(minutes: 13),
     DateTime Function()? clock,
-  }) : _clock = clock ?? DateTime.now;
+    bool Function()? isCurrent,
+  }) : _clock = clock ?? DateTime.now,
+       _isCurrent = isCurrent ?? (() => true);
 
   final Future<String?> Function() mint;
   final Duration lifetime;
   final DateTime Function() _clock;
+  final bool Function() _isCurrent;
+  int _epoch = 0;
 
   String? _token;
   DateTime? _mintedAt;
@@ -27,6 +31,7 @@ final class CachingTokenProvider implements AccessTokenProvider {
 
   @override
   Future<String?> token() {
+    if (!_isCurrent()) return Future.value(null);
     final cached = _token;
     final mintedAt = _mintedAt;
     if (cached != null &&
@@ -38,18 +43,22 @@ final class CachingTokenProvider implements AccessTokenProvider {
   }
 
   Future<String?> _mint() async {
+    final epoch = _epoch;
     try {
       final value = await mint();
+      if (epoch != _epoch || !_isCurrent()) return null;
       _token = value;
       _mintedAt = value == null ? null : _clock();
       return value;
     } finally {
-      _inFlight = null;
+      if (epoch == _epoch) _inFlight = null;
     }
   }
 
   @override
   void invalidate() {
+    _epoch++;
+    _inFlight = null;
     _token = null;
     _mintedAt = null;
   }

@@ -79,6 +79,8 @@ export async function applyPracticeCompletion(tx: ProgressTx, event: PracticeEve
     replayXp: Number(dayRow?.['replayXp'] ?? 0),
     completedLessons: Number(dayRow?.['completedLessons'] ?? 0),
     originalCorrect: Number(dayRow?.['originalCorrect'] ?? 0),
+    trackedOriginalCount: Number(dayRow?.['trackedOriginalCount'] ?? 0),
+    trackedOriginalCorrect: Number(dayRow?.['trackedOriginalCorrect'] ?? 0),
     reviewSessions: Number(dayRow?.['reviewSessions'] ?? 0),
     minutesSpent: Number(dayRow?.['minutesSpent'] ?? 0),
     goalMet: studyXp >= dailyGoal,

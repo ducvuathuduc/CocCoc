@@ -6,6 +6,7 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../../core/ui/duo_form.dart';
+import '../../../core/config/app_config.dart';
 import '../../auth/application/auth_controller.dart';
 import '../../auth/presentation/auth_widgets.dart';
 import '../application/registration_controller.dart';
@@ -100,7 +101,9 @@ class RegistrationScreen extends ConsumerWidget {
         ? DuoBlueButton(
             key: const ValueKey('register-continue'),
             label: copy.continueLabel,
-            onPressed: () => context.go('/auth/verify'),
+            onPressed: () => context.go(
+              ref.read(appConfigProvider).isApi ? '/home' : '/auth/verify',
+            ),
           )
         : ReferenceButton(
             key: const ValueKey('register-next'),

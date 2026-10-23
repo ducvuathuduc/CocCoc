@@ -483,15 +483,56 @@ class AuthController extends Notifier<AuthState> {
   /// Ends the session server-side, then returns to the signed-out state while
   /// keeping the remembered-account hint.
   Future<void> signOut() async {
+    if (_commandInFlight) return;
     final session = ref.read(authSessionRepositoryProvider);
     final revision = _beginCommand(AuthStage.choice);
     try {
       await session?.signOut();
-    } on Object {
-      // Local sign-out still proceeds; the server session expires on its own.
+    } on Object catch (error) {
+      if (ref.read(appConfigProvider).isApi) {
+        if (_finishCommand(revision)) {
+          state = state.copyWith(busy: false, error: _message(error));
+        }
+        return;
+      }
     }
     if (!_finishCommand(revision)) return;
     state = AuthState(remembered: state.remembered);
+  }
+
+  /// Publishes the newly authenticated identity before API providers are used.
+  Future<void> registerAccount(
+    String email,
+    String password,
+    String name,
+  ) async {
+    if (_commandInFlight) {
+      throw const AuthFailure('Please wait for the current request.');
+    }
+    final session = ref.read(authSessionRepositoryProvider);
+    if (session == null) {
+      throw const AuthFailure('Account creation is unavailable.');
+    }
+    final revision = _beginCommand(state.stage);
+    try {
+      final user = await session.signUp(email, password, name);
+      if (!_finishCommand(revision)) {
+        throw const AuthFailure('Account changed. Please sign in again.');
+      }
+      state = state.copyWith(
+        stage: AuthStage.signedIn,
+        user: user,
+        remembered: user,
+        password: '',
+        busy: false,
+        clearError: true,
+      );
+    } catch (error) {
+      if (_finishCommand(revision)) {
+        state = state.copyWith(busy: false, error: _message(error));
+      }
+      rethrow;
+    }
   }
 
   void dismissRecovery() {
@@ -500,6 +541,16 @@ class AuthController extends Notifier<AuthState> {
       stage: AuthStage.details,
       recoverySent: false,
       clearError: true,
+    );
+  }
+
+  /// A stale request from another account cannot expire the current identity.
+  void expireSession(String expectedUserId) {
+    if (state.user?.id != expectedUserId) return;
+    _leavePendingCommand();
+    state = AuthState(
+      remembered: state.remembered,
+      error: 'Your session ended. Please sign in again.',
     );
   }
 

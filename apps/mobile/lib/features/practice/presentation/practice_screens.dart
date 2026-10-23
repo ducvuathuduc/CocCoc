@@ -12,6 +12,9 @@ import '../../learning/presentation/learning_visuals.dart';
 import '../application/practice_controller.dart';
 import '../domain/practice_models.dart';
 import 'words_screen.dart';
+import 'mistake_history_panel.dart';
+
+export 'pronunciation_practice_screen.dart' show SpeakingRecordScreen;
 
 const _callLily = ArtRegion('call-04', Rect.fromLTWH(0, 300, 1180, 1800));
 
@@ -293,7 +296,7 @@ class PracticeDetailScreen extends ConsumerWidget {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 560),
                     child: switch (kind) {
-                      'mistakes' => _MistakesPractice(ref: ref),
+                      'mistakes' => const MistakeHistoryPanel(),
                       'listen' => _MediaPractice(kind: kind, ref: ref),
                       'speak' => _MediaPractice(kind: kind, ref: ref),
                       _ => const _WordPractice(),
@@ -388,75 +391,6 @@ class _WordPractice extends ConsumerWidget {
   }
 }
 
-class _MistakesPractice extends StatelessWidget {
-  const _MistakesPractice({required this.ref});
-
-  final WidgetRef ref;
-
-  @override
-  Widget build(BuildContext context) {
-    final mistakes = ref.watch(lessonControllerProvider).pendingMistakes;
-    if (mistakes.isEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const ReferenceArt(LearningArt.mistakes, width: 132, height: 132),
-          const SizedBox(height: 18),
-          const Text(
-            'No mistakes to review',
-            textAlign: TextAlign.center,
-            style: headingStyle,
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Missed lesson questions will appear here.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: ReferenceColors.muted, fontSize: 17),
-          ),
-          const SizedBox(height: 24),
-          ReferenceButton(
-            label: 'PRACTICE WORDS',
-            outlined: true,
-            foregroundColor: ReferenceColors.blue,
-            onPressed: () => context.go('/practice/words'),
-          ),
-        ],
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          '${mistakes.length} question${mistakes.length == 1 ? '' : 's'} ready',
-          style: headingStyle,
-        ),
-        const SizedBox(height: 14),
-        for (final mistake in mistakes)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: LearningCard(
-              child: Text(mistake.prompt, style: const TextStyle(fontSize: 17)),
-            ),
-          ),
-        const SizedBox(height: 12),
-        ReferenceButton(
-          label: 'REVIEW MISTAKES',
-          onPressed: () async {
-            await ref
-                .read(lessonControllerProvider.notifier)
-                .start(
-                  nodeId: 'mistake-practice',
-                  guest: true,
-                  exercises: mistakes,
-                );
-            if (context.mounted) context.push('/lesson/practice');
-          },
-        ),
-      ],
-    );
-  }
-}
-
 class _MediaPractice extends StatelessWidget {
   const _MediaPractice({required this.kind, required this.ref});
 
@@ -516,182 +450,6 @@ class _MediaPractice extends StatelessWidget {
           ),
         ],
       ],
-    );
-  }
-}
-
-class SpeakingRecordScreen extends ConsumerStatefulWidget {
-  const SpeakingRecordScreen({super.key});
-
-  @override
-  ConsumerState<SpeakingRecordScreen> createState() =>
-      _SpeakingRecordScreenState();
-}
-
-class _SpeakingRecordScreenState extends ConsumerState<SpeakingRecordScreen>
-    with WidgetsBindingObserver {
-  late final SpeakingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = ref.read(speakingControllerProvider.notifier);
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _controller.resumeRecordingAfterLifecycle();
-      return;
-    }
-    if ({
-      AppLifecycleState.inactive,
-      AppLifecycleState.hidden,
-      AppLifecycleState.paused,
-      AppLifecycleState.detached,
-    }.contains(state)) {
-      _controller.pauseRecordingForLifecycle();
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _controller.cancelPending();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final state = ref.watch(speakingControllerProvider);
-    final controller = ref.read(speakingControllerProvider.notifier);
-    return Scaffold(
-      backgroundColor: ReferenceColors.surface,
-      body: SafeArea(
-        child: Column(
-          children: [
-            LearningHeader(
-              title: 'Speaking',
-              onClose: () => _closeToPractice(context),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(20, 22, 20, 36),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 560),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const ReferenceArt(
-                          LearningArt.lily,
-                          width: 168,
-                          height: 158,
-                        ),
-                        const SizedBox(height: 18),
-                        _CapabilityPanel(capability: state.capability),
-                        const SizedBox(height: 22),
-                        if (state.capability == SpeechCapability.ready)
-                          ReferenceButton(
-                            label: 'TAP TO SPEAK',
-                            backgroundColor: LearningColors.blue,
-                            edgeColor: LearningColors.blueDark,
-                            onPressed: controller.startMockRecording,
-                          ),
-                        if (state.capability == SpeechCapability.capturing)
-                          ReferenceButton(label: 'LISTENING…'),
-                        if (state.capability == SpeechCapability.unscored)
-                          ReferenceButton(
-                            label: 'CONTINUE TO CALL',
-                            onPressed: () => context.push('/speaking/call'),
-                          ),
-                        if ({
-                          SpeechCapability.permissionDenied,
-                          SpeechCapability.unsupported,
-                        }.contains(state.capability)) ...[
-                          ReferenceButton(
-                            label: 'USE TYPED PRACTICE',
-                            backgroundColor: LearningColors.blue,
-                            edgeColor: LearningColors.blueDark,
-                            onPressed: () => _startTextSubstitute(
-                              context,
-                              ref,
-                              mockPracticeExercises,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          ReferenceButton(
-                            label: 'TRY AGAIN',
-                            outlined: true,
-                            onPressed: controller.resetCapability,
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _CapabilityPanel extends StatelessWidget {
-  const _CapabilityPanel({required this.capability});
-
-  final SpeechCapability capability;
-
-  @override
-  Widget build(BuildContext context) {
-    final (title, detail, icon) = switch (capability) {
-      SpeechCapability.permissionDenied => (
-        'Microphone permission denied',
-        'Allow microphone access or continue with typed practice.',
-        Icons.mic_off_rounded,
-      ),
-      SpeechCapability.unsupported => (
-        'Speech capture unsupported',
-        'Continue with typed practice on this device.',
-        Icons.portable_wifi_off_rounded,
-      ),
-      SpeechCapability.capturing => (
-        'Listening…',
-        'Read the sentence aloud.',
-        Icons.graphic_eq_rounded,
-      ),
-      SpeechCapability.unscored => (
-        'Practice complete',
-        'Continue practicing with Lily.',
-        Icons.check_circle_outline_rounded,
-      ),
-      SpeechCapability.ready => (
-        'Listen and repeat',
-        'Tap below to practice saying the sentence.',
-        Icons.mic_none_rounded,
-      ),
-    };
-    return LearningCard(
-      child: Column(
-        children: [
-          Icon(icon, size: 42, color: ReferenceColors.blue),
-          const SizedBox(height: 12),
-          Text(title, textAlign: TextAlign.center, style: headingStyle),
-          const SizedBox(height: 8),
-          Text(
-            detail,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: ReferenceColors.muted,
-              fontSize: 16,
-              height: 1.4,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

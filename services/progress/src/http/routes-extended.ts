@@ -20,6 +20,8 @@ import {
   repairStreak,
   sendGift,
   verifyPurchase,
+  getPurchase,
+  cancelSubscription,
 } from '../application/commerce.js';
 import {
   blockUser,
@@ -256,6 +258,17 @@ export function extendedRoutes(store: ProgressPersistence): Route[] {
       );
     }),
     user('GET', '/v1/me/entitlement', (c) => read(store, c, getEntitlement)),
+    user('GET', '/v1/billing/purchases/{purchaseId}', (c) => {
+      const id = str(pathParam('purchaseId'), 'purchaseId', 1, 36, ID);
+      return read(store, c, (tx, u) => getPurchase(tx, u, id));
+    }),
+    user('POST', '/v1/billing/subscription/cancel', (c) => {
+      emptyBody(c.body);
+      return mutate(store, c, 'cancelSubscription', async (tx, u) => ({
+        status: 200,
+        body: await cancelSubscription(tx, u),
+      }));
+    }),
     user('POST', '/v1/billing/purchases', (c) => {
       const b = objectBody(
         c.body,

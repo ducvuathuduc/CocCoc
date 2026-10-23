@@ -35,6 +35,9 @@ final accountRepositoryProvider = Provider<AccountRepository>((ref) {
     api: ref.watch(apiEndpointsProvider),
     auth: ref.watch(authSessionRepositoryProvider),
     content: mock,
+    createAccount: (email, password, name) => ref
+        .read(authControllerProvider.notifier)
+        .registerAccount(email, password, name),
     onRegister: onRegister,
     onDelete: onDelete,
   );

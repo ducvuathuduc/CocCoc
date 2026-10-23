@@ -12,6 +12,7 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../../core/design/lesson_motion.dart';
 import '../../../core/audio/speech_recorder.dart';
+import '../../../core/config/app_config.dart';
 import '../application/learning_controller.dart';
 import '../data/speech_assessment.dart';
 import '../../progress/application/preview_controller.dart';
@@ -29,6 +30,7 @@ import 'exercises/match_pairs_exercise.dart';
 import 'widgets/lesson_choice_tile.dart';
 import 'widgets/lesson_sheets.dart';
 import 'widgets/token_fly_in.dart';
+import '../../vocabulary/presentation/notebook_screen.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({super.key});
@@ -236,7 +238,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       if (next.stage == LessonStage.completed &&
           previous?.stage != LessonStage.completed) {
         _sound.effect(LessonSfx.lessonComplete);
-        context.replace('/results/${next.receipt!.id}');
+        context.replace(
+          next.placement && ref.read(appConfigProvider).isApi
+              ? '/placement/result'
+              : '/results/${next.receipt!.id}',
+        );
       }
     });
     final exercise = state.current;
@@ -565,6 +571,19 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // sc_2082f9ab: toast sits just above the feedback panel.
+                      if (!state.skipped)
+                        Material(
+                          child: TextButton.icon(
+                            icon: const Icon(Icons.bookmark_add_outlined),
+                            label: const Text('SAVE TO MY VOCABULARY'),
+                            onPressed: () => editVocabulary(
+                              context,
+                              term: exercise!.correctText,
+                              meaning: exercise.meaning ?? '',
+                              example: exercise.correctText,
+                            ),
+                          ),
+                        ),
                       if (_reportToast case final message?)
                         IssueReportedToast(message: message),
                       LessonFeedbackEntrance(

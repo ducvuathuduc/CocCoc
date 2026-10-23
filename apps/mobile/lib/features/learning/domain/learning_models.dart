@@ -196,12 +196,26 @@ class SessionReceipt {
     required this.guest,
     required this.placement,
     this.gems = 0,
+    this.rewardPending = false,
   });
 
   final String id;
   final String nodeId;
   final int xp;
   final int gems;
+  final bool rewardPending;
+
+  SessionReceipt withReward(int awardedXp) => SessionReceipt(
+    id: id,
+    nodeId: nodeId,
+    xp: awardedXp,
+    accuracy: accuracy,
+    elapsed: elapsed,
+    firstCompletion: firstCompletion,
+    guest: guest,
+    placement: placement,
+    gems: gems,
+  );
   final double accuracy;
   final Duration elapsed;
   final bool firstCompletion;

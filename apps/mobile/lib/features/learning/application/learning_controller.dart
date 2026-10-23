@@ -1,12 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/api_providers.dart';
+import '../../../core/api/client/idempotency.dart';
 import '../../../core/cache/lesson_journal.dart';
 import '../../../core/config/app_config.dart';
 import '../../auth/application/auth_controller.dart';
 import '../data/api_learning_repository.dart';
 import '../data/learning_repository.dart';
 import '../domain/learning_models.dart';
+import '../../practice/application/mistake_history_controller.dart';
+import '../../practice/data/mistake_history_repository.dart';
+import '../../session/application/real_learning_session.dart';
+import '../data/path_repository.dart';
+import '../../progress/data/progress_snapshot.dart';
 
 final learningRepositoryProvider = Provider<LearningRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return MockLearningRepository();
@@ -34,9 +40,25 @@ final lessonControllerProvider =
 
 class LearningStateController extends Notifier<LearningState> {
   @override
-  LearningState build() => const LearningState();
+  LearningState build() {
+    final userId = ref.watch(authControllerProvider.select((s) => s.user?.id));
+    if (!ref.watch(appConfigProvider).isApi) return const LearningState();
+    final prepared = ref.watch(realLearningSessionProvider).value;
+    final rewards =
+        ref.watch(realRewardsProvider(userId)).value ??
+        (prepared?.profile.userId == userId ? prepared?.rewards : null);
+    return LearningState(
+      xp: rewards?.studyXp ?? 0,
+      gems: rewards?.gems ?? 0,
+      streak: rewards?.currentStreak ?? 0,
+    );
+  }
 
   void claim(SessionReceipt receipt) {
+    if (ref.read(appConfigProvider).isApi) {
+      ref.invalidate(realRewardsProvider);
+      return;
+    }
     if (state.claimedReceiptIds.contains(receipt.id)) return;
     final claimed = <String>{...state.claimedReceiptIds, receipt.id};
     if (!receipt.firstCompletion || receipt.guest || receipt.placement) {
@@ -58,17 +80,78 @@ class LearningStateController extends Notifier<LearningState> {
 }
 
 class LessonController extends Notifier<LessonState> {
+  bool _syncing = false;
   bool _disposed = false;
   bool _commandActive = false;
   int _revision = 0;
   int _originalTotal = 0;
   List<Exercise> _mistakes = <Exercise>[];
   List<Exercise> _nextRetry = <Exercise>[];
+  final Map<String, MistakeEvidence> _firstEvidence = {};
+  String _evidenceId = '';
+  MistakeHistoryRepository? _historyRepository;
 
   LearningRepository get _repository => ref.read(learningRepositoryProvider);
 
+  Future<void> syncProgress() async {
+    if (!ref.read(appConfigProvider).isApi || _syncing) return;
+    final userId = ref.read(authControllerProvider).user?.id;
+    if (userId == null) return;
+    _syncing = true;
+    final repository = _repository;
+    final path = ref.read(pathRepositoryProvider);
+    final progress = ref.read(progressSnapshotSourceProvider);
+    try {
+      if (repository is ApiLearningRepository) await repository.syncPending();
+      if (!ref.mounted || ref.read(authControllerProvider).user?.id != userId) {
+        return;
+      }
+      ref.invalidate(realRewardsProvider);
+      await Future.wait([
+        if (path is ApiPathRepository) path.refresh(),
+        progress.refresh(),
+      ]);
+    } finally {
+      _syncing = false;
+    }
+  }
+
+  Future<void> refreshReceiptReward() async {
+    final receipt = state.receipt;
+    if (receipt == null || !receipt.rewardPending || state.busy) return;
+    if (receipt.id.startsWith('offline-')) {
+      await syncProgress();
+      return;
+    }
+    final revision = _revision;
+    state = state.copyWith(busy: true, clearError: true);
+    try {
+      final rewards = await ref
+          .read(progressApiProvider)
+          .getRewards(completionId: receipt.id);
+      if (!_isCurrent(revision)) return;
+      state = state.copyWith(
+        busy: false,
+        receipt: rewards.status == 'pending'
+            ? receipt
+            : receipt.withReward(rewards.awardXp ?? 0),
+      );
+      ref.invalidate(realRewardsProvider);
+    } catch (_) {
+      if (_isCurrent(revision)) {
+        state = state.copyWith(
+          busy: false,
+          error: 'XP has not synced yet. Please retry when connected.',
+        );
+      }
+    }
+  }
+
   @override
   LessonState build() {
+    ref.watch(authControllerProvider.select((s) => s.user?.id));
+    _revision++;
+    _commandActive = false;
     _disposed = false;
     ref.onDispose(() {
       _disposed = true;
@@ -84,13 +167,29 @@ class LessonController extends Notifier<LessonState> {
     List<Exercise>? exercises,
   }) async {
     if (_commandActive) return;
+    if (nodeId == placementNodeId && ref.read(appConfigProvider).isApi) {
+      placement = true;
+    }
     _commandActive = true;
     final revision = ++_revision;
     state = state.copyWith(busy: true, clearError: true);
     try {
       final loaded = exercises ?? await _repository.loadLesson(nodeId);
       if (!_isCurrent(revision)) return;
+      final restored = _repository is ApiLearningRepository
+          ? _repository.loadDraft()
+          : null;
+      if (restored != null) {
+        _originalTotal = restored.originalTotal;
+        _mistakes = [...restored.pendingMistakes];
+        _nextRetry = [...restored.nextMistakes];
+        state = restored;
+        return;
+      }
       _originalTotal = loaded.length;
+      _firstEvidence.clear();
+      _evidenceId = UuidV4Generator().next();
+      _historyRepository = ref.read(mistakeRepositoryProvider);
       _mistakes = <Exercise>[];
       _nextRetry = <Exercise>[];
       _repository.clearDraft();
@@ -116,7 +215,7 @@ class LessonController extends Notifier<LessonState> {
         );
       }
     } finally {
-      _commandActive = false;
+      if (_isCurrent(revision)) _commandActive = false;
     }
   }
 
@@ -246,8 +345,23 @@ class LessonController extends Notifier<LessonState> {
       clearError: true,
     );
     try {
-      final correct = await _repository.grade(exercise, answer);
+      final repository = _repository;
+      final correct = repository is EvidenceLearningRepository
+          ? await (repository as EvidenceLearningRepository).gradeWithEvidence(
+              exercise,
+              answer,
+              assisted: state.assisted,
+              substituted: state.textAlternative,
+            )
+          : await repository.grade(exercise, answer);
       if (!_isCurrent(revision)) return;
+      if (!state.isRetry) {
+        _firstEvidence[exercise.id] = MistakeEvidence(
+          exercise,
+          correct: correct,
+          assisted: state.assisted,
+        );
+      }
       var originalCorrect = state.originalCorrect;
       var attempted = state.attempted;
       if (state.isRetry) {
@@ -287,7 +401,7 @@ class LessonController extends Notifier<LessonState> {
         );
       }
     } finally {
-      _commandActive = false;
+      if (_isCurrent(revision)) _commandActive = false;
     }
   }
 
@@ -297,7 +411,7 @@ class LessonController extends Notifier<LessonState> {
       _showExercise(state.index + 1);
       return;
     }
-    if (!state.isRetry && _mistakes.isNotEmpty) {
+    if (!state.placement && !state.isRetry && _mistakes.isNotEmpty) {
       final retry = List<Exercise>.unmodifiable(_mistakes);
       _mistakes = <Exercise>[];
       _nextRetry = <Exercise>[];
@@ -404,6 +518,14 @@ class LessonController extends Notifier<LessonState> {
       clearError: true,
     );
     try {
+      if (_repository is! ApiLearningRepository) {
+        await _historyRepository?.record(
+          _evidenceId,
+          _firstEvidence.values.toList(),
+          review: state.nodeId == mistakeReviewNodeId,
+        );
+        if (!_isCurrent(revision)) return;
+      }
       final receipt = await _repository.complete(
         nodeId: state.nodeId,
         originalCorrect: state.originalCorrect,
@@ -413,6 +535,16 @@ class LessonController extends Notifier<LessonState> {
         placement: state.placement,
       );
       if (!_isCurrent(revision)) return;
+      ref.invalidate(mistakeHistoryProvider);
+      if (state.placement && ref.read(appConfigProvider).isApi) {
+        ref.invalidate(realLearningSessionProvider);
+      }
+      if (ref.read(appConfigProvider).isApi) {
+        ref.invalidate(realRewardsProvider);
+        final path = ref.read(pathRepositoryProvider);
+        if (path is ApiPathRepository) path.refresh().ignore();
+        ref.read(progressSnapshotSourceProvider).refresh().ignore();
+      }
       _repository.clearDraft();
       state = state.copyWith(
         stage: LessonStage.completed,
@@ -437,7 +569,7 @@ class LessonController extends Notifier<LessonState> {
         );
       }
     } finally {
-      _commandActive = false;
+      if (_isCurrent(revision)) _commandActive = false;
     }
   }
 }

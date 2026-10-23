@@ -22,13 +22,29 @@ final apiTransportProvider = Provider<ApiTransport>((ref) {
 
 /// Bearer token source: the active auth repository's Appwrite JWT.
 final accessTokenProvider = Provider<AccessTokenProvider>((ref) {
+  ref.watch(authControllerProvider.select((s) => s.user?.id));
   final session = ref.watch(authSessionRepositoryProvider);
-  return CachingTokenProvider(() async => session?.accessToken());
+  var current = true;
+  final tokens = CachingTokenProvider(
+    () async => session?.accessToken(),
+    isCurrent: () => current,
+  );
+  ref.onDispose(() {
+    current = false;
+    tokens.invalidate();
+  });
+  return tokens;
 });
 
 final apiClientProvider = Provider<ApiClient>((ref) {
   final config = ref.watch(appConfigProvider);
+  final userId = ref.watch(authControllerProvider.select((s) => s.user?.id));
   return ApiClient(
+    onUnauthenticated: () {
+      if (ref.mounted && userId != null) {
+        ref.read(authControllerProvider.notifier).expireSession(userId);
+      }
+    },
     transport: ref.watch(apiTransportProvider),
     tokens: ref.watch(accessTokenProvider),
     timeout: config.requestTimeout,

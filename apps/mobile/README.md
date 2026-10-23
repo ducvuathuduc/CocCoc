@@ -1,8 +1,49 @@
 # CocEnglish mobile frontend
 
+Personal notebook: Practice → Words → MY VOCABULARY, or bookmark a Words row / answered lesson. Words, meanings and examples persist locally per account/course. Due-only reviews use the canonical spacing heuristic and award no XP. See [workflow and checks](../../docs/quality/PERSONAL_VOCABULARY.md).
+
+Persistent mistake review: finish a lesson with an incorrect first answer, then open Practice → Mistakes. Demo history persists locally; API mode reads saved account mistakes and starts/resumes the server REVIEW session. Hints and same-lesson retries do not silently resolve mistakes. See [workflow, offline policy and acceptance evidence](../../docs/quality/PERSISTENT_MISTAKE_REVIEW.md).
+
 Flutter 3.47.0 / Dart 3.13.0; feature-first manual Riverpod MVVM and go_router. Android/iOS platform projects are generated; recorded Android evidence is kept in QA receipts, and iOS needs macOS/Xcode. New collaborators should start with the [developer handoff](../../docs/agent/DEVELOPER_HANDOFF.md).
 
 Run `flutter pub get` then `flutter run` from this directory. Run `pnpm verify` from the repository root for the complete local gate. Direct regression command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false`. Dedicated Duo tests enable the actual animation explicitly.
+
+Simulated payments: open Super/Max → select a plan → confirm demo payment. The
+checkout supports success, pending and declined outcomes, with no real money.
+Settings → Manage Subscription provides restore, receipt details and cancellation
+of renewal while access continues until expiry. Receipts persist per local
+account; API mode uses the Progress simulated verifier and signed-in JWT. See
+the [payment receipt](../../docs/quality/MOCK_PAYMENT.md) for tests, retry behavior
+and the distinction between local settlement and signed API notifications.
+
+## Recorded pronunciation practice
+
+Open Practice → Speak → Practice speaking. In API mode (`DATA_SOURCE=api`),
+the record button asks for microphone access and captures up to 15 seconds of
+16 kHz mono PCM WAV. Stop submits that recording and the displayed reference to
+the existing AI assessment endpoint using the signed-in Appwrite JWT. Configure
+`AI_API_URL` with the AI service URL, alongside the other service URLs described
+in [local setup](../../docs/devops/LOCAL_SETUP_WINDOWS.md). Provider secrets stay
+in the AI Function; this feature does not enable a provider or deploy a service.
+
+The result shows the recognized text and the dedicated scorer's accuracy,
+fluency, completeness and optional prosody. Expand a word for returned phoneme
+scores. Transcript-only, low-confidence, failed and expired results do not show
+numeric pronunciation scores. This practice gives feedback without awarding XP.
+Three authored reference sentences are included; try again or advance to the
+next sentence. Mock mode explicitly offers typed practice instead of simulated
+recording success.
+
+Leaving the screen or backgrounding stops capture and discards late results.
+Microphone denial, empty audio and service failure keep the sentence available
+for retry or typed practice. Captured bytes stay in memory and are uploaded only
+after the learner starts recording and stops or reaches the limit. API request
+retries reuse the same assessment job and idempotency key.
+
+See the [implementation and validation receipt](../../docs/quality/PRONUNCIATION_PRACTICE.md)
+for tests and device/provider limitations. Native microphone and service quality
+must still be checked with a consenting speaker on the target phone; unit tests
+do not establish speech accuracy.
 
 Debug mock login uses `demo@cocenglish.test` / `duolingo-demo`. Any valid demo email accepts that password until reset. Google, Facebook and Apple buttons simulate a demo sign-in. Forgot Password → Next → Okay opens the local reset form; matching passwords must have at least 12 characters. The changed password works for that email in this app instance. Restart resets demo authentication; onboarding choices are stored locally and restored. There is no cloud email, real OAuth or account creation.
 
@@ -25,3 +66,11 @@ Completed mock families and individual source steps are kept in the
 [persistent checklist](../../docs/design/qa/FLOW_CHECKLIST.md); reuse them before
 implementing a pending variant. Original avatar resources and their verified
 catalog are documented in the [avatar analysis](../../docs/design/flows/24_AVATAR_ASSET_RESEARCH.md).
+
+## Native real learning flow
+
+Use `flutter run --dart-define-from-file=config/real.public.json` from this folder for the existing coccoc-test project. See [scope, limits and acceptance](../../docs/quality/REAL_LEARNING_FLOW.md). The browser preview remains a fixture preview; billing remains simulated.
+
+## Real placement test (native API mode)
+
+New learners can choose a 10-question placement test before enrollment. Completed tests select the server starting point and award no XP. Existing progress is preserved. See [usage, recovery and verification](../../docs/quality/REAL_PLACEMENT_TEST.md).

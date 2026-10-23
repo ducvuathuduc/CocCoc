@@ -9,13 +9,25 @@ import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/config/app_config.dart';
 
-/// One reference word with its pronunciation result (Duolingo-style
-/// green/red). [accuracy] is null when the scorer gave no number.
+/// One phoneme returned by the dedicated scorer; missing metrics stay null.
+class SpokenPhoneme {
+  const SpokenPhoneme(this.symbol, this.accuracy);
+  final String symbol;
+  final double? accuracy;
+}
+
+/// One reference word with its pronunciation result. Accuracy is nullable.
 class SpokenWord {
-  const SpokenWord(this.word, {this.accuracy, this.errorType});
+  const SpokenWord(
+    this.word, {
+    this.accuracy,
+    this.errorType,
+    this.phonemes = const [],
+  });
   final String word;
   final double? accuracy;
   final String? errorType;
+  final List<SpokenPhoneme> phonemes;
 
   /// Pronounced well enough to show green.
   bool get ok =>
@@ -36,6 +48,9 @@ class SpeechVerdict {
     required this.transcript,
     this.words = const <SpokenWord>[],
     this.accuracy,
+    this.fluency,
+    this.completeness,
+    this.prosody,
     this.reason,
   });
 
@@ -50,6 +65,9 @@ class SpeechVerdict {
   /// Reference-aligned words (insertions dropped) when [scored].
   final List<SpokenWord> words;
   final double? accuracy;
+  final double? fluency;
+  final double? completeness;
+  final double? prosody;
   final String? reason;
 }
 
@@ -62,29 +80,51 @@ String _norm(String s) => s
 /// Maps the server Assessment to a [SpeechVerdict].
 SpeechVerdict verdictFrom(wire.Assessment a, String referenceText) {
   final transcript = a.transcript ?? '';
-  if (a.scoreState == 'VALID') {
+  double? metric(num? value) =>
+      value != null && value.isFinite && value >= 0 && value <= 100
+      ? value.toDouble()
+      : null;
+  final accuracy = metric(a.accuracy);
+  final completeness = metric(a.completeness);
+  final succeeded = a.status == 'SUCCEEDED';
+  if (succeeded &&
+      a.scoreState == 'VALID' &&
+      transcript.trim().isNotEmpty &&
+      a.locale == 'en-US' &&
+      a.scorer != null &&
+      a.modelVersion != null &&
+      a.scoreVersion != null &&
+      accuracy != null &&
+      completeness != null) {
     final words = [
       for (final w in a.words)
         if (w.errorType != 'Insertion')
           SpokenWord(
             w.word,
-            accuracy: w.accuracy?.toDouble(),
+            accuracy: metric(w.accuracy),
             errorType: w.errorType,
+            phonemes: List.unmodifiable([
+              for (final p in w.phonemes)
+                SpokenPhoneme(p.phoneme, metric(p.accuracy)),
+            ]),
           ),
     ];
-    final accuracy = a.accuracy?.toDouble() ?? 0;
-    final completeness = a.completeness?.toDouble() ?? 0;
     return SpeechVerdict(
       scored: true,
       passed: accuracy >= 70 && completeness >= 80,
       transcript: transcript,
       words: words,
       accuracy: accuracy,
+      fluency: metric(a.fluency),
+      completeness: completeness,
+      prosody: metric(a.prosody),
     );
   }
   return SpeechVerdict(
     scored: false,
     passed:
+        succeeded &&
+        a.scoreState == 'NULL_UNAVAILABLE' &&
         transcript.trim().isNotEmpty &&
         _norm(transcript) == _norm(referenceText),
     transcript: transcript,

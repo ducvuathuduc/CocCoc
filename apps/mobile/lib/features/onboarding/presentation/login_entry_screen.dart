@@ -6,6 +6,7 @@ import '../../auth/presentation/login_flow.dart';
 import '../../auth/application/auth_controller.dart';
 import '../../auth/domain/auth_state.dart';
 import '../application/onboarding_controller.dart';
+import '../../../core/config/app_config.dart';
 
 class LoginEntryScreen extends ConsumerWidget {
   const LoginEntryScreen({this.recoveryUserId, this.recoverySecret, super.key});
@@ -18,6 +19,10 @@ class LoginEntryScreen extends ConsumerWidget {
     onStart: () {
       if (ref.read(authControllerProvider).stage == AuthStage.signedIn) {
         context.go('/home');
+        return;
+      }
+      if (ref.read(appConfigProvider).isApi) {
+        context.go('/auth/register');
         return;
       }
       if (context.canPop()) {

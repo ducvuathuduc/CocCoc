@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 c5efb70bc1fbf038e84b06a8dd69ae37f9d6f8cee845b294e081f530ee7a7ba1).
+// Source: docs/api/openapi.yaml (sha256 21c9c5aec06b83ba9154cc7e8ca21af1ea2038d1ab03d170e8a54265929b7ba9).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import '../api_contracts.dart' as wire;
@@ -61,6 +61,20 @@ final class ApiEndpoints {
     ApiOperations.verifyPurchase,
     decode: wire.Purchase.fromJson,
     body: body,
+    idempotencyKey: idempotencyKey,
+  );
+
+  /// `GET /v1/billing/purchases/{purchaseId}`
+  Future<wire.Purchase> getPurchase(String purchaseId) => client.call(
+    ApiOperations.getPurchase,
+    decode: wire.Purchase.fromJson,
+    pathParams: {'purchaseId': purchaseId},
+  );
+
+  /// `POST /v1/billing/subscription/cancel`
+  Future<wire.Entitlement> cancelSubscription({String? idempotencyKey}) => client.call(
+    ApiOperations.cancelSubscription,
+    decode: wire.Entitlement.fromJson,
     idempotencyKey: idempotencyKey,
   );
 
@@ -378,6 +392,12 @@ final class ApiEndpoints {
     ApiOperations.initializeProfile,
     decode: wire.Profile.fromJson,
     idempotencyKey: idempotencyKey,
+  );
+
+  /// `GET /v1/me/learning-stats`
+  Future<wire.LearningStats> getLearningStats() => client.call(
+    ApiOperations.getLearningStats,
+    decode: wire.LearningStats.fromJson,
   );
 
   /// `GET /v1/me/preferences`

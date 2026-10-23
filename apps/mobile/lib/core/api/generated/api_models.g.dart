@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 c5efb70bc1fbf038e84b06a8dd69ae37f9d6f8cee845b294e081f530ee7a7ba1).
+// Source: docs/api/openapi.yaml (sha256 21c9c5aec06b83ba9154cc7e8ca21af1ea2038d1ab03d170e8a54265929b7ba9).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors
@@ -7446,6 +7446,96 @@ final class TurnScore {
       };
 }
 
+/// Wire DTO for `#/components/schemas/LearningStatsDay`.
+final class LearningStatsDay {
+  const LearningStatsDay({
+    required this.day,
+    required this.studyXp,
+    required this.completedLessons,
+    required this.reviewSessions,
+    required this.originalCorrect,
+    required this.active,
+    required this.trackedOriginalCount,
+    required this.trackedOriginalCorrect,
+  });
+
+  /// Validates [json] against the `LearningStatsDay` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory LearningStatsDay.fromJson(Object? json) {
+    ContractValidator.instance.check('LearningStatsDay', json);
+    return LearningStatsDay._decode(json);
+  }
+
+  static LearningStatsDay _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return LearningStatsDay(
+      day: map['day'] as String,
+      studyXp: (map['studyXp'] as num).toInt(),
+      completedLessons: (map['completedLessons'] as num).toInt(),
+      reviewSessions: (map['reviewSessions'] as num).toInt(),
+      originalCorrect: (map['originalCorrect'] as num).toInt(),
+      active: map['active'] as bool,
+      trackedOriginalCount: (map['trackedOriginalCount'] as num).toInt(),
+      trackedOriginalCorrect: (map['trackedOriginalCorrect'] as num).toInt(),
+    );
+  }
+
+  final String day;
+  final int studyXp;
+  final int completedLessons;
+  final int reviewSessions;
+  final int originalCorrect;
+  final bool active;
+  final int trackedOriginalCount;
+  final int trackedOriginalCorrect;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'day': day,
+        'studyXp': studyXp,
+        'completedLessons': completedLessons,
+        'reviewSessions': reviewSessions,
+        'originalCorrect': originalCorrect,
+        'active': active,
+        'trackedOriginalCount': trackedOriginalCount,
+        'trackedOriginalCorrect': trackedOriginalCorrect,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/LearningStats`.
+final class LearningStats {
+  const LearningStats({
+    required this.asOf,
+    required this.learningZone,
+    required this.days,
+  });
+
+  /// Validates [json] against the `LearningStats` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory LearningStats.fromJson(Object? json) {
+    ContractValidator.instance.check('LearningStats', json);
+    return LearningStats._decode(json);
+  }
+
+  static LearningStats _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return LearningStats(
+      asOf: map['asOf'] as String,
+      learningZone: map['learningZone'] as String,
+      days: List<LearningStatsDay>.unmodifiable((map['days'] as List<Object?>).map((Object? x) => LearningStatsDay._decode(x))),
+    );
+  }
+
+  final String asOf;
+  final String learningZone;
+  final List<LearningStatsDay> days;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'asOf': asOf,
+        'learningZone': learningZone,
+        'days': days.map((LearningStatsDay x) => x.toJson()).toList(),
+      };
+}
+
 /// Decoders for every `#/components/schemas` entry, keyed by schema name.
 const Map<String, Object Function(Object?)> apiContractDecoders =
     <String, Object Function(Object?)>{
@@ -7603,4 +7693,6 @@ const Map<String, Object Function(Object?)> apiContractDecoders =
   'JobTickRequest': JobTickRequest.fromJson,
   'JobRunReport': JobRunReport.fromJson,
   'TurnScore': TurnScore.fromJson,
+  'LearningStatsDay': LearningStatsDay.fromJson,
+  'LearningStats': LearningStats.fromJson,
 };

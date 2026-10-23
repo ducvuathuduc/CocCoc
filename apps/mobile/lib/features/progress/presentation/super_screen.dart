@@ -8,6 +8,8 @@ import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../application/extended_controller.dart';
 import 'hub_screens.dart';
+import '../../billing/presentation/billing_checkout.dart';
+import '../../billing/application/billing_controller.dart';
 import 'max_screen.dart';
 
 const _superInk = Color(0xFF0C1149);
@@ -309,7 +311,7 @@ class _SuperState extends ConsumerState<SuperScreen> {
                           ),
                         ),
                         const Text(
-                          'Cancel anytime in the App Store',
+                          'Demo billing • no real charges',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -358,32 +360,12 @@ class _SuperState extends ConsumerState<SuperScreen> {
       height: 1.3,
     ),
   );
-  Future<void> _confirm(BuildContext context) => learningSheet<void>(
-    context,
-    title: 'Try Super',
-    child: Column(
-      children: [
-        const Text(
-          'Continue with your selected plan?',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18),
-        ),
-        const SizedBox(height: 22),
-        ReferenceButton(
-          label: 'START FREE TRIAL',
-          onPressed: () {
-            ref.read(extendedControllerProvider.notifier).confirmPlan();
-            Navigator.pop(context);
-            context.pushReplacement('/super/tour');
-          },
-        ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('NOT NOW'),
-        ),
-      ],
-    ),
-  );
+  Future<void> _confirm(BuildContext context) async {
+    final selection = ref.read(extendedControllerProvider).selectedPlan;
+    if (selection == null) return;
+    final paid = await showBillingCheckout(context, selection);
+    if (context.mounted && paid) context.pushReplacement('/super/tour');
+  }
 }
 
 class _TrialRow extends StatelessWidget {
@@ -552,6 +534,7 @@ class SubscriptionScreen extends ConsumerWidget {
           style: const TextStyle(fontSize: 19),
         ),
         const SizedBox(height: 26),
+        const BillingManagement(),
         if (state.isFamily) ...[
           ReferenceButton(
             label: 'MANAGE FAMILY',
@@ -684,7 +667,9 @@ class _CancelSubscriptionState extends ConsumerState<CancelSubscriptionScreen> {
     children: [
       const SizedBox(height: 24),
       Text(
-        cancelled ? 'Your plan is cancelled.' : 'Why are you cancelling?',
+        cancelled
+            ? 'Renewal canceled. Access continues until your plan expires.'
+            : 'Why are you cancelling?',
         style: headingStyle,
       ),
       const SizedBox(height: 16),
@@ -719,15 +704,20 @@ class _CancelSubscriptionState extends ConsumerState<CancelSubscriptionScreen> {
           label: 'CONFIRM CANCELLATION',
           outlined: true,
           foregroundColor: LearningColors.red,
-          onPressed: reason == null
+          onPressed: reason == null || ref.watch(billingControllerProvider).busy
               ? null
-              : () {
-                  ref
-                      .read(extendedControllerProvider.notifier)
-                      .cancelPlan(reason);
-                  setState(() => cancelled = true);
+              : () async {
+                  final ok = await ref
+                      .read(billingControllerProvider.notifier)
+                      .cancelRenewal();
+                  if (mounted && ok) setState(() => cancelled = true);
                 },
         ),
+        if (ref.watch(billingControllerProvider).message != null)
+          Semantics(
+            liveRegion: true,
+            child: Text(ref.watch(billingControllerProvider).message!),
+          ),
       ] else
         ReferenceButton(label: 'DONE', onPressed: () => context.pop()),
     ],

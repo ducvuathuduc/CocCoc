@@ -25,6 +25,16 @@ abstract class LearningRepository {
   bool get enforcesHearts => false;
 }
 
+/// Optional authoritative grading evidence used by server-backed lessons.
+abstract interface class EvidenceLearningRepository {
+  Future<bool> gradeWithEvidence(
+    Exercise exercise,
+    LessonAnswer answer, {
+    required bool assisted,
+    required bool substituted,
+  });
+}
+
 class LearningFailure implements Exception {
   const LearningFailure(this.message);
 

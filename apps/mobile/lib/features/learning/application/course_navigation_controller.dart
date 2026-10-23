@@ -5,6 +5,10 @@ import '../domain/unit_skip.dart';
 import '../domain/course_review.dart';
 import '../domain/learning_models.dart';
 import 'learning_controller.dart';
+import '../../../core/config/app_config.dart';
+import '../../../core/cache/snapshot_cache.dart';
+import '../data/path_repository.dart';
+import '../../auth/application/auth_controller.dart';
 
 class CourseNavigationState {
   CourseNavigationState({
@@ -26,16 +30,87 @@ final courseNavigationProvider =
 // the learning service; browsing and a fixture check never write those counters.
 class CourseNavigationController extends Notifier<CourseNavigationState> {
   final _consumedChecks = Set<UnitSkipState>.identity();
+  String? _userId;
+  bool _hasSelection = false;
+  CourseTarget _activeTarget = const CourseTarget(1, 1);
   @override
-  CourseNavigationState build() => CourseNavigationState();
+  CourseNavigationState build() {
+    final userId = ref.watch(authControllerProvider.select((s) => s.user?.id));
+    if (_userId != userId) {
+      _userId = userId;
+      _activeTarget = const CourseTarget(1, 1);
+      _hasSelection = false;
+      _consumedChecks.clear();
+    }
+    if (!ref.watch(appConfigProvider).isApi) return CourseNavigationState();
+    watchSnapshot(ref, 'path');
+    final path = ref.watch(pathRepositoryProvider);
+    final pages = path is ApiPathRepository ? path.cache.value : null;
+    final sections = <String, Map<String, bool>>{};
+    final ordered = [for (final page in pages ?? []) ...page.nodes]
+      ..sort((a, b) => a.order.compareTo(b.order));
+    for (final node in ordered) {
+      final units = sections.putIfAbsent(node.sectionId, () => {});
+      units[node.unitId] =
+          (units[node.unitId] ?? false) || node.state != 'locked';
+    }
+    final unlocked = <CourseTarget>{};
+    var section = 0;
+    for (final units in sections.values) {
+      section++;
+      var unit = 0;
+      for (final open in units.values) {
+        unit++;
+        if (open) unlocked.add(CourseTarget(section, unit));
+      }
+    }
+    if (!_hasSelection && ordered.isNotEmpty) {
+      final current = ordered.where((n) => n.state == 'current').firstOrNull;
+      if (current != null) {
+        _activeTarget = CourseTarget(
+          sections.keys.toList().indexOf(current.sectionId) + 1,
+          sections[current.sectionId]!.keys.toList().indexOf(current.unitId) +
+              1,
+        );
+        _hasSelection = true;
+      }
+    }
+    return CourseNavigationState(active: _activeTarget, unlocked: unlocked);
+  }
 
   bool select(CourseTarget target) {
     if (!target.valid || !state.unlocked.contains(target)) return false;
+    _activeTarget = target;
+    _hasSelection = true;
     state = CourseNavigationState(active: target, unlocked: state.unlocked);
     return true;
   }
 
+  bool selectFrontier() {
+    final path = ref.read(pathRepositoryProvider);
+    if (path is! ApiPathRepository) return false;
+    final ordered = [for (final page in path.cache.value ?? []) ...page.nodes]
+      ..sort((a, b) => a.order.compareTo(b.order));
+    final sections = <String, List<String>>{};
+    for (final node in ordered) {
+      final units = sections.putIfAbsent(node.sectionId, () => []);
+      if (!units.contains(node.unitId)) units.add(node.unitId);
+    }
+    final current =
+        ordered.where((n) => n.state == 'current').firstOrNull ??
+        ordered.where((n) => n.state == 'available').firstOrNull;
+    if (current == null) return false;
+    final section = sections.keys.toList().indexOf(current.sectionId);
+    return select(
+      CourseTarget(
+        section + 1,
+        sections[current.sectionId]!.indexOf(current.unitId) + 1,
+      ),
+    );
+  }
+
   bool acceptCompletedCheck(CourseTarget target, UnitSkipState result) {
+    if (ref.read(appConfigProvider).isApi) return false;
     final expected = target.unit == 1 ? target.section : target.unit;
     if (!target.valid ||
         expected < 2 ||
@@ -67,7 +142,9 @@ class CourseNavigationController extends Notifier<CourseNavigationState> {
       vm.resume();
       return;
     }
-    final isReview = target != const CourseTarget(1, 1);
+    final isReview =
+        !ref.read(appConfigProvider).isApi &&
+        target != const CourseTarget(1, 1);
     await vm.start(
       nodeId: id,
       guest: isReview,

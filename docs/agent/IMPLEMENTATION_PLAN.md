@@ -1,6 +1,10 @@
 # CocEnglish Implementation Plan
 
 Goal: implement the frozen Flutter language platform in small verified tasks.
+
+2026-10-21 user-authorized addition: personal vocabulary notebook on local branch `feat/personal-vocabulary-srs`, scoped to Flutter local persistence and FR-PRACTICE-002 review scheduling. Words and lesson feedback entry points, per-account/course storage, assisted/wrong resets and zero-XP reviews are implemented. [Acceptance evidence and remaining limits](../quality/PERSONAL_VOCABULARY.md). No global phase gate is advanced; no cloud sync, deployment or push is authorized.
+
+2026-10-21 user-authorized slice: persistent Mistakes UI and existing backend REVIEW integration on local `feat/persistent-mistake-review`. Implements account-scoped demo persistence, server history/cache, assisted first-attempt evidence, bounded resume queues and duplicate-safe start/answer/completion recovery. [Acceptance evidence and limitations](../quality/PERSISTENT_MISTAKE_REVIEW.md). No global phase gate advances; no push, deployment or schema change is authorized.
 Architecture: Riverpod MVVM mobile; Learning/Progress/AI services; Appwrite platform; offline journal and transactional events.
 Tech stack: [STACK](../architecture/STACK.md). Spec: [SRS](../product/SRS.md), [OpenAPI](../api/openapi.yaml).
 Worker method: native thin slices with meaningful behavior tests; an isolated reviewer when context split helps. No application implementation performed in Phase0.
@@ -12,6 +16,13 @@ Data-model gap analysis 2026-10-12 (branch pb/data): 59-table model (DATA_MODEL 
 Current user-authorized task, 2026-10-04: [FRONTEND_FLOW_PLAN](FRONTEND_FLOW_PLAN.md). Flutter scaffold, onboarding/login and the remaining planned learning/practice/progress/account UI families are implemented as a mock frontend baseline. [Checks/artifacts](../design/qa/FULL_FRONTEND_REPORT.md) are recorded separately; exact fidelity and full P1/P2/P3 gates remain pending. Original Duolingo appearance and mock data override prior asset adaptation for this slice without changing service boundaries or production identity rules.
 
 Global constraints: Flutter Android/iOS; TypeScript/Node22; no provider keys in mobile; no live AI in deterministic CI; no paid/external release action without request; fixed contracts/owners; strict predecessor gates.
+
+2026-10-21 scoped P10-BILL-001 follow-up on local `feat/payment`: explicit mock
+checkout/receipts, restore, pending and declined outcomes, cancellation preserving
+paid expiry, owner-only receipt reads and notification replay fixes are implemented.
+See the [payment receipt](../quality/MOCK_PAYMENT.md) and task status for checks;
+this does not advance the full P10 gate or enable live store payments. The user
+requires explicit permission before pushing this branch.
 
 Review focus: uncertain commit/duplicate award; user cache/auth switch; timezone/late event; short credential expiry/ambiguous mint; native mic/PCM/audio-focus mismatch. Owning tasks below name acceptance cases.
 
@@ -92,3 +103,15 @@ Each task uses checklist: [ ] claim dependencies/paths; [ ] write failing accept
 Inputs: exact STACK baseline and actual inventory; OpenAPI commit/hash; current AGENTS. Reuse the existing Git repository and Flutter app; do not run flutter create or overwrite finished screens. Only an absent checkout/module may be generated with Android/iOS platforms and projectName cocenglish. Dart SDK stays bundled3.13 baseline; preserve current mobile lock and resolve only assigned missing dependencies; no P8heavy packages. Root pnpm workspace includes services/* and packages/* only. Toolchain manifest records actual SDK/Node/JDK and generated Gradle/AGP/Kotlin; cloud/macOS build evidence remains distinct.
 
 Acceptance fixture: launch FakeAuthRepository as signedOut → welcome; override verifiedprofile+enrollment → pathplaceholder fixture; offlinecacheduser → cacheOnly; no admin/provider credentials. Initial unit test verifies router guard completes each state without looping. First negative test is auth state router undefined; build minimal shell until tests pass. Commands from apps/mobile: flutter pub get, dart format --output=none --set-exit-if-changed lib test, flutter analyze --fatal-infos, flutter test, flutter build apk --debug. Record outputs; Mac build follows P1-OPS-001. Do not implement real lessons/auth/backend in this foundation task.
+
+## Scoped real learning integration (2026-10-21)
+
+`feat/real-learning-flow` integrates the four completed feature branches on local `int/real-learning-features` and wires native account, enrollment, lesson, server progress and recovery-safe journal behavior. See [implementation and acceptance receipt](../quality/REAL_LEARNING_FLOW.md). Code verification is separate from hosted/device acceptance; neither new branch is pushed and no deployment is authorized.
+
+## Real placement follow-up (2026-10-22)
+
+`feat/real-placement-test` adds the native choice, server placement session, replay-safe enrollment and current-unit navigation for FR-COURSE-002. See [implementation and acceptance receipt](../quality/REAL_PLACEMENT_TEST.md). Local code work only; merge is handled separately by the user's teammate.
+
+## 2026-10-22 — real learning statistics
+
+Local branch `feat/real-learning-stats`: private Progress read of the last 28 server learning days; mobile 7/28-day XP chart, lesson/review history and tracked first-attempt accuracy. M004 declares two optional counters; legacy records remain excluded from accuracy. See [implementation receipt](../quality/REAL_LEARNING_STATS.md). Cloud schema apply, deployment and account/device validation remain separate.
