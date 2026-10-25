@@ -266,6 +266,15 @@ class EditProfileScreen extends ConsumerStatefulWidget {
   ConsumerState<EditProfileScreen> createState() => _EditProfileState();
 }
 
+// Editing profile geometry, measured on the Duolingo "Editing profile" flow
+// (catalog sc_198760c7…, 393 pt wide): 49 pt fields on a 95 pt row pitch,
+// 12 pt from label glyphs to the field, a 94 pt avatar ring and 18 pt
+// CHANGE AVATAR label; the phone placeholder uses the disabled grey #B0B0B0.
+const double _profileFieldHeight = 49;
+const double _profileFieldInset = 17;
+const double _profileLabelGap = 5;
+const double _profileRowGap = 14;
+
 class _EditProfileState extends ConsumerState<EditProfileScreen> {
   late final TextEditingController first, last, username, email, phone;
   late final ProviderSubscription<ProfileDetails> _profileSubscription;
@@ -323,7 +332,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
       int limit = 60,
       TextInputType? type,
     }) => Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: const EdgeInsets.only(bottom: _profileRowGap),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -335,7 +344,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               color: palette.ink,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: _profileLabelGap),
           TextField(
             key: ValueKey('profile-$id'),
             controller: controller,
@@ -349,9 +358,10 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               filled: true,
               fillColor: palette.raisedSurface,
               hintText: id == 'phone' ? 'Add phone number' : null,
+              hintStyle: TextStyle(fontSize: 20, color: palette.disabled),
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 12,
+                horizontal: _profileFieldInset,
+                vertical: 9.5,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -407,8 +417,8 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                 onTap: () => context.push('/settings/avatar'),
                 customBorder: const CircleBorder(),
                 child: Container(
-                  width: 96,
-                  height: 96,
+                  width: 94,
+                  height: 94,
                   padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -422,8 +432,8 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
                         ? AvatarMotion(values: avatar.saved, animate: false)
                         : const ReferenceArt(
                             LearningArt.avatar,
-                            width: 86,
-                            height: 86,
+                            width: 84,
+                            height: 84,
                           ),
                   ),
                 ),
@@ -436,7 +446,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               child: const Text(
                 'CHANGE AVATAR',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF1CB0F6),
                 ),
@@ -451,7 +461,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
             'Password',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: _profileLabelGap),
           Semantics(
             button: true,
             label: 'Change password',
@@ -460,7 +470,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               onTap: () => context.push('/settings/password'),
               borderRadius: BorderRadius.circular(12),
               child: Container(
-                height: 50,
+                height: _profileFieldHeight,
                 decoration: BoxDecoration(
                   color: palette.raisedSurface,
                   borderRadius: BorderRadius.circular(12),
@@ -469,7 +479,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: _profileRowGap),
           field(
             'email',
             'Email',
@@ -555,7 +565,7 @@ class _PhoneRow extends ConsumerWidget {
     final verified = ref.watch(phoneVerificationControllerProvider).verified;
     final value = verified?.masked ?? fallback;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: const EdgeInsets.only(bottom: _profileRowGap),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -567,7 +577,7 @@ class _PhoneRow extends ConsumerWidget {
               color: palette.ink,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: _profileLabelGap),
           Semantics(
             button: true,
             label: value.isEmpty ? 'Add phone number' : 'Phone number $value',
@@ -579,8 +589,10 @@ class _PhoneRow extends ConsumerWidget {
               },
               borderRadius: BorderRadius.circular(12),
               child: Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                height: _profileFieldHeight,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: _profileFieldInset,
+                ),
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   color: palette.raisedSurface,
@@ -592,7 +604,7 @@ class _PhoneRow extends ConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 20,
-                    color: value.isEmpty ? palette.muted : palette.ink,
+                    color: value.isEmpty ? palette.disabled : palette.ink,
                   ),
                 ),
               ),
