@@ -368,7 +368,11 @@ class AndroidSuperComparison extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 400),
         child: LayoutBuilder(
           builder: (context, box) {
-            const freeWidth = 58.0;
+            // Mobbin Super 01 (360 px): Free column centred at x 224, Super
+            // column 82 px wide with a 14 % white tint from the 34 px header
+            // to the last row, rows on a 48 px pitch with dividers only
+            // between rows (none under the header or after the last row).
+            const freeWidth = 78.0;
             final superWidth = (box.maxWidth * .25).clamp(72.0, 92.0);
             return Stack(
               children: [
@@ -379,22 +383,25 @@ class AndroidSuperComparison extends StatelessWidget {
                   width: superWidth,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: const Color(0x334D5B9A),
-                      borderRadius: BorderRadius.circular(12),
+                      color: const Color(0x24FFFFFF),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                 ),
                 Column(
                   children: [
                     SizedBox(
-                      height: 48,
+                      height: 33,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           const Expanded(child: SizedBox()),
                           const SizedBox(
                             width: freeWidth,
-                            child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.zero,
                               child: Text(
+                                textAlign: TextAlign.center,
                                 'FREE',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -407,6 +414,7 @@ class AndroidSuperComparison extends StatelessWidget {
                           SizedBox(
                             width: superWidth,
                             child: Center(
+                              heightFactor: 1,
                               child: Semantics(
                                 label: 'Super',
                                 image: true,
@@ -416,8 +424,8 @@ class AndroidSuperComparison extends StatelessWidget {
                                     Rect.fromLTWH(268, 255, 72, 31),
                                   ),
                                   key: ValueKey('android-super-badge'),
-                                  width: 66,
-                                  height: 28,
+                                  width: 72,
+                                  height: 31,
                                 ),
                               ),
                             ),
@@ -425,8 +433,9 @@ class AndroidSuperComparison extends StatelessWidget {
                         ],
                       ),
                     ),
-                    for (final feature in _features)
+                    for (final (index, feature) in _features.indexed)
                       _ComparisonRow(
+                        divider: index > 0,
                         label: feature.$1,
                         freeIncluded: feature.$2,
                         freeWidth: freeWidth,
@@ -445,12 +454,14 @@ class AndroidSuperComparison extends StatelessWidget {
 
 class _ComparisonRow extends StatelessWidget {
   const _ComparisonRow({
+    required this.divider,
     required this.label,
     required this.freeIncluded,
     required this.freeWidth,
     required this.superWidth,
   });
 
+  final bool divider;
   final String label;
   final bool freeIncluded;
   final double freeWidth;
@@ -464,8 +475,10 @@ class _ComparisonRow extends StatelessWidget {
       child: ExcludeSemantics(
         child: Container(
           constraints: const BoxConstraints(minHeight: 48),
-          decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: Color(0x2EFFFFFF))),
+          decoration: BoxDecoration(
+            border: divider
+                ? const Border(top: BorderSide(color: Color(0x2EFFFFFF)))
+                : null,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -473,14 +486,14 @@ class _ComparisonRow extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
+                    horizontal: 14,
                     vertical: 11,
                   ),
                   child: Text(
                     label,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 15,
                       height: 1.15,
                       fontWeight: FontWeight.w400,
                     ),

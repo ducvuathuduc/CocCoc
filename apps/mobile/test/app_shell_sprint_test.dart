@@ -16,6 +16,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/settle_images.dart';
+
 void main() {
   setUpAll(() async {
     await (FontLoader('DuolingoSans')
@@ -271,6 +273,8 @@ void main() {
           addTearDown(container.dispose);
           await tester.pumpWidget(_harness(container, scale: scale));
           await tester.pumpAndSettle();
+          // Decode the stat and tab artwork so the golden shows the icons.
+          await settleImages(tester);
           for (final label in [
             'Courses',
             'Streak',

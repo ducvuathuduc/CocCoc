@@ -48,34 +48,39 @@ class AndroidSuperFlow extends ConsumerWidget {
           child: SafeArea(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        tooltip: s.step == 0 ? 'Close' : 'Back',
-                        onPressed: s.busy
-                            ? null
-                            : () {
-                                if (s.step > 0) {
-                                  vm.back();
-                                } else if (context.canPop()) {
-                                  context.pop();
-                                } else {
-                                  context.go('/home');
-                                }
-                              },
-                        icon: Icon(
-                          s.step == 0 ? Icons.close : Icons.arrow_back,
-                          color: Colors.white,
+                // Super 01 has an empty header (NO THANKS and system back
+                // exit); later steps show close/back and the SUPER badge.
+                if (s.step == 0)
+                  const SizedBox(height: 48)
+                else
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          tooltip: s.step == 0 ? 'Close' : 'Back',
+                          onPressed: s.busy
+                              ? null
+                              : () {
+                                  if (s.step > 0) {
+                                    vm.back();
+                                  } else if (context.canPop()) {
+                                    context.pop();
+                                  } else {
+                                    context.go('/home');
+                                  }
+                                },
+                          icon: Icon(
+                            s.step == 0 ? Icons.close : Icons.arrow_back,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      const ReferenceArt(_badge, width: 79, height: 25),
-                      const SizedBox(width: 15),
-                    ],
+                        const Spacer(),
+                        const ReferenceArt(_badge, width: 79, height: 25),
+                        const SizedBox(width: 15),
+                      ],
+                    ),
                   ),
-                ),
                 Expanded(
                   child: AnimatedSwitcher(
                     duration: MediaQuery.disableAnimationsOf(context)
@@ -86,18 +91,21 @@ class AndroidSuperFlow extends ConsumerWidget {
                       padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
                       children: [
                         if (s.step == 0) ...[
-                          const SizedBox(height: 42),
-                          const Text(
-                            'Progress faster in your English course with Super!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w800,
-                              height: 1.3,
+                          const SizedBox(height: 41),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24),
+                            child: Text(
+                              'Progress faster in your English course with Super!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23,
+                                fontWeight: FontWeight.w800,
+                                height: 1.435,
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 18),
                           const AndroidSuperComparison(),
                         ] else if (s.step == 1) ...[
                           const SizedBox(height: 80),
@@ -181,8 +189,19 @@ class AndroidSuperFlow extends ConsumerWidget {
                     ),
                   ),
                 ),
+                if (s.step == 0)
+                  const Divider(
+                    height: 2,
+                    thickness: 2,
+                    color: Color(0x33FFFFFF),
+                  ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                  padding: EdgeInsets.fromLTRB(
+                    16,
+                    s.step == 0 ? 15 : 10,
+                    16,
+                    16,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -214,6 +233,7 @@ class AndroidSuperFlow extends ConsumerWidget {
                                 }
                               },
                       ),
+                      if (s.step == 0) const SizedBox(height: 13),
                       if (s.step == 0)
                         TextButton(
                           onPressed: () => context.canPop()
@@ -224,6 +244,8 @@ class AndroidSuperFlow extends ConsumerWidget {
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w800,
+                              fontSize: 15,
+                              letterSpacing: 1.3,
                             ),
                           ),
                         ),

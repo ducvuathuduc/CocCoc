@@ -40,6 +40,15 @@ void main() {
     );
 
     await tester.pumpAndSettle();
+    // The avatar is a Rive file decoded on real async IO: let it load, then
+    // render, so the golden shows the avatar instead of placeholder icons.
+    for (var i = 0; i < 3; i++) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
+      await tester.pump(const Duration(milliseconds: 16));
+    }
+    await tester.pumpAndSettle();
 
     await expectLater(
       find.byKey(const ValueKey('avatar-screen')),
