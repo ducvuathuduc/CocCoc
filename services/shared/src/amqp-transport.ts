@@ -235,7 +235,8 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
       };
       pendingPublishes.add(finish);
       const timer = setTimeout(
-        () => finish(new ServiceError('DEADLINE_EXCEEDED', { details: { reason: 'AMQP_CONFIRM' } })),
+        () =>
+          finish(new ServiceError('DEADLINE_EXCEEDED', { details: { reason: 'AMQP_CONFIRM' } })),
         confirmTimeoutMs,
       );
       try {

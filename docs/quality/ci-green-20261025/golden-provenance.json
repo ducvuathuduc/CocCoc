@@ -1,0 +1,1435 @@
+{
+  "date": "2026-10-25",
+  "candidateSourceCommit": "d585b6a92422050287bca80659895e032c6995c5",
+  "sourceWorkflowRun": 40168817573,
+  "platform": "ubuntu-24.04 / Flutter3.47.0",
+  "comparison": "strict LocalFileComparator; no tolerance, skips or automatic baseline update in CI",
+  "scope": "mobile code matches artifact source except Shop, which is excluded and retains its separately reviewed branch goldens",
+  "review": "Inspected representative Ahem-before/real-font-after, Sections, Practice, weekend Quests, report menu, offline Path and hearts overlay. Per-file hashes and measured changes below record provenance; this is not proof of whole-app Duolingo pixel parity.",
+  "baselines": [
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_practice_hub_360_text2.png",
+      "previousSha256": "9e0e748dc37d7bd5001a940baf5ad237d2d533bc71c4d122cd8fbd5b06442ef3",
+      "candidateSha256": "76d8a27d774f84e5c2ea8c4fbb2888f591ec9160ff65dff99d7aaa339ca94630",
+      "changedPixels": 227166,
+      "pixelRatio": 0.7887708333333333,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_practice_hub_430_text2.png",
+      "previousSha256": "6b8de6c7532b11f477c058159ceb0949f311a5918bdbebe4b7dd152b4b82db1b",
+      "candidateSha256": "cd0e3b0f4db29f8b8622eddf45b6365eb733c4ccc9e25f00019ca93f27796bd4",
+      "changedPixels": 279205,
+      "pixelRatio": 0.6966887912965366,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_sort_360_text2.png",
+      "previousSha256": "432452b0d8eee7c1de36c80f33c03724221fd057950bb85e1b4df32f0088b0fc",
+      "candidateSha256": "fd10f82ebef7358c3d338164e2a935fa5c5483d9e5295f8aec14597baa867320",
+      "changedPixels": 189764,
+      "pixelRatio": 0.6589027777777777,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_sections_430_text2.png",
+      "previousSha256": "2574968873325d8c40b7db331a82d7d21f42f3e51751d28f10b3d8e1f27dae13",
+      "candidateSha256": "4525e471da3c7b3e32e5de65ba1db3b89e9c8c6accc198307cf3c6ada0df0c1f",
+      "changedPixels": 249589,
+      "pixelRatio": 0.6227892005190139,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_sections_360_text2.png",
+      "previousSha256": "7cf6551efff9b0d917a97fdbaccc29f0c799c3126ed8f5ef8c80a47f7e8a3065",
+      "candidateSha256": "b881920bf89f6dca60cf619cfb9799a0cf64c54899f720c278f227028fa33142",
+      "changedPixels": 169309,
+      "pixelRatio": 0.5878784722222222,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_sections_430_text1.png",
+      "previousSha256": "2ff0b199aca75e49e7ad0d2dc9593fb0e2b2b829bba2924350fedd020f571d79",
+      "candidateSha256": "f07d879341ea59777dac9f9a497fc6785fc3db42d6722eeb43813993167423e8",
+      "changedPixels": 216101,
+      "pixelRatio": 0.5392279668629604,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_sections_360_text1.png",
+      "previousSha256": "077778c82e9cde419cbe51e25a280f52961f2ecc86cebd4953876a791730f051",
+      "candidateSha256": "67a8365a90047f09e857c7ab7edcb826613d9d5aa38877aabb7512c2ec882c53",
+      "changedPixels": 152374,
+      "pixelRatio": 0.5290763888888889,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_max_430_text2.png",
+      "previousSha256": "5fccdf766c7d6e6df4dbdda1acca9075fb6fc06399c1fb97d330063004bba01a",
+      "candidateSha256": "cbeff2ea93b9017d0dbf068c025174a06d4e1227a729d4a6fa9fd4370b9ecb15",
+      "changedPixels": 199702,
+      "pixelRatio": 0.49830821439265394,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_max_360_text2.png",
+      "previousSha256": "78e34769708a9d0edadf59e7442380d1f81fc63389ca3eea3237a0a08dbdf80d",
+      "candidateSha256": "85a0f62a80be73cb5f1f2c3842edef848401af20a11f4f947e380e89fd85fa27",
+      "changedPixels": 133808,
+      "pixelRatio": 0.4646111111111111,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_app_icon_360_text2.png",
+      "previousSha256": "17967ccd22bd4fff626c65e679d243bffc1a1b7c58e1794cce1f053a022c55d9",
+      "candidateSha256": "1e5e1158530916898984900461924172230e2fafbe58a494eb6c2c9addf00d20",
+      "changedPixels": 133438,
+      "pixelRatio": 0.4633263888888889,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_story_library_430_text2.png",
+      "previousSha256": "5fa77487c0d9581925d1feaa7ebeddd0394785f54b5fbca32732e2747883a33e",
+      "candidateSha256": "3a3790f33511e03d2007ee3b583e81517bbd8a8017549fba324c5bedfeb8acc8",
+      "changedPixels": 174320,
+      "pixelRatio": 0.4349735502545164,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_430_text2.png",
+      "previousSha256": "ea6f3a98fff1e1af0dfdd896c53cf3b283d9d436b868b214c43e76da37b1b4ed",
+      "candidateSha256": "cf87808e0591e4ad9964c218afb30d8ef6f9bc73457e247e17fbdd4c15cdc08c",
+      "changedPixels": 173983,
+      "pixelRatio": 0.43413264796885914,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_family_360_text2.png",
+      "previousSha256": "d19809549967b050538823f35876e0e9eb2b1df6fa5ba6176f8d4e09a2a2a14c",
+      "candidateSha256": "db055c73736c568c2c43eb96f6f3350bad20133c17eafba36f9e85c7774b1a11",
+      "changedPixels": 123652,
+      "pixelRatio": 0.4293472222222222,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_widgets_360_text2.png",
+      "previousSha256": "7d9dcf75602e9f846a05702c68b25799cfd7f096536c6399306fcdd85558e324",
+      "candidateSha256": "706ca596c5953f836042ad7d50711f0bd5569a6dd7e1784870813a9696efd6fa",
+      "changedPixels": 122161,
+      "pixelRatio": 0.4241701388888889,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_sort_430_text2.png",
+      "previousSha256": "e3290d4e782307987d9e08e71de04dbb61e2c7148072e5278983fd17f9144dfe",
+      "candidateSha256": "a5c2bf3dbe3ffbb563f7ab51e7d223c0bf1febf3ee73982af20b7022cc0e8b9b",
+      "changedPixels": 167754,
+      "pixelRatio": 0.4185896796087434,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_story_library_430_text1.png",
+      "previousSha256": "518d30dbc802b807b6d8887f383d068c984c538da4a567efb898e1eb6fa7ac8e",
+      "candidateSha256": "30af2709203dec1136bc9b22795cd1f59c4289f41306cf1972f7cadaa1cb2a80",
+      "changedPixels": 165797,
+      "pixelRatio": 0.4137064577303124,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_avatar_screen_430.png",
+      "previousSha256": "573e15d2cf384c0b14f5f3ddc7ac7ad7fe9d25b9e69607b6f836446a86ec1935",
+      "candidateSha256": "f7b16e7361e746b989509a0fce1810fba826367ae56d7fca4a660b785a92113b",
+      "changedPixels": 162994,
+      "pixelRatio": 0.4067122467312107,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_360_text2.png",
+      "previousSha256": "432452b0d8eee7c1de36c80f33c03724221fd057950bb85e1b4df32f0088b0fc",
+      "candidateSha256": "0e36ac665df9ef3fb60b4cc5e0bc3d1b87f4e4474555bb645ea2ae97fca6c7ce",
+      "changedPixels": 114513,
+      "pixelRatio": 0.3976145833333333,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_widgets_430_text2.png",
+      "previousSha256": "9a447f827764f93cf2e92a5eb0b3c92cf67625b50541b577c1972ec0d97db07f",
+      "candidateSha256": "b522009a5a2bf1146ced061544ad68544c7429d300be5e8a37674137e91480d7",
+      "changedPixels": 158549,
+      "pixelRatio": 0.3956208204411618,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_settings_360_text2.png",
+      "previousSha256": "1d925d98bdc6a93b7ea536878d5a73c8e1daec05a04a19118e133d73483da4cb",
+      "candidateSha256": "6352afc411673cba3e18300bd9ebcd9487080092ab9986a3f5cd8d4393318e2b",
+      "changedPixels": 113413,
+      "pixelRatio": 0.3937951388888889,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_story_library_360_text2.png",
+      "previousSha256": "7049c3328a7184f7e886eee9eac8ee3fbd3afdd6bfb443d225c7ad2ae0b679d6",
+      "candidateSha256": "fe101a487f1656c28e7d8f78bc9c488941b52d33f085caf7341ba05b02efbe74",
+      "changedPixels": 111945,
+      "pixelRatio": 0.38869791666666664,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_max_430_text1.png",
+      "previousSha256": "03da6cfbba9f7d3237fc4e87346143fdeea896c15d551a20a4ceb818599e84f5",
+      "candidateSha256": "aa168742b9dd8ba676c9f77469a0c211363a01ebc4961e7bc2a03b67c91f1106",
+      "changedPixels": 153541,
+      "pixelRatio": 0.3831245633296736,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_app_icon_430_text2.png",
+      "previousSha256": "839dda2ce1400f2050750728e98c5f20d09dcb948cd68c7565d14e7557c1721e",
+      "candidateSha256": "e8f3ed04a7d0e8344459c6efa115547810dad38b76c5911d283665048dbc6f02",
+      "changedPixels": 152864,
+      "pixelRatio": 0.38143527298133545,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_360_text2.png",
+      "previousSha256": "9a011ca6d5fcc8eb0f15438b4fb43a05f840758a3eba85ffbe150375e36b373c",
+      "candidateSha256": "226b7576419ad75ac158aabb188349828e3a87458092fc9899365da89566eff0",
+      "changedPixels": 105799,
+      "pixelRatio": 0.3673576388888889,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_sort_360_text1.png",
+      "previousSha256": "11219d6cfe77e252888f7e90fd1ef3e119dbf5835627a82079ab1f5943e64224",
+      "candidateSha256": "cad3c3deb99c275dcfc2e01a4c409b1c0f53def73965a129eb99e384341fb0be",
+      "changedPixels": 104875,
+      "pixelRatio": 0.3641493055555556,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_rapid_430_text2.png",
+      "previousSha256": "afc1ea75418d29829f4df4e33a1dc84f02d1e95ad46a3a266b761f754ec64693",
+      "candidateSha256": "6082e714a8ade2f89aaf469ca7a64d088644f50d088bbda12167f6e179ae2825",
+      "changedPixels": 139997,
+      "pixelRatio": 0.34932877532687895,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_430_text2.png",
+      "previousSha256": "c592906a65eaad0d53ce81a962f6fa0abfb70405d52f955ed8152dc41022e8bf",
+      "candidateSha256": "5b4fe9c5de09a50e54a947a2ecceb17c39fbbbde36340d90ff29e5ea981b3a91",
+      "changedPixels": 139750,
+      "pixelRatio": 0.3487124463519313,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_settings_430_text2.png",
+      "previousSha256": "cf4fe3d4daadf21479d740757382defc7f651d1b60340b537783d8608724b3d2",
+      "candidateSha256": "c412737a0b8734860ed2653eea3a24cf730584b5f09bc4a709f3b781b4c35de4",
+      "changedPixels": 138127,
+      "pixelRatio": 0.34466264098213395,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_word_bank_360_text2.png",
+      "previousSha256": "0d862bf0155974abcd01ab7f3913169491e2b53297280f873b3c72eaed1b1671",
+      "candidateSha256": "b931031bb35d3bbbfe3bfaa599cefaf2d6253fa74aad296d9c634fe7169d066f",
+      "changedPixels": 98912,
+      "pixelRatio": 0.34344444444444444,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_legendary_430_text2.png",
+      "previousSha256": "1792b769cb42a69076fc6f8147a10c4bf4655d16836770798e6d4f6d37bccbe4",
+      "candidateSha256": "d9d2d6d1a8e5234b01be0b929b22c2a6aacc652be5b16fc2124870676d2deb4a",
+      "changedPixels": 136718,
+      "pixelRatio": 0.341146821040024,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_family_430_text2.png",
+      "previousSha256": "a8404580ea8d6aa73c6080662f6472f32150e79caecce16bff254e7b32c00b23",
+      "candidateSha256": "bf5c6130cb02fd3b081552ead073dc039d055abea035201a1d908824aab48235",
+      "changedPixels": 130600,
+      "pixelRatio": 0.3258808264297834,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_legendary_360_text2.png",
+      "previousSha256": "6a7c2e86bbc4c35d25e6f5cce679de66aab6c9cec98c32e2dd742a0faf378685",
+      "candidateSha256": "1d14c84fc60aed343cb43923c78f22057a90576ec1c8c5ba82b04abb1b2d2a94",
+      "changedPixels": 93131,
+      "pixelRatio": 0.3233715277777778,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_rapid_360_text2.png",
+      "previousSha256": "540cddfeb1e6ead86faaae5248e93ea2f0150b05f7a918111eecb9efd93347b6",
+      "candidateSha256": "c4aa6a0a6b57c38f661d222d91bc1f4599b2e7cc6840e2ce0b82ef2a36d31756",
+      "changedPixels": 92406,
+      "pixelRatio": 0.32085416666666666,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_widgets_430_text1.png",
+      "previousSha256": "863957c960fcb37e80e08b9e2fd625f9dfa4545b82baa1bb6513af36de8ba0e4",
+      "candidateSha256": "286f102596a58837d5359a2f07887015aa68702bba075e226d43e01a15ca11c2",
+      "changedPixels": 118724,
+      "pixelRatio": 0.2962471304521409,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_sort_430_text1.png",
+      "previousSha256": "4ee2f58914a9cc83a38e07fa009a98bfc4e9bcee315067ac86cda71207cd44c8",
+      "candidateSha256": "21817d743d0d66a6757e6b448d68a79f52dda5c8bd7795e1319935180b374cd8",
+      "changedPixels": 117105,
+      "pixelRatio": 0.2922073061183751,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_feed_430_text2.png",
+      "previousSha256": "b046a7763e93765c60a38225e365f72b89354c9a58641dc89aae61d6f4fb8453",
+      "candidateSha256": "3447b767cbf363dc133c2009ec0fc80c7ece569f28afe71f3b219fb73a13b4a8",
+      "changedPixels": 115944,
+      "pixelRatio": 0.2893103104102206,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_360_text1.png",
+      "previousSha256": "5f4f8f539b5079d80aabc73898a410880c891a89802139d2874dd064a3952981",
+      "candidateSha256": "610220c79db3070d8283ffa8c9ba2e6653e52c919ac24946a6c8562054e63bc2",
+      "changedPixels": 82559,
+      "pixelRatio": 0.28666319444444444,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_listen_choice_360_text2.png",
+      "previousSha256": "cb39fc6d2fa9dcd63c4891d48b225117b3cc33dceecb1ecf494470e4e90315f2",
+      "candidateSha256": "eda26cee5216f8abaca2e89a7a7729afab5780ba1677f515837f2287d2ba06ec",
+      "changedPixels": 81977,
+      "pixelRatio": 0.28464236111111113,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_word_bank_430_text2.png",
+      "previousSha256": "1e30f1f8faba8ab7ec073cafceacb7de66bda805d5e65b7b8704a638ffa25ca6",
+      "candidateSha256": "277e1536fdd36dc4c39e53c93ff26c5fa1632f1c2c8965b942a238cfcd9bf06f",
+      "changedPixels": 111130,
+      "pixelRatio": 0.2772981335462621,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_listen_choice_430_text2.png",
+      "previousSha256": "b60c4250279a9065bd9e4d2dfa9e0f886fdd5f25dbbfd0b0e18487f48a89e32c",
+      "candidateSha256": "c35b6e917850c2322bd3a6a0cf2b6004fe99719184a67bd27c12784dae058940",
+      "changedPixels": 110563,
+      "pixelRatio": 0.2758833216887913,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_words_430_text1.png",
+      "previousSha256": "3f9fdfbad945302d860456ee9aa3a5414a18f360db412c6e3b9b0b0aa38c8881",
+      "candidateSha256": "8506631f08b7f4760c9ddf659efd681a1ff84d9b0f68e1adaea7b2d1c0a66fcc",
+      "changedPixels": 108834,
+      "pixelRatio": 0.2715690188641581,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_speak_repeat_360_text2.png",
+      "previousSha256": "8473749f6f8621e375ba7209341ff0835cecf88d7f8760052c09403d5c5db028",
+      "candidateSha256": "666ef584f863f0bb4899f83b7b12bc29bc603bd606c6cdc7f29f0e284ad6ad6d",
+      "changedPixels": 77794,
+      "pixelRatio": 0.27011805555555557,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_feed_360_text2.png",
+      "previousSha256": "65f951c9130bd5526c00767011b416725fe440f8b2e0f894ab5f6d1dcdc492ff",
+      "candidateSha256": "0971df67096cd6936e61641f4e6f1b76882976d49b0874563dc19590323a09bd",
+      "changedPixels": 76877,
+      "pixelRatio": 0.2669340277777778,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_speak_repeat_430_text2.png",
+      "previousSha256": "bedc4095f3cabe0905a0f4ffb83ce60016baa92b52ee084681df63b1abfe3312",
+      "candidateSha256": "21a6ff70abe2201870f488959798073c71586d7c778ab908fd6365cfe24a8d56",
+      "changedPixels": 105898,
+      "pixelRatio": 0.2642429384170077,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_guide_360_text2.png",
+      "previousSha256": "0bf5b5a8ade6a756f18cecd099ce19b442bdb5fd1f36805ed16ed0243df3f0d5",
+      "candidateSha256": "bd831e0252a74691e57c9215f5c345dc00a04d5855c8f44cc14917892942fa5e",
+      "changedPixels": 71470,
+      "pixelRatio": 0.2481597222222222,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_story_library_360_text1.png",
+      "previousSha256": "885a09f19368d69861041a46210c7be8584bbf37a5f6411551202aa63918cd0e",
+      "candidateSha256": "27aada6bfec7bf3f1b7a1dfdd47c642b9c1a91c50e5ef37f18f4eb64a1b3aef7",
+      "changedPixels": 69447,
+      "pixelRatio": 0.24113541666666666,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_story_430_text2.png",
+      "previousSha256": "e30b02414606d68922dccc850fdf8123a3bc62b533e82f0b726a30c38b3d4009",
+      "candidateSha256": "a116ab7e956911107f6b20c2ef4974c1a3fd97a81bac99a6cc4176081d92bdea",
+      "changedPixels": 96270,
+      "pixelRatio": 0.24021858468909071,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_guide_430_text2.png",
+      "previousSha256": "ee751b85031df0081bb290cdb20fcf59ee9ed47180a2eaab32d00b4b8708ee9e",
+      "candidateSha256": "af1c10d9bb5ee14103e017c23814f22789c22d8bf6794fd5fcdcbe43601dea57",
+      "changedPixels": 95868,
+      "pixelRatio": 0.23921549056792096,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_widgets_360_text1.png",
+      "previousSha256": "a0cc2dbfb5664dbbfbf196e4d7ea56bde313f21fc2ef7bd34ac8acaa9f48491c",
+      "candidateSha256": "cc0f27fbe2d93e75d9037d5425fd8986b5cd45ad9c9dfc734c4687ab7354b1ee",
+      "changedPixels": 65932,
+      "pixelRatio": 0.22893055555555555,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_max_360_text1.png",
+      "previousSha256": "89ce969c7ee1dbdade5cd7b9769a96c2896f83038e19138f50133b347c732174",
+      "candidateSha256": "0ca3aa5553d523008470f3a1b83f794953d2c13542685fa10d7742865ba8f4b6",
+      "changedPixels": 65892,
+      "pixelRatio": 0.22879166666666667,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_settings_430_text1.png",
+      "previousSha256": "09c48c8f6040e13f1651b8d3f95e85e19ba1994e5698de9c420f4b05e29046e0",
+      "candidateSha256": "92f29521555810d8e64f5489821d0255c2b8165f92d0bd703a90235214b71d67",
+      "changedPixels": 90051,
+      "pixelRatio": 0.2247005689190538,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_radio_430_text2.png",
+      "previousSha256": "24d7c50f9e26ef0d0fb75895e27cff88f14c80ac3c951c1a5f1e4dc3c89d9ef5",
+      "candidateSha256": "8a1e0a63701875e7277ec7a7cbb39dc55d3ac62e0c126660de1110a78d326d05",
+      "changedPixels": 89976,
+      "pixelRatio": 0.22451342449346243,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_360_text1.png",
+      "previousSha256": "cd0539c219ac92bc205c130e761c63667e09fad6f29244d621a6c4913514cc47",
+      "candidateSha256": "45d5baf7bb1834c1545d6daccef1ddebfd7f686ff1ab3504bb45c82c0ad75676",
+      "changedPixels": 60791,
+      "pixelRatio": 0.2110798611111111,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_settings_360_text1.png",
+      "previousSha256": "be551b77ec70dff81d7cc6dc5cdad68ec00f8fc2d0c08560656cfa82c3d90fb3",
+      "candidateSha256": "1e768b7257b77d770ecb42ec54b060769ceebdc258a9cfd8e750422487bb138f",
+      "changedPixels": 58719,
+      "pixelRatio": 0.20388541666666668,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_guide_360_text1.png",
+      "previousSha256": "87f915cfd8a12c530fe16612efff5a447c16d39aa0f2deea4c74b38e35fa2bce",
+      "candidateSha256": "fd8d4bfd97f740c0213db449d7673462c38093d993ae32d83f23fb568ee0f73c",
+      "changedPixels": 58324,
+      "pixelRatio": 0.20251388888888888,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_story_360_text2.png",
+      "previousSha256": "39024ba13cb10943ac9f1c829d3bb52fb19319ab91bb89bccc048b3eff3feb8a",
+      "candidateSha256": "1962070eeaec580f2854aa49fbefa8c4a5522b015e8b08959e31b6fdde0950ec",
+      "changedPixels": 55353,
+      "pixelRatio": 0.19219791666666666,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_guide_430_text1.png",
+      "previousSha256": "97fa1211e2191b12bcecf2bed09c5551748eb32a425f767dd2ec19d7c3aaa461",
+      "candidateSha256": "f7b35daa7aec353aa2b072845f193097e39f49ef900dc61e5424ea293d36a54f",
+      "changedPixels": 74246,
+      "pixelRatio": 0.18526300029943107,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_rapid_360_text1.png",
+      "previousSha256": "7318e318c77d98ae9397efa735fd1a1bf6fbf57b31735e9615f2d3e5f6553b4e",
+      "candidateSha256": "0d44682f112b41eaaec13056d12950178010e1acfd6b8f52b04212c7a85d8665",
+      "changedPixels": 52601,
+      "pixelRatio": 0.18264236111111112,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_streak_430_text1.png",
+      "previousSha256": "c9ac22b7eedb9a11d4585d2411be0af21ac21c762804f0c39eeeca7e4ec8603b",
+      "candidateSha256": "86e0c7e5e644b98f18c677788910e428815eb0023a0800c6cafc7a96a4f0e1b3",
+      "changedPixels": 72281,
+      "pixelRatio": 0.18035981634893702,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_app_icon_360_text1.png",
+      "previousSha256": "bfec602ee5c9c85e10fcff7481af45202b72f909440ceabf23d006432c03361a",
+      "candidateSha256": "ceec1d9181ec4fe00d4314c6a0afbffaa1319251cbd56c5ed2d00152af74caa6",
+      "changedPixels": 51804,
+      "pixelRatio": 0.179875,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_feed_360_text1.png",
+      "previousSha256": "80c30d274d99844eb46a8b0184bd3f5f35d297caf2bfac3fe5ebb97319121e6a",
+      "candidateSha256": "ecfcd6b9d181da8888807d4d3b45561c60d914701f3a8ac86fe73790437c9673",
+      "changedPixels": 51018,
+      "pixelRatio": 0.17714583333333334,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_feed_430_text1.png",
+      "previousSha256": "8780da999e1caa0e317f30b39fe5f5f9861eb101ee6f76ee5943bf740738a8ea",
+      "candidateSha256": "758c9ca0cf8e77d1699cc1323fe6cefa0f7c6d5587a03df34f80605ebc72f2b9",
+      "changedPixels": 69824,
+      "pixelRatio": 0.17422896496656354,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_speak_repeat_360_text1.png",
+      "previousSha256": "1f73dae188e5674dd827430a9e8beda930e931be134d65b05526eb1fbb6dd585",
+      "candidateSha256": "a78323f239dd884c9bbc1b81ec009ca8aa79c5bbd032e5c18f703fabc947efb5",
+      "changedPixels": 48990,
+      "pixelRatio": 0.17010416666666667,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_listen_choice_360_text1.png",
+      "previousSha256": "c30a7db6c7696703672f6dbc40caf1383c3066dc0575af05ef3418f2e73bb10b",
+      "candidateSha256": "1127ff627c3cc5336b9fadb001bb190d60b95e7996adacd5fc4bf1843fbd4d8c",
+      "changedPixels": 46374,
+      "pixelRatio": 0.16102083333333334,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_family_360_text1.png",
+      "previousSha256": "8bce3941f163883d2e4afa9a4f44606bc3ab901a0ef49f7a0eb95e367f446971",
+      "candidateSha256": "582d23cc01a5cf522190d28d5138c1811c405afe58d9167cf95f10358a53ced7",
+      "changedPixels": 44242,
+      "pixelRatio": 0.15361805555555555,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_radio_360_text2.png",
+      "previousSha256": "3821f534b233efc447a9f2bbe71f0be47fa76cf04e0390080557f2ba4861d446",
+      "candidateSha256": "69e1826bfc1b2ad05b1606badefdbda5c01a5539788a38ee011ded2aae00474c",
+      "changedPixels": 42794,
+      "pixelRatio": 0.14859027777777778,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_app_icon_430_text1.png",
+      "previousSha256": "c76998b6d46937d27617d31068fc050a83cf91ac544f23a3df2f37e6060b68d5",
+      "candidateSha256": "b0bd35eb54a11a0e2f0c82854ecb27d4e1af24b2e3122f5769b74525b0ed5cad",
+      "changedPixels": 58735,
+      "pixelRatio": 0.14655903782812657,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_legendary_360_text1.png",
+      "previousSha256": "7905471b218c7a247347e761187781da51700ee5c376f288b35f604643d0417b",
+      "candidateSha256": "e030f0ec90ce1d1aa83d33c99419772d5918c6fb0b3e301658d871a8188ac24a",
+      "changedPixels": 42175,
+      "pixelRatio": 0.14644097222222222,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_story_360_text1.png",
+      "previousSha256": "18e0894b7665f2103fdafa06d1066f1550baa3c36b515ca7bcceed0dd605e454",
+      "candidateSha256": "0169cb630c02df7fcedbbcfa42bb3b5474743ea3c2729807d723a04400bbdaf3",
+      "changedPixels": 40419,
+      "pixelRatio": 0.14034375,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_radio_430_text1.png",
+      "previousSha256": "3d3638f02587126b44e55061e919b67803a10a964013c6ba56a078f9e6fb3e7c",
+      "candidateSha256": "9de25486375e1a3eb784b16d91966c337946ad55e8b6c21a62176c8e1e832e9b",
+      "changedPixels": 54610,
+      "pixelRatio": 0.13626609442060086,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_rapid_430_text1.png",
+      "previousSha256": "521bb63fcbe85587d780c0b911aed2e01a084c48df7ba30ee68d7d51bff9f5af",
+      "candidateSha256": "83c47fea8898ddade20afdf859befae49013b359489dcd62e34b10af6169d74a",
+      "changedPixels": 54418,
+      "pixelRatio": 0.13578700469108693,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_legendary_430_text1.png",
+      "previousSha256": "75e43ac89cdff90e53fbeedf3213d25413928ee3446c4f4756c70e9dd719890f",
+      "candidateSha256": "fd247e290ca606f1854be3ea0ef901975cab058234f4d5827104a72ddd7328e4",
+      "changedPixels": 53586,
+      "pixelRatio": 0.1337109491965266,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_story_430_text1.png",
+      "previousSha256": "5038b480dabbbaa3367050998abd8868246bc496ad3ea5e1e781a587872978ac",
+      "candidateSha256": "f79454c7236ed6a8e0ad4e73dd5ed06213a5640056b711f5e794b230f23ef887",
+      "changedPixels": 51831,
+      "pixelRatio": 0.1293317696376884,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_word_bank_360_text1.png",
+      "previousSha256": "47abc5efbfe6815370ff481fe20bd435bbe4f5e9529a4090b5cb931292ba56eb",
+      "candidateSha256": "db1620d7401d868efde186fdc2ec161be50c4df90a1ca3c47f9367a4b0af698a",
+      "changedPixels": 36305,
+      "pixelRatio": 0.12605902777777778,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_word_bank_430_text1.png",
+      "previousSha256": "6d31348d8ca979bd11420b0ee34e81b36125b8d12ed2edd3033e5cb1fd967830",
+      "candidateSha256": "700a289d205b74933df4bb4f27b93322f5e659b9ca8ffe9d5938e9b91f01f601",
+      "changedPixels": 49705,
+      "pixelRatio": 0.12402684898692484,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_journey_radio_360_text1.png",
+      "previousSha256": "b15954c1ab79ad62be11bc09ff447d15aa2184916d934b16ef5e468f01912634",
+      "candidateSha256": "69ad9f0855215dd0ec5afc4a30ce14bfe5b99caef0f115398c8e926888d62405",
+      "changedPixels": 35249,
+      "pixelRatio": 0.12239236111111111,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_speak_repeat_430_text1.png",
+      "previousSha256": "297089972c341228bddcfb5f3c7421c42fa1a26e1515b15196eac68a0527e199",
+      "candidateSha256": "12189f52c67d6479254da98b0ce1e07f2050f942e9ce7622d86763fe3ec07886",
+      "changedPixels": 46951,
+      "pixelRatio": 0.1171549056792095,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_practice_hub_360_text1.png",
+      "previousSha256": "8253262d0b3da9545d67efc1f70acbe20bb7b9f32fa11cd93786d8578ee8d435",
+      "candidateSha256": "0532f0a5225a485abb1c4fdf7e3687a59a124b962ce8ac21a408fc7367a17e64",
+      "changedPixels": 32311,
+      "pixelRatio": 0.11219097222222223,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_family_430_text1.png",
+      "previousSha256": "fec4a9c4eddf0f344c2f393c4bd36b118aa743778a75b0576a5fb1c616128955",
+      "candidateSha256": "05812bb3247710d865768c9b3fcb43f29f6550d7a79fe93b4d507671430fdf16",
+      "changedPixels": 38594,
+      "pixelRatio": 0.0963020261503144,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_practice_hub_430_text1.png",
+      "previousSha256": "758c5848e33d42ef54028b5d6c921a0abc721e8c603f96888dee13d083ea75d1",
+      "candidateSha256": "23b1cc3e323026c2a57ed744a046469754ce92938ebce9a494a2470099e4b68a",
+      "changedPixels": 35276,
+      "pixelRatio": 0.0880227567621519,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_exercise_listen_choice_430_text1.png",
+      "previousSha256": "f555ace34bb3af25666ced1a8759a17ef2db67c1b565e05830b00a1f83ee6c42",
+      "candidateSha256": "44d3760b42530f92e9ef3816278730a9b84a46ad3ca1451dcfb09e50a58a381e",
+      "changedPixels": 25338,
+      "pixelRatio": 0.0632248727417906,
+      "reason": "real bundled fonts and Material icons replace Ahem placeholders"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_weekend_w430_s1.png",
+      "previousSha256": "f5064a305af7ce799e93a0920371f019fd59e219d3e1bbc5123d5150b0caaf02",
+      "candidateSha256": "3a835984f1a40a884b9c657d06ea14f123861e02ba2dd5d58d0011e9c08a3959",
+      "changedPixels": 18466,
+      "pixelRatio": 0.05088173702193321,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_weekend_w360_s1.png",
+      "previousSha256": "77790a114389bb73bfbb22c800af81fc6c732aab9f79c0243ca1947a0fcbe76b",
+      "candidateSha256": "f9632563d26b842b9a726f4145b200b05a9cb67791c51d7aa72412d5bb8f0414",
+      "changedPixels": 15143,
+      "pixelRatio": 0.04983873091100579,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/offline_path_360.png",
+      "previousSha256": "af7c6fd81b1d04bdb443b722f4e38cdde1723c0ec2028ed6c4335a41600479d2",
+      "candidateSha256": "e949ce8dc4a643b187ef91939c334f7b3fd0630bf8031d78ead407ad86267556",
+      "changedPixels": 12820,
+      "pixelRatio": 0.045655270655270655,
+      "reason": "source-aspect mascot fallback correction"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/report_issue_menu_360.png",
+      "previousSha256": "8318245061b43b0c568a17024def77877966f28f5f9224295ad527e944224d4f",
+      "candidateSha256": "6ceece52c346225465c630d43f0a98dfde170793bae8275621297a5783445a5f",
+      "changedPixels": 12226,
+      "pixelRatio": 0.04353988603988604,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_weekend_w430_s2.png",
+      "previousSha256": "b4cf26cdcf9e1ba38861d6b5bf14843092686ad7dea9fb8225815e53b3559665",
+      "candidateSha256": "0d310c4a2272b49b7d89d5e389d646bfc361bf3de48447a56d831dfd3d348773",
+      "changedPixels": 11859,
+      "pixelRatio": 0.032676622947206,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_weekend_w360_s2.png",
+      "previousSha256": "b12fd696f72dfc7cd73d8ead78d7c49b19228c880325328b11cb27fafbd023b3",
+      "candidateSha256": "f35734f5670cf2b256c5a922a405808a72c899fc87960224d582ef92b6f7d458",
+      "changedPixels": 9693,
+      "pixelRatio": 0.03190165876777251,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/hearts_dropdown_360.png",
+      "previousSha256": "87b4515460f8b69921077753054723712bb176a984403515a373014a931ee169",
+      "candidateSha256": "289addbf52d4e9ac2f0cab03c482e612c890156537e695bc5c6468e0c620bd57",
+      "changedPixels": 5489,
+      "pixelRatio": 0.019547720797720797,
+      "reason": "source-aspect mascot fallback correction"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_league_screen_430.png",
+      "previousSha256": "ac1d4006cac590be83a6ad2fe18e1846ac2f408b4ff1af5dac1d2681d90f76da",
+      "candidateSha256": "9b370a240379c644c4480930d311fcbeba45d796f85507c85274a57e32588370",
+      "changedPixels": 7123,
+      "pixelRatio": 0.017773729913164987,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_main_w360_s1.png",
+      "previousSha256": "08167d0b64402522dd2455ee72bfb28ecd1adfebdbafd6cc7875ec2b23545064",
+      "candidateSha256": "1184b9e8da68477ba10c21d0ede2b5e0a021b3d37890b447cf05175ef87ee22f",
+      "changedPixels": 2724,
+      "pixelRatio": 0.0089652448657188,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_select_image_correct_430.png",
+      "previousSha256": "da2249ff06fda5013cd8096ee5f678c5f442aa8e8d0bdd2dc92770175a662e70",
+      "candidateSha256": "a128b7d273e5ff60bee1f75b79463226c08f250131f22977bc4159e61ef8e15e",
+      "changedPixels": 3389,
+      "pixelRatio": 0.008456432777722327,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_translation_incorrect_430.png",
+      "previousSha256": "a004da9a17d6e39dcbeba2667fbe588267d88dceb644adbf845068a56b6f8e54",
+      "candidateSha256": "4dd1aa769be326f760e2ebfcd2c3691ab1ef6fbbb5dcc66fa412bf7d48f56fa6",
+      "changedPixels": 3348,
+      "pixelRatio": 0.008354127158399042,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_quests_screen_430.png",
+      "previousSha256": "111e168d69a465b66d71ca4b02b7ed578460b0ce2d375e9ec4c50ee085442720",
+      "candidateSha256": "f14424311e680897c856b1a18622dfe83d9c356069a60276c95b6bff5812fa5f",
+      "changedPixels": 2975,
+      "pixelRatio": 0.008197398875785297,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_main_w430_s1.png",
+      "previousSha256": "111e168d69a465b66d71ca4b02b7ed578460b0ce2d375e9ec4c50ee085442720",
+      "candidateSha256": "f14424311e680897c856b1a18622dfe83d9c356069a60276c95b6bff5812fa5f",
+      "changedPixels": 2975,
+      "pixelRatio": 0.008197398875785297,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_main_w360_s2.png",
+      "previousSha256": "32e7b566bb8ed0b06b7e6adee690c85a8eafcd9bfb9d4fdc3c56831009a37a7d",
+      "candidateSha256": "654137d708c2b252cb9439e4f45f353d4a953655573bf4559d182bd1897c2a15",
+      "changedPixels": 2458,
+      "pixelRatio": 0.008089784096893102,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_feedback_360_text2.png",
+      "previousSha256": "753e3d2e3d0f23443d69bff231c1339b74edc6b80c136e5af73f2d852bf9d7b8",
+      "candidateSha256": "fb89c80c6960e9808430a1961f01e4389c5afbedf2da0111d4fc476ae3a753f0",
+      "changedPixels": 2259,
+      "pixelRatio": 0.0069722222222222225,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_friends_screen_430.png",
+      "previousSha256": "8244936a2314de17ce43409e2aee1e29ae3aee51ec373dbd0cd33d74cfafa4dd",
+      "candidateSha256": "71ff616157b617d24fc5459ed72d2729abae384859ff3a5e07c5e89c2ae7cb4d",
+      "changedPixels": 2702,
+      "pixelRatio": 0.00674218983930532,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_feedback_430_text2.png",
+      "previousSha256": "0ecf4c553b99d8965bda8065125b09f657af680268d67007759b0fde1fa222a1",
+      "candidateSha256": "7dea6b9829285325ecbfab5d9801967413ce8546c021686914199a764ff8b97c",
+      "changedPixels": 2540,
+      "pixelRatio": 0.006563307493540052,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_hearts_warning_430.png",
+      "previousSha256": "16c81a6ee5d17d754e2a8756eb3a4e846590e7912e4bac76c3dc972cf16f28da",
+      "candidateSha256": "ba97f9b6bc618fc12293802e61afbfca9a11ad878a5dc1fb3759e494e53af65f",
+      "changedPixels": 2472,
+      "pixelRatio": 0.006168280267491766,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_feedback_360_text1.png",
+      "previousSha256": "a64a6f5edbacaf5eb608909137c76578fdca1cae9e1fc4cc75ebc993374e0b01",
+      "candidateSha256": "15c22b6579014a59672ac243d28fe68329d3ae260ffb9f9249a9d6eda5b0695a",
+      "changedPixels": 1827,
+      "pixelRatio": 0.005638888888888889,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_feedback_430_text1.png",
+      "previousSha256": "60ffd02028f981ed7ac695a0bdb2d20cf692fffa0813c6570d01f5d841c91b26",
+      "candidateSha256": "25676b49f6c2e7e290a38f6d856bb77843b0ac411e1471d80c7bfdce9215941a",
+      "changedPixels": 2108,
+      "pixelRatio": 0.0054470284237726095,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_schools_360_text2.png",
+      "previousSha256": "cc075551c1698a46c0a7ccb833ac880ca40d25765e878c8fee1bfba6a0d7844b",
+      "candidateSha256": "5d04792f78e561c9c958201031c62ea2f19d2791ea5ef776d7c71e0fad6680d5",
+      "changedPixels": 1635,
+      "pixelRatio": 0.005046296296296296,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_schools_430_text2.png",
+      "previousSha256": "c6d47e4edb3eb8b9ae43d76784dbdc55af8263c76dbf223737c486b51698fd44",
+      "candidateSha256": "9ba319c1a289173626ef1489e33c327ca57c6c79306e98eeaa04443f09d93ff1",
+      "changedPixels": 1916,
+      "pixelRatio": 0.004950904392764858,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/report_issue_toast_360.png",
+      "previousSha256": "d2ef3452bc51155e583ecfe448712a8a0f39c2317b474cc254d901bc726e92e4",
+      "candidateSha256": "fb0f4bd5afc2d719e7740c5a02fde918e66aec58375a6b7c40195f52627af7f9",
+      "changedPixels": 1330,
+      "pixelRatio": 0.004736467236467237,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_schools_360_text1.png",
+      "previousSha256": "aeab01a65acc0b32e95f0b958b7ec08570dcf763bf11171fd2b8263c3d465afd",
+      "candidateSha256": "326484095844b5ada7f90f3586814e11f6faf0391c2822968f65d8cf5f8f941d",
+      "changedPixels": 1515,
+      "pixelRatio": 0.004675925925925926,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/settings_schools_430_text1.png",
+      "previousSha256": "a21e02714bf03e4aff265829e2f9e0176e66bb4c3c5653331ce8b7a767326266",
+      "candidateSha256": "aa9fc34e767d8a7ac5cbadaed9a9ee9d2e4e2e4d23e13f7344c25a82d309b2c5",
+      "changedPixels": 1796,
+      "pixelRatio": 0.0046408268733850126,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_main_w430_s2.png",
+      "previousSha256": "4223c5c42646d4f210795278f51503a9168ac51512fe23f8550d5b04bd4c774f",
+      "candidateSha256": "2e22699e49ed319d40a4f9200a5ef36eb13f1d1c9fe9f1031581f7e17aec8687",
+      "changedPixels": 510,
+      "pixelRatio": 0.001405268378706051,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_completed_w360_s1.png",
+      "previousSha256": "436aefb45cf493d665461f8ec6261701a1544595d5116caf37bcd7b610a90312",
+      "candidateSha256": "f9ece75bcdb197e8164b04957fa7b4b73c492f1f9f3c02e8b836d215d06e729c",
+      "changedPixels": 359,
+      "pixelRatio": 0.001181542917324908,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_streak_430.png",
+      "previousSha256": "0845ed1b945af64c4b0f844e14730ae8dd29f650063443390f6096a354d4d94c",
+      "candidateSha256": "7fe6b631c4a78fc8104d6c1ae92bbf524a134b5979abb58967eb43d702ff59ca",
+      "changedPixels": 137,
+      "pixelRatio": 0.00034185048408024755,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_completed_w360_s2.png",
+      "previousSha256": "e319a17f909a17bbe1d1ccfac5eb12a531097c1819bda940b7d42a4ca2945525",
+      "candidateSha256": "b070cebaf172f2c8d5a47f43c11a84167f3eb14b9cd488db1dde7d13e69b4b49",
+      "changedPixels": 98,
+      "pixelRatio": 0.00032253817798841495,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_completed_w430_s1.png",
+      "previousSha256": "01386b70c8c4df61ad3a8034c8822aca6dffb7f08b7ac2a94126c673c723cc1a",
+      "candidateSha256": "760e89cb05d809f087f96ed8a0dc8cf6b4f06e23bf019e1acb559f88eeafc3ae",
+      "changedPixels": 101,
+      "pixelRatio": 0.0002782982475476689,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_completed_w430_s2.png",
+      "previousSha256": "1043f18b6dfe3dc102ae0d1d384a6be8ab89337c8283e0327c945d8db5ddd4ce",
+      "candidateSha256": "5e931e270fbe46738bbc3e675887508218f23805863ae9ca7182ea2b0509a0ff",
+      "changedPixels": 82,
+      "pixelRatio": 0.00022594511187038467,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/lesson_offer_360.png",
+      "previousSha256": "cff12ddd5be6f4d372d572bf4bb2f41dfa14858ae65295931b9a23e2bf32d5ee",
+      "candidateSha256": "a4f99b7584ac5432dc3252bb40431f0802b259f82d36fc0f6d7d7f5c83823542",
+      "changedPixels": 50,
+      "pixelRatio": 0.00017361111111111112,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/need_hearts_360.png",
+      "previousSha256": "0aacc16c254a717050bcf39e2c0e53b6fd59b429bc5abdd569eb988a9736bd05",
+      "candidateSha256": "b539c9b98bde87d0e5bab1101d0302b0b3128e88d61643d7fac480f0959aeb32",
+      "changedPixels": 31,
+      "pixelRatio": 0.00010763888888888889,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_out_of_hearts_430.png",
+      "previousSha256": "7e343c32f33835d463e24c06e363de3bd6f97479fe4c1026bf61d4aa9d439c5b",
+      "candidateSha256": "755110d2148fa3a61ab00ee0fbaead36d72bdec0dda573e9c3606f47617b33e4",
+      "changedPixels": 40,
+      "pixelRatio": 9.981036031540073e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/library.png",
+      "previousSha256": "f07878a83f5871d7be7997178d84b75a3daee6da0d3622ad787aa32dbce137dd",
+      "candidateSha256": "bca5d87accfa9d63dcedfdd5f153487c584f59125b734dbcedcdb970ee80c9af",
+      "changedPixels": 23,
+      "pixelRatio": 6.869034392956551e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_widget_unlock_430.png",
+      "previousSha256": "d3dbcecada7aa4be9ab45311c8e42fa50cd3442c9be36b3be056e02a81c8d142",
+      "candidateSha256": "6ec885dc1498316f5f58f346252f1d3bc8d78e45dcb704c5c03cf15cc9362a8a",
+      "changedPixels": 27,
+      "pixelRatio": 6.73719932128955e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/icon_sheet_360_text2.png",
+      "previousSha256": "f5965f550844d0c0f48c06b11ceea2a0c27e2f8e564a27972b018e051d224ea0",
+      "candidateSha256": "c6838be07c31ae3f8f47e7755d4faa4c300b95272d92dbe990294fce0bc32188",
+      "changedPixels": 18,
+      "pixelRatio": 6.25e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/icon_selected_360_text2.png",
+      "previousSha256": "a02ca4528255eb30e056ab867ccb690484d4ffa15dbcb01d6257a1c1248a7a6a",
+      "candidateSha256": "e77ffaec37564ecf412875f4406cc5dc60ba47c473ffecbdbea0cb06ff949b84",
+      "changedPixels": 17,
+      "pixelRatio": 5.902777777777778e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_path_return_430.png",
+      "previousSha256": "8dfe6af361a4c43aa4140b16aba416caf1457713d5b9ca02fd95840c1a507e6f",
+      "candidateSha256": "4b5364b84675d3cfb9051c7b8706264f15f0d0e8e337c71c144f4e82f3742593",
+      "changedPixels": 23,
+      "pixelRatio": 5.739095718135543e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/library_scrolled.png",
+      "previousSha256": "8ebb4b2c2c80a861afab1d6a5cb9792cae2d1e7be53150719863d95102be9b33",
+      "candidateSha256": "25b4b713f6b05db44d7b59d433ab37ccc929b32b10b54a90a6dc3f17e460dad9",
+      "changedPixels": 14,
+      "pixelRatio": 4.1811513696257274e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/house_ad_360.png",
+      "previousSha256": "e517585da5689cc8abbcb92e8bf0dbef862c9dd7225253fef7ca483da129a4d8",
+      "candidateSha256": "3806ece7fd055e49444b99baca8348417f8fe2cee67a064186b3fb8e573910bb",
+      "changedPixels": 11,
+      "pixelRatio": 3.8194444444444444e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_friends_quest_430.png",
+      "previousSha256": "f93d1c3c36b6f13863313fdf7093ea592d6bd63e20f880366678a9850fe9b88a",
+      "candidateSha256": "1f6f42157731d7560e33459ffe8a67f9dbc91a5739d5bb1f5b215884885730c7",
+      "changedPixels": 15,
+      "pixelRatio": 3.742888511827528e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_streak_goal_430.png",
+      "previousSha256": "9bae612d25af151232ef26197624f7c211d5f2a2ca18b4dd79803a9574b4bd15",
+      "candidateSha256": "226e647b9947d01ecc4e5c89eae26e611f4df9003d56ebafdd8bfb28e6cada2a",
+      "changedPixels": 13,
+      "pixelRatio": 3.243836710250524e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_completion_430_text1.png",
+      "previousSha256": "60e0de67ab4cc7147f55e4088a02c76f38e1213a9f8fa172b4ce81fad7a5523e",
+      "candidateSha256": "1ce6c7d58c55020b2e441d978973f40b4264e1dcc1921a6dda762bf5a48f305a",
+      "changedPixels": 12,
+      "pixelRatio": 2.994310809462022e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_league_430.png",
+      "previousSha256": "f6c6b1f702390b231d93b06898685b642408b85e4ce22555e57cb82154d9c04b",
+      "candidateSha256": "154aef66503dd9f0e1db0015df7cf2ed39970a691de855105d20339fb930d665",
+      "changedPixels": 12,
+      "pixelRatio": 2.994310809462022e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_intro_w430_s1.png",
+      "previousSha256": "0f438a113ade74f95960947204f1f300927cac32f9695f94c40e36a2748e9386",
+      "candidateSha256": "ca4199b413782fd57a2f76f706248f9f1aef9828229aa85f0ec66880b2257dce",
+      "changedPixels": 10,
+      "pixelRatio": 2.7554281935412764e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_friend_streak_430.png",
+      "previousSha256": "d4cbb24628e5c6bc5de5db3163e9a4ad03ae262ebb400c9393e9f21fe0991e66",
+      "candidateSha256": "acf6de857b3fbb2bc8863c53df795bb25cab593f3568dd5611d4bb97d05da687",
+      "changedPixels": 10,
+      "pixelRatio": 2.4952590078850183e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_completion_360_text1.png",
+      "previousSha256": "c1492f2b437fb2a11cd80f6d36650727801852829177877bb99e2c7b9dc56c13",
+      "candidateSha256": "d0d7e6e5814b0c757004c41f6941b8cf0fd982a367f27437aac30929a4a5e9d3",
+      "changedPixels": 7,
+      "pixelRatio": 2.4305555555555554e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/max_intro.png",
+      "previousSha256": "b09f34b0e2a9fe1b72e3d44e894b716a68940286805a9b7dffdd9658f04568d3",
+      "candidateSha256": "1cc85cda40a557d288b478091e9a0931359e29e572fbe7abb6661910c182b409",
+      "changedPixels": 8,
+      "pixelRatio": 2.389229354071844e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/results.png",
+      "previousSha256": "2092d8748066c017867f9d6525ae4621fb2a8954ed9c297756148141bf5fc1a7",
+      "candidateSha256": "b858cd2bd4fdbd0b5f8f6ed6cab05f8982cc8c0bb771332775f3e0131ecf6d19",
+      "changedPixels": 8,
+      "pixelRatio": 2.389229354071844e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_intro_w360_s1.png",
+      "previousSha256": "5da4a9d08f3f214d60130e46ecebbc32260c2bf309f6660d0a4004bc3b4d00e0",
+      "candidateSha256": "76f10e97d667b25b3edc0fa4386d8cb32d0c99e3febf87418439f01339536536",
+      "changedPixels": 7,
+      "pixelRatio": 2.3038441284886784e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_auth_signup_prompt_430.png",
+      "previousSha256": "1be7ead1d3a10911473372f7dfc7701cc7af772574586b0e89515ca69fe4a9e5",
+      "candidateSha256": "a961f1acf318bd9c78309ae9d07ce4817abf039837c8690a9493da355c78c1ab",
+      "changedPixels": 8,
+      "pixelRatio": 1.9962072063080146e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_completion_430_text2.png",
+      "previousSha256": "777aa453c73c2b4fbe33dc968487a7ad3d21db4c4ed4a4682208fd270fc69607",
+      "candidateSha256": "625ea17d4af68ca9ea5a38cfc9bb9abc2a18de99aab7ad4a2cc0937618670ea0",
+      "changedPixels": 8,
+      "pixelRatio": 1.9962072063080146e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_quit_sheet_430.png",
+      "previousSha256": "43f1f0ea336b79dbda03ee64e5ec524b724da79b7b0b0b81be308c7bdf1233b6",
+      "candidateSha256": "dbf6a7e3415b4a8eb0d7c65c3d6ee8fd2834859ea22619b2a6bbb80fab05ebb1",
+      "changedPixels": 8,
+      "pixelRatio": 1.9962072063080146e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_select_image_ready_430.png",
+      "previousSha256": "9a5b939639019b747c2c18ed4c212f0c5844b4c94c84a8a4469079e0ed81dbce",
+      "candidateSha256": "c752c2565d1599bde0871a8e25443d04fe26f0e786ba4d19c32fc224ce7855b7",
+      "changedPixels": 8,
+      "pixelRatio": 1.9962072063080146e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_select_image_selected_430.png",
+      "previousSha256": "40a65f5a099e25033a484f3721724b2672594377a2a6e0841ed65d9ed7ae3f76",
+      "candidateSha256": "0ac2607c33ce0aafc3f083a2dfae3171ff481e1f9191e63e4a5c7a7cd3878eaf",
+      "changedPixels": 8,
+      "pixelRatio": 1.9962072063080146e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/well_done.png",
+      "previousSha256": "b2b430103191304a03dceb431f956355a4b8925acfdf03a4d8133c9b92d3b748",
+      "candidateSha256": "43bb892286c3c8ae1972628b62d39018247e2fde665113f5c941b46b2df5baf8",
+      "changedPixels": 6,
+      "pixelRatio": 1.791922015553883e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/streak_repair_restored_360.png",
+      "previousSha256": "11df9c692f202186c4fba02a02695de3d2aac494e9e99b3986a0c673287669f4",
+      "candidateSha256": "f7aac00fb5b2aa5667d509af85590a2bdc85b60a12a6885bf30cb66fb21a27e2",
+      "changedPixels": 5,
+      "pixelRatio": 1.736111111111111e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/core_completion_celebrating.png",
+      "previousSha256": "859b962f2ff48cd6763b914454c67d5d520b45fafc1228c8b63be2d860546ee3",
+      "candidateSha256": "302b200366ca369959d7c1294309c379df0f31679e74b0e174a23e669bebc550",
+      "changedPixels": 5,
+      "pixelRatio": 1.5190181066958317e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/icon_selected_430_text1.png",
+      "previousSha256": "5e6d98733e35f94f6e1de825e71b34412ce42db7b58f6d049a42e0df2e6a984e",
+      "candidateSha256": "427b18a979a85821af48ac2ef622aff02c7f6ff7c21ad8a40f2f23f4dc547df3",
+      "changedPixels": 6,
+      "pixelRatio": 1.497155404731011e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/icon_sheet_430_text1.png",
+      "previousSha256": "adeea727c46ec74d5e6872d565c6b56b7cb3d39a323b6ebcbc8f3ccc4aca3881",
+      "candidateSha256": "cec2e2804ef5b930c5c7306cf6e75f6ba4e93d0c55f1124b74d14791e824f9f1",
+      "changedPixels": 6,
+      "pixelRatio": 1.497155404731011e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_call_listening_430.png",
+      "previousSha256": "59b37847394b0d5e4ae363b64fc00f9a027cfd9de9a11fd3ff2b3268889c7a38",
+      "candidateSha256": "3056b377083b66061d6854272493819aba58bbb15ca769fd8992936667a56787",
+      "changedPixels": 6,
+      "pixelRatio": 1.497155404731011e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_call_ringing_430.png",
+      "previousSha256": "e1f2a85cf5348fb876fcb9ecab8706f69f63bd9da7822644737dac0e1732a541",
+      "candidateSha256": "9f618aaf9107400dd12c0c29ad43b8b376be0f133873a58d855577ff0086adae",
+      "changedPixels": 6,
+      "pixelRatio": 1.497155404731011e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_onboarding_reasons_430.png",
+      "previousSha256": "00011abd0c4c4918a61f8132c3df65ad2d7574f5a81f64b0ca3a585a71909159",
+      "candidateSha256": "56601dc05837debf1034a8e14c58c2c75ff153a208124cd9a219be12b23ca1bf",
+      "changedPixels": 6,
+      "pixelRatio": 1.497155404731011e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/chest_opening_360.png",
+      "previousSha256": "463f45692eeda3333cfd9d37131e6880dd071b17d1baa2a1545c1fbe0b7b3838",
+      "candidateSha256": "9913f75dbdac04639f9c922181f194d2ffc0c5caab60e28b0dec23b361d5ce2d",
+      "changedPixels": 4,
+      "pixelRatio": 1.4245014245014244e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/icon_dialog_360_text2.png",
+      "previousSha256": "9842c03042fb32c8fa0f0b579eaf8b807db625b2b57b0655ea1c2a832f54aabe",
+      "candidateSha256": "2115924e84878939220a0f7e0326de958c6d0c04b962cea432a451ae724dc126",
+      "changedPixels": 4,
+      "pixelRatio": 1.388888888888889e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/quests_intro_w430_s2.png",
+      "previousSha256": "2fabebaa7f1a7160a755afd6af430cc9ff805dd76640ee4c9d36c62b1b04dcc6",
+      "candidateSha256": "56f0c942c15f76659a219b8cc97747f0e7effcc0722ea1b3ce8ff5ecc5f1787c",
+      "changedPixels": 5,
+      "pixelRatio": 1.3777140967706382e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/icon_dialog_430_text1.png",
+      "previousSha256": "7cca6dfacbf413411c769acfd3241b45257b83995c0237ae2b131245d273d3b6",
+      "candidateSha256": "beaf17607fbff4d8c8915f76436d617ebc4546821c10ccd2ef9f2dfaf0836b57",
+      "changedPixels": 5,
+      "pixelRatio": 1.2476295039425092e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/core_completion.png",
+      "previousSha256": "d4e9164d8f9259b32e601d3589f2651804f3be724eb1954a1e992b1535f55c02",
+      "candidateSha256": "32345954781a9a3e6fe2365bf7fd950811f65eaaa354821a77b2fd9cb1f53137",
+      "changedPixels": 4,
+      "pixelRatio": 1.2152144853566655e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/core_lesson_image_ready.png",
+      "previousSha256": "033f04455d7665417973d9be60fd413b0bd07ca56ef3c53881bd1acaee9528f0",
+      "candidateSha256": "cef3f9c76bb14727fa4d0389d65fe2af1ff7d2ac31fb5b6847ae9668e455d2e9",
+      "changedPixels": 4,
+      "pixelRatio": 1.2152144853566655e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/core_lesson_image_selected.png",
+      "previousSha256": "2149efa7e045a800811645336711e05ef34534457b0c8ef105c11cf6fc489d7d",
+      "candidateSha256": "e7601372de8151b40091996ae07a2a016c19e7bbc455d888350f39d169f5a3ae",
+      "changedPixels": 4,
+      "pixelRatio": 1.2152144853566655e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/streak_repair_offer_360.png",
+      "previousSha256": "4406e5911afbf53e51ca8f6ed7d7e465b787adeedd7e88ad2fe4d84cb3a445eb",
+      "candidateSha256": "d0a81e58af97d9c8ce73ea396a8bf61c598bddbc2a6218fd131a2c0ecd76adda",
+      "changedPixels": 3,
+      "pixelRatio": 1.0416666666666666e-05,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_auth_delete_done_430.png",
+      "previousSha256": "9ea797a455c5d7637dcfce937091efe4099b96942fe81633b987e41273a94704",
+      "candidateSha256": "d30df6b4338e0171c71e3beccc109cfee43451fc133fc07549eba29d02c9f786",
+      "changedPixels": 4,
+      "pixelRatio": 9.981036031540073e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_call_connected_430.png",
+      "previousSha256": "9e8a824f3e0fb155904dab23447de8fbb787f175f843ff9e70cad4472650573f",
+      "candidateSha256": "d035be548601d624cb94b240fcb8c11312b20271b2f82f9338208cab0293e3cc",
+      "changedPixels": 4,
+      "pixelRatio": 9.981036031540073e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_call_review_430.png",
+      "previousSha256": "e49f6325f58246517ff0c1cfffbaf1be00a14294aa27355ec71268bb3e0fc493",
+      "candidateSha256": "4cf45cee3261917251f62907d6c9efa486a365ae4f500b878ccd01fb2e5c7216",
+      "changedPixels": 4,
+      "pixelRatio": 9.981036031540073e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/session_chat.png",
+      "previousSha256": "0bd95f0f59c7b849531673d41ca9d2ed5f1fe0403b04053be933763fdb087a0e",
+      "candidateSha256": "c71d6164f81616a1f4db6f1ccb99a6737cc80fbd00aae513f5ccbd4c4a2b17a2",
+      "changedPixels": 3,
+      "pixelRatio": 8.959610077769416e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/session_intro.png",
+      "previousSha256": "6d4e76327c52ba33f72894799d3d47764c00219c56e4cf350ec523b80742b828",
+      "candidateSha256": "5381a84a851c26046571b8e5bc3317181279eb7ca3bdf90edc12bd563f47d4e3",
+      "changedPixels": 3,
+      "pixelRatio": 8.959610077769416e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_gems_430.png",
+      "previousSha256": "f11f820780ec4fe9c61a9bdc31faec14afbb40dfa29d39a50b5ebff15429652f",
+      "candidateSha256": "c8ed5655bff985812201af5fc2268991075a9e082d12a272b8a0e1dc5b44d657",
+      "changedPixels": 3,
+      "pixelRatio": 7.485777023655055e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_results_quest_430.png",
+      "previousSha256": "0af0fcb912c5e1c05db5073b4ea9b8da3b5d1ca36f215184bd851dd6b576230e",
+      "candidateSha256": "b485d9616c6023f56de8b77eef873318a018f7835b3b60bf66d160077131a0c8",
+      "changedPixels": 3,
+      "pixelRatio": 7.485777023655055e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/roleplay/topic.png",
+      "previousSha256": "b3a77626a1f038decdc6486e1d9a9e09c05955e2d49bc645547d2cb9809bf0cf",
+      "candidateSha256": "4bfe3dac9dec7f5543f6cefe08e0ef1e5a62205637d22caa5931d907deaaca7e",
+      "changedPixels": 2,
+      "pixelRatio": 5.97307338517961e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_call_ended_430.png",
+      "previousSha256": "8428251bb587306455749809e8ca179adf30af3fb39883dc85849e5b094a82b9",
+      "candidateSha256": "0316936339af137cd4ea5a3e42cd6168aa1084b26047a529d61a914f6f3ff4dc",
+      "changedPixels": 2,
+      "pixelRatio": 4.9905180157700365e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_management_screen_430.png",
+      "previousSha256": "ccee4c90b6545ab06d19d6569bd156fa68eef1151d9ae59beb08bfbbf84c4dcf",
+      "candidateSha256": "00c83738bc5f5ec5b51a44e6bc785b5832cb9f8e13d387e650c7428afd19b22a",
+      "changedPixels": 2,
+      "pixelRatio": 4.9905180157700365e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_onboarding_knowledge_430.png",
+      "previousSha256": "7055d728ec3a2d92588810f1b1c52ed7c73f4717a8cea0341dc89cc5a1d4ac24",
+      "candidateSha256": "e5b27782e2709a5fcebeca2573c25985c7dfb83ed7c03038ce41083531db3200",
+      "changedPixels": 2,
+      "pixelRatio": 4.9905180157700365e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/gap/chest_opening_burst_360.png",
+      "previousSha256": "2168cf177ae68979f42d6c1ed8b02cd1ef7cea34e5bc0b088a5d9587f095d612",
+      "candidateSha256": "4d43ac89777a826df603ce841c8069dbde68f83a152203beb8deda29075927c6",
+      "changedPixels": 1,
+      "pixelRatio": 3.561253561253561e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/gift_hub_360_text2.png",
+      "previousSha256": "aa8d0cef1be1b04d365f31ca539df5159e1541ba1bc52277ef3160e8f6a6e5e9",
+      "candidateSha256": "35ccd166afbc78f4579ffd0cd99a8957ed8699fe77f5c468c27b4610470379c2",
+      "changedPixels": 1,
+      "pixelRatio": 3.4722222222222224e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/gift_intro_360_text2.png",
+      "previousSha256": "c941583c4f3a282ad18100213a572af9f1d7bf60f9f9e7fcdcc5eb54d40140da",
+      "candidateSha256": "ed1ca25a2e3239b7ef81b1ce944bcaffb50439c1a4de8e920e56beb15b054a79",
+      "changedPixels": 1,
+      "pixelRatio": 3.4722222222222224e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_completion_streak_360_text1.png",
+      "previousSha256": "e9e9ea36eb4ad1529aa99a73df452177ea33bf9dd64bc5a1c8fed249f1aca395",
+      "candidateSha256": "8decae81688029b3a8d7fbd829b8f27ee37b714e328bde01e68c2020e545f5fc",
+      "changedPixels": 1,
+      "pixelRatio": 3.4722222222222224e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_completion_streak_360_text2.png",
+      "previousSha256": "3ca21cce4fda1a41f95ae70389aa981087e0442db549f92e66b2a600bca0ab15",
+      "candidateSha256": "73ea361431390fb108f285ed41d220da8e3a542c7bb41462da65d154dd51871a",
+      "changedPixels": 1,
+      "pixelRatio": 3.4722222222222224e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/iconcgift/gift_hub_430_text1.png",
+      "previousSha256": "990283dbd8d3bd777346473058c45ed6a393c2cd5ad21ae8f48844320652102c",
+      "candidateSha256": "64451cb8a7c9d22d3b05041bf0749d89e8bb648eabcef6787d9f36574f00ba20",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_call_upsell_430.png",
+      "previousSha256": "a80b4cfb371a015a2940b841eaaa78fe7fe326904d618cb418c96a5eb97050c7",
+      "candidateSha256": "8dbd35350ae10ecd1d508f8b0f9be3f26cbe510ed05e35d8fd5bddc390bbd51e",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_completion_streak_430_text1.png",
+      "previousSha256": "01a3800c299d0dc22ac424844ac617de51977b1fe9bf9a5c3544903c1abd40bc",
+      "candidateSha256": "64a535d50102a5876e370bd015418f11a17ab1b50ba17492c6261f530937fc29",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_completion_streak_430_text2.png",
+      "previousSha256": "f821f16a1b9a032f409ce62eec30f82d6251a4b2740f3a55d7f3a3c2199ba922",
+      "candidateSha256": "b2c27af7e92922146749350fed15e09195a29f9d2567f4bcb0ca438f2996d74b",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_energy_screen_430.png",
+      "previousSha256": "795a4fb4daae7cc73dc9cd860dc6bd21234f33b921ad9ff6b53f09e1c60b6a85",
+      "candidateSha256": "c2d0623d66bccc1fa03afe60db4703e7583c2d65298a7324f5e306efd28ce695",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_fill_blank_430.png",
+      "previousSha256": "e852eda55e8277cf0f2425976ddf5cfc7ef31b8e6005ff96a21dc054fd324521",
+      "candidateSha256": "2c48294f6e3cd6fe7ba4c50aa4f22155b02b72ab74094e672290276da89f5965",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_translation_selected_430.png",
+      "previousSha256": "6aa5a08e23fb891335d37176cbedd46e4b68856c65c9eeaf75f197a87f51accb",
+      "candidateSha256": "098e8572bce2413dce142909eed1dde7a6d835aba1269756093794bd3547c2e3",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_lesson_type_answer_430.png",
+      "previousSha256": "9ecf5c201fe3438df8e8130a64a6b5e1a60766634bbd609c46d80f62c71f7b85",
+      "candidateSha256": "14dec452c8b2367f7d7f61cd634525ffd32aa2756abdf93bd310b6a85f429de2",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/sprint_score_screen_430.png",
+      "previousSha256": "64aa5e5246a50edbd246a95f33d9c7e4ec2a743e18acf72d3f0400af88b2a674",
+      "candidateSha256": "b58368e3451bc4ec4d6b0453902a77a93e1d2c57de416758f9845515c294f5a3",
+      "changedPixels": 1,
+      "pixelRatio": 2.4952590078850183e-06,
+      "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    }
+  ]
+}

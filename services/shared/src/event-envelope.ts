@@ -38,7 +38,10 @@ function mac(key: ServiceKey, sender: string, bodyHash: string): Buffer {
 }
 
 /** The producer's signing key: the first key in the keyring whose sender is this owner. */
-export function signingKeyFor(keyring: Keyring | undefined, owner: EventOwner): ServiceKey | undefined {
+export function signingKeyFor(
+  keyring: Keyring | undefined,
+  owner: EventOwner,
+): ServiceKey | undefined {
   return keyring ? [...keyring.values()].find((key) => key.sender === owner) : undefined;
 }
 
@@ -99,7 +102,10 @@ export function verifyEnvelope(keyring: Keyring | undefined, raw: Buffer): Verif
   const event = validateEventEnvelope(parsed.event);
   const bodyHash = canonicalBodyHash(event);
   const expected = mac(key, parsed.sender, bodyHash);
-  if (bodyHash !== parsed.bodyHash || !timingSafeEqual(expected, Buffer.from(parsed.signature, 'hex'))) {
+  if (
+    bodyHash !== parsed.bodyHash ||
+    !timingSafeEqual(expected, Buffer.from(parsed.signature, 'hex'))
+  ) {
     throw new ServiceError('AUTH_REQUIRED');
   }
   if (key.sender !== parsed.sender || event.producer !== parsed.sender) {

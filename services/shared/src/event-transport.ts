@@ -83,7 +83,12 @@ export function usesAmqp(
 /** Loggable description: never the URL or its credentials. */
 export function describeEventTransport(config: EventTransportConfig): Record<string, unknown> {
   if (config.mode === 'amqp') {
-    return { mode: 'amqp', routes: config.routes, prefetch: config.prefetch, vhost: config.vhostLabel };
+    return {
+      mode: 'amqp',
+      routes: config.routes,
+      prefetch: config.prefetch,
+      vhost: config.vhostLabel,
+    };
   }
   if (config.mode === 'refused') return { mode: 'direct', refusedAmqp: config.reason };
   return { mode: 'direct' };

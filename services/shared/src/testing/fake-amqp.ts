@@ -146,7 +146,8 @@ export class FakeAmqpBroker {
 
   setAlarm(on: boolean) {
     this.alarm = on;
-    for (const connection of this.connections) connection.emit(on ? 'blocked' : 'unblocked', 'disk');
+    for (const connection of this.connections)
+      connection.emit(on ? 'blocked' : 'unblocked', 'disk');
     if (!on) for (const connection of this.connections) connection.flushStalled();
   }
 
@@ -318,7 +319,10 @@ class FakeChannel extends EventEmitter implements AmqpConfirmChannel {
         this.emit('return', {
           content: message.content,
           fields: { deliveryTag: 0, redelivered: false, routingKey, exchange },
-          properties: { messageId: message.messageId, headers: {} },
+          properties: {
+            ...(message.messageId ? { messageId: message.messageId } : {}),
+            headers: {},
+          },
         } satisfies AmqpMessage);
       }
       if (this.broker.dropConfirms > 0) {

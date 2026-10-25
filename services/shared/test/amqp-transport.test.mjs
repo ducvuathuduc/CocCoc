@@ -6,7 +6,11 @@ import { randomUUID } from 'node:crypto';
 import { loadTransportKit } from './kit.mjs';
 
 const kit = await loadTransportKit('amqp');
-const keyring = kit.createKeyring([kit.devKey('learning'), kit.devKey('progress'), kit.devKey('ai')]);
+const keyring = kit.createKeyring([
+  kit.devKey('learning'),
+  kit.devKey('progress'),
+  kit.devKey('ai'),
+]);
 
 async function until(check, label, ms = 2000) {
   const started = Date.now();
@@ -62,7 +66,9 @@ function receiver() {
           { eventId: event.eventId, type: event.type, bodyHash: context.bodyHash },
           async (tx) => {
             state.applied++;
-            tx.put('p_reward_ledger', String(event.payload.completionId), { eventId: event.eventId });
+            tx.put('p_reward_ledger', String(event.payload.completionId), {
+              eventId: event.eventId,
+            });
           },
         );
       },
@@ -112,7 +118,11 @@ test('topology: quorum queue with pinned delivery limit, at-least-once DLX and r
   });
   assert.equal(kit.DELIVERY_LIMIT, 10);
   assert.deepEqual(broker.queue('coc.progress.events.dead').args, { 'x-queue-type': 'quorum' });
-  assert.ok(broker.bindings.some((b) => b.queue === 'coc.progress.events.dead' && b.exchange === 'coc.events.dlx'));
+  assert.ok(
+    broker.bindings.some(
+      (b) => b.queue === 'coc.progress.events.dead' && b.exchange === 'coc.events.dlx',
+    ),
+  );
   await handle.stop();
   await t.close();
 });
@@ -160,7 +170,11 @@ test('lost confirm, broker down, closed connection and resource alarm are retrie
   assert.equal(await kit.publishForTarget(producer, 'progress', lessonEvent()), 'published');
 
   broker.setQueueLimit('coc.progress.events', 0);
-  assert.equal(await producer.publish('progress', lessonEvent()), 'nacked', 'reject-publish overflow');
+  assert.equal(
+    await producer.publish('progress', lessonEvent()),
+    'nacked',
+    'reject-publish overflow',
+  );
   broker.setQueueLimit('coc.progress.events', 1000);
 
   broker.setAlarm(true);
@@ -200,7 +214,10 @@ test('persistent messages survive a broker restart and the consumer reconnects t
   // Kill the consumer's connection while idle: it reconnects and keeps consuming.
   for (const connection of [...broker.connections]) broker.kill(connection);
   const later = lessonEvent();
-  await until(async () => (await kit.publishForTarget(producer, 'progress', later)) === 'published', 'republish');
+  await until(
+    async () => (await kit.publishForTarget(producer, 'progress', later)) === 'published',
+    'republish',
+  );
   await until(() => rc.recorded.has(later.eventId), 'receipt after reconnect');
   assert.equal(r.state.applied, 2);
   await again.stop();
@@ -239,9 +256,16 @@ test('unavailable DLX target: at-least-once keeps the dead letter instead of dro
   const producer = transport(broker, 'learning');
   // A forged/invalid event dead-letters immediately.
   await producer.publish('progress', lessonEvent({ type: 'unknown.v1' }));
-  await until(() => broker.queue('coc.progress.events').pendingDeadLetters.length === 1, 'retained');
+  await until(
+    () => broker.queue('coc.progress.events').pendingDeadLetters.length === 1,
+    'retained',
+  );
   assert.equal(broker.lostMessages, 0);
-  broker.bindings.push({ queue: 'coc.progress.events.dead', exchange: 'coc.events.dlx', pattern: 'progress.#' });
+  broker.bindings.push({
+    queue: 'coc.progress.events.dead',
+    exchange: 'coc.events.dlx',
+    pattern: 'progress.#',
+  });
   broker.retryDeadLetters();
   assert.equal(broker.depth('coc.progress.events.dead'), 1);
   await handle.stop();
@@ -262,10 +286,21 @@ test('envelope: forged, re-signed, producer-mismatched and changed-payload event
   const channel = await (await broker.connect('amqp://fake')).createConfirmChannel();
   const send = (content) =>
     new Promise((resolve) =>
-      channel.publish('coc.events', 'progress.lesson.completed.v1', content, { persistent: true }, resolve),
+      channel.publish(
+        'coc.events',
+        'progress.lesson.completed.v1',
+        content,
+        { persistent: true },
+        resolve,
+      ),
     );
   // 1. Same eventId, different payload, validly signed by Learning: IDEMPOTENCY_CONFLICT.
-  await send(kit.signEnvelope(kit.devKey('learning'), { ...event, payload: { ...event.payload, originalCorrect: 1 } }));
+  await send(
+    kit.signEnvelope(kit.devKey('learning'), {
+      ...event,
+      payload: { ...event.payload, originalCorrect: 1 },
+    }),
+  );
   // 2. Signature tampered.
   const tampered = JSON.parse(kit.signEnvelope(kit.devKey('learning'), lessonEvent()).toString());
   tampered.signature = '0'.repeat(64);
@@ -309,12 +344,21 @@ test('key rotation: old and new keys both verify while both are in the receiver 
   const rotated = { keyId: 'learning-2026-11', sender: 'learning', secret: Buffer.alloc(32, 7) };
   const ring = kit.createKeyring([kit.devKey('learning'), rotated]);
   const event = lessonEvent();
-  assert.equal(kit.verifyEnvelope(ring, kit.signEnvelope(rotated, event)).keyId, 'learning-2026-11');
-  assert.equal(kit.verifyEnvelope(ring, kit.signEnvelope(kit.devKey('learning'), event)).keyId, 'dev-learning');
+  assert.equal(
+    kit.verifyEnvelope(ring, kit.signEnvelope(rotated, event)).keyId,
+    'learning-2026-11',
+  );
+  assert.equal(
+    kit.verifyEnvelope(ring, kit.signEnvelope(kit.devKey('learning'), event)).keyId,
+    'dev-learning',
+  );
   const retired = kit.createKeyring([rotated]);
-  assert.throws(() => kit.verifyEnvelope(retired, kit.signEnvelope(kit.devKey('learning'), event)), {
-    code: 'AUTH_REQUIRED',
-  });
+  assert.throws(
+    () => kit.verifyEnvelope(retired, kit.signEnvelope(kit.devKey('learning'), event)),
+    {
+      code: 'AUTH_REQUIRED',
+    },
+  );
   assert.equal(kit.signingKeyFor(ring, 'learning').keyId, 'dev-learning', 'first key signs');
   assert.throws(() => kit.signEnvelope(kit.devKey('ai'), event), { code: 'FORBIDDEN' });
 });
