@@ -11,6 +11,8 @@ import '../application/promo_controller.dart';
 
 /// Android source: Mobbin flow 098f538c, frames 2–4. Native text, field,
 /// close control and bottom-pinned Apply; repository failures remain inline.
+/// Geometry re-measured on frame 2 (360 px): 16 px close glyph, 45 px from
+/// its centre to the title, 49 px field with text 15 px inside the border.
 class PromoCodeScreen extends ConsumerStatefulWidget {
   const PromoCodeScreen({super.key});
   static const route = '/settings/promo';
@@ -56,7 +58,7 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   tooltip: 'Close',
-                  icon: const Icon(Icons.close, size: 24),
+                  icon: const Icon(Icons.close, size: 27),
                   color: ReferenceColors.disabled,
                   onPressed: () =>
                       context.canPop() ? context.pop() : context.go('/home'),
@@ -64,7 +66,7 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(15, 9, 15, 16),
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -76,7 +78,7 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
                           height: 1.2,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 14),
                       Text(
                         content.body,
                         style: const TextStyle(
@@ -120,8 +122,8 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
                             color: ReferenceColors.disabled,
                           ),
                           contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 14,
+                            horizontal: 9,
+                            vertical: 14.5,
                           ),
                           border: border(_fieldBorder),
                           enabledBorder: border(
