@@ -3,12 +3,21 @@
 // PENDING row; a dispatcher leases <=20 due rows (lease 30s, optimistic transaction), delivers them
 // sequentially, and records ACK, a jittered retry, or DEAD after 10 failures. Network delivery is
 // at least once; Progress' inbox dedupe gives one effect per eventId.
+import { ServiceError } from '../../../shared/src/errors.js';
+import type { ApplicationReceipt } from '../../../shared/src/ports.js';
+import { canonicalBodyHash } from '../../../shared/src/transport.js';
 import type { LearningTransaction, Row } from '../persistence/port.js';
 import { iso, type LearningDeps } from './deps.js';
 
 export const LEASE_MS = 30_000;
 export const MAX_BATCH = 20;
 export const DEAD_AFTER = 10;
+/**
+ * ADR-0018: after a broker confirm ('published') the row stays PENDING until Progress' application
+ * receipt marks it ACK; if no receipt arrives it is republished (same eventId/payload) after this
+ * wait. A confirm is never counted as applied, so the settlement watermark keeps waiting.
+ */
+export const RECEIPT_WAIT_MS = 10 * 60_000;
 
 export interface LessonCompletedEvent {
   eventId: string;
@@ -72,7 +81,7 @@ export function stageOutboxEvent(
   });
 }
 
-export type DeliveryOutcome = 'ack' | 'retry' | 'dead';
+export type DeliveryOutcome = 'ack' | 'retry' | 'dead' | 'published';
 /** Deliver one event; map the receiver's answer to an outcome. Must not throw for HTTP errors. */
 export type Deliver = (event: LearningOutboxEvent) => Promise<DeliveryOutcome>;
 
@@ -81,6 +90,8 @@ export interface DispatchReport {
   acked: number;
   retried: number;
   dead: number;
+  /** Broker-confirmed, awaiting the application receipt (AMQP routes only; omitted when 0). */
+  published?: number;
 }
 
 function backoffMs(attempt: number, random: () => number): number {
@@ -168,6 +179,13 @@ async function settle(
       updatedAt: iso(now),
     };
     if (outcome === 'ack') tx.put('l_outbox', id, { ...base, status: 'ACK', ackAt: iso(now) });
+    else if (outcome === 'published')
+      tx.put('l_outbox', id, {
+        ...base,
+        status: 'PENDING',
+        attempt: Number(current['attempt']),
+        nextAttemptAt: iso(now + RECEIPT_WAIT_MS),
+      });
     else if (outcome === 'dead' || attempt >= DEAD_AFTER)
       tx.put('l_outbox', id, { ...base, status: 'DEAD', attempt });
     else
@@ -214,9 +232,43 @@ export async function dispatchOutbox(
     await settle(deps, row, owner, outcome, random);
     if (outcome === 'ack') report.acked++;
     else if (outcome === 'dead') report.dead++;
+    else if (outcome === 'published') report.published = (report.published ?? 0) + 1;
     else report.retried++;
   }
   return report;
+}
+
+/**
+ * Record Progress' application receipt for a Learning outbox event (ADR-0018). Only the event's
+ * target may acknowledge it and only for the exact payload; a repeat is a harmless replay. The
+ * row becomes ACK even if it was DEAD or leased: the consumer proved the effect is committed.
+ */
+export async function recordOutboxReceipt(
+  deps: LearningDeps,
+  receipt: ApplicationReceipt,
+): Promise<'recorded' | 'replayed'> {
+  if (receipt.producer !== 'learning' || receipt.consumer !== 'progress') {
+    throw new ServiceError('FORBIDDEN');
+  }
+  return deps.persistence.transact(async (tx) => {
+    const row = await tx.get('l_outbox', receipt.eventId);
+    if (!row) throw new ServiceError('NOT_FOUND');
+    if (canonicalBodyHash(JSON.parse(String(row['payloadJson']))) !== receipt.bodyHash) {
+      throw new ServiceError('IDEMPOTENCY_CONFLICT');
+    }
+    if (row['status'] === 'ACK') return 'replayed';
+    const now = deps.nowMs();
+    tx.put('l_outbox', receipt.eventId, {
+      ...row,
+      status: 'ACK',
+      ackAt: iso(now),
+      leaseOwner: null,
+      leaseUntil: null,
+      revision: Number(row['revision']) + 1,
+      updatedAt: iso(now),
+    });
+    return 'recorded';
+  });
 }
 
 /** Map a Progress /internal/events HTTP answer to an outcome (EVENTS_ERRORS). */
