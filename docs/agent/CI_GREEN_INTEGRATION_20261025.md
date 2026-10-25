@@ -18,11 +18,22 @@
 
 - [x] Fetch all refs; fast-forward the clean checkout to `76221b5`, including the merged Phase 1 inventory.
 - [x] Integrate `fix/mobile-ci-baseline`, `fix/mobile-pixel-perfect-screens` and `wip/phase5-amqp-adapter` on `codex/ci-green-integration`; the WIP includes `feat/phase5-amqp-redis`.
-- [ ] Reproduce backend failures; repair AMQP dependency/type/test defects in `services/shared` and validate `pnpm backend:verify`, smokes and runtime checks.
-- [ ] Reproduce merged Flutter failures; inspect failing screenshot artifacts against existing source references. Repair fonts/fixtures/layout/lifecycle at their cause and add targeted regressions where behavior changes.
-- [ ] Validate source-backed baseline changes individually; retain strict comparisons and document platform-specific evidence if required.
-- [ ] Run contracts, API lint, schema dry-run/tests, seeds, content, blueprint/audit, secret scan, Flutter analyzer/full tests and Android build.
+- [x] Reproduce backend failures; repair AMQP dependency/type/test defects in `services/shared` and validate `pnpm backend:verify`, smokes and runtime checks.
+- [x] Reproduce merged Flutter failures; inspect failing screenshot artifacts against existing source references. Repair fonts/fixtures/layout/lifecycle at their cause and add targeted regressions where behavior changes.
+- [x] Record per-file baseline hashes/reasons in [golden provenance](../quality/ci-green-20261025/golden-provenance.json); retain strict comparisons. This evidence does not assert whole-app Duolingo pixel parity.
+- [x] Run contracts, API lint, schema dry-run/tests, seeds, content, blueprint/audit, secret scan, Flutter analyzer/full tests and Android build.
 - [ ] Push the integration candidate, inspect actual GitHub workflow results and repair remaining CI/Android native failures.
 - [ ] Merge the verified integration into `main`, push normally, verify remote identity and final required workflows, and record actual remaining release limitations.
 
 Starting CI failures: mobile has historical screenshot mismatches; the unfinished AMQP branch fails TypeScript on an undeclared `amqplib` import and an explicitly undefined optional `messageId`. These are diagnoses to verify, not declarations of completion.
+
+## Executed checkpoints
+
+- Backend on Node 22.23.3: 228 tests, 216 passed, 12 gated skips, zero failures; build, TypeScript, ESLint and Prettier pass. Backend/dev/native runtime smokes pass.
+- Local Flutter format: 609 files unchanged; analyzer clean; 67 scoped functional tests pass, including native Rive loading with the configured Windows release DLL path.
+- Contracts/API lint, schema dry-run/tests, seeds, blueprint/audit and media checks pass. No schema apply or cloud publish occurred.
+- Candidate `9c3364f`: GitHub Backend, Container runtime and secret scan pass. Mobile: 1,522 passed, one remaining Shop snapshot failure.
+- The Shop failure was reviewed against `docs/design/references/shop/05.png`: three prices moved to the trailing edge through the merged layout correction. A new geometry assertion protects the disabled full-inventory price; its updated strict snapshot is recorded separately in the provenance ledger.
+- Candidate `4632eae`: [Mobile CI](https://github.com/ducvuathuduc/CocCoc/actions/runs/40170628303) passes all 1,523 tests, analyzer, format and Android APK build/upload. Backend and secret scan pass; the Container runtime passed on the identical runtime source at `9c3364f`.
+- Android E2E run `40170085752` built both APKs and entered the emulator suite; its final result and final-main workflows remain pending at this checkpoint. iOS/manual deployment/cloud/provider acceptance are not inferred.
+- Linux is the pinned screenshot platform. Windows full-suite screenshots differ; the direct Windows diagnostic also omitted the required Rive DLL path. Neither that diagnostic nor emulator tests establish physical-device/cloud acceptance.
