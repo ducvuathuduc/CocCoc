@@ -120,7 +120,8 @@ export interface RouterOptions {
   nowMs?: () => number;
 }
 
-function validateEventEnvelope(value: unknown): BusinessEvent {
+/** Strict BusinessEvent envelope shape check (shared by the HTTP route and the AMQP envelope). */
+export function validateEventEnvelope(value: unknown): BusinessEvent {
   const event = value as Record<string, unknown> | null;
   if (!event || typeof event !== 'object' || Array.isArray(event)) {
     throw new ServiceError('VALIDATION_ERROR');
@@ -143,6 +144,27 @@ function validateEventEnvelope(value: unknown): BusinessEvent {
     Array.isArray(event['payload']);
   if (invalid) throw new ServiceError('VALIDATION_ERROR', { details: { field: 'event' } });
   return event as unknown as BusinessEvent;
+}
+
+/**
+ * Receiver-side acceptance shared by POST /internal/events and the AMQP consumer: the event type
+ * must be in this receiver's allowlist, its producer allowed and equal to the authenticated
+ * sender; then the owner consumer commits inbox + effects atomically.
+ */
+export async function acceptBusinessEvent(
+  service: ServiceName,
+  consumer: EventConsumer | undefined,
+  event: BusinessEvent,
+  sender: ServiceSender | undefined,
+  requestId: string,
+): Promise<'accepted' | 'replayed'> {
+  const producers = EVENT_ALLOWLIST[service][event.type];
+  if (!producers) throw new ServiceError('VALIDATION_ERROR', { details: { field: 'type' } });
+  if (!sender || !producers.includes(event.producer as ServiceName) || event.producer !== sender) {
+    throw new ServiceError('FORBIDDEN');
+  }
+  if (!consumer) throw new ServiceError('SERVICE_NOT_CONFIGURED');
+  return consumer.consume(event, { bodyHash: canonicalBodyHash(event), requestId, sender });
 }
 
 export function createRouter(options: RouterOptions) {
@@ -178,17 +200,13 @@ export function createRouter(options: RouterOptions) {
 
   async function consumeEvent(context: RouteContext): Promise<RouteResult> {
     const event = validateEventEnvelope(context.body);
-    const producers = allowlist[event.type];
-    if (!producers) throw new ServiceError('VALIDATION_ERROR', { details: { field: 'type' } });
-    if (!producers.includes(event.producer as ServiceName) || event.producer !== context.sender) {
-      throw new ServiceError('FORBIDDEN');
-    }
-    if (!options.eventConsumer) throw new ServiceError('SERVICE_NOT_CONFIGURED');
-    const status = await options.eventConsumer.consume(event, {
-      bodyHash: canonicalBodyHash(event),
-      requestId: context.requestId,
-      sender: context.sender,
-    });
+    const status = await acceptBusinessEvent(
+      service,
+      options.eventConsumer,
+      event,
+      context.sender,
+      context.requestId,
+    );
     return {
       status: 200,
       body: { operationId: event.eventId, status, requestId: context.requestId },

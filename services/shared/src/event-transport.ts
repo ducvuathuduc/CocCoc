@@ -4,7 +4,15 @@
 // routes cut over so far (one route at a time; docs/devops/OPERATIONS.md). Anything partial or
 // unknown is 'refused': the caller keeps the direct relay and reports the reason, never a fake.
 import { ServiceError } from './errors.js';
-import type { EventOwner, EventTransport } from './ports.js';
+import type {
+  BusinessEvent,
+  DeliveryHandler,
+  EventConsumer,
+  EventOwner,
+  EventTransport,
+  ReceiptPort,
+} from './ports.js';
+import { acceptBusinessEvent } from './transport.js';
 
 export type EventRoute = `${EventOwner}->${EventOwner}`;
 /** Producer->consumer pairs that exist in the receiver allowlists (transport.ts EVENT_ALLOWLIST). */
@@ -75,12 +83,7 @@ export function usesAmqp(
 /** Loggable description: never the URL or its credentials. */
 export function describeEventTransport(config: EventTransportConfig): Record<string, unknown> {
   if (config.mode === 'amqp') {
-    return {
-      mode: 'amqp',
-      routes: config.routes,
-      prefetch: config.prefetch,
-      vhost: config.vhostLabel,
-    };
+    return { mode: 'amqp', routes: config.routes, prefetch: config.prefetch, vhost: config.vhostLabel };
   }
   if (config.mode === 'refused') return { mode: 'direct', refusedAmqp: config.reason };
   return { mode: 'direct' };
@@ -96,5 +99,74 @@ export function createDisabledEventTransport(reason: string): EventTransport {
     consume: refuse,
     health: () => ({ kind: 'disabled', connected: false, reason }),
     close: async () => undefined,
+  };
+}
+
+/**
+ * Outbox delivery over a broker for one target. 'published' means the broker durably accepted
+ * the event; the outbox row stays pending until the consumer's application receipt arrives
+ * (a confirm never counts as applied). Anything else, including an unknown outcome, is 'retry'
+ * with the same event ID and payload.
+ */
+export async function publishForTarget(
+  transport: EventTransport,
+  target: EventOwner,
+  event: BusinessEvent,
+): Promise<'published' | 'retry'> {
+  try {
+    return (await transport.publish(target, event)) === 'confirmed' ? 'published' : 'retry';
+  } catch {
+    return 'retry';
+  }
+}
+
+const DEAD_CODES = new Set(['IDEMPOTENCY_CONFLICT', 'FORBIDDEN', 'VALIDATION_ERROR']);
+
+/**
+ * Consumer pipeline for one owner (ADR-0018 application receipt path):
+ *   1. allowlist + producer == verified envelope signer (acceptBusinessEvent),
+ *   2. the owner's consumer commits inbox + domain effects atomically,
+ *   3. a fresh authenticated receipt is recorded by the producer,
+ *   4. only then 'ack'.
+ * A crash or failure between any two steps leaves the delivery unacknowledged: the broker
+ * redelivers, step 2 replays from the inbox (same eventId/hash) and step 3 is idempotent.
+ * A changed payload under the same eventId, an unknown type or a wrong producer dead-letters.
+ */
+export function createReceiptingHandler(options: {
+  owner: EventOwner;
+  consumer: EventConsumer;
+  receipts: ReceiptPort;
+  log?: (entry: Record<string, unknown>) => void;
+}): DeliveryHandler {
+  const log = options.log ?? (() => undefined);
+  return async (delivery) => {
+    let outcome: 'accepted' | 'replayed';
+    try {
+      outcome = await acceptBusinessEvent(
+        options.owner,
+        options.consumer,
+        delivery.event,
+        delivery.sender,
+        delivery.event.requestId,
+      );
+    } catch (error) {
+      const code = error instanceof ServiceError ? error.code : 'INTERNAL_ERROR';
+      log({ service: options.owner, runtime: 'amqp', status: 'CONSUME_FAILED', code });
+      return DEAD_CODES.has(code) ? 'dead' : 'retry';
+    }
+    try {
+      await options.receipts.send({
+        eventId: delivery.event.eventId,
+        bodyHash: delivery.bodyHash,
+        producer: delivery.sender,
+        consumer: options.owner,
+        outcome: outcome === 'accepted' ? 'applied' : 'replayed',
+      });
+    } catch {
+      // Effects are committed; without the producer's record we must not ack. Redelivery replays.
+      log({ service: options.owner, runtime: 'amqp', status: 'RECEIPT_FAILED' });
+      return 'retry';
+    }
+    return 'ack';
   };
 }
