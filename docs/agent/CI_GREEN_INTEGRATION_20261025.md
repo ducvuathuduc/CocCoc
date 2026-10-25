@@ -37,3 +37,9 @@ Starting CI failures: mobile has historical screenshot mismatches; the unfinishe
 - Candidate `4632eae`: [Mobile CI](https://github.com/ducvuathuduc/CocCoc/actions/runs/40170628303) passes all 1,523 tests, analyzer, format and Android APK build/upload. Backend and secret scan pass; the Container runtime passed on the identical runtime source at `9c3364f`.
 - Android E2E run `40170085752` built both APKs and entered the emulator suite; its final result and final-main workflows remain pending at this checkpoint. iOS/manual deployment/cloud/provider acceptance are not inferred.
 - Linux is the pinned screenshot platform. Windows full-suite screenshots differ; the direct Windows diagnostic also omitted the required Rive DLL path. Neither that diagnostic nor emulator tests establish physical-device/cloud acceptance.
+
+## Native E2E follow-up
+
+Main `08307ab` passed Mobile, Backend, Container runtime and secret scan. The redundant old manual Android run was cancelled to expose diagnostics while the full main run continued. Before cancellation, permission grant/denial and lesson-cancellation cases each exhausted their six-minute limit; three notification/deep-link cases passed.
+
+The native helper repeatedly waited up to six seconds for `pumpAndSettle`, although audio/idle animation continuously schedules frames. Repeated lesson interactions consumed the whole case budget. `patrol_test/support/advance_frame.dart` now advances one bounded frame interval; finder polling, all seven native cases, their six-minute limits and every OS assertion remain intact. A looping-ticker regression reproduces 6,600 ms with the old helper and requires responsive progress while animation remains active. The fixed helper plus reminder regressions pass 20 tests; analyzer is clean. The resulting full native CI run is still required.
