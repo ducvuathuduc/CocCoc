@@ -61,6 +61,15 @@ jobs:
       - name: Verify frontend and build debug APK
         run: node tools/scripts/mobile-check.mjs --with-blueprint --build-android
 
+      - name: Upload golden failure diffs
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: golden-failures
+          path: apps/mobile/test/**/failures/*.png
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Upload debug APK
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:

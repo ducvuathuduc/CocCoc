@@ -6,7 +6,15 @@ name: Android E2E (reminders)
 # logcat are uploaded as artifacts.
 on:
   push:
-    branches: [pb/notify]
+    branches: [main]
+    paths:
+      - "apps/mobile/**"
+      - ".github/workflows/android-e2e.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "apps/mobile/**"
+      - ".github/workflows/android-e2e.yml"
   workflow_dispatch:
 
 permissions:
