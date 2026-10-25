@@ -74,11 +74,13 @@ class ReferenceArt extends StatefulWidget {
     this.region, {
     required this.width,
     required this.height,
+    this.blendMode = BlendMode.srcOver,
     super.key,
   });
   final ArtRegion region;
   final double width;
   final double height;
+  final BlendMode blendMode;
   static AssetImage _provider(String file) => AssetImage(
     'assets/reference_art/${file.contains('-') ? file : 'onboarding-$file'}.png',
   );
@@ -200,7 +202,11 @@ class _ReferenceArtState extends State<ReferenceArt> {
       height: widget.height,
       child: _info != null
           ? CustomPaint(
-              painter: _ArtPainter(_info!.image, widget.region.source),
+              painter: _ArtPainter(
+                _info!.image,
+                widget.region.source,
+                widget.blendMode,
+              ),
             )
           : const SizedBox.shrink(),
     ),
@@ -208,17 +214,22 @@ class _ReferenceArtState extends State<ReferenceArt> {
 }
 
 class _ArtPainter extends CustomPainter {
-  _ArtPainter(this.image, this.source);
+  _ArtPainter(this.image, this.source, this.blendMode);
   final ui.Image image;
   final Rect source;
+  final BlendMode blendMode;
   @override
   void paint(Canvas canvas, Size size) => canvas.drawImageRect(
     image,
     source,
     Offset.zero & size,
-    Paint()..filterQuality = FilterQuality.medium,
+    Paint()
+      ..filterQuality = FilterQuality.medium
+      ..blendMode = blendMode,
   );
   @override
   bool shouldRepaint(_ArtPainter oldDelegate) =>
-      oldDelegate.image != image || oldDelegate.source != source;
+      oldDelegate.image != image ||
+      oldDelegate.source != source ||
+      oldDelegate.blendMode != blendMode;
 }

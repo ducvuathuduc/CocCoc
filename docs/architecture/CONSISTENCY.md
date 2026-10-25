@@ -1,5 +1,7 @@
 # Authority, transactions and cross-service delivery
 
+2026-10-25: approved [ADR-0018](adr/0018-container-event-cache-runtime.md) extends the runtime with an optional-to-admit RabbitMQ transport and derived Redis cache. Preserve the owner transactions and application-effect acknowledgements below; published-to-broker is not applied-by-consumer. The current signed HTTP protocol remains active until compatible contract/storage/transport acceptance passes.
+
 Canonical [storage](../data/DATA_MODEL.md), [events](../api/EVENTS_ERRORS.md), [auth](../api/AUTH.md) and [offline protocol](OFFLINE.md) remain unchanged. One database saves platform resources; service-owned tables and signed commands are logical boundaries, not hard per-project key isolation.
 
 Learning owns content/frontier/session/regrade/completion/review scheduling/mistakes/energy/outbox; Progress owns profile/XP/streak/economy/social/leagues/entitlements; AI owns usage/leases/jobs/conversations/temporary audio. Cross-owner effects travel only as signed events: lesson.completed.v1 and ai.practice.completed.v1 into Progress; entitlement.changed.v1 and energy.granted.v1 out of Progress (same outbox/inbox/dedupe rules as below). Only the owner writes its prefix. Transport/shared code contains no grading/reward model. Independent package/artifact/function/revision/tests distinguish genuine deploy boundaries; cloud integration and the teacher's acceptance of Functions remain unproven.

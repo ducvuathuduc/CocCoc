@@ -1,0 +1,290 @@
+{
+  "generatedWith": {
+    "library": "sharp",
+    "moduleRoot": "C:/Users/ADMIN/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp",
+    "operation": "literal extract; no generative or retouching step"
+  },
+  "streakWidget": {
+    "ready": {
+      "source": {
+        "id": "sc_62f2ea4ee11a4a7dac490720619ddd52",
+        "url": "https://storage.gummble.com/prod/content/app_screens/f3e6449c-4b62-487f-9996-dcda83b33d26.png",
+        "localFile": "apps/mobile/assets/reference_art/widget-ready.png",
+        "sha256": "33c6b152ff1e20cdffcb5bfd5cce5c9af1e8f7704f20a49749ff1674f51ce5ef"
+      },
+      "crops": {
+        "medium": {
+          "left": 690,
+          "top": 487,
+          "width": 413,
+          "height": 241,
+          "assetName": "WidgetReadyMedium",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetReadyMedium.imageset/widget-ready-medium.png",
+          "sha256": "f3e42e26359259b669db02050b32db54f9ab2befefc689474968e8bfff3c8f4a"
+        },
+        "small": {
+          "left": 77,
+          "top": 1020,
+          "width": 481,
+          "height": 251,
+          "assetName": "WidgetReadySmall",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetReadySmall.imageset/widget-ready-small.png",
+          "sha256": "aff4792172ee56b0facaa9466b88f17e684e09bf85380a33c3bfe7c80826241b"
+        }
+      }
+    },
+    "early": {
+      "source": {
+        "id": "sc_34f5bed1fed74391a676815ac4845015",
+        "url": "https://storage.gummble.com/prod/content/app_screens/eafd781d-9640-4a80-a2de-e54e44e39b13.png",
+        "localFile": "apps/mobile/assets/reference_art/widget-early.png",
+        "sha256": "918ed4c8679aa6f4dae81786880807ff1891b00257d116164164455129da48ab"
+      },
+      "crops": {
+        "medium": {
+          "left": 720,
+          "top": 475,
+          "width": 383,
+          "height": 251,
+          "assetName": "WidgetEarlyMedium",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetEarlyMedium.imageset/widget-early-medium.png",
+          "sha256": "436720bba6ed96a1b4ada69e34b306967b7782ed894edd071933ac94ea3fc91b"
+        },
+        "small": {
+          "left": 80,
+          "top": 1050,
+          "width": 477,
+          "height": 219,
+          "assetName": "WidgetEarlySmall",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetEarlySmall.imageset/widget-early-small.png",
+          "sha256": "3e0636075fe5a44b2b6848a2251f09611a8fd35e6e0b008bc231cd007a8ad647"
+        }
+      }
+    },
+    "practice": {
+      "source": {
+        "id": "sc_ad6b6bf61f8f47ba89554c805037fcc5",
+        "url": "https://storage.gummble.com/prod/content/app_screens/d2179a32-6faa-45a3-9465-762cc7ac2bb8.png",
+        "localFile": "apps/mobile/assets/reference_art/widget-practice.png",
+        "sha256": "fe32cf367742876e8c7042cab7860f39eacacad5d284af67e0f4c4fc599062ef"
+      },
+      "crops": {
+        "medium": {
+          "left": 695,
+          "top": 444,
+          "width": 408,
+          "height": 282,
+          "assetName": "WidgetPracticeMedium",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetPracticeMedium.imageset/widget-practice-medium.png",
+          "sha256": "36405a9107bc4ecfa4e1a1a1dd29383019591804a493dc2965b0aa47026dda77"
+        },
+        "small": {
+          "left": 77,
+          "top": 1050,
+          "width": 481,
+          "height": 220,
+          "assetName": "WidgetPracticeSmall",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetPracticeSmall.imageset/widget-practice-small.png",
+          "sha256": "545f0bd43a0cac9e9625e56c9031dd99b24f1a8e01abf5515c5e3de57819b066"
+        }
+      }
+    },
+    "lastChance": {
+      "source": {
+        "id": "sc_3a7f89d1de424653861d828ac8ee3166",
+        "url": "https://storage.gummble.com/prod/content/app_screens/cd0a1d09-fe82-4a3d-8e09-8e48c571b854.png",
+        "localFile": "apps/mobile/assets/reference_art/widget-last-chance.png",
+        "sha256": "28ff0b164b52678f7d3fae20acea5237b617f6bb96c94f3a3b70ade0e0feb029"
+      },
+      "crops": {
+        "medium": {
+          "left": 695,
+          "top": 441,
+          "width": 408,
+          "height": 285,
+          "assetName": "WidgetLastChanceMedium",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetLastChanceMedium.imageset/widget-last-chance-medium.png",
+          "sha256": "dfee9b29046b961e66eccac7aa6f7aa0dea56890a6ca5ebbed14cd582e292151"
+        },
+        "small": {
+          "left": 77,
+          "top": 997,
+          "width": 481,
+          "height": 274,
+          "assetName": "WidgetLastChanceSmall",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetLastChanceSmall.imageset/widget-last-chance-small.png",
+          "sha256": "fbc6e3523fb8652d8e0a7820a84327eed724f961ac5e749436789fac5c64c813"
+        }
+      }
+    },
+    "save": {
+      "source": {
+        "id": "sc_4dc34672e5184cd8944a853d5f0c0128",
+        "url": "https://storage.gummble.com/prod/content/app_screens/f161f33d-6018-4c65-b8a6-a4c3e531219b.png",
+        "localFile": "apps/mobile/assets/reference_art/widget-save.png",
+        "sha256": "e7224b72b0d13c117a25a9703bdb8e6b358e4d55cb92b26ecfbff86e1441741c"
+      },
+      "crops": {
+        "medium": {
+          "left": 640,
+          "top": 442,
+          "width": 463,
+          "height": 284,
+          "assetName": "WidgetSaveMedium",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetSaveMedium.imageset/widget-save-medium.png",
+          "sha256": "de8d3e5424c6a37128877c129e33b01119b803f701e7c95181f461398e654627"
+        },
+        "small": {
+          "left": 77,
+          "top": 1018,
+          "width": 481,
+          "height": 252,
+          "assetName": "WidgetSaveSmall",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetSaveSmall.imageset/widget-save-small.png",
+          "sha256": "b5ad1ff9e0bbacddbbeed3d986dde0ec5819368fb0427a00eb95c5b7ac8fff8a"
+        }
+      }
+    },
+    "protected": {
+      "source": {
+        "id": "sc_4ff8cd48ef8f4473b5208256d2b77020",
+        "url": "https://storage.gummble.com/prod/content/app_screens/0eec81aa-e3d3-43b6-a704-2db0f1845ac3.png",
+        "localFile": "apps/mobile/assets/reference_art/widget-six.png",
+        "sha256": "8fc0549a98222ec8434e96e8b8a6b82bd0532f7276f54f88b8c16132ba345ccd"
+      },
+      "crops": {
+        "medium": {
+          "left": 675,
+          "top": 470,
+          "width": 428,
+          "height": 255,
+          "assetName": "WidgetProtectedMedium",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetProtectedMedium.imageset/widget-protected-medium.png",
+          "sha256": "ebac5a3833f08753e538d5abe291717506593ea9f0bc20d93be2c6a3e291843f"
+        },
+        "small": {
+          "left": 77,
+          "top": 1010,
+          "width": 481,
+          "height": 260,
+          "assetName": "WidgetProtectedSmall",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetProtectedSmall.imageset/widget-protected-small.png",
+          "sha256": "c4cd58fc562e1b0facdca8e426402d24f8ca2b7187fc9bbd4ae9337fff963bb3"
+        }
+      }
+    },
+    "away": {
+      "source": {
+        "id": "sc_808b0fa527354f1eb806ddbdd20e0c52",
+        "url": "https://storage.gummble.com/prod/content/app_screens/67e38256-e03e-49ea-a0d5-3f93530945e8.png",
+        "localFile": "apps/mobile/assets/reference_art/widget-seven.png",
+        "sha256": "b7d329a220b7363bf042182271dbe156b6b76935bb846489e56e7bb6b47b731a"
+      },
+      "crops": {
+        "medium": {
+          "left": 690,
+          "top": 457,
+          "width": 413,
+          "height": 269,
+          "assetName": "WidgetAwayMedium",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetAwayMedium.imageset/widget-away-medium.png",
+          "sha256": "24e4272ea3480eb5e60d465c8155a427d586c9f0831d7c0541c5cebb0122de96"
+        },
+        "small": {
+          "left": 77,
+          "top": 1040,
+          "width": 481,
+          "height": 230,
+          "assetName": "WidgetAwaySmall",
+          "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/WidgetAwaySmall.imageset/widget-away-small.png",
+          "sha256": "cc62504024256a28d964dc0e23df1f9f9c83636a15abb6b44fd516e14bae61ab"
+        }
+      }
+    }
+  },
+  "liveActivity": {
+    "compactIslandIcon": {
+      "source": {
+        "id": "sc_91ce2f0575e541209656de20ceaaa6d0",
+        "url": "https://storage.gummble.com/prod/content/app_screens/3e3a9326-956a-4c65-8b43-b66e0ab753e3.png",
+        "localFile": "docs/design/references/catalog-cache/sc_91ce2f0575e541209656de20ceaaa6d0.png",
+        "sha256": "9cd57a3fb511018a41095d1f260bd1dc99b098f0c41567c1f7c75c1fb8757e1d"
+      },
+      "region": {
+        "left": 343,
+        "top": 57,
+        "width": 60,
+        "height": 60
+      },
+      "assetName": "LessonIslandIcon",
+      "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/LessonIslandIcon.imageset/lesson-island-icon.png",
+      "sha256": "740f42a829d19d1a5cca9ca78c314448fa97a0efe811cc3e9692574886909b33"
+    },
+    "expandedAppIcon": {
+      "source": {
+        "id": "sc_62d09ee369b64622afc4abb857b931ad",
+        "url": "https://storage.gummble.com/prod/content/app_screens/66ce99c3-814a-44fc-8213-e9a3ffb09c45.png",
+        "localFile": "docs/design/references/catalog-cache/sc_62d09ee369b64622afc4abb857b931ad.png",
+        "sha256": "901a9654c9d92dd934ad6c2f92306643fd3a82c4811f95ba8175c8d3e2e89e39"
+      },
+      "region": {
+        "left": 89,
+        "top": 151,
+        "width": 151,
+        "height": 153
+      },
+      "assetName": "LessonAppIcon",
+      "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/LessonAppIcon.imageset/lesson-app-icon.png",
+      "sha256": "7529515c4d28d4f0e91bd487131c957790be66750f79f03dcd985353a1bd5e68"
+    },
+    "expandedProgressReference": {
+      "source": {
+        "id": "sc_898294db35d04788a51d463ba7c33073",
+        "url": "https://storage.gummble.com/prod/content/app_screens/6fcbd041-b56c-4d97-8619-4958e7fc46c9.png",
+        "localFile": "docs/design/references/catalog-cache/sc_898294db35d04788a51d463ba7c33073.png",
+        "sha256": "4eab6a26387c823c4b067dcfba294fdeb85464bd63e5f916a3a1da6f318367ab"
+      },
+      "region": {
+        "left": 89,
+        "top": 361,
+        "width": 796,
+        "height": 48
+      },
+      "purpose": "Layout measurement only; the progress rail is drawn natively."
+    },
+    "lockScreenDuo": {
+      "source": {
+        "id": "sc_8db9b46f3ce34530ab305f344c3e0313",
+        "url": "https://storage.gummble.com/prod/content/app_screens/4907efb7-110f-405b-84c8-227fdeb1450b.png",
+        "localFile": "docs/design/references/catalog-cache/sc_8db9b46f3ce34530ab305f344c3e0313.png",
+        "sha256": "faab4e0a567dda099fc709b5cbb9457e261294258059e5eaf6fd92fa540e0576"
+      },
+      "region": {
+        "left": 780,
+        "top": 1900,
+        "width": 300,
+        "height": 304
+      },
+      "assetName": "LessonLockDuo",
+      "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/LessonLockDuo.imageset/lesson-lock-duo.png",
+      "sha256": "1a12d616c1a7ec47582ea252704b58e4ea183b87c86b7522afb05dc04abf5a13"
+    },
+    "streakWarningDuo": {
+      "source": {
+        "id": "sc_777ca7cd32f2424b905254c100d86ea8",
+        "url": "https://storage.gummble.com/prod/content/app_screens/9e5df3eb-08e1-4bc1-b1cc-7bb4378cdc59.png",
+        "localFile": "docs/design/references/catalog-cache/sc_777ca7cd32f2424b905254c100d86ea8.png",
+        "sha256": "29cca98fee55aa696a13f92d8232be05105a95f6750da4e520350db81e51f34d"
+      },
+      "region": {
+        "left": 700,
+        "top": 1930,
+        "width": 435,
+        "height": 275
+      },
+      "assetName": "LessonWarningDuo",
+      "file": "apps/mobile/ios/StreakWidget/Assets.xcassets/LessonWarningDuo.imageset/lesson-warning-duo.png",
+      "sha256": "35fc32c50f6102d1659a602d6beb23aca502ee22f73310c50a1d9faade0a4698"
+    }
+  }
+}

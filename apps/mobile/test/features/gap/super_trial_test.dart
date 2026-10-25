@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/super_trial/application/super_trial_provider.dart';
 import 'package:cocenglish/features/super_trial/data/super_trial_repository.dart';
@@ -11,19 +13,33 @@ import 'package:go_router/go_router.dart';
 import '../../support/app_fonts.dart';
 import '../../support/settle_images.dart';
 
+class SlowSuperTrialRepository extends MockSuperTrialRepository {
+  final release = Completer<void>();
+
+  @override
+  Future<void> record(SuperTrialChoice choice) async {
+    choices.add(choice);
+    await release.future;
+  }
+}
+
 /// Opens the trial from a launcher so the pop result is observable.
 Future<({MockSuperTrialRepository repo, List<bool?> results})> pump(
   WidgetTester tester, {
   Size size = const Size(360, 800),
   double scale = 1,
   SuperTrialOffer offer = const SuperTrialOffer(),
+  TargetPlatform platform = TargetPlatform.iOS,
+  MockSuperTrialRepository? repository,
   bool open = true,
 }) async {
+  SuperTrialScreen.debugPlatformOverride = platform;
+  addTearDown(() => SuperTrialScreen.debugPlatformOverride = null);
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
-  final repo = MockSuperTrialRepository(offer: offer);
+  final repo = repository ?? MockSuperTrialRepository(offer: offer);
   final results = <bool?>[];
   final router = GoRouter(
     routes: [
@@ -135,6 +151,85 @@ void main() {
     expect(r.results, [null]);
     expect(r.repo.choices, [SuperTrialChoice.declined]);
   });
+
+  testWidgets('Android shows the source-backed English seven-day comparison', (
+    tester,
+  ) async {
+    await pump(
+      tester,
+      size: const Size(360, 717),
+      platform: TargetPlatform.android,
+    );
+    expect(
+      find.text('Progress faster in your English course with Super!'),
+      findsOneWidget,
+    );
+    expect(find.text('Get a 7-day free trial of Super Duolingo'), findsNothing);
+    final heading = tester.getRect(
+      find.text('Progress faster in your English course with Super!'),
+    );
+    expect(heading.top, closeTo(125, 3));
+    final comparison = tester.getRect(
+      find.byKey(const ValueKey('android-super-comparison')),
+    );
+    expect(comparison.top, closeTo(heading.bottom + 28, 1));
+    for (final feature in [
+      'Learning content',
+      'Unlimited Hearts',
+      'Personalized Practice',
+      'Unlimited Legendary',
+      'No ads',
+    ]) {
+      expect(find.text(feature), findsOneWidget);
+    }
+    expect(find.byKey(const ValueKey('android-super-badge')), findsOneWidget);
+    expect(find.textContaining('14'), findsNothing);
+    expect(find.textContaining('2 WEEKS'), findsNothing);
+    expect(find.byKey(const ValueKey('super-trial-accept')), findsOneWidget);
+    expect(find.byKey(const ValueKey('super-trial-decline')), findsOneWidget);
+  });
+
+  testWidgets('Android acceptance pops true and records exactly once', (
+    tester,
+  ) async {
+    final repository = SlowSuperTrialRepository();
+    final r = await pump(
+      tester,
+      platform: TargetPlatform.android,
+      repository: repository,
+    );
+    final accept = find.byKey(const ValueKey('super-trial-accept'));
+    await tester.tap(accept);
+    await tester.tap(accept);
+    expect(repository.choices, [SuperTrialChoice.accepted]);
+    repository.release.complete();
+    await tester.pumpAndSettle();
+    expect(r.results, [true]);
+  });
+
+  for (final size in [const Size(320, 568), const Size(430, 932)]) {
+    testWidgets('Android comparison fits $size at 2x text', (tester) async {
+      await pump(
+        tester,
+        size: size,
+        scale: 2,
+        platform: TargetPlatform.android,
+      );
+      expect(tester.takeException(), isNull);
+      expect(
+        find.byKey(const ValueKey('android-super-comparison')),
+        findsOneWidget,
+      );
+      final accept = tester.getRect(
+        find.byKey(const ValueKey('super-trial-accept')),
+      );
+      final decline = tester.getRect(
+        find.byKey(const ValueKey('super-trial-decline')),
+      );
+      expect(accept.bottom, lessThanOrEqualTo(decline.top + 1));
+      expect(decline.bottom, lessThanOrEqualTo(size.height));
+    });
+  }
 
   for (final size in [const Size(320, 568), const Size(430, 932)]) {
     testWidgets('no overflow at $size with 2x text', (tester) async {

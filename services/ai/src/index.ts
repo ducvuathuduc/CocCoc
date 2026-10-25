@@ -3,9 +3,10 @@
 // only when COC_AI_PERSISTENCE=appwrite with an https endpoint and project; its credential is the
 // per-execution dynamic key (`x-appwrite-key`, limited by the function scopes) first, then
 // COC_AI_APPWRITE_KEY / APPWRITE_API_KEY. Business routes need COC_AI_ADMITTED=reviewed-cloud-gate.
-// Provider: authored scripts always; COC_AI_PROVIDER=speech + secret provider keys
+// Provider: authored text scripts; COC_AI_PROVIDER=speech + secret provider keys
 // (COC_AZURE_SPEECH_KEY/REGION, COC_ASSEMBLYAI_API_KEY, COC_DEEPGRAM_API_KEY) enables real STT and
-// Azure pronunciation scores, else the scripted transcript + null scores (COC_AI_PROVIDER=disabled).
+// Azure pronunciation scores. Otherwise recorded speech is unavailable; hosted audio never
+// receives a synthetic transcript. Scripted speech exists only in explicit dev/test adapters.
 // Event relay: COC_PROGRESS_URL (https) + an 'ai' key in COC_SERVICE_KEYS.
 import { randomUUID } from 'node:crypto';
 import {
@@ -17,7 +18,7 @@ import {
 } from '../../shared/src/appwrite-entry.js';
 import { parseKeyring } from '../../shared/src/service-hmac.js';
 import { createHostedHandler } from '../../shared/src/transport.js';
-import { SCRIPTED_PROVIDER, speechProvider, type AiDeps } from './application/deps.js';
+import { DISABLED_PROVIDER, speechProvider, type AiDeps } from './application/deps.js';
 import { speechFromEnv } from './application/speech.js';
 import { createImmediateRelay, dispatchOutbox, httpDeliver } from './application/outbox.js';
 import { gatesFromEnv } from './domain/plans.js';
@@ -37,7 +38,7 @@ const deps: AiDeps = {
   nowMs: Date.now,
   newId: randomUUID,
   gates: gatesFromEnv(env),
-  provider: speech ? speechProvider(speech) : SCRIPTED_PROVIDER,
+  provider: speech ? speechProvider(speech) : DISABLED_PROVIDER,
 };
 let serviceKeys;
 try {
@@ -60,7 +61,7 @@ export default async function main(context: RawAppwriteContext): Promise<unknown
   const req = plainRequest(context.req);
   return withExecutionKey(req, async () => {
     if (isScheduledExecution(req)) {
-      if (persistence.kind === 'disabled' || !deps.deliver) {
+      if (!persistence.admittedForHosting || !deps.deliver) {
         return context.res.json({ worker: 'ai', status: 'SERVICE_NOT_CONFIGURED' }, 503);
       }
       const report = await dispatchOutbox(deps, deps.deliver, { deadlineMs: 20_000 });

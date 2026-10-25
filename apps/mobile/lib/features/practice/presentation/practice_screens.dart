@@ -45,153 +45,156 @@ class PracticeHubScreen extends StatelessWidget {
   const PracticeHubScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: ReferenceColors.surface,
-    body: SafeArea(
-      bottom: false,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              constraints: const BoxConstraints(minHeight: 375),
-              padding: const EdgeInsets.fromLTRB(16, 14, 16, 22),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFF8558E8), Color(0xFF5D35B5)],
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Scaffold(
+      backgroundColor: palette.surface,
+      body: SafeArea(
+        bottom: false,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                constraints: const BoxConstraints(minHeight: 375),
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 22),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFF8558E8), Color(0xFF5D35B5)],
+                  ),
                 ),
-              ),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 560),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Video Call',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 23,
-                                fontWeight: FontWeight.w700,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 560),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Video Call',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
-                          ),
-                          _MaxLogo(),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      const Center(
-                        child: ClipOval(
-                          child: ReferenceArt(
-                            LearningArt.lily,
-                            width: 145,
-                            height: 137,
+                            _MaxLogo(),
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+                        const Center(
+                          child: ClipOval(
+                            child: ReferenceArt(
+                              LearningArt.lily,
+                              width: 145,
+                              height: 137,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Center(child: _LilyNamePill()),
-                      const SizedBox(height: 18),
-                      ReferenceButton(
-                        label: 'CALL LILY',
-                        backgroundColor: Colors.white,
-                        edgeColor: const Color(0xFF45248F),
-                        foregroundColor: const Color(0xFF5D35B5),
-                        onPressed: () => context.push('/speaking/call'),
-                      ),
-                    ],
+                        const SizedBox(height: 10),
+                        const Center(child: _LilyNamePill()),
+                        const SizedBox(height: 18),
+                        ReferenceButton(
+                          label: 'CALL LILY',
+                          backgroundColor: Colors.white,
+                          edgeColor: const Color(0xFF45248F),
+                          foregroundColor: const Color(0xFF5D35B5),
+                          onPressed: () => context.push('/speaking/call'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 560),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 36),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Text(
-                        'Skill practice',
-                        style: TextStyle(
-                          color: ReferenceColors.ink,
-                          fontSize: 23,
-                          fontWeight: FontWeight.w700,
+              Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 24, 16, 36),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Skill practice',
+                          style: TextStyle(
+                            color: palette.ink,
+                            fontSize: 23,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      _PracticeRow(
-                        title: 'Roleplay',
-                        art: LearningArt.roleplay,
-                        onTap: () => context.push('/journeys/roleplay'),
-                      ),
-                      _PracticeRow(
-                        title: 'Mistakes',
-                        art: LearningArt.mistakes,
-                        onTap: () => context.push('/practice/mistakes'),
-                      ),
-                      _PracticeRow(
-                        title: 'Words',
-                        art: LearningArt.words,
-                        onTap: () => context.push('/practice/words'),
-                      ),
-                      _PracticeRow(
-                        title: 'Listen',
-                        art: LearningArt.listen,
-                        onTap: () => context.push('/practice/listen'),
-                      ),
-                      _PracticeRow(
-                        title: 'Speak',
-                        art: LearningArt.speak,
-                        onTap: () => context.push('/practice/speak'),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'English stories and radio',
-                        style: headingStyle,
-                      ),
-                      const SizedBox(height: 16),
-                      _PracticeRow(
-                        title: 'Stories',
-                        art: LearningArt.words,
-                        onTap: () => context.push('/stories'),
-                      ),
-                      _PracticeRow(
-                        title: 'Radio',
-                        art: LearningArt.listen,
-                        onTap: () => context.push('/journeys/radio'),
-                      ),
-                      _PracticeRow(
-                        title: 'Rapid Review',
-                        art: LearningArt.speak,
-                        onTap: () => context.push('/challenges/rapid'),
-                      ),
-                      _PracticeRow(
-                        title: 'Legendary',
-                        art: LearningArt.league,
-                        onTap: () => context.push('/challenges/legendary'),
-                      ),
-                      _PracticeRow(
-                        title: 'Adventures',
-                        art: LearningArt.roleplay,
-                        onTap: () => context.push('/adventures/passport'),
-                      ),
-                    ],
+                        const SizedBox(height: 16),
+                        _PracticeRow(
+                          title: 'Roleplay',
+                          art: LearningArt.roleplay,
+                          onTap: () => context.push('/journeys/roleplay'),
+                        ),
+                        _PracticeRow(
+                          title: 'Mistakes',
+                          art: LearningArt.mistakes,
+                          onTap: () => context.push('/practice/mistakes'),
+                        ),
+                        _PracticeRow(
+                          title: 'Words',
+                          art: LearningArt.words,
+                          onTap: () => context.push('/practice/words'),
+                        ),
+                        _PracticeRow(
+                          title: 'Listen',
+                          art: LearningArt.listen,
+                          onTap: () => context.push('/practice/listen'),
+                        ),
+                        _PracticeRow(
+                          title: 'Speak',
+                          art: LearningArt.speak,
+                          onTap: () => context.push('/practice/speak'),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'English stories and radio',
+                          style: headingStyle,
+                        ),
+                        const SizedBox(height: 16),
+                        _PracticeRow(
+                          title: 'Stories',
+                          art: LearningArt.words,
+                          onTap: () => context.push('/stories'),
+                        ),
+                        _PracticeRow(
+                          title: 'Radio',
+                          art: LearningArt.listen,
+                          onTap: () => context.push('/journeys/radio'),
+                        ),
+                        _PracticeRow(
+                          title: 'Rapid Review',
+                          art: LearningArt.speak,
+                          onTap: () => context.push('/challenges/rapid'),
+                        ),
+                        _PracticeRow(
+                          title: 'Legendary',
+                          art: LearningArt.league,
+                          onTap: () => context.push('/challenges/legendary'),
+                        ),
+                        _PracticeRow(
+                          title: 'Adventures',
+                          art: LearningArt.roleplay,
+                          onTap: () => context.push('/adventures/passport'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _MaxLogo extends StatelessWidget {
@@ -273,6 +276,7 @@ class PracticeDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     if (kind == 'words') return const WordsScreen();
     final title = switch (kind) {
       'mistakes' => 'Mistakes',
@@ -281,7 +285,7 @@ class PracticeDetailScreen extends ConsumerWidget {
       _ => 'Words',
     };
     return Scaffold(
-      backgroundColor: ReferenceColors.surface,
+      backgroundColor: palette.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -348,15 +352,17 @@ class _WordPractice extends ConsumerWidget {
                       const SizedBox(height: 18),
                       Text(
                         word.meaning,
-                        style: const TextStyle(
-                          color: ReferenceColors.muted,
+                        style: TextStyle(
+                          color: context.referencePalette.muted,
                           fontSize: 22,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
+                      Text(
                         'Assisted reveal',
-                        style: TextStyle(color: ReferenceColors.disabled),
+                        style: TextStyle(
+                          color: context.referencePalette.disabled,
+                        ),
                       ),
                     ],
                   ],
@@ -427,8 +433,8 @@ class _MediaPractice extends StatelessWidget {
               ? 'Read the sentence, then practice your response.'
               : 'Continue with the same prompt as a written exercise.',
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: ReferenceColors.muted,
+          style: TextStyle(
+            color: context.referencePalette.muted,
             fontSize: 17,
             height: 1.4,
           ),

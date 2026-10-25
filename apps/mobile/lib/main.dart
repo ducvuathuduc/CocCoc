@@ -1,4 +1,9 @@
+import 'features/super_trial/presentation/android_super_flow.dart';
+import 'features/super_trial/application/super_access_reminder.dart';
+import 'features/appearance/application/appearance_controller.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,8 +30,11 @@ import 'features/learning/presentation/lesson_screen.dart';
 import 'features/learning/presentation/explanation_screen.dart';
 import 'features/learning/presentation/lesson_results.dart';
 import 'features/learning/application/learning_controller.dart';
+import 'features/learning/application/lesson_activity_coordinator.dart';
+import 'features/learning/domain/lesson_activity.dart';
 import 'features/call/presentation/video_call_screen.dart';
 import 'features/results/presentation/results_chain.dart';
+import 'features/results/application/results_providers.dart';
 import 'features/results/presentation/results_extra_screens.dart';
 import 'features/learning/presentation/session_entry.dart';
 import 'features/progress/presentation/hub_screens.dart';
@@ -64,6 +72,7 @@ import 'features/progress/application/profile_lists_controller.dart';
 import 'features/notifications/presentation/notification_screens.dart';
 import 'features/roleplay/presentation/roleplay_screens.dart';
 import 'features/reminders/application/reminder_coordinator.dart';
+import 'features/progress/application/streak_widgets_controller.dart';
 import 'features/reminders/presentation/reminder_permission_sheet.dart';
 import 'features/notifications/application/notification_settings_controller.dart';
 import 'features/auth/application/auth_controller.dart';
@@ -74,6 +83,7 @@ import 'features/session/application/real_learning_session.dart';
 import 'features/session/presentation/real_connection_screen.dart';
 import 'features/placement/presentation/placement_screens.dart';
 import 'features/super_trial/presentation/super_trial_screen.dart';
+import 'features/super_trial/presentation/super_brand_screen.dart';
 import 'features/streak_repair/presentation/streak_repair_screen.dart';
 import 'features/promo/presentation/promo_code_screen.dart';
 import 'features/super_features/presentation/super_features_screen.dart';
@@ -210,6 +220,7 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    ref.read(lessonActivityCoordinatorProvider).initialize().ignore();
     final initial = ref.read(onboardingControllerProvider);
     _router = GoRouter(
       initialLocation: ref.read(appConfigProvider).isApi
@@ -271,6 +282,16 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         ),
         GoRoute(path: '/lesson', redirect: (context, state) => '/home'),
         GoRoute(
+          path: '/activity/resume',
+          redirect: (context, state) => lessonActivityResumeLocation(
+            authRequired: ref.read(appConfigProvider).isApi,
+            signedInUserId: ref.read(authControllerProvider).user?.id,
+            retained: ref
+                .read(lessonActivityCoordinatorProvider)
+                .retainedSession,
+          ),
+        ),
+        GoRoute(
           path: '/stories',
           builder: (context, state) => const StoryLibraryScreen(),
         ),
@@ -306,8 +327,11 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
               routes: [
                 GoRoute(
                   path: '/home',
-                  builder: (context, state) =>
-                      const SafeArea(child: LearningPath()),
+                  builder: (context, state) => SafeArea(
+                    child: state.uri.queryParameters['superWelcome'] == '1'
+                        ? const SuperWelcomePath()
+                        : const LearningPath(),
+                  ),
                 ),
               ],
             ),
@@ -358,6 +382,16 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
           builder: (context, state) {
             final receipt = ref.read(lessonControllerProvider).receipt;
             return ResultsChainScreen(
+              unlockedScore:
+                  (kIsWeb || defaultTargetPlatform == TargetPlatform.android)
+                  ? ref
+                        .read(scoreUnlockCelebrationProvider)
+                        .take(
+                          completionId: state.pathParameters['completionId']!,
+                          receipt: receipt,
+                          progress: ref.read(learningStateProvider),
+                        )
+                  : null,
               streakGrew: state.uri.queryParameters['streak'] == '1',
               gemsEarned: (receipt?.gems ?? 0) > 0,
               guest: receipt?.guest ?? false,
@@ -497,6 +531,10 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         GoRoute(
           path: '/super',
           builder: (context, state) => const SuperScreen(),
+        ),
+        GoRoute(
+          path: SuperBrandScreen.route,
+          builder: (context, state) => const SuperBrandScreen(),
         ),
         GoRoute(
           path: SuperTrialScreen.route,
@@ -712,7 +750,10 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         ),
         GoRoute(
           path: '/auth/verify',
-          builder: (context, state) => const VerificationScreen(),
+          builder: (context, state) => VerificationScreen(
+            userId: state.uri.queryParameters['userId'],
+            secret: state.uri.queryParameters['secret'],
+          ),
         ),
         GoRoute(path: '/auth/login', redirect: (context, state) => '/login'),
         GoRoute(
@@ -857,7 +898,11 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
     _remindersStarted = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        ref.read(reminderCoordinatorProvider).start(_openFromReminder);
+        ref.read(reminderCoordinatorProvider).start(_openFromReminder).then((
+          _,
+        ) {
+          if (mounted) ref.read(superAccessReminderProvider.notifier).sync();
+        });
       }
     });
   }
@@ -867,6 +912,7 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
     // Resume covers reboots, timezone changes and a new local day.
     if (state == AppLifecycleState.resumed && _remindersStarted) {
       ref.read(reminderCoordinatorProvider).sync();
+      ref.read(superAccessReminderProvider.notifier).sync();
     }
     if (state == AppLifecycleState.resumed &&
         ref.read(appConfigProvider).isApi) {
@@ -894,12 +940,19 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
       snapshotRevisionProvider.select((m) => m['progress'] ?? 0),
       (_, _) => ref.read(reminderCoordinatorProvider).sync(),
     );
+    ref.listen(
+      streakWidgetsProvider,
+      (_, _) => ref.read(reminderCoordinatorProvider).sync(),
+    );
     ref.listen(authControllerProvider.select((s) => s.user?.id), (
       previous,
       next,
     ) {
+      ref.read(lessonActivityCoordinatorProvider).accountChanged(next).ignore();
       if (previous != null && previous != next) {
-        ref.read(reminderCoordinatorProvider).onSignedOut();
+        ref.read(reminderCoordinatorProvider).onSignedOut().then((_) {
+          if (mounted) ref.read(superAccessReminderProvider.notifier).sync();
+        });
       }
     });
   }
@@ -945,10 +998,13 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         _router.go(_location(next.step));
       }
     });
+    ref.watch(superAccessReminderProvider);
     return MaterialApp.router(
       title: 'CocEnglish',
       debugShowCheckedModeBanner: false,
       theme: referenceTheme(),
+      darkTheme: referenceTheme(brightness: Brightness.dark),
+      themeMode: ref.watch(appearanceControllerProvider).themeMode,
       routerConfig: _router,
     );
   }

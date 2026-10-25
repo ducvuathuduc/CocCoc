@@ -258,54 +258,61 @@ class _ScoreInformationScreenState extends ConsumerState<ScoreInformationScreen>
     );
   }
 
-  Future<void> _share(BuildContext context, int score) {
-    _controller.resetCopyFeedback();
-    return showDialog<void>(
-      context: context,
-      builder: (_) => Consumer(
-        builder: (context, ref, _) {
-          final state = ref.watch(scoreInformationProvider);
-          return AlertDialog(
-            scrollable: true,
-            actionsOverflowDirection: VerticalDirection.down,
-            title: const Text('Share English Score'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const ReferenceArt(LearningArt.english, width: 52, height: 40),
-                const SizedBox(height: 12),
-                Text('My English Score is $score.'),
-                if (state.copyError)
-                  const Text(
-                    'Couldn’t copy. Try again.',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                if (state.copied)
-                  const Text(
-                    'Copied',
-                    style: TextStyle(color: LearningColors.green),
-                  ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: state.copyBusy
-                    ? null
-                    : () => ref
-                          .read(scoreInformationProvider.notifier)
-                          .copyScore(score),
-                child: const Text('COPY'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('CLOSE'),
-              ),
+  Future<void> _share(BuildContext context, int score) =>
+      showScoreShareDialog(context, ref, score);
+}
+
+Future<void> showScoreShareDialog(
+  BuildContext context,
+  WidgetRef ref,
+  int score,
+) {
+  ref.read(scoreInformationProvider.notifier).resetCopyFeedback();
+  return showDialog<void>(
+    context: context,
+    builder: (_) => Consumer(
+      builder: (context, ref, _) {
+        final state = ref.watch(scoreInformationProvider);
+        return AlertDialog(
+          scrollable: true,
+          actionsOverflowDirection: VerticalDirection.down,
+          title: const Text('Share English Score'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const ReferenceArt(LearningArt.english, width: 52, height: 40),
+              const SizedBox(height: 12),
+              Text('My English Score is $score.'),
+              if (state.copyError)
+                const Text(
+                  'Couldn’t copy. Try again.',
+                  style: TextStyle(color: Colors.red),
+                ),
+              if (state.copied)
+                const Text(
+                  'Copied',
+                  style: TextStyle(color: LearningColors.green),
+                ),
             ],
-          );
-        },
-      ),
-    );
-  }
+          ),
+          actions: [
+            TextButton(
+              onPressed: state.copyBusy
+                  ? null
+                  : () => ref
+                        .read(scoreInformationProvider.notifier)
+                        .copyScore(score),
+              child: const Text('COPY'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('CLOSE'),
+            ),
+          ],
+        );
+      },
+    ),
+  );
 }
 
 class _ExampleBubble extends ConsumerWidget {

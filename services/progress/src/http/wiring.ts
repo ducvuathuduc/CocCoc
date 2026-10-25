@@ -4,6 +4,7 @@
 // withRequestScope (./scope.ts) supplies path parameters and the Idempotency-Key.
 // Scheduler ticks (/internal/jobs/*) are signed by the 'scheduler' (or maintainer) key.
 import { jobRoute } from '../../../shared/src/job-tick.js';
+import { ServiceError } from '../../../shared/src/errors.js';
 import type { FunctionContext, Route, ServiceWiring } from '../../../shared/src/transport.js';
 import { createProgressEventConsumer } from '../application/consume-events.js';
 import {
@@ -53,13 +54,35 @@ export function jobRoutes(store: ProgressPersistence, ports: ProgressJobPorts = 
 export function progressWiring(
   persistence: ProgressPersistence,
   ports: ProgressJobPorts = {},
+  policy: { allowSimulatedCommerce?: boolean } = {},
 ): ServiceWiring {
+  const simulationWriters = new Set([
+    '/v1/billing/purchases',
+    '/internal/billing/notifications',
+    '/v1/gifts',
+    '/v1/gifts/{giftId}/redeem',
+    '/v1/ad-events',
+  ]);
+  const routes = [
+    ...progressRoutes(persistence),
+    ...extendedRoutes(persistence),
+    ...jobRoutes(persistence, ports),
+  ].map((route) => {
+    if (
+      policy.allowSimulatedCommerce === true ||
+      route.method !== 'POST' ||
+      !simulationWriters.has(route.path)
+    )
+      return route;
+    return {
+      ...route,
+      async handle() {
+        throw new ServiceError('SERVICE_NOT_CONFIGURED');
+      },
+    };
+  });
   return {
-    routes: [
-      ...progressRoutes(persistence),
-      ...extendedRoutes(persistence),
-      ...jobRoutes(persistence, ports),
-    ],
+    routes,
     eventConsumer: createProgressEventConsumer(persistence),
   };
 }

@@ -1,5 +1,7 @@
 # Service catalog and operational contracts
 
+2026-10-25 runtime amendment: [ADR-0018](adr/0018-container-event-cache-runtime.md) approves Docker API/worker processes for the same three business owners plus RabbitMQ/Redis infrastructure. Function deployment descriptions below are the existing baseline and migration fallback, not the only future entrypoints. Appwrite Auth remains the managed identity dependency by human choice; the [Descope evaluation](adr/draft-0019-descope-identity.md) is closed without adoption.
+
 All API operation ownership is in [OpenAPI](../api/openapi.yaml). Data ownership is in [DATA_MODEL](../data/DATA_MODEL.md). Common limits below are normative.
 
 | Service | Business responsibility / owned data | APIs / events | Dependencies | Deployment / scale | Tests / telemetry |

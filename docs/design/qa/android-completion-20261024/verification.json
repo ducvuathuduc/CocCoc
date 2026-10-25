@@ -1,0 +1,228 @@
+{
+  "date": "2026-10-24",
+  "scope": "Android non-payment local implementation and emulator acceptance",
+  "status": "implemented and locally verified within documented source/device/cloud limits",
+  "billing": "unchanged internal demo; no real Play Billing",
+  "cloudMutation": false,
+  "backend": {
+    "command": "pnpm backend:verify",
+    "passed": 179,
+    "failed": 0,
+    "skipped": 12
+  },
+  "flutterFull": {
+    "command": "pnpm verify",
+    "formatChanged": 0,
+    "analyzerIssues": 0,
+    "passed": 1124,
+    "failed": 273,
+    "newFailedCaseNames": [],
+    "baselineFailureCount": 274,
+    "baselineResolved": 1,
+    "goldensUpdated": false,
+    "caveat": "Run before final shell dark-source correction; targeted verification follows that correction."
+  },
+  "localGates": {
+    "passed": [
+      "contracts:check",
+      "api:lint",
+      "schema:plan",
+      "schema:test",
+      "seed:check",
+      "blueprint:check",
+      "audit:check",
+      "backend:smoke",
+      "dev:smoke"
+    ],
+    "note": "Blueprint and audit rechecked after final source/QA updates.",
+    "finalDocsBlueprint": "PASS",
+    "finalDocsAudit": "PASS"
+  },
+  "androidAcceptance": {
+    "device": "PRM392_API34_Lite / emulator-5554 / API 34 x86_64",
+    "command": "flutter drive -d emulator-5554 --driver test_driver/integration_driver.dart --target integration_test/android_completion_test.dart --dart-define=ENABLE_MASCOT_MOTION=false",
+    "result": "PASS",
+    "screenshots": [
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-chest-common.png",
+        "bytes": 140972,
+        "sha256": "d35ca20a38bcb7741c95d89fd81109bb9f79c18503ffacab0a2e9eb3d2b40cc9"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-chest-epic.png",
+        "bytes": 183473,
+        "sha256": "0e929f05274c4bbd586e93e206094454d88f1abe47916a1eac03b1ccbec11af2"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-chest-mega.png",
+        "bytes": 184773,
+        "sha256": "183bb3927d2aa34922b515bcc90497dfb44dada3b76411dfe02efcac669b5373"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-chest-motion.png",
+        "bytes": 150962,
+        "sha256": "201ee061679800cb72dfc425fd49ac033eeea83810fb061dcb9f5fdf51e09488"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-chest-rare.png",
+        "bytes": 129251,
+        "sha256": "dca345c0b5b7619116abedd89f96ac8272bfbde1f4b1f65c8f990cf93d6cf221"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-chest-reward.png",
+        "bytes": 198521,
+        "sha256": "73a4c10989fbd0d50181a51ebb563dc418d69693c0840afb6e3ae019dafced32"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-dark-dialog.png",
+        "bytes": 86768,
+        "sha256": "6c2cd8e7618e037d74ee6fdfdee8bc6ca118239bea5be736442b0bc0e982515e"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-home-dark.png",
+        "bytes": 199703,
+        "sha256": "fcc853547410aab8f78157afd4451cb487c2624136adc92e0adde424cd9498da"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-settings-dark.png",
+        "bytes": 63804,
+        "sha256": "dc6cfecc7a8d55b65769aadaa3c0cf000a0b6531fb8441c925397b72e7a90827"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-settings-light.png",
+        "bytes": 69261,
+        "sha256": "d2aa5382ed89c81822fd573af155f6638c987d0b67b306925dc23b98831137a5"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-all-plans.png",
+        "bytes": 159686,
+        "sha256": "6d3165d652a861aa1d1d70ca18b8f32099d918a9bd265efbe0240ce43c806f59"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-brand.png",
+        "bytes": 207578,
+        "sha256": "d507bc77eb1fccb8f1dbcf38a50997ac0e38ccc9375c0f0a1f55b928a9bda066"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-coachmark.png",
+        "bytes": 186736,
+        "sha256": "3d078af99e630a8677bb540a18d54a859ba427019974fcc4b8ca7bd64eedf686"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-comparison.png",
+        "bytes": 173623,
+        "sha256": "ed23b88da2224a098283de1bf80d4092371f3e114d88ad2b934e4617e86e2b47"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-confirmed.png",
+        "bytes": 224011,
+        "sha256": "929c34aeb6d2b04386e2e0c2e0f8123d473435278296a0564eb4075dde4c9d85"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-plans.png",
+        "bytes": 149137,
+        "sha256": "1bf71f9347ae790d4e0539f9f12bc43d5dfe8d31441f606dbe0bcdd5422e58b5"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-reminder.png",
+        "bytes": 275055,
+        "sha256": "c23489083d61d14ad3a842aa7a2f5b772808fad727edbb2a684316a3081207a6"
+      },
+      {
+        "path": "docs/design/qa/android-completion-20261024/android-completion-super-welcome.png",
+        "bytes": 133940,
+        "sha256": "21cbd72807d71ef6a2c6973b46200b8c8f6323cfcf866e0a4f3861853a715413"
+      }
+    ],
+    "testCases": 2,
+    "screenshotCount": 18
+  },
+  "riveAcceptance": {
+    "command": "flutter drive --no-pub -d emulator-5554 --driver test_driver/integration_driver.dart --target integration_test/motion_test.dart",
+    "result": "PASS",
+    "poses": [
+      "idle",
+      "wave",
+      "pencil",
+      "celebrate",
+      "reading"
+    ]
+  },
+  "limits": [
+    "No physical Android device or 60 fps performance acceptance.",
+    "Rare/Epic/Mega source art is corroborating iOS material adapted to Android; original Android intermediate timing is unavailable.",
+    "No authenticated live Appwrite or hosted new chest endpoint proof.",
+    "Existing Windows golden differences and Rive host diagnostics remain unresolved."
+  ],
+  "builds": [
+    {
+      "command": "flutter build web --no-pub --release --no-wasm-dry-run --dart-define=USE_MOCK_AUTH=true --dart-define=RIVE_NATIVE_WASM_HOST=rive/",
+      "result": "PASS",
+      "artifact": {
+        "path": "apps/mobile/build/web/main.dart.js",
+        "bytes": 6097390,
+        "sha256": "abb062d9a67c4b55e89110040ca2b50f3e1d12c2f99a870724c2ab2ab58a2849"
+      },
+      "note": "Optional Wasm dry run already passed earlier in this slice; final delivery targets JavaScript."
+    },
+    {
+      "command": "flutter build apk --debug --dart-define=USE_MOCK_AUTH=true",
+      "result": "PASS",
+      "artifact": {
+        "path": "apps/mobile/build/app/outputs/flutter-apk/app-debug.apk",
+        "bytes": 301198636,
+        "sha256": "33c685aed3c982746815911fe21b0087877af57272665bff06874e9c9a1ee988"
+      },
+      "entrypoint": "lib/main.dart",
+      "note": "Debug preview APK with mock auth/data and motion enabled; integration-test entrypoint is not packaged as the launch app."
+    }
+  ],
+  "verificationDate": "2026-10-25",
+  "shellRefinement": {
+    "functionalCommand": "flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false test/dark_shell_source_test.dart test/appearance_controller_test.dart test/dark_mode_setting_test.dart test/dark_mode_source_surfaces_test.dart test/dark_mode_secondary_surfaces_test.dart test/app_shell_sprint_test.dart --name=\"dark shell|appearance|dark|theme|top stats|tab artwork|rapid\"",
+    "passed": 13,
+    "failed": 0,
+    "analyzerCommand": "flutter analyze --no-pub lib/features/shell/presentation/app_bottom_nav.dart lib/features/shell/presentation/app_stats_bar.dart lib/features/learning/presentation/learning_path.dart test/dark_shell_source_test.dart integration_test/android_completion_test.dart",
+    "analyzerIssues": 0,
+    "sourceAssetRecords": 22,
+    "assetHashMismatches": 0,
+    "note": "Source atlas and reduced-motion Duo remove only edge-connected crop backgrounds; light styling and original animation remain intact."
+  },
+  "ownerIsolation": {
+    "command": "node --test services/progress/test/chest-upgrade.test.mjs",
+    "passed": 5,
+    "failed": 0,
+    "coverage": [
+      "foreign JWT cannot claim completed quest of another user",
+      "client userId rejected",
+      "concurrent and repeated claim gives one wallet credit",
+      "historical ledger amount retained",
+      "missing/invalid ledger fails closed",
+      "incomplete and client-supplied outcomes rejected"
+    ]
+  },
+  "browserPreview": {
+    "url": "http://127.0.0.1:4173/preview.html",
+    "mockAuth": true,
+    "mockData": true,
+    "httpStatus": 200,
+    "servedBundleHashMatchesBuild": true,
+    "capture": {
+      "path": "docs/design/qa/android-completion-20261024/web-home-dark.png",
+      "bytes": 27132,
+      "sha256": "276ac0a1cdf448e301a3aa6fcefd0bb684fbb05e9fba00098752c5fa09480ca8"
+    },
+    "reloadedAfterFinalBuild": true
+  },
+  "completedDate": "2026-10-25",
+  "androidMainLaunch": {
+    "installed": true,
+    "mainActivityLaunched": true,
+    "processObserved": true,
+    "runtimeFatalErrorObserved": false,
+    "device": "emulator-5554",
+    "mockPreview": true
+  },
+  "diffCheck": "PASS",
+  "lockfilesChanged": false
+}

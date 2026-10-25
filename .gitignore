@@ -41,6 +41,7 @@ build/
 .amp/portals/*
 coverage/
 **/coverage/
+apps/mobile/test/**/failures/
 tmp/
 **/tmp/
 

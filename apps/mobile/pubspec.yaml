@@ -11,6 +11,8 @@ dependencies:
   audioplayers: 6.5.1
   crypto: 3.0.7
   cupertino_icons: 1.0.9
+  drift: 2.35.1
+  drift_flutter: 0.3.1
   flutter:
     sdk: flutter
   flutter_riverpod: 3.4.3
@@ -40,6 +42,32 @@ flutter:
   assets:
     # Original illustration ROIs for English journeys, Stories, Max and Timer Boost.
     - assets/reference_art/
+    - assets/reference_art/gap-super-brand.png
+    - assets/reference_art/android-super-offer.png
+    - assets/reference_art/android-super-02.png
+    - assets/reference_art/android-super-03.png
+    - assets/reference_art/android-super-04.png
+    - assets/reference_art/android-super-08.png
+    - assets/reference_art/android-super-09.png
+    - assets/reference_art/android-super-10.png
+    - assets/reference_art/android-super-11.png
+    - assets/reference_art/android-super-gradient.png
+    - assets/reference_art/android-dark-04.png
+    - assets/reference_art/android-dark-shell-icons.png
+    - assets/reference_art/path-duo-transparent.png
+    - assets/reference_art/android-dark-06.png
+    - assets/reference_art/android-dark-09.png
+    - assets/reference_art/android-dark-12.png
+    - assets/reference_art/android-dark-13.png
+    - assets/reference_art/android-dark-14.png
+    - assets/reference_art/energy-icon-transparent.png
+    - assets/reference_art/android-chest-common.png
+    - assets/reference_art/chest-rare-source.png
+    - assets/reference_art/chest-epic-source.png
+    - assets/reference_art/chest-reward-source.png
+    - assets/reference_art/chest-mega-source.png
+    - assets/reference_art/android-score-unlock.png
+    - assets/reference_art/android-promo-shop.png
     - assets/reference_art/course-remove.png
     - assets/reference_art/profile-foreign-source.png
     - assets/reference_art/league-ranking-source.png

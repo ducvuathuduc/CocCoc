@@ -6,6 +6,8 @@ import '../../notifications/domain/notification_models.dart';
 /// range, an Android channel and the Settings > Notifications item that
 /// gates it (FR-NOTIFY-001).
 enum ReminderKind {
+  superAccess(800, ReminderChannel.reminders, 'practice'),
+
   /// Daily practice reminder at the user's chosen (or smart) time.
   daily(100, ReminderChannel.reminders, 'practice'),
 
@@ -54,8 +56,9 @@ abstract final class ReminderLinks {
   static const lesson = '/home';
   static const streak = '/streak';
   static const league = '/league';
+  static const superAccess = '/subscription';
 
-  static const all = {lesson, streak, league};
+  static const all = {lesson, streak, league, superAccess};
 
   /// Accepts only known in-app locations; anything else opens the path.
   static String sanitize(String? payload) =>

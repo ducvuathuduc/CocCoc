@@ -18,18 +18,16 @@ class ApiAccountRepository implements AccountRepository {
     required this.api,
     required this.auth,
     required this.content,
-    this.onRegister,
-    this.onDelete,
+    this.onDeletionAccepted,
     this.createAccount,
   });
 
   final ApiEndpoints api;
   final AuthSessionRepository? auth;
-  final AccountRepository content;
+  final AccountContent content;
 
-  /// Mirrors the result into local UI state (preview controller).
-  final String? Function(String name, String email)? onRegister;
-  final void Function()? onDelete;
+  /// Updates the identity-scoped receipt state after server acceptance only.
+  final void Function()? onDeletionAccepted;
   final Future<void> Function(String email, String password, String name)?
   createAccount;
 
@@ -51,7 +49,13 @@ class ApiAccountRepository implements AccountRepository {
         // The root session preparation uses a fresh, identity-scoped client.
         return null;
       }
-      await auth?.signUp(profile.email, profile.password, profile.displayName);
+      final session = auth;
+      if (session == null) return 'This feature isn’t connected yet.';
+      await session.signUp(
+        profile.email,
+        profile.password,
+        profile.displayName,
+      );
       final created = await api.initializeProfile();
       final nickname = profile.displayName.length > 40
           ? profile.displayName.substring(0, 40)
@@ -64,7 +68,7 @@ class ApiAccountRepository implements AccountRepository {
           ),
         );
       }
-      return onRegister?.call(profile.displayName, profile.email);
+      return null;
     } on AuthFailure catch (error) {
       return error.message;
     } on ApiException catch (error) {
@@ -76,7 +80,7 @@ class ApiAccountRepository implements AccountRepository {
   Future<String?> requestDeletion() async {
     try {
       await api.deleteAccount(const wire.DeletionRequest());
-      onDelete?.call();
+      onDeletionAccepted?.call();
       return null;
     } on ApiException catch (error) {
       return error.userMessage;
@@ -91,7 +95,7 @@ class ApiSettingsRepository implements SettingsRepository {
   ApiSettingsRepository({required this.api, required this.content});
 
   final ApiEndpoints api;
-  final SettingsRepository content;
+  final SettingsContent content;
 
   @override
   SchoolsContent get schools => content.schools;
@@ -100,7 +104,7 @@ class ApiSettingsRepository implements SettingsRepository {
   List<SocialAccount> get socialAccounts => content.socialAccounts;
 
   @override
-  Set<String> get connectedSocial => content.connectedSocial;
+  Set<String> get connectedSocial => const {};
 
   @override
   FeedbackContent get feedback => content.feedback;
@@ -129,8 +133,14 @@ class ApiSettingsRepository implements SettingsRepository {
   }
 
   @override
-  Future<void> setSocialConnected(String id, {required bool connected}) =>
-      content.setSocialConnected(id, connected: connected);
+  Future<void> setSocialConnected(String id, {required bool connected}) async {
+    // Managed identity linking needs an admitted Appwrite capability. No local
+    // switch can manufacture an OAuth identity when that capability is absent.
+    throw const ApiException(
+      code: 'NOT_CONFIGURED',
+      message: 'Identity linking unavailable.',
+    );
+  }
 
   @override
   Future<void> sendFeedback(String topic, String message) async {

@@ -39,10 +39,12 @@ node tools/content/lint-course.mjs            # v2 content lint (intro order, gr
 
 ## Media
 
-Audio (`a.<unit>.<item>.n` normal / `.s` 0.75× slow) and image (`i.<unit>.<word>`) asset keys and
-metadata are present, but the media files are **not produced yet** (P7-AUDIO-001): their `sha256`
-values are deterministic placeholders. Every audio prompt has an authored `nonAudioAlternative` and
-every speech item a `nonSpeechAlternative`, so lessons work without media.
+The committed v2 includes 1,650 AAC files and 110 WebP files (14,532,843 bytes).
+`node content/tools/check-content.mjs` verifies all 14,888 lesson and placement asset references:
+safe paths, consistent metadata, actual bytes, SHA-256 and container signatures. It rejects missing,
+tampered and placeholder files. Audio decoding/playback still requires a device check.
+Every audio prompt has an authored `nonAudioAlternative` and every speech item a
+`nonSpeechAlternative`, so unavailable media has a defined fallback.
 
 ## Publishing
 

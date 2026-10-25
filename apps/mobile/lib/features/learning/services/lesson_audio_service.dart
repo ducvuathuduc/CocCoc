@@ -4,7 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../progress/application/preview_controller.dart';
+import '../../account/application/account_preferences_controller.dart';
 import '../data/lesson_audio_io_stub.dart'
     if (dart.library.io) '../data/lesson_audio_io.dart'
     as platform;
@@ -190,6 +190,6 @@ final lessonAudioServiceProvider = Provider<LessonAudioService>((ref) {
   return LessonAudioService(
     store: ref.watch(lessonAudioStoreProvider),
     output: ref.watch(lessonSoundOutputProvider),
-    effectsEnabled: () => ref.read(previewControllerProvider).sound,
+    effectsEnabled: () => ref.read(soundEffectsEnabledProvider),
   );
 });

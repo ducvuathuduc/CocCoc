@@ -1,0 +1,138 @@
+{
+  "retrieved": "2026-10-24",
+  "records": [
+    {
+      "id": "android-super-offer",
+      "file": "apps/mobile/assets/reference_art/android-super-offer.png",
+      "source": "docs/design/references/android-free-20261024/mobbin-super-01.webp",
+      "url": "https://mobbin.com/explore/flows/2b062804-06ea-48be-898e-e77c163bfc72",
+      "sourceSha256": "179571647ecab84a8531d2d668aabd603ab2d44e629f24a2375e23a9f43cb5cb",
+      "assetSha256": "70006d92649a3b6c1e177da4ac3497ca98ef560dca278783b079ddb2724123de",
+      "width": 360,
+      "height": 900,
+      "transformation": "lossless PNG decoding; no illustration redraw",
+      "crops": [
+        {
+          "name": "badge",
+          "rect": [
+            268,
+            255,
+            72,
+            31
+          ]
+        }
+      ],
+      "adaptations": [
+        "English course copy",
+        "Configured 7-day offer; no 14-day claim"
+      ]
+    },
+    {
+      "id": "android-score-unlock",
+      "file": "apps/mobile/assets/reference_art/android-score-unlock.png",
+      "source": "docs/design/references/android-free-20261024/score-unlock.jpg",
+      "url": "https://bestlanguageapp.com/reviews/duolingo",
+      "sourceSha256": "70390722d544b8ea1cfe96b43c290bf60472d192bf68ac3fa36f8b6ad6dc5655",
+      "assetSha256": "30e4cb604e9c81629d7f4b0e94d9c32dc8572f85db927457ffdec3b95f05b778",
+      "width": 640,
+      "height": 1360,
+      "transformation": "lossless PNG decoding; no illustration redraw",
+      "crops": [
+        {
+          "name": "top-background-and-Duo",
+          "rect": [
+            0,
+            0,
+            640,
+            650
+          ]
+        },
+        {
+          "name": "lower-left-cloud",
+          "rect": [
+            0,
+            945,
+            120,
+            175
+          ]
+        },
+        {
+          "name": "lower-right-cloud",
+          "rect": [
+            550,
+            980,
+            90,
+            140
+          ]
+        }
+      ],
+      "adaptations": [
+        "Native English course text and existing English flag",
+        "Source cloud crops composite with BlendMode.lighten over a source-sampled gradient; files remain unchanged",
+        "Existing demo score projection only; API unlock trigger absent",
+        "Existing share COPY fallback; no native share-sheet claim"
+      ]
+    },
+    {
+      "id": "gap-super-brand",
+      "file": "apps/mobile/assets/reference_art/gap-super-brand.png",
+      "source": "apps/mobile/assets/reference_art/gap-super-brand.png",
+      "url": "https://storage.gummble.com/prod/content/app_screens/249c085c-f3c7-4db8-989e-77f9512baf93.png",
+      "sourceSha256": "c304365a725b9d4248d52c12bba1c80fa8e729b926ed8c056c4f54d5771e5094",
+      "assetSha256": "c304365a725b9d4248d52c12bba1c80fa8e729b926ed8c056c4f54d5771e5094",
+      "width": 1179,
+      "height": 2556,
+      "transformation": "byte-for-byte copy",
+      "crops": [
+        {
+          "name": "wordmark",
+          "rect": [
+            190,
+            1030,
+            800,
+            430
+          ]
+        },
+        {
+          "name": "muted-glyph",
+          "rect": [
+            1040,
+            248,
+            100,
+            74
+          ]
+        }
+      ],
+      "adaptations": [
+        "Archived iOS ordering only; not inserted before Android offer"
+      ]
+    },
+    {
+      "id": "android-promo-shop",
+      "file": "apps/mobile/assets/reference_art/android-promo-shop.png",
+      "source": "docs/design/references/android-free-20261024/mobbin-promo-01.webp",
+      "url": "https://mobbin.com/explore/flows/098f538c-5fa6-4506-8164-e71764f66d1a",
+      "sourceSha256": "07dea455216cf6d314a669868b3ab9bf187fde10596cd65ea288ffd8efb9943d",
+      "assetSha256": "d5909c19397e81bbff9c66650f35679005f8d18d97526658e4b6c6eec2596030",
+      "width": 360,
+      "height": 900,
+      "transformation": "lossless PNG decoding; original source unchanged",
+      "crops": [
+        {
+          "name": "promo-ticket",
+          "rect": [
+            34,
+            631,
+            78,
+            78
+          ]
+        }
+      ],
+      "adaptations": [
+        "Native English text and actions",
+        "Existing account entitlement controls Max-only banner visibility",
+        "Card grows for 48 px touch target and larger text; original red ticket bounds x37..108,y634..705 are preserved"
+      ]
+    }
+  ]
+}

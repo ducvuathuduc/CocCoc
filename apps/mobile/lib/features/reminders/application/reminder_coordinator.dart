@@ -12,6 +12,8 @@ import '../../notifications/application/notification_settings_controller.dart';
 import '../../onboarding/application/onboarding_controller.dart';
 import '../../progress/data/progress_snapshot.dart';
 import '../../progress/data/social_repository.dart';
+import '../../progress/application/streak_widgets_controller.dart';
+import '../../progress/domain/streak_widget.dart';
 import '../data/reminder_store.dart';
 import '../domain/reminder_models.dart';
 import '../domain/reminder_planner.dart';
@@ -175,6 +177,10 @@ class ReminderCoordinator {
     var local = await _store.load();
     final facts = _ref.read(reminderFactsProvider)();
     final prefs = _ref.read(notificationSettingsControllerProvider);
+    if (!prefs.ready) {
+      await _notes.cancel(ReminderPlanner.managedIds);
+      return;
+    }
     final today = _day(now);
     final practicedToday = local.lastPracticeDay == today;
 
@@ -221,6 +227,7 @@ class ReminderCoordinator {
         practicedToday: practicedToday,
         goalMinutes: facts.goalMinutes,
         todayMinutes: local.todayMinutesDay == today ? local.todayMinutes : 0,
+        mood: _ref.read(streakWidgetsProvider),
       ),
     );
   }
@@ -313,6 +320,7 @@ class ReminderCoordinator {
           practicedToday: false,
           goalMinutes: 10,
           todayMinutes: 0,
+          mood: StreakWidgetMood.ready,
         ),
       );
     } catch (error) {

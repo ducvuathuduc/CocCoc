@@ -1,4 +1,5 @@
 import 'package:cocenglish/core/api/client/api_endpoints.g.dart';
+import 'package:cocenglish/core/api/client/api_exception.dart';
 import 'package:cocenglish/features/account/data/account_repository.dart';
 import 'package:cocenglish/features/account/data/api_account_repositories.dart';
 import 'package:cocenglish/features/account/data/settings_repository.dart';
@@ -12,8 +13,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../support/fake_api_transport.dart';
 
-Map<String, Object?> shop({int gems = 900, int timer = 3}) => {
-  'catalogVersion': 'c1',
+Map<String, Object?> shop({
+  int gems = 900,
+  int timer = 3,
+  String catalogVersion = 'c1',
+  String timerItemId = 'timer-boost',
+  bool timerAvailable = true,
+  int? timerOwned,
+}) => {
+  'catalogVersion': catalogVersion,
   'gems': gems,
   'freezeSlots': 1,
   'items': [
@@ -27,17 +35,17 @@ Map<String, Object?> shop({int gems = 900, int timer = 3}) => {
       'available': true,
     },
     {
-      'itemId': 'timer-boost',
+      'itemId': timerItemId,
       'kind': 'TIMER_BOOST',
       'priceGems': 450,
       'maxOwned': 99,
-      'owned': timer,
+      'owned': timerOwned ?? timer,
       'durationMinutes': null,
-      'available': true,
+      'available': timerAvailable,
     },
   ],
   'inventory': [
-    {'itemId': 'timer-boost', 'quantity': timer, 'expiresAt': null},
+    {'itemId': timerItemId, 'quantity': timer, 'expiresAt': null},
   ],
   'asOf': isoNow,
 };
@@ -81,9 +89,16 @@ void main() {
     test('reads wallet, freezes and timer boosts from the server', () async {
       transport.json('GET /base/v1/shop', shop());
       final repo = ApiShopRepository(api);
-      expect(await repo.getWallet(), 900);
-      expect(await repo.getFreezes(), 1);
-      expect(await repo.getTimerBoosts(), 3);
+      final state = await repo.loadShop();
+      expect(state.wallet, 900);
+      expect(state.freezes, 1);
+      expect(state.timerBoosts, 3);
+      expect(state.freezeOffer.price, 200);
+      expect(state.timerBoostOffers.map((offer) => offer.price), [
+        450,
+        2250,
+        6750,
+      ]);
       expect(transport.to('GET /base/v1/shop'), hasLength(1), reason: 'cached');
     });
 
@@ -94,7 +109,11 @@ void main() {
           ..json('GET /base/v1/shop', shop())
           ..json('POST /base/v1/shop/purchases', purchase('timer-boost', 10));
         final repo = ApiShopRepository(api);
-        await repo.buyItem('timer-15', 1);
+        await repo.buyItem(
+          'timer-15',
+          1,
+          commandId: '00000000-0000-4000-8000-000000000099',
+        );
         final bodies = transport
             .to('POST /base/v1/shop/purchases')
             .map(bodyOf)
@@ -116,11 +135,110 @@ void main() {
       },
     );
 
-    test('offers keep the UI catalog', () async {
-      final repo = ApiShopRepository(api);
-      expect(await repo.getTimerBoostOffers(), isNotEmpty);
-      expect(transport.requests, isEmpty);
+    test(
+      'special offers keep approved copy but are locked without a contract',
+      () async {
+        transport.json('GET /base/v1/shop', shop());
+        final repo = ApiShopRepository(api);
+        final state = await repo.loadShop();
+        expect(
+          state.specialOffers.map((offer) => offer.title),
+          contains('Friends Chest'),
+        );
+        expect(state.specialOffers.every((offer) => !offer.available), isTrue);
+        expect(
+          state.specialOffers.every((offer) => offer.actionLabel == 'LOCKED'),
+          isTrue,
+        );
+      },
+    );
+
+    test('partial pack retry reuses every batch idempotency key', () async {
+      transport
+        ..json('GET /base/v1/shop', shop())
+        ..once(
+          'POST /base/v1/shop/purchases',
+          (_) => jsonResponse(purchase('timer-boost', 10)),
+        )
+        ..once(
+          'POST /base/v1/shop/purchases',
+          (_) => jsonResponse(errorEnvelope('INTERNAL_ERROR'), status: 500),
+        )
+        ..once(
+          'POST /base/v1/shop/purchases',
+          (_) => jsonResponse(purchase('timer-boost', 10)),
+        )
+        ..json('POST /base/v1/shop/purchases', purchase('timer-boost', 5));
+      final repo = ApiShopRepository(api, ids: SequenceIds());
+      const command = '00000000-0000-4000-8000-000000000099';
+      await expectLater(
+        repo.buyItem('timer-15', 9999, commandId: command),
+        throwsA(isA<ApiException>()),
+      );
+      await repo.buyItem('timer-15', 9999, commandId: command);
+      final requests = transport.to('POST /base/v1/shop/purchases');
+      expect(requests, hasLength(4));
+      expect(requests.map((request) => request.headers['Idempotency-Key']), [
+        requests[0].headers['Idempotency-Key'],
+        requests[1].headers['Idempotency-Key'],
+        requests[0].headers['Idempotency-Key'],
+        requests[1].headers['Idempotency-Key'],
+      ]);
     });
+
+    test(
+      'partial retry replays frozen bodies before refreshing changed catalog',
+      () async {
+        transport
+          ..once('GET /base/v1/shop', (_) => jsonResponse(shop(timer: 0)))
+          ..json(
+            'GET /base/v1/shop',
+            shop(
+              timer: 99,
+              catalogVersion: 'c2',
+              timerItemId: 'timer-v2',
+              timerAvailable: false,
+              timerOwned: 99,
+            ),
+          )
+          ..once(
+            'POST /base/v1/shop/purchases',
+            (_) => jsonResponse(purchase('timer-boost', 10)),
+          )
+          ..once(
+            'POST /base/v1/shop/purchases',
+            (_) => jsonResponse(errorEnvelope('INTERNAL_ERROR'), status: 500),
+          )
+          ..once(
+            'POST /base/v1/shop/purchases',
+            (_) => jsonResponse(purchase('timer-boost', 10)),
+          )
+          ..json('POST /base/v1/shop/purchases', purchase('timer-boost', 5));
+        final repo = ApiShopRepository(api, ids: SequenceIds());
+        const command = '00000000-0000-4000-8000-000000000099';
+
+        await expectLater(
+          repo.buyItem('timer-15', 9999, commandId: command),
+          throwsA(isA<ApiException>()),
+        );
+        await repo.loadShop(refresh: true);
+        await repo.buyItem('timer-15', 9999, commandId: command);
+
+        final requests = transport.to('POST /base/v1/shop/purchases');
+        expect(requests.map(bodyOf), [
+          {'itemId': 'timer-boost', 'quantity': 10, 'catalogVersion': 'c1'},
+          {'itemId': 'timer-boost', 'quantity': 5, 'catalogVersion': 'c1'},
+          {'itemId': 'timer-boost', 'quantity': 10, 'catalogVersion': 'c1'},
+          {'itemId': 'timer-boost', 'quantity': 5, 'catalogVersion': 'c1'},
+        ]);
+        expect(requests.map((request) => request.headers['Idempotency-Key']), [
+          requests[0].headers['Idempotency-Key'],
+          requests[1].headers['Idempotency-Key'],
+          requests[0].headers['Idempotency-Key'],
+          requests[1].headers['Idempotency-Key'],
+        ]);
+      },
+    );
   });
 
   test('ApiFriendsRepository maps public profiles and pages', () async {
@@ -219,10 +337,6 @@ void main() {
         onRegister: (_, _) => null,
         onDelete: () {},
       ),
-      onRegister: (name, email) {
-        registered.add('$name <$email>');
-        return null;
-      },
     );
 
     test('signs up, initializes and sets the nickname', () async {
@@ -240,7 +354,7 @@ void main() {
         ),
       );
       expect(error, isNull);
-      expect(registered, ['Thành Huỳnh <thanh@cocenglish.test>']);
+      expect(registered, isEmpty, reason: 'API signup never mutates preview');
       expect(bodyOf(transport.to('PATCH /base/v1/me').single), {
         'nickname': 'Thành Huỳnh',
         'expectedRevision': 1,

@@ -21,6 +21,23 @@ final appShellRepositoryProvider = Provider<AppShellRepository>((ref) {
 
 final appStatsProvider = Provider<List<AppStat>>((ref) {
   watchProgressSnapshot(ref);
+  if (ref.watch(appConfigProvider).isApi) {
+    // Real balances come exclusively from the account-scoped snapshot.
+    return ref
+        .watch(appShellRepositoryProvider)
+        .stats(
+          AppShellSnapshot(
+            score: ref.watch(
+              learningStateProvider.select((state) => state.score),
+            ),
+            streak: 0,
+            gems: 0,
+            energy: 0,
+            unlimited: false,
+            streakActive: false,
+          ),
+        );
+  }
   final progress = ref.watch(
     learningStateProvider.select(
       (state) => (state.score, state.streak, state.completedLessons > 0),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
@@ -7,7 +8,9 @@ import 'package:cocenglish/core/api/client/api_operation.dart';
 import 'package:cocenglish/core/api/client/api_transport.dart';
 import 'package:cocenglish/core/api/client/idempotency.dart';
 
-typedef FakeHandler = ApiHttpResponse Function(ApiHttpRequest request);
+typedef FakeHandler = FutureOr<ApiHttpResponse> Function(
+  ApiHttpRequest request,
+);
 
 /// Scriptable in-memory HTTP transport. Routes are matched by
 /// `METHOD /path` (no query); unmatched requests return 404 envelopes.
@@ -78,7 +81,7 @@ final class SequenceIds implements IdGenerator {
 }
 
 ApiClient fakeClient(
-  FakeApiTransport transport, {
+  ApiTransport transport, {
   AccessTokenProvider? tokens,
   IdGenerator? ids,
 }) => ApiClient(

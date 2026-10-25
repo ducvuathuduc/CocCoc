@@ -1,0 +1,74 @@
+name: Container runtime
+on:
+  pull_request:
+    paths:
+      [
+        'services/**',
+        'packages/**',
+        'infra/docker/**',
+        '.dockerignore',
+        'tools/scripts/*runtime*.mjs',
+        'tools/scripts/container-check.mjs',
+        'tools/scripts/backend-check.mjs',
+        'package.json',
+        'pnpm-lock.yaml',
+        '.github/workflows/containers.yml',
+      ]
+  push:
+    paths:
+      [
+        'services/**',
+        'packages/**',
+        'infra/docker/**',
+        '.dockerignore',
+        'tools/scripts/*runtime*.mjs',
+        'tools/scripts/container-check.mjs',
+        'tools/scripts/backend-check.mjs',
+        'package.json',
+        'pnpm-lock.yaml',
+        '.github/workflows/containers.yml',
+      ]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: containers-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  isolated-runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22.23.3
+      - run: npm install --global pnpm@10.15.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm backend:verify
+      - run: pnpm runtime:check
+      - run: node --test tools/tests/runtime-test-env.test.mjs
+      - run: docker compose -f infra/docker/compose.local.yaml config --quiet
+      - run: docker compose -f infra/docker/compose.local.yaml build
+      - run: docker compose -f infra/docker/compose.local.yaml up -d
+      - run: node tools/scripts/container-check.mjs
+      - name: Restart preserves failure-safe composition
+        run: |
+          docker compose -f infra/docker/compose.local.yaml restart
+          node tools/scripts/container-check.mjs
+      - name: Runtime artifact checksums
+        run: sha256sum services/*/dist/{function,http,worker}.mjs > runtime-checksums.txt
+      - name: Collect redacted runtime logs
+        if: always()
+        run: docker compose -f infra/docker/compose.local.yaml logs --no-color > runtime-containers.log
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: isolated-runtime-evidence
+          path: |
+            runtime-checksums.txt
+            runtime-containers.log
+          retention-days: 3
+      - name: Stop disposable containers
+        if: always()
+        run: docker compose -f infra/docker/compose.local.yaml down

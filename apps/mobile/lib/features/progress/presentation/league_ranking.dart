@@ -38,6 +38,7 @@ class LeagueRankingSurface extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     final ranking = ref.watch(leagueRankingProvider);
     final catalog = ref.watch(avatarCatalogProvider).asData?.value;
     final rows = [
@@ -47,17 +48,13 @@ class LeagueRankingSurface extends ConsumerWidget {
           entry: entry,
           avatar: entry.isOwn
               ? ownAvatar
-              : _foreignAvatar(ref, entry.userId, catalog),
+              : _foreignAvatar(ref, entry.userId, catalog, palette),
           onOpenProfile: onOpenProfile,
           onSetStatus: onSetStatus,
         ),
     ];
     final header = _LeagueHeader(onOpenHistory: onOpenHistory);
-    const divider = Divider(
-      height: 2,
-      thickness: 2,
-      color: ReferenceColors.border,
-    );
+    final divider = Divider(height: 2, thickness: 2, color: palette.border);
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -89,14 +86,19 @@ class LeagueRankingSurface extends ConsumerWidget {
     );
   }
 
-  Widget _foreignAvatar(WidgetRef ref, String userId, AvatarCatalog? catalog) {
+  Widget _foreignAvatar(
+    WidgetRef ref,
+    String userId,
+    AvatarCatalog? catalog,
+    ReferencePalette palette,
+  ) {
     final appearance = ref.watch(profileAppearanceProvider(userId));
     if (appearance == null || catalog == null) {
-      return const Icon(Icons.person, color: ReferenceColors.muted, size: 28);
+      return Icon(Icons.person, color: palette.muted, size: 28);
     }
     final display = catalog.profileDisplays[appearance.background];
     final color = display == null
-        ? ReferenceColors.border
+        ? palette.border
         : Color(
             int.parse(
               display.backgroundColor.replaceFirst('#', 'FF'),
@@ -123,49 +125,52 @@ class _LeagueHeader extends StatelessWidget {
   final VoidCallback? onOpenHistory;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 16,
-          runSpacing: 8,
-          children: [
-            Text('Bronze League', style: headingStyle.copyWith(fontSize: 28)),
-            const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.timer_outlined,
-                  color: LearningColors.orange,
-                  size: 25,
-                ),
-                SizedBox(width: 6),
-                Text(
-                  '6 DAYS',
-                  style: TextStyle(
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 16,
+            runSpacing: 8,
+            children: [
+              Text('Bronze League', style: headingStyle.copyWith(fontSize: 28)),
+              const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.timer_outlined,
                     color: LearningColors.orange,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
+                    size: 25,
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        const Text(
-          'Compete with other learners.',
-          style: TextStyle(fontSize: 19, color: ReferenceColors.muted),
-        ),
-        const SizedBox(height: 26),
-        _trophies(),
-      ],
-    ),
-  );
+                  SizedBox(width: 6),
+                  Text(
+                    '6 DAYS',
+                    style: TextStyle(
+                      color: LearningColors.orange,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Compete with other learners.',
+            style: TextStyle(fontSize: 19, color: palette.muted),
+          ),
+          const SizedBox(height: 26),
+          _trophies(),
+        ],
+      ),
+    );
+  }
 
   Widget _trophies() {
     final row = SingleChildScrollView(
@@ -217,11 +222,16 @@ class _LeagueRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void openProfile() => onOpenProfile(entry.userId);
-    final foreground = entry.isOwn ? LearningColors.green : ReferenceColors.ink;
+    final palette = context.referencePalette;
+    final foreground = entry.isOwn ? LearningColors.green : palette.ink;
     final stacked = MediaQuery.textScalerOf(context).scale(19) > 28;
     return Material(
       key: ValueKey('league-row-${entry.userId}'),
-      color: entry.isOwn ? const Color(0xFFD7FFB8) : Colors.white,
+      color: entry.isOwn
+          ? const Color(0xFFD7FFB8)
+          : Theme.of(context).brightness == Brightness.dark
+          ? palette.surface
+          : Colors.white,
       child: Semantics(
         container: true,
         explicitChildNodes: true,

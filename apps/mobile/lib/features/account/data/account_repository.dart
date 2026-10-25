@@ -9,10 +9,12 @@ import 'api_account_repositories.dart';
 
 /// Account boundary for signup + deletion. Swap the API implementation by
 /// overriding [accountRepositoryProvider].
-abstract class AccountRepository {
+abstract interface class AccountContent {
   SignupContent get signupContent;
   DeleteAccountContent get deleteContent;
+}
 
+abstract class AccountRepository implements AccountContent {
   /// Returns null on success, or a user-facing error message.
   Future<String?> createProfile(NewProfile profile);
 
@@ -21,46 +23,59 @@ abstract class AccountRepository {
 }
 
 final accountRepositoryProvider = Provider<AccountRepository>((ref) {
+  if (ref.watch(appConfigProvider).isApi) {
+    // Watching identity retires callbacks from an account which has signed out.
+    ref.watch(authControllerProvider.select((state) => state.user?.id));
+    return ApiAccountRepository(
+      api: ref.watch(apiEndpointsProvider),
+      auth: ref.watch(authSessionRepositoryProvider),
+      content: const BundledAccountContent(),
+      createAccount: (email, password, name) => ref
+          .read(authControllerProvider.notifier)
+          .registerAccount(email, password, name),
+      onDeletionAccepted: () {
+        if (ref.mounted) {
+          ref.read(realDeletionReceiptProvider.notifier).accepted();
+        }
+      },
+    );
+  }
   String? onRegister(String name, String email) => ref
       .read(previewControllerProvider.notifier)
       .saveProfile(name, email, register: true);
   void onDelete() =>
       ref.read(previewControllerProvider.notifier).requestDeletion();
-  final mock = MockAccountRepository(
-    onRegister: onRegister,
-    onDelete: onDelete,
-  );
-  if (!ref.watch(appConfigProvider).isApi) return mock;
-  return ApiAccountRepository(
-    api: ref.watch(apiEndpointsProvider),
-    auth: ref.watch(authSessionRepositoryProvider),
-    content: mock,
-    createAccount: (email, password, name) => ref
-        .read(authControllerProvider.notifier)
-        .registerAccount(email, password, name),
-    onRegister: onRegister,
-    onDelete: onDelete,
-  );
+  return MockAccountRepository(onRegister: onRegister, onDelete: onDelete);
 });
+
+final realDeletionReceiptProvider = NotifierProvider<RealDeletionReceipt, bool>(
+  RealDeletionReceipt.new,
+);
+
+class RealDeletionReceipt extends Notifier<bool> {
+  @override
+  bool build() {
+    ref.watch(authControllerProvider.select((state) => state.user?.id));
+    return false;
+  }
+
+  void accepted() => state = true;
+}
 
 /// Whether a deletion request is pending (drives the "Check your email"
 /// receipt). Mock source: preview state.
 final deletionRequestedProvider = Provider<bool>(
-  (ref) => ref.watch(previewControllerProvider).deletionRequested,
+  (ref) => ref.watch(appConfigProvider).isApi
+      ? ref.watch(realDeletionReceiptProvider)
+      : ref.watch(previewControllerProvider).deletionRequested,
 );
 
-class MockAccountRepository implements AccountRepository {
-  MockAccountRepository({
-    required this.onRegister,
-    required this.onDelete,
-    this.latency = const Duration(milliseconds: 60),
-  });
-  final String? Function(String name, String email) onRegister;
-  final void Function() onDelete;
-  final Duration latency;
+/// Immutable approved presentation content shared by preview and API builds.
+class BundledAccountContent implements AccountContent {
+  const BundledAccountContent();
 
   @override
-  final SignupContent signupContent = const SignupContent(
+  SignupContent get signupContent => const SignupContent(
     promptMessage: 'Don’t lose your progress! Let’s create a profile.',
     promptCreate: 'CREATE PROFILE',
     promptLater: 'LATER',
@@ -89,7 +104,7 @@ class MockAccountRepository implements AccountRepository {
   );
 
   @override
-  final DeleteAccountContent deleteContent = const DeleteAccountContent(
+  DeleteAccountContent get deleteContent => const DeleteAccountContent(
     title: 'Delete Account',
     body:
         'By proceeding, you will delete your Duolingo and Duolingo for '
@@ -115,6 +130,18 @@ class MockAccountRepository implements AccountRepository {
         'on enjoying Duolingo!',
     doneLabel: 'DONE',
   );
+}
+
+class MockAccountRepository extends BundledAccountContent
+    implements AccountRepository {
+  MockAccountRepository({
+    required this.onRegister,
+    required this.onDelete,
+    this.latency = const Duration(milliseconds: 60),
+  });
+  final String? Function(String name, String email) onRegister;
+  final void Function() onDelete;
+  final Duration latency;
 
   @override
   Future<String?> createProfile(NewProfile profile) async {

@@ -262,6 +262,81 @@ void main() {
     expect(await journal.pendingCompletions(), isEmpty);
   });
 
+  test('permanent offline rejection preserves answers for review', () async {
+    final lesson = await repo.loadLesson('node-0');
+    transport.offline = true;
+    await repo.grade(
+      lesson.first,
+      LessonAnswer(selectedId: lesson.first.correctIds.single),
+    );
+    await repo.complete(
+      nodeId: 'node-0',
+      originalCorrect: 1,
+      originalTotal: 1,
+      elapsed: const Duration(minutes: 1),
+      guest: false,
+      placement: false,
+    );
+    final original = (await journal.pendingCompletions()).single;
+    transport
+      ..offline = false
+      ..on(
+        'POST /v1/offline-completions',
+        (_) => jsonResponse(errorEnvelope('CONTENT_STALE'), status: 409),
+      );
+    expect(await repo.syncPending(), 1);
+    expect(await journal.pendingCompletions(), isEmpty);
+    final rejected = await journal.rejectedCompletions();
+    expect(rejected, hasLength(1));
+    expect(rejected.single.reasonCode, 'CONTENT_STALE');
+    expect(rejected.single.payload, original);
+    expect(await repo.syncPending(), 0);
+    expect(transport.to('POST /v1/offline-completions'), hasLength(1));
+  });
+
+  test(
+    'invalid HTTP receipt preserves the exact offline retry operation',
+    () async {
+      final lesson = await repo.loadLesson('node-0');
+      transport.offline = true;
+      await repo.grade(
+        lesson.first,
+        LessonAnswer(selectedId: lesson.first.correctIds.single),
+      );
+      await repo.complete(
+        nodeId: 'node-0',
+        originalCorrect: 1,
+        originalTotal: 1,
+        elapsed: const Duration(minutes: 1),
+        guest: false,
+        placement: false,
+      );
+      final original = (await journal.pendingCompletions()).single;
+      transport
+        ..offline = false
+        ..once(
+          'POST /v1/offline-completions',
+          (_) => jsonResponse(<String, Object?>{}),
+        )
+        ..json('POST /v1/offline-completions', {
+          ...completion(),
+          'source': 'OFFLINE',
+        });
+      expect(await repo.syncPending(), 0);
+      expect((await journal.pendingCompletions()).single, original);
+      expect(await journal.rejectedCompletions(), isEmpty);
+      expect(await repo.syncPending(), 1);
+      expect(await journal.pendingCompletions(), isEmpty);
+      final requests = transport.to('POST /v1/offline-completions');
+      expect(requests, hasLength(2));
+      expect(bodyOf(requests.first), bodyOf(requests.last));
+      expect(
+        requests.first.headers['Idempotency-Key'],
+        requests.last.headers['Idempotency-Key'],
+      );
+    },
+  );
+
   test('complete commits and reports server-credited XP', () async {
     transport
       ..json('POST /v1/sessions/sess-1/complete', completion())

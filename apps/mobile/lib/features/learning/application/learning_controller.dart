@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/api/client/idempotency.dart';
 import '../../../core/cache/lesson_journal.dart';
+import '../../../core/cache/lesson_journal_platform.dart';
 import '../../../core/config/app_config.dart';
 import '../../auth/application/auth_controller.dart';
 import '../data/api_learning_repository.dart';
@@ -26,8 +29,19 @@ final learningRepositoryProvider = Provider<LearningRepository>((ref) {
 /// Durable lesson journal, namespaced per signed-in user so one account never
 /// sees another's queued answers.
 final lessonJournalProvider = Provider<LessonJournal>((ref) {
+  final apiMode = ref.watch(appConfigProvider).isApi;
   final user = ref.watch(authControllerProvider.select((s) => s.user?.id));
-  return PreferencesLessonJournal(namespace: user ?? 'anonymous');
+  if (!apiMode) {
+    return PreferencesLessonJournal(namespace: user ?? 'anonymous');
+  }
+  if (user == null) {
+    return const UnavailableLessonJournal(JournalFailure.accountRequired);
+  }
+  final journal = createDurableLessonJournal(namespace: user);
+  if (journal is ClosableLessonJournal) {
+    ref.onDispose(() => unawaited(journal.close()));
+  }
+  return journal;
 });
 
 final learningStateProvider =

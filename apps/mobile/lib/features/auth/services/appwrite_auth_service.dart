@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/config/app_config.dart';
 import '../domain/auth_state.dart';
+import '../domain/email_verification.dart';
 
 class AppwriteAuthServiceException implements Exception {
   const AppwriteAuthServiceException(this.message);
@@ -16,6 +17,7 @@ class AppwriteAuthService {
   AppwriteAuthService._({
     required this._account,
     required this.recoveryUrl,
+    required this.verificationUrl,
     required this.googleEnabled,
     required this.facebookEnabled,
     required this.appleEnabled,
@@ -27,6 +29,7 @@ class AppwriteAuthService {
   /// Builds the Account client for [config]'s public endpoint and project.
   factory AppwriteAuthService.fromConfig(AppConfig config) {
     const recoveryUrl = String.fromEnvironment('APPWRITE_RECOVERY_URL');
+    const verificationUrl = String.fromEnvironment('APPWRITE_VERIFICATION_URL');
     const googleEnabled = bool.fromEnvironment('APPWRITE_GOOGLE_ENABLED');
     const facebookEnabled = bool.fromEnvironment('APPWRITE_FACEBOOK_ENABLED');
     const appleEnabled = bool.fromEnvironment('APPWRITE_APPLE_ENABLED');
@@ -45,6 +48,7 @@ class AppwriteAuthService {
     return AppwriteAuthService._(
       account: account,
       recoveryUrl: recoveryUrl,
+      verificationUrl: verificationUrl,
       googleEnabled: googleEnabled,
       facebookEnabled: facebookEnabled,
       appleEnabled: appleEnabled,
@@ -56,9 +60,11 @@ class AppwriteAuthService {
   factory AppwriteAuthService.withAccount(
     Account? account, {
     String recoveryUrl = '',
+    String verificationUrl = '',
   }) => AppwriteAuthService._(
     account: account,
     recoveryUrl: recoveryUrl,
+    verificationUrl: verificationUrl,
     googleEnabled: false,
     facebookEnabled: false,
     appleEnabled: false,
@@ -79,6 +85,7 @@ class AppwriteAuthService {
 
   final Account? _account;
   final String recoveryUrl;
+  final String verificationUrl;
   final bool googleEnabled;
   final bool facebookEnabled;
   final bool appleEnabled;
@@ -161,6 +168,58 @@ class AppwriteAuthService {
     }
     try {
       await account.createRecovery(email: email.trim(), url: recoveryUrl);
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  Future<EmailVerificationStatus> readEmailVerification() async {
+    final account = _configuredAccount();
+    try {
+      final user = await account.get();
+      return EmailVerificationStatus(
+        userId: user.$id,
+        email: user.email,
+        verified: user.emailVerification,
+      );
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  Future<void> sendEmailVerification() async {
+    final account = _configuredAccount();
+    final uri = Uri.tryParse(verificationUrl);
+    if (uri == null ||
+        uri.scheme != 'https' ||
+        uri.host.isEmpty ||
+        uri.userInfo.isNotEmpty ||
+        uri.hasQuery ||
+        uri.hasFragment) {
+      throw const AppwriteAuthServiceException(configurationMessage);
+    }
+    try {
+      await account.createEmailVerification(url: verificationUrl);
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  Future<EmailVerificationStatus> completeEmailVerification(
+    String userId,
+    String secret,
+  ) async {
+    final account = _configuredAccount();
+    if (userId.trim().isEmpty || secret.trim().isEmpty) {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+    final before = await readEmailVerification();
+    if (before.userId != userId) {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+    try {
+      await account.updateEmailVerification(userId: userId, secret: secret);
+      return await readEmailVerification();
     } on Object {
       throw const AppwriteAuthServiceException(requestMessage);
     }

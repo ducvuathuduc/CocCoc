@@ -1,0 +1,1425 @@
+{
+  "retrieved": "2026-10-24",
+  "purpose": "Original source references; archived cohorts are not evidence of a universal current rollout.",
+  "sources": [
+    {
+      "id": "lazyweb",
+      "page": "https://www.lazyweb.com/company/duolingo",
+      "platform": "iOS (observed status bar; not Android evidence)",
+      "captureDate": "2026-08-02",
+      "appVersion": null,
+      "screenCount": 5,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "lazyweb-01.png",
+          "alt": "Duolingo app screenshot 1",
+          "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700093957_03_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-feed-1785691182.png",
+          "width": 1206,
+          "height": 2622,
+          "sha256": "575d4c2147a588629dacddc2014b7166dc3da70ddbdc7fffac4116741951b45f",
+          "timestamp": null
+        },
+        {
+          "index": 2,
+          "file": "lazyweb-02.png",
+          "alt": "Duolingo app screenshot 2",
+          "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700093343_02_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-profile-1785691180.png",
+          "width": 1206,
+          "height": 2622,
+          "sha256": "8e793de020a13f6846502d9635688743d375cae64c27538dfc517b1464a72397",
+          "timestamp": null
+        },
+        {
+          "index": 3,
+          "file": "lazyweb-03.png",
+          "alt": "Duolingo app screenshot 3",
+          "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700092851_01_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-leagues-1785691166.png",
+          "width": 1206,
+          "height": 2622,
+          "sha256": "0bd950dde8d2c7bf8c4821904788b0292d5465f357120795774c09eb90a6be3e",
+          "timestamp": null
+        },
+        {
+          "index": 4,
+          "file": "lazyweb-04.png",
+          "alt": "Duolingo app screenshot 4",
+          "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700092387_00_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-quests-1785691164.png",
+          "width": 1206,
+          "height": 2622,
+          "sha256": "e8b3c86f6b631883f21644931193ac63b57c478c45f492bc6adbeca273c93dc1",
+          "timestamp": null
+        },
+        {
+          "index": 5,
+          "file": "lazyweb-05.png",
+          "alt": "Duolingo app screenshot 5",
+          "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/locked_feature_paywall/compare/2026-08-02/1785699963342_05_com.duolingo.DuolingoMobile-20260802T165650Z-cap-plan-picker-1785691461.png",
+          "width": 1206,
+          "height": 2622,
+          "sha256": "bea80674c98aa1693d4d6e798080a5afba6df462949d4e3a3d3c5338536e6c9f",
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "id": "mobbin-dark-mode",
+      "page": "https://mobbin.com/explore/flows/7f7f386a-bb6b-4835-8490-ada04ebc4d67",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 15,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-dark-mode-01.webp",
+          "alt": "Screen 1 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.ZXz8Zr-ynb0v5k_X.8wyAXvGyRDfK93YZB5_6Tmmi-dzdnrhkgKvQLBIctyZHOECOJyLQle6xbg_1JRy3u_sZwI_NeuWjw0KhcPMfsZiCOZGiDDUrwcrUH0WTTzdr1l6fK4KlvY9L5RKejOvttXD5lux1keVjmRQoDb0MFKt31uMCb1qS74JxygZ6GBIHnB7uMB1_B3CmLMIN2xAUrwmGAvCYgRUldZTOgMXPUFCyFDm0dU0DzHw6pp184R6ug8igXJvlDLiYbW-pnTtf4IHumznlZv3eOqGkzSUq2E7HD7OnZ5ahPauiepfY-SpFX0nhhU_rvU43DZFN582RZKbfMP5apUp1MOUDdJsZ5gd5GCA7sUOwpbPQdG8fuqEfj4oZ8cWcNg",
+          "width": 360,
+          "height": 900,
+          "sha256": "2df81c457704abde137da53d9eb2276fa6241c14a07af93dba2c966235208d79",
+          "timestamp": null
+        },
+        {
+          "index": 2,
+          "file": "mobbin-dark-mode-02.webp",
+          "alt": "Screen 2 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.bieZmD2J5wetQ9_g.BvCPbtYZp19WJpIEhSCPuS2Ez8ZohyKxtuUa_dCeAOkOtx-WDjZ4ig__FrFI-E5OxOpYnCc8IGcPCzrD4pzD905bxxCakaf4-LUJz1yX6wrY91oPbCGefPsS4QGTEn-ZzjmUgjJI4fDvaY5uXDj6cXi6jsg_w-3VzjZS1NcOZwzX3PhYcTWjI5dNrEnTZNfC4ygimplZ3lTg8B8iN9Ak8Jw1xG_dEvH5D98qktVaa-fAK6GCYCYq6OHybFeVBzh4VZvCIC1oXbF1hv82UnQacq2XlohPPYV065PgGwTZ6zMVBMa0CrhARIZS7U7pTxKx6motIhSlBp4-b70bRl2--oW_DZxBUooCARPGYjbkDAxfRz9GO3ECfg",
+          "width": 360,
+          "height": 900,
+          "sha256": "5e8700f995926a341b07d8b044ffca7509c911622dd2743947c6923287234d1b",
+          "timestamp": null
+        },
+        {
+          "index": 3,
+          "file": "mobbin-dark-mode-03.webp",
+          "alt": "Screen 3 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.1L8585h8LAHYx5CN.4pBDBjWb3AQf-YuxQcPGUn_MR73vs-Lh55C0xhQ8XjFkL5DdDPyvsuLAoDU-Ak7r788eHrsTEiMNqbq2k0Kwd78vgWCEgWVYfbIqj736K9zgrpOj2SVrpKG7lmJaEkpZTEjyH-rmQoIr56Ckqi-apNBnDUauW6c64gdW_RTsVZyowT4YtsOsSV5KKvFDWTJMdS4hDNpKNcEuXPam9lx4oe_-SfcJq3rIFhYUvHoJW-q-u9SlOztu_tnt5iCwQk7MhGh30fqCXP3Q6MqSWRoYtchb0m0wl0BCgKa0E5TXxxlnqxmgapHmVAnrPKqYVqmjoDCuH6RLPKGHi7dnk0y8p6IW9uaq8U39hzJ9nPRqrzZthskM5oxo5w",
+          "width": 360,
+          "height": 900,
+          "sha256": "19628f9315f71c733b7d46b9da9eded92898d8aa114ec6fe177f4ccce8ebec40",
+          "timestamp": null
+        },
+        {
+          "index": 4,
+          "file": "mobbin-dark-mode-04.webp",
+          "alt": "Screen 4 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.aY-ANA0h4YjbzJCD.RbZKWFpw7s3cF9LKVfvuOAyJnLGBDU4mfpaZByH2IpMnu_MS0VMqr1hJmT_F3_WRnu-gVEJDTndmkl0Da6ue8YtMUzPjrCSimP1eFZG5Mqppw59pVL6CCXTzLwC5tn0ra9Dn_0TCTJEa3jgVD0z_Odj6rxrlnZbJJLTBIVD9q3QrO4yB3HAE8g0t2NNq4hAmXM_5NIaUr6PTbkmIE5Du0YxB1kTsxjLwr6JOXpE-1srRS59YA95Rof-Lo-8WvCkMak2SRa5ujpqGwbXN4cf_GgZfq96s66GtvWv9aEio8y-HaNzTrnHo3D-IDHQnaBenrbg45Sx3NQVxqZiYE045HARMuJdQdwrX-eg9GLB3Gd_W1Nvn4Ah-kg",
+          "width": 360,
+          "height": 900,
+          "sha256": "9765598d1dfb11ed7b33389c40d63b4e610f685bbf95e80cc07c3ffc4cb97a67",
+          "timestamp": null
+        },
+        {
+          "index": 5,
+          "file": "mobbin-dark-mode-05.webp",
+          "alt": "Screen 5 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.nQ7CEJ9x5J9Bvnn0.aHMFeR6sb5sFsmvCIe0cyFSih5B8pIihaeswngE3WohdkOTlW667yCcTUi5RWzBM07-qEB2Q4KbdiBX8q_MYNSPqc32wStlECXmdiLvd_Hy0nRFh1AhGTKLI_b2VGp_EXObh3IcuCSKun4e07s3519JaGpWHXUwy2VO5g6zRZVbFal5sNfvqtvicqCOiRMjZfc5uKLQOF6s4X-wRJPbCK8XXINaglQAOXYmKW8CY5lQlxmWPiNs3pibK-t_QxkQ809krY3PPuwg1xRFxLVHFvkuD37BkjWdUTXgwzH8z9yBUrylV1cckAnmhlERDMxNEGvZz_XVgjbJeDSH24QRQyHqe65wz6mZvP30d0RvJBD4nyC2iVQXadA",
+          "width": 360,
+          "height": 900,
+          "sha256": "d3da428d0b1c9cc534eb41865cbde79b93b5eab29cee55a146b4e9d47c9502c6",
+          "timestamp": null
+        },
+        {
+          "index": 6,
+          "file": "mobbin-dark-mode-06.webp",
+          "alt": "Screen 6 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.ROUi7XzRKsSbqf7w.sOzlbY_5sD3Yts7-2fPNusKeOI3Qs0nKmDCJacWNr9FrmY-XDLEtokzhKzZiaMMCCD_R3N1dQGhLPFqYZS-mYBrFubVs1zUUpsT0JSOiGuAEKYJSHqd_DA4Gc3O2M2hzHTq9ROY3mFWDPbaR0iJ9Gjvw8dymCAME0L5A_39JcsG0ijzV7C30lXJPVNgFDO-Lm3V1TtgoeN3N4WEBhZUHCddo3l_zRWzvkSId2ypP6BtmZPqfx9ngLZNSzP3g4qohmshWhq0aii6xtBqL-YM49ccmE59kTrDyR60Gd71jpu8qV-gXVCKroccLC72ILRb_TuRtGi1212TwQWK6DiZ3QN_hxV0wVtGh6SXqwTIvpBX2JzZaJp0Lrw",
+          "width": 360,
+          "height": 900,
+          "sha256": "4ac8ee436aa54329041bc4c433d96085bac31d4c1974e1fbb1df419fa7cf91a8",
+          "timestamp": null
+        },
+        {
+          "index": 7,
+          "file": "mobbin-dark-mode-07.webp",
+          "alt": "Screen 7 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.P8OKiSnWVoaxDnrY.6IHc1zyLByGrBj2iwQ9sXZDDMcueNUejb3XsG2WZh8iSfBk2O8-I0o2Cmvaai9I2XYBzoAnTfIi4gEM6D27QCWKBwnWbKC-6ifOHH4SOWlCFsfkhvUia7EWO5fGzXndK5DXkq-ATzrLpIscKZKPj68ZDJKzl5ZhVvTRVldbEDxVPqTm6efSAplj7KEnHTaiCU8OvPgO7N_jVKazwR-KOQUlXrBZ1V4Za_WGWyrszkm83abdTzaa2Wytn13WBrr3WGWE7_bDMV4BPdH1M6sOKdU2UE8j6iR76qgDfCaGCX4Fgk3A-cn_0AnvgSF6qMLyBJaGSJkFGFBbMbfhsBaJq7_BHCqSLqoe11paxMstrsrqEWR3f4lJ3yw",
+          "width": 360,
+          "height": 900,
+          "sha256": "63a11f03bc7b498145c3e948233c5d177b0f7fc5b3d4ad9f1dd27181106d25eb",
+          "timestamp": null
+        },
+        {
+          "index": 8,
+          "file": "mobbin-dark-mode-08.webp",
+          "alt": "Screen 8 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.NYhuhyp5LYW7XSxE.Cc4RqIY8HyQQ1PbuyhEJiNy80x4zmZsA85LA1LLCeAgXweuJ20GJ5_4i9plcQKcFoZ9O_o5iZNPQfG2jt8hIZE_9CK-9oewNmkScFdkNxk-OMOUQDF2vKF4Dw2xTm0EsNNAzQtZi2rnXbIeEbs8aFF3W6-aEtU5LoNKdqkr_o2GTbEVnr2hJuWyVnu4O5Bfj5EHwZlI4ISUDJy1L5t11iA16R8mDI-xypOo6reaDwuewyIM3EY9njmE4idqHgrRQGopVkDvahtI3zeipilJRB7NoB9lX6xE2VFZPP1lqOzTbu5suDYK-u9-Zt4dyLVxYSKJD6l4YgSdRDb9vrg279aKicqEM0q8ba1CQpK2h_rcoshZJe_p6wg",
+          "width": 360,
+          "height": 900,
+          "sha256": "e45d8abe54553ce61e8c07e1da04f74ae657110f2925975907a5708ab848dcf1",
+          "timestamp": null
+        },
+        {
+          "index": 9,
+          "file": "mobbin-dark-mode-09.webp",
+          "alt": "Screen 9 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.hlYEoOYFGaeR0yf8.0RDtR_1CzDCVYaSe5bTLlMMtMtLILfzvXGtuGWDY-a1fzZrqUUnMw6z1pwTGUSuNoJmaD8o5JEegO3lrRypYVhpbC1L7QVBzb_olnUEs9Hmvw1QJakWXj3frFvo_YTLxJgzgUpDbk2F3LxvEKGFAFeRHHVsdeawJPleniF7oMTzzov5RoyFc70LRqzEEiuZO-a86J1vs7DSBEpdcjDwDXy7NkM3mdxLrLGZdeFS-UaRkGMTN2oizecFf_FGnzDCMSTit1gAyhrUp6R75Ka5KHvKK_NJd-amENQkXf_icE-B_lWoomzD4hU2oUfjxcy-GmAqlKQ_iocXIHf4vNeCpslM7ZBrQTwckSXE0nvDUfOBWuF_WFyg3tg",
+          "width": 360,
+          "height": 900,
+          "sha256": "21c5b3a31a6c4613d23fe9cc00a17a571dbe729feea0f59d514a35c7783f630a",
+          "timestamp": null
+        },
+        {
+          "index": 10,
+          "file": "mobbin-dark-mode-10.webp",
+          "alt": "Screen 10 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.drqFxrA7_P62MUsJ.RSsBgrtUAMY3M4e_1tuPALEvjc-iShwyeGAMuvnkr1F8AghhRSh4W9R1qplJbrYh2Ajun6WbgNWEaJHtjK0M1KagHZNwrmi-ELXf8gq4k1AkJt3PSNv2ROpi8xozfcrEBr7smS3bURojY56SNv3_tj0WML2A7bT8vaV_hM2dfWwwIguGA6bq0g0OSyYOuJ6EzAUD1Ad9haT4q6J0AyoGdlaTvq_PZfbRsar3IugDec1zlm2dS_WzqvCyMYIrlWajqzGe7Il0ACHskKJMnap8vqAMxMEXDQdA7eEhxslQizWMZmBKh6jApPMrsBjrAU6aMvGlnf0i8CVKVkbouqXi4fL4EIGvmtQgb33m3-KGbcUYN7PWjkU4qQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "1ddeadf115eda665fd66a0d2583070da14fd11b448e9809471cfdac4cd64c3f9",
+          "timestamp": null
+        },
+        {
+          "index": 11,
+          "file": "mobbin-dark-mode-11.webp",
+          "alt": "Screen 11 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.s6wbte3J3gRjImSF.nNkNqgVCYuAvEdnhtiPIaPRSuhLpbxUPSMN8OvcPd-D6oaR7kENNryKmRCPa0v8T_PK83oW6suj5B1zs2ZWZieT9V9bD6WXNtIE4_2aYkVvc6xz4KcbhEZWatJN_XEOQmkCc5TN38bBNazJZd0mUx_M1_F1owHZSiIdJK0UM8_fCB8Vs1V4QVeaIpQEp0OJeNfDnWboX8vCKtSRQobCOOXAQPjnlCKKoaonDFZgXDrBE4sEplKepiig40fys7xUuuz8qWwYL2eYnG7aQqWCFnc_H7KwmsqDYEL2zfEte-qaWaRPi3bRULgF3tA-JLecI6SOvXYQBjF-Q-pHyqKtbuAr7g5GwLwNkgB9Yky_2VF3V047kBKmDnQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "5cab67e4280507b697c0cf915be14511914efbd281efa42d17099d7d5005bfbd",
+          "timestamp": null
+        },
+        {
+          "index": 12,
+          "file": "mobbin-dark-mode-12.webp",
+          "alt": "Screen 12 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.MiOp0P2myTV9mEWU.B0TEGsS2kiB_UXWvhSk8fIuqHfB5NKgOnldoLLWWQ5zJ48b9WyBz48SYP_4qjn-YEB95Wbc-BnM39QE8sbBmwH1Rp9-pjgV8MDPLg_-Y1t9jlaJ1HWFxpXovne2PiGGm2xDcJ3cp469g2omfr-qCy9rPpM4242XfurmQQ_AV52K_WfcxQNzhJN6gmSKnX2TYxNRGSiWmvUvKzr4PTPFHB178KgQDcPWs4EVrc1FtMCJOjdtnuEQEBvVfwZUmgeS31SRIq-UReIgQzCZg0zr7aow8e8q0vBsDGLD-KpuYFc2dR3V9Jd8-cPeLaVsDb06hmnRv6H5tHllphnCrkcAoCPNBKGmV1SBW889SowAgh8N2arB0w6svEA",
+          "width": 360,
+          "height": 900,
+          "sha256": "f9f5824018f156ac4e79e85a8ae40af92bfe31d985e1c0fd4272df9e51be92ff",
+          "timestamp": null
+        },
+        {
+          "index": 13,
+          "file": "mobbin-dark-mode-13.webp",
+          "alt": "Screen 13 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.HPzVO9G3-lHSaYES.yekPrHGeGmQJ5EEw2WE9KYVnpd3RTxC0FfwnFgmSZho-DHTNG72BAJTzYedXYosgf1yvlSntJOOzJKAhi-Hxj41oAUoBFLCvAD-JYqWYca8lvndVjtjBx2F8VcHSMlkbEeZGXqYadfP0FStL-p52uBrOfLkJVPExn1_IvsFMcfN6QCiRrGhL7DTHDh3FDT_YDqlbYLvBLNFo-QgZm06ik9HnLzI93hKfcRYmccMLaxTVEwhENS1uI5fRdXlzzhyh3isIGVmo_L5vvey-qva6e_PBA9c6UrPXDC1x71xjP4WCPGpf4szwZybsgTXyxNwyJ3yLrv_26-aTn9EH_MQDEVSJ9DF-3cxV_VPpuu-rlOdPC_CgpCUDHg",
+          "width": 360,
+          "height": 900,
+          "sha256": "4c2991a3139971ec019051124d885400ca23baeb091bd109717a5b27de817f04",
+          "timestamp": null
+        },
+        {
+          "index": 14,
+          "file": "mobbin-dark-mode-14.webp",
+          "alt": "Screen 14 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.PvfQFLhfXou_O7Gq.MUbtAOPtm360bc80VZQQSLfB2G2Rs0SqAv_xMORfhQbp1NIaytCGCpwErXkgK3AjzkFmt_SoNBFGI0TvlycZo8jZ1e0NZi_8pbeQH0IM7-GSp4Qa-Htc87nSrv_58bCfuuHrzkZWow5D0Q0Ua3FmQFeMugxtMxTWCC5D6c2zBAVPkzCNULbT-cbhm_ECxmTWZDaKtZIwLmOt9te_N0lDVnLyEMpUWEGA5EbkQDUvqSj6jcXx1d4lGAUWBcM5dPh8nTgMvxBuySq7yRUy6zZX95hkU99Anj4qCbx3jMHGsmrM3O-HSGQNhOAbbzbA_Q8ZUjKL4qDpgew1ygl7h1K3AKG_kgVJMwDrj_hTIK7JFFKfbNMpBZaqFA",
+          "width": 360,
+          "height": 900,
+          "sha256": "6a2096a99c33613b89ff2cecf3f5381aa37d73b5cfffb654e62c0997d32b87d1",
+          "timestamp": null
+        },
+        {
+          "index": 15,
+          "file": "mobbin-dark-mode-15.webp",
+          "alt": "Screen 15 of 15 of the Switching to dark mode flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.Xe9PWjbXcGiEyqQv.u61w0hhG60k5OULGsO0X4YzfPWJupgVn3wduVbFS1jBlzvVe7i05ykzDJSwxnG5RE3807Win50QRPCYn-xHt5skuG48pOPiTeN47h-1sda8EY-ST8VfEfD6IF73mdvlt37YB-PqYuztj5ipZuomjBaIFKHdHVumm0-FXfzEidR0S403OoZUdttg3-w8esqW-ahIiH16xcJOz0ihC30k3JnHwyIeVXfkHMI9LB4ZTXJnBcKxUkSyYK0jRQ23otYSX75vk0T1AQG9IvBgJ86puwpI6njk-ylE5p9Y6PmmiNeQFzW9VG45JJVAULt84QnYaENuZtMnItVvw0ZwlDRNI2lUaBMNhvs_FYdF8f1cK8y0SRXUDJ-Qk5Q",
+          "width": 360,
+          "height": 900,
+          "sha256": "7ba92fb3d0ab8acd607c49328c7caf5a46d6c915d9d2be90ecdc0fd88e82f4d0",
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "id": "mobbin-first-lesson",
+      "page": "https://mobbin.com/explore/flows/660efd18-17ad-4c57-8a32-540352e55b63",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 27,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-first-lesson-01.webp",
+          "alt": "Screen 1 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.Yud4-kr59rFus_Fl.kmUtEsenCDEpYT060ZQz80lCuqIp9vpgD7KI931r7hM5j48Hq_RX2fjQFPr7FZIs4hX3wMBE9aroIN1G8_CM_odIbSqnMMJjlxGHOwAMNsPBM3A9xi7yxgx6thonPVY17ONeCMVVCj-IPoZZVNbVXbfmu28lUc728ZjxGA47L0TA5Q7ZOc508J6uMe9Bus9e3VuQ5nuaty1CZJ9fehPx2s76k7a_cJxB7FYkoDfgwTt4oUo9n4uF7hr46JcHKui27g8AUlEDEXZtg1m5HnQMySVz3PG-ZsQc3xE1ks9PsVMiF9u-3JlmX_RCRJ3S0A5jJm0tgkODUsaoZwAEybJHSU6HuJqmI22LJwySnsu-8WKoAMlft0cUcw",
+          "width": 360,
+          "height": 900,
+          "sha256": "b3fd111d9f9b6109cb43c95737c523d12a96ef81a00c54a7f6830b6952c68593",
+          "timestamp": null
+        },
+        {
+          "index": 2,
+          "file": "mobbin-first-lesson-02.webp",
+          "alt": "Screen 2 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.yTQHy6yJh8Xvuk2A.2cvxGz0D9Y1o-8umd6M6iiMITTdnVI0CsxKLy8mWqX1rrXSMZtfnNBpcPjcMcJ2rywjHp-OqDx2n2m-thpKVnu1T-s8B4zL4iMXNhTcVryG-mg4izbUsLxfIO9hxwWTi86bGfpH-RAd9SiW_ZOmaSeVbKRCv5V8s9afGbk1c-RXGHsl0Vri-NaIv-4tEKWIFU4mr3ZUQlJQPrU6n3xENEpNynnD5P1_DqhO4o4ZouPP6TgjifjDx7iBquu37KRPzurdoUvC3LUhIw7bAbzSNqSFxaBf3pUgL-JjPcpoe_kPL73VtbnrYBFInPn-k6KMbTd7UdsJPWKxQ3gg7VDA1zm7feX4HSWj7LLJxCo_ncMgM5GmFcb_6Ow",
+          "width": 360,
+          "height": 900,
+          "sha256": "ae4ac4cce0889d37209e97d14ac00a13b78ec59b9759de3c1093d2b6d0d5a0df",
+          "timestamp": null
+        },
+        {
+          "index": 3,
+          "file": "mobbin-first-lesson-03.webp",
+          "alt": "Screen 3 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.6FF8d1eP_jIj5Q0z.jYua1dx1ikppjfa65ByL8fmFpBpBeTHCrisb_Rqha_TIuReOVn3njZ_-pGeCmnANSOISg0Jq69EvXt8Bx4z247_kE4Vb9dQxfskMmEtGWM86vdjbIAltkkCS9_9oufsPHsVmcTluNHVi911KLM9_tmsgJaLhRMZ28ryZ23Hwaf7De_8zi4B4H2-HEqbGlJCllA1Xp8MbKVTX3qx-rYS10zoKlNdOXd_gUyZ9esNYbK-HcOKjJM-5Q0dBM-Bd84vRQ1LbTZFNTk7B5_tgbF7cJpWYWM8z8YhLUeW55EgLh6S2sVah96XAckM5sUqut3UBuA8_sfbzcq7zCLCw1fr3oTV0OaTtseJyALTUBHP0_3n4Vtp3DWgZHQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "e13b6ef4552166b2773e41237fab2dc2c62fc95fc478485404011c99bbdc10e4",
+          "timestamp": null
+        },
+        {
+          "index": 4,
+          "file": "mobbin-first-lesson-04.webp",
+          "alt": "Screen 4 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.9YvsTkxfS272qHLL.qF48E1TafQ-48oQxBNZtDWglaKorCtgb7WVN6O-hooBfQnw6HKWMOWXKwsMlMQqwSb5dsUyRsvDBeK-24JWImigy2Cd_D9dtqtnvii137HB8nbLqm1PU_VkDiHmCHcBhshh-DNbw9U3UTu6zVsOtlhIOHLiVbzWbRxVlYNAfR2N8fWWj6r-m73DUswyTDbS1P99DAC2HDdC5Fcb_bgXFmWdjlb2x7pg96zfvuC6Oo0SKfBXucarOfRfPIGcxaSOqPpmFH4ywkGOBv_kDWzVeR45v0Av2s7EL771KU4M5-_1n3tHj5gmiLzCiWGXZLiSXgBxfgHjJi-8UxuUuqCX1icT4qTG-6m_0PtAOY4hubD7hG12vSfD11Q",
+          "width": 360,
+          "height": 900,
+          "sha256": "b57880e93e2b20ae7776847f1e61b5180b32d07d3c8d74a5f38a6592f45e3f77",
+          "timestamp": null
+        },
+        {
+          "index": 5,
+          "file": "mobbin-first-lesson-05.webp",
+          "alt": "Screen 5 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.r8qJ1C7DI6rgIyrL.uFb3RywLI5jf93PDIF3sqTXjj4Ehhfyav2LIzs1ePaMxeT7OSuk_jd0HgFWbUSMz0uy7RFovvzZUx12LnoZONPVN_lU32xf_P648zbkJdRHZfRg_mJLZLrTqME3ysievK1nl_b29UjWUFxFiWMOye0WsKACwDPFa2ie66Cpyg-2nM7mEjePaSaUMIvRYCotiTN5EHuwXD9f-tQozZrIicJisUvPXA8CeatCEU-RASQP3WgzudEBAUVwmEK5FfYh0KODyAJRZPFPhSsWcKECJHxJivEnz9evI93tyvZNTyh1VwdCooxVv5uFtWpu7-2V0JzsPzIteIXcUeGqU0jorZmmAi8uJxx4ousv8vNxCwqRRhZuBVcxF1g",
+          "width": 360,
+          "height": 900,
+          "sha256": "14512666952bee8c6b06c3168136c6f4e65bcdb01eb036e1cd3494568fa1065e",
+          "timestamp": null
+        },
+        {
+          "index": 6,
+          "file": "mobbin-first-lesson-06.webp",
+          "alt": "Screen 6 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.fT9rBGVi8_tEwauQ.myCK5j5F8ncRslXyXdu1WmJBGoWGX0QVceJpH9doa9JFVvAO1yW1ZmMxl3aTOu75nU6WvighXuGh3b2oWh-oQFDe0wtMhEjOeP49fL_6srg2kClg0eAHVMSPVVP-_wio940CXiapdAFu7OWqF1KO_uk6RweINX5zxCdoZnGFhbOrkhErHkp9bAvdctcueB5kG-UvbVFeyFJWEI2tk7Vsw2ymiQLGaWpmrbOP3OPV4MF0sbkLYPjS1RZp-n9hisX_J7GsZpGDKLoaNAeqBTE4x-5WjVUGRy2IcLoU15QHrvdCTWjpXhMdbVZYETN0Lwt9KbhB7FykYn3LHlPwydx918-GEy-vA9u3dj1vhld04uBt352-K540pA",
+          "width": 360,
+          "height": 900,
+          "sha256": "b8dfb611de1c579877e52bc1cefc016a4b2e127e1bb870900f6e3334d0bcf5bd",
+          "timestamp": null
+        },
+        {
+          "index": 7,
+          "file": "mobbin-first-lesson-07.webp",
+          "alt": "Screen 7 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.SmqWYrzj89BLVPmr.HslKSJt1B-dPqZd78PStzrbOoIHWPOZ4iBgon-29tsiyB-tYp4XX0_dI7yXL8wEhs03Oi7-xIBvJWv31Uq4D7cfotxbS3uu_H3YiQHmIc673OPL1z_B15TCEuM4FHdjpEsSqsEknw6Vn1DpgRDDGaRmbLUgRoA-uu7SjBGUauxO_yBw6_ulDhpusPGOaYmb2gb0Ud2B9nXpeRep4hHIleeWCjwMC_XCXwrAYKB9fitimJ4bzRQ_cF5b1sW9JYyFPvSc6ximPb94whOQ19MVO3Jq8I8DLYrkyY-xiFAX4sygPBZI3tzqozGHdzz1f0UVNAtfDlRyeBzo4DYG0jIRNDY329X5UgiNvmCSZSeSpzrbR9eloWQh2OA",
+          "width": 360,
+          "height": 900,
+          "sha256": "6edf01d1d75ee3eeecfa69a51683e9a1a85fef248d25c58a3840b6e07245d8ad",
+          "timestamp": null
+        },
+        {
+          "index": 8,
+          "file": "mobbin-first-lesson-08.webp",
+          "alt": "Screen 8 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.YkOUapg7IudP0_kZ.7QBhXhBOcpVLDHzV1x2cO-FZoyB-415BACDRHHnVo128F8m_v77o8mma_1R_eXY6MkytF_TakNDc9UJffS-wZm2JyeYNpynawIgiIaXNQJCcH1bOyCS47S79zy5EAWzEeHO7Ja_BnEcB1Lyt8b1f68BL1clSwsvOHGYfsLdxc5cEMRzLJ8G3ZwPgoDTMSCCKaZUcKjHAhoGzxjqd5faa2gj4oZ1cT-9EfsEfTNFiWJTqPlO4uW9oTn7Vk67K6cA6YCOOiTA7H8sCMIbF_hwS4PfzkUyca8-V04pWLsONAeBBKT08furxN39easoOREYHhk9sjsUqAHrPDm0D5HIm874ydV72ipiEMx2M2hC1DzdDQVO5boAS-A",
+          "width": 360,
+          "height": 900,
+          "sha256": "7f28c7d05f0e95fc7363f272b8385f31d42fe9c1fae982b544ddacc0bb7313b3",
+          "timestamp": null
+        },
+        {
+          "index": 9,
+          "file": "mobbin-first-lesson-09.webp",
+          "alt": "Screen 9 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.yQITfioJ5-0UIDBU.wPWxzeARY7fR937OEYqfNvvnsY2o2FbCgynox9s_oEh98Ei2Qnn9iDfICowsAcfUqsT9iR0rQyyE8uNYZzQfORB-y2UGKoqMf-0nqqQBSwaBOnfVp9dsAag37ldXUv44GVDMLgWUbkVBP1XJ6TmcqNC-n1BP2ox9KSw03jThVHyaMl0dxn7HYBvSWmgGGVdvaJnOOzzrkzACS2iDf3upFmKB9MkLmYB4Dc7R6Ik9yGBPTtX_nQaadgqvdX3QOgCDRHkJ7ezkGH_9iWn9sJX_yyfLT8MYyAvu_yzMBiCq_IlualhzZcbWkJmJbTordfgU_iWNtHSPbCLVqZ8yqYdQNoaKw716-TFbDwLFdlMf5nUAGM5foQqmHQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "0374df2f82803383102a132bc4a17bd18ce57bd1c4b6801a332571fcc029b352",
+          "timestamp": null
+        },
+        {
+          "index": 10,
+          "file": "mobbin-first-lesson-10.webp",
+          "alt": "Screen 10 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.cVX9N4-Vy_92f-wM.jsCmDgoQH24VP8rQdcC5HnxJ_Lzm1snKaqBNKsAgtZX4V2ocXznZSkWu6_HW5Qdi_Hm1VTrEJp_yrKzAfEjm-RDqD0ayzsgJmvAmoeV4ODgxlch00lo_BSUZzlKCeiVgzmlwnN1RE_05L-GH5a0I_7kYZeBd8LzdJvi-rAvcoANuQTXVuhpGu2p8H3nwnnfheY-3F6HjqxxWhhpa4mdm2XlEERSTKjoBMzqxbcG0H_KyLLPgpd2wWt2nIqh37maGqdxpNz_jUMXvpk1xMHUgtl1joYXaCpxZ4SN77_4rk3w6DdIiz2aqz9iEsxsuF6kbTskBtMFOGyXiyc3vKNVDGHULktk4SfSeb37rMFdr4OHw3MgopenU-g",
+          "width": 360,
+          "height": 900,
+          "sha256": "347e54d7a32f3843bbf6264dc88891627222b1ea6a9d8eb29b70b8106c1cb07d",
+          "timestamp": null
+        },
+        {
+          "index": 11,
+          "file": "mobbin-first-lesson-11.webp",
+          "alt": "Screen 11 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.4Vci-Oa9fQI1N5y2.x8sJ6wteUCPOYEf6_LYkMN46KZvFJ8QBCWZy3w7GZfAheAyghaAvE_fQcyfI8_pQS6GNkBVotGBXcptuFPsRxY6IV3_FWLmsbHqQXts_FprlAmBARFrBcrvAzNheVUsFAUhn64tt24TH10RBjs5diX6FPQ8qKdH3eCm6B8m0RgfHlFrgoZu_rp0iGS6IQzSXGUaM30GhQnycqRBEMAVk5RCEzhRg91wwXcFSJTj52Hv_P4S5QbWlG1m7I1IJ-P_WJy_3bym9VoKX2ZKoDbsZqdAUTwZsjxgDEUQPbDkzjUnZvjeieK8UFDuIpvYLCZZRojW5Ln-sq58nrbue1E8CpfQz53ikC4l-QVYFVirMV0OKAbrKJ7aMJA",
+          "width": 360,
+          "height": 900,
+          "sha256": "62b441908cb7bd88ca77035fe13fa14e066773e57d895420769e7814d1fd6986",
+          "timestamp": null
+        },
+        {
+          "index": 12,
+          "file": "mobbin-first-lesson-12.webp",
+          "alt": "Screen 12 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.vON79Iaj2hMo1eZJ.jMKN8mM1IFdrjwKXeGB1jwh3_zgYSilcgOje8Kn-_SNNfvhNR46AMNLacNIcd1tE7UfZr3g0eWo6EIEJYOSbHQDto6-GkUXsWQ8BUqnl2x5caey_WEI_3ib1iviVeIvHhugvMky4JDIqiX4KdINJWAoaluNN-GI2hpnJhBuMS0MEKBCx0FC9L1hnYj83BYxe6xeR85zNhzeRT0Sw-jC-QIEr7RtXk6cnC7QzJO6e8ptua55hf_felvYt0OFPu19odXaoke2B2etUAqXc9gXYsSmyJ52R6q3xIkEK4PqrhfmaDKzzJIW1CVyTu2Jp6dLhuKB-FHB89QKm_ZcqLJmAioFjY7uQ-HKqzilyVvCVLTVyC3rL0lq5jg",
+          "width": 360,
+          "height": 900,
+          "sha256": "c6a4901dd4cdddc872b748e8da5356c1751d83a35e8f41c97742d685e85aefb9",
+          "timestamp": null
+        },
+        {
+          "index": 13,
+          "file": "mobbin-first-lesson-13.webp",
+          "alt": "Screen 13 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.NVFV2Lmm3OMDe-D2.UTOqGnfjXeNXxchVzsN2emsGfmUVfzgmhhKYsH8Gp3fv2CwLxryazQIKab1sAri3D60iYMgUlKlbYti1m1wDbv9awzZJIefs3YJMFIXInNZPmE600lDm2GB0Qsc6a9TfocX9Oydg2g_essBaP8mM8sE8J4XhOnwhehGSBMuNk9COuH_3MNxAu9IB0CwBy12xB5glJsOXu0Pw044ajMtXpr3SIdKa1-YIT8A2etlk-hTdPFktTztzw9sASBpin-CS1h4izFN59ZevrUou-HgvKbgvbtVT6-OYSRv6DtlpqZ5MWmbq3s8_RZVB4yEAveT0Uzlg9o4s1GH8c3cm82bCmuHu5rGX8e6FViJblozQm6nlZ6GWQDrsWw",
+          "width": 360,
+          "height": 900,
+          "sha256": "d0630b1239872c8213e0c22a586451bc86f5cbf6f5bd5aac2506d78e2a7026a2",
+          "timestamp": null
+        },
+        {
+          "index": 14,
+          "file": "mobbin-first-lesson-14.webp",
+          "alt": "Screen 14 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.KDDWCpQznGhKkbNO.w6Ie8IgIMKjHqXn-SbzKuK6vIFbIKVHgNahtzN-Go8YUCOCUlJLZEfjQwPe-BDFhJX4e8B1fV4iqAZpzZEgm2glJMC-oBtThciIDb3YEMyRgf8rnzYD0yy20uvSoQos9oUiwnVWUJ30QfjZYp4BVIxP9asOl4f76NBpZRWnk9Ndj_gnbEKr9GyukqU8hR9gfyGgw7MA4DInP7-hLTjp7odgZvl-KkVZfVDFukzfwc5zU6BXdlJqg8rYuOmEeHsUx7YtocuA2Bm17JJYn2mC1E2sj3VjBk1WGjekRzZju57-IpbEApodAELNylbuDA5vKxQnl99GTzvTzJiczHfM9G1PU7Oa7kubkqwb625hJCNXUx3XRsbrfMg",
+          "width": 360,
+          "height": 900,
+          "sha256": "77bf7778f48665c1be33013f9f39b521d80c1dcb2ee93aa030f0b08dec860e32",
+          "timestamp": null
+        },
+        {
+          "index": 15,
+          "file": "mobbin-first-lesson-15.webp",
+          "alt": "Screen 15 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.9GwgPIWXoIPiSmMN.Y_uQILRJ95U-6vc1MiQ-llPChNa6N7hZPyvxmZT9k0k7JMDxWd6zCIt7TpQIFKmbEsqJ9dDB3S_iBGAMWwT9hva0o7iZyB3eCg_3r24_Qk9e9KOM1s53XoJYJ9E9_a8TCTzWyRU630WHe36DYV2r9Iw9V8B2fsf0iyr91Xd8xhkwscUUrkDNgx8d9SsPlcQrtKckToQI5YCVgKyFH4nduLV2zX6X2s16ArfztA4oWbCshkkObDZrKDQ5Bjr24hnhswtYQfGLt1YtCHrezkyCZnAn5b7wrKswYVA5n0F90Z9Y-rt4Bmuu2HpMetdQt2rPT3H0xoC1wK1IDghMPUJLPDSPbpR57vBNxTOYcJj_G5JyefK0luBbSQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "505b6c57c471b851d18d8ab12ac6d4bf854c96b077c9af9ef0cc3335e6ea6bda",
+          "timestamp": null
+        },
+        {
+          "index": 16,
+          "file": "mobbin-first-lesson-16.webp",
+          "alt": "Screen 16 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.um0V9NUB-Ze7bTYM.lWAPcfHOf3yfaQK0k6lAum0zXfP9FJZC6LPjavfeEafl2fDysKG_nA8fO7jZOFyXRLby_NbJuX_cI4Tjz6AaOC-zdEYA22-4sQUCQL6MSB9YU1ksZuCZg-LxmF1Cc0HDNp4_oaDLpsEonvMOWTkuSqilLGKSvaKD5FYCKoLWq2jvcTjtb6HdoFf46lTQrJRWWLjDFEOOsP0Rr614vUnJB7Mg0IbvidajcKx_5j9Jul2svkNZvQki1qxh5pyFL9_j-11j6IoXAK1JCoslsT2Xr4RoeeebISG_UarhyMWDzKGlQwaHcPtH9OH330VthQGFrvvjzytfKSlBzTbQUiPQUav19otcSn-SM7AJf3ezmGPb3aaftHAfrg",
+          "width": 360,
+          "height": 900,
+          "sha256": "b9db69c6db281d092bfd2d6dd25e9fcd9dc101c0aebf42fceb6b0b14327169c8",
+          "timestamp": null
+        },
+        {
+          "index": 17,
+          "file": "mobbin-first-lesson-17.webp",
+          "alt": "Screen 17 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.URE2282kwHjVsEXz.9lPCXIqfiJjgPVNuJvse-EHY0MMm9D8g2dQ8gOeTPb2O9NPnPCZwC-0iALxi3fFgrpfOVDzTOcZ1mozjgpgS2qq4_kuITXzbvRbXop-MfPTDFvYv1Wx72oOBgLYOM_HLObmQ5dwR9nMfzanloYyu9pSK4DYZGZ1qEv_vlGhFoQFhwl4FQJKn1RHxBpK89Ye0kGN70JI29q-yGtwf2QKcOsAfdyBdtmOcvNkV4mDBIdTiSVHjFRyfOAzOD9rLTbWJ9SgNNSQ2kgDRnYq74y9TVBY_YyazYE5kOKwbvD7Nrz698lO7XJz9OK5GcdbMLpHTZ--YSZHy6fDZFtNXPzIlIoU3gb_v984GZchPsOZbwDVaWbhAv6xYPQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "fe28da62b743979f14f746759d49802aa8d3b32d38634df72af3b1d528bb5518",
+          "timestamp": null
+        },
+        {
+          "index": 18,
+          "file": "mobbin-first-lesson-18.webp",
+          "alt": "Screen 18 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.oVraUBp0aovbwmLr.gTgLjFgShJ5zsfJmTHDToWEzsHtrAZohMqH9TI0hE8kkam8hnoKAcQ0azc-E4ND_gGgws9OjLHrV4aOtf1g3m-d0d68AybRq88MkLUVDpaUkV6Q0g1VWyNwGzy6HQwRhe-8YAL08u60GFAmqGIXMxkxQoyOVrqRIUaZrQBvJAhWqvWmE_FAteB6dPMtVzYd9MkBwyVOo-GYkfuZu5U6D01pwtS9_jR-FiyqMWflK6I8dODEd5Sf0Sp36-FG5DyyN657tj33LyKCNRE8xJ92fnzFpjeZj3HYmIXlYEvxl5uSVqp87N35D6G30qUu_3MEPqDMzIWgeus6W9jYQjB2xFWAqd81RYVTUv96TuudV9B6JcCN9AqD_1w",
+          "width": 360,
+          "height": 900,
+          "sha256": "57a1896594371b7336de3d2529b9e0bf20e85372a84d21429940df8603418d74",
+          "timestamp": null
+        },
+        {
+          "index": 19,
+          "file": "mobbin-first-lesson-19.webp",
+          "alt": "Screen 19 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.46lsMAYhnYprySe_.hWTkPJSOBZL1HWAq7W6Tru8PkLvlZuZfXX_PlKsvvHi-EbDGLZdKRs9C6iTH2jE6Rvq0s7OhYHmB_sWmCmwkH6K4lxIDXCOperT7iqoZeAr5MWScocotT6bDeGwdBpnEGAE199XEpbECxcNXki1MA8qgn20jbkHmISekobFaf6cWHILZT8SYsYriGaTja9voXn8fQoULJGND4SOy8jW7gmlSHlt_UT4-K4vPgRAfzEvMF6oCrEi7nxUwoE8rOFmTfZvi5gTUXYMkitxO3pBlLdALURViVDmkKQ2qhWqc0nqGNNeGbFw-8kax-AFsUGCZqxu6d415UrgYf6vpu39GUFoNogt25YtgW8aGBugWTDfaXG-87omitQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "d1b4e3552177195b6eca6785b5fe430fea3c932adacd059951cc00739f532e78",
+          "timestamp": null
+        },
+        {
+          "index": 20,
+          "file": "mobbin-first-lesson-20.webp",
+          "alt": "Screen 20 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.ccBPLvzEdDqMXA_R.BLgb0o5w9qDPOvQokzniZiGrYh8c6LiJAKqYyHVkCa2p-3IIyuKo8knX6Mkt2Zk4gfe_ktHEquaoyiSI5ZisfYz9Tlhvybf06K4qc9WXYCyeG0zFXsqbhnDqauhy9MIUp5V1safQe_sxPpjuTqiO3pWaa6z0n7CHjj3UrgwCJh3eip3yoaY0wXVgcVXlSgP1SJV-39dNnGMX1t_DuSKD-RpNLAWDS9cLzdiyOWLLb9u8olo0kR88hH-BEr2chiQ-GVa2S3PqYQWHpXPO09RzaEbt1p6ToEOwtgXddZTvkkaM3PJLKOVMz5-93JXuMvAP97ig-phAsIh819bFE-oPRZvBJVZ3qirAqooXAf9e8Do8Ee4JgnxunQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "db8a0b5e37fd904ac4854c5740a1abaccaa2f00cd238d2dd33c429c16e556d87",
+          "timestamp": null
+        },
+        {
+          "index": 21,
+          "file": "mobbin-first-lesson-21.webp",
+          "alt": "Screen 21 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.KfUfU2sYgViM_dSV.ePAYyB1bhFlT-KfEaGO1_HE-IVPzW3OxY0ZIHXryyyMuDj4Ym8F01--iuvKVQo-lN56Rnr1HVUIPbNtBm4J0z-xE3UEABfEjdixxlhajKI7cabje-jev2Tmlt0fghETj7V_wEONTesA4y8SN2kyNvEG4gjReS78qN_968xBhH4dVzm2umlM_OmocBBvscxu_DEHdQZV6uhXakrcXxPnrSYOrY7Oxlb8puY9BnMMEJwWRR1Fq4AYLQ3ZgOR4NuYO0ic6St3V9fapvCnTW-JSxa9sFOZmglQD9HiMFEBy3-8u3FcDkiQjVPb6MrrKr-uI8TEl2DiMAgFf_JgTxVY97JwfrZEHmaC1DJseX_9kJcdEqTw8-OT6Wwg",
+          "width": 360,
+          "height": 900,
+          "sha256": "b42d580ad8770c8defd912d5809ae1f997e1c2023098993593684cccec5b7185",
+          "timestamp": null
+        },
+        {
+          "index": 22,
+          "file": "mobbin-first-lesson-22.webp",
+          "alt": "Screen 22 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.mMzCVXyi2d21vsfW._-zBbFQmLge556wX_owm5UljUy2jYy8oienY9E7KkEf0PrrIoca1B7I6BNsXFmWc_pzPgHKcLFMgv9Hw9bZpe8Tb2yf6lr3G3QGJi-YVMMlgsOmsNSA23GDbwDMBFc49tW3ZsbhFkolyGAqOtMAta24gU2SHQyEmz31rC2exKZ59rH6WKLzJETjqdm-ltkqHbSyLqhfeGRf6BafA_qfeknTg4z9SN3fAd-HbTBu0Juugc0PdNXA7THulgGRloL31WgFFjWPbzyLFdrNFSP4HcJHuV-RYHXXiNgKerCT4_BIan7BJdsMlOCuywahIe0SXIyg2qS4hF5K3pSAfxqUiBNj5BKSfX5w3R9KCO4KtxR-T6ax7uIkrPA",
+          "width": 360,
+          "height": 900,
+          "sha256": "80970fa642a1ac13f9251332918892aa2b292a94beb03cb06ffcfb694cdba129",
+          "timestamp": null
+        },
+        {
+          "index": 23,
+          "file": "mobbin-first-lesson-23.webp",
+          "alt": "Screen 23 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.7rJuFoDKwYSBHI8y.MAPWCTOFV9rdA26Ofr35Xp8zuB62EfyND1RddSQfcxVqgU-gk3rk-eaUiM32doba1zA3tI-LOExce4nmZpTiHmTK2I8tjFeXbB3k03XOj6WM0B1kVh0betk9slhsTY_f7G07M7bW0EyVHHurEC56sVsKorjc45e8MBXM6F06rgoX5i-yFtxMaMQdP7gsCGb35WuI5hRRXgY_oVM0XDiADZml2GLGHnXCI6CTvuLnAyJmXP7Ttuoe8-xu3H_mgOF9pYb9m3I_fqwKSrZ3W-U3UERiHOKAoYTteGArRzkxSDA1NN1XBZvbCRRI2ZhWESX3p47Ur1xhlIhXKKd7fG6AZLXIIPcihy_Ecwj6yWbfC5kLAkra6f98HQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "07d0cb10686980eb93cc44b9e0c18db55db9fa4dabcce3217473e198b0c2999f",
+          "timestamp": null
+        },
+        {
+          "index": 24,
+          "file": "mobbin-first-lesson-24.webp",
+          "alt": "Screen 24 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.gfwKotEWMci6pzTL.y1L6u5Zb7nfLOyzG8RyuVM--RCfrim2hp0dp1yQPffXSdpTp9nTDZe_9tlmkse862iGUqyVDKeouT4LOhhVFQZ5YwO-V3RIqusuyoaYNRGlMysOUheEgY8UTdaITktojnmbC9J-_U5T5CAifeV9VLbCJgqLnbvXQ6g7RzPXaSMbGub9s8xrUYduCR6fZh1GTNFysGMf8d_DPOaRNZuiZDQf5i2whkIsFpKk2KPkqL5qS2B0ZQsqlXycKa9LqRWjBUaKoTjFZ5dAGOoFkQc5eYU_x40j1Ps4e4782VNZSPZ2tmA5IWSWEg4RBmxtBip2-KgwZ_Bke8XtHZ3FzrA2VEBtzEnG-Jt1yFw_c_Yu4H1xz5Lo6LlA8VQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "a8478d1297cfcfc75dbdc4abdd763e7147536fb44ce9795d9526381fa1ca6de1",
+          "timestamp": null
+        },
+        {
+          "index": 25,
+          "file": "mobbin-first-lesson-25.webp",
+          "alt": "Screen 25 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.fiBm3_ZKkQDawyid.DpJwUsrYwEpkNpRIEXGiMyQMNhFiZL-x7iCNZvvv3DQuAdOC1hQBuImL7tnKRQgx4fXa59hm1itNMCz1EE9rmE9Z-q_ue8hJOhy9LEpfYY2ZtDRsJSoSu6qi9xdNEnFhtVCzjNwCQlHwLz1kqyZWHdiOjWITY8bsGO9M5AUO53uxzain_edqqRqK2ulIJK2AzaNGModjLgWFEY-NlSQ_EESH0dAXZ6CHMCzz5YD0IIT-Bx3y-faPPPTrqSIiSLBH75xSi07Hi2p4cdYB-gg-KtqJr_fATF7l28eK03VYyXQeqT3A39CRp4Ao8DZpv4sqzxS51mvo3tuck97G8Hlc36sSu4pwzQDk4z5pPV0NQprHKlOfZ6zQog",
+          "width": 360,
+          "height": 900,
+          "sha256": "3fbdfa27ee84a2b08bed47d7e4a7065d76c1c514db553b14d9f8aab3892e67a6",
+          "timestamp": null
+        },
+        {
+          "index": 26,
+          "file": "mobbin-first-lesson-26.webp",
+          "alt": "Screen 26 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.VKxPXId-WCfrgXr7.GhrZq8oHNdzLqG1iqajab3bHIROXgZc3LZstI-eY_PdDhG8OstRu-6xnYEsaY33Bq9HQvmPLHh9hHq_JH9y3ZX5L38CCjAKGuwdtcno6O6OcQ52UzW5cjq2R9Ykd5qasNx46sQJENv9QFEjvUNOfqxUQDwV2GQHUEYLJDsLzGExwnS9BNiL4pN5BlhfRKtiXdUGqRqX9skrMDfN3C2KbCkTFyzhiAXjNsb06BUYNGXc17mC_mwM-3GcSrbPUeB8Ia6Sg8-3_yNiO_qFsBZ04lJhesbLdmTxbIaAGRByunOCQ2g1yxeouh-Wl2POpGd5IXGE1qoZGLqOKiIcy_6Ls5BD4cKJBW0iAk3v2-8BigqdzPMytkOfFGQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "d2dccba2ebfb4bc6542742efc61899171121abe95d892ff207d8b03029119d48",
+          "timestamp": null
+        },
+        {
+          "index": 27,
+          "file": "mobbin-first-lesson-27.webp",
+          "alt": "Screen 27 of 27 of the Completing the first lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.pEVF6fwuR-JNx005._QY7pbKRACY8jCW2oPV3YXXvHz7IDTsDWAnGLoTkHLpv0pEAjSzpDACkV2Y5eSVxNBZF3a9BSc5S1v-1K6IpkvDbRM2UR5R7YQbWNRDFcMFpvp82tA63VC21kLHOqYECpQVEh5gFqzp9refqM-Tv-KKP5nOqQ5toOpyBY6Q1FO1S0AX3-VblczWJRh885qVgIjTKwqpS_dneLFk5XUCWtm0WTjvrqFuXN4ZJdWQWgZGMKh8NfjvF_hUJMb525AY0x0bfkX4QZCrV_aBEygsacYakkNdoHfM3-3iB2t0g2XKof5lKBCI9vyp_VR09CQf1qh5CkhePk84EV6Userr-A3myzhTk4bcJLTeWhYUsAd48GVVm13jwUQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "a4ced7fd4aadb82d820ed91842e19c125554efb18bf9e516581be82fcc67af85",
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "id": "mobbin-friend-streaks",
+      "page": "https://mobbin.com/explore/flows/9739cac1-c512-4083-ba60-e388ea244ca9",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 5,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-friend-streaks-01.webp",
+          "alt": "Screen 1 of 5 of the Inviting a friend to start Friend Streaks flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.-AABzfbyyhH0dNWM.hAeY5vuGCzH3j9JD_tEYIlKf1-RS8FhQJkmPujBhZcIHtEiCKIoo38zuHILk0EDHRxODp6glAWXUynC_tOdjO2SJLPEZ5ynhj8sK23kHQuy8Z1peD1D21GhB5OV6eM-tAri4gItpoXRZYuGd8JNEoisbyOQTqp5C5057-NqJ7qlhgRxLTogu0HXlKG5jVV8eqLP4tiGceMV2Oz1CIkD0eeFju71l6u-J8C4UUk2tdzBa5TReYWLZqvWsZJrUKwW4sYbFxUOFYzL2S7suGZqBLrdRd_xzqF2qin3m6SJESSDNLtrIOd4QvBkasWy9jaSD12mWjoCepo2-otIcWIU2YmL4JC9df92SuoL9yfjMKBeewP3PrAZB3A",
+          "width": 360,
+          "height": 900,
+          "sha256": "32ad8d2aa5cee3cc70dcbefd2c3fa19e335b6c799df96278df3bf13f698e70e2",
+          "timestamp": null
+        },
+        {
+          "index": 2,
+          "file": "mobbin-friend-streaks-02.webp",
+          "alt": "Screen 2 of 5 of the Inviting a friend to start Friend Streaks flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.XIW_mnUjxfQZe3u0.UqXzsF18L66n_U9rF2yuXpO9dZRKASFvn__ZCA8qr2R26ZYh4oF_wfTutgVcN72ZwCAzxQwZ6lYMz7Io23F5omUVlkfml-JMn0WvOffvN9KCj03xzMNu3ECYYdyHVbFqIo0q3ddPjcptVF3DkPHQ18s5WV8xNlsiwKGoRHiR1zGjeUb_7_kgULPd2kNvSZvHdgIhcGUx7ZdAhy5OmV1-YWbBTeO3fvq-5fSqKw14zl5aVikEFIRzXOIwcOuRyRD0z7e0MQFYLvi3UANIe_QM1P3Siax0SBhT0fbqqsYyyKpRa4-T-bcigOqyP7eZ_Gy0mha56W4jr7MNkLjPCSVPyqrUKxL0AevqTZzj1l2OtxWoIsCp2JzipA",
+          "width": 360,
+          "height": 900,
+          "sha256": "8e4209411cad391e933e9c99f4fa7b619af483fe794e43e6af6f302a559abc7c",
+          "timestamp": null
+        },
+        {
+          "index": 3,
+          "file": "mobbin-friend-streaks-03.webp",
+          "alt": "Screen 3 of 5 of the Inviting a friend to start Friend Streaks flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.uzwFRHpbzrUebRc4.mM1Mjos9fiawhLn8NSnFLUMT30-a6586Yge-phSX97iZSqJ_KKK-GF5jgaZPCKfJ-3LWTgcjjYop8_mHuJwHuqKVoz0hIgspooc3gNY8rPNCItt7Zpl15lmDIAqpwy5XVFm2GwHySTvYrnc-MSc9i8FNo7uQ-_mrEM4UT8Au9kW_60d9T1Xnly7UyRJKtx-WTYALDULWo5Ol6sY0_AWjeuI_F0hNYulJvoY9W_pCfzwOyJ5yeEgsiZ1RCehHuc-aEYoEIoVbEgNNO26SqRgC980GtFNwgYX0IqrgEGG7EADSjfKD-Ju5PZYkjBI_Wze9xURLD6L4_OnWteLo33eCUpu9GhFWQFrb51E__nf9Ose1d8nJk460kw",
+          "width": 360,
+          "height": 900,
+          "sha256": "9c330010bf4f2a2915b74bc74be8cc60a59906b56371f4e81c7302dacda36370",
+          "timestamp": null
+        },
+        {
+          "index": 4,
+          "file": "mobbin-friend-streaks-04.webp",
+          "alt": "Screen 4 of 5 of the Inviting a friend to start Friend Streaks flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.lSvBuRsoLDVgC8N7.dIs1iZx7O0tFafzZSGZdnlBAF2_dfA-tKb_wR8vEt0-8pmyE2-wGwnXqXcXar-BdDLAUdzvOERCcqRwbo417JoAui6BdIENuRkr166J1Ey27cSx7TXcmTe-UvglM6JIw9CbS9352rUmW0N_Iiung_H4rkscdfuuhPA0PVWYzOacUNaddLiZDylUdnPictfyVw5kq31fF1Cd4PmNOYTOtRxbfJ_E0cFjHd4m-B_fZIlFAp9togyHJCQrS4eQ3xm2RbqiNRrO5_O9dGs7U7OLXlTqP3zihTGIL8S5SvrnWE8cpjV_L4WzMeWFY9FxrpBgMpjQtFNGcswkRUj2QaehIZUqIvrljTW8u5jItCpk8VGAFmkB3RgtUYg",
+          "width": 360,
+          "height": 900,
+          "sha256": "a55cd9539dd10e32533fc8910bc0210edb65c5b320035b8f19951974057a0a15",
+          "timestamp": null
+        },
+        {
+          "index": 5,
+          "file": "mobbin-friend-streaks-05.webp",
+          "alt": "Screen 5 of 5 of the Inviting a friend to start Friend Streaks flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.uUD-HoQ0ODjCYOpG.dz5MeOvJOVfYuQCrlRhCzYb6BRInbuFlj0LLF4lsNnxNB8IuqISq-NbFLCN4VfCfcB5cT_0xmkvPY7yn1KB13EhJwnYEng7lCre6FvZNIpAS8Jk90NRVsmxM41dHTjR5QJiod1WanRr26xEqoHulbDndor7LyV7b_t-HAYXYJwBeGjqcE3gArk4cREyDq9pqGU52bxOVvNoPatFHxUknqD4fNXheNdD8SdZZhj3VPwE3_lijLD9ckeIgtZ8vQOdBgY3zjY08_5SPWuEH-7lWTCrx2AiYEmuNIIsdm5eSLK0SKjzNSkEvipwyYr2Lq2-YacRaUWRPC5Ilj4YCJI4icurN36Q3uuG36hzaFGhispRgGq3oAAKxpA",
+          "width": 360,
+          "height": 900,
+          "sha256": "9b03e82fe130b84662c09b8e6939022371a5f34b23e543dbdae43f9c3d26b660",
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "id": "mobbin-lesson",
+      "page": "https://mobbin.com/explore/flows/43d3b0b8-cb53-443e-918f-aaa7d445196e",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 18,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-lesson-01.webp",
+          "alt": "Screen 1 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.fAIf_ZXImlN3XaSK.VoFCuKiwJYRbK7P4pc_Lt11A50K4PrpzDTWA5LI8WjSkx3I-oL6hsnLmABYYDXxDkM0bmkqqKDUR6qHCALwvhpIn9cwCwIiipMUmeSIj9INk6cxGHYshmQhHnGnbWERVAFNt0eYtU0ex8v6xGRLavJ2YHhAPaeMt1rOqezZoQJ9lIcRK9YC5NLVKi5kVM4cO7CykKWnJTrAm-wk0ojIhJ7Z1mqcMhlaMF04lceGb-dNi2xmo5vC4NZfDGTK52WUl7Wu5c0-7GKA-7fgH794mIcXXgDqIP7nJMUq-aQw-HxvQ7NoBl00RBNiD42KQUEFP3BZaN3pUiw2eXMBOq7m8CZcDCZRlVYHqvC1YOYljcPnwS50usQ7ifg",
+          "width": 360,
+          "height": 900,
+          "sha256": "588b539fad3f25e745c30ca461f35fb49fe4784d4a15f8e9c0839dd7729b7611",
+          "timestamp": null
+        },
+        {
+          "index": 2,
+          "file": "mobbin-lesson-02.webp",
+          "alt": "Screen 2 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.9NVSHR_TTc9gQJhc.o9Uiw2LYwkdR6GAyctMlonYUsE6zsco3I-KhOGJ7IGdgDKExWEyfdHOww9eaZaEr1w9AfUpHIrZVfzw5dTrtCsFVERtbTMu8AvUpGWJXxMTR6k-1JnsPXIOUifQhHG3MRFegy8sHki6Qpsal87R0PoRp6Frs-sRfs1zBLgz_SjlzRsvu_196Be_o_b11_gYt-kcDch0yqEqg3CtiCcV2AzCWW3lDXO5uYTigrXDDVS3eoVhJX5MlmBbgv_C_FzxNUoxjPlz8bK8Ko5U7YN9lYlxxCGqUoyBKafaocVD1QiPD5fF2HTQUhc8QZJI5BCPjK5WKnPylTgtOPLZnT9y35H9Rpxm8IFfv6hlbWgIFhyZlv1L0nTyehg",
+          "width": 360,
+          "height": 900,
+          "sha256": "abede074d07eb42d2493f13dcbce9a260cd1972a6a118d064053e8f43bb88b79",
+          "timestamp": null
+        },
+        {
+          "index": 3,
+          "file": "mobbin-lesson-03.webp",
+          "alt": "Screen 3 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.PoPrAAKVvx6XeTNk.CL15225RWES8MkaOlez_m4ReQOBAvmRaXCVe14wsUDlfCPrmVHd7N_qb-DKj_pKAhzZI8KArpqYn7zYtMfLpwtJnMLsB06aYnE9leZzxKyeK-mNG9PgmWho8oS9rNAd4H0ksAN-lNbbLr9lhVnYsoarmlEOAfkn7rkjKNMaDgGeSwMNic_TV4PhN7x1ZTuwxSjat-6m6ztEHb2_8jw5E6h7TZc2th22-qjDGifL5v-1x3L3poLbB_O_jNpfredNcMV9b7tRgqELxTDR60Vs9FTWH6seu2vNyijMpdqNGX14AxGGk5VuygQhJ4_RhDVuxPwC4-WRQXzRzf0Eoy3FTtJrduH52HxEm1vPtK3Wat_lgDT6a1elvuA",
+          "width": 360,
+          "height": 900,
+          "sha256": "45f327144dab9177172002fcbf54a29535d24c871ac1eef197ad8c36e4f64db0",
+          "timestamp": null
+        },
+        {
+          "index": 4,
+          "file": "mobbin-lesson-04.webp",
+          "alt": "Screen 4 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.nyK_79bdSCLKpa8A.bj___EWeLhg1u2e7aLjn9A_x_GGfLvf0T89HQedPBCDo0oKhJSgiGUUbvrZKOpKS5qbnTVk7DhjwMrr9MWhx-P2gvqNrrL3Et9lxCRySJ8OTxAJlFkbm2a3As0HE7aesKeMdY3leKfHva0py5zhcCs5ugJepEvGzePQYbF4nLzFfv2fCZfOOrb8nP8ReWyFaSms0YsYoXWvYelXgMnrmfkBEVt5ABAMv2_ttNodz1XOoRbZix8W4WNyZqY14YV8PqBbZtbP_Lan_ikEoTPmN3oelXlzTXsS503us6amySa-eotfEXDvbgyTOxm6XT-xj2ZIB6TM7FYVhnf04ZRQhNwGuQ755fRkUpWhpFfwLlaPi1l70AtxMHg",
+          "width": 360,
+          "height": 900,
+          "sha256": "3e02c857071874d59994efe6db21f5489135edfb346691e1bf94352c187e9156",
+          "timestamp": null
+        },
+        {
+          "index": 5,
+          "file": "mobbin-lesson-05.webp",
+          "alt": "Screen 5 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.T3sOk7QuvXAWRpxk.5ZTsRpJcpjGR-Fy3zDd6MHElGuOWh7C2C2nBNTsaUyTxEnwi8ZykjwG-as153lBFglOhL2t9A7etjTrvdeBiiq2FI9_RM1WCZI7FQvMPYxCAVUS3JakEBBPbwwNARoHWosuOdzFhD0wrQSq75dbG8vugpM57FBWpxO-3o68t3hi_INZ1p_Sdq5u25ePMNpHn1WwbGEY5imEHRph6dXy2aLblEQUnfpXV-X76-8OZtE7tZqYS3eLMjvbjJWoaWprOj563TJ0_eJBtJXNVxAjE8QL6avSB37HyZ-ecsierz9yVkT_idb4ZnUjVo6kzhKIsvHRvinZwGS0c0og1fIAgANvpjbq2-A7LaQzKTFkI6jKoVhPJj5Reng",
+          "width": 360,
+          "height": 900,
+          "sha256": "9b5431f57024ecc4df1d234277e8707b34a7b5e7cfd20ae5f5076cb300b5d36e",
+          "timestamp": null
+        },
+        {
+          "index": 6,
+          "file": "mobbin-lesson-06.webp",
+          "alt": "Screen 6 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.b8pOCKt9rH8Qavat.s6c7ysPOdyFq2BO7oAqQrs-YzreW9dbb5yF70l05zDF55wJDxieOrZe-meQSihtRsaLrNurT3fAhAgcO3BDfyyiq43Cqs53z_PyldZ_VKKMXR74l1_j-MLlNppT05J8s_ycH6qSw4TCQ0yHpvSGAb7F70PS56k15hT2PjeSekiZnZnBE-pGdhCkEVI0Hm2Nvlrdj57uP-aaknRDq4nl4MnGG-ut1mOX-i-K-WBq_jwo8uTj_-xoVY68w4w9dkbdVzVKrsj_--VUf49dj9kvsImvJWzIxQ7sCiNH6kVwvLdkMHGw9pNHQfzRCzgi6YUNRZsl64X4nbNDOtwa36H_fxycgS-Ob8WJP0axhUnjWTIykSJfp4rhgBA",
+          "width": 360,
+          "height": 900,
+          "sha256": "c1572fec749f9a4c305439e6cab018d18e24fe4aa1b150814a6dc6d4dfa90719",
+          "timestamp": null
+        },
+        {
+          "index": 7,
+          "file": "mobbin-lesson-07.webp",
+          "alt": "Screen 7 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.o6U-7whC9Q2RoGZt.pOsfOCbWxa83nrPvGumfI9isyan6DuXVQpWT4ciUk-zFGwtu94TaU3cGt3HotQ5ni8crdroPAy-rblyRBIeNdTdkHXZ5Y2aqKeyEe8qwwhoOPTmcamBYOv6R99EZ3aTV5UbdRt4LQZBVo25WWBZyuU6669zMT0CQjv1qBkiGS48iV-AjPZkotWgFnZvBYnTbOudq0cub3TeoXB-YOg9q3E8BeQnCSqWMEkBwtlFaVpqIixClNbJbmfdwUG7KYaaOeHR7OvjHyy6UjetJL_ppWVGrN9ArzHn6H0jJLhzc2hNq_HU-c3kOX4lkCeZNvaoBQ6GWV_i8CAnQqchaaTiF6JKS6vT-6UMC35DRUb0m4nP7fdRxu_ykzA",
+          "width": 360,
+          "height": 900,
+          "sha256": "c01c9f181eca955841e9ed7185e5fdef53ea9db161dbc960bece90f650c0ea3f",
+          "timestamp": null
+        },
+        {
+          "index": 8,
+          "file": "mobbin-lesson-08.webp",
+          "alt": "Screen 8 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.R0nLj8TTKQRvaa0Z.zlWUjIjRDRNiBXfrq7hjqpUoQ7glIKnwBvFGTcsHa05L2GaIJYRc_VwD8pQw3_LBaq7bJpVm-n_KH_OQ00ZD5jYYcm9cC9N63psFT5nKPNtLh8SvDyRw995eBhp0toy-8MESecQHF16iB-EYq5RnIUT3aYWF0rKs4_nfLhm9xpOVM4ralSb3f-DSkx9NhmgkjMRlC-BqQcb-1gmBhGoCCuzqijUGguKsw4IPpDj1gLJpI8dBUztIChm8lhD705f8SLSL8FvRTq0v6D_jWgSFN-KbQilSdiZdKPLAPKihzLSh9sc8yrX_o6hUZ1FuT8YNjSArFnmIHfIOY_Qs-9o7G0qse2--kvP7kyUPfcr_h9oEIVUyMA0wjQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "99ad464defc094c4698c880ebe8e9321adb36edcf67a031cd524a28837cc4e13",
+          "timestamp": null
+        },
+        {
+          "index": 9,
+          "file": "mobbin-lesson-09.webp",
+          "alt": "Screen 9 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.LQUBkp08aAFigHaN.iBP7bJusLfKMl3t1y_WRLvRrFeNNwE-a7pz0UXADZMpUclOIZU5b9W76GKJdWN6xTDDDMc6rxA8jjKB3WDRKeoCR-kihrpIMoUfNeJ7dwA4dpkemqe6Xh0ZWyJtQ1-4i7g7ci929zCK4Gh-QYwhJfmGznA09MCmff2PFWJ9cMnmsbB35AhKyDDFAjVIbNsg1g8Ve1wPk-cPy5nceUBQ886kIS1D3byl4XjmT6iBJpPg4r-INmJ6mIP_UqpY9fyosVvGFSag69ZoYEWnWrggSjov6ngE18G7pfSrLwomjRjGnt3B5m94tspbO7yhRyG-mWWkujbvMx7n10F-wGd3VUeQyuauZKHfWMu93efdZm5QHn22gAck5wA",
+          "width": 360,
+          "height": 900,
+          "sha256": "81d59b07c5c68268b6260c93f54920ced8ebe8500e79bc1ee1ccf4f779f81b07",
+          "timestamp": null
+        },
+        {
+          "index": 10,
+          "file": "mobbin-lesson-10.webp",
+          "alt": "Screen 10 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.TTvdu9iJoSMYNXbm.3YWnApUQXMk3EjlkKe-fIeEqE-I45O_jgsAK6nq9b1WUV3SdykS3tm_S0Tjf3YzuvX03dDcvHC4xVdfI9DthDVoAcooAnvozFPh057tR2qPXGS0SB4CdQ0x342lGLO-h8qMESAufTFpcC1-o6hZvyuzHwx0E_eb6HbJxHP8mdVGwdtx0iWezh76RV2H7GvM5fGgvtnGkhBtKt5e1O-wA6R61XT4oQnKXNY4h84T1Vj33u9jv9VMrEGKcLRUZ7_edxGFCuJcabf4PHeAidtEcgAd-G3jZNLboFKqtnZHdbMN2cP5qOwEIkbq7jv8eHd_cvLjzXeRGAO5K81iUEkVWULTfOld-zJ1ZV4_tgITZN1pBj26ThJcOYw",
+          "width": 360,
+          "height": 900,
+          "sha256": "7979440cda32ebfdc469221eddf5c3b9886c2c2c1934babf9dff78e00a6b8b48",
+          "timestamp": null
+        },
+        {
+          "index": 11,
+          "file": "mobbin-lesson-11.webp",
+          "alt": "Screen 11 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.JebFTanz26NaAc9_._1AkWLp3ZVt55jmqn8lgnDeSOafirQqdpb0HqicMC1mmN9KCIwP8RMs7G4iKtEulh0MOIc5a9d7QPX7IqEqvfiXLbjfXqnN1QohqYar12GJSIHjQ78tNG6iWdwTaCyWOsZ2QcOZ6uweCZmOTlajexaVUU0WWqfe7pzLoUdizmnuVlY_hS82z9PlgxgCYYbpObOSy5jCizy-86OyuCuGuBHtDM_RnRKbePQosBxg4QjZXZxAREGFehxHpU-rn1GferWFLpA51M549CL0difjWDaX9xGCypQa9ZysUmM6zHnhx2CAx0_QrkLo2C2ckJ_XgVJpEBwIeGLXLnHkrIIlWYD_ZXCf9N_BrzwfkiTOa56LOJcJyKTcn2A",
+          "width": 360,
+          "height": 900,
+          "sha256": "2277992620fc66eba551b1e76894c0d407dea1f41cc22f08759e3055903c77a5",
+          "timestamp": null
+        },
+        {
+          "index": 12,
+          "file": "mobbin-lesson-12.webp",
+          "alt": "Screen 12 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.hNACqdBO4TFlZX7S.7LlCwLjibYv5RqPSYoPFhrEBpB523HUK3gw3aZuElofgjwkEK5SXWdZ4LkZDb89FK4kFrHYXCjLVQWXBWnvFnOfBZob3yaloXVTE17pNf63Imr_BQZZgAyooYKocgkF77XPPZ_xIBOv8XTZx1e-lWG2bk9sfxrAWTaWXlsKwH-F6lkJRRy6yi_6r_qZekxyn1o8m9RqgWB44WEWmfaY6ORieKREqc1qg7I2YWmRk-uHMagbrERsBH2d3ykYVLXsTsb_PKQLTUtRkuUJ6WgxjwLQpHsr-cMLNFJnJrNWhNjspud6rMtPxu0yCvRUNu5wZQWmCqSyrss_w_Q3MzZMZIK7TgkZgYbCGAiRZT1SY-wkvohe6-xNeUQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "1fce99c4fa1411f2913d41a546cbcd4a3f15a3a5bdd586c621f100446f6f6e72",
+          "timestamp": null
+        },
+        {
+          "index": 13,
+          "file": "mobbin-lesson-13.webp",
+          "alt": "Screen 13 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.L--wozFMLr8o7aG2.1PJG8Wi07tEqJFqSy0qM73kY4XOKMOA_nLDobIf0FlprG6LdrSEJPONv0jgnn337k_18_VXHJLhA60nlIDY7l0OV1g-plkJCeDDJCsFimc_FlDT63BbW2ja9eEcDVUX7jHbDn62VzVsSbS1PopPXYpx6709nBG1LzeZ7R03DWG4tFwDkBws38P2Y8nh5wsXcQHwps4jaccAMXFR6q4wNhWbPsuHdWJxOO-J5aMXXEIce-45hCS_hQ5LfbW-qgMcm_x4vuW6RicCKJ3cyVyoYP-7kixk54XHQqJUoWFDAYIJNHrP0iNlh9knigcnNPS4uORzFACPOHEhM3tCOL8ShG9W-Wr56NhFjdBrL9zYeLyBxrCzjnSi65Q",
+          "width": 360,
+          "height": 900,
+          "sha256": "cbbe78f0f8e29b0018dcde5f292253c4d2371709db0986898fb4c26b85f9ef4d",
+          "timestamp": null
+        },
+        {
+          "index": 14,
+          "file": "mobbin-lesson-14.webp",
+          "alt": "Screen 14 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.XgW793Ju98neMUaK._HC5L6uEOFaUMe4Uf2Tj64K5Yak5FCT9qIKmlWDjjd4v1KLrW2kxnPaP4SNOsljWld5X4JLn8GzTHlyLul6ERhgB1IZqWmyZ7kCl-6OHFfVPnCFloCWaGKTZqAVnfNMm0ZDaap7w6YwsorpTP7kaG9Y42abkCC3sNbXOsv50q6D7L51hfv3q2TbF6O53LKd1l6B82fuON5Zd6wqxU5l7JFps-1zKKA8IFDWsWBsbremmxka_t9EKxMQCPqoACWyszOHsXV2Nt8uNxvBSEnajRnwRDm_MDp3lifu48ga_7c1yUNudVREtgZH1gsue4TBelDlDjMUvQEpKIIg5qe8bpvmdSg0SmOxaynB7Zkdgm-Fwmg1DcHX5YQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "33eb0198a7e656489bdda57e73613f1354f9c7ba6f842c69c224c987db8aeb50",
+          "timestamp": null
+        },
+        {
+          "index": 15,
+          "file": "mobbin-lesson-15.webp",
+          "alt": "Screen 15 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.8VxbX1YrhMDu4W3C.5T2-x8PpUa8MNrOKRGRXn_eN-iUBgOC6CIw-Kx06dfKAuZRE75B3XNPhxKgDWBHfNCsCZ-_gTS1Z9GSz8S5OCqGhlMjP-dFAcwA5672524jox0hUxYtO4tM8skDYdwdsrew1v28fYPDc5qc989VyLWFgWWy3z9XX7y2e0PSLYtMFM2NaslYZuGxVvOmsc_GPxXloXiaqdS5E5FGO-adQQtVQXjlfbDMEfZIAibLAErVJhUD4NKluAktI6xqndAM54YQl9DjA6aYm6BzmCuvJszQisamkhmqE0GmtBdeAL_LkeLN9xOQQmaJIX6kI5-csyTYNnwDFma2vfFClXPwb5Si36EGMtCQSS6i-87_OC93Pcg-R5va3Bg",
+          "width": 360,
+          "height": 900,
+          "sha256": "500a9003e0a26c4a1fe3180b0a519c075b8005592eee41e8c365582c443f8b04",
+          "timestamp": null
+        },
+        {
+          "index": 16,
+          "file": "mobbin-lesson-16.webp",
+          "alt": "Screen 16 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.pOrDIKev0SEoZHcO.6CJhJHPgiPH47j0wynPao37_kuOudv5wzbY2XAJn_7IQbCHXjcZvjLAx8rAwos4iE3IBACNtAMixwCHs-G3b0X_Ma217fxGSrSaH2TKjrCuTCU4yBMFZd_rbeuo5MTynHYhCYrYFcIYJyeogTaeNRC-kc8eKeRhTjFN3hlus7Jq-H15EJzfgn0YW3agpuOh2zD6LLVNx7U_5maIddtsEe8cb5b20_tSVmiNnaVtFmnMwsQAnxx2KQ3h72h_cwJS09JPcPd2YjeVqRXdsqB8M0KOWDuRCBAw8BgH4djNg6ZCSwLePQcVJtDf-xmSecZRgvyI3KmmPLXWoAK6SyOwdtRdTOvdJIWKy3jCRU7XKKRGQXfOQpgY4VQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "a1531468a3d25e94c976cb9ce087d7afdc20bdac7ebd34d79324fbcf40cb9f0d",
+          "timestamp": null
+        },
+        {
+          "index": 17,
+          "file": "mobbin-lesson-17.webp",
+          "alt": "Screen 17 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6._ugpQYOj2prM3gP0.VuhAWSL2oiHlqlG5eTp8L_YC9CdQlP0HIvK7YagrbRswP4QtKJ5Wjs99ofNUPgUuXaJq71bOIzIkCX17Ibfh0ERHYdPWKv2XxcueGXLArnmXL409k_svMrs_GY_1XH2aGDAbUYdo25Fd70q3qrf96U9iQErWSuH23Hdhnyh-RfC716E8WyvSMKVFMs2f3i4StHADfNSIc0TAXhsZ2tmIqhHtk8DeMyJKAeVBD5EvbpLyknChlie83CijJdOguiP4geIJAeRrlxBFO-c7ojgxovtQL-uNsfgFntjw7ws28AqhQjvzuLPLoqKbes84v5m3VeOQ7DPX2qehnxSTZL5BAnkujDU_FGkCfAG1mSDNMz12OGeCfVnWcA",
+          "width": 360,
+          "height": 900,
+          "sha256": "760e17e894df0910a3f53e48188a69514d11d6e8822268063d6faed89d9caefe",
+          "timestamp": null
+        },
+        {
+          "index": 18,
+          "file": "mobbin-lesson-18.webp",
+          "alt": "Screen 18 of 18 of the Completing a lesson flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.fRVc4L3BHZa88034.FNle-qNxTtuNIXKUdHJlz0OiRzzVr-JBmIDwl2HAggyn4DX8LdKkIk5Vj6G7m3wcJ7YpPfV0FqRrphW-D_zX7IFMIbAQlAtmVAXGVKSDKife1NXvwqaXJULgdb194N_Fk6EHswhOGkL0TJWUmr3hA67eK5_TMpV_6C_GRr2s1U6j7yCPwh3gjx39jAy6fkZf9hk9Z8EG48jAtohN6b4NstQxcHEq0s0f1dW83e_mXFDY15koYLFdqnnZFR9EIo2tpoILGdzfmeKhrI3NtVZVla4lJjEwK7XW0pKChNMj2Dq8c0dORBnT-tNAR1vmu4ysCzRB_uxzv72v9xSxynHGKMoWNDo_8Gn8cM8_obAsMDbKniIxosvSGQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "5446cd1a77189ecb4bb4f3f9e5500b693e87d68b4d215f0b75b83a5f73c20618",
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "id": "mobbin-leveling-up",
+      "page": "https://mobbin.com/explore/flows/c2a18d3e-9279-48b6-983c-8fb682822a29",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 14,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-leveling-up-01.webp",
+          "alt": "Screen 1 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.lREgawBLZC4oFqPb.fVHDBIzbSwi6S7zBaWI4WQ3ZTJTs2bqM4mr3gSt0b3gyWjI4u9ddMMrreYyGsIQhwtGziGfNoyb__xDG713MnHnOxJL8SkBtLR0yT8m-lzwwIAI1OggRj64IAxiDu5fKYDz7JgrYsHhaL70ZJE9m_r0IQ7aBdsra6aXKlBdswxlUUXBEc98gcXYvfW8FwTACTFo2_qi0h8KwSAVoGVjR6aTHuZeHhLIj6rG2IXTpt0vLP0kgv9Qh3HUf2u1J0gQjWB7GDHE7-eo87l6qf37GsKeSKpawRNrTs-CawWdhR_mXC65KDzRc15aNKSd1iUKYRX1C1YTQ95HkNmLADBMSSixnaQup8UZsnflScO9qSZukk4Ij7NSHCw",
+          "width": 360,
+          "height": 900,
+          "sha256": "f4da9b34c4fedf7727f23a0d413e30314f37b5d8b2e69e0330dd48b0a97bf245",
+          "timestamp": "0:00"
+        },
+        {
+          "index": 2,
+          "file": "mobbin-leveling-up-02.webp",
+          "alt": "Screen 2 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.w3Q7GVrElXmCnQZo.L3tqore0aKkzz4jQjxw38ZN6z2XFvD5mFNMPpKe6N4cwun6o_z6DJBhxbSSE1ovkfqzgDopNX1naCvorkdVqzczVactHYltX464pknUQsqJLsoQMQSCkHtIYB87dmA9YaZv5uYB1K_9n65XA_adA0ZDSunoG4M09B9XPNo0_zOleFlg4vql-Yw8T8xSHtbcilmXt-p5hfRW5yjqZDdabDaIhDBLP2H-Tk6E44hOGmOtjwf4vkpkS7gSENgzEihE-rsjKQ5pa65wQwuVTA9Yd9OnMivDEwT9wO0euO9dxHFr0K9QqQ_JJqTAm-ASRdNaFC2edV5P0YYfCRAocglpbsZZ1pCCI2jX0icqDqu6ruSVyI8lKkV8Nkw",
+          "width": 360,
+          "height": 900,
+          "sha256": "732ac832d2f8f242c64d5d3887aa1eb139a3394370b4848a3c811a97c8a71922",
+          "timestamp": "0:02"
+        },
+        {
+          "index": 3,
+          "file": "mobbin-leveling-up-03.webp",
+          "alt": "Screen 3 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.DJOYFToYKHoJpcq-.CEQjJgnf6LvyLOyhcjx7iK5kLtu6LF11KTNyRqILunpqqI6SnFsWJ9oMtUa8q_zwwPfDt9pQnFv_CZ9bybFSuiJM2yYuhlBY3Q1Dd9vrDZqbbBQbhpGFIQp2FD1DLyJn97KxOqzqGqKBYwF0A7LW5JCkebqiTnSBRgUulcGC5Cl-FC2to7l6U9JcnYAvUPahxM9UvelFzAz-1P6H1TPkpkSH3znJgL6CJdNUMSUWctdxlRk8s5lTkoy6C8-iVlBgN7QY__xmrZAuhSyZ3iYbSNKQoXXeYqyKjwwZuKyXRomVVSEaFkYu_X0s-1d-d8I35b43lvEoXC3gMwJU3POsbMDAwpA5oS6M90n7s3Ugzx3SPPnga28Gsg",
+          "width": 360,
+          "height": 900,
+          "sha256": "4f85d52a3ee25253c09a648e3c22bec40410f87be8c69534448df2ff10ba0b4b",
+          "timestamp": "0:05"
+        },
+        {
+          "index": 4,
+          "file": "mobbin-leveling-up-04.webp",
+          "alt": "Screen 4 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.94aCReCXGWb5yVzh.8EaBt50pTsfoCj4hb_CGhYNdgyQo4JUhS6CyjBP3Ps-cSRtxTuddIE8vFXq8HspO-6qQ5a9B5F9wGZQwdIDQlv8qfnMVLcW3UImjWtGdf1AYNxs5m-fxiHU-d1sznrrU0iBrjNAN891bCsqVcrYFNHN9CULOq_b5s2YQer3qvmcjSkaXRdmqTDgQa45viQbva3WJXJjco9fEQJJDl7eGY-gs2SQCsrS-JoeOwgpaVaKJbYbHemYhl62BNuTubGsua44RXNHiYFUuYOejUfYPXlWxBKGVxRsdnMBrndfsyJ_jyw5Q7xF2CI6G6kA6hEN53Scf_ozMCnYCFhqEg5h1jDs_aJZR8JRqGEmydcMqs800EPbrxoSv7w",
+          "width": 360,
+          "height": 900,
+          "sha256": "13ad92ed35ec1fc42adb399526496454b24eb9a30a904ef25f8944669299598d",
+          "timestamp": "0:08"
+        },
+        {
+          "index": 5,
+          "file": "mobbin-leveling-up-05.webp",
+          "alt": "Screen 5 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.byI4xPWqRw2UtQ8g.0rirdpzKdJiKHtTkHZRZeLgEPlphnXxdkBN-SnmOCXSHRuCj9d9O1z_rzMm-_bCjTtJvlAoQiv65ICl-TLD_ceBlXzBaHwAJXlc9BrMw0aAxTA6_Qa6B2XFtxMSV7izwgqCWOwmZNbAPB0L4yxzuIBzh6H79V8KP5MVab79Gc3NYTczTxyFx8Y6CzIgO1r5ZkNCh_rFheFdhbq-w31EYnRBDRfBlDXYUKGiaH52PsrU60VEWkY4faQExVyr9nE4wifSBgGrmFh-AKne6VsPB7EcyUwAC-LbDNuCuNOdDb2gc4AxSliMoaRB9JRi80_CblW-J644mkORi0kox_Fv2TpXeMoJxYn5ry9TgQdCKEDIq2k3K-T1xaQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "a8dc91f5a15acd875da75c4ca92cbc027f58995453f8d8bd8756de50ba917644",
+          "timestamp": "0:12"
+        },
+        {
+          "index": 6,
+          "file": "mobbin-leveling-up-06.webp",
+          "alt": "Screen 6 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.YwXQRVTUgLF4rVfp.WjbnoO0pSFUtoZVSNIDMSfolhPLk2uArwUYI-ITR7f5PUipFUh_wXLMGSCK6sEruagh-gDjenee1RXh07kv6pdvjcjCyozZoy86FeVTKdmTq-CuKYvMkS3jmAjMfpSSjx8T8dAXD10hYy4q7avrBd5dqTyEf__-NRS95bQhG5M54F1-FP3NPqkki3oEJvExmsPg8GE_w3FejcONgu6lDl_2DK0zyqXJOU3A8upXweLo_jhqQ8kIksiQq5axk7-grKXVhrfGJOHhYBMdOdSXMvjaaegKQlko4rMBoKpoYSXevepLCl_wM6m8FHGguMMVYHgwIxSweNcQYZbe_9OdnB_0EgGY7hB1hamvy6KcK_NU0uUx_EEf-Tg",
+          "width": 360,
+          "height": 900,
+          "sha256": "7eb45f29d972302fb3740a6e8d62d8901d5bb8f6c442fdd7bd01ae64a51ed70e",
+          "timestamp": "0:14"
+        },
+        {
+          "index": 7,
+          "file": "mobbin-leveling-up-07.webp",
+          "alt": "Screen 7 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.sPDMFra0r3Q1CIhD.TCmFx76-2m380jJLuec89UR2vJhDT6KQyhxt_l24z9TGrcgUk2yhehVhQEsuHzkX2p7sw8TC8OJFj7jP_lWakmQay6Y5TfdCzNTiblpyuEbQgguL5RriCb5Jg9csBx6FxqCe1E4YHMWzptczgquqj0WCvX06myzFHu7vfHKtJOybmhr9UW7II-NyeMMFkicpHaiXrm-lfL-FPAvFMh7180LD5rIwdcm6aJgPdlCuG-49juEOBDXw_lmKhmkSblJhti6IQ65K81v5B0WVr1bLug_7SgBt7qBAxidSmj1hNlBZjUQEqeE48bkSLErXSqW2IkWeQRoyOlb2l7ZcBJJORF2VglDm_fHfNPFJFCDijQ55Il2QLpSjlg",
+          "width": 360,
+          "height": 900,
+          "sha256": "7d6d5c3b280fe77975fcbbe8f2ab46507640ba837d1334a042b64c986e488117",
+          "timestamp": "0:16"
+        },
+        {
+          "index": 8,
+          "file": "mobbin-leveling-up-08.webp",
+          "alt": "Screen 8 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.MmO_VIEf2Dgz3Onx.P5Yndb4NbPgC5HQZtkFnE1a8RuO_7iiUqBM9G6Ixiekr6jKAyommHwVu4UZF8m8vzDh1qIqLQfd_dS3BztiuiWhlhpg2GANPXa50uwuAdgz1tennLykUr6eIk7PAORF_zXdslRHB7-qj9V2AY0h4jW61BRVWljtl341nvUfyTB1OZrGX4uZbimQNUaseCR7555vna1Zsi4YqDH1zgycYOSr5RY4gk1N3OUHR_uVrW9cwyM_OJNPKK5cfRsFls_PHd-4UFhOpYlxutaEde8V1rAatt2UANytd8RxyX5t_FpNzb6cM5gOmge2EVyK3iIGY1HNJYE1j5ET20pCTzgoYwuBFVwBRxXV-0UDOOmjPlirL2g-sauIuQg",
+          "width": 360,
+          "height": 900,
+          "sha256": "fc2c3d4d0a6439af8862368d57fc8d4780b2d2f281d8f2a3c7d00d350d1f3c2e",
+          "timestamp": "0:19"
+        },
+        {
+          "index": 9,
+          "file": "mobbin-leveling-up-09.webp",
+          "alt": "Screen 9 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.hNHD21z9uv8FbhQB.Byn3M9mzsBmOlNXLxf_vbpBCFsj9wYe2AeuO62UEVzsoa4OUzuNfHsj-0tXNCxBvZsso_Vo57T9P-3HlU5bf2gvGklbmnklyMEbWF7b1YZbPYxJlirl5KBrLHrOaJ_-4b1wDepF35LPHwpzQ_oWM8OCDKvJU5J8xv9cUgw5Aryvp6SCHCUA2eEkPH_ljxOaeIyBh0e7SkCF8Rn6WJei6P6Nd8nvrb0BcFXY-69clz7CF9XErNmpFUkfH2jf-f7i5g7Q_uiSZ48SlVyJ8QIfoUplnYw0sMaugcmDdTxK58WYl41lNq-XrHb1_WvclEX4wh6Pp1-dXjgYxEFZNcnvFgV77h5Zpwp_0qZx7b1MU4edBu3U2TKV-rg",
+          "width": 360,
+          "height": 900,
+          "sha256": "02bf790faedd094b6f4607e7cd574a9cec7dc65a2b712ac71f9d0da44da14fd3",
+          "timestamp": "0:24"
+        },
+        {
+          "index": 10,
+          "file": "mobbin-leveling-up-10.webp",
+          "alt": "Screen 10 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.QwE3eVgaDolVnjIQ.s-ixEb74Y9wq_1o-lA8BYwhFjILCiGvK4X5ollyVmR4fhyTrxMFhPh5K49isaQmfRw2O7ZzJxiPquDbBTtrXV82h69nwngCJyzl1kXCQKA-ebeUMckNlCSs1gkc5WztT3E4aRjxpQdBaYGvMTftw8ZK9DKmku4NcZdwX6-GzHSaMXZRm2tLnzj6-224EYY-OTlfu1JFYxe6yHrxc4o8DEzNtJiE_Ftu5D2R-nW8_tjrnaloa6EdSZYVyqN6ddI-pzBsvdJbQGe2nCiS71YP0WOniVKHJ58K3vDks-GJplYMw05vnBri4ti6fXR-6n8y96ytfQ88J6R0XCUuUmXtB9KVvknoYQDqRAl-7f3lD5z54vhrLCTtyZw",
+          "width": 360,
+          "height": 900,
+          "sha256": "cf00baa48c42bf4ba197ac55d7101e144a34d7049e23da5568ac56b4bfeef86a",
+          "timestamp": "0:26"
+        },
+        {
+          "index": 11,
+          "file": "mobbin-leveling-up-11.webp",
+          "alt": "Screen 11 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.-7AC1duFRfeXXZxD.m9piyDihLQ_FoCn-DMAIpsvY4X7WB3NHf0xETWAXSE5DghLtdQP13UT14dXpptlR2unCKf6DFTqvjFJRXENky8ynRqScOdegQZca9Hg6QRojPEopaHnin2tJY9AEF-dLbyDKF0OFqGFg-TCVQHQr6VoJb1wrFY3094qT3s2iypg3Sn9haL-VNKU_72ZugkHLHdQNj5PmqUcPawTUc1UH18f3JHFjB2_FIjLJ3BJCpYBjSS_BmAb6zc3kbTIVUjFNeKw6BfIu-K_IMiNBONsLfk8YywGuMxOJcJp4CARFzMwTdy0VGdgu5QkYejdjZeyxxaBhe7R-FYARr3D1I9Cwlt5bfMm_ezh7HNzR6tCshx8BELPqhdNFgA",
+          "width": 360,
+          "height": 900,
+          "sha256": "d925673caf1d1d316d6595d52009d4469f96f7bdeacdba2b42d637ee6be558dc",
+          "timestamp": "0:28"
+        },
+        {
+          "index": 12,
+          "file": "mobbin-leveling-up-12.webp",
+          "alt": "Screen 12 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.p7mCPhvmqT5sKGiL.loseC5bCvnIlbVVgWtULvpTMvLEkfJa4SbG0BXDBVGceoSr2iaXLI1XleM-LiuZziYM7s12-iancNcTuQNgiDqnWboezv46pBgSzjisjRNgy-LKTcOZ1KxQpjOl4pstRFxFttwgcC2cXfyCUzYxQWWCr0HaoxlJ_QJxmbc0b00I-5AJY5RfXC4BAtTat-ZYFpwN1jkGXNU_RFbVPGVJBr1ZTUik_om7WrENubMoM1mOTj0uCquNmuLEzExL46wYoiohJ0DBz1ZR6GJvEZxjZ2KYX3eV0yIJKOn05Zzx61lrN8W69DyE1VsYPsdepgprUjLIsxyTvQBtdQAaC1nDg49mWLSIcW9Hf9qPMrsFxxzBiB3wEI-o24w",
+          "width": 360,
+          "height": 900,
+          "sha256": "83009f30805fdb0e5611136997bc2da557482c9c52c2e1ecd239a16149cd8aaa",
+          "timestamp": "0:33"
+        },
+        {
+          "index": 13,
+          "file": "mobbin-leveling-up-13.webp",
+          "alt": "Screen 13 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.0eFVElJ5U-o22Gxb.EhNz_7cjhzaE6xxnKrIp__MCtpYDK7LGMJRNpQ8QTZMj1Pb5w7gbuhM39QK3ssb9ek1kpzlzqJjBz3oGlYEFODESjz0ld4sbzbctuog0sDbKtSCRQe8PiZWzwyBmiQZUCO4BZAQZe6bi-xP1qSOlaIiGu8OBs6OXHkNxeb4vXdHrniw2ttIlbCVZloz5fHXc3Y9-ubW0YbR6h5KAXiAHuCK9Jvjydu_lQZBeaUly_nXNkvNtqbcTyp4nshP_Kq4fB01v9R31cCBZahQIZU3iuEEIW5yy2Q1l_naSlmDd9PPIV80l9gf8L5BAiBMrZzzsMIeQbFKlW0JX9kTB4mGievpcHP_ixVB4GBDJl3uTZx8p5cxSG5rqUA",
+          "width": 360,
+          "height": 900,
+          "sha256": "916f90c23aa925243ff2233cf99f50964d4cf929d1f7b810ba841956faab5b67",
+          "timestamp": "0:34"
+        },
+        {
+          "index": 14,
+          "file": "mobbin-leveling-up-14.webp",
+          "alt": "Screen 14 of 14 of the Leveling up flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.g6qOn9y9ezkeCque.BJxmr525oLVRHhAvsHmKF2JZ-in7ebcT9HlI8CJxPhbrcLD2HhLtLgE6ejpl0L8uiTn4p8_TJuSCCj6R5365VGPLjYdbaUyXoxvtUm6HJloN726L9BfkZk8HPFmqwlo2M8Ym58ZnBDJ1U61Jy5-kfc_EqFP5foeFnzgq44aD30Q6f57BjkpOIscnyzZ-vWQp8F1rY73Zr0QyhfDvsWdgnrRPcBiMy4mXtQ1b1SlmcedSEm2DsQ0yJ75THYWqq769s3fLakmT7VXORng-q98R6yhTS3jgpuVYO8nyJl_jaEs_SgFxs0192yucGD3yqjSf02x637gT4yTaoEfrdBy4EvBzkk1lpH45tLTnPTwdUuv_jVIeLDnqdw",
+          "width": 360,
+          "height": 900,
+          "sha256": "156c193ac48d6c1d59d0817cf70ca293e9992f1f24d142c150a3082139b4637b",
+          "timestamp": "0:39"
+        }
+      ]
+    },
+    {
+      "id": "mobbin-onboarding",
+      "page": "https://mobbin.com/explore/flows/afd9076d-2599-44fe-962f-fc723a7a7b6b",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 23,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-onboarding-01.webp",
+          "alt": "Screen 1 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.x703CZZLjzSwcpFL.M0wwr4kH6x6nw17WLuEJlsNcGDi_eD-8Ueqo6D09WY-jft728vqZtMfnI_vPYUAERiMg5PxP1ApXs4G69enRzySqL5MSVnzD9yr5BLqkaU8T98yc9XoXJBc6efbO29zzq3xfdFuRPPbZ5pwyNZ9Rl96MiGawHodT7Mx8VXMhnU6i0Jpw4XF0b3-acPcYQA1jj5tTVbckCNFahOAXP4SrjAp9IDyo3REuaD20V0MErxwcrmtLJUF_GQ9zgr2v1eD5Py85mOvzlZYuAnnXc0ZMX0h211CipQOz-ja8CyEuZpzC_Oru1nwmtcxDCkXajezudPaJSS6jYFFJy6O8lONsVaH6Rc68ymo6ZDPxJnhwmL8YHcW8-YNCIg",
+          "width": 360,
+          "height": 900,
+          "sha256": "c651926cef9b67d78d1082a99b15ed0d5fb4b2a230b5c3c2c290e555091a3f5f",
+          "timestamp": "0:00"
+        },
+        {
+          "index": 2,
+          "file": "mobbin-onboarding-02.webp",
+          "alt": "Screen 2 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.LX30xOBj47RIaDGq.6Mzz1AWE4w2z6ywa4oOjxgUtbaoCIxGd4SwZmUY5cBicWLzV4z2Jo-TxPmzAxvlYhj0FFTHCG5mvsCUM2N5yXqatkwWv1qxFCBN2oLtT4-IJMmz2uxdKC_9TTZ9NgTTGGFMFmlEFkvR_aARBelQz_h9EQNEuFnVLjkzO00_WEKk8mmcOsIIh5Bh5gfrak5UVJzMB5hU7wRvrOijwj3hmjV5Pqc5M08WVMnGV5CnfPoILaUwwPIV8E8cs61fK5jugSORu-YLqYFoZhh8gyEdqbKihPYoAH1aAXQQsg3HpNpiKtEp4D4ccMRdIskws89K_0MazTHVUSFVj3Vgd6lM1607xtu4IYJxpkte-Q0nZPzJwfXBBYdSAwg",
+          "width": 360,
+          "height": 900,
+          "sha256": "ae3f0bd697c7a0be5ccd440ea0f1d41a4742e95d037e6d27134154e0f3834d6e",
+          "timestamp": "0:00"
+        },
+        {
+          "index": 3,
+          "file": "mobbin-onboarding-03.webp",
+          "alt": "Screen 3 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.iYchngpOGF1tTtTG.xYPh7LuRHOsleAvJNyHi_3u1QkvQhKJ7vXG61-w4FI8iHRsJORoXpcKmdCeFL7wjZW3oOWxjbmOLeqhgZCW3ZuKhEI9yb6vpMwHDMN3dETPkeo-uhXpqQueBKL8Yl59QDTUDmIkot3ZEzde44pP0AIhXzeZuW4RZ14T84tir2gW0guGI093CZ7Bfp0zY1zPiv2u5gzyfCTroMKJv4O8DV4ztuHNZx0UdSuvTa83-S041VX-gCX0IqYb0pVq2LEen8-IkjFSyFa1j2sLjJ7ks18HWawcoxzS3-Z6_dIvwzKEe1f6_5iT-C3x_0TjYeyEZOb928uJmW0RAdXigtcYWvDMrPgylgvyU5g6En2jQsnieonCS-nQBDg",
+          "width": 360,
+          "height": 900,
+          "sha256": "f1b0c5cfc689159367caf41199bfebdda5273fe473be0da71b6709c0ab35198b",
+          "timestamp": "0:01"
+        },
+        {
+          "index": 4,
+          "file": "mobbin-onboarding-04.webp",
+          "alt": "Screen 4 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.rZskWO1a0r4gHT96.wEJWX67_AC_qKqLJyr2ZSWrF7ureXJDs7Rdyh8wfdfj1k4COAuYwtz6N3anUguM_3nTMcdom37mMo-tLqEhUsfukkJtAeoEgr0acbDeEXyE28gyFLpxRVfxx57Etm0WP8AR4T5_GnmQ4UMOhdGC8bIgA2WeMGW7EqPjmDJci1m7eCBLEEgIywIDd9mUOgvWD_wGkN54UBpCB1FaebRdxNUVXS6glIWcfrk7ivFOw98MrMiazSEZjzZI9BMUCS1VgYbSfwckYR-9kqAp3hAwLlzWjyN8rDA-Vgqfpya8pEMYWl0rWTPj2gr31OOSuphN_jmU09Y8T0cGR-ZZIfzrSYp5XJFl4brbvdzrwZv6uiwb9zVgftJJDaQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "e314abaa18781422bf9fd4d0b47e533d57475df271782090cf6a643d23d33f95",
+          "timestamp": "0:04"
+        },
+        {
+          "index": 5,
+          "file": "mobbin-onboarding-05.webp",
+          "alt": "Screen 5 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.QtLl0GTcZpjHz5QN.f8lAEfMo1MllZAYoyvGy1agDT1nWmJ1DrH_avUwewANtXcwoDOAYQx0cXS668-Jl6CjOLYxlc1S2caK5XLFxpij7RHLhCi10ZgGJI9YnWRk0Vsj8aiVh2MAdpvNKDj0KX7Mbdo1olvpkxx_sjZHKm2LS7zbJxgOfU2vhdOKntTdnKzTvb1v9ZR2bh5cMDi3-0cudHoyuwlgq4s4A1wbviXteNg5yetN2mgzRoinK5vM_nSBLCXY22DBExaG0YLu2pJPUwyPFTHoWaRd7AiGvWq13n6M3nH9LvFlrj9rCsJ6uHR3SUYr5l1G7cJXTjU_N338YzJu4ZVK2ntWzQpWqjkxorja0XGo8wMGTweDEKkVrCAxP1RV4_Q",
+          "width": 360,
+          "height": 900,
+          "sha256": "fdde08cf96a76aec776490c2f3cf37617355342c83045f982de6367fb551b14a",
+          "timestamp": "0:07"
+        },
+        {
+          "index": 6,
+          "file": "mobbin-onboarding-06.webp",
+          "alt": "Screen 6 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.BEglkMPiGm6dLD2y.p5pUX4euv61KLwLPc8jBk5oRPKRHOno6YbWrWSgK078u1dhx-hhocmckk0aei_4cdP4pt24zhlqiCjmYtR3VIwYHlMKXBcum2kIC7rRRT-b-ww3qSpfqtuazSrRVhmBPgWntuJLnP2oHih6q7vBdYqxDPO74Fjim8Y5jkqaLsl7czd8HHf0Pgwiw3t8Qk0Uap5pkUOcIPOCKwh4AktVLkv2l3GVz0_o4PnV4Hh1lcMLXTmcSFOlqFbCTQfMTFJ7os56ZNnN-mmkN-YVYXIAOZ2Eepl5yQubxyzMSr6zLvIZLrKHgUMx1ya8GXvuUEJ5y1j-FyfxQyOlkI5gXqAahbIMUaO9NhdP1xZnVc_dYJ1jzztySs8fgEw",
+          "width": 360,
+          "height": 900,
+          "sha256": "5753c0ac7751466bfe40e37badec068cffe9cfe6328fa1fefa766a29cd3492ac",
+          "timestamp": "0:09"
+        },
+        {
+          "index": 7,
+          "file": "mobbin-onboarding-07.webp",
+          "alt": "Screen 7 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.u5iwqmtA7Lze31vq.k-bY0YGSGvRvhS96_ck77VVQ-FMAPoJ00-OE7fjOUQ5aY3UWwHXVG3mF_je3o9Du8UXV7mcOFYiOFdrJZCfCLDRNOcpEIm7h1aANNfNNcT8sJmGeKSPpkh7F_F0TJjGr_SZJMiqcOLdIVo_jqAp7mA6bokpaQi0ciqHkLaCWHqav8q3AULt_MKi2ZZJgo6xqNyI7FGy8sapWbpxm5i8DkttpZlc4t831WiqZ21Oaz4Q_8lmhLXVmaPnzitLYAE_jMzG6GXyz9w7rqMvzG1Mj6wxoADAMF_cRCHhWs4Lr8-6o2iRhUEKnAjpaEAroj0ESeCUIe1v4Y6iM6wzlDGUxeJcD2mjiFDsaP1TgO3AGzwdWsCkOpr-3HA",
+          "width": 360,
+          "height": 900,
+          "sha256": "063a65f04ccd2f33fff3823829f5467af7e95287eb1929071e90371292f06566",
+          "timestamp": "0:15"
+        },
+        {
+          "index": 8,
+          "file": "mobbin-onboarding-08.webp",
+          "alt": "Screen 8 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.nvHfcK_AOHYD80Ao.OdxfYMzOtXiqifF9MqcoeeeS7QV5B89InYGmr_BCYA1eHfrHUTEbtEaW1Ucx7LgawYZh1JJiIz5SI5EvA8th6Fpcc_6E904f5Yd1loNAbOhM27Q4KhECQTyzLdl4HDT2VPcyxJNEmbWRiOaXe93bPc1jQDHLq3yAv7ynnzKGvQHL9drk-Y8KUqiv9sCaP4e6yrY2rHKbE_1TncBbGPHR4CgrW7A3uY_-_hbBuSfdxPTagekoXpKFy1qTKVoDPkfsDxqjG9rDhts8swQlH5qLn13d8k4ZeXpuaC4O4bP0EH0EARFl6BzG_d66g7uaH9B-60NROKcOa8UuBie_AgsN02ziEOIEE5LGBcAp5WuLqNh8dVS3bdS_3Q",
+          "width": 360,
+          "height": 900,
+          "sha256": "8101a7983164fd73a7bdb54d2309db81e5271848d5213d97f80a740e89e0a941",
+          "timestamp": "0:18"
+        },
+        {
+          "index": 9,
+          "file": "mobbin-onboarding-09.webp",
+          "alt": "Screen 9 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.WTGkNCVd6pH7XRf4.ofubcwOUFFJimFaTlQBronFxnWB3jUkl8iXBff3DrhL6k6cr6oMDUk1nzy6uUmeAobR7ZTo6WeU5CH4idodbKb-zhjpewdyRjaTq1Tge0zckvEXbkC5i1oxwn8m-Wtdl9wtK6cpVsHYbQI8CsNm_x2PrgLSGzdlzSLZhBOY2pWHS5vJNUHNsDxtlPkIeEZlHGXvxs1mLe2l0vFXZv4iyenV6dUNPIskqB2hpBdMraC_lodOi30yLxR38X8EPJHySJE0eUaROLARghs9cdVdpw3z2KL5CDieKkv6eDhYGVJhVae5iLXomHvz_wkoIKRZUYtOom-qkPh_jltKvCV1lkVhKwsWjTkoAzR-c8ssBvvTZuz1K35gQ8A",
+          "width": 360,
+          "height": 900,
+          "sha256": "fac9b4ad46530088e913fca823ad9b71aaac19a1790488adc529103a74989cd8",
+          "timestamp": "0:21"
+        },
+        {
+          "index": 10,
+          "file": "mobbin-onboarding-10.webp",
+          "alt": "Screen 10 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.qv1uuqY5BAsFdcP7.EI7b_I01nUFZmbcreHt_9Ttd13o0kG_pHHxHofnJx7da4sXAuVMZtM5Q6lNuAplo8tcXxyQiojRF4vVHYgZwmLiVKplvOOAuLebziaHV5nQFe4WpiIkSGGNWaniujKyZWyomleBbxaSp5sqeM4ux9T1xTyGhph9jNWp13wBt16NlXLEdTczr41-yOHyffgglZftZbC6-kahVblENNWNxDjjFARKoN7TeBtlVRfhqqyQxMUmm-NRTn6gfnepFkg3I98ueJfdpMBpI5vmzy0GZUzdRcJeV_Tpw56d3wwObSlODuYb3W8ZepImB6VrYGAJylga_yaQoTSbCLQyiVqjykiA-lb8T8mNTJUKX0HJJuYhjosEI_9V7pA",
+          "width": 360,
+          "height": 900,
+          "sha256": "20b405415e9a40f32a16961be0b9a41cbfd667beee219bfd8d23b51854729b50",
+          "timestamp": "0:25"
+        },
+        {
+          "index": 11,
+          "file": "mobbin-onboarding-11.webp",
+          "alt": "Screen 11 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.UpvDcf3i-prhyOR5.8qWQGMGMQQW4Crr5pXcbpXQ9RxCxS7akGG2_obtj_cM1zxN1F3NTXk2BXGB0YvD7ogidWOxtMF86M5ev5mttMe5A9a3Lg7qH9LfRP3Cqm-fRK1zhM8m9fMawARvih7A4eop25LsLcnd3xjoACTwpbeVKD0vwKakNbeS4u7qjA-T-RX4CR_VvY9unAg-3eMlb50nE2oa1JXr8eQBUVo7gbAnrQRF-waQGM0bNrRE2-5gQNjMQWfzkA5MpiVOGomS_cRn-M93oO3gWtvcBW1locywKsqYyr8Xwtxt8bZwWMcqrzYqD58NM2Z7Mx12qalwq28WUjxjDLowMly6Obwe3bUrBBFzoavkvgM5aRReBzXIcIWBk4nbwEw",
+          "width": 360,
+          "height": 900,
+          "sha256": "4a568ca68d23b3a4c63982f53edfe300736d9b686035b76bcb16ba5e741a4ca6",
+          "timestamp": "0:27"
+        },
+        {
+          "index": 12,
+          "file": "mobbin-onboarding-12.webp",
+          "alt": "Screen 12 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.yfjCDJUYzUnH-cXN.0ok5rmzeawO0dJaD8WyfXQlnmemieWLNHykIHrewW7O-8OVwlaVlCSN4w7aUIYsRcy08ZWnhAzooCQiQkKuqwH-HZd0FRCVDh4t8DWhRcexkryfm5Cp-3ftXNJLAcKQTb29Fa8GnDQ-RKDaedQcED4b0mtDk2w5mVlJeRF-5JkcGJCf8kDEp3onAdiS1hlAQtu8T8na271XfYbgvByty2PwK2HEMTX_57lXne61gDR3Ss_7Bi_Y1kIbvwV6cmYWgfFMovPwetG03qtHnTN7XKSP6CjxogcFCHujQvUlRXJZzAn_GccFNyyBe1ylANqHQer-DXZ2ULCD-13UIxz09CTvFY14WTa8XR_SF-kZQOAELNL3zysTYVQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "0d0f1f1461735de6676714f50d53078af8e30ecb4d5cbc94bfce4d9e881beb21",
+          "timestamp": "0:29"
+        },
+        {
+          "index": 13,
+          "file": "mobbin-onboarding-13.webp",
+          "alt": "Screen 13 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.9pMLPTrFbYy_nrEX.P8r8mWM-0rryx_T8LYEs_lMJ2T4WiUL-5drFjZ8MUHLgRhxO1LYue_0kil3y5sq93unnhQDZk2dTVO6qL-IvqpMgbEjnAp4OARhDflaZ-2MDUBxmtgjjHiIT2pL8VPyZT3Ecs_CT-940s4crJ7VNmgZPLS6KsHWcnrRwV3W0MUqH_DEQUd0uKot6KAJWqcXliNxEciTGvEFCxxNfKrBx0vJXryXpA1XpSwriCTWcpVRCKOStCwOJjO5m5gDu0PNsgsN5A-nVv66QuqxwXa7DS3HN7edO7eYXnWSuLQ-9RuGEba-c8jufj0jc64m0GcQ0zUaZQXEVBwgHOQpIwBimRsi__V7uqKF1ELLUonDh79367LSwiGk7Mw",
+          "width": 360,
+          "height": 900,
+          "sha256": "b86f32b88d16bfc6f0f329ec5b19ff5fcd9e04ec507cb97657acbe89dd299fdd",
+          "timestamp": "0:33"
+        },
+        {
+          "index": 14,
+          "file": "mobbin-onboarding-14.webp",
+          "alt": "Screen 14 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.4WMGFCayzMcIM9sD.XKTdMj609Ak5ZH3CA4Ba3c7oayeI54Jo9LCNhwNZL8GS266_feobl1LD0HREDJ-AIkKFBurvIpmIkz9gvHGJ6-gII3pJOXwCYeCwyRLUX6N7vpP9r_c_L0NDWl0bGuA9K-Jvnqark1AKbOT0NlxyKAaSrrGUn_rA5mWDGdGaUk9HrVZHI0yZ9X7QB36XbfjVCYeEc4oZOOh5BjJb9ypbNEVXigsOsXYtdeAaa767YekNEAVXjqMN2YoQjeeODBmojAFjkusToS9QHJd8hzAABimBwWJJbby9yY69gpSF0v-OsDCw6aSuYMvcx3SA7ai1fs3uLAVBxjZQHvw6G75zTY4ozUojUegoSdjsqFcVhuBtzZjA9ei-1A",
+          "width": 360,
+          "height": 900,
+          "sha256": "0108551f36db39efa062c05cd3c2f91ebc5796709fdbdfae6c87c7ed0389d9fe",
+          "timestamp": "0:35"
+        },
+        {
+          "index": 15,
+          "file": "mobbin-onboarding-15.webp",
+          "alt": "Screen 15 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.8ctnuSKtaft3N0MO.-kqSsKetX8k_6-fVWEsZ3aJU8_vG5V_5xQzC_cUa5VBnS8s-jt-wHrANAFvBrRQK5Dt2xpaAoJ-O8rGwGHjgdOvWL1Rp7ZhK_7fMk58KwM_8z1gok69jTOWszFxcLp1AUJgG7trPrOkYKFRQ8MrlLJm_LWI7xCHDtSAdyfQLTXkmz2KS4QoTeqiu9BZcpUeD73L9-DEIGMIKNo7_hpgIcU1ylrOKDU_h_ci6CNWrt1ro5hb-ErvFAn8brwhFPT8KaU0dlt9WHysIaC8-AAfMjCbqj5Jh7mvB-3DOtDYeCRvSmtLHJhGh5YGjVkonxJqVkBro0HULEI6gYSRL1utK_FBy-sJ-c1Arix80ukBSvW13zhmvKEKLGQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "f1c91cb9f5ac8584f1feb4c20e931e8060fe5a0f39859a2e0279a34442bbcead",
+          "timestamp": "0:38"
+        },
+        {
+          "index": 16,
+          "file": "mobbin-onboarding-16.webp",
+          "alt": "Screen 16 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.UgyFcprnSt_L2EEm.g40ark_1o2O3BvlwCQ5BDAO2p7wl2RkL9w8HNC6I34pXWsclLxeAoY_YY46TtIVm1xOEI-F7h4BOHwVzbS31U4q0rL6bUZKjhT8Y2Tt7liBgJxkDMP9t7fgaHEt4uWvv_HBExJncTa51dwsPA6OhreoqcayuCS2Dt-X94ap6u_gRj3jEdrdNJl1WEl4fPAXdzEXnDx37R2wbjlb2H6ddhjXWzcribCkcHqm27hRs8ZJ3Je0ybic_Viskt9Cjq5O9F_KqAeRgWzl7gdOu3UddXJqmEpyOpEvkyYXz20UaVrswXolEOkIRDkgNXq9nlFTBliYCXXVGHHEVlzLTBYWm88F98bgOc8aHcVNMQBHk-2KSje5NZl9eiQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "c61286250234581c839300b0d5a2077e017b82afa48e4af1b94aac1651f24836",
+          "timestamp": "0:42"
+        },
+        {
+          "index": 17,
+          "file": "mobbin-onboarding-17.webp",
+          "alt": "Screen 17 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.VhNUrL1qfThyx4J0.9tcpAUsd1hbrH0zZRRj_UefmdIIxZiluqWsutu6pPGacxXULjmcjtJ-7zePBej5dMA3Dh1TdrkDINA2P2fwwIaQ4BO-GqQGZcZD3qfYfmbmAdSxDUxJbZO_8QTdqvBNAK4zDia_h1aMX_rmNV9QFzNifrvoD1D-FskpmXouEEmtEjJqr980y3T79yUC4ALX0lAtliwyBgsODnOSZZh1ngF88gK8of4PPGwO0P3n1jDwzPXQKQtMnksCA9v7COK3IHu1t7tkBCn-koaHQ2EG4AD25UJj8KwgnJpR6FbaDSCrGuhQRKW6WfiEWx67qXh2Jz5XjUa_4SYwSeVaNKSH9oKvH09EADpY6mqUBSCkozF0mmxmVwFLteQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "33f1299a74387934ededb9d40f2f0c37ef824de77e77ede29516b7f7f57d69c4",
+          "timestamp": "0:44"
+        },
+        {
+          "index": 18,
+          "file": "mobbin-onboarding-18.webp",
+          "alt": "Screen 18 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.hiBTiUWRW8Bkqudn.POhStswuqFAz9ZzbBM4sYqy0LvT-x44d36V8fE_e1un81X-sRWDlG350rHFPMxS5738YERlfUgFXlRRN5SzbYedUJZxmWwohHBR1eilH50EeTMyGqLBl-IFv73fd7l6xBKQCPMxHL4BctuFZbTtE2kjjoTOYItOyQHGaX64vfugRACGK3xH8lFVnKct1WbcgnfKmlCI_BlcV30MsB2R85JZT7LOPbW2rcZCyte7MhFy5RoFtsIDAKcFGNH4jidb3sofR07qYEU5IuSjl1WfgKOSvlcO_gZFiSs5J3fD8IRDqh-5fWICVQXpZ7zsJmi8z8DdTzXHXO25Qu-zf1LYb-sIGOnHypHc00qBLc8_iw8vw8A7sVgGeTQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "197261b48cf21edbe494da5f11652e8621f84a2f71ff555531f9d74f5c0be362",
+          "timestamp": "0:48"
+        },
+        {
+          "index": 19,
+          "file": "mobbin-onboarding-19.webp",
+          "alt": "Screen 19 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.jh33exA0YAgJMjrH.jkQL_RokLYhdo3vmKAeN-xZgla0ngeLPqzg1ictRrCNnrfWn3IV3cwJVI6Y9KeNZYZ-WmMW_IbjxaJ_dciEQRR_DmdMKH2mf1YPp1X1wbj76cHqmX5hBVK5X46En8ZwcjzIjJMU23BD_zr-aBfVye9iv9lzf20y7_G0-ONRlsJMYNm3s05i68OmvskDM7Dr0Gmi4ZmoFgW4b4NGLmH2r5ZiBXOra02Pk_6inK8yzcUjuOMp5OI6DNV6QvJ5rZwwSLXcbCp9CopQQhxeerkWHj0L8qJ08P0Wzhx9WvNnQyb1APSjpHxqS3pJff9qT_XEk84fLMbbvRU4862sUN-omxq0HRlRycMMu3zqywLFQ_XHfGRhKT8rmwQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "e0bef4d6a23794e287b0ff356fe788401d96108fe27415cde8cd809f84f256d7",
+          "timestamp": "0:51"
+        },
+        {
+          "index": 20,
+          "file": "mobbin-onboarding-20.webp",
+          "alt": "Screen 20 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.BkFnPKFMtWM-rD0h.U485keSfcV_RzEYjpTp2bm_ktpun4w2RjfUN1P6npPvxZzDMw6wb0NKMYwRfvB5BVvhgLLcrB73Zzf-yfevgxEh4RrjHcnQNyQqEXkTq2_5iFUisu-XrhohsZs7FOkKT8MpTh7GMxBpJRSG9VW3rn7S3UESxVvdyKqSwPuWkIEa-ixqMHS-vAsDOJkvpiVCoyGcm767dcTv9FAbvqlifYoU5tlXqeWO3i-S7q0tj9dHQ6lUdD1U7pRYfbFlQudiUGN2OA_0TW_-Xly2oc3qT1N5RqGAHM7N5bIdxUiPQ788oV32OdM_Upce0i22FhG3MVy2fYvXjNcgkp2mjR0dCmaJeEBxTDiKQYQrJIe9vEuLuth6yfnXj4g",
+          "width": 360,
+          "height": 900,
+          "sha256": "8ea919fabf90691e052db39e2f3e20dd74ddc21a7d1305b42a4d563c32f52def",
+          "timestamp": "0:53"
+        },
+        {
+          "index": 21,
+          "file": "mobbin-onboarding-21.webp",
+          "alt": "Screen 21 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.O_6muV_7623JQcfp.9F2adlpK_4plG05O9wVbpgEqCYisySvaAPur6MzjPHqKcIenxTacYRysHu1a8XdG9o_LaBrlmblKgKrlvOdrz0KxugZtmdnCWAPTsp92WHx28iywBtBJEKovyw82AVdUlwIp2uXi5sKOWKV3t915WGOG9pDFiD9LW0uDGRW_Z2HRitBqBVzNvO-sRCPPy5HKV-2aZ1nA2-7U6PT2NxyNsFBGsxUfjsAUuK7z3EAn9YrqV_HjeVVW2bejjEi-JKZDVKySE0GR-ZGLxTJTNPP8sRE8r2Hxsd0to3_uwY2hz6FfbhoA_hqgptFTkuPBUtES3n8FtoF1nyBQfeMOvOGslopV39E9JXS8VJzSWjvDFP2cX5PRADL6vQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "020141d89e835e038f4848d93ea5364f546bdb21d47b73613402390c462e5e90",
+          "timestamp": "0:57"
+        },
+        {
+          "index": 22,
+          "file": "mobbin-onboarding-22.webp",
+          "alt": "Screen 22 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.7kQOx5aV55qztrqe.ZKemk3C-Z9ZVhzmxUM5Sly_4flOoeDlQFAcIwwfeVrC72NXI-3bKgnFsB-NKngyCJMsOvb7eBVBSrg0rEzVQC0f9ghbsxiDNgKHJDOZYLLTh16bWeJDioqXfCOOMAsPrENF5NHOOoEuMT2qrIfPQ4vHhPB--JL2U5aDD-h93dA4VLZmUgBOMRXlC3Tm-KWaQbgLf9bE_-uJaZlU6IOqi-IegkLiTKxLcKHGKpWsAMtycPIyQhlvJSHE9CNeqrrcGFhHWm34hBiiWFrXe2fAvvw5S-tKiV5uQbvW-2dBjpRvmOBb8EJXh2X9XIHu6HKhhCt2dIu32CBvEmRgSat_u9zZb_csN5NnRfymb622wiyzjTKwsRaLL4Q",
+          "width": 360,
+          "height": 900,
+          "sha256": "8597e62799b333913efce61218fffc5a49357c694ab932e9abaa3674cf0fe1fd",
+          "timestamp": "1:01"
+        },
+        {
+          "index": 23,
+          "file": "mobbin-onboarding-23.webp",
+          "alt": "Screen 23 of 23 of the Onboarding flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.Yud4-kr59rFus_Fl.kmUtEsenCDEpYT060ZQz80lCuqIp9vpgD7KI931r7hM5j48Hq_RX2fjQFPr7FZIs4hX3wMBE9aroIN1G8_CM_odIbSqnMMJjlxGHOwAMNsPBM3A9xi7yxgx6thonPVY17ONeCMVVCj-IPoZZVNbVXbfmu28lUc728ZjxGA47L0TA5Q7ZOc508J6uMe9Bus9e3VuQ5nuaty1CZJ9fehPx2s76k7a_cJxB7FYkoDfgwTt4oUo9n4uF7hr46JcHKui27g8AUlEDEXZtg1m5HnQMySVz3PG-ZsQc3xE1ks9PsVMiF9u-3JlmX_RCRJ3S0A5jJm0tgkODUsaoZwAEybJHSU6HuJqmI22LJwySnsu-8WKoAMlft0cUcw",
+          "width": 360,
+          "height": 900,
+          "sha256": "b3fd111d9f9b6109cb43c95737c523d12a96ef81a00c54a7f6830b6952c68593",
+          "timestamp": "1:06"
+        }
+      ]
+    },
+    {
+      "id": "mobbin-promo",
+      "page": "https://mobbin.com/explore/flows/098f538c-5fa6-4506-8164-e71764f66d1a",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 4,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-promo-01.webp",
+          "alt": "Screen 1 of 4 of the Redeem a promo code flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.b_JRKVPubWtnnHAL.9E73pwutV69WbbFj1mWb46sgTUr8BLWZiJ2XOEN_8sPMmXj_MSL2o5rBVQCJs41TJzASPQncw1k0rcA5_iG28w72wDc5KFjN2HpPryd3WVbEDZL-SsZrnjgEEqshXKhnRDxBoyfyf-hDjqkfgwo47Z8M143YH40Nqkic2G0E1DI0n8X6A6IAfdD7NpaIUsgDwJcEdhe6Dd33IKNd1Ike2cd21GkAQPKZ8_M57Vz6lB8RPwl6yX4wy2oL-sqAGcSTctX3RTHFx6SA7YwN9xyMDeTbfT5ceUoiycZmU_hRWDKPlYqQzGTsGsAo9kN1TqlvRQv-diTARJucgLHCV_B4RI9ub-fJeRgUsDmj4Ri-m5SWfx_KGu2viA",
+          "width": 360,
+          "height": 900,
+          "sha256": "07dea455216cf6d314a669868b3ab9bf187fde10596cd65ea288ffd8efb9943d",
+          "timestamp": null
+        },
+        {
+          "index": 2,
+          "file": "mobbin-promo-02.webp",
+          "alt": "Screen 2 of 4 of the Redeem a promo code flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.2k9v17sPHjrQ1-bU.CH1_a1-MBSOUJl6k-JbSORq0uSn9OxX7kS7A_397A9j0_CXbYazkKzBhvIQJ-PsfWYoEFpleNNcjOUdzCSgAIFsG3amhYHDzQwTDixW_kbTnW0T2r5nd-TZhRDSLVU4qZaY8EnQvPYiwrmi8mgWgujCG2u53v91rVnD_ICTEwZwC6ZT38R_3O9T6fuP3RyVAiM3vAvYUi2k8GCmQk2UHgdRxcPSotQL-LpX3Th9Y9zfSCen2jSfaIK0r83Oz2ORLGkz1Zce7g2hYMnQL_F_rkzn1J6co8p01a-yFce5i9cPxW5vXNtA2nlHv4LmRGMkNjMxSUGAOnx5B2PF66F_mD1N5R6iB0i4HCBvSHq6ijtFRbWXkIPFx4Q",
+          "width": 360,
+          "height": 900,
+          "sha256": "e47ddfdfdb16d8a97538dce3e0c9c2056d911684b26b7562c58295cb0c27c7d2",
+          "timestamp": null
+        },
+        {
+          "index": 3,
+          "file": "mobbin-promo-03.webp",
+          "alt": "Screen 3 of 4 of the Redeem a promo code flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.InoHtdDLVwWj5jiC.a3xtGCmrCXPrsKyc2Gt6th6IJ6zT20LWh7reZ9nHyqn8BcmLZiAEHlnhdnCKX_BrQ7iguszkRFNllj_uuyIHfM0e-RrVSKFnmSITs3k6LTXpVEHnHNRqUwNYRSa4CNGpV2Za0iiTnzbcThXA5MGDauAlx5st_RuoF7MHZUcKfq9VGFrHdiR_3fLjwWnOL9tIM0cky6WFUxwdm-ot-Qi-TQ2D4FEulgQ3fJtmXGM9Mxj15jTdoibplmuVsjeR81iOVGZzWpRBenAV2CSLpyomsFCP-wu0T_6rskEsv6y5ZuuxfaWg6jdWcdyHqj8mJfIRLjcFwgRx-srdR0X8TjLsv6ToWDzJiIuxqcNuBrCFEZaLDmfGJOlieQ",
+          "width": 360,
+          "height": 900,
+          "sha256": "9bca02395f98f35e529eef297c8121f349b638bd80541edb19ee1420ac89db02",
+          "timestamp": null
+        },
+        {
+          "index": 4,
+          "file": "mobbin-promo-04.webp",
+          "alt": "Screen 4 of 4 of the Redeem a promo code flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.kqO42C7eqQd2Vxhp.q0b8IInirYvo6JGe5pjL8aYv_ENF28s_TXuyn-Khhux-OOxQw52gK7r1xy24RB5YRKCnGkam1ZWM3e6FLKidyV_j16s5rahsn_jVo5ZjOIza-pQDTynAhwvlOsles1cy5jZ1GofsAwS1zlIwhqcTzGNvryL4fNqqdr15KeuP5n-rX4noTPR269_F2uJqju5aKt--qcvwELU_lqJTxlbtV1Cskmgzxk5aLwGzrShpEffRiq2088IyNIkZH7ZQNk194D8JvDY-aktIE3RAmOCKfSkmG7QJO2H0pugVDKSXMknwcSLLl9UyAaNWO20knptevxzJjQv9lH4TWfvO3qIiC-_t4ZROrvywch_6fJygZpW3pPYMN_-VwA",
+          "width": 360,
+          "height": 900,
+          "sha256": "8ac3dc506ba4df3391d616c5ba4a3a256abd31940867474c20730d7c105c2c20",
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "id": "mobbin-super",
+      "page": "https://mobbin.com/explore/flows/2b062804-06ea-48be-898e-e77c163bfc72",
+      "platform": "Android",
+      "captureDate": null,
+      "appVersion": null,
+      "screenCount": 12,
+      "motion": "Still references only; animation timing not measured",
+      "screens": [
+        {
+          "index": 1,
+          "file": "mobbin-super-01.webp",
+          "alt": "Screen 1 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.XMruIggcbJHoEHFr.FZFfyEQI1sn2V4EUO7xtfbTkPYUpvuxoaK28d2gIM9VbyTEQwx3T5q2k7F8G25EObGb3GPkKA2Jgox7ltqLjYSlG0n7abejyMkX5kjd2jfhgjhkk4OzdfL9Oy_LbKTGS6Id-Px46GUQysdkWicVWI3DA-e5m55h7GpqsBHYtCzN_FEvXzlRVGoNJnR-JkK1-HNO51VY1cTxn9rF7msBhGOtbiK5zet5mCF-yaW4jgnvapn5eq6Tq0myTToZiBr3AYIqBNTB8lgy3H7p9wWICrIOXYyo-9zBOZ81RW3Vs9Ds4T8iQE-hTaF58N6lGMBEP70SQiDk_joyDtSJWbG4lgBfNHHRMnTTW_XQFjvIEPF4HBy92mRMJVg",
+          "width": 360,
+          "height": 900,
+          "sha256": "179571647ecab84a8531d2d668aabd603ab2d44e629f24a2375e23a9f43cb5cb",
+          "timestamp": null
+        },
+        {
+          "index": 2,
+          "file": "mobbin-super-02.webp",
+          "alt": "Screen 2 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.ToHxCsJTzQIGqYTT.pYfYLmeyNN67_LRqyQwtriJZ2aUBDT2XSe4mfgZ9rIppQPofLb0cgbClPmdgN5odAnaARxE_LZjdgx4LaEffSPr1o0lzGs9lp3yeYet-LXXAWliVGUZ7nkshSMM_kj4QypwrREbN9CN2o8ZDnv6ePisCnaDPkPRutNEvbMB38gdPXXVlDvTVCYGJjQIGCMShqHF9UoHbAu-d8lK3DSPKs8S5I3P6wG3cyuJkkBflZjJjOFU_R7OZdqxzBJIJtQOWLsxk9nbgrN71LQiLp3vsv5lnR0eS08NaW0_18iYi2YXS3VovkiLrDg0CYAnLwv_xkKAi7qUF3llL_jQBQ1L53ecY6GcfWjQDIit4AdHzPAPfyzsFRxy5WA",
+          "width": 360,
+          "height": 900,
+          "sha256": "494931283cb0ddf0da899315dc212817e7bbd712188d784a01ce39cf2fa93bd2",
+          "timestamp": null
+        },
+        {
+          "index": 3,
+          "file": "mobbin-super-03.webp",
+          "alt": "Screen 3 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.r30YIVf1YAiJnHWT.p0GYeT_XP0ae2cz67pMkOSdsqve9UL4Zjo1bkrY-HX0pPiaAWekYCa8WcP0lNwQN07MOiqWxFzj8u0DXUFcYutkiLJbmcYPo5LG3q3o_Qnu9oUPEEVbgpAhB0U45FHu7QZHz_kn7lAbRgaDVQG7yzoU16NiLpycKPySqcJqBWXgi_EL97gJjhT7D_baZ_wywiE9RHcLCQQsdTirYB8BYofA8h9FlBe9Ww34YrQdsIQcQfOsP5rIilowe1UyoW1LGS-XVHczN0OkJxigvX42scMD1841acDp2n95jJ-GG-eLjEUPOdoMy6eKcep6Di-4jw1DPInAV9PfPNHlDv29RVvU7mPgZVYU7gx78n400o4F1961fUjzQ1A",
+          "width": 360,
+          "height": 900,
+          "sha256": "4767b6dd286ee92f735fb2e5147976d334ae94243806b8664eab9e3d2be8b21b",
+          "timestamp": null
+        },
+        {
+          "index": 4,
+          "file": "mobbin-super-04.webp",
+          "alt": "Screen 4 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.RVMEovwe6Rs50tUE.kIASJeM4rxYBgP_xH4TMBi2jc2BzRIFEYhsT67VbxvHwWN6qrkjGOWSNw4jg6YZprwyasjfLxr2B7xv3S1Vvr1nMC76-cKfYKIDRYYS7OK6hxFqStSn9kn-a86resRMlsXhmveC91qrzSi14QCzY92PVsedwj3Ul4H5ppAJAStJrfgmCBHio1hQ88ziJBDmsL9LVgkkKldtMPpvkTCNtJ58MTYkuvXq6uiAb3yGhhcSdO8Q55D4kfs2Ftkk_THEhNhSjv7PUTsZ0isa_7S2NwYXw5nM8H33UaGar7UKCNc3v4CVqSiEh_7ICf1e0oWQOQl1nHK4GG5mAWKhR6E98Qq4W-v-CYsRF0fFtBs-uKPwusIxegIeWbw",
+          "width": 360,
+          "height": 900,
+          "sha256": "a674e9901b490c2bd4e3e2ebd3768e51fe70e1272ed9dfe1252ef46ca312c71c",
+          "timestamp": null
+        },
+        {
+          "index": 5,
+          "file": "mobbin-super-05.webp",
+          "alt": "Screen 5 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.oFk2P_8-w6fuqmaT.MYGpd69witpJvMTVcYdP16SK0dpWWMRyM7mfVou1QtrpXVtGgQnZe8BIMLfp3ie0tLyYICbYvsO1033NaotrX9KxNaQRqKg5Q-XiY_-nD4fpEhaG0iFnIOT9J_ALVSXEBZnGEhqWCs_VAhciAz3z87cimYzzm0E7YWOUOfuN9McbY4UrzLENd7g7VfIoa2yfw9sLzXIepG412s4ohdXJPQMMnw3LBv27VaqROPxfdeYUgJMwdydW0bw-AEI2RcVWvqSU8fsMLhl9R9GYh56FFU06kXU1cj5r3E_W9QjzXGIUSZXdSJsDiUyPJKN3nIPCesqVGXw3_bYhJvlHXm7hnxkQXrJ6F8ca7LB_0u2xZQ86aiVuzEINCw",
+          "width": 360,
+          "height": 900,
+          "sha256": "83c10001e6f2d553aa6b0dbbfeaa77dc82894c463358981a2d2ee35a9ee69148",
+          "timestamp": null
+        },
+        {
+          "index": 6,
+          "file": "mobbin-super-06.webp",
+          "alt": "Screen 6 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.ZyG552tGsIfCQ9gw.d98N1Ptk7h3z4zywhOaJMTMBM2zbEjXfs9CCQAa7OF9rkhsYyLeDduYASjj50tm68htXSxbuVda_oQjee-V_7Kq9Px_SYlFzHdm1EgwtxlEFZmJZ5p1zWFjOaqMhalAMuyFcHsc7CltkJhF17MvE34AIi0kEI4svj5kDfDrprLzwgxUjrMtp96eQ7FJJY1lHDbPAxt-tc9TVmK-Z1YnR3j2nmT0ov5Qix4La41tx86Dzql8s0a8daFVc937cKZC8HuSSrdY5bQnj37mKeSPBBmOJTEnZs5UlxY13kiiSvgQhTtl_L4DaDgsh6_r5A7SmZDTNs2desPOgnrg0Hj-EFFZqGgxW_3MhXni3a7anP8FJNEXcCyIenA",
+          "width": 360,
+          "height": 900,
+          "sha256": "fdebfe7addfd4c836e164abd15e6be8cca5fd6b075edf699e1aa0c9d3479a42d",
+          "timestamp": null
+        },
+        {
+          "index": 7,
+          "file": "mobbin-super-07.webp",
+          "alt": "Screen 7 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.vMD2m4iKi6TMr8H-.zBuH5dQ9lXTcHgUKof2MI5ULeqBiyqeq06KKvC0MNe0wgqN2YYIiv_UC5zmAFTlLfy5BR9ehyojgXWjqrmpKeOGyJN21P1_UjnyqDYOibKwTL1m4QgoUt2QyhZB09K1_OtpVsmpSnjAMHg__xmppYxo7y6RIP6KXn0DsvqnQQ72PFBOh_SwRxnCvbhBxn0Gva6LP_hujHDQA9aHmF7QTLUNJYoXQtAGmCYDrouMXlnj1XaTYX_TEPrMP9yT2_Qs9WAGTWTUyf9FWQ6rqwVikfXHj0RQuHwi_kC98FlVK1Vng8CaOsSAHACkOzBMydV1uaj3-z67stF5kuKTRb-SnGRVCGGxVChtd2fqOLwaU1Kbl_w3HTk9ilg",
+          "width": 360,
+          "height": 900,
+          "sha256": "3322341ff56a68f8f446ef36c6bc2a6c46eba3e93bef7b618f8c7f616588be2c",
+          "timestamp": null
+        },
+        {
+          "index": 8,
+          "file": "mobbin-super-08.webp",
+          "alt": "Screen 8 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.2VukJxBTSUvK3KLj.TRQm_nHgj8MRWT22J4D1nsV9vQVpEvHjYn9390uragno5cgReUmfGE9QVU1Tx-0PFt46j7FEuohLtv0zgdGMpdsJhwD6wTdHXB-RzaizDyJzc55aAOKWO7rt7pgP6L2pai7_DhcSf6bHR8RytMSJS4FAmfTJORIfhTRwuB1O6TVwgFE8E8YmvZlyHw1hWE6Pq-FiRJ3T__G_H1kEM1r9M9p1VXjlRk3KWfRynfNNJQ8HGB1SydqrPKStGVd5I21Pc1AMDAwX7jZzb3m7kalzOJ0x8Pwff488d5HI0S7hlnCAS_ZwDvEuNGh_mv4vvYTv1e6LnPHBUSH86b4hdkScNWEj6UOUJs4G9PkQ8wMjAsHV5ArRv2BOYg",
+          "width": 360,
+          "height": 900,
+          "sha256": "63845616eb24dcfb8f422306cc10831d31dcb040bbf65fcd69dd0a5af89d8f87",
+          "timestamp": null
+        },
+        {
+          "index": 9,
+          "file": "mobbin-super-09.webp",
+          "alt": "Screen 9 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.PLzPGe4AN8MDofj0.ugQvcJPnqxgHNBf-f8nMJOimpJTuia3cuX3FzuiiagleUVUsS145NbKlQUh9-yPYOz-xiIXLzcSomZSUnlGH1jM-xI89s9KXQDZk2S4uj_iYtq4mvBvU3drUAgu-ptdIM4WhE_BKkQ8ueD5HsnTZ-5sgf5ml_g_K0z_ffbpgDyfrdnku9w-dNDBv_qAWO6d8dzMQbgtKc6OS_iCIdV3OsZKOhCeuwzjsbIg0f1UnQdn8Cvzg44NbBrP8demYqzoiIK-3nzW3SwWzXGmWSiyPSESDWNpHsPOD38wd73oQaydh4nTIIZOBUrw48i8LL9ABc0mcWdPEoYrlqs_AigISkf_Fzr7qiE2BVgNjB21f5uiZDvX_eJ8ESA",
+          "width": 360,
+          "height": 900,
+          "sha256": "8000641a222a787caf6e0aef326f85ec42fe88e7b38d1b45315634e64300441e",
+          "timestamp": null
+        },
+        {
+          "index": 10,
+          "file": "mobbin-super-10.webp",
+          "alt": "Screen 10 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.rfWHclw5_ZbQbXMx.Idd0rdwn1amhQYaKQ76WuEkONdnTWOZWU9vwhceOJhynAHOFy5_lOgaSnzcwEP1ZFvfoGtEOhj7ESwmufFaN0ddSup-fW64OcJiWo5PlFa0LHqL1brM9TIx4vccXvor1YXdpn0wJng9WjTU2QTQa-evqpkq_evLNIEFWbOh0eQ-ucT6nUa6fMnqfsFmCX3a4y-a5bWaUGVzSunIt836Idq3QyRJTb7gx1OxUYlEpzWrE-CLguuRsrD3MYdOrcCuWqh1Qa81EIqsmFl9tf_pQlHSXKArumq0re6RICNH5THMlzK4e8O6skbBoT8desFcVX6RBxEtjAg46kMBBSusESpIv4tvKmETm3WKmT17LuHGPM9HsS0il9A",
+          "width": 360,
+          "height": 900,
+          "sha256": "075f91238e35705e7bd6cce2271b41ea59eab30cf7df208f6252d3969b986593",
+          "timestamp": null
+        },
+        {
+          "index": 11,
+          "file": "mobbin-super-11.webp",
+          "alt": "Screen 11 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.UCk1MQePrbxXYyJx.YCrLgW57ZpYrk8lkmcgK9H2K9F1AuOTr1SGWKJlbqnliXXwdmy7afpbur8uJVRjMLIssPekXDMeJ7xFxyeZkAYwbMbmMdjMuv5sDb9eB2AE19CqiM4EFlmywbknE6dfk9ChusGkr9KzC9tUFJpreqjDE6kn9DqYKceb8oqWejl54hhKa1iMCSoxoy0jZRsvCQ6xEZJPOBkzfjkYD7eqYxoLZT1SmABMvS5jyYXzQ29YREM0XRNH-K-ZzfI9CQueyh_KBbWyP8iStImblOq0852OlTqlpqeom979b_TqVNfNit_thlJQh-UI4XVxpfx7xbipd_B329lVe_172FyftuG5WVkj50YoBMHjGGI9VDqxYm_VjRW-ezg",
+          "width": 360,
+          "height": 900,
+          "sha256": "407366cdc1348203b24f813c61d74125c3d69f605f7c25cfb9904c3f5d8d6e27",
+          "timestamp": null
+        },
+        {
+          "index": 12,
+          "file": "mobbin-super-12.webp",
+          "alt": "Screen 12 of 12 of the Subscribing to Duolingo Super flow on the Duolingo Android app.",
+          "url": "https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/file.webp?enc=1.BQnbdJK6.fAIf_ZXImlN3XaSK.VoFCuKiwJYRbK7P4pc_Lt11A50K4PrpzDTWA5LI8WjSkx3I-oL6hsnLmABYYDXxDkM0bmkqqKDUR6qHCALwvhpIn9cwCwIiipMUmeSIj9INk6cxGHYshmQhHnGnbWERVAFNt0eYtU0ex8v6xGRLavJ2YHhAPaeMt1rOqezZoQJ9lIcRK9YC5NLVKi5kVM4cO7CykKWnJTrAm-wk0ojIhJ7Z1mqcMhlaMF04lceGb-dNi2xmo5vC4NZfDGTK52WUl7Wu5c0-7GKA-7fgH794mIcXXgDqIP7nJMUq-aQw-HxvQ7NoBl00RBNiD42KQUEFP3BZaN3pUiw2eXMBOq7m8CZcDCZRlVYHqvC1YOYljcPnwS50usQ7ifg",
+          "width": 360,
+          "height": 900,
+          "sha256": "588b539fad3f25e745c30ca461f35fb49fe4784d4a15f8e9c0839dd7729b7611",
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "id": "bestlanguageapp-home",
+      "page": "https://bestlanguageapp.com/reviews/duolingo",
+      "platform": "Android 11, Moto G Power (2021)",
+      "captureDate": "2026-07-31",
+      "appVersion": "6.90.3",
+      "course": "Vietnamese for English speakers; not the product English curriculum",
+      "screens": [
+        {
+          "file": "home.jpg",
+          "url": "https://bestlanguageapp.com/app-media/duolingo/ui/home.jpg",
+          "width": 640,
+          "height": 1360,
+          "sha256": "6516bfbf937f4ebbc1336dbdda084620d32cbb24e78e8b0b425b7eae6b5a0507"
+        }
+      ],
+      "motion": "Still only"
+    },
+    {
+      "id": "bestlanguageapp-exercise-wordbank",
+      "page": "https://bestlanguageapp.com/reviews/duolingo",
+      "platform": "Android 11, Moto G Power (2021)",
+      "captureDate": "2026-07-31",
+      "appVersion": "6.90.3",
+      "course": "Vietnamese for English speakers; not the product English curriculum",
+      "screens": [
+        {
+          "file": "exercise-wordbank.jpg",
+          "url": "https://bestlanguageapp.com/app-media/duolingo/ui/exercise-wordbank.jpg",
+          "width": 640,
+          "height": 1360,
+          "sha256": "b38afd96b0417fa27edfb9209d061dfcfa3198ee4df09727d5e913b1f93fc78b"
+        }
+      ],
+      "motion": "Still only"
+    },
+    {
+      "id": "bestlanguageapp-exercise-listening",
+      "page": "https://bestlanguageapp.com/reviews/duolingo",
+      "platform": "Android 11, Moto G Power (2021)",
+      "captureDate": "2026-07-31",
+      "appVersion": "6.90.3",
+      "course": "Vietnamese for English speakers; not the product English curriculum",
+      "screens": [
+        {
+          "file": "exercise-listening.jpg",
+          "url": "https://bestlanguageapp.com/app-media/duolingo/ui/exercise-listening.jpg",
+          "width": 640,
+          "height": 1360,
+          "sha256": "e53e28639c5ceee462d3897c65a16ecfdbd42ea691923724fc4a08d8ee9dc9f0"
+        }
+      ],
+      "motion": "Still only"
+    },
+    {
+      "id": "bestlanguageapp-score-unlock",
+      "page": "https://bestlanguageapp.com/reviews/duolingo",
+      "platform": "Android 11, Moto G Power (2021)",
+      "captureDate": "2026-07-31",
+      "appVersion": "6.90.3",
+      "course": "Vietnamese for English speakers; not the product English curriculum",
+      "screens": [
+        {
+          "file": "score-unlock.jpg",
+          "url": "https://bestlanguageapp.com/app-media/duolingo/ui/score-unlock.jpg",
+          "width": 640,
+          "height": 1360,
+          "sha256": "70390722d544b8ea1cfe96b43c290bf60472d192bf68ac3fa36f8b6ad6dc5655"
+        }
+      ],
+      "motion": "Still only"
+    },
+    {
+      "id": "bestlanguageapp-loot-chest",
+      "page": "https://bestlanguageapp.com/reviews/duolingo",
+      "platform": "Android 11, Moto G Power (2021)",
+      "captureDate": "2026-07-31",
+      "appVersion": "6.90.3",
+      "course": "Vietnamese for English speakers; not the product English curriculum",
+      "screens": [
+        {
+          "file": "loot-chest.jpg",
+          "url": "https://bestlanguageapp.com/app-media/duolingo/ui/loot-chest.jpg",
+          "width": 640,
+          "height": 1360,
+          "sha256": "e719b29fb99d2ef70f62ce0ac595f15f255a0990d73c9deb03c51f0010ebde00"
+        }
+      ],
+      "motion": "Still only"
+    }
+  ]
+}

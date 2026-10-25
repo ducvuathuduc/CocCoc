@@ -178,35 +178,32 @@ class LearningHeader extends StatelessWidget {
   final VoidCallback onClose;
   final Widget? trailing;
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-    decoration: const BoxDecoration(
-      border: Border(
-        bottom: BorderSide(color: ReferenceColors.border, width: 2),
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: palette.border, width: 2)),
       ),
-    ),
-    child: Row(
-      children: [
-        IconButton(
-          tooltip: 'Close',
-          onPressed: onClose,
-          icon: const Icon(
-            Icons.close_rounded,
-            size: 30,
-            color: ReferenceColors.disabled,
+      child: Row(
+        children: [
+          IconButton(
+            tooltip: 'Close',
+            onPressed: onClose,
+            icon: Icon(Icons.close_rounded, size: 30, color: palette.disabled),
           ),
-        ),
-        Expanded(
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: headingStyle.copyWith(fontSize: 21),
+          Expanded(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: headingStyle.copyWith(fontSize: 21),
+            ),
           ),
-        ),
-        trailing ?? const SizedBox(width: 48),
-      ],
-    ),
-  );
+          trailing ?? const SizedBox(width: 48),
+        ],
+      ),
+    );
+  }
 }
 
 class LearningCard extends StatelessWidget {
@@ -225,20 +222,21 @@ class LearningCard extends StatelessWidget {
   final EdgeInsets padding;
   @override
   Widget build(BuildContext context) {
+    final palette = context.referencePalette;
     final border = selected
         ? correct == true
               ? const Color(0xFFA5ED6E)
               : correct == false
               ? LearningColors.red
               : ReferenceColors.blueBorder
-        : ReferenceColors.border;
+        : palette.border;
     final fill = selected
         ? correct == true
               ? LearningColors.correct
               : correct == false
               ? LearningColors.incorrect
-              : ReferenceColors.blueFill
-        : ReferenceColors.surface;
+              : palette.blueFill
+        : palette.surface;
     return Semantics(
       selected: selected,
       button: onTap != null,
@@ -309,23 +307,26 @@ Future<void> showLearningNotice(
   BuildContext context,
   String title,
   String message,
-) => learningSheet<void>(
-  context,
-  title: title,
-  child: Column(
-    children: [
-      Text(
-        message,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 17, color: ReferenceColors.muted),
-      ),
-      const SizedBox(height: 24),
-      ReferenceButton(
-        label: 'GOT IT',
-        backgroundColor: LearningColors.blue,
-        edgeColor: LearningColors.blueDark,
-        onPressed: () => Navigator.pop(context),
-      ),
-    ],
-  ),
-);
+) {
+  final palette = context.referencePalette;
+  return learningSheet<void>(
+    context,
+    title: title,
+    child: Column(
+      children: [
+        Text(
+          message,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 17, color: palette.muted),
+        ),
+        const SizedBox(height: 24),
+        ReferenceButton(
+          label: 'GOT IT',
+          backgroundColor: LearningColors.blue,
+          edgeColor: LearningColors.blueDark,
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+    ),
+  );
+}

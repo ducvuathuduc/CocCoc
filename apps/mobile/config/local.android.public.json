@@ -1,0 +1,13 @@
+{
+  "DATA_SOURCE": "api",
+  "USE_MOCK_AUTH": "false",
+  "ALLOW_INSECURE_LOCAL_ENDPOINTS": "true",
+  "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+  "APPWRITE_PROJECT_ID": "6acc656d0025cc57bd81",
+  "LEARNING_API_URL": "http://10.0.2.2:4101",
+  "PROGRESS_API_URL": "http://10.0.2.2:4102",
+  "AI_API_URL": "http://10.0.2.2:4103",
+  "APPWRITE_GOOGLE_ENABLED": "false",
+  "APPWRITE_FACEBOOK_ENABLED": "false",
+  "APPWRITE_APPLE_ENABLED": "false"
+}

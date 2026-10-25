@@ -16,7 +16,7 @@ Start at [docs/00_START_HERE.md](docs/00_START_HERE.md). Then read the assigned 
 
 ## Frozen architecture
 
-The architecture is frozen as follows. Flutter Android/iOS uses feature-first manual Riverpod MVVM. The backend is TypeScript on Node 22 with three services: Learning, Progress and AI. Appwrite provides Auth, TablesDB and Storage. The API is REST described by OpenAPI, and each service owns its writes. The local journal is Drift. Change the architecture only through the ADR procedure in [docs/agent/TASK_PROTOCOL.md](docs/agent/TASK_PROTOCOL.md). Do not add a broker, cluster, cache, gateway or a Python service.
+The architecture is frozen as follows. Flutter Android/iOS uses feature-first manual Riverpod MVVM. The backend is TypeScript on Node 22 with three services: Learning, Progress and AI. Appwrite provides Auth, TablesDB and Storage. The API is REST described by OpenAPI, and each service owns its writes. The local journal is Drift. The human-approved [ADR-0018](docs/architecture/adr/0018-container-event-cache-runtime.md) permits Docker container API/worker entrypoints, RabbitMQ transport and Redis derived read cache, subject to its admission gates. Other architecture changes use [TASK_PROTOCOL](docs/agent/TASK_PROTOCOL.md); no unapproved cluster, gateway or Python service. The human chose to retain Appwrite Auth after the [closed Descope evaluation](docs/architecture/adr/draft-0019-descope-identity.md); do not introduce an auth-provider migration in this scope.
 
 Canonical owners:
 

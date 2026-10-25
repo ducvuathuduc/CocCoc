@@ -80,16 +80,17 @@ class _ReferenceButtonState extends State<ReferenceButton> {
   bool _pressed = false;
   @override
   Widget build(BuildContext context) {
+    final palette = context.referencePalette;
     final enabled = widget.onPressed != null;
     final background = !enabled
         ? widget.outlined
-              ? ReferenceColors.surface
-              : ReferenceColors.border
+              ? palette.surface
+              : palette.border
         : widget.outlined
-        ? ReferenceColors.surface
+        ? palette.surface
         : widget.backgroundColor ?? ReferenceColors.green;
     final edge = widget.outlined
-        ? ReferenceColors.border
+        ? palette.border
         : widget.edgeColor ?? ReferenceColors.greenEdge;
     return Semantics(
       button: true,
@@ -116,7 +117,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
               color: background,
               borderRadius: BorderRadius.circular(widget.cornerRadius),
               border: widget.outlined
-                  ? Border.all(color: ReferenceColors.border, width: 2)
+                  ? Border.all(color: palette.border, width: 2)
                   : null,
               boxShadow: enabled && !_pressed
                   ? [BoxShadow(color: edge, offset: const Offset(0, 4))]
@@ -140,13 +141,13 @@ class _ReferenceButtonState extends State<ReferenceButton> {
                           : 12,
                     ),
                 foregroundColor: !enabled
-                    ? ReferenceColors.disabled
+                    ? palette.disabled
                     : widget.foregroundColor != null
                     ? widget.foregroundColor!
                     : widget.outlined
                     ? ReferenceColors.green
                     : Colors.white,
-                disabledForegroundColor: ReferenceColors.disabled,
+                disabledForegroundColor: palette.disabled,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(widget.cornerRadius),
                 ),
@@ -200,14 +201,13 @@ class ChoiceCard extends StatelessWidget {
   final double minHeight;
   @override
   Widget build(BuildContext context) {
-    final border = selected
-        ? ReferenceColors.blueBorder
-        : ReferenceColors.border;
+    final palette = context.referencePalette;
+    final border = selected ? ReferenceColors.blueBorder : palette.border;
     final card = Semantics(
       selected: selected,
       button: true,
       child: Material(
-        color: selected ? ReferenceColors.blueFill : ReferenceColors.surface,
+        color: selected ? palette.blueFill : palette.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
           side: BorderSide(color: border, width: 2),
@@ -219,7 +219,7 @@ class ChoiceCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: DefaultTextStyle.merge(
               style: TextStyle(
-                color: selected ? ReferenceColors.blue : ReferenceColors.ink,
+                color: selected ? ReferenceColors.blue : palette.ink,
               ),
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: minHeight),
@@ -280,25 +280,25 @@ class SpeechBubble extends StatelessWidget {
   final Widget child;
   final bool below;
   @override
-  Widget build(BuildContext context) => CustomPaint(
-    painter: _BubblePainter(below),
-    child: Padding(
-      padding: EdgeInsets.fromLTRB(16, 14, 16, below ? 24 : 14),
-      child: DefaultTextStyle.merge(
-        style: const TextStyle(
-          fontSize: 20,
-          height: 1.42,
-          color: ReferenceColors.ink,
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return CustomPaint(
+      painter: _BubblePainter(below, palette),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(16, 14, 16, below ? 24 : 14),
+        child: DefaultTextStyle.merge(
+          style: TextStyle(fontSize: 20, height: 1.42, color: palette.ink),
+          child: child,
         ),
-        child: child,
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _BubblePainter extends CustomPainter {
-  _BubblePainter(this.below);
+  _BubblePainter(this.below, this.palette);
   final bool below;
+  final ReferencePalette palette;
   @override
   void paint(Canvas canvas, Size size) {
     final bounds = Rect.fromLTWH(
@@ -308,9 +308,9 @@ class _BubblePainter extends CustomPainter {
       size.height - (below ? 10 : 0),
     );
     final shape = RRect.fromRectAndRadius(bounds, const Radius.circular(13));
-    final fill = Paint()..color = ReferenceColors.surface;
+    final fill = Paint()..color = palette.surface;
     final stroke = Paint()
-      ..color = ReferenceColors.border
+      ..color = palette.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
     canvas.drawRRect(shape, fill);
@@ -333,7 +333,7 @@ class _BubblePainter extends CustomPainter {
     canvas.drawPath(tail, stroke);
     // Erase the shared base line, leaving the bubble and tail as one outline.
     final eraser = Paint()
-      ..color = ReferenceColors.surface
+      ..color = palette.surface
       ..strokeWidth = 3;
     if (below) {
       canvas.drawLine(
@@ -348,25 +348,29 @@ class _BubblePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_BubblePainter oldDelegate) => below != oldDelegate.below;
+  bool shouldRepaint(_BubblePainter oldDelegate) =>
+      below != oldDelegate.below || palette != oldDelegate.palette;
 }
 
 class ReferenceBackIcon extends StatelessWidget {
   const ReferenceBackIcon({super.key});
   @override
-  Widget build(BuildContext context) => const SizedBox(
+  Widget build(BuildContext context) => SizedBox(
     width: 28,
     height: 28,
-    child: CustomPaint(painter: _BackPainter()),
+    child: CustomPaint(
+      painter: _BackPainter(context.referencePalette.disabled),
+    ),
   );
 }
 
 class _BackPainter extends CustomPainter {
-  const _BackPainter();
+  const _BackPainter(this.color);
+  final Color color;
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = ReferenceColors.disabled
+      ..color = color
       ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round
@@ -383,7 +387,8 @@ class _BackPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _BackPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _BackPainter oldDelegate) =>
+      color != oldDelegate.color;
 }
 
 class FlowHeader extends StatelessWidget {
@@ -391,62 +396,65 @@ class FlowHeader extends StatelessWidget {
   final VoidCallback onBack;
   final double? progress;
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(6, 3, 16, 0),
-    child: Row(
-      children: [
-        IconButton(
-          onPressed: onBack,
-          tooltip: 'Back',
-          icon: const ReferenceBackIcon(),
-        ),
-        if (progress != null) const SizedBox(width: 6),
-        if (progress != null)
-          Expanded(
-            child: Semantics(
-              label: 'Onboarding progress',
-              value: '${(progress! * 100).round()}%',
-              child: SizedBox(
-                height: 16,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Stack(
-                    children: [
-                      const Positioned.fill(
-                        child: ColoredBox(color: ReferenceColors.border),
-                      ),
-                      TweenAnimationBuilder<double>(
-                        tween: Tween(end: progress!.clamp(0, 1)),
-                        duration: MediaQuery.disableAnimationsOf(context)
-                            ? Duration.zero
-                            : const Duration(milliseconds: 220),
-                        curve: Curves.easeOutCubic,
-                        builder: (context, value, child) =>
-                            FractionallySizedBox(
-                              widthFactor: value,
-                              child: child,
-                            ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: ReferenceColors.green,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(6, 3, 16, 0),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: onBack,
+            tooltip: 'Back',
+            icon: const ReferenceBackIcon(),
+          ),
+          if (progress != null) const SizedBox(width: 6),
+          if (progress != null)
+            Expanded(
+              child: Semantics(
+                label: 'Onboarding progress',
+                value: '${(progress! * 100).round()}%',
+                child: SizedBox(
+                  height: 16,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: ColoredBox(color: palette.border),
+                        ),
+                        TweenAnimationBuilder<double>(
+                          tween: Tween(end: progress!.clamp(0, 1)),
+                          duration: MediaQuery.disableAnimationsOf(context)
+                              ? Duration.zero
+                              : const Duration(milliseconds: 220),
+                          curve: Curves.easeOutCubic,
+                          builder: (context, value, child) =>
+                              FractionallySizedBox(
+                                widthFactor: value,
+                                child: child,
+                              ),
                           child: Container(
-                            margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF80DE1A),
-                              borderRadius: BorderRadius.circular(9),
+                              color: ReferenceColors.green,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Container(
+                              margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF80DE1A),
+                                borderRadius: BorderRadius.circular(9),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

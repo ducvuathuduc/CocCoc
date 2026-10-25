@@ -54,78 +54,78 @@ class StatusAvatar extends StatelessWidget {
   final double size;
   final Widget? portrait;
   @override
-  Widget build(BuildContext context) => SizedBox(
-    width: size + 14,
-    height: size + 12,
-    child: Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          left: 0,
-          bottom: 0,
-          child: Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFFF7F7F7),
-              border: Border.all(color: const Color(0xFFB0B0B0), width: 2),
-            ),
-            alignment: Alignment.center,
-            child: portrait == null
-                ? Text(
-                    name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: size * .47,
-                      color: ReferenceColors.disabled,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  )
-                : ClipOval(child: portrait),
-          ),
-        ),
-        Positioned(
-          right: 0,
-          top: 0,
-          child: Container(
-            width: size * .52,
-            height: size * .52,
-            padding: const EdgeInsets.all(3),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(size * .21),
-              border: Border.all(color: ReferenceColors.border, width: 2),
-            ),
-            child: _statusArt[status] != null
-                ? FittedBox(
-                    child: ReferenceArt(
-                      _statusArt[status]!,
-                      width: _statusArt[status]!.source.width,
-                      height: _statusArt[status]!.source.height,
-                    ),
-                  )
-                : const Icon(
-                    Icons.sentiment_satisfied_alt,
-                    color: ReferenceColors.border,
-                  ),
-          ),
-        ),
-        Positioned(
-          right: 11,
-          bottom: 0,
-          child: Container(
-            width: size * .2,
-            height: size * .2,
-            decoration: BoxDecoration(
-              color: ReferenceColors.green,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 2),
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return SizedBox(
+      width: size + 14,
+      height: size + 12,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            left: 0,
+            bottom: 0,
+            child: Container(
+              width: size,
+              height: size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: palette.raisedSurface,
+                border: Border.all(color: palette.border, width: 2),
+              ),
+              alignment: Alignment.center,
+              child: portrait == null
+                  ? Text(
+                      name.isEmpty ? '?' : name.characters.first.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: size * .47,
+                        color: palette.disabled,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    )
+                  : ClipOval(child: portrait),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Container(
+              width: size * .52,
+              height: size * .52,
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                color: palette.raisedSurface,
+                borderRadius: BorderRadius.circular(size * .21),
+                border: Border.all(color: palette.border, width: 2),
+              ),
+              child: _statusArt[status] != null
+                  ? FittedBox(
+                      child: ReferenceArt(
+                        _statusArt[status]!,
+                        width: _statusArt[status]!.source.width,
+                        height: _statusArt[status]!.source.height,
+                      ),
+                    )
+                  : Icon(Icons.sentiment_satisfied_alt, color: palette.border),
+            ),
+          ),
+          Positioned(
+            right: 11,
+            bottom: 0,
+            child: Container(
+              width: size * .2,
+              height: size * .2,
+              decoration: BoxDecoration(
+                color: ReferenceColors.green,
+                shape: BoxShape.circle,
+                border: Border.all(color: palette.surface, width: 2),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 Future<void> showStatusPicker(BuildContext context, WidgetRef ref) async {
@@ -133,7 +133,7 @@ Future<void> showStatusPicker(BuildContext context, WidgetRef ref) async {
   await showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    backgroundColor: Colors.white,
+    backgroundColor: context.referencePalette.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
@@ -146,6 +146,7 @@ class StatusPickerSheet extends ConsumerWidget {
   const StatusPickerSheet({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     final state = ref.watch(statusControllerProvider);
     final wallet = ref.watch(previewWalletProvider);
     final vm = ref.read(statusControllerProvider.notifier);
@@ -166,7 +167,7 @@ class StatusPickerSheet extends ConsumerWidget {
                 width: 36,
                 height: 5,
                 decoration: BoxDecoration(
-                  color: ReferenceColors.disabled,
+                  color: palette.disabled,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -372,6 +373,7 @@ class FeedScreen extends ConsumerWidget {
   const FeedScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     final following = ref.watch(previewControllerProvider).following;
     return Scaffold(
       body: SafeArea(
@@ -384,10 +386,7 @@ class FeedScreen extends ConsumerWidget {
                   IconButton(
                     tooltip: 'Back',
                     onPressed: () => _back(context),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: ReferenceColors.muted,
-                    ),
+                    icon: Icon(Icons.arrow_back, color: palette.muted),
                   ),
                   const Text(
                     'Feed',
@@ -396,7 +395,7 @@ class FeedScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const Divider(height: 1, color: ReferenceColors.border),
+            Divider(height: 1, color: palette.border),
             Expanded(
               child: following.isEmpty
                   ? const _FeedSuggestions()
@@ -413,6 +412,7 @@ class _FeedSuggestions extends ConsumerWidget {
   const _FeedSuggestions();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     final state = ref.watch(feedControllerProvider);
     final following = ref.watch(previewControllerProvider).following;
     final count = state.selectedSuggestions.difference(following).length;
@@ -437,15 +437,15 @@ class _FeedSuggestions extends ConsumerWidget {
               RichText(
                 textAlign: TextAlign.center,
                 textScaler: MediaQuery.textScalerOf(context),
-                text: const TextSpan(
+                text: TextSpan(
                   style: TextStyle(
                     fontFamily: 'DuolingoSans',
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
-                    color: ReferenceColors.ink,
+                    color: palette.ink,
                     height: 1.2,
                   ),
-                  children: [
+                  children: const [
                     TextSpan(
                       text: 'Add friends',
                       style: TextStyle(color: Color(0xFF4EAAED)),
@@ -466,9 +466,9 @@ class _FeedSuggestions extends ConsumerWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  subtitle: const Text(
+                  subtitle: Text(
                     'You may know each other',
-                    style: TextStyle(color: ReferenceColors.muted),
+                    style: TextStyle(color: palette.muted),
                   ),
                   trailing: IconButton(
                     tooltip: 'Select $name',
@@ -487,18 +487,18 @@ class _FeedSuggestions extends ConsumerWidget {
                 ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: const CircleAvatar(
-                  backgroundColor: ReferenceColors.blueFill,
-                  child: Icon(Icons.person_add, color: LearningColors.blue),
+                leading: CircleAvatar(
+                  backgroundColor: palette.blueFill,
+                  child: const Icon(
+                    Icons.person_add,
+                    color: LearningColors.blue,
+                  ),
                 ),
                 title: const Text(
                   'Find more friends',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
-                trailing: const Icon(
-                  Icons.chevron_right,
-                  color: ReferenceColors.muted,
-                ),
+                trailing: Icon(Icons.chevron_right, color: palette.muted),
                 onTap: () => context.push('/friends'),
               ),
             ],
@@ -559,10 +559,10 @@ class _FeedPosts extends ConsumerWidget {
                       style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    Text(
                       '33 mins',
                       style: TextStyle(
-                        color: ReferenceColors.muted,
+                        color: context.referencePalette.muted,
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                       ),
@@ -640,7 +640,7 @@ class _SentencePost extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Row(
+      Row(
         children: [
           _FeedAvatar('Sam Lee'),
           SizedBox(width: 12),
@@ -651,7 +651,10 @@ class _SentencePost extends ConsumerWidget {
                 Text('Sam shared a sentence', style: TextStyle(fontSize: 18)),
                 Text(
                   '2 days',
-                  style: TextStyle(color: ReferenceColors.muted, fontSize: 16),
+                  style: TextStyle(
+                    color: context.referencePalette.muted,
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),
@@ -666,7 +669,7 @@ class _SentencePost extends ConsumerWidget {
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFF7F7F7),
+                color: context.referencePalette.raisedSurface,
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Column(
@@ -685,8 +688,8 @@ class _SentencePost extends ConsumerWidget {
                   const SizedBox(height: 10),
                   Text(
                     translation,
-                    style: const TextStyle(
-                      color: ReferenceColors.muted,
+                    style: TextStyle(
+                      color: context.referencePalette.muted,
                       fontSize: 17,
                       height: 1.25,
                     ),
@@ -729,7 +732,7 @@ class _FirstFriendPost extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Row(
+      Row(
         children: [
           _FeedAvatar('Sam Lee'),
           SizedBox(width: 12),
@@ -743,7 +746,10 @@ class _FirstFriendPost extends StatelessWidget {
                 ),
                 Text(
                   '3 days',
-                  style: TextStyle(color: ReferenceColors.muted, fontSize: 16),
+                  style: TextStyle(
+                    color: context.referencePalette.muted,
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),
@@ -863,40 +869,45 @@ class _ActionButton extends StatelessWidget {
   final int count;
   final bool selected;
   @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    selected: selected,
-    label: label,
-    child: OutlinedButton(
-      onPressed: onTap,
-      style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        side: const BorderSide(color: ReferenceColors.border, width: 2),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: selected ? LearningColors.red : ReferenceColors.ink,
-            size: 27,
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      child: OutlinedButton(
+        onPressed: onTap,
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          side: BorderSide(color: palette.border, width: 2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
           ),
-          if (count > 0) ...[
-            const SizedBox(width: 8),
-            Text(
-              '$count',
-              style: const TextStyle(
-                color: ReferenceColors.ink,
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-              ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: selected ? LearningColors.red : palette.ink,
+              size: 27,
             ),
+            if (count > 0) ...[
+              const SizedBox(width: 8),
+              Text(
+                '$count',
+                style: TextStyle(
+                  color: palette.ink,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class FeedCommentSheet extends ConsumerStatefulWidget {
@@ -1011,7 +1022,7 @@ class _LearningPost extends StatelessWidget {
       ),
       const SizedBox(height: 14),
       if (kind != 'streak')
-        const Wrap(
+        Wrap(
           spacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
@@ -1029,7 +1040,7 @@ class _LearningPost extends StatelessWidget {
             Text(
               '2 days',
               style: TextStyle(
-                color: ReferenceColors.muted,
+                color: context.referencePalette.muted,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
@@ -1050,7 +1061,7 @@ class _LearningPost extends StatelessWidget {
           child: ReferenceButton(
             label: kind == 'streak' ? 'START A LESSON' : 'TELL ME MORE',
             outlined: true,
-            foregroundColor: ReferenceColors.ink,
+            foregroundColor: context.referencePalette.ink,
             onPressed: () => kind == 'streak'
                 ? context.go('/home')
                 : context.push('/feed/learning'),
@@ -1093,9 +1104,12 @@ class FeedLearningScreen extends StatelessWidget {
             style: TextStyle(fontSize: 20, height: 1.5),
           ),
           const SizedBox(height: 20),
-          const Text(
+          Text(
             'Based on Duolingo’s guide to children’s materials for language learning.',
-            style: TextStyle(color: ReferenceColors.muted, fontSize: 15),
+            style: TextStyle(
+              color: context.referencePalette.muted,
+              fontSize: 15,
+            ),
           ),
           const SizedBox(height: 30),
           ReferenceButton(

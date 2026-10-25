@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/design/duo_illustration.dart';
 import '../../../core/design/reference_art.dart';
@@ -64,7 +66,7 @@ class SocialAuthButtons extends StatelessWidget {
 }
 
 /// "By signing in to Duolingo, you agree to our Terms and Privacy Policy."
-class AuthLegalFooter extends StatelessWidget {
+class AuthLegalFooter extends StatefulWidget {
   const AuthLegalFooter({
     required this.prefix,
     required this.terms,
@@ -73,18 +75,39 @@ class AuthLegalFooter extends StatelessWidget {
   });
   final String prefix, terms, privacy;
   @override
+  State<AuthLegalFooter> createState() => _AuthLegalFooterState();
+}
+
+class _AuthLegalFooterState extends State<AuthLegalFooter> {
+  late final _terms = TapGestureRecognizer()
+    ..onTap = () => context.push('/settings/legal/terms');
+  late final _privacy = TapGestureRecognizer()
+    ..onTap = () => context.push('/settings/legal/privacy');
+
+  @override
+  void dispose() {
+    _terms.dispose();
+    _privacy.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Text.rich(
     TextSpan(
       children: [
-        TextSpan(text: prefix),
+        TextSpan(text: widget.prefix),
         TextSpan(
-          text: terms,
+          text: widget.terms,
           style: const TextStyle(fontWeight: FontWeight.w700),
+          recognizer: _terms,
+          mouseCursor: SystemMouseCursors.click,
         ),
         const TextSpan(text: ' and '),
         TextSpan(
-          text: '$privacy.',
+          text: '${widget.privacy}.',
           style: const TextStyle(fontWeight: FontWeight.w700),
+          recognizer: _privacy,
+          mouseCursor: SystemMouseCursors.click,
         ),
       ],
     ),

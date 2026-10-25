@@ -1,0 +1,19 @@
+{
+  "retrieved": "2026-10-24",
+  "sources": [
+    {
+      "page": "https://60fps.design/shots/duolingo-chest-open-interaction",
+      "title": "Duolingo Chest Open Interaction",
+      "platform": "iOS (observed iPhone / Dynamic Island chrome)",
+      "purpose": "Corroborates chest motion only; Android timing and random reward rules remain unverified",
+      "media": [
+        {
+          "duration": 22.333333,
+          "height": 2160,
+          "url": "https://video.gumlet.io/66b49d08225b7b88f78b7b44/68e7129101fefe1a9aa3a14d/main.mp4",
+          "width": 2160
+        }
+      ]
+    }
+  ]
+}

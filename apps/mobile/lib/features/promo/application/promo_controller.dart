@@ -22,8 +22,13 @@ final promoControllerProvider =
 
 class PromoController extends Notifier<PromoState> {
   final _keys = <String, String>{};
+  int _epoch = 0;
   @override
-  PromoState build() => const PromoState();
+  PromoState build() {
+    _epoch++;
+    ref.onDispose(() => _epoch++);
+    return const PromoState();
+  }
 
   /// Clears a shown error once the learner edits the code.
   void edited() {
@@ -40,7 +45,9 @@ class PromoController extends Notifier<PromoState> {
     state = const PromoState(busy: true);
     // One key per code, so a retry after a lost response replays the receipt.
     final key = _keys.putIfAbsent(code, UuidV4Generator().next);
+    final epoch = _epoch;
     final result = await ref.read(promoRepositoryProvider).redeem(code, key);
+    if (!ref.mounted || epoch != _epoch) return false;
     final reward = result.reward;
     if (reward == null) {
       state = PromoState(failure: result.failure);

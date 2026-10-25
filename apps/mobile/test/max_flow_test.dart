@@ -1,3 +1,5 @@
+import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/progress/application/extended_controller.dart';
 import 'package:cocenglish/features/progress/application/max_controller.dart';
@@ -85,10 +87,10 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      // Duolingo Max is reached from the Max banner at the top of the Shop.
+      // Open the registered Max route; Free Shop uses the archived Super banner.
       await tester.tap(find.byTooltip('Shop'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('MANAGE FEATURES'));
+      GoRouter.of(tester.element(find.byType(ShopScreen))).push('/max');
       await tester.pumpAndSettle();
       await tester.tap(find.text('TRY FOR \$0.00'));
       await tester.pumpAndSettle();

@@ -84,6 +84,11 @@ void main() {
       await c.read(lessonControllerProvider.notifier).claim();
       expect(c.read(learningStateProvider).xp, 20);
       // Duolingo result chain (results/05, 07–12) via the app router.
+      expect(
+        find.text('You unlocked your Duolingo\nEnglish Score!'),
+        findsOneWidget,
+      );
+      await tapText('CONTINUE'); // first English Score unlock
       await tapText('CONTINUE'); // streak extended
       await tapText('I CAN DO IT'); // streak goal
       await tapText('CONTINUE'); // widget unlocked

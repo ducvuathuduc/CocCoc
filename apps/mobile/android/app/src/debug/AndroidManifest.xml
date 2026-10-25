@@ -4,4 +4,6 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Explicit local debug profiles use 10.0.2.2. Release still requires TLS. -->
+    <application android:usesCleartextTraffic="true" />
 </manifest>

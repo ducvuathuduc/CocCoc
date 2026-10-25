@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/api/client/active_course.dart';
 import '../../../core/config/app_config.dart';
+import '../../../core/config/validated_app_config.dart';
 import '../../../core/api/api_contracts.dart' as wire;
 import '../../auth/application/auth_controller.dart';
 import '../../learning/data/path_repository.dart';
@@ -10,7 +11,7 @@ import '../../learning/application/learning_controller.dart';
 import '../data/real_learning_session_repository.dart';
 
 final authStartupProvider = FutureProvider<void>((ref) async {
-  if (ref.watch(appConfigProvider).isApi) {
+  if (ref.watch(validatedAppConfigProvider).isApi) {
     await ref.read(authControllerProvider.notifier).initialize();
   }
 });
@@ -25,7 +26,7 @@ final realLearningSessionRepositoryProvider =
 final realLearningSessionProvider = FutureProvider<PreparedLearningSession?>((
   ref,
 ) async {
-  if (!ref.watch(appConfigProvider).isApi) return null;
+  if (!ref.watch(validatedAppConfigProvider).isApi) return null;
   final user = ref.watch(authControllerProvider.select((s) => s.user));
   if (user == null) return null;
   final result = await ref
@@ -68,6 +69,8 @@ String? realLearningRedirect({
     '/auth/login',
     '/reset-password',
     '/auth/register',
+    '/settings/legal/terms',
+    '/settings/legal/privacy',
   };
   if (public.contains(path)) return null;
   if (restoring) return path == '/connecting' ? null : '/connecting';

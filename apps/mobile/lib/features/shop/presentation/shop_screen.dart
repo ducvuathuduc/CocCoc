@@ -6,11 +6,13 @@ import '../../gift/presentation/gift_screens.dart';
 
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
+import '../../../core/config/app_config.dart';
 import 'shop_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
 import '../../progress/application/extended_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../progress/presentation/timer_boost_screen.dart';
+import '../../promo/presentation/promo_code_screen.dart';
 import '../application/shop_controller.dart';
 import '../../xp_boost/application/boost_controller.dart';
 import '../../../core/design/reference_widgets.dart';
@@ -18,19 +20,123 @@ import '../../progress/domain/preview_state.dart';
 
 import 'shop_visuals.dart';
 
-class ShopScreen extends ConsumerWidget {
+class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ShopScreen> createState() => _ShopScreenState();
+}
+
+class _ShopScreenState extends ConsumerState<ShopScreen> {
+  bool _promoRoutePending = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !ref.read(shopControllerProvider).hasValue) return;
+      ref.read(shopControllerProvider.notifier).refresh();
+    });
+  }
+
+  void _close() => context.canPop() ? context.pop() : context.go('/home');
+
+  Future<void> _openPromo() async {
+    if (_promoRoutePending) return;
+    setState(() => _promoRoutePending = true);
+    try {
+      await context.push<void>(PromoCodeScreen.route);
+    } finally {
+      if (mounted) setState(() => _promoRoutePending = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final stateAsync = ref.watch(shopControllerProvider);
     final state = stateAsync.value;
-    if (state == null) return const Scaffold();
+    if (state == null) {
+      return Scaffold(
+        backgroundColor: ShopColors.surface,
+        body: SafeArea(
+          child: Column(
+            children: [
+              _ShopHeader(
+                title: 'Shop',
+                onClose: _close,
+                trailing: const SizedBox(width: 48),
+              ),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: stateAsync.isLoading
+                              ? Semantics(
+                                  liveRegion: true,
+                                  label: 'Loading Shop',
+                                  child: const CircularProgressIndicator(),
+                                )
+                              : Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text(
+                                      'Shop unavailable',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ShopColors.ink,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    const Text(
+                                      'Check your connection and try again.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ReferenceColors.muted,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 24),
+                                    SizedBox(
+                                      width: 200,
+                                      child: ReferenceButton(
+                                        key: const ValueKey('shop-retry'),
+                                        label: 'RETRY',
+                                        onPressed: () => ref
+                                            .read(
+                                              shopControllerProvider.notifier,
+                                            )
+                                            .refresh(),
+                                        backgroundColor: ShopColors.blue,
+                                        edgeColor: LearningColors.blueDark,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     final max = ref.watch(extendedControllerProvider).isMax;
-    // Balance and owned items come from the app economy (same wallet the
-    // Home stats bar shows); the shop repository only supplies the catalog.
-    final wallet = ref.watch(previewWalletProvider);
-    final owned = ref.watch(previewControllerProvider);
+    final apiMode = ref.watch(appConfigProvider).isApi;
+    final wallet = apiMode ? state.wallet : ref.watch(previewWalletProvider);
+    final owned = apiMode ? null : ref.watch(previewControllerProvider);
+    final freezes = apiMode ? state.freezes : owned!.freezes;
+    final timerBoosts = apiMode ? state.timerBoosts : owned!.timerBoosts;
 
     return Scaffold(
       backgroundColor: ShopColors.surface,
@@ -39,8 +145,7 @@ class ShopScreen extends ConsumerWidget {
           children: [
             _ShopHeader(
               title: 'Shop',
-              onClose: () =>
-                  context.canPop() ? context.pop() : context.go('/home'),
+              onClose: _close,
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -61,15 +166,18 @@ class ShopScreen extends ConsumerWidget {
               child: ListView(
                 padding: const EdgeInsets.only(top: 14, bottom: 24),
                 children: [
-                  _buildMaxBanner(context, max),
-                  const SizedBox(height: 44),
+                  if (max) ...[
+                    _buildMaxBanner(context, max),
+                    const SizedBox(height: 44),
+                  ],
                   _buildSectionTitle('My Items'),
                   const SizedBox(height: 18),
                   _buildMyItems(
                     context,
                     ref,
-                    freezes: owned.freezes,
-                    timerBoosts: owned.timerBoosts,
+                    freezes: freezes,
+                    timerBoosts: timerBoosts,
+                    apiMode: apiMode,
                   ),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Subscriptions'),
@@ -82,11 +190,22 @@ class ShopScreen extends ConsumerWidget {
                   const SizedBox(height: 64),
                   _buildSectionTitle('Timer Boost'),
                   const SizedBox(height: 18),
-                  _buildTimerBoost(context, ref, state, wallet),
+                  _buildTimerBoost(context, ref, state, wallet, apiMode),
                   const SizedBox(height: 64),
                   _buildSectionTitle('Streak Freeze'),
                   const SizedBox(height: 18),
-                  _buildStreakFreeze(context, ref, wallet, owned.freezes),
+                  _buildStreakFreeze(
+                    context,
+                    ref,
+                    wallet,
+                    freezes,
+                    state.freezeOffer,
+                    apiMode,
+                  ),
+                  const SizedBox(height: 64),
+                  _buildSectionTitle('Promo Code'),
+                  const SizedBox(height: 18),
+                  _buildPromoCode(context),
                   const SizedBox(height: 64),
                 ],
               ),
@@ -107,6 +226,80 @@ class ShopScreen extends ConsumerWidget {
           height: 1.2,
           fontWeight: FontWeight.w800,
           color: ShopColors.ink,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPromoCode(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 131),
+        padding: const EdgeInsets.fromLTRB(18, 18, 12, 18),
+        decoration: BoxDecoration(
+          color: ShopColors.surface,
+          borderRadius: BorderRadius.circular(10),
+          border: const Border(
+            top: BorderSide(color: ShopColors.border, width: 2.2),
+            left: BorderSide(color: ShopColors.border, width: 2.2),
+            right: BorderSide(color: ShopColors.border, width: 2.2),
+            bottom: BorderSide(color: ShopColors.border, width: 4.4),
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const ReferenceArt(
+              ArtRegion('android-promo-shop', Rect.fromLTWH(34, 631, 78, 78)),
+              width: 78,
+              height: 78,
+            ),
+            const SizedBox(width: 2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Redeem a promo code',
+                    style: TextStyle(
+                      color: ShopColors.ink,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'Enter a promo code to earn rewards',
+                    style: TextStyle(
+                      color: ReferenceColors.muted,
+                      fontSize: 15,
+                      height: 1.25,
+                    ),
+                  ),
+                  TextButton(
+                    key: const ValueKey('shop-promo-redeem'),
+                    onPressed: _promoRoutePending ? null : _openPromo,
+                    style: TextButton.styleFrom(
+                      foregroundColor: ShopColors.blue,
+                      padding: EdgeInsets.zero,
+                      minimumSize: const Size(48, 48),
+                      alignment: Alignment.centerLeft,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: const Text(
+                      'REDEEM',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: .5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -187,6 +380,7 @@ class ShopScreen extends ConsumerWidget {
     WidgetRef ref, {
     required int freezes,
     required int timerBoosts,
+    required bool apiMode,
   }) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -221,7 +415,9 @@ class ShopScreen extends ConsumerWidget {
                 child: GestureDetector(
                   key: const ValueKey('shop-my-timer-boost'),
                   behavior: HitTestBehavior.opaque,
-                  onTap: () => showTimerBoostOffer(context, ref),
+                  onTap: apiMode
+                      ? null
+                      : () => showTimerBoostOffer(context, ref),
                   child: _buildMyItemCard(
                     ShopArt.timerBoostMyItem,
                     'Timer Boost',
@@ -335,16 +531,19 @@ class ShopScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     ShopState state,
-    PreviewState owned,
+    PreviewState? owned,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
         children: state.specialOffers.map((offer) {
-          final claimed = owned.claims.contains(
-            '${PreviewController.shopClaimPrefix}${offer.id}',
-          );
-          final claimable = offer.actionLabel == 'CLAIM' && !claimed;
+          final claimed =
+              owned?.claims.contains(
+                '${PreviewController.shopClaimPrefix}${offer.id}',
+              ) ??
+              false;
+          final claimable =
+              offer.available && offer.actionLabel == 'CLAIM' && !claimed;
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: _buildListItem(
@@ -443,6 +642,7 @@ class ShopScreen extends ConsumerWidget {
     WidgetRef ref,
     ShopState state,
     int wallet,
+    bool apiMode,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -455,24 +655,44 @@ class ShopScreen extends ConsumerWidget {
               title: offer.title,
               price: offer.price,
               popular: offer.popular,
-              onAction: () {
-                final cost = offer.price ?? 0;
-                final pack = _timerBoostPack(offer.id);
-                if (wallet >= cost && pack != null) {
-                  ref
-                      .read(previewControllerProvider.notifier)
-                      .buyTimerBoost(
-                        'shop-${offer.id}-${DateTime.now().microsecondsSinceEpoch}',
-                        pack,
-                      );
-                } else {
-                  showLearningNotice(
-                    context,
-                    'Not enough gems',
-                    'You need $cost gems. Earn gems by finishing lessons and quests.',
-                  );
-                }
-              },
+              priceDisabled: !offer.available,
+              onAction: !offer.available
+                  ? null
+                  : () async {
+                      final cost = offer.price ?? 0;
+                      if (apiMode) {
+                        final bought = await ref
+                            .read(shopControllerProvider.notifier)
+                            .buyItem(offer.id, cost);
+                        if (!bought && context.mounted) {
+                          showLearningNotice(
+                            context,
+                            wallet < cost
+                                ? 'Not enough gems'
+                                : 'Purchase unavailable',
+                            wallet < cost
+                                ? 'You need $cost gems. Earn gems by finishing lessons and quests.'
+                                : 'Please try again.',
+                          );
+                        }
+                        return;
+                      }
+                      final pack = _timerBoostPack(offer.id);
+                      if (wallet >= cost && pack != null) {
+                        ref
+                            .read(previewControllerProvider.notifier)
+                            .buyTimerBoost(
+                              'shop-${offer.id}-${DateTime.now().microsecondsSinceEpoch}',
+                              pack,
+                            );
+                      } else {
+                        showLearningNotice(
+                          context,
+                          'Not enough gems',
+                          'You need $cost gems. Earn gems by finishing lessons and quests.',
+                        );
+                      }
+                    },
             ),
           );
         }).toList(),
@@ -492,50 +712,76 @@ class ShopScreen extends ConsumerWidget {
     WidgetRef ref,
     int wallet,
     int freezes,
+    ShopOffer freezeOffer,
+    bool apiMode,
   ) {
     final maxed = freezes >= PreviewController.maxFreezes;
+    final cost = apiMode ? freezeOffer.price ?? 0 : 425;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: _buildListItem(
         art: ShopArt.streakFreezeItem,
         title: '1-day',
-        price: 425,
-        priceDisabled: maxed,
+        price: cost,
+        priceDisabled: maxed || !freezeOffer.available,
         priceSemantics: maxed
             ? 'Streak Freeze, $freezes of ${PreviewController.maxFreezes} '
                   'equipped. Maximum reached'
             : null,
-        onAction: () {
-          if (maxed) {
-            // Duolingo: no purchase once both freeze slots are full.
-            showLearningNotice(
-              context,
-              'Streak Freeze maxed out',
-              'You already have ${PreviewController.maxFreezes} of '
-                  '${PreviewController.maxFreezes} Streak Freezes equipped. '
-                  'Use one before buying another.',
-            );
-            return;
-          }
-          final cost = 425;
-          if (wallet >= cost) {
-            final bought = ref
-                .read(previewControllerProvider.notifier)
-                .buyFreeze('freeze-${DateTime.now().microsecondsSinceEpoch}');
-            if (!bought) return;
-            showLearningNotice(
-              context,
-              'Streak Freeze equipped!',
-              'Your streak freeze is ready.',
-            );
-          } else {
-            showLearningNotice(
-              context,
-              'Not enough gems',
-              'You need $cost gems. Earn gems by finishing lessons and quests.',
-            );
-          }
-        },
+        onAction: !freezeOffer.available
+            ? null
+            : () async {
+                if (maxed) {
+                  // Duolingo: no purchase once both freeze slots are full.
+                  showLearningNotice(
+                    context,
+                    'Streak Freeze maxed out',
+                    'You already have ${PreviewController.maxFreezes} of '
+                        '${PreviewController.maxFreezes} Streak Freezes equipped. '
+                        'Use one before buying another.',
+                  );
+                  return;
+                }
+                if (wallet >= cost) {
+                  if (apiMode) {
+                    final bought = await ref
+                        .read(shopControllerProvider.notifier)
+                        .buyItem(freezeOffer.id, cost);
+                    if (!context.mounted) return;
+                    if (!bought) {
+                      showLearningNotice(
+                        context,
+                        'Purchase unavailable',
+                        'Please try again.',
+                      );
+                      return;
+                    }
+                    showLearningNotice(
+                      context,
+                      'Streak Freeze equipped!',
+                      'Your streak freeze is ready.',
+                    );
+                    return;
+                  }
+                  final bought = ref
+                      .read(previewControllerProvider.notifier)
+                      .buyFreeze(
+                        'freeze-${DateTime.now().microsecondsSinceEpoch}',
+                      );
+                  if (!bought) return;
+                  showLearningNotice(
+                    context,
+                    'Streak Freeze equipped!',
+                    'Your streak freeze is ready.',
+                  );
+                } else {
+                  showLearningNotice(
+                    context,
+                    'Not enough gems',
+                    'You need $cost gems. Earn gems by finishing lessons and quests.',
+                  );
+                }
+              },
       ),
     );
   }

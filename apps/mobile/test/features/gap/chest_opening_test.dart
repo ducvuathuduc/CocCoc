@@ -5,7 +5,7 @@ import 'package:cocenglish/features/progress/domain/preview_state.dart';
 import 'package:cocenglish/features/quests/data/quests_repository.dart';
 import 'package:cocenglish/features/quests/domain/quest_models.dart';
 import 'package:cocenglish/features/quests/presentation/chest_opening.dart';
-import 'package:cocenglish/features/quests/presentation/quests_screen.dart';
+
 import 'package:cocenglish/features/quests/application/quests_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +13,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/app_fonts.dart';
 
-/// Audit row 17: daily-quest chest opening after a credited claim.
+/// Archived chest renderer after a credited claim.
+/// The new Android quest upgrade entry is covered by android_chest_upgrade_test.
 class _Quests implements QuestsRepository {
   const _Quests();
   @override
@@ -63,13 +64,32 @@ Future<ProviderContainer> _pump(WidgetTester t, {bool reduced = true}) async {
           ),
           child: child!,
         ),
-        home: const QuestsScreen(),
+        home: Builder(
+          builder: (context) => Scaffold(
+            body: Center(
+              child: TextButton(
+                onPressed: () {
+                  if (c
+                      .read(questsControllerProvider.notifier)
+                      .claimQuest('daily-score')) {
+                    showChestOpening(
+                      context,
+                      type: QuestChestType.silver,
+                      gems: 10,
+                    );
+                  }
+                },
+                child: const Text('Score 90% in 1 lesson'),
+              ),
+            ),
+          ),
+        ),
       ),
     ),
   );
   await t.pumpAndSettle();
   final quest = find.text('Score 90% in 1 lesson');
-  await t.scrollUntilVisible(quest, 100);
+  await t.ensureVisible(quest);
   await t.pumpAndSettle();
   await t.tap(quest);
   return c;

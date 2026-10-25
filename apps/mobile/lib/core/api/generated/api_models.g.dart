@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
 // dart format off
-// Source: docs/api/openapi.yaml (sha256 64f4993f049da84184d4fac4c0d5ad558907061d2ca688aff6a4f919b12a7c00).
+// Source: docs/api/openapi.yaml (sha256 41dbf71e650880418344908dbe55bea259d8f3ea29cca01cecda82317473eee0).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors
@@ -2975,6 +2975,7 @@ final class Rewards {
     required this.awardXp,
     required this.revision,
     required this.asOf,
+    this.chest,
   });
 
   /// Validates [json] against the `Rewards` schema, then decodes it.
@@ -2997,6 +2998,7 @@ final class Rewards {
       awardXp: map['awardXp'] == null ? null : (map['awardXp'] as num).toInt(),
       revision: (map['revision'] as num).toInt(),
       asOf: map['asOf'] as String,
+      chest: map.containsKey('chest') ? QuestChestReceipt._decode(map['chest']) : null,
     );
   }
 
@@ -3010,6 +3012,7 @@ final class Rewards {
   final int? awardXp;
   final int revision;
   final String asOf;
+  final QuestChestReceipt? chest;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'completionId': completionId,
@@ -3022,6 +3025,7 @@ final class Rewards {
         'awardXp': awardXp,
         'revision': revision,
         'asOf': asOf,
+        if (chest != null) 'chest': chest!.toJson(),
       };
 }
 
@@ -3080,6 +3084,7 @@ final class Quest {
 final class QuestClaimRequest {
   const QuestClaimRequest({
     required this.periodKey,
+    this.upgradeChest,
   });
 
   /// Validates [json] against the `QuestClaimRequest` schema, then decodes it.
@@ -3093,13 +3098,16 @@ final class QuestClaimRequest {
     final Map<Object?, Object?> map = json as Map<Object?, Object?>;
     return QuestClaimRequest(
       periodKey: map['periodKey'] as String,
+      upgradeChest: map.containsKey('upgradeChest') ? map['upgradeChest'] as bool : null,
     );
   }
 
   final String periodKey;
+  final bool? upgradeChest;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'periodKey': periodKey,
+        'upgradeChest': ?upgradeChest,
       };
 }
 
@@ -7537,6 +7545,41 @@ final class LearningStats {
       };
 }
 
+/// Wire DTO for `#/components/schemas/QuestChestReceipt`.
+final class QuestChestReceipt {
+  const QuestChestReceipt({
+    required this.receiptId,
+    required this.tiers,
+    required this.gems,
+  });
+
+  /// Validates [json] against the `QuestChestReceipt` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory QuestChestReceipt.fromJson(Object? json) {
+    ContractValidator.instance.check('QuestChestReceipt', json);
+    return QuestChestReceipt._decode(json);
+  }
+
+  static QuestChestReceipt _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return QuestChestReceipt(
+      receiptId: map['receiptId'] as String,
+      tiers: List<String>.unmodifiable((map['tiers'] as List<Object?>).map((Object? x) => x as String)),
+      gems: (map['gems'] as num).toInt(),
+    );
+  }
+
+  final String receiptId;
+  final List<String> tiers;
+  final int gems;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'receiptId': receiptId,
+        'tiers': List<Object?>.of(tiers),
+        'gems': gems,
+      };
+}
+
 /// Decoders for every `#/components/schemas` entry, keyed by schema name.
 const Map<String, Object Function(Object?)> apiContractDecoders =
     <String, Object Function(Object?)>{
@@ -7696,4 +7739,5 @@ const Map<String, Object Function(Object?)> apiContractDecoders =
   'TurnScore': TurnScore.fromJson,
   'LearningStatsDay': LearningStatsDay.fromJson,
   'LearningStats': LearningStats.fromJson,
+  'QuestChestReceipt': QuestChestReceipt.fromJson,
 };

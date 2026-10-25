@@ -6,9 +6,11 @@ import '../application/results_providers.dart';
 import '../data/results_repository.dart';
 import 'results_extra_screens.dart';
 import 'results_screens.dart';
+import 'score_unlock_screen.dart';
 
 /// Post-lesson screens, in Duolingo order, shown after "Lesson complete".
 enum ResultsStage {
+  scoreUnlock,
   streakExtended,
   streakGoal,
   widgetUnlock,
@@ -30,7 +32,9 @@ List<ResultsStage> resultsChainStages({
   required bool streakGrew,
   required bool gemsEarned,
   required bool guest,
+  int? unlockedScore,
 }) => [
+  if (unlockedScore != null && unlockedScore > 0) ResultsStage.scoreUnlock,
   if (streakGrew) ...[
     ResultsStage.streakExtended,
     if (repository.streakGoal() != null) ResultsStage.streakGoal,
@@ -53,11 +57,13 @@ class ResultsChainScreen extends ConsumerStatefulWidget {
     required this.guest,
     required this.onFinished,
     required this.onCreateProfile,
+    this.unlockedScore,
     super.key,
   });
   final bool streakGrew;
   final bool gemsEarned;
   final bool guest;
+  final int? unlockedScore;
   final VoidCallback onFinished;
   final VoidCallback onCreateProfile;
 
@@ -66,11 +72,13 @@ class ResultsChainScreen extends ConsumerStatefulWidget {
 }
 
 class _ResultsChainScreenState extends ConsumerState<ResultsChainScreen> {
+  late final int? _unlockedScore = widget.unlockedScore;
   late final List<ResultsStage> _stages = resultsChainStages(
     repository: ref.read(resultsRepositoryProvider),
     streakGrew: widget.streakGrew,
     gemsEarned: widget.gemsEarned,
     guest: widget.guest,
+    unlockedScore: _unlockedScore,
   );
   int _index = 0;
 
@@ -83,6 +91,10 @@ class _ResultsChainScreenState extends ConsumerState<ResultsChainScreen> {
   }
 
   Widget _screen(ResultsStage stage) => switch (stage) {
+    ResultsStage.scoreUnlock => ScoreUnlockScreen(
+      score: _unlockedScore!,
+      onContinue: _next,
+    ),
     ResultsStage.streakExtended => StreakExtendedScreen(onContinue: _next),
     ResultsStage.streakGoal => StreakGoalScreen(onContinue: _next),
     ResultsStage.widgetUnlock => WidgetUnlockScreen(onContinue: _next),

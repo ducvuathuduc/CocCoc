@@ -15,7 +15,9 @@ const code = (r) => r.body?.error?.code;
 test('every OpenAPI progress operation is routed', () => {
   const api = JSON.parse(fs.readFileSync(path.join(repoRoot, 'docs/api/openapi.yaml'), 'utf8'));
   const h = setup();
-  const routes = kit.progressWiring(h.store).routes.map((r) => `${r.method} ${r.path}`);
+  const routes = kit
+    .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
+    .routes.map((r) => `${r.method} ${r.path}`);
   const missing = [];
   for (const [p, item] of Object.entries(api.paths)) {
     for (const [method, op] of Object.entries(item)) {
@@ -201,7 +203,7 @@ test('mock billing: subscription states, entitlement.changed outbox, out-of-orde
   assert.deepEqual([pending.state, pending.entitlement.plan], ['PENDING', 'FREE']);
   const notify = (state, at, id = randomUUID()) =>
     h.kit
-      .progressWiring(h.store)
+      .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
       .routes.find((r) => r.path === '/internal/billing/notifications')
       .handle({
         body: {

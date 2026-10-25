@@ -16,7 +16,7 @@ import {
   expectedLine,
   scriptedTranscript,
 } from './conversations.js';
-import { iso, stamp, type AiDeps } from './deps.js';
+import { iso, stamp, turnSpeechAvailable, type AiDeps } from './deps.js';
 import { AZURE_SCORER, type SpeechResult } from './speech.js';
 import { countUsage, DAILY_RECORDED_SECONDS } from './usage.js';
 
@@ -48,6 +48,7 @@ export async function createVoiceSession(
   bodyHash: string,
 ): Promise<ReceiptOutcome> {
   if (input.mode === 'LIVE') throw new ServiceError('NATIVE_LIVE_DISABLED');
+  if (!turnSpeechAvailable(deps.provider)) throw new ServiceError('AI_PROVIDER_UNAVAILABLE');
   return deps.persistence.commitWithReceipt(
     { userId, operation: 'createVoiceSession', key: idempotencyKey },
     bodyHash,
@@ -182,6 +183,7 @@ export async function submitVoiceTurn(
   idempotencyKey: string,
   bodyHash: string,
 ): Promise<ReceiptOutcome> {
+  if (!turnSpeechAvailable(deps.provider)) throw new ServiceError('AI_PROVIDER_UNAVAILABLE');
   const seconds = validateWav(input.wavBase64, input.audioSha256);
   const session = await ownedSession(deps, userId, sessionId);
   let heard: SpeechResult | null = null;

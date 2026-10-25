@@ -110,9 +110,11 @@ final class ProgressSnapshotSource {
 
 const progressSnapshotFeature = 'progress';
 
-final progressSnapshotSourceProvider = Provider<ProgressSnapshotSource>(
-  (ref) => ProgressSnapshotSource(
+final progressSnapshotSourceProvider = Provider<ProgressSnapshotSource>((ref) {
+  final source = ProgressSnapshotSource(
     ref.watch(apiEndpointsProvider),
     host: SnapshotHost.of(ref, progressSnapshotFeature),
-  ),
-);
+  );
+  ref.onDispose(source.cache.dispose);
+  return source;
+});

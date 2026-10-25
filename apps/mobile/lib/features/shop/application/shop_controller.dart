@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/client/idempotency.dart';
 import '../data/shop_repository.dart';
 import '../../xp_boost/domain/boost.dart';
 
@@ -12,6 +13,7 @@ class ShopOffer {
     this.popular = false,
     this.rewardGems,
     this.xpBoost,
+    this.available = true,
   });
   final String id;
   final String title;
@@ -22,6 +24,7 @@ class ShopOffer {
   /// Gems granted when a CLAIM offer is opened (mock data until the API).
   final int? rewardGems;
   final BoostReward? xpBoost;
+  final bool available;
 }
 
 class ShopState {
@@ -31,47 +34,97 @@ class ShopState {
     required this.timerBoosts,
     required this.specialOffers,
     required this.timerBoostOffers,
+    required this.freezeOffer,
   });
   final int wallet;
   final int freezes;
   final int timerBoosts;
   final List<ShopOffer> specialOffers;
   final List<ShopOffer> timerBoostOffers;
+  final ShopOffer freezeOffer;
 }
 
 class ShopController extends Notifier<AsyncValue<ShopState>> {
+  final IdGenerator _ids = UuidV4Generator();
+  final Map<String, String> _pendingCommands = {};
+  int _generation = 0;
+  bool _busy = false;
+  late ShopRepository _repository;
+
   @override
   AsyncValue<ShopState> build() {
-    _load();
+    _repository = ref.watch(shopRepositoryProvider);
+    final repository = _repository;
+    final generation = ++_generation;
+    _busy = false;
+    _pendingCommands.clear();
+    Future<void>(() => _load(repository, generation));
     return const AsyncLoading();
   }
 
-  ShopRepository get repository => ref.read(shopRepositoryProvider);
-
-  Future<void> _load() async {
-    final wallet = await repository.getWallet();
-    final freezes = await repository.getFreezes();
-    final timerBoosts = await repository.getTimerBoosts();
-    final specialOffers = await repository.getSpecialOffers();
-    final timerBoostOffers = await repository.getTimerBoostOffers();
-    state = AsyncData(
-      ShopState(
-        wallet: wallet,
-        freezes: freezes,
-        timerBoosts: timerBoosts,
-        specialOffers: specialOffers,
-        timerBoostOffers: timerBoostOffers,
-      ),
-    );
+  Future<void> _load(
+    ShopRepository repository,
+    int generation, {
+    bool refresh = false,
+  }) async {
+    final previous = state.value;
+    try {
+      final next = await repository.loadShop(refresh: refresh);
+      if (!ref.mounted ||
+          generation != _generation ||
+          repository != _repository) {
+        return;
+      }
+      state = AsyncData(next);
+    } catch (error, stack) {
+      if (!ref.mounted ||
+          generation != _generation ||
+          repository != _repository) {
+        return;
+      }
+      if (previous == null) state = AsyncError(error, stack);
+    }
   }
 
-  Future<bool> buyItem(String id, int cost) async {
+  Future<void> refresh() async {
+    final repository = _repository;
+    final generation = _generation;
+    if (state.value == null) state = const AsyncLoading();
+    await _load(repository, generation, refresh: true);
+  }
+
+  Future<bool> buyItem(String id, int displayCost) async {
+    if (_busy) return false;
     final s = state.value;
     if (s == null) return false;
-    if (s.wallet < cost) return false;
-    await repository.buyItem(id, cost);
-    await _load();
-    return true;
+    final offers = [...s.timerBoostOffers, s.freezeOffer];
+    final offer = offers.where((candidate) => candidate.id == id).firstOrNull;
+    final serverPrice = offer?.price;
+    if (offer == null ||
+        !offer.available ||
+        serverPrice == null ||
+        s.wallet < serverPrice) {
+      return false;
+    }
+    final repository = _repository;
+    final generation = _generation;
+    final commandId = _pendingCommands.putIfAbsent(id, _ids.next);
+    _busy = true;
+    try {
+      await repository.buyItem(id, displayCost, commandId: commandId);
+      if (!ref.mounted ||
+          generation != _generation ||
+          repository != _repository) {
+        return false;
+      }
+      _pendingCommands.remove(id);
+      await _load(repository, generation);
+      return true;
+    } catch (_) {
+      return false;
+    } finally {
+      if (generation == _generation && repository == _repository) _busy = false;
+    }
   }
 }
 

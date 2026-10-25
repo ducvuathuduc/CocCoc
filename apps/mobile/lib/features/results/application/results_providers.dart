@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/config/app_config.dart';
+import '../../auth/application/auth_controller.dart';
+import '../domain/score_unlock.dart';
 import '../../progress/data/league_repository.dart';
 import '../../progress/data/progress_snapshot.dart';
 import '../data/api_results_repository.dart';
@@ -11,6 +13,13 @@ final resultsRepositoryProvider = Provider<ResultsRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return const MockResultsRepository();
   return ApiResultsRepository(ref.watch(progressSnapshotSourceProvider));
 });
+
+final scoreUnlockCelebrationProvider = Provider<ScoreUnlockPresentationTracker>(
+  (ref) => ScoreUnlockPresentationTracker(
+    config: ref.watch(appConfigProvider),
+    accountId: ref.watch(authControllerProvider.select((s) => s.user?.id)),
+  ),
+);
 
 final streakExtendedResultProvider = Provider<StreakExtendedResult>(
   (ref) => _results(ref).streakExtended(),

@@ -25,7 +25,10 @@ const placementNodeId = 'placement';
 /// * XP is never computed on the client: the receipt carries the reward the
 ///   Progress service credited (0 while it is still pending).
 class ApiLearningRepository
-    implements LearningRepository, EvidenceLearningRepository {
+    implements
+        LearningRepository,
+        EvidenceLearningRepository,
+        OfflineLearningSync {
   ApiLearningRepository({
     required this.learning,
     required this.journal,
@@ -772,8 +775,14 @@ class ApiLearningRepository
           wire.OfflineAnswer.fromJson(answer.toOfflineAnswerJson()),
       ],
     );
-    await journal.enqueueCompletion(request.toJson());
-    await journal.clearActive();
+    final requestJson = request.toJson();
+    final localJournal = journal;
+    if (localJournal is AtomicLessonJournal) {
+      await localJournal.stageCompletionAndClearActive(requestJson);
+    } else {
+      await localJournal.enqueueCompletion(requestJson);
+      await localJournal.clearActive();
+    }
     _session = null;
     return SessionReceipt(
       id: 'offline-$localId',
@@ -790,27 +799,48 @@ class ApiLearningRepository
 
   /// Replays queued offline completions; stops at the first network failure.
   /// Returns how many were accepted (or rejected for good) by the server.
+  @override
   Future<int> syncPending() async {
     var settled = 0;
     for (final json in await journal.pendingCompletions()) {
       final operationId = json['operationId']! as String;
+      final wire.OfflineCompletionRequest request;
+      try {
+        request = wire.OfflineCompletionRequest.fromJson(json);
+      } on wire.ContractViolation {
+        final storage = journal;
+        if (storage is! RejectedLessonJournal) break;
+        await storage.rejectCompletion(operationId, 'INVALID_LOCAL_COMPLETION');
+        settled++;
+        continue;
+      }
       try {
         await learning.syncOfflineCompletion(
-          wire.OfflineCompletionRequest.fromJson(json),
+          request,
           idempotencyKey: operationId,
         );
         await journal.removeCompletion(operationId);
         settled++;
       } on ApiException catch (error) {
-        if (error.isOffline || error.retryable || error.isUnauthenticated) {
+        if (error.isOffline ||
+            error.retryable ||
+            error.isUnauthenticated ||
+            error.code == 'BAD_RESPONSE' ||
+            error.code.startsWith('HTTP_') ||
+            error.statusCode == null ||
+            error.statusCode == 403 ||
+            error.statusCode == 429 ||
+            error.statusCode! >= 500) {
           break;
         }
-        // Permanently rejected (stale bundle, conflict): drop it, the server
-        // stays authoritative and grants nothing for it.
-        await journal.removeCompletion(operationId);
+        final storage = journal;
+        if (storage is! RejectedLessonJournal) break;
+        await storage.rejectCompletion(operationId, error.code);
         settled++;
       } on wire.ContractViolation {
-        await journal.removeCompletion(operationId);
+        // A malformed success receipt can follow a committed request. Preserve
+        // the operation and retry its original key instead of rejecting it.
+        break;
       }
     }
     return settled;

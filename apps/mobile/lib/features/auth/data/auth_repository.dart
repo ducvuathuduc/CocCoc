@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/auth_state.dart';
+import '../domain/email_verification.dart';
 import '../services/appwrite_auth_service.dart';
 
 abstract interface class AuthRepository {
@@ -42,6 +43,15 @@ abstract interface class EmailCodeAuthRepository {
   Future<AuthUser> verifyEmailCode(String userId, String code);
 }
 
+abstract interface class EmailVerificationRepository {
+  Future<EmailVerificationStatus> readEmailVerification();
+  Future<void> sendEmailVerification();
+  Future<EmailVerificationStatus> completeEmailVerification(
+    String userId,
+    String secret,
+  );
+}
+
 class AuthFailure implements Exception {
   const AuthFailure(this.message);
 
@@ -49,7 +59,11 @@ class AuthFailure implements Exception {
 }
 
 class AppwriteAuthRepository
-    implements AuthRepository, AuthSessionRepository, EmailCodeAuthRepository {
+    implements
+        AuthRepository,
+        AuthSessionRepository,
+        EmailCodeAuthRepository,
+        EmailVerificationRepository {
   AppwriteAuthRepository(this.service, [SharedPreferencesAsync? preferences])
     : _preferences = preferences;
 
@@ -80,6 +94,42 @@ class AppwriteAuthRepository
   Future<void> sendRecovery(String email) async {
     try {
       await service.sendRecovery(email);
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<EmailVerificationStatus> readEmailVerification() async {
+    try {
+      return await service.readEmailVerification();
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<void> sendEmailVerification() async {
+    try {
+      await service.sendEmailVerification();
+    } on AppwriteAuthServiceException catch (error) {
+      throw AuthFailure(error.message);
+    } on Object {
+      throw const AuthFailure(_requestError);
+    }
+  }
+
+  @override
+  Future<EmailVerificationStatus> completeEmailVerification(
+    String userId,
+    String secret,
+  ) async {
+    try {
+      return await service.completeEmailVerification(userId, secret);
     } on AppwriteAuthServiceException catch (error) {
       throw AuthFailure(error.message);
     } on Object {

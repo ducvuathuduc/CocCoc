@@ -4,6 +4,8 @@
 
 Accepted V1; decision2026-10-04.
 
+2026-10-25 amendment: [ADR-0018](0018-container-event-cache-runtime.md) permits RabbitMQ as an admitted transport over this owner outbox/inbox design. Transactions, idempotent effects and consumer-application watermarks remain required; broker confirms do not replace them. Direct signed delivery remains the migration/rollback baseline.
+
 ## Context
 
 Learning completion must not fail when Progress is down and cannot double-award after retry.

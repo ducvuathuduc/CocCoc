@@ -4,6 +4,7 @@ import '../../../core/api/api_contracts.dart' as wire;
 import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/cache/snapshot_cache.dart';
 import '../domain/quest_models.dart';
+import '../domain/upgrade_chest.dart';
 import 'quests_repository.dart';
 
 /// [QuestsRepository] backed by `GET /v1/quests` + `POST /v1/quests/{id}/claim`.
@@ -12,7 +13,11 @@ import 'quests_repository.dart';
 /// friends quest (WEEK, `friend_*`). The weekend XP quest has no endpoint yet,
 /// so it renders as a zero-progress card rather than a fixture value.
 class ApiQuestsRepository
-    implements QuestsRepository, QuestCommands, QuestCopySource {
+    implements
+        QuestsRepository,
+        QuestCommands,
+        QuestRewardCommands,
+        QuestCopySource {
   @override
   ChestRewardCopy get chestCopy => const ChestRewardCopy();
 
@@ -97,6 +102,26 @@ class ApiQuestsRepository
     );
     unawaited(refresh());
     return true;
+  }
+
+  @override
+  Future<UpgradeChestReward?> claimReward(String questId) async {
+    final quest = cache.value?.items
+        .where((q) => q.questId == questId)
+        .firstOrNull;
+    if (quest == null || quest.claimed || quest.metricValue < quest.target) {
+      return null;
+    }
+    final rewards = await api.claimQuest(
+      questId,
+      wire.QuestClaimRequest(periodKey: quest.periodKey, upgradeChest: true),
+    );
+    unawaited(refresh());
+    final chest = rewards.chest;
+    if (chest == null) {
+      return null; // An older already-claimed receipt cannot be rolled again.
+    }
+    return UpgradeChestReward.checked(chest.receiptId, chest.tiers, chest.gems);
   }
 
   static const _months = [

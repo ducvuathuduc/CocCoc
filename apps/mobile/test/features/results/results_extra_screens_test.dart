@@ -11,6 +11,7 @@ import 'package:cocenglish/features/results/domain/results_models.dart';
 import 'package:cocenglish/features/results/presentation/results_chain.dart';
 import 'package:cocenglish/features/results/presentation/results_extra_screens.dart';
 import 'package:cocenglish/features/results/presentation/results_screens.dart';
+import 'package:cocenglish/features/results/presentation/score_unlock_screen.dart';
 import 'package:cocenglish/features/results/presentation/results_theme.dart';
 import 'package:cocenglish/features/results/presentation/results_widgets.dart';
 import 'package:cocenglish/main.dart';
@@ -322,11 +323,13 @@ void main() {
   });
 
   testWidgets(
-    'router: lesson complete → streak → gems → quests → league → home',
+    'router: lesson complete → score → streak → gems → quests → league → home',
     (tester) async {
       await _openRouterResults(tester, _receipt());
       await _tap(tester, 'CLAIM XP');
-      // Streak went 0 → 1, so the streak celebrations lead the chain.
+      expect(find.byType(ScoreUnlockScreen), findsOneWidget);
+      await _tap(tester, 'CONTINUE');
+      // Streak went 0 → 1; its celebrations follow the first Score unlock.
       expect(find.byType(StreakExtendedScreen), findsOneWidget);
       await _tap(tester, 'CONTINUE');
       expect(find.byType(StreakGoalScreen), findsOneWidget);

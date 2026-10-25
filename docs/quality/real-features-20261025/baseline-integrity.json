@@ -1,0 +1,16 @@
+{
+  "checkedDate": "2026-10-25",
+  "sourceAssetFiles": 1583,
+  "changedAssets": [],
+  "artifacts": [
+    {
+      "path": "apps/mobile/build/web/main.dart.js",
+      "unchanged": true
+    },
+    {
+      "path": "apps/mobile/build/app/outputs/flutter-apk/app-debug.apk",
+      "unchanged": true
+    }
+  ],
+  "scope": "Source/artifact integrity only; API debug APK is retained separately and preview APK restored after Android tests."
+}

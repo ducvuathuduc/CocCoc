@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cocenglish/core/api/api_contracts.dart' as wire;
 import 'package:cocenglish/core/api/client/active_course.dart';
 import 'package:cocenglish/core/api/client/api_endpoints.g.dart';
+import 'package:cocenglish/core/api/client/api_exception.dart';
 import 'package:cocenglish/core/cache/snapshot_cache.dart';
 import 'package:cocenglish/features/call/data/api_call_repository.dart';
 import 'package:cocenglish/features/learning/data/path_repository.dart';
@@ -468,23 +469,38 @@ void main() {
       expect(repo.categories, isNotEmpty);
     });
 
-    test('a revision conflict refetches and reapplies once', () async {
-      transport
-        ..json('GET /base/v1/me/preferences', preferences(revision: 9))
-        ..once(
-          'PATCH /base/v1/me/preferences',
-          (_) => jsonResponse(errorEnvelope('REVISION_CONFLICT'), status: 409),
-        )
-        ..on(
-          'PATCH /base/v1/me/preferences',
-          (r) => jsonResponse(preferences(revision: 10)),
+    test(
+      'a notification conflict requires refresh before a new command',
+      () async {
+        transport
+          ..once(
+            'GET /base/v1/me/preferences',
+            (_) => jsonResponse(preferences(revision: 4)),
+          )
+          ..json('GET /base/v1/me/preferences', preferences(revision: 9))
+          ..once(
+            'PATCH /base/v1/me/preferences',
+            (_) =>
+                jsonResponse(errorEnvelope('REVISION_CONFLICT'), status: 409),
+          )
+          ..on(
+            'PATCH /base/v1/me/preferences',
+            (r) => jsonResponse(preferences(revision: 10)),
+          );
+        final repo = ApiNotificationRepository(api);
+        await expectLater(
+          repo.save(const NotificationPrefs()),
+          throwsA(isA<ApiException>()),
         );
-      final repo = ApiNotificationRepository(api);
-      await repo.save(const NotificationPrefs());
-      final patches = transport.to('PATCH /base/v1/me/preferences');
-      expect(patches, hasLength(2));
-      expect(bodyOf(patches.last)['expectedRevision'], 9);
-    });
+        expect(transport.to('PATCH /base/v1/me/preferences'), hasLength(1));
+        await repo.fetch();
+        await repo.save(const NotificationPrefs());
+        final patches = transport.to('PATCH /base/v1/me/preferences');
+        expect(patches, hasLength(2));
+        expect(bodyOf(patches.first)['expectedRevision'], 4);
+        expect(bodyOf(patches.last)['expectedRevision'], 9);
+      },
+    );
   });
 
   group('progress snapshot consumers', () {
@@ -573,7 +589,7 @@ void main() {
           unlimited: false,
           streakActive: false,
         );
-        expect(repo.stats(local)[2].value, '5', reason: 'local until loaded');
+        expect(repo.stats(local)[2].value, '—', reason: 'no fixture balance');
         await source.refresh();
         final stats = repo.stats(local);
         expect(stats.map((s) => s.value), ['12', '4', '420', '∞']);

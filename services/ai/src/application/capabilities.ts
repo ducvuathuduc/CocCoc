@@ -1,12 +1,12 @@
 // Capability manifest (GET /v1/ai/capabilities): what this deployment actually enables, no secrets.
-import type { AiDeps } from './deps.js';
+import { turnSpeechAvailable, type AiDeps } from './deps.js';
 
 export function capabilities(deps: AiDeps) {
   return {
     configVersion: deps.provider.configVersion,
     textTutor: true,
     nativeLive: false,
-    turnSpeech: true,
+    turnSpeech: turnSpeechAvailable(deps.provider),
     pronunciation: deps.provider.azureEnabled,
     offlineShadowing: true,
     nativeLiveReason: 'NATIVE_LIVE_DISABLED',

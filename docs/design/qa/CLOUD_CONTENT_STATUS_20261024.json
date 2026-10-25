@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-10-24T12:40:24.107Z",
+  "timeZone": "Asia/Saigon",
+  "access": "read-only public Storage GET; no write/publish performed",
+  "manifest": {
+    "fileId": "vi_en.v2.manifest",
+    "status": 200,
+    "bytes": 128195,
+    "sha256": "e0d6197628903f4286ffcbe2c7200140ffe01122b9f484caf5490c2e49b4ccf4",
+    "matchesCommitted": true,
+    "bundles": 512,
+    "units": 16,
+    "courseId": "vi_en"
+  },
+  "bundles": {
+    "checkedAt": "2026-10-24T12:40:03.988Z",
+    "mode": "read-only anonymous public Storage download",
+    "projectId": "6acc656d0025cc57bd81",
+    "bucketId": "learning-assets",
+    "expectedBundles": 513,
+    "verifiedBundles": 513,
+    "exercises": 6394,
+    "bytes": 10340913,
+    "failures": [],
+    "finishedAt": "2026-10-24T12:40:24.107Z"
+  },
+  "placementPaths": [
+    "bundles/placement.json"
+  ],
+  "learningCatalogAnonymousStatus": 401,
+  "learningCatalogAnonymousError": "AUTH_REQUIRED",
+  "tablesDBPublishPointerVerified": false,
+  "previewDataSource": "mock",
+  "mediaCloudVerified": false
+}

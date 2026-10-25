@@ -14,6 +14,8 @@
     "backend:smoke": "node tools/scripts/backend-smoke.mjs",
     "dev:services": "node tools/scripts/dev-services.mjs",
     "dev:smoke": "node tools/scripts/dev-smoke.mjs",
+    "runtime:check": "node tools/scripts/runtime-check.mjs",
+    "container:check": "node tools/scripts/container-check.mjs",
     "contracts:generate": "openapi-typescript docs/api/openapi.yaml -o packages/api_contracts/generated.ts",
     "contracts:check": "node tools/blueprint/validate-schemas.mjs && node tools/blueprint/generate-dart-contracts.mjs --check",
     "contracts:dart": "node tools/blueprint/generate-dart-contracts.mjs",

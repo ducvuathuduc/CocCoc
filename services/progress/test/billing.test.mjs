@@ -62,7 +62,7 @@ test('duplicate ACTIVE notifications do not extend paid expiry', async () => {
   await initUser(h, 'alice');
   const p = await purchase(h);
   const notify = h.kit
-    .progressWiring(h.store)
+    .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
     .routes.find((r) => r.path === '/internal/billing/notifications');
   h.clock.now += 86400000;
   await notify.handle({
@@ -85,7 +85,7 @@ test('newer ACTIVE notification cannot resurrect a refunded purchase', async () 
   await initUser(h, 'alice');
   const p = await purchase(h);
   const notify = h.kit
-    .progressWiring(h.store)
+    .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
     .routes.find((r) => r.path === '/internal/billing/notifications');
   for (const state of ['REFUNDED', 'ACTIVE']) {
     h.clock.now += 1000;
@@ -115,7 +115,7 @@ for (const [currentState, staleState] of [
     await initUser(h, 'alice');
     const p = await purchase(h);
     const notify = h.kit
-      .progressWiring(h.store)
+      .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
       .routes.find((r) => r.path === '/internal/billing/notifications');
     const start = h.clock.now;
     const send = (state, offset) =>
@@ -148,7 +148,7 @@ test('invalid billing notification timestamp is rejected without poisoning order
   await initUser(h, 'alice');
   const p = await purchase(h);
   const notify = h.kit
-    .progressWiring(h.store)
+    .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
     .routes.find((r) => r.path === '/internal/billing/notifications');
   await assert.rejects(
     notify.handle({

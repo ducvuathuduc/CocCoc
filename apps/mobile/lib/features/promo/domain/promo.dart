@@ -1,6 +1,6 @@
-/// Promo code redemption (audit row 32, P10-PROMO-001). Gummble lists an
-/// Android "Redeem a promo code" flow with no screens captured, so this UI is
-/// derived from the app's settings pages. Contract: `POST
+/// Promo code redemption (P10-PROMO-001). Android entry/processing references:
+/// Mobbin flow 098f538c-5fa6-4506-8164-e71764f66d1a, frames 2–4.
+/// Contract: `POST
 /// /v1/promo-codes/redeem` → PromoRedemption; unknown, expired and exhausted
 /// codes share NOT_FOUND; a second redemption is PROMO_ALREADY_REDEEMED.
 enum PromoRewardType { superDays, gems, item }
@@ -34,9 +34,9 @@ class PromoContent {
   const PromoContent({
     this.pageTitle = 'Promo code',
     this.title = 'Redeem a promo code',
-    this.body = 'Enter your code to unlock Super, gems or items.',
-    this.hint = 'Enter code',
-    this.action = 'REDEEM',
+    this.body = 'Enter a promo code to earn rewards',
+    this.hint = 'Gift code',
+    this.action = 'APPLY',
     this.invalidFormat = 'Codes use 4–32 letters, numbers or dashes.',
     this.notFound = 'That code isn’t valid or has expired.',
     this.alreadyRedeemed = 'You’ve already redeemed this code.',

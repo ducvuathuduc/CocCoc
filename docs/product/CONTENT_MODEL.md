@@ -27,4 +27,10 @@ Content pins schemaVersion, courseVersion, lessonVersion, gradingRulesVersion, r
 
 Future schema version adds `learning_domain` at catalog/course boundary with language as default for legacy V1. It is not added to existing frozen wire DTOs now. Register a future subject's versioned renderer/validator table at app composition and its server owner; stable session/answer/result/event interfaces remain subject-aware through the versioned union. Translation/listening/speaking stay language modules. Unsupported renderer version blocks start with update/help; old cached bundles retain their language decoder. No math/chess/music scaffold or unused everything-engine is created.
 
-Synthetic seed validation command is `pnpm seed:check`. The seed is a catalog starter; the full two-section/six-unit/24-node/48-lesson content gate remains P4 and requires authored media/keys/signature checks. No competitor user data or live inference is imported during CI.
+Synthetic storage seed validation is `pnpm seed:check`. The committed English curriculum and its
+current counts are tracked in the [Learning content catalog](../../content/README.md). Its offline
+gate is `node content/tools/check-content.mjs`, including authored media bytes, keys and signatures.
+Real-router acceptance serves every committed lesson and completes one lesson per unit; it does
+not prove cloud publication or completion of every lesson on a device. Phase admission remains
+owned by the [implementation plan](../agent/IMPLEMENTATION_PLAN.md). No competitor user data or
+live inference is imported during CI.

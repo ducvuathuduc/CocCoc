@@ -28,7 +28,7 @@ class LeagueEntrySurface extends StatelessWidget {
   Widget build(BuildContext context) {
     final locked = remainingLessons > 0;
     return ColoredBox(
-      color: Colors.white,
+      color: context.referencePalette.surface,
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -97,8 +97,8 @@ class _LockedLeagueEntry extends StatelessWidget {
             ],
           ),
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: ReferenceColors.ink,
+          style: TextStyle(
+            color: context.referencePalette.ink,
             fontSize: 24,
             fontWeight: FontWeight.w700,
             height: 1.25,
@@ -133,23 +133,23 @@ class _WelcomeLeagueEntry extends StatelessWidget {
         height: artWidth * 850 / 890,
       ),
       const SizedBox(height: 26),
-      const Text(
+      Text(
         'Welcome to Leaderboards!',
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: ReferenceColors.ink,
+          color: context.referencePalette.ink,
           fontSize: 24,
           fontWeight: FontWeight.w700,
           height: 1.2,
         ),
       ),
       const SizedBox(height: 6),
-      const Text(
+      Text(
         'Join other learners in a weekly contest.\n'
         'Earn XP from lessons to climb the ranks!',
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: ReferenceColors.muted,
+          color: context.referencePalette.muted,
           fontSize: 20,
           height: 1.35,
         ),

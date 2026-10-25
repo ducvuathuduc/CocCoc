@@ -29,6 +29,7 @@ export function setup({
   start = Date.parse('2026-10-12T03:00:00.000Z'),
   store: given,
   realClock = false,
+  allowSimulatedCommerce = true,
 } = {}) {
   const clock = {
     fixed: start,
@@ -41,7 +42,7 @@ export function setup({
   };
   const store =
     given ?? kit.createMemoryProgressPersistence(() => clock.now, { strictSchema: true });
-  const wiring = kit.progressWiring(store);
+  const wiring = kit.progressWiring(store, {}, { allowSimulatedCommerce });
   const auth = {
     async verify(jwt) {
       return { userId: jwt };

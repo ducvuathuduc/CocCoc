@@ -25,7 +25,7 @@ services/<svc>/
   test/*.test.mjs           node:test; imports bundles from .cache/backend-fixtures
 ```
 
-Create `domain/` and `application/` when a service gets its first real rule or use case. Learning and AI have none yet, so they have no empty placeholder folders. Add a business route only for an operation that exists in OpenAPI, and register it in `src/http/wiring.ts`.
+Domain and application modules implement each service's rules and use cases. Add a business route only for an operation that exists in OpenAPI, and register it in `src/http/wiring.ts`. Native `src/runtime/{http,worker}.ts` entrypoints reuse the hosted composition; they never select the dev stores.
 
 ## Run locally
 

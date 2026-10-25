@@ -1,4 +1,5 @@
 import '../domain/quest_models.dart';
+import '../domain/upgrade_chest.dart';
 import 'quests_mock_data.dart';
 
 /// Override questsRepositoryProvider to replace the local quest data source.
@@ -33,6 +34,10 @@ class MockQuestsRepository implements QuestsRepository, QuestCopySource {
 /// The local preview ledger keeps the optimistic UI either way.
 abstract interface class QuestCommands {
   Future<bool> claim(String questId);
+}
+
+abstract interface class QuestRewardCommands {
+  Future<UpgradeChestReward?> claimReward(String questId);
 }
 
 /// Optional copy source; repositories without it fall back to the default

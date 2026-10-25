@@ -81,14 +81,17 @@ final phoneVerificationControllerProvider =
 /// SMS code entry with resend countdown, and the verified result.
 class PhoneVerificationController extends Notifier<PhoneVerificationState> {
   Timer? _timer;
+  int _revision = 0;
   PhoneVerificationRepository get _repo =>
       ref.read(phoneVerificationRepositoryProvider);
 
   @override
   PhoneVerificationState build() {
+    _revision++;
+    _timer?.cancel();
     ref.onDispose(() => _timer?.cancel());
     return PhoneVerificationState(
-      country: ref.read(phoneVerificationRepositoryProvider).defaultCountry,
+      country: ref.watch(phoneVerificationRepositoryProvider).defaultCountry,
     );
   }
 
@@ -110,6 +113,7 @@ class PhoneVerificationController extends Notifier<PhoneVerificationState> {
 
   /// Fresh flow each time the Profile row is opened; keeps [verified].
   void begin() {
+    _revision++;
     _timer?.cancel();
     state = PhoneVerificationState(
       country: _repo.defaultCountry,
@@ -136,13 +140,16 @@ class PhoneVerificationController extends Notifier<PhoneVerificationState> {
       return false;
     }
     final number = PhoneNumber(state.country, state.national);
+    final revision = _revision;
     state = state.copyWith(sending: true, serverError: () => null);
     try {
       await _repo.sendCode(number);
     } on PhoneVerificationFailure catch (e) {
+      if (!ref.mounted || revision != _revision) return false;
       state = state.copyWith(sending: false, serverError: () => e.message);
       return false;
     }
+    if (!ref.mounted || revision != _revision) return false;
     _timer?.cancel();
     state = state.copyWith(
       sending: false,
@@ -163,13 +170,16 @@ class PhoneVerificationController extends Notifier<PhoneVerificationState> {
   Future<void> resend() async {
     final number = state.pending;
     if (number == null || !state.canResend) return;
+    final revision = _revision;
     state = state.copyWith(sending: true);
     try {
       await _repo.sendCode(number);
     } on PhoneVerificationFailure catch (e) {
+      if (!ref.mounted || revision != _revision) return;
       state = state.copyWith(sending: false, serverError: () => e.message);
       return;
     }
+    if (!ref.mounted || revision != _revision) return;
     state = state.copyWith(
       sending: false,
       resent: true,
@@ -189,8 +199,10 @@ class PhoneVerificationController extends Notifier<PhoneVerificationState> {
   Future<bool> verify() async {
     final number = state.pending;
     if (number == null || !state.canVerify) return false;
+    final revision = _revision;
     state = state.copyWith(verifying: true);
     final ok = await _repo.verifyCode(number, state.code);
+    if (!ref.mounted || revision != _revision) return false;
     if (!ok) {
       state = state.copyWith(
         verifying: false,

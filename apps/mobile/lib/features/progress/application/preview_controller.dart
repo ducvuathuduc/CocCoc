@@ -91,14 +91,15 @@ class PreviewController extends Notifier<PreviewState> {
   bool spendGems(int cost) => spendRefillGems(cost);
 
   void dismissQuestIntro() => state = state.copyWith(questIntroSeen: true);
-  bool claimQuest(String id, {required bool eligible}) {
+  bool claimQuest(String id, {required bool eligible, int gems = 10}) {
     if (!eligible ||
+        gems <= 0 ||
         state.claims.contains(id) ||
         !{'daily-2', 'daily-xp', 'monthly'}.contains(id)) {
       return false;
     }
     state = state.copyWith(
-      bonusGems: state.bonusGems + 10,
+      bonusGems: state.bonusGems + gems,
       claims: {...state.claims, id},
     );
     return true;

@@ -314,8 +314,8 @@ export function createHostedHandler(
   env: Record<string, string | undefined> = process.env,
   wiring: ServiceWiring = {},
 ) {
-  const endpoint = env['APPWRITE_FUNCTION_API_ENDPOINT'];
-  const project = env['APPWRITE_FUNCTION_PROJECT_ID'];
+  const endpoint = env['APPWRITE_FUNCTION_API_ENDPOINT'] ?? env['APPWRITE_ENDPOINT'];
+  const project = env['APPWRITE_FUNCTION_PROJECT_ID'] ?? env['APPWRITE_PROJECT_ID'];
   let auth: AuthPort | undefined;
   if (endpoint && project && endpoint.startsWith('https://')) {
     auth = createAppwriteAuthPort(createAccountVerifier(endpoint, project));

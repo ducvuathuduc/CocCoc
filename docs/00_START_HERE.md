@@ -4,7 +4,7 @@ This is the one documentation entry point. It replaces the former `00_READ_ME_FI
 
 ## What is implemented and what is designed
 
-The Flutter app has onboarding/authentication UI, a learning path, deterministic mock lessons, practice, progress, social/settings and subscription preview flows. Most features use local fixtures. An Appwrite Auth adapter exists, but its presence does not establish cloud identity/permissions or device proof. Lesson drafts are in memory; the planned Drift journal is not implemented. Native live voice, assessed pronunciation, server-authoritative rewards, billing and cloud asynchronous delivery remain gated.
+The Flutter app has onboarding/authentication UI, a learning path, deterministic mock lessons, practice, progress, social/settings and subscription preview flows. Most features use local fixtures. An Appwrite Auth adapter exists, but its presence does not establish cloud identity/permissions or device proof. Native API builds now use an account-scoped Drift journal; Android emulator persistence/migration tests pass. Current real-composition implementation and remaining runtime gaps are in the [2026-10-25 receipt](quality/real-features-20261025/COMPOSITION_GUARD.md). Native live voice, assessed pronunciation, server-authoritative rewards, billing and cloud asynchronous delivery remain gated.
 
 The backend is three separately bundled services: Learning, Progress and AI (`services/`). Hosted entrypoints fail closed for business routes until a durable adapter is admitted. `pnpm dev:services` runs all three locally with explicit in-memory dev adapters. The Appwrite schema declares 62 tables (`appwrite/`). The first 59 are applied to the test project; M003, which adds promo codes and mock ads, is declared only. Billing and ads stay mock. This is a local, runnable foundation, not a production integration.
 
@@ -28,6 +28,7 @@ The [repository tree](agent/REPOSITORY_TREE.md) is the single layout and ownersh
 | Setup, Appwrite, cost, recovery | [local setup](devops/LOCAL_SETUP_WINDOWS.md), [Appwrite setup](devops/APPWRITE_SETUP.md), [cost model](devops/COST_MODEL.md), [operations](devops/OPERATIONS.md) |
 | Commercialization design | [monetization](product/MONETIZATION.md) |
 | Phases and assigned work | [phase plan](agent/IMPLEMENTATION_PLAN.md), [task status](agent/task-status.json), [task protocol](agent/TASK_PROTOCOL.md), [developer handoff](agent/DEVELOPER_HANDOFF.md) |
+| Real feature integration while preserving approved UI | [Approved 2026-10-25 setup plan](agent/REAL_FEATURES_SETUP_PLAN_20261025.md), [first composition slice](agent/REAL_FEATURES_FIRST_SLICE_20261025.md), [accepted runtime ADR](architecture/adr/0018-container-event-cache-runtime.md), [auth decision: retain Appwrite](architecture/adr/draft-0019-descope-identity.md) |
 | Release and demo evidence | [release gate](quality/RELEASE_GATE.md), [demo playbook](quality/DEMO_PLAYBOOK.md) |
 
 ## Full specification reading order (V1, checked 2026-10-03)

@@ -21,6 +21,7 @@ export { ids, operationId } from '../application/records.js';
 export * from '../domain/lesson-xp.js';
 export * from '../domain/practice-xp.js';
 export * from '../domain/streak.js';
+export { questChestReceipt } from '../domain/quest-chest.js';
 export * from '../domain/time.js';
 export * from '../domain/league.js';
 export { createPromoCode, codeHash, derivedCode } from '../application/commerce.js';

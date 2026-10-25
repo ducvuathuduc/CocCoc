@@ -197,3 +197,45 @@ with the bubble fill interpolated per row). The gradient, SUPER badge, bubble,
 Duo and bell are the source pixels. `SuperTrialScreen` paints the whole image
 (cover-cropped) and draws every string natively from `SuperTrialRepository`.
 No artwork was generated. SHA-256 (asset): e0e4d441b3e25cc9e39ca93b363fa2fea35f4d1faf4eec383852a6d769264454; source: 832aed3e947b6766bd017b9e4dcc0806b6b535292181fe124800598eb3e8cb93.
+
+### Android source collection and native companion slice (2026-10-24)
+
+`reference_art/android-super-offer.png`, `android-promo-shop.png` and `android-score-unlock.png` are lossless PNG decodes of
+public Mobbin Android and BestLanguageApp Android screenshots. `gap-super-brand.png` is an
+unchanged archived Gummble iOS capture. Only documented illustration/badge regions are displayed;
+labels and controls are native. Source URLs, original/asset SHA-256, dimensions, crop rectangles
+and explicit English/demo adaptations are in the
+[implementation manifest](../../../docs/design/references/android-free-20261024/implementation-assets.json).
+The [collection record](../../../docs/design/references/android-free-20261024/README.md) distinguishes
+Android, iOS, archived capture dates and unverified animation timings. Source collection does not
+grant a product asset license or establish pixel acceptance.
+
+
+## Android non-payment completion — 2026-10-24
+
+Original Super 02/08/09/10/11 artwork and Common chest imagery are decoded from the archived Android captures. Native widgets supply copy, controls and state. Rare/Epic/gem art comes from the publicly linked 60fps iOS clip; Mega comes from the Android Authority article’s iOS capture. These are explicitly Android adaptations, not evidence of Android pixel parity. The Super gradient is reconstructed from measured source background edges; illustration pixels remain source crops. Source URLs, hashes, crop rectangles, timestamps, platform limits and palette coordinates are recorded in [completion-assets.json](../../../docs/design/references/android-free-20261024/completion-assets.json). No store-sheet artwork or paid billing adapter was added.
+
+### Android dark shell crops — 2026-10-24
+
+`android-dark-04/06/09/12/13/14.png` are lossless RGB decodes of the archived
+Mobbin Android dark-mode frames. The app paints only the tight top-stat and
+five-tab icon crops recorded in `completion-assets.json`; selected-tab borders
+remain native Flutter surfaces. The English course flag remains the documented
+US-flag adaptation. No Android dark energy icon exists in the archive, so
+`energy-icon-transparent.png` only removes the near-white background connected
+to the edge of the existing `energy-02.png` crop; its enclosed white lightning
+and all colored source pixels are unchanged. This is source-backed shell
+adaptation, not whole-screen pixel parity.
+
+Final shell refinement on 2026-10-25: `android-dark-shell-icons.png` stores original-size icon crops
+in a transparent atlas. Edge-connected background pixels alone receive zero alpha (maximum RGB
+distance 20 from each recorded top-left background sample). RGB and enclosed illustration pixels
+are unchanged; source selected-tab borders are outside the tight crops. This prevents rectangular
+background seams when the same art appears on a selected native tile or a different dark surface.
+The atlas region/source hashes and coordinates are in `completion-assets.json`; the inactive flame
+retains the existing energy source's grey artwork.
+
+`path-duo-transparent.png` uses the existing original practice Duo crop at native resolution.
+Only the edge-connected background receives zero alpha, with the same recorded RGB-distance
+threshold; enclosed eyes and all illustration RGB are preserved. It replaces the light crop only
+for dark reduced-motion/loading/error fallback. The light path and original animation stay intact.

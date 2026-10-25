@@ -1,18 +1,21 @@
 import '../../../core/api/api_contracts.dart' as wire;
 import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_exception.dart';
+import '../../../core/api/client/idempotency.dart';
 import '../application/shop_controller.dart';
 import 'shop_repository.dart';
 
-/// [ShopRepository] backed by `GET /v1/shop` and `POST /v1/shop/purchases`.
-/// Gems, freezes and inventory are server-authoritative; offer copy (titles,
-/// pack sizes) stays the UI catalog from [catalog].
+/// Server-authoritative shop projection and purchase commands.
+///
+/// Titles and artwork IDs come from the immutable mock catalog. Availability,
+/// prices, balances and inventory always come from `GET /v1/shop`.
 class ApiShopRepository implements ShopRepository {
-  ApiShopRepository(this.api, {ShopRepository? catalog})
-    : catalog = catalog ?? MockShopRepository();
+  ApiShopRepository(this.api, {IdGenerator? ids})
+    : _ids = ids ?? UuidV4Generator();
 
   final ApiEndpoints api;
-  final ShopRepository catalog;
+  final IdGenerator _ids;
+  final Map<String, _PendingPurchase> _pendingPurchases = {};
   wire.Shop? _shop;
 
   Future<wire.Shop> _load({bool refresh = false}) async {
@@ -22,69 +25,135 @@ class ApiShopRepository implements ShopRepository {
   }
 
   @override
-  Future<int> getWallet() async => (await _load()).gems;
-
-  @override
-  Future<int> getFreezes() async => (await _load()).freezeSlots;
-
-  @override
-  Future<int> getTimerBoosts() async {
-    final shop = await _load();
-    final ids = shop.items
+  Future<ShopState> loadShop({bool refresh = false}) async {
+    final shop = await _load(refresh: refresh);
+    final timerItem = shop.items
         .where((item) => item.kind == 'TIMER_BOOST')
-        .map((item) => item.itemId)
-        .toSet();
-    return shop.inventory
-        .where((item) => ids.contains(item.itemId))
-        .fold<int>(0, (sum, item) => sum + item.quantity);
-  }
-
-  /// UI offer id -> (server item kind, quantity).
-  static (String, int) _resolve(String id) {
-    if (id.startsWith('freeze')) return ('FREEZE', 1);
-    if (id.startsWith('timer-15')) return ('TIMER_BOOST', 15);
-    if (id.startsWith('timer-5')) return ('TIMER_BOOST', 5);
-    if (id.startsWith('timer')) return ('TIMER_BOOST', 1);
-    if (id.contains('repair')) return ('STREAK_REPAIR', 1);
-    if (id.contains('amulet')) return ('WEEKEND_AMULET', 1);
-    if (id.contains('energy') || id.contains('refill')) {
-      return ('ENERGY_REFILL', 1);
-    }
-    if (id.contains('xp') || id.contains('boost')) return ('XP_BOOST', 1);
-    throw ApiException(
-      code: 'ITEM_UNAVAILABLE',
-      message: 'No catalog item for $id',
+        .firstOrNull;
+    final freezeItem = shop.items
+        .where((item) => item.kind == 'FREEZE')
+        .firstOrNull;
+    final timerBoosts = timerItem == null
+        ? 0
+        : shop.inventory
+              .where((item) => item.itemId == timerItem.itemId)
+              .fold<int>(0, (sum, item) => sum + item.quantity);
+    final timerOffers = timerItem == null
+        ? const <ShopOffer>[]
+        : [
+            for (final offer in ShopPresentationCatalog.timerBoostOffers)
+              ShopOffer(
+                id: offer.id,
+                title: offer.title,
+                price: timerItem.priceGems * _quantityFor(offer.id),
+                popular: offer.popular,
+                available:
+                    timerItem.available &&
+                    timerItem.owned + _quantityFor(offer.id) <=
+                        timerItem.maxOwned,
+              ),
+          ];
+    return ShopState(
+      wallet: shop.gems,
+      freezes: shop.freezeSlots,
+      timerBoosts: timerBoosts,
+      specialOffers: [
+        for (final offer in ShopPresentationCatalog.specialOffers)
+          ShopOffer(
+            id: offer.id,
+            title: offer.title,
+            actionLabel: 'LOCKED',
+            available: false,
+          ),
+      ],
+      timerBoostOffers: timerOffers,
+      freezeOffer: ShopOffer(
+        id: 'freeze',
+        title: '1-day',
+        price: freezeItem?.priceGems,
+        available:
+            freezeItem != null &&
+            freezeItem.available &&
+            freezeItem.owned < freezeItem.maxOwned,
+      ),
     );
   }
 
-  /// [cost] is ignored: the server prices the item from its catalog.
-  @override
-  Future<void> buyItem(String id, int cost) async {
-    final shop = await _load();
-    final (kind, quantity) = _resolve(id);
-    final item = shop.items.where((i) => i.kind == kind).firstOrNull;
-    if (item == null) {
-      throw ApiException(code: 'ITEM_UNAVAILABLE', message: kind);
-    }
-    var remaining = quantity;
-    while (remaining > 0) {
-      final batch = remaining > 10 ? 10 : remaining;
-      await api.buyItem(
-        wire.ShopPurchaseRequest(
-          itemId: item.itemId,
-          quantity: batch,
-          catalogVersion: shop.catalogVersion,
-        ),
-      );
-      remaining -= batch;
-    }
-    await _load(refresh: true);
+  static int _quantityFor(String id) => switch (id) {
+    'timer-15' => 15,
+    'timer-5' => 5,
+    _ => 1,
+  };
+
+  static (String, int) _resolve(String id) {
+    if (id.startsWith('freeze')) return ('FREEZE', 1);
+    if (id.startsWith('timer')) return ('TIMER_BOOST', _quantityFor(id));
+    throw ApiException(code: 'ITEM_UNAVAILABLE', message: 'Item unavailable.');
   }
 
   @override
-  Future<List<ShopOffer>> getSpecialOffers() => catalog.getSpecialOffers();
+  Future<void> buyItem(
+    String id,
+    int displayCost, {
+    required String commandId,
+  }) async {
+    final pending = _pendingPurchases[commandId];
+    if (pending != null) {
+      await _submit(pending);
+      await _load(refresh: true);
+      _pendingPurchases.remove(commandId);
+      return;
+    }
+    final shop = await _load();
+    final (kind, quantity) = _resolve(id);
+    final item = shop.items
+        .where((candidate) => candidate.kind == kind)
+        .firstOrNull;
+    if (item == null ||
+        !item.available ||
+        item.owned + quantity > item.maxOwned) {
+      throw ApiException(
+        code: 'ITEM_UNAVAILABLE',
+        message: 'Item unavailable.',
+      );
+    }
+    final batches = <int>[];
+    for (var remaining = quantity; remaining > 0; remaining -= batches.last) {
+      batches.add(remaining > 10 ? 10 : remaining);
+    }
+    final created = _PendingPurchase(
+      requests: [
+        for (final batch in batches)
+          wire.ShopPurchaseRequest(
+            itemId: item.itemId,
+            quantity: batch,
+            catalogVersion: shop.catalogVersion,
+          ),
+      ],
+      keys: [
+        commandId,
+        for (var index = 1; index < batches.length; index++) _ids.next(),
+      ],
+    );
+    _pendingPurchases[commandId] = created;
+    await _submit(created);
+    await _load(refresh: true);
+    _pendingPurchases.remove(commandId);
+  }
 
-  @override
-  Future<List<ShopOffer>> getTimerBoostOffers() =>
-      catalog.getTimerBoostOffers();
+  Future<void> _submit(_PendingPurchase pending) async {
+    for (var index = 0; index < pending.requests.length; index++) {
+      await api.buyItem(
+        pending.requests[index],
+        idempotencyKey: pending.keys[index],
+      );
+    }
+  }
+}
+
+final class _PendingPurchase {
+  const _PendingPurchase({required this.requests, required this.keys});
+
+  final List<wire.ShopPurchaseRequest> requests;
+  final List<String> keys;
 }

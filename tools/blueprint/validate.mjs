@@ -96,7 +96,7 @@ for(let phase=0;phase<=11;phase++)check(new RegExp('^\\| '+phase+' ','m').test(r
 const parts=ids('docs/ARCHITECTURE_BLUEPRINT_V1.md',/^## PART ([A-L]) —/gm);
 check(parts.join('')==='ABCDEFGHIJKL','Blueprint A–L order incomplete');
 const adrs=inventory.filter(p=>/^docs\/architecture\/adr\/\d{4}-.+\.md$/.test(p));
-check(adrs.length===17,'Expected17ADR decisions');
+check(adrs.length===18,'Expected18ADR decisions (including human-approved ADR-0018)');
 for(const file of adrs)for(const field of ['Status','Context','Decision','Alternatives','Rationale','Consequences','Revisit triggers'])check(read(file).includes('## '+field),file+' missing '+field);
 const skills=inventory.filter(p=>p.endsWith('/SKILL.md'));
 check(skills.length===8,'Four canonical skills plus four discovery wrappers required');

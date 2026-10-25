@@ -2341,6 +2341,7 @@ export interface components {
             revision: number;
             /** Format: date-time */
             asOf: string;
+            chest?: components["schemas"]["QuestChestReceipt"];
         };
         Quest: {
             questId: string;
@@ -2354,6 +2355,7 @@ export interface components {
         };
         QuestClaimRequest: {
             periodKey: string;
+            upgradeChest?: boolean;
         };
         FollowRequest: {
             targetUserId: string;
@@ -3270,6 +3272,11 @@ export interface components {
             asOf: string;
             learningZone: string;
             days: components["schemas"]["LearningStatsDay"][];
+        };
+        QuestChestReceipt: {
+            receiptId: string;
+            tiers: ("COMMON" | "RARE" | "EPIC" | "MEGA")[];
+            gems: number;
         };
     };
     responses: {

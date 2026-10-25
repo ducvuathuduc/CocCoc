@@ -14,7 +14,9 @@ import '../../../core/design/lesson_motion.dart';
 import '../../../core/audio/speech_recorder.dart';
 import '../../../core/config/app_config.dart';
 import '../application/learning_controller.dart';
+import '../application/lesson_activity_coordinator.dart';
 import '../data/speech_assessment.dart';
+import '../../auth/application/auth_controller.dart';
 import '../../progress/application/preview_controller.dart';
 import '../../hearts/presentation/hearts_sheets.dart';
 import '../../report/application/issue_report_provider.dart';
@@ -79,8 +81,20 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _sound.prefetch(ref.read(lessonControllerProvider).exercises);
+        _syncLessonActivity();
       }
     });
+  }
+
+  void _syncLessonActivity([LessonState? next]) {
+    ref
+        .read(lessonActivityCoordinatorProvider)
+        .update(
+          lesson: next ?? ref.read(lessonControllerProvider),
+          streak: ref.read(learningStateProvider).streak,
+          userId: ref.read(authControllerProvider).user?.id,
+        )
+        .ignore();
   }
 
   void _autoplay(String identity) {
@@ -120,6 +134,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       _backgroundPaused =
           ref.read(lessonControllerProvider).stage == LessonStage.paused;
     }
+    _syncLessonActivity();
   }
 
   @override
@@ -213,9 +228,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.referencePalette;
     final state = ref.watch(lessonControllerProvider);
     final controller = ref.read(lessonControllerProvider.notifier);
     ref.listen(lessonControllerProvider, (previous, next) {
+      _syncLessonActivity(next);
       if (next.stage == LessonStage.feedback &&
           previous?.stage == LessonStage.checking) {
         if (next.correct == true) {
@@ -283,10 +300,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                         IconButton(
                           tooltip: 'Exit lesson',
                           onPressed: state.busy ? null : _exit,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.close_rounded,
                             size: 32,
-                            color: ReferenceColors.disabled,
+                            color: palette.disabled,
                           ),
                         ),
                         Expanded(
@@ -436,6 +453,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                       state,
                                       controller,
                                       constraints.maxHeight,
+                                      palette,
                                     ),
                                     if (state.error != null)
                                       Padding(
@@ -483,10 +501,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                               exercise!.hint!,
                                             );
                                           },
-                                    child: const Text(
+                                    child: Text(
                                       'HINT',
                                       style: TextStyle(
-                                        color: ReferenceColors.disabled,
+                                        color: palette.disabled,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -507,10 +525,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                           : controller.substituteMedia,
                                       child: Text(
                                         'CAN’T LISTEN NOW',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
-                                          color: ReferenceColors.disabled,
+                                          color: palette.disabled,
                                         ),
                                       ),
                                     ),
@@ -530,10 +548,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                   onPressed: state.busy
                                       ? null
                                       : controller.substituteMedia,
-                                  child: const Text(
+                                  child: Text(
                                     "CAN'T SPEAK NOW",
                                     style: TextStyle(
-                                      color: ReferenceColors.disabled,
+                                      color: palette.disabled,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -610,6 +628,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     LessonState state,
     LessonController controller,
     double availableHeight,
+    ReferencePalette palette,
   ) {
     final editable = state.stage == LessonStage.answering && !state.busy;
     switch (exercise.kind) {
@@ -687,7 +706,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                   ? state.correct == true
                                         ? LearningColors.greenDark
                                         : LearningColors.blue
-                                  : ReferenceColors.ink,
+                                  : palette.ink,
                             ),
                           ),
                         ],
@@ -744,10 +763,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
             Container(
               width: double.infinity,
               constraints: const BoxConstraints(minHeight: 115),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(color: ReferenceColors.border, width: 2),
-                  bottom: BorderSide(color: ReferenceColors.border, width: 2),
+                  top: BorderSide(color: palette.border, width: 2),
+                  bottom: BorderSide(color: palette.border, width: 2),
                 ),
               ),
               padding: const EdgeInsets.symmetric(vertical: 14),
@@ -868,21 +887,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                     ? 'Type the missing word'
                     : 'Type in English',
                 filled: true,
-                fillColor: const Color(0xFFF7F7F7),
+                fillColor: palette.raisedSurface,
                 counterText: '',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(
-                    color: ReferenceColors.border,
-                    width: 2,
-                  ),
+                  borderSide: BorderSide(color: palette.border, width: 2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(
-                    color: ReferenceColors.border,
-                    width: 2,
-                  ),
+                  borderSide: BorderSide(color: palette.border, width: 2),
                 ),
               ),
             ),

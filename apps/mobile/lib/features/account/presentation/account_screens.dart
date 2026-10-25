@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/config/app_config.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
@@ -16,23 +17,52 @@ import '../data/settings_repository.dart';
 import '../../notifications/presentation/notification_screens.dart';
 import '../../phone/application/phone_verification_controller.dart';
 import '../../phone/presentation/phone_verification_screens.dart';
+import '../application/account_preferences_controller.dart';
+import '../application/email_verification_controller.dart';
+import '../application/account_sync_controller.dart';
+import '../../notifications/application/notification_settings_controller.dart';
+import '../../notifications/domain/notification_models.dart';
+import '../../reminders/application/reminder_coordinator.dart';
 import 'avatar_motion.dart';
 import '../../billing/presentation/billing_checkout.dart';
+import '../../appearance/presentation/dark_mode_setting.dart';
 
 export 'delete_account_screen.dart';
 export 'signup_flow.dart';
 
 class VerificationScreen extends ConsumerStatefulWidget {
-  const VerificationScreen({super.key});
+  const VerificationScreen({super.key, this.userId, this.secret});
+  final String? userId, secret;
   @override
   ConsumerState<VerificationScreen> createState() => _VerificationState();
 }
 
 class _VerificationState extends ConsumerState<VerificationScreen> {
   bool sent = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.userId != null || widget.secret != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || !ref.read(appConfigProvider).isApi) return;
+        ref
+            .read(emailVerificationProvider.notifier)
+            .completeLink(widget.userId ?? '', widget.secret ?? '');
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final s = ref.watch(previewControllerProvider);
+    final palette = context.referencePalette;
+    final api = ref.watch(appConfigProvider).isApi;
+    final preview = api ? null : ref.watch(previewControllerProvider);
+    final real = api ? ref.watch(emailVerificationProvider) : null;
+    final verified = api ? real!.verified : preview!.verified;
+    final email = api ? real!.email : preview!.email;
+    final waiting = api && (real!.loading || real.busy);
+    final linkSent = api ? real!.sent : sent;
     return PreviewPage(
       title: 'Verify email',
       children: [
@@ -44,36 +74,52 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
         ),
         const SizedBox(height: 25),
         Text(
-          s.verified ? 'Email verified!' : 'Check your email',
+          verified ? 'Email verified!' : 'Check your email',
           textAlign: TextAlign.center,
           style: headingStyle,
         ),
         const SizedBox(height: 18),
         Text(
-          s.verified
+          verified
               ? 'Your email is verified.'
-              : '${s.email}\nVerify your email to keep your account up to date.',
+              : '$email\nVerify your email to keep your account up to date.',
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 18, color: ReferenceColors.muted),
+          style: TextStyle(fontSize: 18, color: palette.muted),
         ),
         const SizedBox(height: 30),
         ReferenceButton(
           label: 'CONTINUE',
-          onPressed: () {
-            if (s.verified) {
-              context.go('/home');
-            } else {
-              ref.read(previewControllerProvider.notifier).verify();
-            }
-          },
+          onPressed: waiting
+              ? null
+              : () {
+                  if (verified) {
+                    context.go('/home');
+                  } else if (api) {
+                    ref.read(emailVerificationProvider.notifier).refresh();
+                  } else {
+                    ref.read(previewControllerProvider.notifier).verify();
+                  }
+                },
         ),
         const SizedBox(height: 20),
-        if (!s.verified)
+        if (!verified)
           ReferenceButton(
-            label: sent ? 'LINK READY' : 'RESEND LINK',
+            label: linkSent ? 'LINK READY' : 'RESEND LINK',
             outlined: true,
-            onPressed: sent ? null : () => setState(() => sent = true),
+            onPressed: linkSent || waiting || (api && !real!.ready)
+                ? null
+                : api
+                ? () => ref.read(emailVerificationProvider.notifier).resend()
+                : () => setState(() => sent = true),
           ),
+        if (real?.error != null) ...[
+          const SizedBox(height: 12),
+          Text(
+            real!.error!,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: LearningColors.red),
+          ),
+        ],
         const SizedBox(height: 20),
         TextButton(
           onPressed: () => context.go('/home'),
@@ -94,6 +140,7 @@ class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     Widget row(String title, String route, {String? subtitle}) => ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(
@@ -103,16 +150,10 @@ class SettingsScreen extends ConsumerWidget {
       subtitle: subtitle != null
           ? Text(
               subtitle,
-              style: const TextStyle(
-                fontSize: 16,
-                color: ReferenceColors.disabled,
-              ),
+              style: TextStyle(fontSize: 16, color: palette.disabled),
             )
           : null,
-      trailing: const Icon(
-        Icons.chevron_right,
-        color: ReferenceColors.disabled,
-      ),
+      trailing: Icon(Icons.chevron_right, color: palette.disabled),
       onTap: () => context.push(route),
     );
 
@@ -227,6 +268,8 @@ class EditProfileScreen extends ConsumerStatefulWidget {
 
 class _EditProfileState extends ConsumerState<EditProfileScreen> {
   late final TextEditingController first, last, username, email, phone;
+  late final ProviderSubscription<ProfileDetails> _profileSubscription;
+  late int _appliedDataVersion;
   String? error;
   @override
   void initState() {
@@ -237,10 +280,29 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
     username = TextEditingController(text: s.username);
     email = TextEditingController(text: s.email);
     phone = TextEditingController(text: s.phone);
+    _appliedDataVersion = s.dataVersion;
+    _profileSubscription = ref.listenManual(profileEditorProvider, (
+      previous,
+      next,
+    ) {
+      if (!mounted || next.dataVersion == _appliedDataVersion) return;
+      _apply(next);
+    });
+  }
+
+  void _apply(ProfileDetails details) {
+    _appliedDataVersion = details.dataVersion;
+    first.text = details.first;
+    last.text = details.last;
+    username.text = details.username;
+    email.text = details.email;
+    phone.text = details.phone;
+    if (mounted) setState(() => error = null);
   }
 
   @override
   void dispose() {
+    _profileSubscription.close();
     first.dispose();
     last.dispose();
     username.dispose();
@@ -251,7 +313,9 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.referencePalette;
     final avatar = ref.watch(avatarControllerProvider);
+    final editor = ref.watch(profileEditorProvider);
     Widget field(
       String id,
       String label,
@@ -265,10 +329,10 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
         children: [
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              color: ReferenceColors.ink,
+              color: palette.ink,
             ),
           ),
           const SizedBox(height: 8),
@@ -278,11 +342,12 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
             maxLength: limit,
             keyboardType: type,
             textInputAction: TextInputAction.next,
-            style: const TextStyle(fontSize: 20, color: ReferenceColors.ink),
+            enabled: !editor.loading && !editor.busy,
+            style: TextStyle(fontSize: 20, color: palette.ink),
             decoration: InputDecoration(
               counterText: '',
               filled: true,
-              fillColor: const Color(0xFFF7F7F7),
+              fillColor: palette.raisedSurface,
               hintText: id == 'phone' ? 'Add phone number' : null,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
@@ -293,10 +358,7 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: Color(0xFFE5E5E5),
-                  width: 2,
-                ),
+                borderSide: BorderSide(color: palette.border, width: 2),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -311,26 +373,32 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
       ),
     );
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: palette.surface,
       appBar: AppBar(
         toolbarHeight: 49,
-        foregroundColor: ReferenceColors.ink,
-        backgroundColor: Colors.white,
+        foregroundColor: palette.ink,
+        backgroundColor: palette.surface,
         surfaceTintColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
           'Profile',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(2),
-          child: Divider(height: 2, thickness: 2, color: Color(0xFFE5E5E5)),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(2),
+          child: Divider(height: 2, thickness: 2, color: palette.border),
         ),
       ),
       body: ListView(
         key: const ValueKey('profile-editor-scroll'),
         padding: const EdgeInsets.fromLTRB(16, 24, 16, 34),
         children: [
+          if (editor.loading)
+            Semantics(
+              liveRegion: true,
+              label: 'Loading profile',
+              child: const LinearProgressIndicator(minHeight: 2),
+            ),
           Center(
             child: Semantics(
               button: true,
@@ -394,9 +462,9 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF7F7F7),
+                  color: palette.raisedSurface,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
+                  border: Border.all(color: palette.border, width: 2),
                 ),
               ),
             ),
@@ -410,39 +478,52 @@ class _EditProfileState extends ConsumerState<EditProfileScreen> {
             type: TextInputType.emailAddress,
           ),
           _PhoneRow(fallback: phone.text),
-          if (error != null)
+          if (error ?? editor.error case final message?)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Text(
-                error!,
-                style: const TextStyle(color: LearningColors.red),
+              child: Column(
+                children: [
+                  Text(
+                    message,
+                    style: const TextStyle(color: LearningColors.red),
+                  ),
+                  if (!editor.loaded && !editor.loading)
+                    TextButton(
+                      key: const ValueKey('profile-retry'),
+                      onPressed: () =>
+                          ref.read(profileEditorProvider.notifier).retry(),
+                      child: const Text('RETRY'),
+                    ),
+                ],
               ),
             ),
           const SizedBox(height: 25),
           ReferenceButton(
             label: 'SAVE CHANGES',
-            onPressed: () {
-              final result = ref
-                  .read(profileEditorProvider.notifier)
-                  .save(
-                    ProfileDetails(
-                      first: first.text,
-                      last: last.text,
-                      username: username.text,
-                      email: email.text,
-                      phone:
-                          ref
-                              .read(phoneVerificationControllerProvider)
-                              .verified
-                              ?.e164 ??
-                          phone.text,
-                    ),
-                  );
-              setState(() => error = result);
-              if (result == null) {
-                if (context.canPop()) context.pop();
-              }
-            },
+            onPressed: !editor.loaded || editor.loading || editor.busy
+                ? null
+                : () async {
+                    setState(() => error = null);
+                    final result = await ref
+                        .read(profileEditorProvider.notifier)
+                        .save(
+                          ProfileDetails(
+                            first: first.text,
+                            last: last.text,
+                            username: username.text,
+                            email: email.text,
+                            phone:
+                                ref
+                                    .read(phoneVerificationControllerProvider)
+                                    .verified
+                                    ?.e164 ??
+                                phone.text,
+                          ),
+                        );
+                    if (!context.mounted) return;
+                    setState(() => error = result);
+                    if (result == null && context.canPop()) context.pop();
+                  },
           ),
           const SizedBox(height: 24),
           Center(
@@ -470,6 +551,7 @@ class _PhoneRow extends ConsumerWidget {
   final String fallback;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     final verified = ref.watch(phoneVerificationControllerProvider).verified;
     final value = verified?.masked ?? fallback;
     return Padding(
@@ -477,12 +559,12 @@ class _PhoneRow extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Phone number',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              color: ReferenceColors.ink,
+              color: palette.ink,
             ),
           ),
           const SizedBox(height: 8),
@@ -501,18 +583,16 @@ class _PhoneRow extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF7F7F7),
+                  color: palette.raisedSurface,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
+                  border: Border.all(color: palette.border, width: 2),
                 ),
                 child: Text(
                   value.isEmpty ? 'Add phone number' : value,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 20,
-                    color: value.isEmpty
-                        ? PhoneColors.hint
-                        : ReferenceColors.ink,
+                    color: value.isEmpty ? palette.muted : palette.ink,
                   ),
                 ),
               ),
@@ -531,9 +611,9 @@ Widget _settingsLink(BuildContext context, String title, String route) =>
         title,
         style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
       ),
-      trailing: const Icon(
+      trailing: Icon(
         Icons.chevron_right,
-        color: ReferenceColors.disabled,
+        color: context.referencePalette.disabled,
       ),
       onTap: () => context.push(route),
     );
@@ -541,7 +621,7 @@ Widget _settingsLink(BuildContext context, String title, String route) =>
 Widget _settingsSwitch(
   String title,
   bool value,
-  ValueChanged<bool> onChanged,
+  ValueChanged<bool>? onChanged,
 ) => SwitchListTile(
   contentPadding: EdgeInsets.zero,
   title: Text(
@@ -559,6 +639,39 @@ class PreferencesScreen extends ConsumerWidget {
   const PreferencesScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(appConfigProvider).isApi) {
+      final state = ref.watch(accountPreferencesProvider);
+      final vm = ref.read(accountPreferencesProvider.notifier);
+      return PreviewPage(
+        title: 'Preferences',
+        children: [
+          const Text('LESSON EXPERIENCE', style: sectionStyle),
+          const SizedBox(height: 10),
+          _settingsSwitch(
+            'Sound effects',
+            state.preferences?.soundEffects ?? false,
+            state.ready && !state.busy ? vm.setSoundEffects : null,
+          ),
+          const Divider(),
+          const DarkModeSetting(),
+          const Divider(),
+          if (state.error != null) ...[
+            Text(
+              state.error!,
+              style: const TextStyle(color: LearningColors.red),
+            ),
+            TextButton(
+              onPressed: state.busy ? null : vm.retry,
+              child: const Text('RETRY'),
+            ),
+          ],
+          const SizedBox(height: 25),
+          const Text('WIDGETS', style: sectionStyle),
+          const SizedBox(height: 10),
+          _settingsLink(context, 'Streak widgets', '/streak/widgets'),
+        ],
+      );
+    }
     final s = ref.watch(previewControllerProvider),
         vm = ref.read(previewControllerProvider.notifier);
     return PreviewPage(
@@ -567,6 +680,8 @@ class PreferencesScreen extends ConsumerWidget {
         const Text('LESSON EXPERIENCE', style: sectionStyle),
         const SizedBox(height: 10),
         _settingsSwitch('Sound effects', s.sound, vm.setSound),
+        const Divider(),
+        const DarkModeSetting(),
         const Divider(),
         const SizedBox(height: 25),
         const Text('WIDGETS', style: sectionStyle),
@@ -590,6 +705,30 @@ class PrivacySettingsScreen extends ConsumerWidget {
   const PrivacySettingsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(appConfigProvider).isApi) {
+      final state = ref.watch(accountPreferencesProvider);
+      final vm = ref.read(accountPreferencesProvider.notifier);
+      return PreviewPage(
+        title: 'Privacy settings',
+        children: [
+          _settingsSwitch(
+            'Private profile',
+            state.profile?.publicOptIn == false,
+            state.ready && !state.busy ? vm.setPrivate : null,
+          ),
+          if (state.error != null) ...[
+            Text(
+              state.error!,
+              style: const TextStyle(color: LearningColors.red),
+            ),
+            TextButton(
+              onPressed: state.busy ? null : vm.retry,
+              child: const Text('RETRY'),
+            ),
+          ],
+        ],
+      );
+    }
     final s = ref.watch(previewControllerProvider),
         vm = ref.read(previewControllerProvider.notifier);
     return PreviewPage(
@@ -613,30 +752,33 @@ class HelpCenterScreen extends StatelessWidget {
   );
 }
 
-InputDecoration _settingsFieldDecoration({String? hint, String? error}) =>
-    InputDecoration(
-      counterText: '',
-      filled: true,
-      fillColor: const Color(0xFFF7F7F7),
-      hintText: hint,
-      errorText: error,
-      errorMaxLines: 3,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFE5E5E5), width: 2),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: LearningColors.blue, width: 2),
-      ),
-    );
+InputDecoration _settingsFieldDecoration(
+  BuildContext context, {
+  String? hint,
+  String? error,
+}) => InputDecoration(
+  counterText: '',
+  filled: true,
+  fillColor: context.referencePalette.raisedSurface,
+  hintText: hint,
+  errorText: error,
+  errorMaxLines: 3,
+  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: BorderSide(color: context.referencePalette.border, width: 2),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: const BorderSide(color: LearningColors.blue, width: 2),
+  ),
+);
 
-const _fieldLabelStyle = TextStyle(
+TextStyle _fieldLabelStyle(BuildContext context) => TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.w700,
-  color: ReferenceColors.ink,
+  color: context.referencePalette.ink,
 );
 
 /// Settings > Duolingo for Schools: join a teacher's classroom by code.
@@ -662,6 +804,7 @@ class _SchoolsState extends ConsumerState<SchoolsSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.referencePalette;
     final copy = ref.watch(settingsRepositoryProvider).schools,
         s = ref.watch(settingsExtrasControllerProvider),
         vm = ref.read(settingsExtrasControllerProvider.notifier);
@@ -670,10 +813,7 @@ class _SchoolsState extends ConsumerState<SchoolsSettingsScreen> {
       children: [
         Text(copy.heading, style: headingStyle),
         const SizedBox(height: 12),
-        Text(
-          copy.body,
-          style: const TextStyle(fontSize: 17, color: ReferenceColors.muted),
-        ),
+        Text(copy.body, style: TextStyle(fontSize: 17, color: palette.muted)),
         const SizedBox(height: 24),
         if (s.classroom != null) ...[
           Text(
@@ -693,15 +833,16 @@ class _SchoolsState extends ConsumerState<SchoolsSettingsScreen> {
             onPressed: vm.leaveClassroom,
           ),
         ] else ...[
-          Text(copy.codeLabel, style: _fieldLabelStyle),
+          Text(copy.codeLabel, style: _fieldLabelStyle(context)),
           const SizedBox(height: 8),
           TextField(
             key: const ValueKey('schools-code'),
             controller: code,
             maxLength: 6,
             textCapitalization: TextCapitalization.characters,
-            style: const TextStyle(fontSize: 20, color: ReferenceColors.ink),
+            style: TextStyle(fontSize: 20, color: palette.ink),
             decoration: _settingsFieldDecoration(
+              context,
               hint: copy.codeHint,
               error: s.joinError,
             ),
@@ -740,6 +881,8 @@ class SocialAccountsScreen extends ConsumerWidget {
             (on) => vm.setSocial(accounts[i].id, on),
           ),
         ],
+        if (s.error case final error?)
+          Text(error, style: const TextStyle(color: LearningColors.red)),
       ],
     );
   }
@@ -771,19 +914,28 @@ class _FeedbackState extends ConsumerState<FeedbackScreen> {
     final sent = await ref
         .read(settingsExtrasControllerProvider.notifier)
         .sendFeedback(copy.topics[topic], message.text);
-    if (!sent || !mounted) return;
+    if (!mounted) return;
+    if (!sent) {
+      final error = ref.read(settingsExtrasControllerProvider).error;
+      if (error != null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error)));
+      }
+      return;
+    }
     await showLearningNotice(context, copy.thanksTitle, copy.thanksBody);
     if (mounted && context.canPop()) context.pop();
   }
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.referencePalette;
     final copy = ref.watch(settingsRepositoryProvider).feedback,
         sending = ref.watch(settingsExtrasControllerProvider).sending;
     return PreviewPage(
       title: 'Feedback',
       children: [
-        Text(copy.topicLabel, style: _fieldLabelStyle),
+        Text(copy.topicLabel, style: _fieldLabelStyle(context)),
         const SizedBox(height: 12),
         for (var i = 0; i < copy.topics.length; i++)
           Padding(
@@ -800,12 +952,12 @@ class _FeedbackState extends ConsumerState<FeedbackScreen> {
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: i == topic ? ReferenceColors.blueFill : null,
+                    color: i == topic ? palette.blueFill : null,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: i == topic
                           ? ReferenceColors.blueBorder
-                          : ReferenceColors.border,
+                          : palette.border,
                       width: 2,
                     ),
                   ),
@@ -814,9 +966,7 @@ class _FeedbackState extends ConsumerState<FeedbackScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: i == topic
-                          ? LearningColors.blue
-                          : ReferenceColors.ink,
+                      color: i == topic ? LearningColors.blue : palette.ink,
                     ),
                   ),
                 ),
@@ -824,7 +974,7 @@ class _FeedbackState extends ConsumerState<FeedbackScreen> {
             ),
           ),
         const SizedBox(height: 14),
-        Text(copy.messageLabel, style: _fieldLabelStyle),
+        Text(copy.messageLabel, style: _fieldLabelStyle(context)),
         const SizedBox(height: 8),
         TextField(
           key: const ValueKey('feedback-message'),
@@ -832,8 +982,8 @@ class _FeedbackState extends ConsumerState<FeedbackScreen> {
           minLines: 4,
           maxLines: 8,
           maxLength: 1000,
-          style: const TextStyle(fontSize: 18, color: ReferenceColors.ink),
-          decoration: _settingsFieldDecoration(hint: copy.messageHint),
+          style: TextStyle(fontSize: 18, color: context.referencePalette.ink),
+          decoration: _settingsFieldDecoration(context, hint: copy.messageHint),
         ),
         const SizedBox(height: 20),
         ReferenceButton(
@@ -857,11 +1007,25 @@ class ReminderScreen extends ConsumerStatefulWidget {
 }
 
 class _ReminderState extends ConsumerState<ReminderScreen> {
-  bool get denied => widget.permissionDenied;
+  bool permissionRefused = false;
+  bool permissionBusy = false;
+  bool get denied => widget.permissionDenied || permissionRefused;
   @override
   Widget build(BuildContext context) {
-    final s = ref.watch(previewControllerProvider),
-        vm = ref.read(previewControllerProvider.notifier);
+    final api = ref.watch(appConfigProvider).isApi;
+    final preview = api ? null : ref.watch(previewControllerProvider);
+    final real = api ? ref.watch(notificationSettingsControllerProvider) : null;
+    final enabled = api
+        ? real!.isOn('practice', NotificationChannel.push)
+        : preview!.reminder;
+    final time = api
+        ? real!.ready
+              ? '${real.reminderTime.hour.toString().padLeft(2, '0')}:${real.reminderTime.minute.toString().padLeft(2, '0')}'
+              : '—'
+        : preview!.reminderTime;
+    final canEdit =
+        !permissionBusy &&
+        (!api || (real!.ready && !real.busy && real.error == null));
     return PreviewPage(
       title: 'Practice reminders',
       children: [
@@ -880,8 +1044,34 @@ class _ReminderState extends ConsumerState<ReminderScreen> {
         const SizedBox(height: 25),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          value: s.reminder,
-          onChanged: (v) => vm.reminder(enabled: v),
+          value: enabled,
+          onChanged: !canEdit
+              ? null
+              : (value) async {
+                  if (!api) {
+                    ref
+                        .read(previewControllerProvider.notifier)
+                        .reminder(enabled: value);
+                    return;
+                  }
+                  final vm = ref.read(
+                    notificationSettingsControllerProvider.notifier,
+                  );
+                  final generation = vm.generation;
+                  if (value) {
+                    setState(() => permissionBusy = true);
+                    final granted = await ref
+                        .read(reminderCoordinatorProvider)
+                        .acceptPermissionOffer();
+                    if (mounted) setState(() => permissionBusy = false);
+                    if (!mounted || generation != vm.generation) return;
+                    if (!granted) {
+                      setState(() => permissionRefused = true);
+                      return;
+                    }
+                  }
+                  await vm.toggle('practice', NotificationChannel.push);
+                },
           title: const Text(
             'Daily reminder',
             style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
@@ -890,32 +1080,64 @@ class _ReminderState extends ConsumerState<ReminderScreen> {
         ListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('Reminder time'),
-          trailing: Text(s.reminderTime, style: headingStyle),
-          onTap: () async {
-            final t = await showTimePicker(
-              context: context,
-              initialTime: const TimeOfDay(hour: 19, minute: 0),
-            );
-            if (t != null && mounted) {
-              vm.reminder(
-                enabled: s.reminder,
-                time:
-                    '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}',
-              );
-            }
-          },
+          trailing: Text(time, style: headingStyle),
+          onTap: !canEdit
+              ? null
+              : () async {
+                  final vm = api
+                      ? ref.read(
+                          notificationSettingsControllerProvider.notifier,
+                        )
+                      : null;
+                  final generation = vm?.generation;
+                  final t = await showTimePicker(
+                    context: context,
+                    initialTime: api
+                        ? TimeOfDay(
+                            hour: real!.reminderTime.hour,
+                            minute: real.reminderTime.minute,
+                          )
+                        : const TimeOfDay(hour: 19, minute: 0),
+                  );
+                  if (t != null && mounted) {
+                    if (api) {
+                      if (generation == vm!.generation) {
+                        await vm.setReminderTime(
+                          ReminderTime(t.hour, t.minute),
+                        );
+                      }
+                      return;
+                    }
+                    ref
+                        .read(previewControllerProvider.notifier)
+                        .reminder(
+                          enabled: enabled,
+                          time:
+                              '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}',
+                        );
+                  }
+                },
         ),
         const SizedBox(height: 20),
         LearningCard(
           child: Text(
             denied
                 ? 'Notifications denied. You can still practise anytime.'
-                : s.reminder
-                ? 'Reminder preference saved for ${s.reminderTime}.'
+                : enabled
+                ? 'Reminder preference saved for $time.'
                 : 'Turn reminders on whenever you’re ready.',
             style: const TextStyle(fontSize: 17),
           ),
         ),
+        if (real?.error != null) ...[
+          Text(real!.error!, style: const TextStyle(color: LearningColors.red)),
+          TextButton(
+            onPressed: () => ref
+                .read(notificationSettingsControllerProvider.notifier)
+                .retry(),
+            child: const Text('RETRY'),
+          ),
+        ],
       ],
     );
   }
@@ -942,98 +1164,158 @@ class _SyncState extends ConsumerState<SyncScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => PreviewPage(
-    title: 'Sync status',
-    children: [
-      const SizedBox(height: 35),
-      Icon(
-        offline ? Icons.cloud_off_rounded : Icons.cloud_done_rounded,
-        size: 90,
-        color: LearningColors.blue,
-      ),
-      const SizedBox(height: 25),
-      Text(
-        conflict
-            ? 'Review needed'
-            : offline
-            ? 'You’re offline'
-            : 'Your progress is up to date',
-        textAlign: TextAlign.center,
-        style: headingStyle,
-      ),
-      const SizedBox(height: 20),
-      LearningCard(
-        child: Text(
-          conflict
-              ? 'Your answer is saved. Continue with a current lesson.'
-              : 'Keep learning to build your streak and reach your daily goal.',
-          style: const TextStyle(fontSize: 18),
+  Widget build(BuildContext context) {
+    final api = ref.watch(appConfigProvider).isApi;
+    final real = api ? ref.watch(accountSyncProvider) : null;
+    final offline = api ? real!.error != null : this.offline;
+    final conflict = api ? real!.rejected > 0 : this.conflict;
+    final busy = real?.busy == true;
+    final title = busy
+        ? 'Checking sync'
+        : conflict
+        ? 'Review needed'
+        : offline
+        ? 'Sync unavailable'
+        : api && !real!.current
+        ? 'Waiting to sync'
+        : 'Your progress is up to date';
+    return PreviewPage(
+      title: 'Sync status',
+      children: [
+        const SizedBox(height: 35),
+        Icon(
+          offline || busy || (api && !real!.current)
+              ? Icons.cloud_off_rounded
+              : Icons.cloud_done_rounded,
+          size: 90,
+          color: LearningColors.blue,
         ),
-      ),
-      const SizedBox(height: 20),
-      ReferenceButton(
-        label: offline ? 'RECONNECT' : 'REFRESH',
-        onPressed: () => setState(() {
-          offline = false;
-          conflict = false;
-        }),
-      ),
-    ],
-  );
+        const SizedBox(height: 25),
+        Text(
+          api
+              ? title
+              : conflict
+              ? 'Review needed'
+              : offline
+              ? 'You’re offline'
+              : 'Your progress is up to date',
+          textAlign: TextAlign.center,
+          style: headingStyle,
+        ),
+        const SizedBox(height: 20),
+        LearningCard(
+          child: Text(
+            conflict ? 'Your answer is saved. Continue with a current lesson.' : 'Keep learning to build your streak and reach your daily goal.',
+            style: const TextStyle(fontSize: 18),
+          ),
+        ),
+        const SizedBox(height: 20),
+        ReferenceButton(
+          label: api && conflict
+              ? 'CONTINUE'
+              : offline
+              ? 'RECONNECT'
+              : 'REFRESH',
+          onPressed: busy
+              ? null
+              : () {
+                  if (api) {
+                    if (conflict) {
+                      context.go('/home');
+                    } else {
+                      ref.read(accountSyncProvider.notifier).refresh();
+                    }
+                    return;
+                  }
+                  setState(() {
+                    this.offline = false;
+                    this.conflict = false;
+                  });
+                },
+        ),
+      ],
+    );
+  }
 }
 
 enum RecoveryFailure { connection, signIn, rateLimited }
 
-class RecoveryScreen extends StatefulWidget {
+class RecoveryScreen extends ConsumerStatefulWidget {
   const RecoveryScreen({this.failure = RecoveryFailure.connection, super.key});
   final RecoveryFailure failure;
   @override
-  State<RecoveryScreen> createState() => _RecoveryState();
+  ConsumerState<RecoveryScreen> createState() => _RecoveryState();
 }
 
-class _RecoveryState extends State<RecoveryScreen> {
+class _RecoveryState extends ConsumerState<RecoveryScreen> {
   bool recovered = false;
+  bool checked = false;
+
   @override
-  Widget build(BuildContext context) => PreviewPage(
-    title: 'Connection',
-    children: [
-      const SizedBox(height: 35),
-      Icon(
-        recovered ? Icons.check_circle_outline : Icons.wifi_off_rounded,
-        size: 80,
-        color: LearningColors.blue,
-      ),
-      const SizedBox(height: 25),
-      Text(
-        recovered
-            ? 'You’re ready to continue'
-            : widget.failure == RecoveryFailure.signIn
-            ? 'Sign in to continue'
-            : widget.failure == RecoveryFailure.rateLimited
-            ? 'Let’s take a short break'
-            : 'Something went wrong',
-        textAlign: TextAlign.center,
-        style: headingStyle,
-      ),
-      const SizedBox(height: 18),
-      const Text(
-        'Your answers are saved. Try again to continue learning.',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18, color: ReferenceColors.muted),
-      ),
-      const SizedBox(height: 30),
-      ReferenceButton(
-        label: recovered
-            ? 'CONTINUE'
-            : widget.failure == RecoveryFailure.signIn
-            ? 'LOG IN'
-            : 'RETRY',
-        onPressed: () => recovered
-            ? context.go('/home')
-            : widget.failure == RecoveryFailure.signIn
-            ? context.push('/login')
-            : setState(() => recovered = true),
-      ),
-    ],
-  );
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted || !ref.read(appConfigProvider).isApi) return;
+      await ref.read(accountSyncProvider.notifier).refresh();
+      if (mounted) setState(() => checked = true);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final api = ref.watch(appConfigProvider).isApi;
+    final sync = api ? ref.watch(accountSyncProvider) : null;
+    final recovered = api ? checked && sync!.current : this.recovered;
+    final busy = api && (!checked || sync!.busy);
+    return PreviewPage(
+      title: 'Connection',
+      children: [
+        const SizedBox(height: 35),
+        Icon(
+          recovered ? Icons.check_circle_outline : Icons.wifi_off_rounded,
+          size: 80,
+          color: LearningColors.blue,
+        ),
+        const SizedBox(height: 25),
+        Text(
+          recovered
+              ? 'You’re ready to continue'
+              : widget.failure == RecoveryFailure.signIn
+              ? 'Sign in to continue'
+              : widget.failure == RecoveryFailure.rateLimited
+              ? 'Let’s take a short break'
+              : 'Something went wrong',
+          textAlign: TextAlign.center,
+          style: headingStyle,
+        ),
+        const SizedBox(height: 18),
+        Text(
+          'Your answers are saved. Try again to continue learning.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18, color: context.referencePalette.muted),
+        ),
+        const SizedBox(height: 30),
+        ReferenceButton(
+          label: recovered
+              ? 'CONTINUE'
+              : widget.failure == RecoveryFailure.signIn
+              ? 'LOG IN'
+              : 'RETRY',
+          onPressed: busy
+              ? null
+              : () {
+                  if (recovered) {
+                    context.go('/home');
+                  } else if (widget.failure == RecoveryFailure.signIn) {
+                    context.push('/login');
+                  } else if (api) {
+                    ref.read(accountSyncProvider.notifier).refresh();
+                  } else {
+                    setState(() => this.recovered = true);
+                  }
+                },
+        ),
+      ],
+    );
+  }
 }

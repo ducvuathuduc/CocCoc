@@ -1,3 +1,5 @@
+import '../../progress/application/extended_controller.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -62,8 +64,16 @@ class _LearningPathState extends ConsumerState<LearningPath> {
               case AppStatKind.gems:
                 context.push('/shop');
               case AppStatKind.energy:
-                context.push('/energy');
+                context.push(
+                  ref.read(extendedControllerProvider).unlimited
+                      ? '/settings/super-features'
+                      : '/energy',
+                );
               case AppStatKind.hearts:
+                if (ref.read(extendedControllerProvider).unlimited) {
+                  context.push('/settings/super-features');
+                  break;
+                }
                 final box = _statsKey.currentContext?.findRenderObject();
                 showHeartsDropdown(
                   context,
@@ -116,13 +126,19 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                                       625,
                                       810,
                                     ),
-                                    fallback: const Align(
+                                    fallback: Align(
                                       alignment: Alignment.bottomCenter,
                                       child: SizedBox(
                                         width: 118,
                                         height: 126,
                                         child: ReferenceArt(
-                                          LearningArt.pathDuo,
+                                          Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? const ArtRegion(
+                                                  'path-duo-transparent',
+                                                  Rect.fromLTWH(0, 0, 255, 263),
+                                                )
+                                              : LearningArt.pathDuo,
                                           width: 102,
                                           height: 105,
                                         ),
@@ -337,6 +353,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
     int i,
     double width,
   ) {
+    final palette = context.referencePalette;
     const offsets = [.5, .36, .29, .36, .5, .65, .5, .36];
     final current = i == (_review ? 0 : progress.currentNode);
     final completed = !_review && progress.completedNodes.contains('node-$i');
@@ -360,9 +377,9 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                   vertical: 9,
                 ),
                 decoration: BoxDecoration(
-                  color: ReferenceColors.surface,
+                  color: palette.surface,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: ReferenceColors.border, width: 2),
+                  border: Border.all(color: palette.border, width: 2),
                 ),
                 child: Text(
                   _pausedFor(i, draft)
@@ -479,6 +496,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
   );
 
   Widget _coursePanel(BuildContext context, LearningState progress) {
+    final palette = context.referencePalette;
     final band = scoreBandIndex(progress.score);
     final start = scoreBandStarts[band];
     final next = scoreBandNext[band];
@@ -486,7 +504,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
         .clamp(0, 1)
         .toDouble();
     return Material(
-      color: ReferenceColors.surface,
+      color: palette.surface,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: MediaQuery.sizeOf(context).height * .75,
@@ -525,14 +543,14 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                       setState(() => _courses = false);
                       context.push('/courses');
                     },
-                    child: const Column(
+                    child: Column(
                       children: [
                         Icon(
                           Icons.add_box_outlined,
                           size: 52,
-                          color: ReferenceColors.disabled,
+                          color: palette.disabled,
                         ),
-                        Text('Course', style: headingStyle),
+                        const Text('Course', style: headingStyle),
                       ],
                     ),
                   ),
@@ -557,7 +575,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                             minHeight: 16,
                             borderRadius: BorderRadius.circular(20),
                             color: LearningColors.green,
-                            backgroundColor: ReferenceColors.border,
+                            backgroundColor: palette.border,
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -567,10 +585,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                     const SizedBox(height: 16),
                     Text(
                       'Your English Score is ${progress.score}',
-                      style: const TextStyle(
-                        fontSize: 17,
-                        color: ReferenceColors.muted,
-                      ),
+                      style: TextStyle(fontSize: 17, color: palette.muted),
                     ),
                     TextButton(
                       onPressed: () => context.push('/score'),
@@ -646,6 +661,8 @@ class _PathNodeState extends State<PathNode> {
     final icon = widget.icon;
     final tooltip = widget.tooltip;
     final reduced = MediaQuery.disableAnimationsOf(context);
+    final palette = context.referencePalette;
+    final dark = Theme.of(context).brightness == Brightness.dark;
     return Tooltip(
       message: tooltip,
       child: Semantics(
@@ -668,7 +685,11 @@ class _PathNodeState extends State<PathNode> {
                     duration: motionDuration(context, 450),
                     builder: (context, value, _) => CustomPaint(
                       size: const Size(98, 87),
-                      painter: _NodeRing(value, color ?? LearningColors.green),
+                      painter: _NodeRing(
+                        value,
+                        color ?? LearningColors.green,
+                        palette.border,
+                      ),
                     ),
                   ),
                 TweenAnimationBuilder<double>(
@@ -708,6 +729,8 @@ class _PathNodeState extends State<PathNode> {
                                 ? completed
                                       ? LearningColors.yellow
                                       : LearningColors.green
+                                : dark
+                                ? palette.border
                                 : ReferenceColors.border),
                         borderRadius: BorderRadius.circular(40),
                         boxShadow: [
@@ -718,6 +741,8 @@ class _PathNodeState extends State<PathNode> {
                                     ? completed
                                           ? const Color(0xFFE5A400)
                                           : LearningColors.greenDark
+                                    : dark
+                                    ? palette.raisedSurface
                                     : const Color(0xFFBCBABC)),
                             offset: Offset(
                               0,
@@ -731,7 +756,7 @@ class _PathNodeState extends State<PathNode> {
                         size: 36,
                         color: color != null || current || completed
                             ? Colors.white
-                            : ReferenceColors.disabled,
+                            : palette.disabled,
                       ),
                     ),
                   ),
@@ -746,14 +771,15 @@ class _PathNodeState extends State<PathNode> {
 }
 
 class _NodeRing extends CustomPainter {
-  _NodeRing(this.progress, this.color);
+  _NodeRing(this.progress, this.color, this.trackColor);
   final double progress;
   final Color color;
+  final Color trackColor;
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Rect.fromLTWH(4, 3, size.width - 8, size.height - 7);
     final paint = Paint()
-      ..color = ReferenceColors.border
+      ..color = trackColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8
       ..strokeCap = StrokeCap.round;
@@ -764,7 +790,9 @@ class _NodeRing extends CustomPainter {
 
   @override
   bool shouldRepaint(_NodeRing oldDelegate) =>
-      oldDelegate.progress != progress || oldDelegate.color != color;
+      oldDelegate.progress != progress ||
+      oldDelegate.color != color ||
+      oldDelegate.trackColor != trackColor;
 }
 
 class _GuideIconPainter extends CustomPainter {

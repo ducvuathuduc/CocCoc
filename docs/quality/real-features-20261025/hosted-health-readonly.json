@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-25T01:49:10.834Z",
+  "scope": "Public health GET only; no identity, keys, database or feature admission established",
+  "results": [
+    {
+      "owner": "LEARNING",
+      "url": "https://coccoc-learning.sgp.appwrite.run/health",
+      "status": 200,
+      "service": "learning",
+      "buildId": "3261ed51bbcc",
+      "health": "degraded"
+    },
+    {
+      "owner": "PROGRESS",
+      "url": "https://coccoc-progress.sgp.appwrite.run/health",
+      "status": 200,
+      "service": "progress",
+      "buildId": "5e53569ff293",
+      "health": "degraded"
+    },
+    {
+      "owner": "AI",
+      "url": "https://coccoc-ai.sgp.appwrite.run/health",
+      "status": 200,
+      "service": "ai",
+      "buildId": "87cdc258f58b-dirty",
+      "health": "degraded"
+    }
+  ]
+}

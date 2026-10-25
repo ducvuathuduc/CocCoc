@@ -8,6 +8,9 @@ import '../../../core/config/app_config.dart';
 import '../data/api_quests_repository.dart';
 import '../data/quests_repository.dart';
 import '../domain/quest_models.dart';
+import '../domain/upgrade_chest.dart';
+import '../../auth/application/auth_controller.dart';
+import '../../session/application/real_learning_session.dart';
 import '../../learning/application/learning_controller.dart';
 import '../../progress/application/preview_controller.dart';
 
@@ -38,9 +41,13 @@ class QuestsController extends Notifier<QuestsTabState> {
     final learning = ref.watch(learningStateProvider);
     final introSeen = preview.questIntroSeen;
     final claims = preview.claims;
+    final claimUser = ref.watch(
+      authControllerProvider.select((s) => s.user?.id),
+    );
 
     final initialDaily = initial.dailyQuests.map((q) {
       final claimed =
+          q.isClaimed ||
           claims.contains(q.id) ||
           (q.id == 'daily-score' && claims.contains('daily-xp'));
       if (q.id == 'daily-2') {
@@ -49,7 +56,10 @@ class QuestsController extends Notifier<QuestsTabState> {
           isClaimed: claimed,
         );
       }
-      return q.copyWith(isClaimed: claimed);
+      return q.copyWith(
+        isClaimed: claimed,
+        isClaiming: _pendingClaims.contains('$claimUser/${q.id}'),
+      );
     }).toList();
 
     return initial.copyWith(introSeen: introSeen, dailyQuests: initialDaily);
@@ -108,6 +118,7 @@ class QuestsController extends Notifier<QuestsTabState> {
   }
 
   bool claimQuest(String id) {
+    if (ref.read(appConfigProvider).isApi) return false;
     final index = state.dailyQuests.indexWhere((q) => q.id == id);
     if (index == -1) return false;
     final quest = state.dailyQuests[index];
@@ -133,5 +144,69 @@ class QuestsController extends Notifier<QuestsTabState> {
       feedbackMessage: success ? 'Claimed 10 gems!' : 'Claimed!',
     );
     return true;
+  }
+
+  final _pendingClaims = <String>{};
+
+  Future<UpgradeChestReward?> claimReward(String id) async {
+    final userId = ref.read(authControllerProvider).user?.id;
+    final pendingKey = '$userId/$id';
+    final quest = state.dailyQuests.where((q) => q.id == id).firstOrNull;
+    if (quest == null || !quest.canClaim || !_pendingClaims.add(pendingKey)) {
+      return null;
+    }
+    final repository = ref.read(questsRepositoryProvider);
+    state = state.copyWith(
+      dailyQuests: [
+        for (final q in state.dailyQuests)
+          q.id == id ? q.copyWith(isClaiming: true) : q,
+      ],
+    );
+    try {
+      UpgradeChestReward? reward;
+      if (ref.read(appConfigProvider).isApi) {
+        if (repository is! QuestRewardCommands) return null;
+        reward = await (repository as QuestRewardCommands).claimReward(id);
+        if (!ref.mounted ||
+            ref.read(authControllerProvider).user?.id != userId) {
+          return null;
+        }
+        ref.invalidate(realRewardsProvider);
+      } else {
+        reward = UpgradeChestReward.demo('demo-$id', quest.rewardGems);
+        final previewId = id == 'daily-score' ? 'daily-xp' : id;
+        if (!ref
+            .read(previewControllerProvider.notifier)
+            .claimQuest(previewId, eligible: true, gems: reward.gems)) {
+          return null;
+        }
+      }
+      if (!ref.mounted || reward == null) return null;
+      state = state.copyWith(
+        dailyQuests: [
+          for (final q in state.dailyQuests)
+            q.id == id ? q.copyWith(isClaimed: true, isClaiming: false) : q,
+        ],
+        feedbackMessage: 'Claimed ${reward.gems} gems!',
+      );
+      return reward;
+    } catch (_) {
+      if (ref.mounted && ref.read(authControllerProvider).user?.id == userId) {
+        state = state.copyWith(
+          feedbackMessage: 'Could not claim your reward. Try again.',
+        );
+      }
+      return null;
+    } finally {
+      _pendingClaims.remove(pendingKey);
+      if (ref.mounted && ref.read(authControllerProvider).user?.id == userId) {
+        state = state.copyWith(
+          dailyQuests: [
+            for (final q in state.dailyQuests)
+              q.id == id ? q.copyWith(isClaiming: false) : q,
+          ],
+        );
+      }
+    }
   }
 }

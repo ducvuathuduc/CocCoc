@@ -1,0 +1,482 @@
+{
+  "reviewedAt": "2026-10-25",
+  "actions": [
+    {
+      "actionId": "local.durableLessonJournal",
+      "route": null,
+      "owner": "mobile",
+      "wave": "W3",
+      "operationIds": [
+        "syncOfflineCompletion"
+      ],
+      "currentSource": "Account-scoped native Drift journal. Actual Android emulator factory close/reopen, account isolation, conflict and legacy migration tests passed. Process-kill/reconnect against admitted backend remains unverified. Journal schema v2 also retains rejected answers and upgrades v1 files without losing queued payloads.",
+      "implementationEvidence": [
+        "apps/mobile/lib/core/cache/drift_lesson_journal.dart",
+        "apps/mobile/lib/core/cache/lesson_journal_platform_native.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/core/cache/drift_lesson_journal_test.dart",
+        "apps/mobile/integration_test/real_journal_native_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "file close/reopen",
+        "account isolation",
+        "operation conflict",
+        "atomic rollback",
+        "corruption retention",
+        "queue limits",
+        "Android process-kill/reconnect still required"
+      ]
+    },
+    {
+      "actionId": "shop.realInventoryPurchase",
+      "route": null,
+      "owner": "progress",
+      "wave": "W4",
+      "operationIds": [
+        "listShop",
+        "buyItem"
+      ],
+      "currentSource": "API wallet/inventory/catalog and frozen retry request; no client gem authority. Legacy free offers require a contract.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/shop/data/api_shop_repository.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/features/shop/real_shop_composition_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "server price",
+        "same request/key retry",
+        "late account response",
+        "no preview wallet",
+        "durable hosted ledger acceptance still required"
+      ]
+    },
+    {
+      "actionId": "phone.verifyExistingAccount",
+      "route": null,
+      "owner": "auth contract",
+      "wave": "W2",
+      "operationIds": [],
+      "currentSource": "Real mode refuses fixed preview OTP. Supported provider/account-link challenge contract is missing.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/phone/data/phone_verification_repository.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/real_phone_verification_test.dart"
+      ],
+      "runtimeStatus": "NEEDS_CONTRACT",
+      "acceptance": [
+        "provider challenge",
+        "expiry/attempt limits",
+        "replay protection",
+        "ownership verification",
+        "no fixed-code success"
+      ]
+    },
+    {
+      "actionId": "profile.editUnsupportedFields",
+      "route": null,
+      "owner": "auth/progress contract",
+      "wave": "W2",
+      "operationIds": [
+        "updateMe"
+      ],
+      "currentSource": "ProfilePatch owns nickname, avatarId and preferences. Username, separate names, verified email/phone updates need explicit semantics; do not simulate their persistence.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/account/application/profile_editor_controller.dart"
+      ],
+      "localEvidence": [],
+      "runtimeStatus": "NEEDS_CONTRACT",
+      "acceptance": [
+        "supported fields persist with expectedRevision",
+        "unsupported edits fail before write",
+        "reauthentication for sensitive identity changes"
+      ]
+    },
+    {
+      "actionId": "profile.ownProfileProjection",
+      "route": "/profile/me",
+      "owner": "mobile/progress",
+      "wave": "W2/W5",
+      "operationIds": [
+        "getMe",
+        "getRewards"
+      ],
+      "currentSource": "API header uses verified identity and same-account Progress nickname/XP/streak/league. Unsupported social/score/joined fields are unavailable. Lower social/achievement sections and standalone tab require further acceptance.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/progress/presentation/own_profile_screen.dart",
+        "apps/mobile/lib/features/progress/application/own_profile_projection.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/real_own_profile_test.dart",
+        "apps/mobile/test/real_own_profile_view_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "real nickname after edit/reopen",
+        "authoritative statistics",
+        "unavailable unsupported fields",
+        "no preview provider in API",
+        "account switch",
+        "same-state visual parity"
+      ]
+    },
+    {
+      "actionId": "profile.standaloneTabProjection",
+      "route": null,
+      "owner": "mobile/progress",
+      "wave": "W2",
+      "operationIds": [
+        "getMe",
+        "getRewards"
+      ],
+      "currentSource": "Standalone tab selects profileMockNew/profileMockRich. Counts, handles and joined year require an actual projection; lexical API coverage does not cover this view.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/profile/application/profile_controller.dart"
+      ],
+      "localEvidence": [],
+      "runtimeStatus": "MISSING_IMPLEMENTATION",
+      "acceptance": [
+        "real identity and returned statistics",
+        "unavailable fields",
+        "account switch",
+        "same-state visual parity"
+      ]
+    },
+    {
+      "actionId": "profile.avatarConfiguration",
+      "route": null,
+      "owner": "progress contract",
+      "wave": "W2",
+      "operationIds": [
+        "updateMe"
+      ],
+      "currentSource": "Avatar editor saves a Rive option map locally; current ProfilePatch stores only avatarId. A versioned configuration/storage contract is needed for cross-device persistence.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/account/application/avatar_controller.dart"
+      ],
+      "localEvidence": [],
+      "runtimeStatus": "NEEDS_CONTRACT",
+      "acceptance": [
+        "validated versioned option set",
+        "revision conflict",
+        "cross-device persistence",
+        "preserve approved avatar art"
+      ]
+    },
+    {
+      "actionId": "settings.linkIdentity",
+      "route": null,
+      "owner": "Appwrite Auth",
+      "wave": "W2",
+      "operationIds": [],
+      "currentSource": "API mode returns unavailable rather than toggling a fixture. Actual supported Appwrite identity-link flow is not implemented.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/account/data/api_account_repositories.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/real_settings_failure_test.dart"
+      ],
+      "runtimeStatus": "MISSING_IMPLEMENTATION",
+      "acceptance": [
+        "provider configuration",
+        "existing identity ownership",
+        "cancel/denial",
+        "actual linked account readback"
+      ]
+    },
+    {
+      "actionId": "os.changeLauncherIcon",
+      "route": null,
+      "owner": "Android/iOS",
+      "wave": "W7",
+      "operationIds": [],
+      "currentSource": "AppIcon provider is memory-only; native aliases/platform bridge and source-backed launcher resources remain missing.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/app_icon/data/app_icon_repository.dart"
+      ],
+      "localEvidence": [],
+      "runtimeStatus": "MISSING_IMPLEMENTATION",
+      "acceptance": [
+        "actual launcher changes",
+        "restart persistence",
+        "platform failure does not show success",
+        "Android install acceptance"
+      ]
+    },
+    {
+      "actionId": "ai.hostedSpeechCapability",
+      "route": null,
+      "owner": "ai",
+      "wave": "W6",
+      "operationIds": [],
+      "currentSource": "Hosted provider defaults disabled. Missing speech engine advertises turnSpeech=false and cannot create a slot or synthesize learner transcripts. Real provider keys and recorded-audio acceptance are pending.",
+      "implementationEvidence": [
+        "services/ai/src/application/deps.ts",
+        "services/ai/src/application/voice.ts",
+        "services/ai/src/index.ts"
+      ],
+      "localEvidence": [
+        "services/ai/test/disabled-speech.test.mjs"
+      ],
+      "runtimeStatus": "UNVERIFIED",
+      "acceptance": [
+        "no scripted hosted fallback",
+        "provider provenance",
+        "real microphone bytes",
+        "nullable score",
+        "provider quota/timeouts"
+      ]
+    },
+    {
+      "actionId": "runtime.nativeHttpWorkers",
+      "route": null,
+      "owner": "learning/progress/ai",
+      "wave": "W1",
+      "operationIds": [],
+      "currentSource": "Native HTTP/worker tests pass; pinned Compose CLI validates configuration. Docker Engine and actual container execution remain unavailable.",
+      "implementationEvidence": [
+        "services/shared/src/runtime-http.ts",
+        "services/shared/src/runtime-worker.ts",
+        "infra/docker/compose.local.yaml"
+      ],
+      "localEvidence": [
+        "services/shared/test/runtime.test.mjs",
+        "services/shared/test/runtime-admission.test.mjs",
+        "services/shared/test/runtime-bundles.test.mjs"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "spoofed platform headers stripped",
+        "bounded body/deadline",
+        "worker residency",
+        "sequential ticks",
+        "unadmitted storage rejected",
+        "container restart/durable environment still required"
+      ]
+    },
+    {
+      "actionId": "runtime.rabbitMqApplicationReceipts",
+      "route": null,
+      "owner": "learning/progress/ai transport",
+      "wave": "W1-after-W4",
+      "operationIds": [],
+      "currentSource": "ADR-0018 approved design; direct signed relay remains selected. AMQP envelope, per-target application receipts, schema and fault-tested broker cutover are not implemented.",
+      "implementationEvidence": [],
+      "localEvidence": [],
+      "runtimeStatus": "NEEDS_CONTRACT",
+      "acceptance": [
+        "published != applied",
+        "per-target durable receipt",
+        "delayed signed delivery",
+        "crash/replay",
+        "100 duplicate/reorder trials",
+        "settlement watermark",
+        "drain/rollback"
+      ]
+    },
+    {
+      "actionId": "runtime.redisDerivedCache",
+      "route": null,
+      "owner": "learning/progress",
+      "wave": "W1-after-W4",
+      "operationIds": [],
+      "currentSource": "ADR-0018 approved design; Redis adapter/topology is not implemented. Current account-scoped mobile cache remains in place.",
+      "implementationEvidence": [],
+      "localEvidence": [],
+      "runtimeStatus": "MISSING_IMPLEMENTATION",
+      "acceptance": [
+        "authorization before lookup",
+        "safe version/revision keys",
+        "invalidation/TTL",
+        "bounded primary fallback",
+        "loss and stampede tests"
+      ]
+    },
+    {
+      "actionId": "auth.emailVerification",
+      "route": null,
+      "owner": "Appwrite Auth",
+      "wave": "W2",
+      "operationIds": [],
+      "currentSource": "Real Account.get status, SDK resend/confirm and readback; same-account callback and late-response guards. Delivery and configured app-link acceptance pending.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/account/application/email_verification_controller.dart",
+        "apps/mobile/lib/features/auth/services/appwrite_auth_service.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/real_email_verification_test.dart",
+        "apps/mobile/test/features/auth/email_verification_service_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "no preview verification",
+        "provider-accepted resend",
+        "expired callback",
+        "account switch",
+        "actual email delivery/app-link still required"
+      ]
+    },
+    {
+      "actionId": "settings.soundAndPrivacy",
+      "route": null,
+      "owner": "progress",
+      "wave": "W2",
+      "operationIds": [
+        "getPreferences",
+        "updatePreferences",
+        "getMe",
+        "updateMe"
+      ],
+      "currentSource": "Server revisions, retained retry identity and actual accepted sound/privacy state. Audio effects read accepted sound preference.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/account/application/account_preferences_controller.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/real_account_preferences_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "no optimistic success",
+        "same body/key retry",
+        "conflict refresh",
+        "account switch"
+      ]
+    },
+    {
+      "actionId": "settings.notificationsAndPracticeReminders",
+      "route": null,
+      "owner": "progress/mobile",
+      "wave": "W7",
+      "operationIds": [
+        "getPreferences",
+        "updatePreferences"
+      ],
+      "currentSource": "Server-accepted notification channels, smart scheduling and time. Cold/unavailable data cannot enable reminders. Native scheduling uses existing gateway; physical permission/delivery acceptance pending.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/notifications/application/notification_settings_controller.dart",
+        "apps/mobile/lib/features/notifications/data/api_notification_repository.dart",
+        "apps/mobile/lib/features/account/presentation/account_screens.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/real_notification_settings_test.dart",
+        "apps/mobile/test/features/reminders/reminder_coordinator_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "no optimistic persisted toggle",
+        "same retry key/body",
+        "no automatic conflict overwrite",
+        "account switch",
+        "no preview reminder settings",
+        "device delivery still required"
+      ]
+    },
+    {
+      "actionId": "call.capturedVoiceTurn",
+      "route": null,
+      "owner": "ai/mobile",
+      "wave": "W6",
+      "operationIds": [],
+      "currentSource": "Real mode requires captured microphone bytes and retains exact voice-turn request for retry; physical microphone/provider acceptance pending.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/call/data/api_call_repository.dart",
+        "apps/mobile/lib/features/call/application/call_controller.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/features/roleplay_call_api_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "no placeholder WAV",
+        "permission/cancel lifecycle",
+        "same turn retry",
+        "late account response"
+      ]
+    },
+    {
+      "actionId": "economy.duplicateReorderTrials",
+      "route": null,
+      "owner": "progress",
+      "wave": "W4",
+      "operationIds": [],
+      "currentSource": "100 independent local trials against actual Progress consumer: shuffled concurrent duplicates, commit failure and changed-payload replay; ledger equals awarded XP. Cloud durable recovery remains pending.",
+      "implementationEvidence": [
+        "services/progress/src/application/consume-events.ts"
+      ],
+      "localEvidence": [
+        "services/progress/test/reward-delivery-trials.test.mjs"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "100 trials",
+        "one reward per completion",
+        "rollback",
+        "cross-user isolation",
+        "hosted restart still required"
+      ]
+    },
+    {
+      "actionId": "learning.offlineRejectedReview",
+      "route": null,
+      "owner": "mobile/learning",
+      "wave": "W3",
+      "operationIds": [
+        "syncOfflineCompletion"
+      ],
+      "currentSource": "Permanent rejection atomically moves original answer bytes to an account-scoped rejected queue. They survive restart and remain in storage budgets; replay does not resubmit them. Local v1-to-v2 upgrade and Android native persistence pass.",
+      "implementationEvidence": [
+        "apps/mobile/lib/core/cache/drift_lesson_journal.dart",
+        "apps/mobile/lib/features/learning/data/api_learning_repository.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/core/cache/drift_journal_upgrade_test.dart",
+        "apps/mobile/test/features/learning/api_learning_repository_test.dart",
+        "apps/mobile/integration_test/real_journal_native_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "preserve original answers",
+        "atomic rejection",
+        "no repeat replay",
+        "account isolation",
+        "bounded retained history",
+        "actual native restart",
+        "full admitted backend offline kill/reconnect remains pending"
+      ]
+    },
+    {
+      "actionId": "account.syncAndRecovery",
+      "route": "/sync",
+      "owner": "mobile/learning/progress",
+      "wave": "W3",
+      "operationIds": [
+        "syncOfflineCompletion",
+        "getMe",
+        "getRewards"
+      ],
+      "currentSource": "Real Sync/recovery consume journal state and actual API reads. Cold, failed, pending or rejected state cannot report current; duplicate commands and late account responses are guarded. Refresh invalidates Progress/path reads after server acceptance.",
+      "implementationEvidence": [
+        "apps/mobile/lib/features/account/application/account_sync_controller.dart",
+        "apps/mobile/lib/features/account/data/account_sync_repository.dart"
+      ],
+      "localEvidence": [
+        "apps/mobile/test/real_sync_status_test.dart"
+      ],
+      "runtimeStatus": "VERIFIED_LOCAL",
+      "acceptance": [
+        "actual API retry",
+        "no local fake recovery",
+        "pending/rejected retained",
+        "fresh identity read",
+        "no cached success",
+        "duplicate guard",
+        "account switch",
+        "full cross-service settlement remains gated"
+      ]
+    }
+  ]
+}

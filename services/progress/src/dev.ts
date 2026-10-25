@@ -24,7 +24,7 @@ export function createDevHandler(
         watermark: httpWatermark({ key: ownKey, learningBaseUrl: `http://127.0.0.1:${base}` }),
       }
     : {};
-  const wiring = progressWiring(persistence, ports);
+  const wiring = progressWiring(persistence, ports, { allowSimulatedCommerce: true });
   const handler = createRouter({
     service: 'progress',
     persistence,

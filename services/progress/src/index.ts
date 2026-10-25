@@ -33,7 +33,7 @@ function hostedPersistence(env: Record<string, string | undefined>): ProgressPer
       projectId,
       apiKey: () => currentExecutionKey() ?? fallbackKey,
       databaseId: env['COC_DATABASE_ID'] ?? 'cocenglish',
-      admitted: true,
+      admitted: env['COC_PROGRESS_ADMITTED'] === 'reviewed-cloud-gate',
     });
   }
   return createDisabledProgressPersistence();
@@ -73,7 +73,7 @@ export default async function main(context: RawAppwriteContext): Promise<unknown
   const req = plainRequest(context.req);
   return withExecutionKey(req, async () => {
     if (isScheduledExecution(req)) {
-      if (persistence.kind === 'disabled') {
+      if (!persistence.admittedForHosting) {
         return context.res.json({ worker: 'progress', status: 'SERVICE_NOT_CONFIGURED' }, 503);
       }
       const report = await runProgressWorker(persistence, ports, Date.now());

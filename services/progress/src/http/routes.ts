@@ -257,12 +257,14 @@ export function progressRoutes(store: ProgressPersistence): Route[] {
     }),
     user('POST', '/v1/quests/{questId}/claim', (c) => {
       const questId = pathParam('questId');
-      const body = objectBody(c.body, ['periodKey'], ['periodKey']);
+      const body = objectBody(c.body, ['periodKey', 'upgradeChest'], ['periodKey']);
       if (typeof body['periodKey'] !== 'string' || body['periodKey'].length > 16) bad('periodKey');
+      if (body['upgradeChest'] !== undefined && typeof body['upgradeChest'] !== 'boolean')
+        bad('upgradeChest');
       const periodKey = body['periodKey'];
       return mutate(store, c, 'claimQuest', async (tx, u) => ({
         status: 200,
-        body: await claimQuest(tx, u, questId, periodKey),
+        body: await claimQuest(tx, u, questId, periodKey, body['upgradeChest'] === true),
       }));
     }),
     user('POST', '/v1/me/freezes', (c) => {

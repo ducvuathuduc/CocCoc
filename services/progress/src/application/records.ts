@@ -151,6 +151,7 @@ export function profileView(profile: Readonly<Row>, achievements: string[]) {
 }
 
 export interface RewardsView {
+  chest?: import('../domain/quest-chest.js').QuestChestReceipt;
   completionId: string | null;
   status: 'pending' | 'credited' | 'capped';
   studyXp: number;

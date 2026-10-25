@@ -35,6 +35,10 @@ abstract interface class EvidenceLearningRepository {
   });
 }
 
+abstract interface class OfflineLearningSync {
+  Future<int> syncPending();
+}
+
 class LearningFailure implements Exception {
   const LearningFailure(this.message);
 
