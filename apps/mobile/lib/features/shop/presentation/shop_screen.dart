@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../gift/presentation/gift_screens.dart';
-
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/config/app_config.dart';
@@ -514,14 +512,6 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
             // Upgrade goes to the existing Family plan picker.
             onAction: () => context.push('/subscription/family'),
           ),
-          const SizedBox(height: 18),
-          _buildListItem(
-            art: GiftArt.duoGift,
-            title: 'Gift Super',
-            actionLabel: 'GIFT',
-            actionColor: ShopColors.blue,
-            onAction: () => context.push(GiftRoutes.hub),
-          ),
         ],
       ),
     );
@@ -786,6 +776,8 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     );
   }
 
+  static const double _actionMaxWidth = 120;
+
   Widget _buildListItem({
     required ArtRegion art,
     required String title,
@@ -853,8 +845,13 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                     ],
                   ),
                 ),
+                // Duolingo keeps the action hugging the right edge and gives the
+                // title the rest of the row (docs/design/references/shop 04-05).
                 if (actionLabel != null && title != 'Max Family Plan')
-                  Flexible(
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: _actionMaxWidth,
+                    ),
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: TextButton(
@@ -873,7 +870,10 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                     ),
                   ),
                 if (price != null)
-                  Flexible(
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: _actionMaxWidth,
+                    ),
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Semantics(
