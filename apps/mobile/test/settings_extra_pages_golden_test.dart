@@ -94,6 +94,9 @@ void main() {
     await t.drag(list, const Offset(0, -400));
     await settleImages(t);
     await t.pumpAndSettle();
+    // Shop reference 05 places gem prices at the trailing edge, including
+    // the disabled full-inventory state. A Flexible price slot centered them.
+    expect(t.getRect(find.text('425')).right, greaterThan(430 - 48));
     await expectLater(
       find.byKey(const ValueKey('page')),
       matchesGoldenFile('goldens/ui_master/shop_freeze_maxed_430.png'),

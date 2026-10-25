@@ -1430,6 +1430,16 @@
       "changedPixels": 1,
       "pixelRatio": 2.4952590078850183e-06,
       "reason": "pinned Linux renderer with explicit bundled fonts/icons"
+    },
+    {
+      "path": "apps/mobile/test/goldens/ui_master/shop_freeze_maxed_430.png",
+      "previousSha256": "e0bb5d0f3e39f0c754d9dba39204070f3db4e7ee99781721325a9113126f13c1",
+      "candidateSha256": "5e38c6637f462652ec7c459dd78a4996697299d090de21ca61bdd4ddf98f0c62",
+      "sourceWorkflowRun": 40170045138,
+      "candidateSourceCommit": "9c3364f694c5b5e88dc89b0bf1b033260ee296f6",
+      "changedPixels": 4726,
+      "pixelRatio": 0.0122,
+      "reason": "Reviewed against docs/design/references/shop/05.png: all gem prices align at the trailing edge after branch integration, including disabled full-inventory price. Text/art/geometry outside the three prices are unchanged. Added a trailing-price geometry assertion."
     }
   ]
 }
