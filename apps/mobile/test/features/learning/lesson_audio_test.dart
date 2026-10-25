@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cocenglish/core/api/api_contracts.dart' as wire;
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
@@ -14,6 +15,7 @@ import 'package:cocenglish/features/learning/presentation/lesson_screen.dart';
 import 'package:cocenglish/features/learning/services/lesson_audio_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -60,6 +62,83 @@ class RecordingOutput implements LessonSoundOutput {
 void main() {
   final clipBytes = Uint8List.fromList(utf8.encode('fake aac clip'));
   final clipHash = hashOf(clipBytes);
+
+  test(
+    'native lesson audio plays without an idle frame polling loop',
+    () async {
+      final binding = TestWidgetsFlutterBinding.ensureInitialized();
+      final messenger = binding.defaultBinaryMessenger;
+      const methods = MethodChannel('xyz.luan/audioplayers');
+      const global = MethodChannel('xyz.luan/audioplayers.global');
+      const globalEvents = MethodChannel('xyz.luan/audioplayers.global/events');
+      const codec = StandardMethodCodec();
+      final calls = <MethodCall>[];
+      final disposed = Completer<void>();
+      final eventChannels = <MethodChannel>[];
+      final output = AudioplayersSoundOutput();
+      final cache = AudioCache.instance.loadedFiles;
+      const asset = 'sfx/correct.wav';
+      final previous = cache[asset];
+      cache[asset] = Uri.file('/test/correct.wav');
+      messenger.setMockMethodCallHandler(global, (_) async => null);
+      messenger.setMockMethodCallHandler(globalEvents, (_) async => null);
+      messenger.setMockMethodCallHandler(methods, (call) async {
+        calls.add(call);
+        final args = call.arguments as Map<Object?, Object?>;
+        final playerId = args['playerId'] as String;
+        final events = MethodChannel('xyz.luan/audioplayers/events/$playerId');
+        if (call.method == 'create') {
+          eventChannels.add(events);
+          messenger.setMockMethodCallHandler(events, (_) async => null);
+        }
+        if (call.method == 'setSourceUrl') {
+          await messenger.handlePlatformMessage(
+            events.name,
+            codec.encodeSuccessEnvelope({
+              'event': 'audio.onPrepared',
+              'value': true,
+            }),
+            (_) {},
+          );
+        }
+        if (call.method == 'dispose' &&
+            calls.where((call) => call.method == 'dispose').length == 3) {
+          disposed.complete();
+        }
+        return call.method == 'getCurrentPosition' ? 0 : null;
+      });
+      try {
+        await output.playEffect(asset);
+        await output.playEffect(asset);
+        await output.playVoice(const CachedLessonAudio('/test/prompt.aac'));
+        final resumed = calls
+            .where((call) => call.method == 'resume')
+            .map((call) => (call.arguments as Map)['playerId']);
+        expect(resumed, ['lesson-sfx-0', 'lesson-sfx-1', 'lesson-voice']);
+        // Low-latency effects never send a completion event. Playback must
+        // remain active without polling the native position on every UI frame.
+        expect(binding.transientCallbackCount, 0);
+        expect(
+          calls.where((call) => call.method == 'getCurrentPosition'),
+          isEmpty,
+        );
+      } finally {
+        output.dispose();
+        await disposed.future.timeout(const Duration(seconds: 5));
+        messenger.setMockMethodCallHandler(methods, null);
+        messenger.setMockMethodCallHandler(global, null);
+        messenger.setMockMethodCallHandler(globalEvents, null);
+        for (final channel in eventChannels) {
+          messenger.setMockMethodCallHandler(channel, null);
+        }
+        if (previous == null) {
+          cache.remove(asset);
+        } else {
+          cache[asset] = previous;
+        }
+      }
+    },
+  );
 
   group('LessonAudioStore', () {
     LessonAudioStore store({

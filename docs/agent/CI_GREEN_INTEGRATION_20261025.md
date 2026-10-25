@@ -22,8 +22,8 @@
 - [x] Reproduce merged Flutter failures; inspect failing screenshot artifacts against existing source references. Repair fonts/fixtures/layout/lifecycle at their cause and add targeted regressions where behavior changes.
 - [x] Record per-file baseline hashes/reasons in [golden provenance](../quality/ci-green-20261025/golden-provenance.json); retain strict comparisons. This evidence does not assert whole-app Duolingo pixel parity.
 - [x] Run contracts, API lint, schema dry-run/tests, seeds, content, blueprint/audit, secret scan, Flutter analyzer/full tests and Android build.
-- [ ] Push the integration candidate, inspect actual GitHub workflow results and repair remaining CI/Android native failures.
-- [ ] Merge the verified integration into `main`, push normally, verify remote identity and final required workflows, and record actual remaining release limitations.
+- [x] Push the integration candidate and merge all remote branch commits into `main` with a normal fast-forward push.
+- [ ] Verify all final-main workflows and repair remaining Android native failures; record actual remaining release limitations.
 
 Starting CI failures: mobile has historical screenshot mismatches; the unfinished AMQP branch fails TypeScript on an undeclared `amqplib` import and an explicitly undefined optional `messageId`. These are diagnoses to verify, not declarations of completion.
 
@@ -43,3 +43,9 @@ Starting CI failures: mobile has historical screenshot mismatches; the unfinishe
 Main `08307ab` passed Mobile, Backend, Container runtime and secret scan. The redundant old manual Android run was cancelled to expose diagnostics while the full main run continued. Before cancellation, permission grant/denial and lesson-cancellation cases each exhausted their six-minute limit; three notification/deep-link cases passed.
 
 The native helper repeatedly waited up to six seconds for `pumpAndSettle`, although audio/idle animation continuously schedules frames. Repeated lesson interactions consumed the whole case budget. `patrol_test/support/advance_frame.dart` now advances one bounded frame interval; finder polling, all seven native cases, their six-minute limits and every OS assertion remain intact. A looping-ticker regression reproduces 6,600 ms with the old helper and requires responsive progress while animation remains active. The fixed helper plus reminder regressions pass 20 tests; analyzer is clean. The resulting full native CI run is still required.
+
+Main `96955ab` passed Mobile (1,524 tests, analyzer, format and APK), Backend, Container runtime and secret scan. Android run `40172663189` completed all seven behavioral paths, including permission grant/denial, real notification taps, cancellation after its scheduled fire time and launcher widget data. Four cases nevertheless failed the framework's teardown invariant: two `audioplayers` frame position updaters remained scheduled after widget disposal. This is a failing native run, not full CI acceptance.
+
+The audio output now disables position polling on its voice/effect players because no lesson UI consumes it. Android low-latency effects do not emit playback-completion events; the default frame updater otherwise continues indefinitely. A regression drives the real Dart plugin through mock native channels without completion events, verifies all three channels still resume, requires zero transient frame callbacks/position queries, and waits for all three native disposals. Removing the fix reproduces three callbacks instead of zero. All seven Patrol assertions remain required on the new commit; cloud/provider, iOS and physical-device acceptance remain separate.
+
+Local validation of this follow-up: `flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false test/features/learning/lesson_audio_test.dart test/patrol_frame_pump_test.dart test/features/reminders/reminder_coordinator_test.dart` passes all 25 tests; `pnpm blueprint:check`, `pnpm audit:check` and `git diff --check` pass. The motion switch is the repository's normal local widget-test configuration; the native Patrol workflow still runs real audio, permission dialogs, notifications and the launcher widget.

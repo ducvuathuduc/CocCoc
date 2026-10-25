@@ -46,6 +46,7 @@ class AudioplayersSoundOutput implements LessonSoundOutput {
 
   AudioPlayer get _voicePlayer =>
       _voice ??= AudioPlayer(playerId: 'lesson-voice')
+        ..positionUpdater = null
         ..setReleaseMode(ReleaseMode.stop);
 
   /// Two low-latency effect players used in turn, so a heart-loss pop can
@@ -53,7 +54,10 @@ class AudioplayersSoundOutput implements LessonSoundOutput {
   AudioPlayer _effectPlayer() {
     final index = _nextEffect;
     _nextEffect = (_nextEffect + 1) % _effects.length;
+    // No lesson UI consumes playback positions. Android low-latency effects
+    // have no completion event, so frame polling would keep running at idle.
     return _effects[index] ??= AudioPlayer(playerId: 'lesson-sfx-$index')
+      ..positionUpdater = null
       ..setReleaseMode(ReleaseMode.stop)
       ..setPlayerMode(PlayerMode.lowLatency);
   }
