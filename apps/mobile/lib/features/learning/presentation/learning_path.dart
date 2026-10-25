@@ -131,16 +131,30 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                                       child: SizedBox(
                                         width: 118,
                                         height: 126,
-                                        child: ReferenceArt(
-                                          Theme.of(context).brightness ==
-                                                  Brightness.dark
-                                              ? const ArtRegion(
-                                                  'path-duo-transparent',
-                                                  Rect.fromLTWH(0, 0, 255, 263),
-                                                )
-                                              : LearningArt.pathDuo,
-                                          width: 102,
-                                          height: 105,
+                                        // Align keeps the art at its own size;
+                                        // a tight SizedBox stretched it to
+                                        // 118x126 (twice Duolingo's mascot).
+                                        child: Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: ReferenceArt(
+                                            Theme.of(context).brightness ==
+                                                    Brightness.dark
+                                                ? const ArtRegion(
+                                                    'path-duo-transparent',
+                                                    Rect.fromLTWH(
+                                                      0,
+                                                      0,
+                                                      255,
+                                                      263,
+                                                    ),
+                                                  )
+                                                : LearningArt.pathDuo,
+                                            // Same footprint as the resting
+                                            // Lottie frame (~68 px owl body), which
+                                            // matches Duolingo's path mascot.
+                                            width: 84,
+                                            height: 87,
+                                          ),
                                         ),
                                       ),
                                     ),
