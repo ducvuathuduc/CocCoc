@@ -1,0 +1,237 @@
+# Local durable stack. No host port is published outside loopback; stop preserves volumes.
+# Appwrite core topology follows appwrite/appwrite tag 2.3.0; Functions/Sites are not used.
+name: cocenglish-dev
+
+x-log: &log
+  driver: json-file
+  options: { max-size: 5m, max-file: '2' }
+x-appwrite: &appwrite
+  image: appwrite/appwrite:2.3.0@sha256:34ef77fb6e87588855b949d1c398be75114ead5aa68654bfeffa4e8d192e615e
+  restart: unless-stopped
+  env_file: ../../.secrets/local-dev/appwrite.env
+  logging: *log
+  networks: [backend]
+  volumes:
+    - appwrite-uploads:/storage/uploads
+    - appwrite-cache:/storage/cache
+    - appwrite-config:/storage/config
+    - appwrite-certificates:/storage/certificates
+    - appwrite-imports:/storage/imports
+  depends_on:
+    postgresql: { condition: service_healthy }
+    appwrite-redis: { condition: service_healthy }
+x-service: &service
+  init: true
+  restart: unless-stopped
+  read_only: true
+  tmpfs: ['/tmp:size=16m,mode=1777']
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  stop_grace_period: 30s
+  mem_limit: 384m
+  cpus: 1.0
+  pids_limit: 128
+  logging: *log
+  environment:
+    NODE_ENV: production
+    HOST: 0.0.0.0
+    PORT: '8080'
+    NODE_OPTIONS: --max-old-space-size=256
+  volumes:
+    - type: bind
+      source: ../../.secrets/local-dev/tls/ca.crt
+      target: /local-ca/ca.crt
+      read_only: true
+      bind: { create_host_path: false }
+  networks: [backend]
+x-service-health: &service-health
+  test:
+    [
+      CMD,
+      node,
+      -e,
+      "fetch('http://127.0.0.1:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+    ]
+  interval: 10s
+  timeout: 5s
+  retries: 6
+
+services:
+  local-tls:
+    image: nginx:1.28.0-alpine@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284
+    restart: unless-stopped
+    ports:
+      ['127.0.0.1:8443:8443', '127.0.0.1:4101:4101', '127.0.0.1:4102:4102', '127.0.0.1:4103:4103']
+    volumes:
+      - {
+          type: bind,
+          source: ./local-tls.conf,
+          target: /etc/nginx/nginx.conf,
+          read_only: true,
+          bind: { create_host_path: false },
+        }
+      - {
+          type: bind,
+          source: ../../.secrets/local-dev/tls/server.crt,
+          target: /local-tls/server.crt,
+          read_only: true,
+          bind: { create_host_path: false },
+        }
+      - {
+          type: bind,
+          source: ../../.secrets/local-dev/tls/server.key,
+          target: /local-tls/server.key,
+          read_only: true,
+          bind: { create_host_path: false },
+        }
+    mem_limit: 64m
+    logging: *log
+    networks: [backend]
+  appwrite:
+    <<: *appwrite
+    mem_limit: 1024m
+    healthcheck:
+      test:
+        [
+          CMD-SHELL,
+          'curl -fsS -o /dev/null -H "Host: localhost" http://localhost/v1/health/version',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 60s
+  appwrite-worker:
+    <<: *appwrite
+    entrypoint: worker
+    mem_limit: 768m
+  appwrite-scheduler:
+    <<: *appwrite
+    entrypoint: schedule
+    mem_limit: 256m
+  appwrite-geo:
+    image: appwrite/geo:0.3.1@sha256:df3751399945ec22661f23d745d66ed3b06a61f70ac4d77a1e9011ea17797653
+    restart: unless-stopped
+    env_file: ../../.secrets/local-dev/appwrite.env
+    mem_limit: 256m
+    networks: [backend]
+    logging: *log
+  appwrite-autogravity:
+    image: ghcr.io/appwrite/autogravity:0.0.11@sha256:ba67720a2ba285d1ba42369bf8426068a0429d1647c3131c07261bf3759d2104
+    restart: unless-stopped
+    environment: { MODEL_BACKEND: focalnet }
+    mem_limit: 512m
+    networks: [backend]
+    logging: *log
+  postgresql:
+    image: appwrite/postgres:0.1.0@sha256:77156232a16d80f5830d914edb44f52a0853058939f2365cc3301d08db9d05e9
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: appwrite
+      POSTGRES_USER: cocenglish
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run local configuration first}
+    volumes: ['appwrite-postgresql:/var/lib/postgresql']
+    mem_limit: 768m
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U cocenglish -d appwrite']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    logging: *log
+    networks: [backend]
+  appwrite-redis:
+    image: redis:7.4.7-alpine@sha256:02f2cc4882f8bf87c79a220ac958f58c700bdec0dfb9b9ea61b62fb0e8f1bfcf
+    restart: unless-stopped
+    command: [redis-server, --appendonly, 'yes', --maxmemory, 192mb, --maxmemory-policy, noeviction]
+    volumes: ['appwrite-redis:/data']
+    mem_limit: 256m
+    healthcheck: { test: [CMD, redis-cli, ping], interval: 5s, timeout: 3s, retries: 12 }
+    logging: *log
+    networks: [backend]
+  mailpit:
+    image: axllent/mailpit:v1.27.4@sha256:df6c2541907e1be6fac21f509927cf6ed771617a1f4b361ef66d97bd05593d2d
+    restart: unless-stopped
+    environment: { MP_DATABASE: /data/mailpit.db, MP_MAX_MESSAGES: '200' }
+    volumes: ['mailpit:/data']
+    ports: ['127.0.0.1:8025:8025']
+    mem_limit: 128m
+    networks: [backend]
+    logging: *log
+  redis:
+    image: redis:7.4.7-alpine@sha256:02f2cc4882f8bf87c79a220ac958f58c700bdec0dfb9b9ea61b62fb0e8f1bfcf
+    restart: unless-stopped
+    environment: { REDIS_PASSWORD: '${REDIS_PASSWORD:?run local configuration first}' }
+    command:
+      [
+        sh,
+        -c,
+        'exec redis-server --requirepass "$$REDIS_PASSWORD" --maxmemory 96mb --maxmemory-policy allkeys-lru',
+      ]
+    mem_limit: 128m
+    healthcheck:
+      test: [CMD-SHELL, 'REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli ping']
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks: [backend]
+    logging: *log
+  rabbitmq:
+    image: rabbitmq:4.1.4-management-alpine@sha256:5cbd7145b0306399ad68422c3350b6cbd1bb95704b39f5896480e5b6d4238a04
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: cocenglish
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?run local configuration first}
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: '+S 2:2'
+    volumes: ['rabbitmq:/var/lib/rabbitmq']
+    mem_limit: 512m
+    healthcheck:
+      { test: [CMD, rabbitmq-diagnostics, -q, ping], interval: 15s, timeout: 10s, retries: 12 }
+    networks: [backend]
+    logging: *log
+  learning:
+    <<: *service
+    image: cocenglish/learning:dev
+    build:
+      { context: ../.., dockerfile: infra/docker/Dockerfile.service, args: { SERVICE: learning } }
+    env_file: ../../.secrets/local-dev/learning.env
+    healthcheck: *service-health
+  progress:
+    <<: *service
+    image: cocenglish/progress:dev
+    build:
+      { context: ../.., dockerfile: infra/docker/Dockerfile.service, args: { SERVICE: progress } }
+    env_file: ../../.secrets/local-dev/progress.env
+    healthcheck: *service-health
+  ai:
+    <<: *service
+    image: cocenglish/ai:dev
+    build: { context: ../.., dockerfile: infra/docker/Dockerfile.service, args: { SERVICE: ai } }
+    env_file: ../../.secrets/local-dev/ai.env
+    healthcheck: *service-health
+  learning-worker:
+    <<: *service
+    image: cocenglish/learning:dev
+    env_file: ../../.secrets/local-dev/learning.env
+    command: [node, worker.mjs]
+  progress-worker:
+    <<: *service
+    image: cocenglish/progress:dev
+    env_file: ../../.secrets/local-dev/progress.env
+    command: [node, worker.mjs]
+  ai-worker:
+    <<: *service
+    image: cocenglish/ai:dev
+    env_file: ../../.secrets/local-dev/ai.env
+    command: [node, worker.mjs]
+
+networks:
+  backend: { driver: bridge }
+volumes:
+  appwrite-postgresql:
+  appwrite-uploads:
+  appwrite-cache:
+  appwrite-config:
+  appwrite-certificates:
+  appwrite-imports:
+  appwrite-redis:
+  mailpit:
+  rabbitmq:

@@ -229,7 +229,9 @@ try {
     if (res.status !== 200) throw new Error(`runtimes ${res.status} ${body.type}: ${body.message}`);
     const node = body.runtimes.filter((r) => r.$id.startsWith('node-')).map((r) => r.$id);
     if (!node.includes('node-22')) throw new Error(`node-22 not offered; node runtimes: ${node.join(',')}`);
-    const fns = await (await fetch(`${endpoint}/functions`, { headers: { 'x-appwrite-project': project, 'x-appwrite-key': key } })).json();
+    const response = await fetch(`${endpoint}/functions`, { headers: { 'x-appwrite-project': project, 'x-appwrite-key': key } });
+    const fns = await response.json();
+    if (!response.ok || !Number.isSafeInteger(fns.total)) throw new Error(`functions list rejected or malformed (${response.status})`);
     return `node-22 offered (node runtimes: ${node.join(',')}); functions deployed in project: ${fns.total}`;
   });
 } finally {

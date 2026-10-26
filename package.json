@@ -14,6 +14,19 @@
     "backend:smoke": "node tools/scripts/backend-smoke.mjs",
     "dev:services": "node tools/scripts/dev-services.mjs",
     "dev:smoke": "node tools/scripts/dev-smoke.mjs",
+    "local:setup": "node tools/scripts/local-setup.mjs",
+    "local:configure": "node tools/scripts/local-config.mjs",
+    "local:doctor": "node tools/scripts/local-dev.mjs doctor",
+    "local:up": "node tools/scripts/local-dev.mjs up",
+    "local:stop": "node tools/scripts/local-dev.mjs stop",
+    "local:status": "node tools/scripts/local-dev.mjs status",
+    "local:logs": "node tools/scripts/local-dev.mjs logs",
+    "local:appwrite": "node tools/scripts/local-appwrite.mjs",
+    "local:smoke": "node tools/scripts/local-learning-smoke.mjs",
+    "local:auth-smoke": "node tools/scripts/local-auth-smoke.mjs",
+    "local:offline-defines": "node tools/scripts/local-offline-defines.mjs",
+    "local:apk": "node tools/scripts/local-mobile.mjs",
+    "local:test": "node --test tools/tests/local-appwrite.test.mjs tools/tests/local-config.test.mjs tools/tests/local-dev.test.mjs tools/tests/local-learning-smoke.test.mjs tools/tests/local-auth-smoke.test.mjs tools/tests/local-offline-defines.test.mjs",
     "runtime:check": "node tools/scripts/runtime-check.mjs",
     "container:check": "node tools/scripts/container-check.mjs",
     "contracts:generate": "openapi-typescript docs/api/openapi.yaml -o packages/api_contracts/generated.ts",
@@ -43,22 +56,23 @@
     "node": ">=22"
   },
   "dependencies": {
+    "@redis/client": "5.9.0",
     "amqplib": "2.2.0"
   },
   "devDependencies": {
+    "@redocly/cli": "2.62.1",
     "@types/node": "22.20.5",
-    "typescript": "5.9.3",
-    "node-appwrite": "29.2.0",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
-    "@redocly/cli": "2.62.1",
-    "openapi-typescript": "7.13.0",
+    "esbuild": "0.28.2",
     "eslint": "10.12.0",
-    "typescript-eslint": "8.71.1",
-    "prettier": "3.9.9",
-    "yaml": "2.9.1",
-    "mermaid": "12.1.0",
     "jsdom": "30.1.2",
-    "esbuild": "0.28.2"
+    "mermaid": "12.1.0",
+    "node-appwrite": "29.2.0",
+    "openapi-typescript": "7.13.0",
+    "prettier": "3.9.9",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.1",
+    "yaml": "2.9.1"
   }
 }

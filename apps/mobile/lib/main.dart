@@ -79,6 +79,7 @@ import 'features/auth/application/auth_controller.dart';
 import 'features/learning/domain/learning_models.dart';
 import 'core/cache/snapshot_cache.dart';
 import 'core/config/app_config.dart';
+import 'core/config/local_tls.dart';
 import 'features/session/application/real_learning_session.dart';
 import 'features/session/presentation/real_connection_screen.dart';
 import 'features/placement/presentation/placement_screens.dart';
@@ -90,6 +91,7 @@ import 'features/super_features/presentation/super_features_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  configureLocalDevelopmentTls();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
