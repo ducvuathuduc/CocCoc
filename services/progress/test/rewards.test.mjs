@@ -197,7 +197,10 @@ test('zone history remains correct for late events after more than 50 changes an
   ]) {
     await h.deliver(lessonEvent({ occurredAt }, { completionId, userId: 'alice' }));
   }
-  const actual = h.store.dump('p_day_activity').map(({ row }) => [row.day, row.zone]).sort();
+  const actual = h.store
+    .dump('p_day_activity')
+    .map(({ row }) => [row.day, row.zone])
+    .sort();
   assert.deepEqual(actual, [
     ['2026-07-31', 'UTC'],
     ['2026-08-01', 'Asia/Ho_Chi_Minh'],
@@ -210,7 +213,12 @@ test('Appwrite adapter receives a UTC indexed upper bound and preserves the exac
   const calls = [];
   const rows = [
     { $id: 'epoch', userId: 'alice', zone: 'UTC', effectiveAt: '1970-01-01T00:00:00.000Z' },
-    { $id: 'change', userId: 'alice', zone: 'Asia/Ho_Chi_Minh', effectiveAt: '2026-08-01T07:00:00+07:00' },
+    {
+      $id: 'change',
+      userId: 'alice',
+      zone: 'Asia/Ho_Chi_Minh',
+      effectiveAt: '2026-08-01T07:00:00+07:00',
+    },
     { $id: 'other', userId: 'bob', zone: 'Europe/Paris', effectiveAt: '2026-07-30T00:00:00.000Z' },
   ];
   const tables = {
@@ -218,16 +226,25 @@ test('Appwrite adapter receives a UTC indexed upper bound and preserves the exac
       assert.equal(tableId, 'p_zone_history');
       const parsed = queries.map((query) => JSON.parse(query));
       calls.push(parsed);
-      const owner = parsed.find((query) => query.method === 'equal' && query.attribute === 'userId').values[0];
-      const upper = parsed.find((query) => query.method === 'lessThan' && query.attribute === 'effectiveAt').values[0];
+      const owner = parsed.find((query) => query.method === 'equal' && query.attribute === 'userId')
+        .values[0];
+      const upper = parsed.find(
+        (query) => query.method === 'lessThan' && query.attribute === 'effectiveAt',
+      ).values[0];
       const limit = parsed.find((query) => query.method === 'limit').values[0];
-      const selected = rows.filter((row) => row.userId === owner && Date.parse(row.effectiveAt) < Date.parse(upper))
-        .sort((a, b) => Date.parse(b.effectiveAt) - Date.parse(a.effectiveAt)).slice(0, limit);
+      const selected = rows
+        .filter((row) => row.userId === owner && Date.parse(row.effectiveAt) < Date.parse(upper))
+        .sort((a, b) => Date.parse(b.effectiveAt) - Date.parse(a.effectiveAt))
+        .slice(0, limit);
       return { rows: selected, total: selected.length };
     },
   };
   const store = h.kit.createAppwriteProgressPersistence({
-    endpoint: 'https://appwrite.invalid/v1', projectId: 'test', apiKey: 'test-key', admitted: false, tables,
+    endpoint: 'https://appwrite.invalid/v1',
+    projectId: 'test',
+    apiKey: 'test-key',
+    admitted: false,
+    tables,
   });
   const zone = (instant) => store.transact((tx) => h.kit.zoneAt(tx, 'alice', instant));
   assert.equal(await zone('2026-07-31T23:59:59.999Z'), 'UTC');
@@ -235,7 +252,11 @@ test('Appwrite adapter receives a UTC indexed upper bound and preserves the exac
   assert.equal(await zone('2026-08-01T00:00:00.000Z'), 'Asia/Ho_Chi_Minh');
   assert.equal(calls[0].find((q) => q.method === 'lessThan').values[0], '2026-08-01T00:00:00.000Z');
   assert.equal(calls[1].find((q) => q.method === 'lessThan').values[0], '2026-08-01T00:00:00.001Z');
-  assert.ok(calls.every((queries) => queries.some((q) => q.method === 'orderDesc' && q.attribute === 'effectiveAt')));
+  assert.ok(
+    calls.every((queries) =>
+      queries.some((q) => q.method === 'orderDesc' && q.attribute === 'effectiveAt'),
+    ),
+  );
 });
 
 test('streak: consecutive, gap resets with lost streak, late event fills gap without double counting', async () => {
