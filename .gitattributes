@@ -1,3 +1,19 @@
+# CocEnglish line-ending policy.
+#
+# Tooling parses committed documents byte-for-byte, so a CRLF working tree breaks
+# gates on Windows even though CI (Linux) stays green:
+#   - appwrite/scripts/schema-lib.mjs derives the 62-table declaration from
+#     docs/data/DATA_MODEL.md and docs/data/PERMISSIONS.md with `$`-anchored
+#     regexes; a trailing \r makes every table row fail to match.
+#   - tools/audit/endpoint-matrix.mjs and tools/blueprint/generate-dart-contracts.mjs
+#     hash generated output against the committed file.
+# The extensions below are therefore checked out with LF, matching .editorconfig.
+#
+# Deliberately NOT a blanket `* text=auto eol=lf`: some tracked blobs were
+# committed with CRLF (a few iOS asset manifests, analysis_options.yaml,
+# web/manifest.json), and a blanket rule makes every one of them show as
+# modified. Renormalizing those is a separate, explicit decision.
+
 # Generated contracts and signed content must have deterministic bytes on Windows.
 *.dart text eol=lf
 *.yaml text eol=lf
@@ -5,3 +21,27 @@
 *.json text eol=lf
 *.ts text eol=lf
 *.mjs text eol=lf
+*.md text eol=lf
+
+# Never rewrite binary assets: golden snapshots, audio, images, fonts and Rive
+# files are compared or hashed as exact bytes.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.aac binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.riv binary
+*.pdf binary
+*.zip binary
+*.jar binary
+*.keystore binary
+*.jks binary
