@@ -1,7 +1,16 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/api/api_contracts.dart' as wire;
+import '../../../core/api/client/api_endpoints.g.dart';
+import '../../../core/api/client/api_providers.dart';
+import '../../../core/config/app_config.dart';
 import '../domain/learning_models.dart';
 
+/// Display bundle for Explain My Answer: one paragraph plus example lines.
+typedef EnglishExplanation = (String, List<String>);
+
 // Authored English examples, never an AI response or an official course export.
-const englishExplanations = <String, (String, List<String>)>{
+const englishExplanations = <String, EnglishExplanation>{
   'english-01-image': (
     'Woman means người phụ nữ. A boy is a young male person; a girl is a young female person.',
     ['The woman is here.', 'The girl is here.'],
@@ -95,4 +104,87 @@ String submittedAnswer(Exercise exercise, LessonState state) {
             id,
       )
       .join(' ');
+}
+
+/// The inputs that identify one Explain My Answer request. Equality is by the
+/// real exercise id, lesson node and submitted answer, so provider rebuilds do
+/// not refetch while the same feedback stays on screen.
+final class ExplanationRequest {
+  const ExplanationRequest({
+    required this.exercise,
+    required this.nodeId,
+    required this.answer,
+  });
+
+  final Exercise exercise;
+  final String nodeId;
+  final String answer;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ExplanationRequest &&
+          other.exercise.id == exercise.id &&
+          other.nodeId == nodeId &&
+          other.answer == answer;
+
+  @override
+  int get hashCode => Object.hash(exercise.id, nodeId, answer);
+}
+
+/// Server-backed Explain My Answer: `POST /v1/tutor` with the exercise id from
+/// the published lesson bundle. Used only in API mode; mock continues to read
+/// the authored [englishExplanations] map synchronously.
+final exerciseExplanationProvider = FutureProvider.autoDispose
+    .family<EnglishExplanation?, ExplanationRequest>((ref, request) async {
+      final authored = englishExplanations[request.exercise.id];
+      if (!ref.watch(appConfigProvider).isApi) return authored;
+      final api = ref.watch(apiEndpointsProvider);
+      final learnerText = request.answer.trim().isEmpty
+          ? request.exercise.prompt
+          : request.answer;
+      try {
+        final result = await api.tutorFeedback(
+          wire.TutorRequest(
+            requestId: api.client.ids.next(),
+            exerciseId: switch (_wireId(request.exercise.id)) {
+              final id? => wire.JsonPresence<String>.value(id),
+              null => const wire.JsonPresence<String>.absent(),
+            },
+            learnerText: learnerText.length > 512
+                ? learnerText.substring(0, 512)
+                : learnerText,
+            level: 'A1',
+            locale: 'en-US',
+            feedbackLocale: 'vi-VN',
+          ),
+        );
+        return explanationFromTutor(result) ?? authored;
+      } catch (_) {
+        // The authored fallback keeps the screen useful when the tutor is
+        // unreachable; unknown server exercises keep the existing
+        // "unavailable" state rather than inventing an explanation.
+        return authored;
+      }
+    });
+
+EnglishExplanation? explanationFromTutor(wire.TutorResult result) {
+  final explanation = result.explanation.trim();
+  final tutor = result.tutorText.trim();
+  if (explanation.isEmpty && tutor.isEmpty) return null;
+  return (
+    explanation.isEmpty ? tutor : explanation,
+    List<String>.unmodifiable([
+      if (tutor.isNotEmpty && tutor != explanation) tutor,
+    ]),
+  );
+}
+
+final _invalidId = RegExp(r'[^A-Za-z0-9_.-]');
+
+String? _wireId(String id) {
+  var value = id.replaceAll(_invalidId, '_');
+  if (value.isEmpty) return null;
+  if (!RegExp(r'^[A-Za-z0-9]').hasMatch(value)) value = 'x$value';
+  return value.length > 36 ? value.substring(0, 36) : value;
 }

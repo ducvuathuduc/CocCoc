@@ -9,7 +9,14 @@ import 'api_gift_repository.dart';
 /// a store-backed implementation can override [giftRepositoryProvider].
 abstract class GiftRepository {
   List<GiftPlan> get plans;
+
+  /// Recipients known right now: demo fixtures in mock mode, the last
+  /// successful [loadFriends] in API mode. Never demo ids in API mode, because
+  /// `POST /v1/gifts` validates `recipientUserId` against real profiles.
   List<GiftRecipient> get friends;
+
+  /// Refreshes recipients from the learner's friends (`GET /v1/friends`).
+  Future<List<GiftRecipient>> loadFriends();
   List<GiftFaq> get faqs;
   List<GiftOrder> get sentGifts;
   Future<GiftOrder> purchase({
@@ -17,6 +24,9 @@ abstract class GiftRepository {
     required GiftRecipient recipient,
     required String note,
   });
+
+  /// Collects a received gift (`POST /v1/gifts/{giftId}/redeem`).
+  Future<GiftRedemption> redeemGift(String giftId);
 }
 
 class MockGiftRepository implements GiftRepository {
@@ -69,6 +79,19 @@ class MockGiftRepository implements GiftRepository {
 
   @override
   List<GiftOrder> get sentGifts => List.unmodifiable(_sent);
+
+  /// Demo fixtures only; the mock never touches the network.
+  @override
+  Future<List<GiftRecipient>> loadFriends() async => friends;
+
+  @override
+  Future<GiftRedemption> redeemGift(String giftId) async {
+    if (latency > Duration.zero) await Future<void>.delayed(latency);
+    return GiftRedemption(
+      giftId: giftId,
+      plan: plans.first.name.toUpperCase(),
+    );
+  }
 
   @override
   Future<GiftOrder> purchase({

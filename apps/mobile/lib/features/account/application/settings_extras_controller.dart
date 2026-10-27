@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/api_exception.dart';
@@ -49,11 +51,22 @@ class SettingsExtrasController extends Notifier<SettingsExtrasState> {
 
   @override
   SettingsExtrasState build() {
+    final repository = ref.watch(settingsRepositoryProvider);
     _revision++;
     _socialInFlight = false;
-    return SettingsExtrasState(
-      connected: ref.watch(settingsRepositoryProvider).connectedSocial,
-    );
+    unawaited(_loadSocial(repository, _revision));
+    return SettingsExtrasState(connected: repository.connectedSocial);
+  }
+
+  /// Reads the linked providers without blanking the switches on failure.
+  Future<void> _loadSocial(SettingsRepository repository, int revision) async {
+    try {
+      final connected = await repository.loadSocialConnections();
+      if (!ref.mounted || revision != _revision || _socialInFlight) return;
+      state = state.copyWith(connected: connected);
+    } on Object {
+      // The seeded snapshot stays; a toggle reports its own error.
+    }
   }
 
   Future<bool> joinClassroom(String code) async {

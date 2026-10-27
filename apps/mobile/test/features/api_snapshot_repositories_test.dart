@@ -375,6 +375,44 @@ void main() {
     expect(list.first.goal, 7, reason: 'next streak tier after 3');
     expect(list.last.progress, 5, reason: 'earned first lessons tier');
     expect(list.last.goal, 20);
+    expect(
+      repo.loadMonthlyBadges(),
+      isEmpty,
+      reason: 'no monthly ids means no badges, never archived fixtures',
+    );
+  });
+
+  test('ApiAchievementsRepository maps monthly_YYYY_MM badges', () async {
+    transport
+      ..json(
+        'GET /base/v1/me',
+        profile(
+          achievements: [
+            'streak',
+            'monthly_2026_10',
+            'monthly_2025_12',
+            'monthly_2026_02',
+            'monthly_2024_03',
+            'monthly_2026_13',
+            'monthly_badges',
+          ],
+        ),
+      )
+      ..json('GET /base/v1/me/rewards', rewards(streak: 4));
+    final repo = ApiAchievementsRepository(api);
+    expect(repo.loadMonthlyBadges(), isEmpty, reason: 'empty before load');
+    await repo.refresh();
+    final badges = repo.loadMonthlyBadges();
+    expect(badges.map((b) => '${b.year} ${b.month}'), [
+      '2024 March',
+      '2025 December',
+      '2026 February',
+      '2026 October',
+    ], reason: 'chronological, malformed ids ignored');
+    expect(badges.every((b) => b.earned), isTrue);
+    expect(badges.first.art.file, 'achievement-monthly-history');
+    expect(badges.last.art.file, 'achievement-monthly-2025');
+    expect(badges.last.art.source.width, greaterThan(0));
   });
 
   test(

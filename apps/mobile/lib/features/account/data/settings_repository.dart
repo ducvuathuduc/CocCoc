@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/config/app_config.dart';
+import '../../auth/application/auth_controller.dart';
+import '../../auth/services/appwrite_auth_service.dart';
 import 'api_account_repositories.dart';
 
 /// Copy + catalog for Settings > Duolingo for Schools.
@@ -57,7 +59,13 @@ abstract interface class SettingsContent {
 }
 
 abstract class SettingsRepository implements SettingsContent {
+  /// Last known linked providers; the first frame of Settings > Social
+  /// accounts reads this before [loadSocialConnections] answers.
   Set<String> get connectedSocial;
+
+  /// Reads the providers linked to the signed-in account.
+  Future<Set<String>> loadSocialConnections();
+
   Future<ClassroomJoin> joinClassroom(String code);
   Future<void> setSocialConnected(String id, {required bool connected});
   Future<void> sendFeedback(String topic, String message);
@@ -108,6 +116,12 @@ class MockSettingsRepository extends BundledSettingsContent
   Set<String> get connectedSocial => {..._connected};
 
   @override
+  Future<Set<String>> loadSocialConnections() async {
+    await Future<void>.delayed(latency);
+    return connectedSocial;
+  }
+
+  @override
   Future<ClassroomJoin> joinClassroom(String code) async {
     await Future<void>.delayed(latency);
     final normalized = code.trim().toUpperCase();
@@ -138,11 +152,18 @@ class MockSettingsRepository extends BundledSettingsContent
 }
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
-  if (ref.watch(appConfigProvider).isApi) {
-    return ApiSettingsRepository(
-      api: ref.watch(apiEndpointsProvider),
-      content: const BundledSettingsContent(),
-    );
-  }
-  return MockSettingsRepository();
+  final config = ref.watch(appConfigProvider);
+  if (!config.isApi) return MockSettingsRepository();
+  // Identity-scoped: a different signed-in account gets a fresh repository so
+  // the cached linked providers never carry over.
+  final signedIn = ref.watch(
+    authControllerProvider.select((state) => state.user != null),
+  );
+  return ApiSettingsRepository(
+    api: ref.watch(apiEndpointsProvider),
+    content: const BundledSettingsContent(),
+    identities: config.useMockAuth || !signedIn
+        ? null
+        : AppwriteSocialIdentityGateway(ref.watch(appwriteAuthServiceProvider)),
+  );
 });

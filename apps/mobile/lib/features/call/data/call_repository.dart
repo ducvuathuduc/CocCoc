@@ -79,8 +79,10 @@ class MockCallRepository implements CallRepository {
 
 final callRepositoryProvider = Provider<CallRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return const MockCallRepository();
-  return ApiCallRepository(
+  final repository = ApiCallRepository(
     ref.watch(apiEndpointsProvider),
     ref.watch(activeCourseProvider),
   );
+  ref.onDispose(repository.dispose);
+  return repository;
 });

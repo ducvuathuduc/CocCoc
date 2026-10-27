@@ -4,6 +4,8 @@ import '../../../core/api/api_contracts.dart' as wire;
 import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_exception.dart';
 import '../../auth/data/auth_repository.dart';
+import '../../auth/domain/auth_state.dart';
+import '../../auth/services/appwrite_auth_service.dart';
 import '../domain/account_models.dart';
 import 'account_repository.dart';
 import 'settings_repository.dart';
@@ -88,23 +90,136 @@ class ApiAccountRepository implements AccountRepository {
   }
 }
 
-/// Settings writes (classroom join, feedback) against Progress; static copy
-/// and social-account toggles stay on [content] (Appwrite identities are
-/// managed by the auth surface).
+/// Identity operations Settings > Social accounts needs from Appwrite.
+///
+/// Behind an interface so the switches can be exercised without an SDK
+/// session. Implementations must never persist provider tokens.
+abstract interface class SocialIdentityGateway {
+  /// OAuth providers this build enables.
+  Set<String> get configuredProviders;
+
+  /// Providers currently linked to the signed-in account.
+  Future<Set<String>> linkedProviders();
+
+  /// Starts the OAuth2 link flow for [providerId] (user-initiated only).
+  Future<void> link(String providerId);
+
+  /// Removes the account identity linked to [providerId].
+  Future<void> unlink(String providerId);
+}
+
+/// Appwrite Account identities of the current session.
+class AppwriteSocialIdentityGateway implements SocialIdentityGateway {
+  AppwriteSocialIdentityGateway(this.service);
+
+  final AppwriteAuthService service;
+
+  static const _providers = {
+    'apple': AuthProvider.apple,
+    'facebook': AuthProvider.facebook,
+    'google': AuthProvider.google,
+  };
+
+  @override
+  Set<String> get configuredProviders => {
+    for (final provider in service.availableProviders(defaultTargetPlatform))
+      _id(provider),
+  };
+
+  @override
+  Future<Set<String>> linkedProviders() => _guard(() async {
+    final identities = await service.listIdentities();
+    return {for (final identity in identities) identity.provider};
+  });
+
+  @override
+  Future<void> link(String providerId) => _guard(() async {
+    final provider = _providers[providerId];
+    if (provider == null) throw _unsupported;
+    await service.linkProvider(provider);
+  });
+
+  @override
+  Future<void> unlink(String providerId) => _guard(() async {
+    if (!_providers.containsKey(providerId)) throw _unsupported;
+    final identities = await service.listIdentities();
+    for (final identity in identities) {
+      if (identity.provider == providerId) {
+        await service.unlinkIdentity(identity.id);
+      }
+    }
+  });
+
+  static const _unsupported = AppwriteAuthServiceException(
+    AppwriteAuthService.socialMessage,
+  );
+
+  static String _id(AuthProvider provider) => switch (provider) {
+    AuthProvider.google => 'google',
+    AuthProvider.facebook => 'facebook',
+    AuthProvider.apple => 'apple',
+  };
+
+  /// Maps SDK failures to a neutral screen message; raw details stay out.
+  Future<T> _guard<T>(Future<T> Function() run) async {
+    try {
+      return await run();
+    } on AppwriteAuthServiceException catch (error) {
+      throw ApiException(
+        code: error.message == AppwriteAuthService.configurationMessage
+            ? 'NOT_CONFIGURED'
+            : 'UNAVAILABLE',
+        message: error.message,
+      );
+    }
+  }
+}
+
+/// Settings writes (classroom join, feedback, social accounts) against
+/// Progress and Appwrite Account; static copy stays on [content].
 class ApiSettingsRepository implements SettingsRepository {
-  ApiSettingsRepository({required this.api, required this.content});
+  ApiSettingsRepository({
+    required this.api,
+    required this.content,
+    this.identities,
+  });
 
   final ApiEndpoints api;
   final SettingsContent content;
+
+  /// Linked-identity surface; null when this build has none (mock auth or no
+  /// signed-in session), so no toggle can manufacture an identity.
+  final SocialIdentityGateway? identities;
+
+  Set<String> _connected = const {};
 
   @override
   SchoolsContent get schools => content.schools;
 
   @override
-  List<SocialAccount> get socialAccounts => content.socialAccounts;
+  List<SocialAccount> get socialAccounts {
+    final gateway = identities;
+    if (gateway == null) return content.socialAccounts;
+    final configured = gateway.configuredProviders;
+    if (configured.isEmpty) return content.socialAccounts;
+    final visible = [
+      for (final account in content.socialAccounts)
+        if (configured.contains(account.id)) account,
+    ];
+    return visible.isEmpty ? content.socialAccounts : visible;
+  }
 
   @override
-  Set<String> get connectedSocial => const {};
+  Set<String> get connectedSocial => _connected;
+
+  @override
+  Future<Set<String>> loadSocialConnections() async {
+    final gateway = identities;
+    if (gateway == null) return const {};
+    final linked = Set<String>.unmodifiable(await gateway.linkedProviders());
+    _connected = linked;
+    return linked;
+  }
 
   @override
   FeedbackContent get feedback => content.feedback;
@@ -134,12 +249,26 @@ class ApiSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setSocialConnected(String id, {required bool connected}) async {
-    // Managed identity linking needs an admitted Appwrite capability. No local
-    // switch can manufacture an OAuth identity when that capability is absent.
-    throw const ApiException(
-      code: 'NOT_CONFIGURED',
-      message: 'Identity linking unavailable.',
-    );
+    final gateway = identities;
+    if (gateway == null) {
+      throw const ApiException(
+        code: 'NOT_CONFIGURED',
+        message: 'Identity linking unavailable.',
+      );
+    }
+    if (connected) {
+      await gateway.link(id);
+      _connected = {..._connected, id};
+    } else {
+      await gateway.unlink(id);
+      _connected = {..._connected}..remove(id);
+    }
+    try {
+      await loadSocialConnections();
+    } on Object {
+      // The link change already succeeded; keep the switch state and let the
+      // next visit re-read the authoritative identities.
+    }
   }
 
   @override

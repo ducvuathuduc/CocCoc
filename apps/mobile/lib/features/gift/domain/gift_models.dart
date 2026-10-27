@@ -27,6 +27,21 @@ class GiftFaq {
   final String question, answer;
 }
 
+/// Outcome of collecting a gift that was sent to this learner
+/// (`POST /v1/gifts/{giftId}/redeem` → Entitlement).
+class GiftRedemption {
+  const GiftRedemption({
+    required this.giftId,
+    required this.plan,
+    this.expiresAt,
+  });
+  final String giftId;
+
+  /// `SUPER` or `MAX`, as granted by the server.
+  final String plan;
+  final DateTime? expiresAt;
+}
+
 class GiftOrder {
   const GiftOrder({
     required this.id,

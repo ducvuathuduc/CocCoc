@@ -131,6 +131,7 @@ class RoleplayLiveSession {
     required this.conversationId,
     required this.cardId,
     required this.serverScenarioId,
+    this.voiceSessionId,
   });
   final String conversationId;
 
@@ -139,6 +140,10 @@ class RoleplayLiveSession {
 
   /// Server scenario the conversation runs on.
   final String serverScenarioId;
+
+  /// TURN voice session opened for this run, when speech is enabled. Null for
+  /// the text-only roleplay flow.
+  final String? voiceSessionId;
 }
 
 /// The server's answer to one learner turn.

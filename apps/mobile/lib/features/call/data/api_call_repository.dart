@@ -10,6 +10,7 @@ import '../../../core/api/client/api_exception.dart';
 import '../../roleplay/domain/server_scenarios.dart';
 import '../domain/call_models.dart';
 import 'call_repository.dart';
+import 'voice_session_heartbeat.dart';
 
 final class CallCaptureFailure implements Exception {
   const CallCaptureFailure(this.message);
@@ -23,10 +24,11 @@ final class _PendingVoiceTurn {
 }
 
 class _LiveCall {
-  _LiveCall(this.voiceSessionId, this.epoch, this.steps);
+  _LiveCall(this.voiceSessionId, this.epoch, this.steps, this.heartbeat);
   final String voiceSessionId;
   final int epoch;
   final int steps;
+  final VoiceSessionHeartbeat heartbeat;
   int spoken = 0;
 }
 
@@ -42,10 +44,18 @@ class ApiCallRepository implements CallRepository, CallTurns {
     this.api,
     this.course, {
     this.content = const MockCallRepository(),
+    this.heartbeatInterval = const Duration(seconds: 10),
+    this.clock,
   });
 
   final ApiEndpoints api;
   final ActiveCourse course;
+
+  /// How often an open voice session reports advisory telemetry.
+  final Duration heartbeatInterval;
+
+  /// Injectable clock for elapsed-second telemetry (and tests).
+  final DateTime Function()? clock;
 
   /// Bundled call presentation (partner, copy, timing), not user data.
   final CallRepository content;
@@ -101,6 +111,12 @@ class ApiCallRepository implements CallRepository, CallTurns {
       voiceSessionId,
       epoch,
       server.steps.length,
+      VoiceSessionHeartbeat(
+        beat: (body) => api.heartbeatVoiceSession(voiceSessionId, body),
+        epoch: epoch,
+        interval: heartbeatInterval,
+        clock: clock,
+      )..start(),
     );
     return preview
         .withScript(scriptFor(server))
@@ -150,6 +166,7 @@ class ApiCallRepository implements CallRepository, CallTurns {
     );
     _pendingTurns.remove(key);
     live.spoken++;
+    live.heartbeat.countTurn();
     return CallTurnResult(
       transcript: result.transcript,
       reply: result.tutor.tutorText,
@@ -159,6 +176,7 @@ class ApiCallRepository implements CallRepository, CallTurns {
   @override
   Future<void> completeCall(String sessionId, int linesSpoken) async {
     final live = _live.remove(sessionId);
+    live?.heartbeat.stop();
     _pendingTurns.removeWhere((key, _) => key.$1 == sessionId);
     final finished = live != null && live.spoken >= live.steps;
     Future<void> end(String reason) => api.completeConversation(
@@ -171,7 +189,18 @@ class ApiCallRepository implements CallRepository, CallTurns {
       // Server still has steps left: close the run as an exit instead.
       if (e.code != 'SESSION_INCOMPLETE') rethrow;
       await end('USER_EXIT');
+    } finally {
+      if (live != null) await _closeVoice(live.voiceSessionId);
     }
+  }
+
+  /// Stops every heartbeat when the repository is torn down; the server still
+  /// expires unclosed leases, so no client timer is authority for budget.
+  void dispose() {
+    for (final live in _live.values) {
+      live.heartbeat.stop();
+    }
+    _live.clear();
   }
 
   static bool _isCapturedWav(Uint8List wav) {

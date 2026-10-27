@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support/fake_api_transport.dart';
 
 void main() {
-  test('unconnected API social link cannot toggle fixture identity', () async {
+  test('API social link without an identity surface cannot toggle', () async {
     final content = MockSettingsRepository(latency: Duration.zero);
     final repository = ApiSettingsRepository(
       api: ApiEndpoints(fakeClient(FakeApiTransport())),
@@ -23,7 +23,10 @@ void main() {
         .setSocial('google', true);
     expect(content.connectedSocial, isEmpty);
     expect(container.read(settingsExtrasControllerProvider).connected, isEmpty);
-    expect(container.read(settingsExtrasControllerProvider).error, isNotNull);
+    expect(
+      container.read(settingsExtrasControllerProvider).error,
+      'This feature isn’t connected yet.',
+    );
   });
 
   test(

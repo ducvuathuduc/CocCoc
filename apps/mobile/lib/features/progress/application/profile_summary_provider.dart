@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/app_config.dart';
+import '../data/social_repository.dart';
 import '../domain/profile_summary.dart';
 
 const _sampleProfileSummaries = <String, ProfileSummary>{
@@ -104,6 +106,34 @@ const _sampleProfileSummaries = <String, ProfileSummary>{
   ),
 };
 
-final profileSummaryProvider = Provider.family<ProfileSummary?, String>(
-  (_, userId) => _sampleProfileSummaries[userId],
-);
+/// Server public profile; mock mode and failures keep the authored fixture.
+final publicProfileProvider = FutureProvider.family<SocialProfile?, String>((
+  ref,
+  userId,
+) async {
+  if (!ref.watch(appConfigProvider).isApi) return null;
+  return ref.watch(socialRepositoryProvider).publicProfile(userId);
+});
+
+final profileSummaryProvider = Provider.family<ProfileSummary?, String>((
+  ref,
+  userId,
+) {
+  final fixture = _sampleProfileSummaries[userId];
+  final profile = ref.watch(publicProfileProvider(userId)).asData?.value;
+  if (profile == null) return fixture;
+  return ProfileSummary(
+    userId: profile.userId,
+    name: profile.nickname,
+    username: profile.nickname.toLowerCase().replaceAll(RegExp(r'\s+'), ''),
+    joinedYear: fixture?.joinedYear ?? DateTime.now().year,
+    xp: profile.studyXp,
+    followingCount: fixture?.followingCount ?? 0,
+    streak: profile.streak,
+    league: fixture?.league ?? 'Bronze',
+    completedLessons: fixture?.completedLessons ?? 0,
+    followersCount: fixture?.followersCount ?? 0,
+    topThreeFinishes: fixture?.topThreeFinishes ?? 0,
+    leagueWeek: fixture?.leagueWeek ?? 1,
+  );
+});

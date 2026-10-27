@@ -38,6 +38,7 @@ import 'features/results/application/results_providers.dart';
 import 'features/results/presentation/results_extra_screens.dart';
 import 'features/learning/presentation/session_entry.dart';
 import 'features/progress/presentation/hub_screens.dart';
+import 'features/profile/presentation/friends_screen.dart' as profile_friends;
 import 'features/shop/presentation/shop_screen.dart';
 import 'features/xp_boost/presentation/xp_boost_activated_screen.dart';
 import 'features/progress/presentation/learning_shell.dart';
@@ -653,7 +654,7 @@ class _AppState extends ConsumerState<_App> with WidgetsBindingObserver {
         ),
         GoRoute(
           path: '/friends',
-          builder: (context, state) => const FriendsScreen(),
+          builder: (context, state) => const profile_friends.FriendsScreen(),
         ),
         GoRoute(
           path: '/activity',

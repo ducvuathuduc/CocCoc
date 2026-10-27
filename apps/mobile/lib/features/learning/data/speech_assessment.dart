@@ -8,6 +8,7 @@ import '../../../core/api/api_contracts.dart' as wire;
 import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/config/app_config.dart';
+import '../../call/data/ai_capabilities.dart';
 
 /// One phoneme returned by the dedicated scorer; missing metrics stay null.
 class SpokenPhoneme {
@@ -141,10 +142,26 @@ abstract class SpeechAssessor {
   });
 }
 
-/// `POST /v1/assessment-jobs` on the AI service (synchronous result).
+/// `POST /v1/assessment-jobs` on the AI service, then `GET
+/// /v1/assessment-jobs/{jobId}` until the job reaches a terminal state or
+/// `expiresAt`. Assessment is asynchronous: a QUEUED/RUNNING job carries no
+/// numeric metrics, so the verdict stays nullable until the owner endpoint
+/// returns a terminal assessment.
 class ApiSpeechAssessor implements SpeechAssessor {
-  ApiSpeechAssessor(this.api);
+  ApiSpeechAssessor(
+    this.api, {
+    this.pollInterval = const Duration(milliseconds: 500),
+    this.maxWait = const Duration(seconds: 30),
+    DateTime Function()? now,
+    Future<void> Function(Duration delay)? sleep,
+  }) : now = now ?? DateTime.now,
+       sleep = sleep ?? Future<void>.delayed;
+
   final ApiEndpoints api;
+  final Duration pollInterval;
+  final Duration maxWait;
+  final DateTime Function() now;
+  final Future<void> Function(Duration delay) sleep;
 
   static final _id = RegExp(r'[^A-Za-z0-9_.-]');
 
@@ -160,7 +177,7 @@ class ApiSpeechAssessor implements SpeechAssessor {
     final reference = referenceText.length > 300
         ? referenceText.substring(0, 300)
         : referenceText;
-    final result = await api.createAssessment(
+    final created = await api.createAssessment(
       wire.AssessmentRequest(
         jobId: api.client.ids.next(),
         referenceExerciseId: ref,
@@ -172,12 +189,54 @@ class ApiSpeechAssessor implements SpeechAssessor {
       ),
       idempotencyKey: api.client.ids.next(),
     );
-    return verdictFrom(result, reference);
+    return verdictFrom(await _awaitTerminal(created), reference);
   }
+
+  /// Polls the owner endpoint for a queued/running job. A transport failure or
+  /// expiry returns the last known assessment (unscored), never a fabricated
+  /// score and never an infinite loop.
+  Future<wire.Assessment> _awaitTerminal(wire.Assessment first) async {
+    var current = first;
+    final deadline = now().add(maxWait);
+    final maxAttempts = pollInterval <= Duration.zero
+        ? 1
+        : (maxWait.inMicroseconds / pollInterval.inMicroseconds)
+              .ceil()
+              .clamp(1, 200)
+              .toInt();
+    for (var attempt = 0; attempt < maxAttempts; attempt++) {
+      if (!_pending(current)) return current;
+      final expires = DateTime.tryParse(current.expiresAt);
+      final stopAt = expires != null && expires.isBefore(deadline)
+          ? expires
+          : deadline;
+      if (!now().isBefore(stopAt)) return current;
+      try {
+        await sleep(pollInterval);
+      } catch (_) {
+        return current;
+      }
+      if (!now().isBefore(stopAt)) return current;
+      try {
+        current = await api.getAssessment(current.jobId);
+      } catch (_) {
+        return current;
+      }
+    }
+    return current;
+  }
+
+  static bool _pending(wire.Assessment a) =>
+      a.status == 'QUEUED' || a.status == 'RUNNING';
 }
 
 /// Null in mock/offline mode: speaking exercises then keep the typed fallback.
+/// In API mode the assessor exists only when the server's capability manifest
+/// reports pronunciation enabled; a disabled or unreachable manifest fails
+/// closed instead of enabling a provider locally.
 final speechAssessorProvider = Provider<SpeechAssessor?>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return null;
+  final caps = ref.watch(aiCapabilitiesProvider);
+  if (caps.asData?.value?.pronunciation != true) return null;
   return ApiSpeechAssessor(ref.watch(apiEndpointsProvider));
 });

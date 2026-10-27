@@ -4,6 +4,7 @@ import '../../../core/api/client/active_course.dart';
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/cache/snapshot_cache.dart';
 import '../../../core/config/app_config.dart';
+import '../../call/data/ai_capabilities.dart';
 import '../../practice/data/journey_repository.dart' show englishRoleplay;
 import '../domain/roleplay_models.dart';
 import 'api_roleplay_repository.dart';
@@ -434,9 +435,12 @@ final roleplayRepositoryProvider = Provider<RoleplayRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) {
     return const MockRoleplayRepository();
   }
-  return ApiRoleplayRepository(
+  final repository = ApiRoleplayRepository(
     ref.watch(apiEndpointsProvider),
     ref.watch(activeCourseProvider),
     host: SnapshotHost.of(ref, 'roleplay'),
+    capabilities: () => ref.read(aiCapabilitiesProvider.future),
   );
+  ref.onDispose(repository.dispose);
+  return repository;
 });

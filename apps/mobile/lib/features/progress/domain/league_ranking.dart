@@ -1,3 +1,5 @@
+import 'league_result.dart';
+
 class LeagueRankingEntry {
   const LeagueRankingEntry({
     required this.userId,
@@ -15,8 +17,12 @@ class LeagueRankingEntry {
 }
 
 class LeagueRanking {
-  LeagueRanking({required List<LeagueRankingEntry> entries})
+  LeagueRanking({required List<LeagueRankingEntry> entries, this.tier})
     : entries = List.unmodifiable(entries);
 
   final List<LeagueRankingEntry> entries;
+
+  /// Server tier when known; null for the local preview league.
+  final LeagueTier? tier;
 }
+

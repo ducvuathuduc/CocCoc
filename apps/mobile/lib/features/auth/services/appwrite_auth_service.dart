@@ -13,6 +13,17 @@ class AppwriteAuthServiceException implements Exception {
   final String message;
 }
 
+/// One sign-in identity linked to the signed-in account.
+///
+/// Only the identity id and provider name leave the service; the SDK's
+/// provider access/refresh tokens are never copied, stored or logged.
+class LinkedIdentity {
+  const LinkedIdentity({required this.id, required this.provider});
+
+  final String id;
+  final String provider;
+}
+
 class AppwriteAuthService {
   AppwriteAuthService._({
     required this._account,
@@ -257,6 +268,49 @@ class AppwriteAuthService {
       return _toAuthUser(await account.get());
     } on Object {
       throw const AppwriteAuthServiceException(socialMessage);
+    }
+  }
+
+  /// Lists the OAuth identities linked to the current account.
+  Future<List<LinkedIdentity>> listIdentities() async {
+    final account = _configuredAccount();
+    try {
+      final result = await account.listIdentities();
+      return [
+        for (final identity in result.identities)
+          LinkedIdentity(id: identity.$id, provider: identity.provider),
+      ];
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  /// Links [provider] to the signed-in account through Appwrite's OAuth2 flow.
+  ///
+  /// Only call from an explicit user action: the SDK opens the provider's
+  /// consent page and returns after the redirect.
+  Future<void> linkProvider(AuthProvider provider) async {
+    final account = _configuredAccount();
+    if (!availableProviders(defaultTargetPlatform).contains(provider)) {
+      throw const AppwriteAuthServiceException(socialMessage);
+    }
+    try {
+      await account.createOAuth2Session(provider: _provider(provider));
+    } on Object {
+      throw const AppwriteAuthServiceException(socialMessage);
+    }
+  }
+
+  /// Deletes a linked identity by id; Appwrite refuses to remove the last one.
+  Future<void> unlinkIdentity(String identityId) async {
+    final account = _configuredAccount();
+    if (identityId.trim().isEmpty) {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+    try {
+      await account.deleteIdentity(identityId: identityId);
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
     }
   }
 

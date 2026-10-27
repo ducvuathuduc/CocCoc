@@ -1,3 +1,9 @@
+import 'dart:async';
+
+import '../../../core/api/api_contracts.dart' as wire;
+import '../../../core/api/client/api_endpoints.g.dart';
+import '../../../core/api/client/api_exception.dart';
+import '../../progress/data/progress_snapshot.dart';
 import '../domain/streak_repair.dart';
 
 abstract class StreakRepairRepository {
@@ -5,6 +11,9 @@ abstract class StreakRepairRepository {
 
   /// The repairable lost streak, or null when nothing can be repaired.
   StreakRepairOffer? loadOffer();
+
+  /// The streak length the last successful repair restored, when known.
+  int? get lastRestoredStreak;
 
   /// Repairs [offer]'s streak; false when the server refuses it.
   Future<bool> repair(
@@ -28,8 +37,11 @@ class MockStreakRepairRepository implements StreakRepairRepository {
   final bool succeed;
   final requests = <(String, StreakRepairPayment)>[];
   final _keys = <String>{};
+  int? _restoredStreak;
   @override
   StreakRepairOffer? loadOffer() => offer;
+  @override
+  int? get lastRestoredStreak => _restoredStreak;
   @override
   Future<bool> repair(
     StreakRepairOffer offer,
@@ -44,6 +56,59 @@ class MockStreakRepairRepository implements StreakRepairRepository {
     _keys.add(idempotencyKey);
     requests.add((offer.lostStreakDay, payWith));
     this.offer = null;
+    _restoredStreak = offer.lostDays;
     return true;
+  }
+}
+
+/// Server-authoritative repair over `POST /v1/me/streak-repair`.
+///
+/// The Progress service owns the lost-streak window, the price and the
+/// restored streak. There is no read endpoint for the offer yet, so the local
+/// offer (when present) only supplies the day to repair.
+class ApiStreakRepairRepository implements StreakRepairRepository {
+  ApiStreakRepairRepository(
+    this.api, {
+    this.offer,
+    ProgressSnapshotSource? source,
+    this.content = const StreakRepairContent(),
+  }) : _source = source;
+
+  final ApiEndpoints api;
+  final ProgressSnapshotSource? _source;
+  StreakRepairOffer? offer;
+  @override
+  final StreakRepairContent content;
+  int? _lastRestoredStreak;
+
+  @override
+  StreakRepairOffer? loadOffer() => offer;
+
+  @override
+  int? get lastRestoredStreak => _lastRestoredStreak;
+
+  @override
+  Future<bool> repair(
+    StreakRepairOffer offer,
+    StreakRepairPayment payWith,
+    String idempotencyKey,
+  ) async {
+    try {
+      final rewards = await api.repairStreak(
+        wire.StreakRepairRequest(
+          lostStreakDay: offer.lostStreakDay,
+          payWith: payWith == StreakRepairPayment.gems ? 'GEMS' : 'ITEM',
+        ),
+        idempotencyKey: idempotencyKey,
+      );
+      this.offer = null;
+      _lastRestoredStreak = rewards.currentStreak > 0
+          ? rewards.currentStreak
+          : null;
+      unawaited(_source?.refresh().catchError((Object _) => null));
+      return true;
+    } on ApiException {
+      return false;
+    }
   }
 }
