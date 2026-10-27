@@ -166,6 +166,35 @@ test('filters malicious SCAN results and bounds invalidation pages', async () =>
   );
 });
 
+test('invalidates all matching keys when Redis returns more than the SCAN count hint', async () => {
+  const clients = [];
+  const prefix = 'coc:test:learning:v1:pub:catalog:';
+  const store = new Map(Array.from({ length: 237 }, (_, index) => [`${prefix}r${index}`, 'old']));
+  const cache = createRedisReadCache(config, factory(clients, store));
+
+  await cache.invalidate(prefix);
+
+  assert.equal(store.size, 0);
+  const batches = clients[0].calls.filter((call) => call[0] === 'unlink');
+  assert.equal(batches.length, 3);
+  assert.ok(batches.every((call) => call[1].length <= 100));
+  await cache.close();
+});
+
+test('bounds invalidation work and exposes the limit instead of claiming full invalidation', async () => {
+  const clients = [];
+  const prefix = 'coc:test:learning:v1:pub:catalog:';
+  const store = new Map(Array.from({ length: 3201 }, (_, index) => [`${prefix}r${index}`, 'old']));
+  const cache = createRedisReadCache(config, factory(clients, store));
+
+  await cache.invalidate(prefix);
+
+  assert.equal(store.size, 1);
+  assert.equal(cache.health().reason, 'INVALIDATION_LIMIT');
+  assert.equal(clients[0].calls.filter((call) => call[0] === 'unlink').length, 32);
+  await cache.close();
+});
+
 test('fails open while down, then reconnects with a fresh client', async () => {
   const clients = [];
   const makeClient = factory(clients);

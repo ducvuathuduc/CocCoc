@@ -120,27 +120,46 @@ export interface CacheAsideOptions<T> {
  * same key in this process share one load (request coalescing).
  */
 export function createCacheAside() {
-  const inflight = new Map<string, Promise<unknown>>();
+  // A key is only meaningful within its cache instance. Coalescing across
+  // instances can return a value loaded for a different backing store.
+  const byCache = new WeakMap<ReadCache, Map<string, Promise<unknown>>>();
   return async function cacheAside<T>(options: CacheAsideOptions<T>): Promise<T> {
     const isPrivate = options.private === true;
     if (isPrivate && !options.privateAdmitted) return options.load();
     if (options.cache.kind === 'disabled') return options.load();
     const cap = isPrivate ? PRIVATE_TTL_CAP_SECONDS : PUBLIC_TTL_CAP_SECONDS;
     const ttl = Math.max(1, Math.min(Math.floor(options.ttlSeconds), cap));
-    const hit = await options.cache.get(options.key);
-    if (hit !== undefined) {
-      try {
-        return (JSON.parse(hit) as { v: T }).v;
-      } catch {
-        // Corrupt entry: ignore it and refill from the owner store.
+    try {
+      const hit = await options.cache.get(options.key);
+      if (hit !== undefined) {
+        const envelope: unknown = JSON.parse(hit);
+        if (
+          envelope !== null &&
+          typeof envelope === 'object' &&
+          !Array.isArray(envelope) &&
+          Object.hasOwn(envelope, 'v')
+        ) {
+          return (envelope as { v: T }).v;
+        }
       }
+    } catch {
+      // A cache failure or malformed entry is a miss, not an owner-read failure.
+    }
+    let inflight = byCache.get(options.cache);
+    if (!inflight) {
+      inflight = new Map<string, Promise<unknown>>();
+      byCache.set(options.cache, inflight);
     }
     const pending = inflight.get(options.key) as Promise<T> | undefined;
     if (pending) return pending;
     const loading = (async () => {
       const value = await options.load();
       if (!options.cacheable || options.cacheable(value)) {
-        await options.cache.set(options.key, JSON.stringify({ v: value }), ttl);
+        try {
+          await options.cache.set(options.key, JSON.stringify({ v: value }), ttl);
+        } catch {
+          // The owner read is authoritative even if the cache write fails.
+        }
       }
       return value;
     })();

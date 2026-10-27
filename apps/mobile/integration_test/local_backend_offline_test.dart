@@ -95,8 +95,9 @@ Future<_Runtime> _authenticate(AppConfig config) async {
   );
   try {
     final existing = await account.get();
-    if (existing.email != _email)
+    if (existing.email != _email) {
       throw StateError('LOCAL_OFFLINE_ACCOUNT_MISMATCH');
+    }
   } on AppwriteException catch (error) {
     if (error.code != 401) rethrow;
     await account.createEmailPasswordSession(

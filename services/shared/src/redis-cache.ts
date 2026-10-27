@@ -5,6 +5,7 @@ import { PUBLIC_TTL_CAP_SECONDS, type ReadCacheConfig } from './read-cache.js';
 
 const MAX_SCAN_PAGES = 32;
 const SCAN_COUNT = 100;
+const MAX_INVALIDATION_KEYS = MAX_SCAN_PAGES * SCAN_COUNT;
 const MAX_KEY_BYTES = 1024;
 const ENVIRONMENT = /^[a-z0-9-]{1,16}$/;
 const OWNER = '(?:learning|progress|ai)';
@@ -192,6 +193,7 @@ export function createRedisReadCache(
       if (!valid(prefix) || closed) return;
       try {
         let cursor = '0';
+        let removed = 0;
         for (let page = 0; page < MAX_SCAN_PAGES; page++) {
           const result = await run((active) =>
             active.scan(cursor, { MATCH: `${prefix}*`, COUNT: SCAN_COUNT }),
@@ -200,11 +202,26 @@ export function createRedisReadCache(
             ? result.keys
                 .filter((key): key is string => typeof key === 'string' && valid(key))
                 .filter((key) => key.startsWith(prefix))
-                .slice(0, SCAN_COUNT)
             : [];
-          if (keys.length > 0) await run((active) => active.unlink(keys));
+          // COUNT is a hint: Redis may return more than SCAN_COUNT keys in one
+          // page. Do not silently drop the tail; bound each command and the
+          // total work, with remaining entries expiring through their TTL.
+          const remaining = MAX_INVALIDATION_KEYS - removed;
+          const selected = keys.slice(0, remaining);
+          for (let offset = 0; offset < selected.length; offset += SCAN_COUNT) {
+            await run((active) => active.unlink(selected.slice(offset, offset + SCAN_COUNT)));
+          }
+          removed += selected.length;
           cursor = typeof result.cursor === 'string' ? result.cursor : '0';
+          if (
+            selected.length < keys.length ||
+            (removed === MAX_INVALIDATION_KEYS && cursor !== '0')
+          ) {
+            reason = 'INVALIDATION_LIMIT';
+            break;
+          }
           if (cursor === '0') break;
+          if (page === MAX_SCAN_PAGES - 1) reason = 'INVALIDATION_LIMIT';
         }
       } catch {
         // Invalidation failure expires naturally through bounded TTLs.

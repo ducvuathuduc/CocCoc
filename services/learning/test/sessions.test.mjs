@@ -493,6 +493,154 @@ test('one active session per user/course; abandon releases it; expiry frees it; 
   assert.equal(s3.status, 200, 'expired holder is replaced');
 });
 
+for (const command of ['reset', 'remove']) {
+  test(`${command} invalidates an in-progress session before it can restore deleted progress`, async () => {
+    const a = await app();
+    await enroll(a, 'learner');
+    const session = (await start(a, 'learner', 'u1n1l1')).body;
+    const revision = await playThrough(a, 'learner', session);
+    const path = (await a.call('GET', '/v1/courses/vi_en/path', { user: 'learner' })).body;
+    const operation =
+      command === 'reset'
+        ? await post(a, '/v1/enrollments/vi_en/reset', 'learner', {
+            expectedRevision: path.enrollment.revision,
+          })
+        : await a.call('DELETE', '/v1/enrollments/vi_en', {
+            user: 'learner',
+            key: randomUUID(),
+          });
+    assert.equal(operation.status, 200, JSON.stringify(operation.body));
+    const view = await a.call('GET', `/v1/sessions/${session.sessionId}`, { user: 'learner' });
+    assert.equal(view.body.status, 'ABANDONED');
+    const late = await post(a, `/v1/sessions/${session.sessionId}/complete`, 'learner', {
+      expectedRevision: revision,
+    });
+    assert.equal(late.body.error.code, 'SESSION_CONFLICT');
+    assert.equal(a.persistence.dump('l_outbox').length, 0);
+    if (command === 'reset') {
+      const fresh = await start(a, 'learner', 'u1n1l1');
+      assert.equal(fresh.status, 200, JSON.stringify(fresh.body));
+      assert.notEqual(fresh.body.sessionId, session.sessionId);
+    }
+  });
+}
+
+test('an orphaned online session cannot accept answers or earn a completion', async () => {
+  const a = await app();
+  await enroll(a, 'orphan');
+  const session = (await start(a, 'orphan', 'u1n1l1')).body;
+  const slot = a.persistence.dump('l_active_slots')[0];
+  await a.persistence.transact(async (tx) => tx.remove('l_active_slots', slot.id));
+  const answer = await post(a, `/v1/sessions/${session.sessionId}/answers`, 'orphan', {
+    exerciseId: session.bundle.exercises[0].id,
+    attemptOrdinal: 0,
+    answer: correctAnswer(session.bundle.exercises[0]),
+    assisted: false,
+    substituted: false,
+    expectedRevision: 0,
+  });
+  assert.equal(answer.body.error.code, 'SESSION_CONFLICT');
+  await enroll(a, 'orphan-completion');
+  const ready = (await start(a, 'orphan-completion', 'u1n1l1')).body;
+  const revision = await playThrough(a, 'orphan-completion', ready);
+  const readySlot = a.persistence
+    .dump('l_active_slots')
+    .find((entry) => entry.row.userId === 'orphan-completion');
+  await a.persistence.transact(async (tx) => tx.remove('l_active_slots', readySlot.id));
+  const completion = await post(
+    a,
+    `/v1/sessions/${ready.sessionId}/complete`,
+    'orphan-completion',
+    {
+      expectedRevision: revision,
+    },
+  );
+  assert.equal(completion.body.error.code, 'SESSION_CONFLICT');
+  assert.equal(a.persistence.dump('l_outbox').length, 0);
+});
+
+test('concurrent reset and completion cannot both commit against the same progress revision', async () => {
+  const a = await app();
+  await enroll(a, 'racer');
+  const session = (await start(a, 'racer', 'u1n1l1')).body;
+  const revision = await playThrough(a, 'racer', session);
+  const enrollment = (await a.call('GET', '/v1/courses/vi_en/path', { user: 'racer' })).body
+    .enrollment;
+  const [reset, completion] = await Promise.all([
+    post(a, '/v1/enrollments/vi_en/reset', 'racer', { expectedRevision: enrollment.revision }),
+    post(a, `/v1/sessions/${session.sessionId}/complete`, 'racer', { expectedRevision: revision }),
+  ]);
+  assert.equal([reset, completion].filter((response) => response.status === 200).length, 1);
+  if (reset.status === 200) {
+    assert.equal(completion.body.error.code, 'SESSION_CONFLICT');
+    assert.equal(a.persistence.dump('l_outbox').length, 0);
+    const path = (await a.call('GET', '/v1/courses/vi_en/path', { user: 'racer' })).body;
+    assert.deepEqual(path.enrollment.completedLessonIds, []);
+  } else {
+    assert.equal(reset.body.error.code, 'REVISION_CONFLICT');
+    assert.equal(a.persistence.dump('l_outbox').length, 1);
+  }
+});
+
+test('reset and session abandonment are atomic, retryable and isolated by account', async () => {
+  const a = await app();
+  await enroll(a, 'alice');
+  await enroll(a, 'bob');
+  const alice = (await start(a, 'alice', 'u1n1l1')).body;
+  const bob = (await start(a, 'bob', 'u1n1l1')).body;
+  const key = randomUUID();
+  const body = { expectedRevision: 0 };
+  a.persistence.failNextCommit = true;
+  const failed = await post(a, '/v1/enrollments/vi_en/reset', 'alice', body, key);
+  assert.equal(failed.body.error.code, 'DB_UNAVAILABLE');
+  assert.equal(
+    (await a.call('GET', `/v1/sessions/${alice.sessionId}`, { user: 'alice' })).body.status,
+    'ACTIVE',
+  );
+  assert.equal(a.persistence.dump('l_active_slots').length, 2);
+  const retried = await post(a, '/v1/enrollments/vi_en/reset', 'alice', body, key);
+  assert.equal(retried.status, 200, JSON.stringify(retried.body));
+  assert.equal(
+    (await a.call('GET', `/v1/sessions/${alice.sessionId}`, { user: 'alice' })).body.status,
+    'ABANDONED',
+  );
+  assert.equal(
+    (await a.call('GET', `/v1/sessions/${bob.sessionId}`, { user: 'bob' })).body.status,
+    'ACTIVE',
+  );
+  assert.deepEqual(
+    (await post(a, '/v1/enrollments/vi_en/reset', 'alice', body, key)).body,
+    retried.body,
+  );
+});
+
+test('session history and last feedback follow answer revisions when timestamps tie', async () => {
+  const a = await app({ nowMs: () => Date.parse('2026-10-12T08:00:00Z') });
+  await enroll(a, 'tie');
+  const session = (await start(a, 'tie', 'u1n1l1')).body;
+  const exercises = session.bundle.exercises.slice(0, 5);
+  let revision = 0;
+  for (const [index, exercise] of exercises.entries()) {
+    const result = await post(a, `/v1/sessions/${session.sessionId}/answers`, 'tie', {
+      exerciseId: exercise.id,
+      attemptOrdinal: 0,
+      answer: index === 4 ? wrongAnswer(exercise) : correctAnswer(exercise),
+      assisted: false,
+      substituted: false,
+      expectedRevision: revision,
+    });
+    assert.equal(result.status, 200, JSON.stringify(result.body));
+    revision = result.body.sessionRevision;
+  }
+  const view = await a.call('GET', `/v1/sessions/${session.sessionId}`, { user: 'tie' });
+  assert.deepEqual(
+    view.body.answerHistory.map((answer) => answer.exerciseId),
+    exercises.map((e) => e.id),
+  );
+  assert.equal(view.body.lastFeedback.exerciseId, exercises.at(-1).id);
+  assert.equal(view.body.lastFeedback.correct, false);
+});
+
 test('hint marks assisted; capability substitution grades the authored alternative', async () => {
   const a = await app();
   await enroll(a, 'hal');

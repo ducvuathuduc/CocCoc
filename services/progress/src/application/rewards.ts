@@ -184,10 +184,17 @@ export async function addLeagueXp(
   const memberId = ids.leagueMember(week, userId);
   const member = await tx.get('p_league_members', memberId);
   if (member && !member['settled'] && !member['excluded']) {
+    const previousLastXp = member['lastXpAt'];
+    // Deliveries can arrive out of order. Tie breaking uses the time at which
+    // the member most recently earned XP, not the time of the last delivery.
+    const lastXpAt =
+      typeof previousLastXp === 'string' && Date.parse(previousLastXp) > Date.parse(occurredAt)
+        ? previousLastXp
+        : occurredAt;
     tx.put('p_league_members', memberId, {
       ...editable(member),
       eligibleXp: Number(member['eligibleXp']) + leagueXp,
-      lastXpAt: occurredAt,
+      lastXpAt,
     });
   }
 }

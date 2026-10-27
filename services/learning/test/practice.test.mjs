@@ -140,6 +140,104 @@ test('words: learned vocabulary with lexicon term/translation, strength decay an
   );
 });
 
+test('word lexicon does not cache an incomplete result after a content read fails', async () => {
+  const manifest = { bundles: [{ lessonId: 'first' }, { lessonId: 'second' }] };
+  let unavailable = true;
+  const calls = [];
+  const content = {
+    async bundle(_manifest, lessonId) {
+      calls.push(lessonId);
+      if (lessonId === 'second' && unavailable) throw new Error('content temporarily unavailable');
+      return {
+        bundle: {
+          exercises: [
+            {
+              type: 'matchPairs',
+              vocabularyIds: [lessonId],
+              content: {
+                pairs: [{ left: { text: lessonId }, right: { text: `translation-${lessonId}` } }],
+              },
+            },
+          ],
+        },
+      };
+    },
+  };
+  await assert.rejects(kit.lexiconOf({ content }, manifest), /content temporarily unavailable/);
+  unavailable = false;
+  const retried = await kit.lexiconOf({ content }, manifest);
+  assert.equal(retried.get('second').translation, 'translation-second');
+  assert.deepEqual(calls, ['first', 'second', 'first', 'second']);
+  const cached = await kit.lexiconOf({ content }, manifest);
+  assert.equal(cached, retried);
+  assert.equal(calls.length, 4);
+});
+
+test('concurrent word lexicon reads share a bounded build and preserve manifest order', async () => {
+  const manifest = { bundles: Array.from({ length: 24 }, (_, i) => ({ lessonId: `lesson-${i}` })) };
+  let active = 0;
+  let maxActive = 0;
+  let calls = 0;
+  const content = {
+    async bundle(_manifest, lessonId) {
+      calls++;
+      active++;
+      maxActive = Math.max(active, maxActive);
+      await new Promise((resolve) => setTimeout(resolve, lessonId === 'lesson-0' ? 10 : 1));
+      active--;
+      return {
+        bundle: {
+          exercises: [
+            {
+              type: 'matchPairs',
+              vocabularyIds: ['shared'],
+              content: { pairs: [{ left: { text: lessonId }, right: { text: lessonId } }] },
+            },
+          ],
+        },
+      };
+    },
+  };
+  const result = await Promise.all(
+    Array.from({ length: 3 }, () => kit.lexiconOf({ content }, manifest)),
+  );
+  assert.equal(calls, 24, 'build only once for concurrent requests');
+  assert.ok(maxActive > 1 && maxActive <= 8, `bounded parallel reads, got ${maxActive}`);
+  assert.equal(result[0], result[1]);
+  assert.equal(result[0], result[2]);
+  assert.equal(result[0].get('shared').term, 'lesson-0', 'first manifest occurrence wins');
+});
+
+test('a failed shared lexicon build settles the batch before a clean retry', async () => {
+  const manifest = { bundles: Array.from({ length: 8 }, (_, i) => ({ lessonId: `l${i}` })) };
+  let active = 0;
+  let calls = 0;
+  let shouldFail = true;
+  const content = {
+    async bundle(_manifest, lessonId) {
+      active++;
+      calls++;
+      try {
+        await new Promise((resolve) => setTimeout(resolve, lessonId === 'l0' ? 1 : 10));
+        if (lessonId === 'l0' && shouldFail) throw new Error('unavailable');
+        return { bundle: { exercises: [] } };
+      } finally {
+        active--;
+      }
+    },
+  };
+  const first = await Promise.allSettled(
+    Array.from({ length: 3 }, () => kit.lexiconOf({ content }, manifest)),
+  );
+  assert.ok(first.every((result) => result.status === 'rejected'));
+  assert.equal(active, 0);
+  assert.equal(calls, 8);
+  shouldFail = false;
+  await kit.lexiconOf({ content }, manifest);
+  assert.equal(active, 0);
+  assert.equal(calls, 16);
+});
+
 test('energy: UNLIMITED by default; LIMITED regenerates lazily to capacity', async () => {
   const { a, user } = await setup();
   const e = await a.call('GET', '/v1/me/energy', { user });

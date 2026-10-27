@@ -143,38 +143,62 @@ const lexicons = new WeakMap<
   CourseManifest,
   Map<string, { term: string; translation: string | null }>
 >();
+const lexiconBuilds = new WeakMap<
+  CourseManifest,
+  Promise<Map<string, { term: string; translation: string | null }>>
+>();
+const LEXICON_BATCH_SIZE = 8;
 export async function lexiconOf(deps: LearningDeps, manifest: CourseManifest) {
   const cached = lexicons.get(manifest);
   if (cached) return cached;
+  const pending = lexiconBuilds.get(manifest);
+  if (pending) return pending;
+  const building = buildLexicon(deps, manifest);
+  lexiconBuilds.set(manifest, building);
+  try {
+    const result = await building;
+    lexicons.set(manifest, result);
+    return result;
+  } finally {
+    if (lexiconBuilds.get(manifest) === building) lexiconBuilds.delete(manifest);
+  }
+}
+
+async function buildLexicon(deps: LearningDeps, manifest: CourseManifest) {
   const map = new Map<string, { term: string; translation: string | null }>();
-  for (const index of manifest.bundles) {
-    let bundle: LessonBundle;
-    try {
-      bundle = (await deps.content.bundle(manifest, index.lessonId)).bundle;
-    } catch {
-      continue;
-    }
-    for (const exercise of bundle.exercises) {
-      const pairs = (
-        exercise.content as { pairs?: { left: { text: string }; right: { text: string } }[] }
-      ).pairs;
-      if (
-        exercise.type !== 'matchPairs' ||
-        !pairs ||
-        pairs.length !== exercise.vocabularyIds.length
-      )
-        continue;
-      exercise.vocabularyIds.forEach((vocabularyId, k) => {
-        const pair = pairs[k];
-        if (pair && !map.has(vocabularyId))
-          map.set(vocabularyId, {
-            term: pair.left.text.slice(0, 120),
-            translation: pair.right.text.slice(0, 160),
-          });
-      });
+  for (let offset = 0; offset < manifest.bundles.length; offset += LEXICON_BATCH_SIZE) {
+    const indexes = manifest.bundles.slice(offset, offset + LEXICON_BATCH_SIZE);
+    // Settle the whole batch before propagating a failure so a subsequent
+    // retry cannot overlap outstanding reads from the failed attempt.
+    const results = await Promise.allSettled(
+      indexes.map(async (index) => (await deps.content.bundle(manifest, index.lessonId)).bundle),
+    );
+    for (const result of results) if (result.status === 'rejected') throw result.reason;
+    // Retain manifest order even if I/O completes out of order: first mapping wins.
+    for (const result of results) {
+      if (result.status !== 'fulfilled') continue;
+      const bundle: LessonBundle = result.value;
+      for (const exercise of bundle.exercises) {
+        const pairs = (
+          exercise.content as { pairs?: { left: { text: string }; right: { text: string } }[] }
+        ).pairs;
+        if (
+          exercise.type !== 'matchPairs' ||
+          !pairs ||
+          pairs.length !== exercise.vocabularyIds.length
+        )
+          continue;
+        exercise.vocabularyIds.forEach((vocabularyId, k) => {
+          const pair = pairs[k];
+          if (pair && !map.has(vocabularyId))
+            map.set(vocabularyId, {
+              term: pair.left.text.slice(0, 120),
+              translation: pair.right.text.slice(0, 160),
+            });
+        });
+      }
     }
   }
-  lexicons.set(manifest, map);
   return map;
 }
 

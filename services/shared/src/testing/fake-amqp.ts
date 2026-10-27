@@ -19,6 +19,7 @@ interface StoredMessage {
   routingKey: string;
   exchange: string;
   messageId: string | undefined;
+  correlationId: string | undefined;
   persistent: boolean;
   deliveryCount: number;
   redelivered: boolean;
@@ -307,6 +308,7 @@ class FakeChannel extends EventEmitter implements AmqpConfirmChannel {
         routingKey,
         exchange,
         messageId: options['messageId'] as string | undefined,
+        correlationId: options['correlationId'] as string | undefined,
         persistent: options['persistent'] === true,
         deliveryCount: 0,
         redelivered: false,
@@ -321,6 +323,7 @@ class FakeChannel extends EventEmitter implements AmqpConfirmChannel {
           fields: { deliveryTag: 0, redelivered: false, routingKey, exchange },
           properties: {
             ...(message.messageId ? { messageId: message.messageId } : {}),
+            ...(message.correlationId ? { correlationId: message.correlationId } : {}),
             headers: {},
           },
         } satisfies AmqpMessage);

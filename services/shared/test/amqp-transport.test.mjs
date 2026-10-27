@@ -161,6 +161,84 @@ test('unroutable (consumer queue never declared) is returned, never confirmed', 
   await producer.close();
 });
 
+test('concurrent fan-out of one event identifies a returned target independently', async () => {
+  const broker = new kit.FakeAmqpBroker();
+  const ai = transport(broker, 'ai');
+  const handle = await ai.consume('ai', async () => 'ack');
+  const producer = transport(broker, 'progress');
+  const event = lessonEvent({ producer: 'progress', type: 'account.deleted.v1' });
+  const [unroutable, routed] = await Promise.all([
+    producer.publish('learning', event),
+    producer.publish('ai', event),
+  ]);
+  assert.equal(unroutable, 'returned');
+  assert.equal(routed, 'confirmed');
+  await handle.stop();
+  await ai.close();
+  await producer.close();
+});
+
+test('broker-side consumer cancellation triggers a new consumer', async () => {
+  const broker = new kit.FakeAmqpBroker();
+  const r = receiver();
+  const rc = receipts();
+  const { t, handle } = await startConsumer(broker, r, rc);
+  const cancelled = broker.consumers.find((consumer) => consumer.queue === 'coc.progress.events');
+  assert.ok(cancelled);
+  broker.removeConsumer(cancelled.tag);
+  cancelled.onMessage(null);
+  await until(
+    () => broker.consumers.some((consumer) => consumer.queue === 'coc.progress.events'),
+    'consumer restart after broker cancellation',
+    200,
+  );
+  const producer = transport(broker, 'learning');
+  const event = lessonEvent();
+  assert.equal(await producer.publish('progress', event), 'confirmed');
+  await until(() => rc.recorded.has(event.eventId), 'receipt after restart');
+  assert.equal(r.state.applied, 1);
+  await handle.stop();
+  await t.close();
+  await producer.close();
+});
+
+test('closing while a connection is pending never publishes or leaves a connection open', async () => {
+  const broker = new kit.FakeAmqpBroker();
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const producer = transport(broker, 'learning', {
+    connect: async (url) => {
+      await gate;
+      return broker.connect(url);
+    },
+  });
+  const publishing = producer.publish('progress', lessonEvent()).then(
+    () => 'resolved',
+    () => 'rejected',
+  );
+  await producer.close();
+  release();
+  assert.equal(await publishing, 'rejected');
+  assert.equal(broker.connections.size, 0);
+  assert.equal(broker.published, 0);
+  assert.deepEqual(producer.health(), { kind: 'amqp', connected: false, reason: 'CLOSED' });
+});
+
+test('a blocked connection that disconnects can reconnect after the alarm clears', async () => {
+  const broker = new kit.FakeAmqpBroker();
+  const producer = transport(broker, 'learning');
+  assert.equal(await producer.publish('progress', lessonEvent()), 'returned');
+  broker.setAlarm(true);
+  assert.equal(producer.health().reason, 'BLOCKED');
+  for (const connection of [...broker.connections]) broker.kill(connection);
+  broker.setAlarm(false);
+  assert.equal(await producer.publish('progress', lessonEvent()), 'returned');
+  assert.equal(producer.health().connected, true);
+  await producer.close();
+});
+
 test('lost confirm, broker down, closed connection and resource alarm are retries, not success', async () => {
   const broker = new kit.FakeAmqpBroker();
   const { t, handle } = await startConsumer(broker, receiver(), receipts());

@@ -1,0 +1,7 @@
+# Generated contracts and signed content must have deterministic bytes on Windows.
+*.dart text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.ts text eol=lf
+*.mjs text eol=lf

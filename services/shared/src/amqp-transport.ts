@@ -21,6 +21,7 @@
 // dead-letters it at-least-once. A connection loss requeues unacked deliveries (broker side);
 // the consumer reconnects with bounded backoff until stopped.
 import { connect as amqpConnect } from 'amqplib';
+import { randomUUID } from 'node:crypto';
 import { ServiceError } from './errors.js';
 import { signEnvelope, verifyEnvelope } from './event-envelope.js';
 import type {
@@ -60,7 +61,7 @@ export function deadQueueArguments(): Record<string, unknown> {
 export interface AmqpMessage {
   content: Buffer;
   fields: { deliveryTag: number; redelivered: boolean; routingKey: string; exchange: string };
-  properties: { messageId?: string; headers?: Record<string, unknown> };
+  properties: { messageId?: string; correlationId?: string; headers?: Record<string, unknown> };
 }
 export interface AmqpChannel {
   on(event: 'close', listener: () => void): unknown;
@@ -150,11 +151,13 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
   let blocked = false;
   let lastError: string | undefined;
   const returned = new Set<string>();
+  const pendingCorrelations = new Set<string>();
   const pendingPublishes = new Set<(error: Error) => void>();
   const consumers = new Set<() => Promise<void>>();
 
   const dropConnection = (reason: string) => {
     lastError = reason;
+    blocked = false;
     connection = undefined;
     connecting = undefined;
     publisher = undefined;
@@ -167,14 +170,18 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
       try {
         const conn = await connectFn(options.url);
         conn.on('error', () => undefined); // 'close' follows; the error message may hold the URL
+        if (closed) {
+          await conn.close().catch(() => undefined);
+          throw new ServiceError('SERVICE_NOT_CONFIGURED', { details: { reason: 'AMQP_CLOSED' } });
+        }
         conn.on('close', () => {
           if (connection === conn) dropConnection('CONNECTION_CLOSED');
         });
         conn.on('blocked', () => {
-          blocked = true;
+          if (connection === conn) blocked = true;
         });
         conn.on('unblocked', () => {
-          blocked = false;
+          if (connection === conn) blocked = false;
         });
         connection = conn;
         lastError = undefined;
@@ -201,7 +208,8 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
           for (const fail of [...pendingPublishes]) fail(lost);
         });
         channel.on('return', (message) => {
-          if (message.properties.messageId) returned.add(message.properties.messageId);
+          const correlationId = message.properties.correlationId;
+          if (correlationId && pendingCorrelations.has(correlationId)) returned.add(correlationId);
         });
         await channel.assertExchange(EXCHANGE, 'topic', { durable: true });
         await channel.assertExchange(DEAD_LETTER_EXCHANGE, 'topic', { durable: true });
@@ -222,7 +230,9 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
     }
     const content = signEnvelope(options.signingKey, event);
     const channel = await getPublisher();
-    returned.delete(event.eventId);
+    // messageId remains the stable business event ID. A separate per-publish
+    // correlation ID distinguishes concurrent fan-out and retry attempts.
+    const correlationId = randomUUID();
     return new Promise<PublishOutcome>((resolve, reject) => {
       let settled = false;
       const finish = (outcome: PublishOutcome | Error) => {
@@ -230,10 +240,13 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
         settled = true;
         clearTimeout(timer);
         pendingPublishes.delete(finish);
+        pendingCorrelations.delete(correlationId);
+        returned.delete(correlationId);
         if (outcome instanceof Error) reject(outcome);
         else resolve(outcome);
       };
       pendingPublishes.add(finish);
+      pendingCorrelations.add(correlationId);
       const timer = setTimeout(
         () =>
           finish(new ServiceError('DEADLINE_EXCEEDED', { details: { reason: 'AMQP_CONFIRM' } })),
@@ -248,6 +261,7 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
             persistent: true,
             mandatory: true,
             messageId: event.eventId,
+            correlationId,
             type: event.type,
             appId: options.service,
             contentType: 'application/json',
@@ -255,7 +269,7 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
           (err) => {
             if (err) return finish('nacked');
             // basic.return precedes basic.ack for an unroutable mandatory message.
-            const wasReturned = returned.delete(event.eventId);
+            const wasReturned = returned.has(correlationId);
             finish(wasReturned ? 'returned' : 'confirmed');
           },
         );
@@ -343,7 +357,19 @@ export function createAmqpEventTransport(options: AmqpTransportOptions): EventTr
         const { consumerTag } = await channel.consume(
           queueFor(owner),
           (message) => {
-            if (!message) return; // consumer cancelled by the broker; 'close' handles restart
+            if (!message) {
+              // Server-side cancellation does not necessarily close the
+              // channel. Close it to release outstanding deliveries and restart
+              // this owner rather than silently leaving its queue unattended.
+              void channel
+                .close()
+                .catch(() => undefined)
+                .finally(() => {
+                  if (current?.channel === channel) current = undefined;
+                  if (!stopping && !closed) scheduleRestart();
+                });
+              return;
+            }
             const task = handle(channel, message).finally(() => inflight.delete(task));
             inflight.add(task);
           },

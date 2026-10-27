@@ -132,6 +132,56 @@ test('read cache is disabled by default and when Redis is half configured', asyn
   assert.equal(cache.health().connected, false);
 });
 
+test('cache-aside falls back to the owner for malformed envelopes and cache failures', async () => {
+  const read = kit.createCacheAside();
+  let loads = 0;
+  const cache = {
+    kind: 'redis',
+    get: async () => '{}',
+    set: async () => {
+      throw new Error('cache write failed');
+    },
+  };
+  const options = {
+    cache,
+    key: 'coc:test:learning:v1:pub:catalog:r1',
+    ttlSeconds: 30,
+    load: async () => {
+      loads++;
+      return { lessons: 2 };
+    },
+  };
+  assert.deepEqual(await read(options), { lessons: 2 });
+  assert.equal(loads, 1);
+  cache.get = async () => {
+    throw new Error('cache read failed');
+  };
+  assert.deepEqual(await read(options), { lessons: 2 });
+  assert.equal(loads, 2);
+});
+
+test('cache-aside never coalesces requests across different cache instances', async () => {
+  const read = kit.createCacheAside();
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const cache = () => ({ kind: 'redis', get: async () => undefined, set: async () => undefined });
+  const first = read({
+    cache: cache(),
+    key: 'same',
+    ttlSeconds: 10,
+    load: async () => {
+      await gate;
+      return 'one';
+    },
+  });
+  const second = read({ cache: cache(), key: 'same', ttlSeconds: 10, load: async () => 'two' });
+  await new Promise((resolve) => setImmediate(resolve));
+  release();
+  assert.deepEqual(await Promise.all([first, second]), ['one', 'two']);
+});
+
 test('hosted bundles contain no fake broker or memory cache code', () => {
   for (const service of ['learning', 'progress', 'ai']) {
     for (const entry of ['function', 'http', 'worker']) {

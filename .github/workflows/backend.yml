@@ -1,9 +1,9 @@
 name: Backend foundation
 on:
   pull_request:
-    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'tools/scripts/local-*.mjs', 'tools/scripts/local-*.sh', 'tools/tests/local-*.test.mjs', 'infra/docker/**', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+    paths: ['services/**', 'packages/**', 'appwrite/**', 'content/**', 'tools/audit/**', 'tools/blueprint/**', 'tools/evals/**', 'tools/toolchain.json', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'tools/scripts/local-*.mjs', 'tools/scripts/local-*.sh', 'tools/tests/local-*.test.mjs', 'tools/tests/dart-contract-line-endings.test.mjs', 'tools/tests/backend-workflow-paths.test.mjs', 'infra/docker/**', 'docs/**', '.gitattributes', 'package.json', 'pnpm-workspace.yaml', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
   push:
-    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'tools/scripts/local-*.mjs', 'tools/scripts/local-*.sh', 'tools/tests/local-*.test.mjs', 'infra/docker/**', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+    paths: ['services/**', 'packages/**', 'appwrite/**', 'content/**', 'tools/audit/**', 'tools/blueprint/**', 'tools/evals/**', 'tools/toolchain.json', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'tools/scripts/local-*.mjs', 'tools/scripts/local-*.sh', 'tools/tests/local-*.test.mjs', 'tools/tests/dart-contract-line-endings.test.mjs', 'tools/tests/backend-workflow-paths.test.mjs', 'infra/docker/**', 'docs/**', '.gitattributes', 'package.json', 'pnpm-workspace.yaml', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -23,9 +23,13 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm backend:verify
       - run: pnpm local:test
+      - name: Bounded local learning load smoke
+        run: node tools/scripts/local-load.mjs --requests=100 --concurrency=10
       - run: pnpm backend:smoke
       - run: pnpm dev:smoke
       - run: pnpm contracts:check
+      - run: node --test tools/tests/dart-contract-line-endings.test.mjs
+      - run: node --test tools/tests/backend-workflow-paths.test.mjs
       - run: pnpm api:lint
       - run: pnpm schema:plan
       - run: pnpm schema:test

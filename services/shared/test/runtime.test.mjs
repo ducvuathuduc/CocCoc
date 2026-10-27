@@ -130,6 +130,47 @@ test('native HTTP timeout uses a complete retryable error envelope', async (t) =
   assertErrorEnvelope(await response.json(), 'DEADLINE_EXCEEDED');
 });
 
+test('native HTTP bounds in-flight work even when a timed-out handler is still running', async (t) => {
+  let release;
+  let started;
+  const entered = new Promise((resolve) => {
+    started = resolve;
+  });
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  let calls = 0;
+  const runtime = createHttpRuntime(
+    async (context) => {
+      calls++;
+      if (calls === 1) {
+        started();
+        await gate;
+      }
+      return context.res.json({ ok: true });
+    },
+    { service: 'learning', port: 0, requestTimeoutMs: 40, maxInFlight: 1 },
+  );
+  const address = await runtime.listen();
+  t.after(() => {
+    release();
+    return runtime.close();
+  });
+  const url = `http://127.0.0.1:${address.port}/health`;
+  const first = fetch(url);
+  await entered;
+  assert.equal((await first).status, 504);
+  const overloaded = await fetch(url);
+  assert.equal(overloaded.status, 429);
+  assert.equal(overloaded.headers.get('retry-after'), '1');
+  assertErrorEnvelope(await overloaded.json(), 'RATE_LIMITED');
+  assert.equal(calls, 1);
+  release();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal((await fetch(url)).status, 200);
+  assert.equal(calls, 2);
+});
+
 test('worker injects the trusted schedule trigger internally and never overlaps ticks', async () => {
   let active = 0;
   let maximum = 0;

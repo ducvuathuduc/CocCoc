@@ -96,12 +96,17 @@ export function promoteZone(profile: Readonly<Row>, nowIso: string): Row {
 
 /** Zone from immutable history: latest row with effectiveAt <= instant (SRS timezone rule). */
 export async function zoneAt(tx: ProgressTx, userId: string, instant: string): Promise<string> {
+  // History timestamps are generated at millisecond precision. Normalize
+  // offsets to UTC and use an exclusive upper bound one millisecond later,
+  // which includes a change effective at this exact instant.
+  const exclusiveUpper = new Date(Date.parse(instant) + 1).toISOString();
   const history = await tx.list('p_zone_history', {
     where: { userId },
+    lt: { effectiveAt: exclusiveUpper },
     orderBy: [['effectiveAt', 'desc']],
-    limit: 50,
+    limit: 1,
   });
-  const match = history.find((entry) => String(entry.row['effectiveAt']) <= instant);
+  const match = history[0];
   return match ? String(match.row['zone']) : DEFAULT_ZONE;
 }
 

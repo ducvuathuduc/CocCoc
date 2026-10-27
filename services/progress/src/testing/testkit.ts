@@ -17,7 +17,7 @@ export { createProgressEventConsumer } from '../application/consume-events.js';
 export { processMissedDays } from '../application/economy.js';
 export { settleLeagueWeek, cohortIdFor } from '../application/leagues.js';
 export { purgeDeletedAccount } from '../application/deletion.js';
-export { ids, operationId } from '../application/records.js';
+export { ids, operationId, zoneAt } from '../application/records.js';
 export * from '../domain/lesson-xp.js';
 export * from '../domain/practice-xp.js';
 export * from '../domain/streak.js';

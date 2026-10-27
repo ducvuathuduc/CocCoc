@@ -266,6 +266,18 @@ export async function getSessionView(deps: LearningDeps, userId: string, session
   );
   const bundle = await sessionBundle(deps, session);
   const answers = await attemptsOf(deps, sessionId);
+  // receivedAt may tie (or the wall clock may move backwards). Each committed
+  // answer carries the strictly increasing session revision, which preserves
+  // the queue and identifies the true latest feedback across devices.
+  answers.sort((left, right) => {
+    const leftRevision = jsonObject<AnswerResultDto>(left['resultJson'])?.sessionRevision;
+    const rightRevision = jsonObject<AnswerResultDto>(right['resultJson'])?.sessionRevision;
+    const validLeft = Number.isSafeInteger(leftRevision) ? leftRevision! : Number.MAX_SAFE_INTEGER;
+    const validRight = Number.isSafeInteger(rightRevision)
+      ? rightRevision!
+      : Number.MAX_SAFE_INTEGER;
+    return validLeft - validRight;
+  });
   const last = answers.at(-1);
   return {
     sessionId,
@@ -299,6 +311,18 @@ function activeOrThrow(session: Row, nowMs: number): void {
     throw new ServiceError('SESSION_CONFLICT', { details: { status: String(session['status']) } });
 }
 
+async function assertActiveSlot(
+  tx: LearningTransaction,
+  userId: string,
+  sessionId: string,
+  session: Row,
+): Promise<void> {
+  const slot = await tx.get('l_active_slots', ids.slot(userId, String(session['courseId'])));
+  if (!slot || slot['sessionId'] !== sessionId) {
+    throw new ServiceError('SESSION_CONFLICT', { details: { reason: 'ACTIVE_SLOT_MISSING' } });
+  }
+}
+
 export async function submitAnswer(
   deps: LearningDeps,
   userId: string,
@@ -321,6 +345,7 @@ export async function submitAnswer(
       const session = ownedSession(await tx.get('l_sessions', sessionId), userId, sessionId);
       activeOrThrow(session, now);
       assertRevision(session, body.expectedRevision);
+      await assertActiveSlot(tx, userId, sessionId, session);
       const attempts = (await attemptsOf(deps, sessionId)).map(toAttempt);
       const order = bundle.exercises.map((e) => e.id);
       const expected = queueState(order, attempts).next;
@@ -432,6 +457,7 @@ export async function completeSession(
       }
       activeOrThrow(session, now);
       assertRevision(session, body.expectedRevision);
+      await assertActiveSlot(tx, userId, sessionId, session);
       const attempts = (await attemptsOf(deps, sessionId)).map(toAttempt);
       const order = bundle.exercises.map((e) => e.id);
       const state = queueState(order, attempts);

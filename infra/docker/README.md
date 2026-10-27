@@ -28,6 +28,14 @@ pnpm container:check
 
 The three APIs bind host loopback ports 4101–4103. `/health` is liveness. `/ready` requires signed service identity and durable admission. With the checked public template, private routes remain unavailable. The images run as an unprivileged user with a read-only root filesystem; the final stages copy only owner bundles. No server credential belongs in a build argument or image layer.
 
+Each HTTP process admits at most `COC_HTTP_MAX_IN_FLIGHT` requests (default 128,
+allowed range 1–1024). Excess requests receive a retryable 429 with `Retry-After`;
+the limit includes health requests. Slots remain occupied until the handler
+actually finishes, including after an HTTP deadline, so a timeout cannot hide
+continuing work. Choose the cap and health-check policy from measured resource
+limits; this is local backpressure, not distributed rate limiting or a capacity
+guarantee.
+
 Each owner has a separate optional ignored runtime env file: `.secrets/learning.env`, `.secrets/progress.env`, `.secrets/ai.env`. Override their locations with `COC_LEARNING_ENV_FILE`, `COC_PROGRESS_ENV_FILE`, `COC_AI_ENV_FILE`. Supply only that owner's least-privilege Appwrite key, public endpoint/project/database, reviewed admission marker and required signed relay configuration. See [Appwrite setup](../../docs/devops/APPWRITE_SETUP.md) and [permissions](../../docs/data/PERMISSIONS.md). Key presence alone does not pass the durable permission/transaction/recovery gates.
 
 Workers are opt-in after configuration and admission:

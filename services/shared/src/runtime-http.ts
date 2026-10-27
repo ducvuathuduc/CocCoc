@@ -12,6 +12,7 @@ export interface HttpRuntimeOptions {
   port?: number;
   host?: '127.0.0.1' | '0.0.0.0';
   requestTimeoutMs?: number;
+  maxInFlight?: number;
 }
 
 export interface HttpRuntime {
@@ -56,7 +57,12 @@ function sendJson(
 function sendError(response: ServerResponse, error: unknown): void {
   const requestId = randomUUID();
   const failure = toErrorResponse(error, requestId);
-  sendJson(response, failure.body, failure.status, { 'X-Request-ID': requestId });
+  sendJson(response, failure.body, failure.status, {
+    'X-Request-ID': requestId,
+    ...(failure.retryAfterSeconds === undefined
+      ? {}
+      : { 'Retry-After': String(failure.retryAfterSeconds) }),
+  });
 }
 
 async function readBody(request: IncomingMessage): Promise<string> {
@@ -79,7 +85,15 @@ export function createHttpRuntime(
   options: HttpRuntimeOptions,
 ): HttpRuntime {
   const timeoutMs = options.requestTimeoutMs ?? 15_000;
+  const maxInFlight = boundedInt(String(options.maxInFlight ?? 128), 128, 1, 1024);
+  let inFlight = 0;
   const server: Server = createServer({ maxHeaderSize: 16_384 }, async (request, response) => {
+    if (inFlight >= maxInFlight) {
+      request.resume();
+      sendError(response, new ServiceError('RATE_LIMITED', { retryAfterSeconds: 1 }));
+      return;
+    }
+    inFlight++;
     try {
       const bodyText = await readBody(request);
       const url = new URL(request.url ?? '/', 'http://runtime.invalid');
@@ -120,6 +134,8 @@ export function createHttpRuntime(
         response,
         error instanceof ServiceError ? error : new ServiceError('VALIDATION_ERROR'),
       );
+    } finally {
+      inFlight--;
     }
   });
   server.headersTimeout = Math.min(timeoutMs, 10_000);
@@ -161,6 +177,7 @@ export async function runHttpProcess(
       MIN_TIMEOUT_MS,
       MAX_TIMEOUT_MS,
     ),
+    maxInFlight: boundedInt(process.env['COC_HTTP_MAX_IN_FLIGHT'], 128, 1, 1024),
   });
   const address = await runtime.listen();
   process.stdout.write(

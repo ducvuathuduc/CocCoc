@@ -1159,7 +1159,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         .read(issueReportRepositoryProvider)
         .submit(IssueReport(exerciseId: exerciseId, category: category));
     if (!mounted) return;
-    if (sent) ref.read(previewControllerProvider.notifier).report(category);
+    if (sent && !ref.read(appConfigProvider).isApi) {
+      ref.read(previewControllerProvider.notifier).report(category);
+    }
     _reportToastTimer?.cancel();
     setState(
       () => _reportToast = sent ? content.successToast : content.failureToast,

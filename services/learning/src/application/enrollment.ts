@@ -3,7 +3,7 @@ import { ServiceError } from '../../../shared/src/errors.js';
 import { nodeState, placementFrontier, sortedNodes, type EnrollmentView } from '../domain/path.js';
 import { PLACEMENT_PASS } from '../domain/session-queue.js';
 import { ids } from '../persistence/ids.js';
-import type { Row } from '../persistence/port.js';
+import type { LearningTransaction, Row } from '../persistence/port.js';
 import {
   bumped,
   created,
@@ -168,6 +168,33 @@ export async function getPath(
 // revision; reset/remove never touch Progress-owned XP or rewards.
 type EnrollmentCommand = 'switchCourse' | 'resetCourse' | 'removeCourse';
 
+/** Prevent a pre-reset session from later restoring progress or issuing rewards. */
+async function abandonActiveSession(
+  tx: LearningTransaction,
+  userId: string,
+  courseId: string,
+  now: number,
+): Promise<void> {
+  const slotId = ids.slot(userId, courseId);
+  const slot = await tx.get('l_active_slots', slotId);
+  if (!slot) return;
+  const sessionId = String(slot['sessionId']);
+  const session = await tx.get('l_sessions', sessionId);
+  if (
+    session &&
+    session['userId'] === userId &&
+    session['courseId'] === courseId &&
+    session['status'] === 'ACTIVE'
+  ) {
+    tx.put('l_sessions', sessionId, {
+      ...session,
+      status: Date.parse(String(session['expiresAt'])) <= now ? 'EXPIRED' : 'ABANDONED',
+      ...bumped(session, now),
+    });
+  }
+  tx.remove('l_active_slots', slotId);
+}
+
 export async function enrollmentCommand(
   deps: LearningDeps,
   userId: string,
@@ -195,14 +222,13 @@ export async function enrollmentCommand(
         });
       }
       if (command === 'removeCourse') {
+        await abandonActiveSession(tx, userId, courseId, now);
         tx.put('l_enrollments', rowId, {
           ...row,
           active: false,
           removedAt: iso(now),
           ...bumped(row, now),
         });
-        const slotId = ids.slot(userId, courseId);
-        if (await tx.get('l_active_slots', slotId)) tx.remove('l_active_slots', slotId);
         return { statusCode: 200, response: { operationId: key, status: 'accepted', requestId } };
       }
       if (command === 'switchCourse') {
@@ -220,6 +246,7 @@ export async function enrollmentCommand(
         tx.put('l_enrollments', rowId, next);
         return { statusCode: 200, response: enrollmentDto(next) };
       }
+      await abandonActiveSession(tx, userId, courseId, now);
       const next = {
         ...row,
         courseVersion: manifest!.courseVersion,

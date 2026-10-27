@@ -10,7 +10,10 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const openapiPath = path.join(root, 'docs/api/openapi.yaml');
 const outDir = path.join(root, 'apps/mobile/lib/core/api/generated');
-const openapiText = fs.readFileSync(openapiPath, 'utf8');
+// Git may have checked out existing files as CRLF before .gitattributes was
+// added. Hash and compare their canonical LF form without changing the spec.
+const normalizeLines = (text) => text.replace(/\r\n/g, '\n');
+const openapiText = normalizeLines(fs.readFileSync(openapiPath, 'utf8'));
 const api = JSON.parse(openapiText);
 const schemas = api.components.schemas;
 
@@ -335,7 +338,7 @@ const outputs = { 'api_models.g.dart': models, 'api_schemas.g.dart': schemaFile 
 if (process.argv.includes('--check')) {
   const stale = Object.entries(outputs).filter(([file, text]) => {
     const target = path.join(outDir, file);
-    return !fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== text;
+    return !fs.existsSync(target) || normalizeLines(fs.readFileSync(target, 'utf8')) !== text;
   });
   if (stale.length) {
     console.error(`Dart contracts are stale: ${stale.map(([f]) => f).join(', ')}. Run node tools/blueprint/generate-dart-contracts.mjs`);
