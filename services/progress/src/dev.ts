@@ -9,6 +9,7 @@ import type { Keyring } from '../../shared/src/service-hmac.js';
 import { httpRelayDeliver, httpWatermark } from './application/relay-http.js';
 import { progressWiring, scopeProgressHandler, type ProgressJobPorts } from './http/wiring.js';
 import { createMemoryProgressPersistence } from './persistence/memory.js';
+import { setCodeSecret } from './application/commerce.js';
 
 const DEV_TOKEN = /^dev-([A-Za-z0-9][A-Za-z0-9_.-]{0,35})$/;
 export const devAuth: AuthPort = {
@@ -23,6 +24,7 @@ export function createDevHandler(
   keyring: Keyring,
   env: Record<string, string | undefined> = process.env,
 ) {
+  setCodeSecret(env['COC_PROGRESS_CODE_SECRET'] ?? 'cocenglish-dev-only-code-secret');
   const persistence = createMemoryProgressPersistence(Date.now, { strictSchema: true });
   // Job ports point at the sibling dev services; nothing runs on a timer here (the scheduler
   // ticks are signed POSTs, e.g. from `pnpm dev:smoke` or a maintainer key).

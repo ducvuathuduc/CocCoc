@@ -167,6 +167,11 @@ class ApiQuestsRepository
     isNudged: false,
     isGifted: false,
     isHighFived: false,
+    // The wire Quest DTO carries no opt-in flag yet, so API mode starts
+    // un-opted and the JOIN button is shown; QuestsController flips this to
+    // true in-session after optInFriendQuest() succeeds. (Was `quest != null`,
+    // which hid JOIN whenever a quest existed and killed the feature.)
+    isOptedIn: false,
   );
 
   static String _hoursToMidnight(DateTime now) {

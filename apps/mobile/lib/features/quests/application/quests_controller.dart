@@ -103,10 +103,27 @@ class QuestsController extends Notifier<QuestsTabState> {
 
   Future<bool> optInFriendQuest() async {
     final repository = ref.read(questsRepositoryProvider);
-    if (repository is! FriendQuestCommands) return false;
+    if (repository is! FriendQuestCommands) {
+      state = state.copyWith(feedbackMessage: 'Could not join. Try again.');
+      return false;
+    }
     try {
-      return await (repository as FriendQuestCommands).optInFriendQuest();
+      final joined = await (repository as FriendQuestCommands)
+          .optInFriendQuest();
+      if (!ref.mounted) return joined;
+      state = state.copyWith(
+        friendsQuest: joined
+            ? state.friendsQuest.copyWith(isOptedIn: true)
+            : state.friendsQuest,
+        feedbackMessage: joined
+            ? 'Joined the Friends Quest!'
+            : 'Could not join. Try again.',
+      );
+      return joined;
     } catch (_) {
+      if (ref.mounted) {
+        state = state.copyWith(feedbackMessage: 'Could not join. Try again.');
+      }
       return false;
     }
   }

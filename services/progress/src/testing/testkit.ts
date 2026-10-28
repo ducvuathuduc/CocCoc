@@ -1,4 +1,6 @@
 // LOCAL TEST BUNDLE ENTRY (built by test/kit.mjs into .cache/progress-test/). Never hosted.
+import { setCodeSecret } from '../application/commerce.js';
+setCodeSecret('cocenglish-dev-only-code-secret');
 export { createDevHandler, devAuth } from '../dev.js';
 export { createRouter, canonicalBodyHash } from '../../../shared/src/transport.js';
 export { createKeyring } from '../../../shared/src/service-hmac.js';
@@ -25,7 +27,7 @@ export * from '../domain/streak.js';
 export { questChestReceipt } from '../domain/quest-chest.js';
 export * from '../domain/time.js';
 export * from '../domain/league.js';
-export { createPromoCode, codeHash, derivedCode } from '../application/commerce.js';
+export { createPromoCode, codeHash, derivedCode, setCodeSecret } from '../application/commerce.js';
 export { classroomCodeHash } from '../application/settings.js';
 export { PROGRESS_ROUTE_TEMPLATES } from '../http/routes.js';
 export {

@@ -35,6 +35,7 @@ abstract final class QuestsMockData {
     isNudged: false,
     isGifted: false,
     isHighFived: false,
+    isOptedIn: true,
   );
 
   static const completedFriendsQuest = FriendsQuest(
@@ -47,6 +48,7 @@ abstract final class QuestsMockData {
     isNudged: false,
     isGifted: false,
     isHighFived: true,
+    isOptedIn: true,
   );
 
   static const defaultWeekendQuest = WeekendQuest(

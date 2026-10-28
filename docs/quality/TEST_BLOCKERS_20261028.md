@@ -29,6 +29,13 @@ reference asset or test tolerance was replaced or relaxed.
   percentile/score/duration fields are unavailable instead of fabricated zeroes.
 - Sharing a real review with fewer than 1,000 XP threw a RangeError; grouping now
   supports small and large totals. Summary year/date come from the snapshot.
+- The `x-tables` metadata for capabilities, tutor, profile initialization, league
+  reads and league joins was corrected from the concrete read/write paths.
+  Generated DTOs and the endpoint matrix were refreshed; request/response shapes
+  and endpoint paths are unchanged.
+- CI now validates and executes the generated local collection. Frontend
+  verification and Android compilation are separate steps so a visual/test
+  failure is distinguishable from a platform-build failure.
 
 ## Executed evidence
 

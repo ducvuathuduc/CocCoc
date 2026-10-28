@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
 // dart format off
-// Source: docs/api/openapi.yaml (sha256 41dbf71e650880418344908dbe55bea259d8f3ea29cca01cecda82317473eee0).
+// Source: docs/api/openapi.yaml (sha256 94faa43c48fd72aaeb5d18cf93bcbbe5caf125fd1dbebccd7a1a273caceb7ed5).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors
@@ -2034,6 +2034,8 @@ final class SessionRequest {
     required this.lessonId,
     required this.mode,
     required this.expectedEnrollmentRevision,
+    this.activityId,
+    this.opponentId,
   });
 
   /// Validates [json] against the `SessionRequest` schema, then decodes it.
@@ -2050,6 +2052,8 @@ final class SessionRequest {
       lessonId: map['lessonId'] as String,
       mode: map['mode'] as String,
       expectedEnrollmentRevision: (map['expectedEnrollmentRevision'] as num).toInt(),
+      activityId: map.containsKey('activityId') ? map['activityId'] as String : null,
+      opponentId: map.containsKey('opponentId') ? map['opponentId'] as String : null,
     );
   }
 
@@ -2057,12 +2061,16 @@ final class SessionRequest {
   final String lessonId;
   final String mode;
   final int expectedEnrollmentRevision;
+  final String? activityId;
+  final String? opponentId;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'courseId': courseId,
         'lessonId': lessonId,
         'mode': mode,
         'expectedEnrollmentRevision': expectedEnrollmentRevision,
+        'activityId': ?activityId,
+        'opponentId': ?opponentId,
       };
 }
 
@@ -2082,6 +2090,9 @@ final class Session {
     required this.bundle,
     required this.answerHistory,
     required this.lastFeedback,
+    this.activityId,
+    this.opponentId,
+    this.passThreshold,
   });
 
   /// Validates [json] against the `Session` schema, then decodes it.
@@ -2107,6 +2118,9 @@ final class Session {
       bundle: LessonBundle._decode(map['bundle']),
       answerHistory: List<OfflineAnswer>.unmodifiable((map['answerHistory'] as List<Object?>).map((Object? x) => OfflineAnswer._decode(x))),
       lastFeedback: map['lastFeedback'] == null ? null : AnswerResult._decode(map['lastFeedback']),
+      activityId: map.containsKey('activityId') ? map['activityId'] as String : null,
+      opponentId: map.containsKey('opponentId') ? map['opponentId'] as String : null,
+      passThreshold: map.containsKey('passThreshold') ? map['passThreshold'] as num : null,
     );
   }
 
@@ -2123,6 +2137,9 @@ final class Session {
   final LessonBundle bundle;
   final List<OfflineAnswer> answerHistory;
   final AnswerResult? lastFeedback;
+  final String? activityId;
+  final String? opponentId;
+  final num? passThreshold;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'sessionId': sessionId,
@@ -2138,6 +2155,9 @@ final class Session {
         'bundle': bundle.toJson(),
         'answerHistory': answerHistory.map((OfflineAnswer x) => x.toJson()).toList(),
         'lastFeedback': lastFeedback?.toJson(),
+        'activityId': ?activityId,
+        'opponentId': ?opponentId,
+        'passThreshold': ?passThreshold,
       };
 }
 
@@ -2490,6 +2510,8 @@ final class Completion {
     required this.enrollmentRevision,
     required this.rewardStatus,
     required this.needsReviewIds,
+    this.passed,
+    this.unlockedNodeId,
   });
 
   /// Validates [json] against the `Completion` schema, then decodes it.
@@ -2513,6 +2535,8 @@ final class Completion {
       enrollmentRevision: (map['enrollmentRevision'] as num).toInt(),
       rewardStatus: map['rewardStatus'] as String,
       needsReviewIds: List<String>.unmodifiable((map['needsReviewIds'] as List<Object?>).map((Object? x) => x as String)),
+      passed: map.containsKey('passed') ? map['passed'] as bool : null,
+      unlockedNodeId: map.containsKey('unlockedNodeId') ? map['unlockedNodeId'] as String : null,
     );
   }
 
@@ -2527,6 +2551,8 @@ final class Completion {
   final int enrollmentRevision;
   final String rewardStatus;
   final List<String> needsReviewIds;
+  final bool? passed;
+  final String? unlockedNodeId;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'completionId': completionId,
@@ -2540,6 +2566,8 @@ final class Completion {
         'enrollmentRevision': enrollmentRevision,
         'rewardStatus': rewardStatus,
         'needsReviewIds': List<Object?>.of(needsReviewIds),
+        'passed': ?passed,
+        'unlockedNodeId': ?unlockedNodeId,
       };
 }
 

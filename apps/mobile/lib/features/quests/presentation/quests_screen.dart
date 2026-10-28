@@ -200,6 +200,25 @@ class QuestsScreen extends ConsumerWidget {
                   const SizedBox(height: 18),
                   Text(questState.friendsQuest.title, style: headingStyle),
                   const SizedBox(height: 12),
+                  if (!questState.friendsQuest.isOptedIn &&
+                      !questState.friendsQuest.isCompleted) ...[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: 112,
+                        child: ReferenceButton(
+                          label: 'JOIN',
+                          outlined: true,
+                          foregroundColor: const Color(0xFF4B4B4B),
+                          minHeight: 44,
+                          onPressed: () {
+                            controller.optInFriendQuest();
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                   QuestProgress(
                     value: questState.friendsQuest.userLessons,
                     secondaryValue: questState.friendsQuest.friendLessons,

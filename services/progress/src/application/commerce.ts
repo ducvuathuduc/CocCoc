@@ -38,17 +38,18 @@ import { rowId } from '../persistence/core.js';
 import { isBlockedPair } from './social.js';
 
 const DAY_MS = 86_400_000;
-let codeSecret = 'cocenglish-dev-only-code-secret';
+let codeSecret: string | undefined;
 
 /** Hosted entry sets COC_PROGRESS_CODE_SECRET; referral/family codes derive from it. */
 export function setCodeSecret(secret: string | undefined): void {
-  if (secret && secret.length >= 16) codeSecret = secret;
+  codeSecret = secret && secret.trim().length >= 16 ? secret : undefined;
 }
 export function codeHash(code: string): string {
   return createHash('sha256').update(normalizeCode(code), 'utf8').digest('hex');
 }
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 export function derivedCode(kind: string, id: string): string {
+  if (!codeSecret) throw new ServiceError('SERVICE_NOT_CONFIGURED');
   const digest = createHmac('sha256', codeSecret).update(`${kind}|${id}`).digest();
   let out = '';
   for (let i = 0; i < 8; i++) out += CODE_ALPHABET[(digest[i] as number) % CODE_ALPHABET.length];

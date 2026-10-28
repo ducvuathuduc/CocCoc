@@ -58,11 +58,16 @@ jobs:
           flutter precache --android
           flutter pub get --enforce-lockfile
 
-      - name: Verify frontend and build debug APK
-        run: node tools/scripts/mobile-check.mjs --with-blueprint --build-android
+      - name: Verify frontend
+        id: verify
+        run: node tools/scripts/mobile-check.mjs --with-blueprint
+
+      - name: Build Android debug APK
+        working-directory: apps/mobile
+        run: flutter build apk --debug --no-pub
 
       - name: Upload golden failure diffs
-        if: failure()
+        if: failure() && steps.verify.conclusion == 'failure'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: golden-failures
