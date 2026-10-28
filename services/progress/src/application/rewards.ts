@@ -18,7 +18,7 @@ import {
   tierFor,
   type QuestMetric,
 } from '../domain/catalog.js';
-import { computeAward, isAward } from '../domain/lesson-xp.js';
+import { computeAward, isAward, isLessonFormulaMode } from '../domain/lesson-xp.js';
 import { recomputeStreak, STREAK_WINDOW_DAYS } from '../domain/streak.js';
 import { addDays, leagueWeek, monthKey, zonedDay } from '../domain/time.js';
 import { activeBoostMultiplier } from './boosts.js';
@@ -42,11 +42,12 @@ export async function applyLessonCompletion(tx: ProgressTx, event: CompletionEve
   const day = zonedDay(event.occurredAt, zone);
   const week = leagueWeek(event.occurredAt);
   const markerId = ids.firstReward(userId, p.rewardIdentity);
-  const marker = p.mode === 'LESSON' ? await tx.get('p_first_rewards', markerId) : null;
+  const lessonFormula = isLessonFormulaMode(p.mode);
+  const marker = lessonFormula ? await tx.get('p_first_rewards', markerId) : null;
   const dayId = ids.day(userId, day);
   const dayRow = await tx.get('p_day_activity', dayId);
   const award = computeAward(p, {
-    firstCompletion: p.mode === 'LESSON' && !marker,
+    firstCompletion: lessonFormula && !marker,
     dayStudyXp: Number(dayRow?.['studyXp'] ?? 0),
     dayReplayXp: Number(dayRow?.['replayXp'] ?? 0),
     boostMultiplier: await activeBoostMultiplier(tx, userId, event.occurredAt),
@@ -55,7 +56,7 @@ export async function applyLessonCompletion(tx: ProgressTx, event: CompletionEve
     const reason = award.ok ? 'INVALID_GRADED_RESULT' : award.reason;
     throw new ServiceError('VALIDATION_ERROR', { details: { reason } });
   }
-  if (award.kind === null) return; // PLACEMENT: no XP, activity or quest credit
+  if (award.kind === null) return; // PLACEMENT/TEST_OUT/CHECKPOINT: no XP, activity or quest credit
 
   tx.put('p_reward_ledger', ids.ledger(userId, p.completionId, award.kind), {
     eventId: event.eventId,

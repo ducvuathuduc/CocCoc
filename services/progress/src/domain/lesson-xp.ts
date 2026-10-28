@@ -1,14 +1,14 @@
-// Lesson reward rules (docs/product/SRS.md FR-GAME-001 and "Deterministic learning and reward
-// rules"). Pure functions: no I/O, no clock.
-// - First online completion: XP = 10 + originalFirstCorrectCount (0-10) + 5 if all originals
-//   correct without hint. Offline first completion omits the perfect bonus and league XP.
-//   Published lessons carry 5-20 originals (vi_en v2 authors 10-15), so the 0-10 term is the
-//   first-correct share scaled to 10: round(10 * originalCorrect / originalCount); a 10-original
-//   lesson is unchanged.
-// - Repeated lesson, REVIEW and MASTERY sessions: 5 study XP, at most 30 replay XP per server
-//   learning day, zero league XP for REVIEW/MASTERY.
+// Lesson reward rules (docs/product/SRS.md FR-GAME-001, "Deterministic learning and reward
+// rules" and "Authored activity session modes"). Pure functions: no I/O, no clock.
+// - First online completion of a lesson-formula session: XP = 10 + originalFirstCorrectCount
+//   (0-10) + 5 if all originals correct without hint. Offline first completion omits the perfect
+//   bonus and league XP. Published lessons carry 5-20 originals (vi_en v2 authors 10-15), so the
+//   0-10 term is the first-correct share scaled to 10: round(10 * originalCorrect /
+//   originalCount); a 10-original lesson is unchanged.
+// - Repeated lesson-formula, REVIEW, MASTERY and UNIT_REVIEW sessions: 5 study XP, at most 30
+//   replay XP per server learning day, zero league XP for REVIEW/MASTERY/UNIT_REVIEW.
 // - At most 1,200 credited study XP per learning day; the excess stays practiced with award 0.
-// - PLACEMENT earns no XP, activity or quest credit.
+// - PLACEMENT, TEST_OUT and CHECKPOINT earn no XP, activity or quest credit.
 
 export interface GradedLesson {
   mode: string;
@@ -29,7 +29,29 @@ export const MAX_ORIGINAL_COUNT = 20;
 export const REPLAY_XP = 5;
 export const REPLAY_DAILY_CAP = 30;
 export const DAILY_STUDY_XP_CAP = 1200;
-const SESSION_MODES = new Set(['LESSON', 'PLACEMENT', 'REVIEW', 'MASTERY']);
+/** Modes using the normal lesson first-completion formula and online league eligibility. */
+const LESSON_FORMULA_MODES = new Set([
+  'LESSON',
+  'STORIES',
+  'ADVENTURE',
+  'RADIO',
+  'SIDE_QUEST',
+  'CLASH',
+]);
+/** Modes earning only replay XP, never league XP. */
+const REPLAY_ONLY_MODES = new Set(['REVIEW', 'MASTERY', 'UNIT_REVIEW']);
+/** Modes crediting no XP, activity or quest: no ledger row. */
+const ZERO_REWARD_MODES = new Set(['PLACEMENT', 'TEST_OUT', 'CHECKPOINT']);
+const SESSION_MODES = new Set([
+  ...LESSON_FORMULA_MODES,
+  ...REPLAY_ONLY_MODES,
+  ...ZERO_REWARD_MODES,
+]);
+
+/** True for LESSON and the activity modes rewarded with its first-completion formula. */
+export function isLessonFormulaMode(mode: string): boolean {
+  return LESSON_FORMULA_MODES.has(mode);
+}
 
 export function validateGraded(lesson: GradedLesson): LessonXpResult | null {
   if (!SESSION_MODES.has(lesson.mode)) return { ok: false, reason: 'MODE_NOT_IMPLEMENTED' };
@@ -52,14 +74,14 @@ export function validateGraded(lesson: GradedLesson): LessonXpResult | null {
   return null;
 }
 
-/** First-completion XP for LESSON (and the zero-XP PLACEMENT case). */
+/** First-completion XP for a lesson-formula session (and the zero-XP gate modes). */
 export function firstCompletionXp(lesson: GradedLesson): LessonXpResult {
-  if (lesson.mode !== 'LESSON' && lesson.mode !== 'PLACEMENT') {
+  if (!isLessonFormulaMode(lesson.mode) && !ZERO_REWARD_MODES.has(lesson.mode)) {
     return { ok: false, reason: 'MODE_NOT_IMPLEMENTED' };
   }
   const invalid = validateGraded(lesson);
   if (invalid) return invalid;
-  if (lesson.mode === 'PLACEMENT') return { ok: true, studyXp: 0, perfect: false };
+  if (ZERO_REWARD_MODES.has(lesson.mode)) return { ok: true, studyXp: 0, perfect: false };
   const perfect =
     lesson.source === 'ONLINE' &&
     lesson.originalCorrect === lesson.originalCount &&
@@ -82,7 +104,7 @@ export interface AwardContext {
 }
 
 export interface Award {
-  /** Ledger kind; null for PLACEMENT (no ledger row, no activity). */
+  /** Ledger kind; null for a zero-reward mode (no ledger row, no activity). */
   kind: 'FIRST' | 'REPLAY' | null;
   /** XP before caps. */
   rawXp: number;
@@ -96,7 +118,7 @@ export interface Award {
 export function computeAward(lesson: GradedLesson, context: AwardContext): Award | LessonXpResult {
   const invalid = validateGraded(lesson);
   if (invalid) return invalid;
-  if (lesson.mode === 'PLACEMENT') {
+  if (ZERO_REWARD_MODES.has(lesson.mode)) {
     return {
       kind: null,
       rawXp: 0,
@@ -113,7 +135,7 @@ export function computeAward(lesson: GradedLesson, context: AwardContext): Award
   let perfect = false;
   let replayXp = 0;
   let capped = false;
-  if (lesson.mode === 'LESSON' && context.firstCompletion) {
+  if (isLessonFormulaMode(lesson.mode) && context.firstCompletion) {
     const first = firstCompletionXp(lesson);
     if (!first.ok) return first;
     kind = 'FIRST';
@@ -131,7 +153,7 @@ export function computeAward(lesson: GradedLesson, context: AwardContext): Award
   const studyXp = Math.min(preCap, room);
   if (studyXp < preCap) capped = true;
   if (kind === 'REPLAY') replayXp = studyXp;
-  const leagueEligible = lesson.mode === 'LESSON' && lesson.source === 'ONLINE';
+  const leagueEligible = isLessonFormulaMode(lesson.mode) && lesson.source === 'ONLINE';
   return {
     kind,
     rawXp,
