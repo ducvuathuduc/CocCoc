@@ -39,7 +39,7 @@ const screens=ids('docs/product/SCREEN_INVENTORY.md',/^\| (SC\d+) /gm);
 const tasks=ids('docs/agent/IMPLEMENTATION_PLAN.md',/^\| (P\d+-[A-Z]+-\d+) /gm);
 const edges=ids('docs/product/EDGE_CASE_MATRIX.md',/^\| (EC\d+) /gm);
 for(const [name,list] of Object.entries({requirements,nfr,screens,tasks,edges}))check(new Set(list).size===list.length,'Duplicate '+name+' ID');
-check(requirements.length===39,'Functional requirement baseline changed; review traceability/freeze');
+check(requirements.length===41,'Functional requirement baseline changed; review traceability/freeze');
 check(screens.length===42,'Screen baseline changed; review fixture gate');
 const tables=new Map([...read('docs/data/DATA_MODEL.md').matchAll(/^\| ([lpa]_[a-z_]+) \/ (Learning|Progress|AI) \|/gm)].map(m=>[m[1],m[2].toLowerCase()]));
 check(tables.size>30,'Data ownership inventory is incomplete');

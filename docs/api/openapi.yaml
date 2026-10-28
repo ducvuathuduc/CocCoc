@@ -725,8 +725,8 @@
     "/v1/sessions": {
       "post": {
         "operationId": "startSession",
-        "summary": "PLACEMENT is allowed before enrollment, uses a fixed published placement lesson, revision0, no XP.",
-        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. PLACEMENT is allowed before enrollment, uses a fixed published placement lesson, revision0, no XP.",
+        "summary": "Start a LESSON, REVIEW, MASTERY, PLACEMENT, or authored activity session.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. PLACEMENT is allowed before enrollment, uses a fixed published placement lesson, revision0, no XP. Authored modes (STORIES, ADVENTURE, RADIO, SIDE_QUEST, CLASH, UNIT_REVIEW, TEST_OUT, CHECKPOINT) use online-authoritative bundles; TEST_OUT/CHECKPOINT require an authored passThreshold and advance the frontier only on pass.",
         "tags": [
           "learning"
         ],
@@ -735,7 +735,9 @@
           "FR-LESSON-001",
           "FR-COURSE-002",
           "FR-PRACTICE-001",
-          "FR-PATH-002"
+          "FR-PATH-002",
+          "FR-ACTIVITY-001",
+          "FR-ACTIVITY-002"
         ],
         "x-tables": [
           "l_sessions",
@@ -1040,14 +1042,16 @@
       "post": {
         "operationId": "completeSession",
         "summary": "Commit session/frontier/review/receipt/outbox atomically; placement is reward-ineligible.",
-        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Commit session/frontier/review/receipt/outbox atomically; placement is reward-ineligible.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Commit session/frontier/review/receipt/outbox atomically; placement is reward-ineligible. Authored modes use the same completion lifecycle; TEST_OUT/CHECKPOINT return passed=false on a failed attempt with no frontier change.",
         "tags": [
           "learning"
         ],
         "x-owner": "learning",
         "x-requirements": [
           "FR-LESSON-006",
-          "FR-GAME-001"
+          "FR-GAME-001",
+          "FR-ACTIVITY-001",
+          "FR-ACTIVITY-002"
         ],
         "x-tables": [
           "l_sessions",
@@ -11118,13 +11122,33 @@
               "LESSON",
               "REVIEW",
               "MASTERY",
-              "PLACEMENT"
+              "PLACEMENT",
+              "STORIES",
+              "ADVENTURE",
+              "RADIO",
+              "SIDE_QUEST",
+              "CLASH",
+              "UNIT_REVIEW",
+              "TEST_OUT",
+              "CHECKPOINT"
             ]
           },
           "expectedEnrollmentRevision": {
             "type": "integer",
             "minimum": 0,
             "maximum": 2147483647
+          },
+          "activityId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "opponentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
           }
         },
         "required": [
@@ -11177,7 +11201,15 @@
               "LESSON",
               "REVIEW",
               "MASTERY",
-              "PLACEMENT"
+              "PLACEMENT",
+              "STORIES",
+              "ADVENTURE",
+              "RADIO",
+              "SIDE_QUEST",
+              "CLASH",
+              "UNIT_REVIEW",
+              "TEST_OUT",
+              "CHECKPOINT"
             ]
           },
           "revision": {
@@ -11218,6 +11250,23 @@
                 "type": "null"
               }
             ]
+          },
+          "activityId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "opponentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "passThreshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
           }
         },
         "required": [
@@ -11521,7 +11570,15 @@
               "LESSON",
               "REVIEW",
               "MASTERY",
-              "PLACEMENT"
+              "PLACEMENT",
+              "STORIES",
+              "ADVENTURE",
+              "RADIO",
+              "SIDE_QUEST",
+              "CLASH",
+              "UNIT_REVIEW",
+              "TEST_OUT",
+              "CHECKPOINT"
             ]
           },
           "completedAt": {
@@ -11549,6 +11606,15 @@
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             },
             "maxItems": 20
+          },
+          "passed": {
+            "type": "boolean"
+          },
+          "unlockedNodeId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
           }
         },
         "required": [
@@ -13259,7 +13325,15 @@
               "LESSON",
               "REVIEW",
               "MASTERY",
-              "PLACEMENT"
+              "PLACEMENT",
+              "STORIES",
+              "ADVENTURE",
+              "RADIO",
+              "SIDE_QUEST",
+              "CLASH",
+              "UNIT_REVIEW",
+              "TEST_OUT",
+              "CHECKPOINT"
             ]
           },
           "originalCount": {

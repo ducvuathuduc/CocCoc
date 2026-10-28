@@ -2099,6 +2099,81 @@
     "nextCursor": null,
     "needsIntervention": false
    }
+  },
+  {
+   "label": "SESSION STORIES request",
+   "schema": "SessionRequest",
+   "valid": true,
+   "value": {
+    "courseId": "vi_en",
+    "lessonId": "story-morning",
+    "mode": "STORIES",
+    "expectedEnrollmentRevision": 0,
+    "activityId": "story-morning"
+   }
+  },
+  {
+   "label": "SESSION CLASH request with opponent",
+   "schema": "SessionRequest",
+   "valid": true,
+   "value": {
+    "courseId": "vi_en",
+    "lessonId": "clash-weekly",
+    "mode": "CLASH",
+    "expectedEnrollmentRevision": 2,
+    "activityId": "clash-weekly",
+    "opponentId": "bot-1"
+   }
+  },
+  {
+   "label": "SESSION unknown mode rejected",
+   "schema": "SessionRequest",
+   "valid": false,
+   "value": {
+    "courseId": "vi_en",
+    "lessonId": "u1n1l1",
+    "mode": "RAPID",
+    "expectedEnrollmentRevision": 0
+   }
+  },
+  {
+   "label": "COMPLETION checkpoint failed",
+   "schema": "Completion",
+   "valid": true,
+   "value": {
+    "completionId": "c-checkpoint-1",
+    "sessionId": "s-checkpoint-1",
+    "originalCount": 10,
+    "originalCorrect": 8,
+    "assisted": false,
+    "source": "ONLINE",
+    "mode": "CHECKPOINT",
+    "completedAt": "2026-10-28T00:00:00Z",
+    "enrollmentRevision": 3,
+    "rewardStatus": "notEligible",
+    "needsReviewIds": [],
+    "passed": false
+   }
+  },
+  {
+   "label": "COMPLETION checkpoint passed",
+   "schema": "Completion",
+   "valid": true,
+   "value": {
+    "completionId": "c-checkpoint-1",
+    "sessionId": "s-checkpoint-1",
+    "originalCount": 10,
+    "originalCorrect": 8,
+    "assisted": false,
+    "source": "ONLINE",
+    "mode": "CHECKPOINT",
+    "completedAt": "2026-10-28T00:00:00Z",
+    "enrollmentRevision": 3,
+    "rewardStatus": "notEligible",
+    "needsReviewIds": [],
+    "passed": true,
+    "unlockedNodeId": "section-2"
+   }
   }
  ]
 }
