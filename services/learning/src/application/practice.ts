@@ -56,7 +56,10 @@ export async function stageMistakes(
         createdAt: previous ? String(previous['createdAt']) : at,
         updatedAt: at,
       });
-    } else if ((input.mode === 'REVIEW' || input.mode === 'MASTERY') && !first.assisted) {
+    } else if (
+      (input.mode === 'REVIEW' || input.mode === 'MASTERY' || input.mode === 'UNIT_REVIEW') &&
+      !first.assisted
+    ) {
       const previous = await tx.get('l_mistakes', id);
       if (previous && !previous['resolvedAt']) {
         tx.put('l_mistakes', id, {

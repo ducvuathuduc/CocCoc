@@ -6,6 +6,7 @@
 import { ServiceError } from '../../../shared/src/errors.js';
 import type { ApplicationReceipt } from '../../../shared/src/ports.js';
 import { canonicalBodyHash } from '../../../shared/src/transport.js';
+import type { SessionMode } from '../content/types.js';
 import type { LearningTransaction, Row } from '../persistence/port.js';
 import { iso, type LearningDeps } from './deps.js';
 
@@ -34,7 +35,7 @@ export interface LessonCompletedEvent {
     lessonVersion: string;
     rewardIdentity: string;
     source: 'ONLINE' | 'OFFLINE';
-    mode: 'LESSON' | 'REVIEW' | 'MASTERY' | 'PLACEMENT';
+    mode: SessionMode;
     originalCount: number;
     originalCorrect: number;
     assisted: boolean;

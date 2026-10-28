@@ -4,13 +4,25 @@
 // same item cannot both win. Completion writes session + frontier + review + outbox + receipt
 // atomically and never touches Progress tables.
 import { ServiceError } from '../../../shared/src/errors.js';
-import type { Answer, Exercise, LessonBundle, SessionMode } from '../content/types.js';
+import {
+  AUTHORED_SESSION_MODES,
+  GATE_SESSION_MODES,
+  type Answer,
+  type CourseManifest,
+  type Exercise,
+  type LessonBundle,
+  type SessionMode,
+} from '../content/types.js';
 import { gradeAnswer, gradedExercise } from '../domain/grading.js';
 import {
+  assertCheckpointUnlocked,
   assertLessonUnlocked,
   assertMasteryUnlocked,
   completeLesson,
+  completeSection,
+  completeUnit,
   nodeOfLesson,
+  sortedNodes,
   type EnrollmentView,
 } from '../domain/path.js';
 import { masteryPassed, queueState, tally, type AttemptRecord } from '../domain/session-queue.js';
@@ -36,6 +48,8 @@ export interface StartBody {
   lessonId: string;
   mode: SessionMode;
   expectedEnrollmentRevision: number;
+  activityId?: string;
+  opponentId?: string;
 }
 export interface AnswerBody {
   exerciseId: string;
@@ -105,6 +119,58 @@ function toAttempt(row: Row): AttemptRecord {
   };
 }
 
+// ---------------------------------------------------------------- authored modes
+
+function isAuthoredMode(mode: SessionMode): boolean {
+  return (AUTHORED_SESSION_MODES as readonly string[]).includes(mode);
+}
+
+function isGateMode(mode: SessionMode): boolean {
+  return (GATE_SESSION_MODES as readonly string[]).includes(mode);
+}
+
+/** Server-owned authored threshold; anything outside 0..1 counts as not authored. */
+function authoredThreshold(bundle: LessonBundle): number | null {
+  const value = bundle.modeConfig?.passThreshold;
+  return typeof value === 'number' && value >= 0 && value <= 1 ? value : null;
+}
+
+/** Authored modes fail closed when the pinned bundle does not declare the requested mode. */
+function assertModeAvailable(bundle: LessonBundle, mode: SessionMode): void {
+  if (!isAuthoredMode(mode)) return;
+  const supported = bundle.modeConfig?.modes;
+  if (supported && !supported.includes(mode))
+    throw new ServiceError('MODE_UNAVAILABLE', {
+      details: { mode, lessonId: bundle.lessonId, reason: 'MODE_NOT_AUTHORED' },
+    });
+  if (isGateMode(mode) && authoredThreshold(bundle) === null)
+    throw new ServiceError('MODE_UNAVAILABLE', {
+      details: { mode, lessonId: bundle.lessonId, reason: 'PASS_THRESHOLD_MISSING' },
+    });
+}
+
+/** CLASH opponent: a client choice must be server-known, else the authored deterministic one. */
+function resolveOpponent(bundle: LessonBundle, requested: string | undefined): string | null {
+  const config = bundle.modeConfig;
+  if (!requested) return config?.defaultOpponentId ?? null;
+  if (!(config?.opponents ?? []).includes(requested))
+    throw new ServiceError('OPPONENT_UNAVAILABLE', { details: { opponentId: requested } });
+  return requested;
+}
+
+/** The bundle is internal content; authored mode config must not leak into the wire view. */
+function wireBundle(bundle: LessonBundle): LessonBundle {
+  if (!bundle.modeConfig) return bundle;
+  const copy = { ...bundle };
+  delete copy.modeConfig;
+  return copy;
+}
+
+/** The node that became current after a monotonic frontier advance, if any. */
+function unlockedNodeOf(manifest: CourseManifest, view: EnrollmentView): string | undefined {
+  return sortedNodes(manifest).find((node) => node.order === view.frontierNodeOrder)?.nodeId;
+}
+
 // ---------------------------------------------------------------- start
 
 export async function startSession(
@@ -124,6 +190,7 @@ export async function startSession(
     hash: string;
     snapshot: string | null;
   };
+  let resolvedOpponentId: string | null = null;
   const enrollmentNow = activeEnrollment(
     await deps.persistence.read('l_enrollments', enrollmentRowId),
   );
@@ -160,8 +227,13 @@ export async function startSession(
     };
   } else {
     const index = manifest.bundles.find((b) => b.lessonId === body.lessonId);
-    if (!index) throw new ServiceError('NOT_FOUND', { details: { lessonId: body.lessonId } });
-    await deps.content.bundle(manifest, body.lessonId); // verify the file before pinning it
+    if (!index)
+      throw new ServiceError(isAuthoredMode(body.mode) ? 'ACTIVITY_NOT_FOUND' : 'NOT_FOUND', {
+        details: { lessonId: body.lessonId },
+      });
+    const { bundle } = await deps.content.bundle(manifest, body.lessonId);
+    assertModeAvailable(bundle, body.mode);
+    if (body.mode === 'CLASH') resolvedOpponentId = resolveOpponent(bundle, body.opponentId);
     bundleInfo = {
       lessonVersion: index.lessonVersion,
       rewardIdentity: index.rewardIdentity,
@@ -196,6 +268,8 @@ export async function startSession(
         assertLessonUnlocked(manifest, enrollmentView(enrollment), body.lessonId);
       if (enrollment && body.mode === 'MASTERY')
         assertMasteryUnlocked(manifest, enrollmentView(enrollment), body.lessonId);
+      if (enrollment && body.mode === 'CHECKPOINT')
+        assertCheckpointUnlocked(manifest, enrollmentView(enrollment), body.lessonId);
       await assertEnergyForStart(deps, tx, userId, body.mode);
 
       // One active online session per user/course (FR-LESSON-001).
@@ -236,6 +310,8 @@ export async function startSession(
         mode: body.mode,
         source: 'ONLINE',
         status: 'ACTIVE',
+        activityId: body.activityId ?? null,
+        opponentId: resolvedOpponentId,
         bundleHash: bundleInfo.hash,
         bundleSnapshotJson: bundleInfo.snapshot,
         nextOriginalOrdinal: 0,
@@ -290,7 +366,12 @@ export async function getSessionView(deps: LearningDeps, userId: string, session
     nextOriginalOrdinal: Number(session['nextOriginalOrdinal']),
     retryPass: Number(session['retryPass']),
     expiresAt: String(session['expiresAt']),
-    bundle,
+    bundle: wireBundle(bundle),
+    ...(session['activityId'] ? { activityId: String(session['activityId']) } : {}),
+    ...(session['opponentId'] ? { opponentId: String(session['opponentId']) } : {}),
+    ...(bundle.modeConfig?.passThreshold !== undefined
+      ? { passThreshold: bundle.modeConfig.passThreshold }
+      : {}),
     answerHistory: answers.map((row) => ({
       exerciseId: String(row['exerciseId']),
       attemptOrdinal: Number(row['attemptOrdinal']),
@@ -428,8 +509,9 @@ export async function completeSession(
   );
   const bundle = await sessionBundle(deps, preview);
   const courseId = String(preview['courseId']);
+  const previewMode = String(preview['mode']) as SessionMode;
   const manifest =
-    preview['mode'] === 'LESSON' || preview['mode'] === 'MASTERY'
+    previewMode === 'LESSON' || previewMode === 'MASTERY' || isGateMode(previewMode)
       ? (await deps.content.published(courseId)).manifest
       : null;
   // Review snapshots mix exercises from several lessons: map each back to its authored version.
@@ -469,9 +551,25 @@ export async function completeSession(
       const summary = tally(order, attempts);
       const mode = String(session['mode']) as SessionMode;
       const completedAt = iso(now);
+      const gate = isGateMode(mode);
+      const threshold = gate ? authoredThreshold(bundle) : null;
+      if (gate && threshold === null)
+        throw new ServiceError('MODE_UNAVAILABLE', {
+          details: {
+            mode,
+            lessonId: String(session['lessonId']),
+            reason: 'PASS_THRESHOLD_MISSING',
+          },
+        });
+      const passed =
+        gate &&
+        threshold !== null &&
+        summary.originalCount > 0 &&
+        summary.originalCorrect / summary.originalCount >= threshold;
 
       // Frontier / mastery (monotonic) for enrolled modes.
       let enrollmentRevision = 0;
+      let unlockedNodeId: string | undefined;
       const enrollmentId = ids.enrollment(userId, courseId);
       const enrollment = activeEnrollment(await tx.get('l_enrollments', enrollmentId));
       if (enrollment) {
@@ -484,25 +582,40 @@ export async function completeSession(
           if (node && !view.masteredNodeIds.includes(node.nodeId))
             next = { ...view, masteredNodeIds: [...view.masteredNodeIds, node.nodeId] };
         }
-        const bump = bumped(enrollment, now);
-        enrollmentRevision = bump.revision;
-        tx.put('l_enrollments', enrollmentId, {
-          ...enrollment,
-          frontierNodeOrder: next.frontierNodeOrder,
-          completedLessonsJson: JSON.stringify(next.completedLessonIds),
-          masteredNodesJson: JSON.stringify(next.masteredNodeIds),
-          lastPracticedAt:
-            mode === 'PLACEMENT' ? (enrollment['lastPracticedAt'] ?? null) : completedAt,
-          ...bump,
-        });
+        if (gate && passed && manifest) {
+          next =
+            mode === 'TEST_OUT'
+              ? completeUnit(manifest, view, String(bundle.unitId))
+              : completeSection(manifest, view, String(bundle.sectionId));
+          if (next.frontierNodeOrder > view.frontierNodeOrder)
+            unlockedNodeId = unlockedNodeOf(manifest, next);
+        }
+        if (gate && !passed) {
+          // A failed test-out/checkpoint changes nothing, not even the enrollment revision.
+          enrollmentRevision = Number(enrollment['revision']);
+        } else {
+          const bump = bumped(enrollment, now);
+          enrollmentRevision = bump.revision;
+          tx.put('l_enrollments', enrollmentId, {
+            ...enrollment,
+            frontierNodeOrder: next.frontierNodeOrder,
+            completedLessonsJson: JSON.stringify(next.completedLessonIds),
+            masteredNodesJson: JSON.stringify(next.masteredNodeIds),
+            lastPracticedAt:
+              mode === 'PLACEMENT' ? (enrollment['lastPracticedAt'] ?? null) : completedAt,
+            ...bump,
+          });
+        }
       }
-      if (mode !== 'PLACEMENT') {
+      // Gating completions and PLACEMENT earn no reward: no event and no review/mistake effects.
+      const rewards = !gate && mode !== 'PLACEMENT';
+      if (rewards) {
         await stageReviewUpdates(tx, {
           userId,
           courseId,
           exercises: bundle.exercises,
           attempts,
-          advance: mode !== 'LESSON',
+          advance: mode === 'REVIEW' || mode === 'MASTERY' || mode === 'UNIT_REVIEW',
           nowMs: now,
         });
         await stageMistakes(deps, tx, {
@@ -529,11 +642,12 @@ export async function completeSession(
         mode,
         completedAt,
         enrollmentRevision,
-        // PLACEMENT earns no reward/activity: no event is emitted for it.
-        rewardStatus: mode === 'PLACEMENT' ? ('notEligible' as const) : ('pending' as const),
+        // PLACEMENT and gating completions earn no reward/activity: no event is emitted.
+        rewardStatus: rewards ? ('pending' as const) : ('notEligible' as const),
         needsReviewIds: summary.needsReviewIds,
+        ...(gate ? { passed, ...(unlockedNodeId ? { unlockedNodeId } : {}) } : {}),
       };
-      if (mode !== 'PLACEMENT') {
+      if (rewards) {
         const event: LessonCompletedEvent = {
           eventId: deps.newId(),
           type: 'lesson.completed.v1',

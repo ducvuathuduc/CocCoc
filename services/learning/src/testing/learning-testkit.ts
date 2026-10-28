@@ -13,6 +13,7 @@ export { LEARNING_TABLES } from '../persistence/port.js';
 export {
   DEV_CONTENT_KEY_ID,
   devContentKeyring,
+  devContentPrivateKey,
   devContentPublicKeyHex,
 } from './dev-content-key.js';
 export { createTestApp } from './test-app.js';
