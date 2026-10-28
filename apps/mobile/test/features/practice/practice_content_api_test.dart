@@ -8,7 +8,7 @@ import 'package:cocenglish/features/practice/data/activity_progress_repository.d
 import 'package:cocenglish/features/practice/data/practice_content_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../support/fake_api_transport.dart';
+import '../../support/fake_api_transport.dart';
 
 final Map<String, Object?> bundle = jsonDecode(
   File('test/fixtures/api/lesson_bundle_u1n1l1.json').readAsStringSync(),
@@ -128,11 +128,11 @@ void main() {
       expect(await repository.reviewItems(), isEmpty);
     });
 
-    test('mock data layer keeps the local practice fixtures', () {
+    test('mock data layer keeps the local practice fixtures', () async {
       final mock = MockPracticeContentRepository();
       expect(mock.isRemote, isFalse);
       expect(
-        mock.practiceExercises(ExerciseKind.speakRepeat).single.id,
+        (await mock.practiceExercises(ExerciseKind.speakRepeat)).single.id,
         'english-practice-speak',
       );
     });
@@ -142,7 +142,8 @@ void main() {
     late FakeApiTransport transport;
 
     setUp(() {
-      transport = FakeApiTransport()..json('GET /v1/activities', activityPage());
+      transport = FakeApiTransport()
+        ..json('GET /v1/activities', activityPage());
     });
 
     test('maps library progress without inventing values', () async {

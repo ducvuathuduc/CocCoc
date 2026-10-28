@@ -5,6 +5,7 @@ import 'package:cocenglish/features/progress/data/league_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/app_fonts.dart';
+import 'support/native_test_runtime.dart';
 
 /// Global test setup. Idle mascots loop forever in the app; in widget tests
 /// they hold their first frame so `pumpAndSettle` stays deterministic. Tests that
@@ -16,6 +17,7 @@ import 'support/app_fonts.dart';
 /// Goldens are canonical on Linux with the Flutter version pinned in
 /// tools/toolchain.json (the CI platform); regenerate them there.
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
+  initializeNativeTestRuntime();
   TestWidgetsFlutterBinding.ensureInitialized();
   DuoMotion.debugSingleCycleLoops = true;
   debugPinReferenceLeague = true;

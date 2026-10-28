@@ -11,7 +11,10 @@ abstract interface class FamilyRepository {
   Future<FamilyGroup> create({required String plan});
 
   /// `POST /v1/family/{groupId}/members` with the group's invite code.
-  Future<FamilyGroup> join({required String groupId, required String inviteCode});
+  Future<FamilyGroup> join({
+    required String groupId,
+    required String inviteCode,
+  });
 
   /// `DELETE /v1/family/{groupId}/members/{userId}`; the manager cannot leave.
   Future<FamilyGroup> removeMember({
@@ -47,7 +50,9 @@ class MockFamilyRepository implements FamilyRepository {
     if (plan != 'SUPER' && plan != 'MAX') {
       throw ArgumentError.value(plan, 'plan', 'SUPER or MAX');
     }
-    if (_group != null) throw const FamilyException(FamilyFailure.alreadyInFamily);
+    if (_group != null) {
+      throw const FamilyException(FamilyFailure.alreadyInFamily);
+    }
     _revision = 0;
     return _group = FamilyGroup(
       groupId: 'family-demo',

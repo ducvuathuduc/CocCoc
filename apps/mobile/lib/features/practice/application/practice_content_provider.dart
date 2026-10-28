@@ -42,18 +42,19 @@ final practiceReviewProvider = FutureProvider<List<PracticeReviewItem>>(
   (ref) => ref.watch(practiceContentRepositoryProvider).reviewItems(),
 );
 
-final activityProgressRepositoryProvider =
-    Provider<ActivityProgressRepository>((ref) {
-      final config = ref.watch(appConfigProvider);
-      final user = ref.watch(practiceAccountProvider);
-      if (!config.isApi || user == null || user.guest) {
-        return const MockActivityProgressRepository();
-      }
-      return ApiActivityProgressRepository(
-        ref.watch(apiEndpointsProvider),
-        ref.watch(activeCourseProvider),
-      );
-    });
+final activityProgressRepositoryProvider = Provider<ActivityProgressRepository>(
+  (ref) {
+    final config = ref.watch(appConfigProvider);
+    final user = ref.watch(practiceAccountProvider);
+    if (!config.isApi || user == null || user.guest) {
+      return const MockActivityProgressRepository();
+    }
+    return ApiActivityProgressRepository(
+      ref.watch(apiEndpointsProvider),
+      ref.watch(activeCourseProvider),
+    );
+  },
+);
 
 /// Library progress for one activity kind (`STORY`, `RADIO`, ...); null lists
 /// every kind.

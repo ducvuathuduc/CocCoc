@@ -20,9 +20,15 @@ Map<String, Object?> receipt() => {
 
 final class _AbandonFake implements LearningRepository, AbandonableSession {
   int abandonCalls = 0;
+  bool failAbandon = false;
 
   @override
-  Future<void> abandonSession() async => abandonCalls += 1;
+  Future<void> abandonSession() async {
+    abandonCalls += 1;
+    if (failAbandon) {
+      throw const LearningFailure('Please retry ending this lesson.');
+    }
+  }
 
   @override
   Future<SessionReceipt> complete({
@@ -87,24 +93,50 @@ void main() {
     );
   });
 
-  test('abandon releases the active server slot and clears the journal', () async {
-    await repo.loadLesson('node-0');
+  test(
+    'abandon releases the active server slot and clears the journal',
+    () async {
+      await repo.loadLesson('node-0');
 
-    await repo.abandonSession();
+      await repo.abandonSession();
 
-    final request = transport.to('POST /v1/sessions/sess-1/abandon').single;
-    expect(bodyOf(request), {'expectedRevision': 0});
-    expect(request.headers['Idempotency-Key'], isNotEmpty);
-    expect(await journal.active(), isNull);
-  });
+      final request = transport.to('POST /v1/sessions/sess-1/abandon').single;
+      expect(bodyOf(request), {'expectedRevision': 0});
+      expect(request.headers['Idempotency-Key'], isNotEmpty);
+      expect(await journal.active(), isNull);
+    },
+  );
 
   test('offline abandon keeps the journal so the lesson can resume', () async {
     await repo.loadLesson('node-0');
     transport.offline = true;
 
-    await repo.abandonSession();
+    await expectLater(repo.abandonSession(), throwsA(isA<LearningFailure>()));
 
     expect(await journal.active(), isNotNull);
+  });
+
+  test('an uncertain abandon retries the same key and body after reopening the repository', () async {
+    await repo.loadLesson('node-0');
+    transport.offline = true;
+    await expectLater(repo.abandonSession(), throwsA(isA<LearningFailure>()));
+    final failed = transport.to('POST /v1/sessions/sess-1/abandon').first;
+    final stored = await journal.active();
+    expect(stored!.toJson()['abandonKey'], failed.headers['Idempotency-Key']);
+    transport.offline = false;
+    final reopened = ApiLearningRepository(
+      learning: LearningApi(fakeClient(transport)),
+      journal: journal,
+      ids: SequenceIds(),
+    );
+    await reopened.abandonSession();
+    final retried = transport.to('POST /v1/sessions/sess-1/abandon').last;
+    expect(
+      retried.headers['Idempotency-Key'],
+      failed.headers['Idempotency-Key'],
+    );
+    expect(bodyOf(retried), bodyOf(failed));
+    expect(await journal.active(), isNull);
   });
 
   test('a server-side completed session clears the local journal', () async {
@@ -148,13 +180,40 @@ void main() {
       nodeId: 'node-0',
       exercises: [mockEnglishExercises.first],
     );
-    expect(container.read(lessonControllerProvider).stage, LessonStage.answering);
+    expect(
+      container.read(lessonControllerProvider).stage,
+      LessonStage.answering,
+    );
 
     controller.abandon();
+    await Future<void>.delayed(Duration.zero);
 
     expect(fake.abandonCalls, 1);
     expect(container.read(lessonControllerProvider).stage, LessonStage.idle);
   });
+
+  test(
+    'failed abandon keeps the lesson open and exposes a retryable error',
+    () async {
+      final fake = _AbandonFake()..failAbandon = true;
+      final container = ProviderContainer(
+        overrides: [learningRepositoryProvider.overrideWithValue(fake)],
+      );
+      addTearDown(container.dispose);
+      final controller = container.read(lessonControllerProvider.notifier);
+      await controller.start(exercises: [mockEnglishExercises.first]);
+      controller.abandon();
+      await Future<void>.delayed(Duration.zero);
+      final failed = container.read(lessonControllerProvider);
+      expect(failed.stage, LessonStage.answering);
+      expect(failed.error, contains('retry'));
+      expect(failed.busy, isFalse);
+      fake.failAbandon = false;
+      controller.abandon();
+      await Future<void>.delayed(Duration.zero);
+      expect(container.read(lessonControllerProvider).stage, LessonStage.idle);
+    },
+  );
 
   test('mock lessons abandon locally without an API call', () {
     final container = ProviderContainer();
@@ -165,13 +224,16 @@ void main() {
     expect(repository, isA<AbandonableSession>());
   });
 
-  test('ApiEndpoints expose the abandon command for the practice owner', () async {
-    final api = ApiEndpoints(fakeClient(transport));
-    await api.abandonSession(
-      'sess-1',
-      const wire.CompleteRequest(expectedRevision: 0),
-      idempotencyKey: 'key-1',
-    );
-    expect(transport.to('POST /v1/sessions/sess-1/abandon'), hasLength(1));
-  });
+  test(
+    'ApiEndpoints expose the abandon command for the practice owner',
+    () async {
+      final api = ApiEndpoints(fakeClient(transport));
+      await api.abandonSession(
+        'sess-1',
+        const wire.CompleteRequest(expectedRevision: 0),
+        idempotencyKey: 'key-1',
+      );
+      expect(transport.to('POST /v1/sessions/sess-1/abandon'), hasLength(1));
+    },
+  );
 }

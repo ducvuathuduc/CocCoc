@@ -56,43 +56,52 @@ ApiSettingsRepository apiSettings(
 Future<void> settle() => Future<void>.delayed(Duration.zero);
 
 void main() {
-  test('API social switches show the identities linked on the account', () async {
-    final repository = apiSettings(FakeIdentityGateway(linked: {'google'}));
-    final container = ProviderContainer(
-      overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
-    );
-    addTearDown(container.dispose);
-    container.read(settingsExtrasControllerProvider);
+  test(
+    'API social switches show the identities linked on the account',
+    () async {
+      final repository = apiSettings(FakeIdentityGateway(linked: {'google'}));
+      final container = ProviderContainer(
+        overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
+      );
+      addTearDown(container.dispose);
+      container.read(settingsExtrasControllerProvider);
 
-    await settle();
-    expect(container.read(settingsExtrasControllerProvider).connected, {
-      'google',
-    });
-    expect(container.read(settingsExtrasControllerProvider).error, isNull);
-  });
+      await settle();
+      expect(container.read(settingsExtrasControllerProvider).connected, {
+        'google',
+      });
+      expect(container.read(settingsExtrasControllerProvider).error, isNull);
+    },
+  );
 
-  test('linking then unlinking a provider follows the account identities', () async {
-    final gateway = FakeIdentityGateway();
-    final repository = apiSettings(gateway);
-    final container = ProviderContainer(
-      overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
-    );
-    addTearDown(container.dispose);
-    final vm = container.read(settingsExtrasControllerProvider.notifier);
-    await settle();
+  test(
+    'linking then unlinking a provider follows the account identities',
+    () async {
+      final gateway = FakeIdentityGateway();
+      final repository = apiSettings(gateway);
+      final container = ProviderContainer(
+        overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
+      );
+      addTearDown(container.dispose);
+      final vm = container.read(settingsExtrasControllerProvider.notifier);
+      await settle();
 
-    await vm.setSocial('google', true);
-    expect(gateway.linkedRequests, ['google']);
-    expect(container.read(settingsExtrasControllerProvider).connected, {
-      'google',
-    });
-    expect(container.read(settingsExtrasControllerProvider).error, isNull);
+      await vm.setSocial('google', true);
+      expect(gateway.linkedRequests, ['google']);
+      expect(container.read(settingsExtrasControllerProvider).connected, {
+        'google',
+      });
+      expect(container.read(settingsExtrasControllerProvider).error, isNull);
 
-    await vm.setSocial('google', false);
-    expect(gateway.unlinkedRequests, ['google']);
-    expect(container.read(settingsExtrasControllerProvider).connected, isEmpty);
-    expect(repository.connectedSocial, isEmpty);
-  });
+      await vm.setSocial('google', false);
+      expect(gateway.unlinkedRequests, ['google']);
+      expect(
+        container.read(settingsExtrasControllerProvider).connected,
+        isEmpty,
+      );
+      expect(repository.connectedSocial, isEmpty);
+    },
+  );
 
   test('a failed link keeps the switch off with a neutral message', () async {
     final gateway = FakeIdentityGateway()
@@ -137,9 +146,8 @@ void main() {
   });
 
   group('AppwriteSocialIdentityGateway', () {
-    SocialIdentityGateway unconfigured() => AppwriteSocialIdentityGateway(
-      AppwriteAuthService.withAccount(null),
-    );
+    SocialIdentityGateway unconfigured() =>
+        AppwriteSocialIdentityGateway(AppwriteAuthService.withAccount(null));
 
     test('an SDK that is not configured reports no identities', () async {
       await expectLater(

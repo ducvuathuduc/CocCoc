@@ -1,4 +1,6 @@
+import '../../../core/api/api_contracts.dart' as wire;
 import '../../../core/api/client/api_endpoints.g.dart';
+import '../../../core/api/client/idempotency.dart';
 import '../domain/energy_offer.dart';
 
 abstract class EnergyRepository {
@@ -36,14 +38,57 @@ class MockEnergyRepository implements EnergyRepository {
           .clamp(0, capacity);
 }
 
-/// Existing getEnergy contract supports reads. There is no free/recharge
-/// command: those preview actions stay disabled in API mode.
+/// Server-authoritative energy reads and refills.
+///
+/// Recharge buys the server's `ENERGY_REFILL` shop item; ads and free offers
+/// grant through their own server flows. Every refill waits for the server
+/// balance to rise instead of echoing the requested amount.
 class ApiEnergyRepository extends MockEnergyRepository {
-  ApiEnergyRepository(this.api);
+  ApiEnergyRepository(
+    this.api, {
+    this.pollInterval = const Duration(milliseconds: 400),
+    this.polls = 5,
+    IdGenerator? ids,
+  }) : _ids = ids ?? UuidV4Generator();
+
   final ApiEndpoints api;
+  final Duration pollInterval;
+  final int polls;
+  final IdGenerator _ids;
+
   @override
   Future<int> readBalance(int previewBalance) async =>
       (await api.getEnergy()).balance;
+
   @override
-  Future<int> refill(EnergyOffer offer, int balance) => readBalance(balance);
+  Future<int> refill(EnergyOffer offer, int balance) async {
+    if (offer.kind == EnergyRefillKind.recharge) {
+      final shop = await api.listShop();
+      final item = shop.items
+          .where((candidate) => candidate.kind == 'ENERGY_REFILL')
+          .firstOrNull;
+      if (item == null || !item.available) return balance;
+      await api.buyItem(
+        wire.ShopPurchaseRequest(
+          itemId: item.itemId,
+          quantity: 1,
+          catalogVersion: shop.catalogVersion,
+        ),
+        idempotencyKey: _ids.next(),
+      );
+    }
+    return _awaitIncrease(balance);
+  }
+
+  Future<int> _awaitIncrease(int balance) async {
+    var current = balance;
+    for (var poll = 0; poll < polls; poll++) {
+      current = await readBalance(current);
+      if (current > balance) return current;
+      if (poll + 1 < polls && pollInterval > Duration.zero) {
+        await Future<void>.delayed(pollInterval);
+      }
+    }
+    return current;
+  }
 }

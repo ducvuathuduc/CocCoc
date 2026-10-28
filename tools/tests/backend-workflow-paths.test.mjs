@@ -10,6 +10,7 @@ test('backend CI runs when its content, contract, toolchain and workspace inputs
     for (const required of [
       'content/**',
       'tools/blueprint/**',
+      'tools/postman/**',
       'tools/tests/dart-contract-line-endings.test.mjs',
       '.gitattributes',
       'pnpm-workspace.yaml',
@@ -23,4 +24,10 @@ test('backend CI runs when its content, contract, toolchain and workspace inputs
     ),
     'bounded local load smoke is missing',
   );
+  for (const command of ['pnpm postman:check', 'pnpm postman:test', 'pnpm postman:run:local']) {
+    assert.ok(
+      workflow.jobs.deterministic.steps.some((step) => step.run === command),
+      command,
+    );
+  }
 });

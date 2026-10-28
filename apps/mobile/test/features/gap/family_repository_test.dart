@@ -24,15 +24,15 @@ Map<String, Object?> familyGroup({
   'status': 'ACTIVE',
   'members':
       members ??
-      [
-        member('u-1', 'An', 'MANAGER'),
-        member('u-2', 'Binh', 'MEMBER'),
-      ],
+      [member('u-1', 'An', 'MANAGER'), member('u-2', 'Binh', 'MEMBER')],
   'inviteCode': inviteCode,
   'revision': revision,
 };
 
-Map<String, Object?> error(String code, {Map<String, Object?> details = const {}}) => {
+Map<String, Object?> error(
+  String code, {
+  Map<String, Object?> details = const {},
+}) => {
   'error': {
     'code': code,
     'message': 'failure',
@@ -71,9 +71,8 @@ void main() {
   test('API join posts the invite code to the group path', () async {
     final transport = FakeApiTransport()
       ..json('POST /base/v1/family/g-1/members', familyGroup(revision: 1));
-    final group = await apiFamilyRepository(
-      transport,
-    ).join(groupId: 'g-1', inviteCode: 'ABCD-1234');
+    final group = await apiFamilyRepository(transport)
+        .join(groupId: 'g-1', inviteCode: 'ABCD-1234');
 
     expect(group.revision, 1);
     expect(bodyOf(transport.requests.single), {'inviteCode': 'ABCD-1234'});
@@ -84,14 +83,10 @@ void main() {
     final transport = FakeApiTransport()
       ..json(
         'DELETE /base/v1/family/g-1/members/u-2',
-        familyGroup(
-          members: [member('u-1', 'An', 'MANAGER')],
-          revision: 2,
-        ),
+        familyGroup(members: [member('u-1', 'An', 'MANAGER')], revision: 2),
       );
-    final group = await apiFamilyRepository(
-      transport,
-    ).removeMember(groupId: 'g-1', userId: 'u-2');
+    final group = await apiFamilyRepository(transport)
+        .removeMember(groupId: 'g-1', userId: 'u-2');
 
     expect(group.members.map((m) => m.userId), ['u-1']);
     expect(transport.requests.single.method, 'DELETE');
@@ -193,10 +188,7 @@ void main() {
     );
     expect(joined.members, hasLength(2));
     await expectLater(
-      repo.removeMember(
-        groupId: created.groupId,
-        userId: created.ownerUserId,
-      ),
+      repo.removeMember(groupId: created.groupId, userId: created.ownerUserId),
       throwsA(
         isA<FamilyException>().having(
           (e) => e.failure,

@@ -70,9 +70,9 @@ class ApiStreakRepairRepository implements StreakRepairRepository {
   ApiStreakRepairRepository(
     this.api, {
     this.offer,
-    ProgressSnapshotSource? source,
+    this._source,
     this.content = const StreakRepairContent(),
-  }) : _source = source;
+  });
 
   final ApiEndpoints api;
   final ProgressSnapshotSource? _source;

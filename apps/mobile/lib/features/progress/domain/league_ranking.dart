@@ -25,4 +25,3 @@ class LeagueRanking {
   /// Server tier when known; null for the local preview league.
   final LeagueTier? tier;
 }
-

@@ -10,12 +10,11 @@ import '../../../core/api/api_contracts.dart' as wire;
 /// (hang-up, completion or abandon) and is idempotent.
 final class VoiceSessionHeartbeat {
   VoiceSessionHeartbeat({
-    required Future<void> Function(wire.VoiceHeartbeat body) beat,
+    required this._beat,
     required this.epoch,
     this.interval = const Duration(seconds: 10),
     DateTime Function()? clock,
-  }) : _beat = beat,
-       clock = clock ?? DateTime.now {
+  }) : clock = clock ?? DateTime.now {
     if (interval <= Duration.zero) {
       throw ArgumentError.value(interval, 'interval', 'must be positive');
     }
@@ -55,7 +54,8 @@ final class VoiceSessionHeartbeat {
       final started = _startedAt;
       final elapsed = started == null
           ? 0
-          : clock().difference(started).inSeconds.clamp(0, 180).toInt();      await _beat(
+          : clock().difference(started).inSeconds.clamp(0, 180).toInt();
+      await _beat(
         wire.VoiceHeartbeat(
           epoch: epoch,
           elapsedSeconds: elapsed,

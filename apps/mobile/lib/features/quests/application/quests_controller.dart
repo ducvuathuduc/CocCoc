@@ -101,6 +101,16 @@ class QuestsController extends Notifier<QuestsTabState> {
     );
   }
 
+  Future<bool> optInFriendQuest() async {
+    final repository = ref.read(questsRepositoryProvider);
+    if (repository is! FriendQuestCommands) return false;
+    try {
+      return await (repository as FriendQuestCommands).optInFriendQuest();
+    } catch (_) {
+      return false;
+    }
+  }
+
   void setFriendsQuest(FriendsQuest quest) {
     state = state.copyWith(friendsQuest: quest);
   }

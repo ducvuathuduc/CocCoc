@@ -1,7 +1,8 @@
 import '../../../core/api/client/active_course.dart';
 import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_exception.dart';
-import '../../learning/data/learning_repository.dart' show mockPracticeExercises;
+import '../../learning/data/learning_repository.dart'
+    show mockPracticeExercises;
 import '../../learning/data/lesson_wire_mapper.dart';
 import '../../learning/domain/learning_models.dart';
 
@@ -88,12 +89,11 @@ class ApiPracticeContentRepository implements PracticeContentRepository {
       final path = await api.getPath(courseId, limit: 100);
       final nodes = [...path.nodes]..sort((a, b) => a.order.compareTo(b.order));
       final node =
-          nodes
-              .where((item) => item.state == 'current')
-              .firstOrNull ??
+          nodes.where((item) => item.state == 'current').firstOrNull ??
           nodes
               .where(
-                (item) => item.state == 'available' && item.lessonIds.isNotEmpty,
+                (item) =>
+                    item.state == 'available' && item.lessonIds.isNotEmpty,
               )
               .firstOrNull ??
           nodes.where((item) => item.lessonIds.isNotEmpty).firstOrNull;
@@ -103,10 +103,7 @@ class ApiPracticeContentRepository implements PracticeContentRepository {
         orElse: () => node.lessonIds.first,
       );
       final bundle = await api.getBundle(lessonId);
-      final mapper = LessonWireMapper(
-        bundle.exercises,
-        assets: bundle.assets,
-      );
+      final mapper = LessonWireMapper(bundle.exercises, assets: bundle.assets);
       return _bundle = mapper.toDomain();
     } on ApiException {
       // Offline or unavailable content: the local practice fixture stays.

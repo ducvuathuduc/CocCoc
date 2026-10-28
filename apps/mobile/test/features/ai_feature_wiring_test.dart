@@ -4,7 +4,6 @@ import 'package:cocenglish/core/api/api_contracts.dart' as wire;
 import 'package:cocenglish/core/api/client/active_course.dart';
 import 'package:cocenglish/core/api/client/api_endpoints.g.dart';
 import 'package:cocenglish/core/api/client/api_providers.dart';
-import 'package:cocenglish/core/api/client/api_transport.dart';
 import 'package:cocenglish/core/audio/speech_recorder.dart';
 import 'package:cocenglish/core/config/app_config.dart';
 import 'package:cocenglish/features/call/data/ai_capabilities.dart';
@@ -174,10 +173,7 @@ void main() {
       ],
     );
     addTearDown(offlineContainer.dispose);
-    expect(
-      await offlineContainer.read(aiCapabilitiesProvider.future),
-      isNull,
-    );
+    expect(await offlineContainer.read(aiCapabilitiesProvider.future), isNull);
     expect(offlineContainer.read(speechAssessorProvider), isNull);
   });
 
@@ -234,96 +230,101 @@ void main() {
     );
   });
 
-  test('an expired pending assessment falls back to a nullable verdict', () async {
-    final transport = FakeApiTransport();
-    final api = endpointsFor(transport);
-    transport.json(
-      'POST /v1/assessment-jobs',
-      assessment(
-        status: 'QUEUED',
-        state: 'NULL_UNAVAILABLE',
-        expiresAt: '2026-10-12T07:59:00.000Z',
-      ),
-      status: 202,
-    );
-    final assessor = ApiSpeechAssessor(
-      api,
-      pollInterval: Duration.zero,
-      now: () => DateTime.utc(2026, 10, 12, 8),
-      sleep: (_) async {},
-    );
-    final verdict = await assessor.assess(
-      _testWav,
-      exerciseId: 'practice-pronunciation-1',
-      referenceText: 'Hello, Sam.',
-    );
-    expect(verdict.scored, isFalse);
-    expect(verdict.accuracy, isNull);
-    expect(
-      transport.to(
-        'GET /v1/assessment-jobs/00000000-0000-4000-8000-000000000001',
-      ),
-      isEmpty,
-    );
-  });
-
-  test('call heartbeats its open voice session and stops after hang-up', () async {
-    final transport = FakeApiTransport();
-    final api = endpointsFor(transport);
-    const sessionId = '00000000-0000-4000-8000-000000000001';
-    transport
-      ..on(
-        'POST /v1/voice-sessions',
-        (r) => jsonResponse(lease(bodyOf(r)['sessionId']! as String)),
-      )
-      ..json(
-        'POST /v1/conversations',
-        conversation('c-call', 'rp_daily_routine'),
-      )
-      ..json(
-        'POST /v1/voice-sessions/$sessionId/heartbeat',
-        voiceState(sessionId),
-      )
-      ..json('POST /v1/conversations/c-call/complete', conversation(
-        'c-call',
-        'rp_daily_routine',
-        status: 'COMPLETED',
-      ))
-      ..json(
-        'POST /v1/voice-sessions/$sessionId/close',
-        voiceState(sessionId, status: 'CLOSED'),
+  test(
+    'an expired pending assessment falls back to a nullable verdict',
+    () async {
+      final transport = FakeApiTransport();
+      final api = endpointsFor(transport);
+      transport.json(
+        'POST /v1/assessment-jobs',
+        assessment(
+          status: 'QUEUED',
+          state: 'NULL_UNAVAILABLE',
+          expiresAt: '2026-10-12T07:59:00.000Z',
+        ),
+        status: 202,
       );
-    final repo = ApiCallRepository(
-      api,
-      ActiveCourse(api, fixed: 'vi_en'),
-      heartbeatInterval: const Duration(milliseconds: 5),
-    );
-    final session = await repo.loadSession('lily');
-    await Future<void>.delayed(const Duration(milliseconds: 30));
-    final beats = transport.to(
-      'POST /v1/voice-sessions/$sessionId/heartbeat',
-    );
-    expect(beats, isNotEmpty);
-    final body = bodyOf(beats.last);
-    expect(body['epoch'], 3);
-    expect(body['turnCount'], 0);
-    expect(body['elapsedSeconds'], isA<int>());
+      final assessor = ApiSpeechAssessor(
+        api,
+        pollInterval: Duration.zero,
+        now: () => DateTime.utc(2026, 10, 12, 8),
+        sleep: (_) async {},
+      );
+      final verdict = await assessor.assess(
+        _testWav,
+        exerciseId: 'practice-pronunciation-1',
+        referenceText: 'Hello, Sam.',
+      );
+      expect(verdict.scored, isFalse);
+      expect(verdict.accuracy, isNull);
+      expect(
+        transport.to(
+          'GET /v1/assessment-jobs/00000000-0000-4000-8000-000000000001',
+        ),
+        isEmpty,
+      );
+    },
+  );
 
-    await repo.completeCall(session.id, 0);
-    await Future<void>.delayed(const Duration(milliseconds: 20));
-    final stopped = transport
-        .to('POST /v1/voice-sessions/$sessionId/heartbeat')
-        .length;
-    await Future<void>.delayed(const Duration(milliseconds: 20));
-    expect(
-      transport.to('POST /v1/voice-sessions/$sessionId/heartbeat'),
-      hasLength(stopped),
-    );
-    expect(
-      transport.to('POST /v1/voice-sessions/$sessionId/close'),
-      hasLength(1),
-    );
-  });
+  test(
+    'call heartbeats its open voice session and stops after hang-up',
+    () async {
+      final transport = FakeApiTransport();
+      final api = endpointsFor(transport);
+      const sessionId = '00000000-0000-4000-8000-000000000001';
+      transport
+        ..on(
+          'POST /v1/voice-sessions',
+          (r) => jsonResponse(lease(bodyOf(r)['sessionId']! as String)),
+        )
+        ..json(
+          'POST /v1/conversations',
+          conversation('c-call', 'rp_daily_routine'),
+        )
+        ..json(
+          'POST /v1/voice-sessions/$sessionId/heartbeat',
+          voiceState(sessionId),
+        )
+        ..json(
+          'POST /v1/conversations/c-call/complete',
+          conversation('c-call', 'rp_daily_routine', status: 'COMPLETED'),
+        )
+        ..json(
+          'POST /v1/voice-sessions/$sessionId/close',
+          voiceState(sessionId, status: 'CLOSED'),
+        );
+      final repo = ApiCallRepository(
+        api,
+        ActiveCourse(api, fixed: 'vi_en'),
+        heartbeatInterval: const Duration(milliseconds: 5),
+      );
+      final session = await repo.loadSession('lily');
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+      final beats = transport.to(
+        'POST /v1/voice-sessions/$sessionId/heartbeat',
+      );
+      expect(beats, isNotEmpty);
+      final body = bodyOf(beats.last);
+      expect(body['epoch'], 3);
+      expect(body['turnCount'], 0);
+      expect(body['elapsedSeconds'], isA<int>());
+
+      await repo.completeCall(session.id, 0);
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+      final stopped = transport
+          .to('POST /v1/voice-sessions/$sessionId/heartbeat')
+          .length;
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+      expect(
+        transport.to('POST /v1/voice-sessions/$sessionId/heartbeat'),
+        hasLength(stopped),
+      );
+      expect(
+        transport.to('POST /v1/voice-sessions/$sessionId/close'),
+        hasLength(1),
+      );
+    },
+  );
 
   test('roleplay heartbeats a capability-gated voice session', () async {
     final transport = FakeApiTransport();
@@ -400,50 +401,47 @@ void main() {
     );
   });
 
-  test('explain my answer uses the server tutor and the real lesson id', () async {
-    final transport = FakeApiTransport();
-    transport.on(
-      'POST /v1/tutor',
-      (r) => jsonResponse(tutor(bodyOf(r))),
-    );
-    final container = ProviderContainer(
-      overrides: [
-        appConfigProvider.overrideWithValue(apiConfig()),
-        apiEndpointsProvider.overrideWithValue(endpointsFor(transport)),
-      ],
-    );
-    addTearDown(container.dispose);
-    const exercise = Exercise(
-      id: 'srv-explain-1',
-      kind: ExerciseKind.textTranslation,
-      title: 'Translate to English',
-      prompt: 'Con mèo',
-      correctText: 'The cat',
-    );
-    final request = ExplanationRequest(
-      exercise: exercise,
-      nodeId: 'node-7',
-      answer: 'a cat',
-    );
-    final explanation = await container.read(
-      exerciseExplanationProvider(request).future,
-    );
-    expect(explanation?.$1, contains('“the”'));
-    expect(explanation?.$2.single, contains('Good try!'));
-    final body = bodyOf(transport.to('POST /v1/tutor').single);
-    expect(body['exerciseId'], 'srv-explain-1');
-    expect(body['learnerText'], 'a cat');
-    expect(body['feedbackLocale'], 'vi-VN');
-  });
+  test(
+    'explain my answer uses the server tutor and the real lesson id',
+    () async {
+      final transport = FakeApiTransport();
+      transport.on('POST /v1/tutor', (r) => jsonResponse(tutor(bodyOf(r))));
+      final container = ProviderContainer(
+        overrides: [
+          appConfigProvider.overrideWithValue(apiConfig()),
+          apiEndpointsProvider.overrideWithValue(endpointsFor(transport)),
+        ],
+      );
+      addTearDown(container.dispose);
+      const exercise = Exercise(
+        id: 'srv-explain-1',
+        kind: ExerciseKind.textTranslation,
+        title: 'Translate to English',
+        prompt: 'Con mèo',
+        correctText: 'The cat',
+      );
+      final request = ExplanationRequest(
+        exercise: exercise,
+        nodeId: 'node-7',
+        answer: 'a cat',
+      );
+      final explanation = await container.read(
+        exerciseExplanationProvider(request).future,
+      );
+      expect(explanation?.$1, contains('“the”'));
+      expect(explanation?.$2.single, contains('Good try!'));
+      final body = bodyOf(transport.to('POST /v1/tutor').single);
+      expect(body['exerciseId'], 'srv-explain-1');
+      expect(body['learnerText'], 'a cat');
+      expect(body['feedbackLocale'], 'vi-VN');
+    },
+  );
 
   testWidgets('explanation screen renders the server bundle explanation', (
     tester,
   ) async {
     final transport = FakeApiTransport();
-    transport.on(
-      'POST /v1/tutor',
-      (r) => jsonResponse(tutor(bodyOf(r))),
-    );
+    transport.on('POST /v1/tutor', (r) => jsonResponse(tutor(bodyOf(r))));
     await tester.pumpWidget(
       ProviderScope(
         overrides: [

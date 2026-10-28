@@ -74,8 +74,10 @@ void main() {
     expect(friends.first.name, 'Alex Smith');
     expect(friends.first.username, 'alex.smith');
     expect(repo.friends.map((f) => f.id), ['u-alex', 'u-linh']);
-    expect(transport.to('GET /base/v1/friends').single.headers['Authorization'],
-        'Bearer jwt-test');
+    expect(
+      transport.to('GET /base/v1/friends').single.headers['Authorization'],
+      'Bearer jwt-test',
+    );
   });
 
   test('API gift posts the friend userId, not a demo recipient id', () async {
@@ -141,7 +143,10 @@ void main() {
 
     final redemption = await vm.receiveGift('gift-9');
     expect(redemption?.giftId, 'gift-9');
-    expect(container.read(giftControllerProvider).lastRedemption?.plan, 'SUPER');
+    expect(
+      container.read(giftControllerProvider).lastRedemption?.plan,
+      'SUPER',
+    );
   });
 
   test('mock mode keeps the demo recipients and local checkout', () async {

@@ -196,7 +196,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     if (action == 'pause') {
       controller.pause();
     } else {
-      controller.abandon();
+      if (!await controller.abandon() || !mounted) return;
     }
     context.pop();
   }
@@ -219,9 +219,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     showHeartsOfferSheet(
       context,
       heartsAnchor: _heartsKey,
-      onEnd: () {
-        controller.abandon();
-        if (mounted) context.pop();
+      onEnd: () async {
+        if (await controller.abandon() && mounted) context.pop();
       },
     );
   }

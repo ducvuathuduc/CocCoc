@@ -29,9 +29,7 @@ class ApiReferralRepository implements ReferralRepository {
   }) async {
     final code = normalizeReferralCode(raw);
     if (code == null) {
-      return const ReferralRedeemResult.failure(
-        ReferralFailure.invalidFormat,
-      );
+      return const ReferralRedeemResult.failure(ReferralFailure.invalidFormat);
     }
     try {
       await api.redeemReferral(

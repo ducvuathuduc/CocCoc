@@ -92,6 +92,8 @@ final class JournalSession {
     required this.completeKey,
     this.sessionId,
     this.revision = 0,
+    this.abandonKey,
+    this.abandonRevision,
     this.answers = const <JournalAnswer>[],
   });
 
@@ -107,6 +109,8 @@ final class JournalSession {
     completeKey: json['completeKey']! as String,
     sessionId: json['sessionId'] as String?,
     revision: (json['revision'] as num?)?.toInt() ?? 0,
+    abandonKey: json['abandonKey'] as String?,
+    abandonRevision: (json['abandonRevision'] as num?)?.toInt(),
     answers: [
       for (final item in (json['answers'] as List<Object?>? ?? const []))
         JournalAnswer.fromJson(Map<String, Object?>.from(item! as Map)),
@@ -134,6 +138,8 @@ final class JournalSession {
   /// Server session; null when the lesson started offline.
   final String? sessionId;
   final int revision;
+  final String? abandonKey;
+  final int? abandonRevision;
   final List<JournalAnswer> answers;
 
   bool get offline => sessionId == null;
@@ -141,6 +147,8 @@ final class JournalSession {
   JournalSession copyWith({
     String? sessionId,
     int? revision,
+    String? abandonKey,
+    int? abandonRevision,
     List<JournalAnswer>? answers,
   }) => JournalSession(
     nodeId: nodeId,
@@ -154,6 +162,8 @@ final class JournalSession {
     completeKey: completeKey,
     sessionId: sessionId ?? this.sessionId,
     revision: revision ?? this.revision,
+    abandonKey: abandonKey ?? this.abandonKey,
+    abandonRevision: abandonRevision ?? this.abandonRevision,
     answers: answers ?? this.answers,
   );
 
@@ -170,6 +180,8 @@ final class JournalSession {
     'completeKey': completeKey,
     'sessionId': sessionId,
     'revision': revision,
+    if (abandonKey != null) 'abandonKey': abandonKey,
+    if (abandonRevision != null) 'abandonRevision': abandonRevision,
     'answers': [for (final answer in answers) answer.toJson()],
   };
 }

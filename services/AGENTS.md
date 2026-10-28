@@ -36,7 +36,7 @@ curl http://127.0.0.1:4102/health # {"service":"progress","buildId":"local-dev",
 pnpm dev:smoke                    # starts them, checks /health, /ready (503), signed Learning->Progress event
 ```
 
-Dev mode is explicit. Stores are in memory and lost on exit, and `/ready` always returns 503 `SERVICE_NOT_CONFIGURED` because memory is never admitted. User routes fail closed because dev has no auth port. Internal calls must carry `X-Service-*` HMAC headers. The dev keys come from `shared/src/testing/dev-keyring.ts` unless `COC_SERVICE_KEYS` is set. `COC_DEV_PORT_BASE` moves the ports, and the servers bind to 127.0.0.1 only. A `NODE_ENV=production` process refuses to start.
+Dev mode is explicit. Stores are in memory and lost on exit, and `/ready` always returns 503 `SERVICE_NOT_CONFIGURED` because memory is never admitted. User routes fail closed unless `COC_DEV_AUTH=1`, which accepts only `Authorization: Bearer dev-<userId>` on the loopback dev servers; hosted bundles never include this adapter. Internal calls must carry `X-Service-*` HMAC headers. The dev keys come from `shared/src/testing/dev-keyring.ts` unless `COC_SERVICE_KEYS` is set. `COC_DEV_PORT_BASE` moves the ports, and the servers bind to 127.0.0.1 only. A `NODE_ENV=production` process refuses to start.
 
 ## Gates
 

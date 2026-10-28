@@ -40,6 +40,11 @@ abstract interface class QuestRewardCommands {
   Future<UpgradeChestReward?> claimReward(String questId);
 }
 
+/// Opts into next week's Friends Quest pairing on the Progress service.
+abstract interface class FriendQuestCommands {
+  Future<bool> optInFriendQuest();
+}
+
 /// Optional copy source; repositories without it fall back to the default
 /// [ChestRewardCopy].
 abstract interface class QuestCopySource {

@@ -3,6 +3,7 @@ import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_exception.dart';
 import '../../../core/api/client/idempotency.dart';
 import '../application/shop_controller.dart';
+import '../../xp_boost/domain/boost.dart';
 import 'shop_repository.dart';
 
 /// Server-authoritative shop projection and purchase commands.
@@ -33,6 +34,16 @@ class ApiShopRepository implements ShopRepository {
     final freezeItem = shop.items
         .where((item) => item.kind == 'FREEZE')
         .firstOrNull;
+    final boostItem = shop.items
+        .where((item) => item.kind == 'XP_BOOST')
+        .firstOrNull;
+    final boostQuantity = boostItem == null
+        ? 0
+        : shop.inventory
+              .where((item) => item.itemId == boostItem.itemId)
+              .fold<int>(0, (sum, item) => sum + item.quantity);
+    final chestAvailable =
+        boostItem != null && boostItem.available && boostQuantity > 0;
     final timerBoosts = timerItem == null
         ? 0
         : shop.inventory
@@ -59,12 +70,28 @@ class ApiShopRepository implements ShopRepository {
       timerBoosts: timerBoosts,
       specialOffers: [
         for (final offer in ShopPresentationCatalog.specialOffers)
-          ShopOffer(
-            id: offer.id,
-            title: offer.title,
-            actionLabel: 'LOCKED',
-            available: false,
-          ),
+          if (offer.id == 'friends-chest' && boostItem != null)
+            ShopOffer(
+              id: offer.id,
+              title: offer.title,
+              actionLabel: chestAvailable ? 'CLAIM' : 'LOCKED',
+              available: chestAvailable,
+              // The activated item comes from the server inventory, never the
+              // presentation catalog.
+              xpBoost: BoostReward(
+                itemId: boostItem.itemId,
+                multiplier: offer.xpBoost?.multiplier ?? 2,
+                minutes:
+                    boostItem.durationMinutes ?? offer.xpBoost?.minutes ?? 15,
+              ),
+            )
+          else
+            ShopOffer(
+              id: offer.id,
+              title: offer.title,
+              actionLabel: 'LOCKED',
+              available: false,
+            ),
       ],
       timerBoostOffers: timerOffers,
       freezeOffer: ShopOffer(

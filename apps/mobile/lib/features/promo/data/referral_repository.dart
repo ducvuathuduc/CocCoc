@@ -50,9 +50,7 @@ class MockReferralRepository implements ReferralRepository {
     await _wait();
     final normalized = normalizeReferralCode(raw);
     if (normalized == null) {
-      return const ReferralRedeemResult.failure(
-        ReferralFailure.invalidFormat,
-      );
+      return const ReferralRedeemResult.failure(ReferralFailure.invalidFormat);
     }
     // The server resolves the inviter's own ISSUED row only; self is invalid.
     if (normalized == code) {

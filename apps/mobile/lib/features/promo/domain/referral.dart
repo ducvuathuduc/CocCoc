@@ -21,8 +21,7 @@ enum ReferralFailure { invalidFormat, notFound, offline, failed }
 /// Either an accepted code or a [failure]; the server treats a replay as
 /// accepted.
 class ReferralRedeemResult {
-  const ReferralRedeemResult.success()
-    : failure = null;
+  const ReferralRedeemResult.success() : failure = null;
   const ReferralRedeemResult.failure(ReferralFailure this.failure);
   final ReferralFailure? failure;
   bool get accepted => failure == null;

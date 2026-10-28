@@ -147,10 +147,12 @@ void main() {
       container.read(courseManagementRepositoryProvider).isRemote,
       isFalse,
     );
-    expect(
-      container.read(courseManagementProvider).courses.map((c) => c.id),
-      ['english', 'chinese', 'indonesian', 'italian'],
-    );
+    expect(container.read(courseManagementProvider).courses.map((c) => c.id), [
+      'english',
+      'chinese',
+      'indonesian',
+      'italian',
+    ]);
   });
 
   test('API mode loads enrolled courses with the server revision', () async {
@@ -226,89 +228,95 @@ void main() {
     expect(controller.requestRemoval('chinese'), isTrue);
     expect(await controller.confirmRemoval(), isTrue);
     expect(repository.removals, ['zh_en']);
-    expect(
-      container.read(courseManagementProvider).courses.map((c) => c.id),
-      ['english'],
-    );
+    expect(container.read(courseManagementProvider).courses.map((c) => c.id), [
+      'english',
+    ]);
     expect(
       container.read(courseManagementProvider).phase,
       CourseRemovalPhase.idle,
     );
   });
 
-  test('a failed API removal restores idle state with a safe message', () async {
-    final repository = _FakeCourseRepository([
-      record('english', 'English', 'vi_en', active: true),
-      record('chinese', 'Chinese', 'zh_en', revision: 2),
-    ])..removeError = const ApiException(
-      code: 'CONFLICT',
-      message: 'internal detail',
-      statusCode: 409,
-    );
-    final container = _container(repository);
-    addTearDown(container.dispose);
-    await pumpEventQueue();
-    final controller = container.read(courseManagementProvider.notifier);
+  test(
+    'a failed API removal restores idle state with a safe message',
+    () async {
+      final repository =
+          _FakeCourseRepository([
+              record('english', 'English', 'vi_en', active: true),
+              record('chinese', 'Chinese', 'zh_en', revision: 2),
+            ])
+            ..removeError = const ApiException(
+              code: 'CONFLICT',
+              message: 'internal detail',
+              statusCode: 409,
+            );
+      final container = _container(repository);
+      addTearDown(container.dispose);
+      await pumpEventQueue();
+      final controller = container.read(courseManagementProvider.notifier);
 
-    controller.requestRemoval('chinese');
-    expect(await controller.confirmRemoval(), isFalse);
-    final state = container.read(courseManagementProvider);
-    expect(state.phase, CourseRemovalPhase.idle);
-    expect(state.pendingCourseId, isNull);
-    expect(state.courses.map((c) => c.id), contains('chinese'));
-    expect(
-      state.protectionMessage,
-      'That changed on another device. Please try again.',
-    );
-    expect(state.protectionMessage, isNot(contains('internal detail')));
-  });
+      controller.requestRemoval('chinese');
+      expect(await controller.confirmRemoval(), isFalse);
+      final state = container.read(courseManagementProvider);
+      expect(state.phase, CourseRemovalPhase.idle);
+      expect(state.pendingCourseId, isNull);
+      expect(state.courses.map((c) => c.id), contains('chinese'));
+      expect(
+        state.protectionMessage,
+        'That changed on another device. Please try again.',
+      );
+      expect(state.protectionMessage, isNot(contains('internal detail')));
+    },
+  );
 
-  test('API repository maps enrolled courses and sends revision commands', () async {
-    final transport = FakeApiTransport()
-      ..json(
-        'GET /v1/courses',
-        coursePage([course('vi_en'), course('zh_en')]),
-      )
-      ..json('GET /v1/courses/vi_en/path', path())
-      ..json('POST /v1/enrollments/vi_en/activate', enrollment())
-      ..json('POST /v1/enrollments/vi_en/reset', enrollment(revision: 6))
-      ..json('DELETE /v1/enrollments/vi_en', receipt());
-    final api = ApiEndpoints(fakeClient(transport));
-    final repository = ApiCourseManagementRepository(
-      api,
-      ActiveCourse(api),
-      ids: SequenceIds(),
-    );
+  test(
+    'API repository maps enrolled courses and sends revision commands',
+    () async {
+      final transport = FakeApiTransport()
+        ..json(
+          'GET /v1/courses',
+          coursePage([course('vi_en'), course('zh_en')]),
+        )
+        ..json('GET /v1/courses/vi_en/path', path())
+        ..json('POST /v1/enrollments/vi_en/activate', enrollment())
+        ..json('POST /v1/enrollments/vi_en/reset', enrollment(revision: 6))
+        ..json('DELETE /v1/enrollments/vi_en', receipt());
+      final api = ApiEndpoints(fakeClient(transport));
+      final repository = ApiCourseManagementRepository(
+        api,
+        ActiveCourse(api),
+        ids: SequenceIds(),
+      );
 
-    final courses = await repository.loadCourses();
-    expect(courses, hasLength(1));
-    expect(courses.single.id, 'english');
-    expect(courses.single.name, 'English for Vietnamese learners');
-    expect(courses.single.courseId, 'vi_en');
-    expect(courses.single.revision, 4);
-    expect(courses.single.active, isTrue);
-    expect(transport.to('GET /v1/courses/zh_en/path'), hasLength(1));
+      final courses = await repository.loadCourses();
+      expect(courses, hasLength(1));
+      expect(courses.single.id, 'english');
+      expect(courses.single.name, 'English for Vietnamese learners');
+      expect(courses.single.courseId, 'vi_en');
+      expect(courses.single.revision, 4);
+      expect(courses.single.active, isTrue);
+      expect(transport.to('GET /v1/courses/zh_en/path'), hasLength(1));
 
-    await repository.switchCourse(courses.single);
-    expect(
-      bodyOf(transport.to('POST /v1/enrollments/vi_en/activate').single),
-      {'expectedRevision': 4},
-    );
-    expect(
-      transport
-          .to('POST /v1/enrollments/vi_en/activate')
-          .single
-          .headers['Idempotency-Key'],
-      isNotEmpty,
-    );
+      await repository.switchCourse(courses.single);
+      expect(
+        bodyOf(transport.to('POST /v1/enrollments/vi_en/activate').single),
+        {'expectedRevision': 4},
+      );
+      expect(
+        transport
+            .to('POST /v1/enrollments/vi_en/activate')
+            .single
+            .headers['Idempotency-Key'],
+        isNotEmpty,
+      );
 
-    await repository.resetCourse(courses.single);
-    expect(
-      bodyOf(transport.to('POST /v1/enrollments/vi_en/reset').single),
-      {'expectedRevision': 4},
-    );
+      await repository.resetCourse(courses.single);
+      expect(bodyOf(transport.to('POST /v1/enrollments/vi_en/reset').single), {
+        'expectedRevision': 4,
+      });
 
-    await repository.removeCourse(courses.single);
-    expect(transport.to('DELETE /v1/enrollments/vi_en'), hasLength(1));
-  });
+      await repository.removeCourse(courses.single);
+      expect(transport.to('DELETE /v1/enrollments/vi_en'), hasLength(1));
+    },
+  );
 }

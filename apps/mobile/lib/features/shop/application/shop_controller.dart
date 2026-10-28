@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/api_contracts.dart' as wire;
+import '../../../core/api/client/api_providers.dart';
 import '../../../core/api/client/idempotency.dart';
+import '../../../core/config/app_config.dart';
 import '../data/shop_repository.dart';
 import '../../xp_boost/domain/boost.dart';
 
@@ -91,6 +94,47 @@ class ShopController extends Notifier<AsyncValue<ShopState>> {
     final generation = _generation;
     if (state.value == null) state = const AsyncLoading();
     await _load(repository, generation, refresh: true);
+  }
+
+  /// Opens a server-backed special offer by activating the boost the learner
+  /// already owns. Availability and the item id come from `GET /v1/shop`.
+  Future<bool> openSpecialOffer(String id) async {
+    if (_busy || !ref.read(appConfigProvider).isApi) return false;
+    final s = state.value;
+    if (s == null) return false;
+    final offer = s.specialOffers
+        .where((candidate) => candidate.id == id)
+        .firstOrNull;
+    final boost = offer?.xpBoost;
+    if (offer == null ||
+        !offer.available ||
+        offer.actionLabel != 'CLAIM' ||
+        boost == null) {
+      return false;
+    }
+    final api = ref.read(apiEndpointsProvider);
+    final repository = _repository;
+    final generation = _generation;
+    final commandId = _pendingCommands.putIfAbsent(id, _ids.next);
+    _busy = true;
+    try {
+      await api.activateBoost(
+        wire.BoostRequest(itemId: boost.itemId),
+        idempotencyKey: commandId,
+      );
+      if (!ref.mounted ||
+          generation != _generation ||
+          repository != _repository) {
+        return false;
+      }
+      _pendingCommands.remove(id);
+      await _load(repository, generation, refresh: true);
+      return true;
+    } catch (_) {
+      return false;
+    } finally {
+      if (generation == _generation && repository == _repository) _busy = false;
+    }
   }
 
   Future<bool> buyItem(String id, int displayCost) async {

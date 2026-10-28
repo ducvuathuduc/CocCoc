@@ -45,22 +45,25 @@ void main() {
     );
   });
 
-  test('an empty review index fails before starting a server session', () async {
-    transport.json('GET /v1/review', reviewPage([]));
+  test(
+    'an empty review index fails before starting a server session',
+    () async {
+      transport.json('GET /v1/review', reviewPage([]));
 
-    await expectLater(
-      repo.loadLesson('mistake-review'),
-      throwsA(
-        isA<LearningFailure>().having(
-          (e) => e.message,
-          'message',
-          contains('Complete a lesson'),
+      await expectLater(
+        repo.loadLesson('mistake-review'),
+        throwsA(
+          isA<LearningFailure>().having(
+            (e) => e.message,
+            'message',
+            contains('Complete a lesson'),
+          ),
         ),
-      ),
-    );
-    expect(transport.to('POST /v1/sessions'), isEmpty);
-    expect(await journal.active(), isNull);
-  });
+      );
+      expect(transport.to('POST /v1/sessions'), isEmpty);
+      expect(await journal.active(), isNull);
+    },
+  );
 
   test('a non-empty review index starts the private review session', () async {
     await repo.loadLesson('mistake-review');

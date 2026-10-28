@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/api_contracts.dart' as wire;
-import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/config/app_config.dart';
 import '../domain/learning_models.dart';

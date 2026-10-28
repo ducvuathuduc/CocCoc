@@ -1,4 +1,5 @@
 // LOCAL TEST BUNDLE ENTRY (built by test/kit.mjs into .cache/progress-test/). Never hosted.
+export { createDevHandler, devAuth } from '../dev.js';
 export { createRouter, canonicalBodyHash } from '../../../shared/src/transport.js';
 export { createKeyring } from '../../../shared/src/service-hmac.js';
 export { createMemoryProgressPersistence } from '../persistence/memory.js';

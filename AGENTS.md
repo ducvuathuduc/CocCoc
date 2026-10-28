@@ -43,6 +43,7 @@ pnpm backend:verify   # tsc + esbuild bundles + eslint + prettier + node tests
 pnpm backend:smoke    # in-process outbox->inbox fixture
 pnpm dev:smoke        # real HTTP: 3 dev services, /health, signed cross-service event
 pnpm contracts:check  # schema fixtures + Dart DTOs in sync with OpenAPI
+pnpm postman:check    # Postman collection covers every OpenAPI operation, secrets empty
 pnpm api:lint         # redocly
 pnpm schema:plan && pnpm schema:test && pnpm seed:check
 pnpm blueprint:check && pnpm audit:check   # traceability, links, Mermaid, endpoint matrix

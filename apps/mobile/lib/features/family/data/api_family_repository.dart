@@ -11,19 +11,16 @@ class ApiFamilyRepository implements FamilyRepository {
   final ApiEndpoints api;
 
   @override
-  Future<FamilyGroup> create({required String plan}) => _guard(
-    () => api.createFamily(wire.FamilyCreateRequest(plan: plan)),
-  );
+  Future<FamilyGroup> create({required String plan}) =>
+      _guard(() => api.createFamily(wire.FamilyCreateRequest(plan: plan)));
 
   @override
   Future<FamilyGroup> join({
     required String groupId,
     required String inviteCode,
   }) => _guard(
-    () => api.joinFamily(
-      groupId,
-      wire.FamilyJoinRequest(inviteCode: inviteCode),
-    ),
+    () =>
+        api.joinFamily(groupId, wire.FamilyJoinRequest(inviteCode: inviteCode)),
   );
 
   @override

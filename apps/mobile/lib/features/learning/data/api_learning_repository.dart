@@ -28,7 +28,8 @@ class ApiLearningRepository
     implements
         LearningRepository,
         EvidenceLearningRepository,
-        OfflineLearningSync {
+        OfflineLearningSync,
+        AbandonableSession {
   ApiLearningRepository({
     required this.learning,
     required this.journal,
@@ -264,6 +265,14 @@ class ApiLearningRepository
         }
         saved =
             null; // Expired/abandoned reviews start a fresh private snapshot.
+      }
+      final review = await learning.getReview(courseId: course, limit: 1);
+      if (review.items.isEmpty) {
+        await journal.clearActive();
+        _session = null;
+        throw const LearningFailure(
+          'Complete a lesson before starting a review.',
+        );
       }
       final path = await learning.getPath(course);
       final intent =
@@ -646,6 +655,63 @@ class ApiLearningRepository
   Future<void> _save(JournalSession session) async {
     _session = session;
     await journal.saveActive(session);
+  }
+
+  @override
+  Future<void> abandonSession() async {
+    final saved = _session ?? await journal.active();
+    if (saved == null) return;
+    var current = saved;
+    final sessionId = current.sessionId;
+    if (sessionId == null) {
+      await journal.clearActive();
+      _session = null;
+      return;
+    }
+    if (current.abandonKey == null ||
+        current.abandonRevision != current.revision) {
+      current = current.copyWith(
+        abandonKey: ids.next(),
+        abandonRevision: current.revision,
+      );
+      await _save(current);
+    }
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        await learning.abandonSession(
+          sessionId,
+          wire.CompleteRequest(expectedRevision: current.abandonRevision!),
+          idempotencyKey: current.abandonKey,
+        );
+        await journal.clearActive();
+        _session = null;
+        return;
+      } on ApiException catch (error) {
+        if (error.code == 'SESSION_CONFLICT') {
+          // Already completed elsewhere; nothing will resume this journal.
+          await journal.clearActive();
+          _session = null;
+          return;
+        }
+        if (error.code == 'REVISION_CONFLICT' && attempt == 0) {
+          try {
+            final server = await learning.getSession(sessionId);
+            current = current.copyWith(
+              revision: server.revision,
+              abandonKey: ids.next(),
+              abandonRevision: server.revision,
+            );
+            await _save(current);
+            continue;
+          } on ApiException catch (refreshError) {
+            throw LearningFailure(refreshError.userMessage);
+          }
+        }
+        // Offline or an unknown outcome: keep the journal so the lesson,
+        // including unsent answers, can still resume.
+        throw LearningFailure(error.userMessage);
+      }
+    }
   }
 
   @override

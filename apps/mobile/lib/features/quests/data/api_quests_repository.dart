@@ -2,6 +2,7 @@ import 'dart:async';
 
 import '../../../core/api/api_contracts.dart' as wire;
 import '../../../core/api/client/api_endpoints.g.dart';
+import '../../../core/api/client/idempotency.dart';
 import '../../../core/cache/snapshot_cache.dart';
 import '../domain/quest_models.dart';
 import '../domain/upgrade_chest.dart';
@@ -17,24 +18,31 @@ class ApiQuestsRepository
         QuestsRepository,
         QuestCommands,
         QuestRewardCommands,
+        FriendQuestCommands,
         QuestCopySource {
   @override
   ChestRewardCopy get chestCopy => const ChestRewardCopy();
 
-  ApiQuestsRepository(this.api, {SnapshotHost? host, DateTime Function()? now})
-    : _now = now ?? DateTime.now,
-      cache = SnapshotCache<wire.QuestPage>(
-        key: 'quests',
-        host: host ?? SnapshotHost.detached(),
-        decode: wire.QuestPage.fromJson,
-        encode: (page) => page.toJson(),
-        maxAge: const Duration(minutes: 1),
-        clock: now,
-      );
+  ApiQuestsRepository(
+    this.api, {
+    SnapshotHost? host,
+    DateTime Function()? now,
+    IdGenerator? ids,
+  }) : _now = now ?? DateTime.now,
+       _ids = ids ?? UuidV4Generator(),
+       cache = SnapshotCache<wire.QuestPage>(
+         key: 'quests',
+         host: host ?? SnapshotHost.detached(),
+         decode: wire.QuestPage.fromJson,
+         encode: (page) => page.toJson(),
+         maxAge: const Duration(minutes: 1),
+         clock: now,
+       );
 
   final ApiEndpoints api;
   final SnapshotCache<wire.QuestPage> cache;
   final DateTime Function() _now;
+  final IdGenerator _ids;
 
   static const _titles = {
     'daily_lessons': 'Complete {n} lessons',
@@ -122,6 +130,13 @@ class ApiQuestsRepository
       return null; // An older already-claimed receipt cannot be rolled again.
     }
     return UpgradeChestReward.checked(chest.receiptId, chest.tiers, chest.gems);
+  }
+
+  @override
+  Future<bool> optInFriendQuest() async {
+    await api.optInFriendQuest(idempotencyKey: _ids.next());
+    await refresh();
+    return true;
   }
 
   static const _months = [

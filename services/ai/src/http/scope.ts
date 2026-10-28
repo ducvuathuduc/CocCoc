@@ -62,6 +62,10 @@ export function withRequestScope(
     // The shared router requires a JSON body on every non-GET; OpenAPI DELETE operations carry
     // none, so an empty DELETE body is presented to it as {} (service-local shim).
     const emptyDelete = context.req.method === 'DELETE' && !context.req.bodyText;
+    const emptyClose =
+      context.req.method === 'POST' &&
+      path === '/v1/voice-sessions/{sessionId}/close' &&
+      !context.req.bodyText;
     const scoped: FunctionContext = {
       ...context,
       // Plain fields only: the Appwrite runtime req has lazy getters (bodyJson throws on empty body).
@@ -69,7 +73,7 @@ export function withRequestScope(
         method: context.req.method,
         path,
         headers: context.req.headers ?? {},
-        ...(emptyDelete
+        ...(emptyDelete || emptyClose
           ? { bodyText: '{}' }
           : context.req.bodyText !== undefined
             ? { bodyText: context.req.bodyText }

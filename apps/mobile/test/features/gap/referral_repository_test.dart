@@ -45,43 +45,49 @@ void main() {
     );
   });
 
-  test('API redeem posts the normalized code with an idempotency key', () async {
-    final transport = FakeApiTransport()
-      ..json('POST /base/v1/referrals/redeem', receipt());
-    final result = await apiReferralRepository(
-      transport,
-    ).redeem('abcd-1234');
+  test(
+    'API redeem posts the normalized code with an idempotency key',
+    () async {
+      final transport = FakeApiTransport()
+        ..json('POST /base/v1/referrals/redeem', receipt());
+      final result = await apiReferralRepository(transport).redeem('abcd-1234');
 
-    expect(result.accepted, isTrue);
-    expect(result.failure, isNull);
-    final request = transport.requests.single;
-    expect(bodyOf(request), {'code': 'ABCD-1234'});
-    expect(request.headers['Idempotency-Key'], isNotEmpty);
-  });
+      expect(result.accepted, isTrue);
+      expect(result.failure, isNull);
+      final request = transport.requests.single;
+      expect(bodyOf(request), {'code': 'ABCD-1234'});
+      expect(request.headers['Idempotency-Key'], isNotEmpty);
+    },
+  );
 
   test('API redeem reuses a caller supplied idempotency key', () async {
     final transport = FakeApiTransport()
       ..json('POST /base/v1/referrals/redeem', receipt());
-    await apiReferralRepository(
-      transport,
-    ).redeem('ABCD-1234', idempotencyKey: 'key-1');
+    await apiReferralRepository(transport)
+        .redeem('ABCD-1234', idempotencyKey: 'key-1');
 
     expect(transport.requests.single.headers['Idempotency-Key'], 'key-1');
   });
 
-  test('API redeem maps unknown codes to notFound and offline to offline', () async {
-    final notFound = FakeApiTransport()
-      ..json('POST /base/v1/referrals/redeem', errorEnvelope('NOT_FOUND'), status: 404);
-    final rejected = await apiReferralRepository(
-      notFound,
-    ).redeem('ZZZZ-9999');
-    expect(rejected.accepted, isFalse);
-    expect(rejected.failure, ReferralFailure.notFound);
+  test(
+    'API redeem maps unknown codes to notFound and offline to offline',
+    () async {
+      final notFound = FakeApiTransport()
+        ..json(
+          'POST /base/v1/referrals/redeem',
+          errorEnvelope('NOT_FOUND'),
+          status: 404,
+        );
+      final rejected = await apiReferralRepository(notFound)
+          .redeem('ZZZZ-9999');
+      expect(rejected.accepted, isFalse);
+      expect(rejected.failure, ReferralFailure.notFound);
 
-    final offline = FakeApiTransport()..offline = true;
-    final result = await apiReferralRepository(offline).redeem('ABCD-1234');
-    expect(result.failure, ReferralFailure.offline);
-  });
+      final offline = FakeApiTransport()..offline = true;
+      final result = await apiReferralRepository(offline).redeem('ABCD-1234');
+      expect(result.failure, ReferralFailure.offline);
+    },
+  );
 
   test('client rejects codes outside the 4-16 character contract', () async {
     final transport = FakeApiTransport();
@@ -96,10 +102,7 @@ void main() {
     final status = await repo.load();
     expect(status.code, isNotEmpty);
     expect(status.accepted, 0);
-    expect(
-      (await repo.redeem(status.code)).failure,
-      ReferralFailure.notFound,
-    );
+    expect((await repo.redeem(status.code)).failure, ReferralFailure.notFound);
     final accepted = await repo.redeem('FRIEND-2026');
     expect(accepted.accepted, isTrue);
     final replay = await repo.redeem('FRIEND-2026');

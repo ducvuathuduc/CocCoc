@@ -116,8 +116,7 @@ Map<String, Object?> shopJson({bool withBoost = true}) => {
     },
   ],
   'inventory': [
-    if (withBoost)
-      {'itemId': 'xp_boost_15', 'quantity': 1, 'expiresAt': null},
+    if (withBoost) {'itemId': 'xp_boost_15', 'quantity': 1, 'expiresAt': null},
   ],
   'asOf': isoNow,
 };
@@ -265,9 +264,7 @@ void main() {
         isTrue,
       );
 
-      final request = transport
-          .to('POST /base/v1/me/streak-repair')
-          .single;
+      final request = transport.to('POST /base/v1/me/streak-repair').single;
       expect(bodyOf(request), {
         'lostStreakDay': '2026-10-12',
         'payWith': 'GEMS',
@@ -282,10 +279,8 @@ void main() {
     test('an expired server offer refuses without a local gem spend', () async {
       transport.on(
         'POST /base/v1/me/streak-repair',
-        (_) => jsonResponse(
-          errorEnvelope('STREAK_REPAIR_EXPIRED'),
-          status: 409,
-        ),
+        (_) =>
+            jsonResponse(errorEnvelope('STREAK_REPAIR_EXPIRED'), status: 409),
       );
       final repository = ApiStreakRepairRepository(api, offer: _offer);
       final container = ProviderContainer(
@@ -327,10 +322,7 @@ void main() {
       );
       expect(await controller.repair(StreakRepairPayment.gems), isTrue);
       expect(container.read(previewControllerProvider).spentGems, 0);
-      expect(
-        container.read(streakRepairControllerProvider).repairedDays,
-        47,
-      );
+      expect(container.read(streakRepairControllerProvider).repairedDays, 47);
     });
   });
 
@@ -347,26 +339,29 @@ void main() {
       expect(request.headers['Idempotency-Key'], isNotNull);
     });
 
-    test('the gate controller joins the server before the local opt-in', () async {
-      final repository = _FakeLeagueRepository();
-      final container = ProviderContainer(
-        overrides: [
-          appConfigProvider.overrideWithValue(
-            const AppConfig(dataSource: DataSource.api),
-          ),
-          leagueRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-      addTearDown(container.dispose);
+    test(
+      'the gate controller joins the server before the local opt-in',
+      () async {
+        final repository = _FakeLeagueRepository();
+        final container = ProviderContainer(
+          overrides: [
+            appConfigProvider.overrideWithValue(
+              const AppConfig(dataSource: DataSource.api),
+            ),
+            leagueRepositoryProvider.overrideWithValue(repository),
+          ],
+        );
+        addTearDown(container.dispose);
 
-      expect(container.read(previewControllerProvider).leagueOptIn, isFalse);
-      final joined = await container
-          .read(leagueJoinControllerProvider.notifier)
-          .join();
-      expect(joined, isTrue);
-      expect(repository.joinCalled, isTrue);
-      expect(container.read(previewControllerProvider).leagueOptIn, isTrue);
-    });
+        expect(container.read(previewControllerProvider).leagueOptIn, isFalse);
+        final joined = await container
+            .read(leagueJoinControllerProvider.notifier)
+            .join();
+        expect(joined, isTrue);
+        expect(repository.joinCalled, isTrue);
+        expect(container.read(previewControllerProvider).leagueOptIn, isTrue);
+      },
+    );
   });
 
   group('year review', () {
@@ -383,40 +378,50 @@ void main() {
       expect(snapshot.minutesSpent, 640);
       expect(snapshot.league, 'Sapphire');
       expect(snapshot.course, 'English');
+      expect(snapshot.percentile, isNull);
+      expect(snapshot.studentTopPercent, isNull);
+      expect(snapshot.leagueWeeks, isNull);
+      expect(snapshot.englishScore, isNull);
     });
 
-    test('the controller shares the loaded server snapshot, not the fixture', () async {
-      final server = YearReviewSnapshot(
-        year: 2025,
-        course: 'English',
-        lessons: 5,
-        totalXp: 900,
-        percentile: 93,
-        studentTopPercent: 8,
-        league: 'Gold',
-        leagueWeeks: 2,
-        englishScore: 19,
-        longestStreak: 12,
-        minutesSpent: 30,
-        asOf: DateTime(2025, 12, 1),
-      );
-      final repository = _FakeYearReviewRepository(server);
-      final container = ProviderContainer(
-        overrides: [
-          appConfigProvider.overrideWithValue(
-            const AppConfig(dataSource: DataSource.api),
-          ),
-          yearReviewRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-      addTearDown(container.dispose);
-      container.listen(yearReviewControllerProvider, (_, _) {});
-      await Future<void>.delayed(Duration.zero);
-      await Future<void>.delayed(Duration.zero);
+    test(
+      'the controller shares the loaded server snapshot, not the fixture',
+      () async {
+        final server = YearReviewSnapshot(
+          year: 2025,
+          course: 'English',
+          lessons: 5,
+          totalXp: 900,
+          percentile: 93,
+          studentTopPercent: 8,
+          league: 'Gold',
+          leagueWeeks: 2,
+          englishScore: 19,
+          longestStreak: 12,
+          minutesSpent: 30,
+          asOf: DateTime(2025, 12, 1),
+        );
+        final repository = _FakeYearReviewRepository(server);
+        final container = ProviderContainer(
+          overrides: [
+            appConfigProvider.overrideWithValue(
+              const AppConfig(dataSource: DataSource.api),
+            ),
+            yearReviewRepositoryProvider.overrideWithValue(repository),
+          ],
+        );
+        addTearDown(container.dispose);
+        container.listen(yearReviewControllerProvider, (_, _) {});
+        await Future<void>.delayed(Duration.zero);
+        await Future<void>.delayed(Duration.zero);
 
-      expect(container.read(yearReviewControllerProvider).snapshot.lessons, 5);
-      expect(repository.loads, 1);
-    });
+        expect(
+          container.read(yearReviewControllerProvider).snapshot.lessons,
+          5,
+        );
+        expect(repository.loads, 1);
+      },
+    );
   });
 
   group('friend quest', () {
@@ -428,9 +433,7 @@ void main() {
 
       expect(await repository.optInFriendQuest(), isTrue);
 
-      final request = transport
-          .to('POST /base/v1/friend-quests/opt-in')
-          .single;
+      final request = transport.to('POST /base/v1/friend-quests/opt-in').single;
       expect(request.headers['Idempotency-Key'], isNotNull);
       expect(request.body, anyOf(isNull, isEmpty));
       expect(transport.to('GET /base/v1/quests'), isNotEmpty);
@@ -439,106 +442,147 @@ void main() {
   });
 
   group('energy', () {
-    test('ad refill waits for the server grant instead of echoing input', () async {
-      transport
-        ..once(
-          'GET /base/v1/me/energy',
-          (_) => jsonResponse(energyJson(10)),
-        )
-        ..json('GET /base/v1/me/energy', energyJson(15));
-      final repository = ApiEnergyRepository(
-        api,
-        pollInterval: Duration.zero,
-      );
-
-      final balance = await repository.refill(
-        const EnergyOffer(EnergyRefillKind.ad, 5, '+5 energy', 'WATCH AD'),
-        10,
-      );
-
-      expect(balance, 15);
-      expect(transport.to('GET /base/v1/me/energy'), hasLength(2));
-    });
-
-    test('recharge buys the server ENERGY_REFILL item, then reads energy', () async {
-      transport
-        ..json('GET /base/v1/shop', shopJson(withBoost: false))
-        ..json(
-          'POST /base/v1/shop/purchases',
-          purchaseJson('energy_refill', 1),
-        )
-        ..once(
-          'GET /base/v1/me/energy',
-          (_) => jsonResponse(energyJson(9)),
-        )
-        ..json('GET /base/v1/me/energy', energyJson(25));
-      final repository = ApiEnergyRepository(
-        api,
-        pollInterval: Duration.zero,
-      );
-
-      final balance = await repository.refill(
-        const EnergyOffer(
-          EnergyRefillKind.recharge,
-          25,
-          'Recharge',
-          '500',
-          cost: 500,
-        ),
-        9,
-      );
-
-      expect(balance, 25);
-      expect(
-        bodyOf(
-          transport.to('POST /base/v1/shop/purchases').single,
-        )['itemId'],
-        'energy_refill',
-      );
-      expect(
+    test(
+      'ad refill waits for the server grant instead of echoing input',
+      () async {
         transport
-            .to('POST /base/v1/shop/purchases')
-            .single
-            .headers['Idempotency-Key'],
-        isNotNull,
-      );
-    });
+          ..once('GET /v1/me/energy', (_) => jsonResponse(energyJson(10)))
+          ..json('GET /v1/me/energy', energyJson(15));
+        final repository = ApiEnergyRepository(
+          api,
+          pollInterval: Duration.zero,
+        );
 
-    test('the controller hydrates server energy and never spends preview gems', () async {
-      transport
-        ..json('GET /base/v1/me/energy', energyJson(10))
-        ..once(
-          'GET /base/v1/me/energy',
-          (_) => jsonResponse(energyJson(10)),
-        )
-        ..json('GET /base/v1/me/energy', energyJson(15));
-      final container = ProviderContainer(
-        overrides: [
-          appConfigProvider.overrideWithValue(
-            const AppConfig(dataSource: DataSource.api),
+        final balance = await repository.refill(
+          const EnergyOffer(EnergyRefillKind.ad, 5, '+5 energy', 'WATCH AD'),
+          10,
+        );
+
+        expect(balance, 15);
+        expect(transport.to('GET /v1/me/energy'), hasLength(2));
+      },
+    );
+
+    test(
+      'recharge buys the server ENERGY_REFILL item, then reads energy',
+      () async {
+        transport
+          ..json('GET /base/v1/shop', shopJson(withBoost: false))
+          ..json(
+            'POST /base/v1/shop/purchases',
+            purchaseJson('energy_refill', 1),
+          )
+          ..once('GET /v1/me/energy', (_) => jsonResponse(energyJson(9)))
+          ..json('GET /v1/me/energy', energyJson(25));
+        final repository = ApiEnergyRepository(
+          api,
+          pollInterval: Duration.zero,
+        );
+
+        final balance = await repository.refill(
+          const EnergyOffer(
+            EnergyRefillKind.recharge,
+            25,
+            'Recharge',
+            '500',
+            cost: 500,
           ),
-          apiEndpointsProvider.overrideWithValue(api),
-          extendedControllerProvider.overrideWith(_EnergyState.new),
-        ],
-      );
-      addTearDown(container.dispose);
+          9,
+        );
 
-      container.listen(energyControllerProvider, (_, _) {});
-      await Future<void>.delayed(Duration.zero);
-      await Future<void>.delayed(Duration.zero);
-      expect(container.read(extendedControllerProvider).energy, 10);
+        expect(balance, 25);
+        expect(
+          bodyOf(transport.to('POST /base/v1/shop/purchases').single)['itemId'],
+          'energy_refill',
+        );
+        expect(
+          transport
+              .to('POST /base/v1/shop/purchases')
+              .single
+              .headers['Idempotency-Key'],
+          isNotNull,
+        );
+      },
+    );
 
-      final offers = container.read(energyOffersProvider);
-      final ad = offers.firstWhere(
-        (offer) => offer.kind == EnergyRefillKind.ad,
-      );
-      await container
-          .read(energyControllerProvider.notifier)
-          .refill(ad, adRewarded: true);
+    test(
+      'the controller hydrates server energy and never spends preview gems',
+      () async {
+        transport
+          ..json('GET /v1/me/energy', energyJson(10))
+          ..once('GET /v1/me/energy', (_) => jsonResponse(energyJson(10)))
+          ..json('GET /v1/me/energy', energyJson(15));
+        final container = ProviderContainer(
+          overrides: [
+            appConfigProvider.overrideWithValue(
+              const AppConfig(dataSource: DataSource.api),
+            ),
+            apiEndpointsProvider.overrideWithValue(api),
+            extendedControllerProvider.overrideWith(_EnergyState.new),
+          ],
+        );
+        addTearDown(container.dispose);
 
-      expect(container.read(extendedControllerProvider).energy, 15);
-      expect(container.read(previewControllerProvider).spentGems, 0);
-    });
+        container.listen(energyControllerProvider, (_, _) {});
+        await Future<void>.delayed(Duration.zero);
+        await Future<void>.delayed(Duration.zero);
+        expect(container.read(extendedControllerProvider).energy, 10);
+
+        final offers = container.read(energyOffersProvider);
+        final ad = offers.firstWhere(
+          (offer) => offer.kind == EnergyRefillKind.ad,
+        );
+        await container
+            .read(energyControllerProvider.notifier)
+            .refill(ad, adRewarded: true);
+
+        expect(container.read(extendedControllerProvider).energy, 15);
+        expect(container.read(previewControllerProvider).spentGems, 0);
+      },
+    );
+
+    test(
+      'API mode exposes server recharge without spending preview gems',
+      () async {
+        transport
+          ..json('GET /base/v1/shop', shopJson(withBoost: false))
+          ..json(
+            'POST /base/v1/shop/purchases',
+            purchaseJson('energy_refill', 1),
+          )
+          ..once('GET /v1/me/energy', (_) => jsonResponse(energyJson(9)))
+          ..json('GET /v1/me/energy', energyJson(25));
+        final container = ProviderContainer(
+          overrides: [
+            appConfigProvider.overrideWithValue(
+              const AppConfig(dataSource: DataSource.api),
+            ),
+            apiEndpointsProvider.overrideWithValue(api),
+            energyRepositoryProvider.overrideWithValue(
+              ApiEnergyRepository(api, pollInterval: Duration.zero),
+            ),
+            extendedControllerProvider.overrideWith(_EnergyState.new),
+          ],
+        );
+        addTearDown(container.dispose);
+
+        final offers = container.read(energyOffersProvider);
+        final recharge = offers.firstWhere(
+          (offer) => offer.kind == EnergyRefillKind.recharge,
+        );
+        final controller = container.read(energyControllerProvider.notifier);
+
+        expect(controller.available(recharge), isTrue);
+        await controller.refill(recharge);
+
+        expect(container.read(extendedControllerProvider).energy, 25);
+        expect(container.read(previewControllerProvider).spentGems, 0);
+        expect(
+          bodyOf(transport.to('POST /base/v1/shop/purchases').single)['itemId'],
+          'energy_refill',
+        );
+      },
+    );
   });
 
   group('shop special offers', () {
@@ -573,13 +617,15 @@ void main() {
             const AppConfig(dataSource: DataSource.api),
           ),
           apiEndpointsProvider.overrideWithValue(api),
-          shopRepositoryProvider.overrideWithValue(
-            _AvailableChestShop(),
-          ),
+          shopRepositoryProvider.overrideWithValue(_AvailableChestShop()),
         ],
       );
       addTearDown(container.dispose);
-      container.listen(shopControllerProvider, (_, _) {}, fireImmediately: true);
+      container.listen(
+        shopControllerProvider,
+        (_, _) {},
+        fireImmediately: true,
+      );
       await Future<void>.delayed(Duration.zero);
       await Future<void>.delayed(Duration.zero);
 
@@ -588,10 +634,9 @@ void main() {
           .openSpecialOffer('friends-chest');
 
       expect(opened, isTrue);
-      expect(
-        bodyOf(transport.to('POST /base/v1/me/boosts').single),
-        {'itemId': 'xp_boost_15'},
-      );
+      expect(bodyOf(transport.to('POST /base/v1/me/boosts').single), {
+        'itemId': 'xp_boost_15',
+      });
     });
   });
 }

@@ -87,10 +87,7 @@ class MockGiftRepository implements GiftRepository {
   @override
   Future<GiftRedemption> redeemGift(String giftId) async {
     if (latency > Duration.zero) await Future<void>.delayed(latency);
-    return GiftRedemption(
-      giftId: giftId,
-      plan: plans.first.name.toUpperCase(),
-    );
+    return GiftRedemption(giftId: giftId, plan: plans.first.name.toUpperCase());
   }
 
   @override

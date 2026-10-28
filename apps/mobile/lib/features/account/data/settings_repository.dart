@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/config/app_config.dart';
 import '../../auth/application/auth_controller.dart';
-import '../../auth/services/appwrite_auth_service.dart';
 import 'api_account_repositories.dart';
 
 /// Copy + catalog for Settings > Duolingo for Schools.

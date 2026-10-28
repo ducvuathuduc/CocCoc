@@ -18,11 +18,11 @@ class YearReviewSnapshot {
   final String course;
   final int lessons;
   final int totalXp;
-  final int percentile;
-  final int studentTopPercent;
+  final int? percentile;
+  final int? studentTopPercent;
   final String league;
-  final int leagueWeeks;
-  final int englishScore;
+  final int? leagueWeeks;
+  final int? englishScore;
   final int longestStreak;
   final int minutesSpent;
   final DateTime asOf;

@@ -84,18 +84,19 @@ class CourseManagementState {
 ///
 /// Mock mode and guest sessions keep the local fixtures; API mode reads the
 /// enrolled catalog from the Learning service.
-final courseManagementRepositoryProvider =
-    Provider<CourseManagementRepository>((ref) {
-      final config = ref.watch(appConfigProvider);
-      final user = ref.watch(authControllerProvider.select((s) => s.user));
-      if (!config.isApi || user == null || user.guest) {
-        return const MockCourseManagementRepository();
-      }
-      return ApiCourseManagementRepository(
-        ref.watch(apiEndpointsProvider),
-        ref.watch(activeCourseProvider),
-      );
-    });
+final courseManagementRepositoryProvider = Provider<CourseManagementRepository>(
+  (ref) {
+    final config = ref.watch(appConfigProvider);
+    final user = ref.watch(authControllerProvider.select((s) => s.user));
+    if (!config.isApi || user == null || user.guest) {
+      return const MockCourseManagementRepository();
+    }
+    return ApiCourseManagementRepository(
+      ref.watch(apiEndpointsProvider),
+      ref.watch(activeCourseProvider),
+    );
+  },
+);
 
 final courseManagementProvider =
     NotifierProvider<CourseManagementController, CourseManagementState>(

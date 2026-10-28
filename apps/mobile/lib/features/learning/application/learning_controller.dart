@@ -460,12 +460,33 @@ class LessonController extends Notifier<LessonState> {
     state = draft.copyWith(stage: draft.resumeStage, busy: false);
   }
 
-  void abandon() {
-    _revision += 1;
-    _repository.clearDraft();
-    _mistakes = <Exercise>[];
-    _nextRetry = <Exercise>[];
-    state = const LessonState();
+  Future<bool> abandon() async {
+    if (state.busy || _commandActive) return false;
+    final repository = _repository;
+    final revision = ++_revision;
+    _commandActive = true;
+    state = state.copyWith(busy: true, clearError: true);
+    try {
+      if (repository is AbandonableSession) {
+        await (repository as AbandonableSession).abandonSession();
+      }
+      if (!_isCurrent(revision)) return false;
+      repository.clearDraft();
+      _mistakes = <Exercise>[];
+      _nextRetry = <Exercise>[];
+      state = const LessonState();
+      return true;
+    } catch (error) {
+      if (_isCurrent(revision)) {
+        state = state.copyWith(
+          busy: false,
+          error: error is LearningFailure ? error.message : 'Could not end this lesson. Your answers are saved. Please retry.',
+        );
+      }
+      return false;
+    } finally {
+      if (_isCurrent(revision)) _commandActive = false;
+    }
   }
 
   Future<void> claim() async {
