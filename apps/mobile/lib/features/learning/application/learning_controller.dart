@@ -11,6 +11,7 @@ import '../../auth/application/auth_controller.dart';
 import '../data/api_learning_repository.dart';
 import '../data/learning_repository.dart';
 import '../domain/learning_models.dart';
+import '../domain/session_mode.dart';
 import '../../practice/application/mistake_history_controller.dart';
 import '../../practice/data/mistake_history_repository.dart';
 import '../../session/application/real_learning_session.dart';
@@ -179,6 +180,10 @@ class LessonController extends Notifier<LessonState> {
     bool guest = false,
     bool placement = false,
     List<Exercise>? exercises,
+    SessionMode mode = SessionMode.lesson,
+    String? lessonId,
+    String? activityId,
+    String? opponentId,
   }) async {
     if (_commandActive) return;
     if (nodeId == placementNodeId && ref.read(appConfigProvider).isApi) {
@@ -188,9 +193,17 @@ class LessonController extends Notifier<LessonState> {
     final revision = ++_revision;
     state = state.copyWith(busy: true, clearError: true);
     try {
-      final loaded = exercises ?? await _repository.loadLesson(nodeId);
+      final targetNodeId = mode.isAuthored ? lessonId ?? nodeId : nodeId;
+      final loaded =
+          exercises ??
+          await _load(
+            mode,
+            targetNodeId,
+            activityId: activityId,
+            opponentId: opponentId,
+          );
       if (!_isCurrent(revision)) return;
-      final restored = _repository is ApiLearningRepository
+      final restored = !mode.isAuthored && _repository is ApiLearningRepository
           ? _repository.loadDraft()
           : null;
       if (restored != null) {
@@ -210,12 +223,13 @@ class LessonController extends Notifier<LessonState> {
       state = LessonState(
         stage: loaded.isEmpty ? LessonStage.idle : LessonStage.answering,
         exercises: loaded,
-        nodeId: nodeId,
+        nodeId: targetNodeId,
         guest: guest,
         placement: placement,
         startedAt: DateTime.now(),
         originalTotal: loaded.length,
         heartsEnforced: _repository.enforcesHearts,
+        mode: mode,
       );
     } on LearningFailure catch (error) {
       if (_isCurrent(revision)) {
@@ -231,6 +245,24 @@ class LessonController extends Notifier<LessonState> {
     } finally {
       if (_isCurrent(revision)) _commandActive = false;
     }
+  }
+
+  Future<List<Exercise>> _load(
+    SessionMode mode,
+    String nodeId, {
+    String? activityId,
+    String? opponentId,
+  }) {
+    final repository = _repository;
+    if (mode.isAuthored && repository is ApiLearningRepository) {
+      return repository.loadAuthored(
+        mode: mode,
+        lessonId: nodeId,
+        activityId: activityId,
+        opponentId: opponentId,
+      );
+    }
+    return repository.loadLesson(nodeId);
   }
 
   void select(String id) {
