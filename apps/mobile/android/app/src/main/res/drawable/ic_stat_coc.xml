@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Monochrome status-bar icon: white mascot silhouette on transparent. -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#FFFFFFFF" android:pathData="M1.2,14.8 a10.8,8.4 0 1,0 21.6,0 a10.8,8.4 0 1,0 -21.6,0 Z M1.6,6.8 a4.4,4.4 0 1,0 8.8,0 a4.4,4.4 0 1,0 -8.8,0 Z M13.6,6.8 a4.4,4.4 0 1,0 8.8,0 a4.4,4.4 0 1,0 -8.8,0 Z M3.52,6.8 a2.48,2.48 0 1,1 4.96,0 a2.48,2.48 0 1,1 -4.96,0 Z M15.52,6.8 a2.48,2.48 0 1,1 4.96,0 a2.48,2.48 0 1,1 -4.96,0 Z M6.4,14.0 Q12.0,19.6 17.6,14.0 L17.6,15.8 Q12.0,21.4 6.4,15.8 Z"/>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+<path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.8" android:strokeLineJoin="round" android:pathData="M6,3 H18 Q21,3 21,6 V16 Q21,19 18,19 H10 L5,22 L6,19 Q3,19 3,16 V6 Q3,3 6,3 Z"/>
+<path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="2" android:strokeLineCap="round" android:pathData="M15.3,7.7 A4.6,4.6 0,1 0,15.3 14.3"/>
 </vector>

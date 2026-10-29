@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+
+import 'cocenglish_brand.dart';
+
 import 'package:lottie/lottie.dart';
 
 enum DuoPose { wave, idle, scribble, pencil, celebrate, clipboard, reading }
@@ -158,6 +161,8 @@ class _DuoMotionState extends State<DuoMotion>
   @override
   void didUpdateWidget(DuoMotion oldWidget) {
     super.didUpdateWidget(oldWidget);
+    _motionAllowed = _calculateMotionAllowed();
+    if (!_motionAllowed) _controller.stop();
     final oldSpec = oldWidget.spec ?? oldWidget.pose.spec;
     if (oldWidget.enabled != widget.enabled) {
       _motionAllowed = _calculateMotionAllowed();
@@ -201,12 +206,14 @@ class _DuoMotionState extends State<DuoMotion>
   }
 
   bool _calculateMotionAllowed() =>
+      !_spec.asset.split('/').last.startsWith('duo-') &&
       widget.enabled &&
       _appActive &&
       !MediaQuery.disableAnimationsOf(context) &&
       TickerMode.valuesOf(context).enabled;
 
   Future<void> _loadComposition() async {
+    if (_spec.asset.split('/').last.startsWith('duo-')) return;
     final revision = ++_loadRevision;
     try {
       final composition = await _compositionCache.putIfAbsent(
@@ -256,6 +263,9 @@ class _DuoMotionState extends State<DuoMotion>
 
   @override
   Widget build(BuildContext context) {
+    if (_spec.asset.split('/').last.startsWith('duo-')) {
+      return CocEnglishMascot(width: widget.width, height: widget.height);
+    }
     if (!_motionAllowed || _loadError != null) return _fallback();
     final composition = _composition;
     final drawable = _drawable;
