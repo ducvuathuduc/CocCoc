@@ -38,6 +38,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/brand/
     # Original illustration ROIs for English journeys, Stories, Max and Timer Boost.
     - assets/reference_art/
     - assets/reference_art/course-remove.png

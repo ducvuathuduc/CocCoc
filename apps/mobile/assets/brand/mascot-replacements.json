@@ -1,0 +1,1043 @@
+{
+  "scope": "owl artwork crops only; replace whole crop when owl is embedded in composite illustration",
+  "regions": [
+    {
+      "id": 0,
+      "file": "01",
+      "rect": [
+        330.0,
+        1060.0,
+        520.0,
+        348.0
+      ],
+      "label": "splashFace",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 2,
+      "file": "02",
+      "rect": [
+        402.0,
+        720.0,
+        370.0,
+        365.0
+      ],
+      "label": "welcomeDuo",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 4,
+      "file": "03",
+      "rect": [
+        400.0,
+        1306.0,
+        365.0,
+        394.0
+      ],
+      "label": "waving",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 5,
+      "file": "04",
+      "rect": [
+        390.0,
+        1300.0,
+        410.0,
+        415.0
+      ],
+      "label": "excited",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 6,
+      "file": "05",
+      "rect": [
+        48.0,
+        350.0,
+        287.0,
+        354.0
+      ],
+      "label": "questionDuo",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 7,
+      "file": "07",
+      "rect": [
+        414.0,
+        874.0,
+        370.0,
+        463.0
+      ],
+      "label": "building",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 8,
+      "file": "15",
+      "rect": [
+        152.0,
+        885.0,
+        875.0,
+        930.0
+      ],
+      "label": "phoneWidget",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 9,
+      "file": "20",
+      "rect": [
+        380.0,
+        1300.0,
+        445.0,
+        425.0
+      ],
+      "label": "writing",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 12,
+      "file": "login-07",
+      "rect": [
+        435.0,
+        312.0,
+        315.0,
+        365.0
+      ],
+      "label": "loginDuo",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 13,
+      "file": "login-17",
+      "rect": [
+        440.0,
+        1430.0,
+        315.0,
+        490.0
+      ],
+      "label": "successDuo",
+      "source": "apps\\mobile\\lib\\core\\design\\reference_art.dart"
+    },
+    {
+      "id": 24,
+      "file": "course-remove",
+      "rect": [
+        420.0,
+        1660.0,
+        340.0,
+        350.0
+      ],
+      "label": "_cryingDuo",
+      "source": "apps\\mobile\\lib\\features\\account\\presentation\\course_management_screen.dart"
+    },
+    {
+      "id": 25,
+      "file": "delete-06",
+      "rect": [
+        383.0,
+        805.0,
+        414.0,
+        445.0
+      ],
+      "label": "_duoDone",
+      "source": "apps\\mobile\\lib\\features\\account\\presentation\\delete_account_screen.dart"
+    },
+    {
+      "id": 26,
+      "file": "signup-01",
+      "rect": [
+        425.0,
+        1100.0,
+        380.0,
+        380.0
+      ],
+      "label": "_duoPrompt",
+      "source": "apps\\mobile\\lib\\features\\account\\presentation\\signup_flow.dart"
+    },
+    {
+      "id": 27,
+      "file": "signup-15",
+      "rect": [
+        395.0,
+        1260.0,
+        400.0,
+        405.0
+      ],
+      "label": "_duoWelcome",
+      "source": "apps\\mobile\\lib\\features\\account\\presentation\\signup_flow.dart"
+    },
+    {
+      "id": 30,
+      "file": "app-icon-select",
+      "rect": [
+        148.0,
+        1742.0,
+        318.0,
+        318.0
+      ],
+      "label": "streakSociety",
+      "source": "apps\\mobile\\lib\\features\\app_icon\\presentation\\app_icon_sheet.dart"
+    },
+    {
+      "id": 31,
+      "file": "app-icon-select",
+      "rect": [
+        713.0,
+        1742.0,
+        320.0,
+        320.0
+      ],
+      "label": "max",
+      "source": "apps\\mobile\\lib\\features\\app_icon\\presentation\\app_icon_sheet.dart"
+    },
+    {
+      "id": 32,
+      "file": "01",
+      "rect": [
+        330.0,
+        974.0,
+        520.0,
+        520.0
+      ],
+      "label": "original",
+      "source": "apps\\mobile\\lib\\features\\app_icon\\presentation\\app_icon_sheet.dart"
+    },
+    {
+      "id": 39,
+      "file": "gift-subscription",
+      "rect": [
+        800.0,
+        540.0,
+        255.0,
+        260.0
+      ],
+      "label": "duoGift",
+      "source": "apps\\mobile\\lib\\features\\gift\\presentation\\gift_screens.dart"
+    },
+    {
+      "id": 40,
+      "file": "gift-intro",
+      "rect": [
+        0.0,
+        0.0,
+        1179.0,
+        940.0
+      ],
+      "label": "introHero",
+      "source": "apps\\mobile\\lib\\features\\gift\\presentation\\gift_screens.dart"
+    },
+    {
+      "id": 41,
+      "file": "gift-note",
+      "rect": [
+        0.0,
+        0.0,
+        1179.0,
+        1150.0
+      ],
+      "label": "noteHero",
+      "source": "apps\\mobile\\lib\\features\\gift\\presentation\\gift_screens.dart"
+    },
+    {
+      "id": 43,
+      "file": "practice-01",
+      "rect": [
+        757.0,
+        1079.0,
+        255.0,
+        263.0
+      ],
+      "label": "pathDuo",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\learning_visuals.dart"
+    },
+    {
+      "id": 50,
+      "file": "lesson-12",
+      "rect": [
+        420.0,
+        673.0,
+        404.0,
+        545.0
+      ],
+      "label": "completed",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\learning_visuals.dart"
+    },
+    {
+      "id": 51,
+      "file": "results-02",
+      "rect": [
+        209.0,
+        481.0,
+        772.0,
+        771.0
+      ],
+      "label": "medalDuo",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\learning_visuals.dart"
+    },
+    {
+      "id": 52,
+      "file": "results-03",
+      "rect": [
+        395.0,
+        379.0,
+        405.0,
+        668.0
+      ],
+      "label": "scoreDuo",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\learning_visuals.dart"
+    },
+    {
+      "id": 56,
+      "file": "lesson-21",
+      "rect": [
+        340.0,
+        326.0,
+        414.0,
+        429.0
+      ],
+      "label": "superDuo",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\learning_visuals.dart"
+    },
+    {
+      "id": 66,
+      "file": "quests-03",
+      "rect": [
+        76.0,
+        956.0,
+        1030.0,
+        376.0
+      ],
+      "label": "questFriends",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\learning_visuals.dart"
+    },
+    {
+      "id": 71,
+      "file": "shop-02",
+      "rect": [
+        777.0,
+        425.0,
+        301.0,
+        298.0
+      ],
+      "label": "maxDuo",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\learning_visuals.dart"
+    },
+    {
+      "id": 72,
+      "file": "section-more-source",
+      "rect": [
+        338.0,
+        1640.0,
+        500.0,
+        423.0
+      ],
+      "label": "sections_screen",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\sections_screen.dart"
+    },
+    {
+      "id": 73,
+      "file": "section-more-source",
+      "rect": [
+        790.0,
+        770.0,
+        341.0,
+        450.0
+      ],
+      "label": "sections_screen",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\sections_screen.dart"
+    },
+    {
+      "id": 74,
+      "file": "section-list-source",
+      "rect": [
+        790.0,
+        1790.0,
+        341.0,
+        340.0
+      ],
+      "label": "sections_screen",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\sections_screen.dart"
+    },
+    {
+      "id": 75,
+      "file": "section-list-source",
+      "rect": [
+        809.0,
+        921.0,
+        322.0,
+        331.0
+      ],
+      "label": "sections_screen",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\sections_screen.dart"
+    },
+    {
+      "id": 76,
+      "file": "section-detail-source",
+      "rect": [
+        861.0,
+        320.0,
+        318.0,
+        325.0
+      ],
+      "label": "sections_screen",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\sections_screen.dart"
+    },
+    {
+      "id": 80,
+      "file": "unit-skip-intro",
+      "rect": [
+        340.0,
+        680.0,
+        500.0,
+        570.0
+      ],
+      "label": "intro",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\unit_skip_screen.dart"
+    },
+    {
+      "id": 82,
+      "file": "unit-skip-warning",
+      "rect": [
+        890.0,
+        1090.0,
+        289.0,
+        500.0
+      ],
+      "label": "warning",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\unit_skip_screen.dart"
+    },
+    {
+      "id": 83,
+      "file": "unit-skip-failed",
+      "rect": [
+        290.0,
+        835.0,
+        600.0,
+        455.0
+      ],
+      "label": "failed",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\unit_skip_screen.dart"
+    },
+    {
+      "id": 84,
+      "file": "unit-skip-result",
+      "rect": [
+        265.0,
+        490.0,
+        600.0,
+        670.0
+      ],
+      "label": "passed",
+      "source": "apps\\mobile\\lib\\features\\learning\\presentation\\unit_skip_screen.dart"
+    },
+    {
+      "id": 94,
+      "file": "adventure-complete",
+      "rect": [
+        220.0,
+        610.0,
+        735.0,
+        610.0
+      ],
+      "label": "adventure_screen",
+      "source": "apps\\mobile\\lib\\features\\practice\\presentation\\adventure_screen.dart"
+    },
+    {
+      "id": 96,
+      "file": "legendary-intro",
+      "rect": [
+        80.0,
+        550.0,
+        1010.0,
+        866.0
+      ],
+      "label": "legendaryGold",
+      "source": "apps\\mobile\\lib\\features\\practice\\presentation\\challenge_intro.dart"
+    },
+    {
+      "id": 109,
+      "file": "story-complete",
+      "rect": [
+        348.0,
+        755.0,
+        520.0,
+        605.0
+      ],
+      "label": "_storyDuo",
+      "source": "apps\\mobile\\lib\\features\\practice\\presentation\\journey_screens.dart"
+    },
+    {
+      "id": 110,
+      "file": "legendary-milestone",
+      "rect": [
+        0.0,
+        1100.0,
+        530.0,
+        430.0
+      ],
+      "label": "journey_screens",
+      "source": "apps\\mobile\\lib\\features\\practice\\presentation\\journey_screens.dart"
+    },
+    {
+      "id": 112,
+      "file": "legendary-complete",
+      "rect": [
+        170.0,
+        600.0,
+        820.0,
+        585.0
+      ],
+      "label": "journey_screens",
+      "source": "apps\\mobile\\lib\\features\\practice\\presentation\\journey_screens.dart"
+    },
+    {
+      "id": 122,
+      "file": "achievement-awards-top",
+      "rect": [
+        138.0,
+        562.0,
+        250.0,
+        235.0
+      ],
+      "label": "longestStreak",
+      "source": "apps\\mobile\\lib\\features\\progress\\domain\\achievement_models.dart"
+    },
+    {
+      "id": 123,
+      "file": "achievement-awards-top",
+      "rect": [
+        581.0,
+        564.0,
+        290.0,
+        232.0
+      ],
+      "label": "mostXp",
+      "source": "apps\\mobile\\lib\\features\\progress\\domain\\achievement_models.dart"
+    },
+    {
+      "id": 124,
+      "file": "achievement-awards-top",
+      "rect": [
+        1049.0,
+        577.0,
+        130.0,
+        222.0
+      ],
+      "label": "perfectLessons",
+      "source": "apps\\mobile\\lib\\features\\progress\\domain\\achievement_models.dart"
+    },
+    {
+      "id": 136,
+      "file": "achievement-awards-bottom",
+      "rect": [
+        830.0,
+        1276.0,
+        286.0,
+        304.0
+      ],
+      "label": "leagueMvp",
+      "source": "apps\\mobile\\lib\\features\\progress\\domain\\achievement_models.dart"
+    },
+    {
+      "id": 148,
+      "file": "league-welcome-source",
+      "rect": [
+        145.0,
+        500.0,
+        890.0,
+        850.0
+      ],
+      "label": "_welcomeLeagueArt",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\league_entry_surface.dart"
+    },
+    {
+      "id": 155,
+      "file": "max-individual",
+      "rect": [
+        304.0,
+        287.0,
+        582.0,
+        380.0
+      ],
+      "label": "maxDuo",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 156,
+      "file": "max-family",
+      "rect": [
+        270.0,
+        555.0,
+        635.0,
+        416.0
+      ],
+      "label": "maxFamilyArt",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 157,
+      "file": "max-icon",
+      "rect": [
+        444.0,
+        1125.0,
+        302.0,
+        315.0
+      ],
+      "label": "maxAppIcon",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 165,
+      "file": "max-features",
+      "rect": [
+        258.0,
+        1150.0,
+        785.0,
+        478.0
+      ],
+      "label": "max_screen",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 167,
+      "file": "max-benefits",
+      "rect": [
+        185.0,
+        1080.0,
+        994.0,
+        1125.0
+      ],
+      "label": "max_screen",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 168,
+      "file": "max-welcome",
+      "rect": [
+        80.0,
+        910.0,
+        930.0,
+        1010.0
+      ],
+      "label": "max_screen",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 169,
+      "file": "max-invite",
+      "rect": [
+        175.0,
+        1200.0,
+        820.0,
+        545.0
+      ],
+      "label": "max_screen",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 170,
+      "file": "max-complete",
+      "rect": [
+        380.0,
+        1265.0,
+        475.0,
+        535.0
+      ],
+      "label": "max_screen",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\max_screen.dart"
+    },
+    {
+      "id": 172,
+      "file": "profile-04",
+      "rect": [
+        708.0,
+        1396.0,
+        352.0,
+        213.0
+      ],
+      "label": "_completeProfileDuo",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\own_profile_screen.dart"
+    },
+    {
+      "id": 173,
+      "file": "profile-score-source",
+      "rect": [
+        700.0,
+        1385.0,
+        287.0,
+        243.0
+      ],
+      "label": "_scoreDuo",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\own_profile_screen.dart"
+    },
+    {
+      "id": 179,
+      "file": "status-icons",
+      "rect": [
+        54.0,
+        1664.0,
+        147.0,
+        127.0
+      ],
+      "label": "social_screens",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\social_screens.dart"
+    },
+    {
+      "id": 180,
+      "file": "status-icons",
+      "rect": [
+        54.0,
+        1832.0,
+        148.0,
+        154.0
+      ],
+      "label": "social_screens",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\social_screens.dart"
+    },
+    {
+      "id": 191,
+      "file": "streak-friends",
+      "rect": [
+        0.0,
+        476.0,
+        1179.0,
+        466.0
+      ],
+      "label": "friends",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\streak_screen.dart"
+    },
+    {
+      "id": 194,
+      "file": "streak-protection",
+      "rect": [
+        118.0,
+        1338.0,
+        200.0,
+        205.0
+      ],
+      "label": "appIcons",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\streak_screen.dart"
+    },
+    {
+      "id": 196,
+      "file": "super-07",
+      "rect": [
+        430.0,
+        153.0,
+        320.0,
+        493.0
+      ],
+      "label": "_superDuo",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\super_screen.dart"
+    },
+    {
+      "id": 201,
+      "file": "year-review-intro",
+      "rect": [
+        0.0,
+        310.0,
+        1180.0,
+        1350.0
+      ],
+      "label": "_introArt",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\year_review_screen.dart"
+    },
+    {
+      "id": 202,
+      "file": "year-review-lessons",
+      "rect": [
+        0.0,
+        310.0,
+        1180.0,
+        690.0
+      ],
+      "label": "_lessonsArt",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\year_review_screen.dart"
+    },
+    {
+      "id": 203,
+      "file": "year-review-xp",
+      "rect": [
+        80.0,
+        300.0,
+        1020.0,
+        1080.0
+      ],
+      "label": "_xpArt",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\year_review_screen.dart"
+    },
+    {
+      "id": 206,
+      "file": "year-review-student",
+      "rect": [
+        150.0,
+        180.0,
+        880.0,
+        1050.0
+      ],
+      "label": "_studentArt",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\year_review_screen.dart"
+    },
+    {
+      "id": 207,
+      "file": "year-review-summary",
+      "rect": [
+        120.0,
+        840.0,
+        940.0,
+        560.0
+      ],
+      "label": "_summaryArt",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\year_review_screen.dart"
+    },
+    {
+      "id": 211,
+      "file": "quests-05",
+      "rect": [
+        72.0,
+        946.0,
+        1035.0,
+        430.0
+      ],
+      "label": "weekendBanner",
+      "source": "apps\\mobile\\lib\\features\\quests\\presentation\\quest_art.dart"
+    },
+    {
+      "id": 212,
+      "file": "quests-04",
+      "rect": [
+        76.0,
+        956.0,
+        1030.0,
+        376.0
+      ],
+      "label": "friendsBannerCompleted",
+      "source": "apps\\mobile\\lib\\features\\quests\\presentation\\quest_art.dart"
+    },
+    {
+      "id": 214,
+      "file": "results-12",
+      "rect": [
+        180.0,
+        1145.0,
+        202.0,
+        185.0
+      ],
+      "label": "results_theme",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 215,
+      "file": "results-12",
+      "rect": [
+        180.0,
+        1385.0,
+        202.0,
+        185.0
+      ],
+      "label": "results_theme",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 220,
+      "file": "results-05",
+      "rect": [
+        368.0,
+        383.0,
+        478.0,
+        542.0
+      ],
+      "label": "flameDuo",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 222,
+      "file": "results-07",
+      "rect": [
+        236.0,
+        1000.0,
+        784.0,
+        738.0
+      ],
+      "label": "streakGoal",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 223,
+      "file": "results-08",
+      "rect": [
+        0.0,
+        1180.0,
+        272.0,
+        438.0
+      ],
+      "label": "results_theme",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 224,
+      "file": "results-08",
+      "rect": [
+        328.0,
+        1137.0,
+        524.0,
+        523.0
+      ],
+      "label": "results_theme",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 225,
+      "file": "results-08",
+      "rect": [
+        909.0,
+        1181.0,
+        271.0,
+        434.0
+      ],
+      "label": "results_theme",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 227,
+      "file": "results-10",
+      "rect": [
+        149.0,
+        423.0,
+        882.0,
+        1187.0
+      ],
+      "label": "friendsQuest",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 229,
+      "file": "results-13",
+      "rect": [
+        0.0,
+        663.0,
+        1180.0,
+        1606.0
+      ],
+      "label": "path",
+      "source": "apps\\mobile\\lib\\features\\results\\presentation\\results_theme.dart"
+    },
+    {
+      "id": 247,
+      "file": "shop-02",
+      "rect": [
+        775.0,
+        425.0,
+        290.0,
+        300.0
+      ],
+      "label": "maxBanner",
+      "source": "apps\\mobile\\lib\\features\\shop\\presentation\\shop_visuals.dart"
+    },
+    {
+      "id": 252,
+      "file": "shop-04",
+      "rect": [
+        84.0,
+        616.0,
+        174.0,
+        162.0
+      ],
+      "label": "widgetReward",
+      "source": "apps\\mobile\\lib\\features\\shop\\presentation\\shop_visuals.dart"
+    },
+    {
+      "id": 299,
+      "file": "status-icons",
+      "rect": [
+        625.0,
+        1668.0,
+        113.0,
+        89.0
+      ],
+      "label": "social_screens",
+      "source": "apps\\mobile\\lib\\features\\progress\\presentation\\social_screens.dart"
+    },
+    {
+      "id": 138,
+      "file": "achievement-xp-detail",
+      "rect": [
+        293.0,
+        631.0,
+        600.0,
+        789.0
+      ],
+      "label": "xpDetail",
+      "source": "apps\\mobile\\lib\\features\\progress\\domain\\achievement_models.dart"
+    }
+  ],
+  "dynamic": "all widget-* artwork regions",
+  "motion": "duo-* Lottie assets replaced; non-owl character motion unchanged",
+  "additional_dynamic_regions": {
+    "max-reminder-choice": [
+      [
+        325,
+        925,
+        545,
+        436
+      ]
+    ],
+    "max-reminder-selected": [
+      [
+        325,
+        850,
+        570,
+        520
+      ]
+    ],
+    "super-12": [
+      [
+        45,
+        1075,
+        1050,
+        1140
+      ]
+    ],
+    "super-13": [
+      [
+        340,
+        1280,
+        510,
+        480
+      ]
+    ],
+    "achievement-monthly-2025": [
+      [
+        100,
+        537,
+        258,
+        271
+      ],
+      [
+        822,
+        1318,
+        258,
+        271
+      ]
+    ],
+    "achievement-monthly-history": [
+      [
+        97,
+        1680,
+        262,
+        276
+      ]
+    ],
+    "family-subscription": [
+      [
+        0.0,
+        370.0,
+        1179.0,
+        400.0
+      ]
+    ]
+  }
+}

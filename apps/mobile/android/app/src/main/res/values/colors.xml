@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Palette green (ReferenceColors.green) -->
-    <color name="launch_background">#5BCD05</color>
-    <color name="ic_launcher_background">#5BCD05</color>
+    <color name="launch_background">#FFF7EF</color>
+    <color name="ic_launcher_background">#FFF7EF</color>
     <color name="coc_accent">#5BCD05</color>
     <color name="coc_surface">#FFFDFE</color>
     <color name="coc_ink">#4D4B4E</color>

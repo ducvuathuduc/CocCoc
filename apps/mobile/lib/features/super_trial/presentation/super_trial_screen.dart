@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/design/reference_art.dart';
+import '../../../core/design/cocenglish_brand.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../application/super_trial_provider.dart';
 import '../domain/super_trial_offer.dart';
@@ -98,19 +98,32 @@ class SuperTrialScreen extends ConsumerWidget {
             return Stack(
               children: [
                 Positioned.fill(
-                  child: ReferenceArt(
-                    ArtRegion(
-                      'gap-super-trial',
-                      Rect.fromLTWH(
-                        crop.dx,
-                        crop.dy,
-                        size.width / s,
-                        size.height / s,
+                  child: const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFF0A484C),
+                          Color(0xFF122D79),
+                          Color(0xFF531972),
+                        ],
                       ),
                     ),
-                    width: size.width,
-                    height: size.height,
                   ),
+                ),
+                Positioned.fromRect(
+                  rect: map(_bubble),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2055A4),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+                fit(
+                  const Rect.fromLTRB(300, 1130, 950, 1800),
+                  const CocEnglishMark(size: 220),
                 ),
                 fit(
                   _title,

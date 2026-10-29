@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/design/duo_illustration.dart';
-import '../../../core/design/reference_art.dart';
+import '../../../core/design/cocenglish_brand.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../application/onboarding_controller.dart';
@@ -38,18 +37,10 @@ class WelcomeScreen extends ConsumerWidget {
                           const PopIn(
                             duration: OnboardingMotion.mascot,
                             alignment: Alignment.bottomCenter,
-                            child: DuoIllustration(
-                              ReferenceArtRegions.welcomeDuo,
-                              width: 123,
-                              height: 121,
-                            ),
+                            child: CocEnglishMark(size: 144),
                           ),
                           const SizedBox(height: 28),
-                          const DuoIllustration(
-                            ReferenceArtRegions.wordmark,
-                            width: 185,
-                            height: 45,
-                          ),
+                          const CocEnglishWordmark(),
                           const SizedBox(height: 14),
                           Text(
                             copy.welcomeTagline,

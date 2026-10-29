@@ -3,6 +3,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import 'cocenglish_brand.dart';
+import 'cocenglish_mascot_regions.dart';
+
 class ArtRegion {
   const ArtRegion(this.file, this.source);
   final String file;
@@ -155,10 +158,22 @@ class _ReferenceArtState extends State<ReferenceArt> {
   @override
   void didUpdateWidget(ReferenceArt oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.region.file != widget.region.file) _resolve();
+    if (oldWidget.region.file != widget.region.file ||
+        oldWidget.region.source != widget.region.source) {
+      _resolve();
+    }
   }
 
   void _resolve() {
+    if (CocEnglishMascotRegions.matches(
+      widget.region.file,
+      widget.region.source,
+    )) {
+      _stream?.removeListener(_listener);
+      _stream = null;
+      _replace(null);
+      return;
+    }
     final next = ReferenceArt._provider(widget.region.file)
         .resolve(createLocalImageConfiguration(context));
     if (next.key == _stream?.key) return;
@@ -194,17 +209,20 @@ class _ReferenceArtState extends State<ReferenceArt> {
   }
 
   @override
-  Widget build(BuildContext context) => ExcludeSemantics(
-    child: SizedBox(
-      width: widget.width,
-      height: widget.height,
-      child: _info != null
-          ? CustomPaint(
-              painter: _ArtPainter(_info!.image, widget.region.source),
-            )
-          : const SizedBox.shrink(),
-    ),
-  );
+  Widget build(BuildContext context) =>
+      CocEnglishMascotRegions.matches(widget.region.file, widget.region.source)
+      ? CocEnglishMascot(width: widget.width, height: widget.height)
+      : ExcludeSemantics(
+          child: SizedBox(
+            width: widget.width,
+            height: widget.height,
+            child: _info != null
+                ? CustomPaint(
+                    painter: _ArtPainter(_info!.image, widget.region.source),
+                  )
+                : const SizedBox.shrink(),
+          ),
+        );
 }
 
 class _ArtPainter extends CustomPainter {
