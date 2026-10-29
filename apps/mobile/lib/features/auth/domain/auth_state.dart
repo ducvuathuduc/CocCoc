@@ -13,7 +13,7 @@ enum AuthStage {
   emailCodeVerify,
 }
 
-enum AuthProvider { google, facebook, apple }
+enum AuthProvider { google }
 
 class AuthUser {
   const AuthUser({

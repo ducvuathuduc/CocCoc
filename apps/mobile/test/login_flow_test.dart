@@ -171,9 +171,13 @@ void main() {
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
         if (stage == AuthStage.details) {
-          await tester.ensureVisible(find.text('SIGN IN WITH APPLE'));
+          expect(find.text('SIGN IN WITH APPLE'), findsNothing);
+          await tester.ensureVisible(find.text('SIGN IN WITH GOOGLE'));
           await tester.pumpAndSettle();
-          expect(find.text('SIGN IN WITH APPLE').hitTestable(), findsOneWidget);
+          expect(
+            find.text('SIGN IN WITH GOOGLE').hitTestable(),
+            findsOneWidget,
+          );
         }
       });
     }

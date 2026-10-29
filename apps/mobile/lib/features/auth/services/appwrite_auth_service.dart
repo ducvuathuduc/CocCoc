@@ -30,8 +30,6 @@ class AppwriteAuthService {
     required this.recoveryUrl,
     required this.verificationUrl,
     required this.googleEnabled,
-    required this.facebookEnabled,
-    required this.appleEnabled,
   });
 
   factory AppwriteAuthService.fromEnvironment() =>
@@ -42,8 +40,6 @@ class AppwriteAuthService {
     const recoveryUrl = String.fromEnvironment('APPWRITE_RECOVERY_URL');
     const verificationUrl = String.fromEnvironment('APPWRITE_VERIFICATION_URL');
     const googleEnabled = bool.fromEnvironment('APPWRITE_GOOGLE_ENABLED');
-    const facebookEnabled = bool.fromEnvironment('APPWRITE_FACEBOOK_ENABLED');
-    const appleEnabled = bool.fromEnvironment('APPWRITE_APPLE_ENABLED');
 
     final endpoint = config.appwriteEndpoint;
     final projectId = config.appwriteProjectId;
@@ -61,8 +57,6 @@ class AppwriteAuthService {
       recoveryUrl: recoveryUrl,
       verificationUrl: verificationUrl,
       googleEnabled: googleEnabled,
-      facebookEnabled: facebookEnabled,
-      appleEnabled: appleEnabled,
     );
   }
 
@@ -77,8 +71,6 @@ class AppwriteAuthService {
     recoveryUrl: recoveryUrl,
     verificationUrl: verificationUrl,
     googleEnabled: false,
-    facebookEnabled: false,
-    appleEnabled: false,
   );
 
   static const configurationMessage =
@@ -98,18 +90,12 @@ class AppwriteAuthService {
   final String recoveryUrl;
   final String verificationUrl;
   final bool googleEnabled;
-  final bool facebookEnabled;
-  final bool appleEnabled;
 
   bool get isConfigured => _account != null;
 
-  Set<AuthProvider> availableProviders(TargetPlatform platform) {
+  Set<AuthProvider> availableProviders() {
     if (!isConfigured) return const {};
-    return {
-      if (googleEnabled) AuthProvider.google,
-      if (facebookEnabled) AuthProvider.facebook,
-      if (appleEnabled && platform == TargetPlatform.iOS) AuthProvider.apple,
-    };
+    return {if (googleEnabled) AuthProvider.google};
   }
 
   Account _configuredAccount() {
@@ -260,7 +246,7 @@ class AppwriteAuthService {
 
   Future<AuthUser> socialSignIn(AuthProvider provider) async {
     final account = _configuredAccount();
-    if (!availableProviders(defaultTargetPlatform).contains(provider)) {
+    if (!availableProviders().contains(provider)) {
       throw const AppwriteAuthServiceException(socialMessage);
     }
     try {
@@ -291,7 +277,7 @@ class AppwriteAuthService {
   /// consent page and returns after the redirect.
   Future<void> linkProvider(AuthProvider provider) async {
     final account = _configuredAccount();
-    if (!availableProviders(defaultTargetPlatform).contains(provider)) {
+    if (!availableProviders().contains(provider)) {
       throw const AppwriteAuthServiceException(socialMessage);
     }
     try {
@@ -385,8 +371,6 @@ class AppwriteAuthService {
   appwrite_enums.OAuthProvider _provider(AuthProvider provider) =>
       switch (provider) {
         AuthProvider.google => appwrite_enums.OAuthProvider.google,
-        AuthProvider.facebook => appwrite_enums.OAuthProvider.facebook,
-        AuthProvider.apple => appwrite_enums.OAuthProvider.apple,
       };
 
   AuthUser _toAuthUser(appwrite_models.User user) => AuthUser(

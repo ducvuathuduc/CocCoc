@@ -121,7 +121,8 @@ void main() {
       await t.pumpAndSettle();
       await open(t, 'Social accounts');
       expect(find.byType(SocialAccountsScreen), findsOneWidget);
-      expect(find.text('Facebook'), findsOneWidget);
+      expect(find.text('Facebook'), findsNothing);
+      expect(find.text('Google'), findsOneWidget);
       await t.tap(find.text('Google'));
       await t.pumpAndSettle();
       expect(container(t).read(settingsExtrasControllerProvider).connected, {

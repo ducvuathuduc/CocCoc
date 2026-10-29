@@ -49,7 +49,7 @@ void main() {
     () async {
       final repository = MockAuthRepository(delay: Duration.zero);
 
-      final user = await repository.socialSignIn(AuthProvider.apple);
+      final user = await repository.socialSignIn(AuthProvider.google);
 
       expect(user, MockAuthRepository.demoUser);
       expect(await repository.rememberedAccount(), MockAuthRepository.demoUser);

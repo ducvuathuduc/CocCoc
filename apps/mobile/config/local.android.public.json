@@ -7,7 +7,5 @@
   "LEARNING_API_URL": "http://10.0.2.2:4101",
   "PROGRESS_API_URL": "http://10.0.2.2:4102",
   "AI_API_URL": "http://10.0.2.2:4103",
-  "APPWRITE_GOOGLE_ENABLED": "false",
-  "APPWRITE_FACEBOOK_ENABLED": "false",
-  "APPWRITE_APPLE_ENABLED": "false"
+  "APPWRITE_GOOGLE_ENABLED": "false"
 }

@@ -88,7 +88,6 @@ class BundledSettingsContent implements SettingsContent {
 
   @override
   List<SocialAccount> get socialAccounts => const [
-    SocialAccount(id: 'facebook', name: 'Facebook'),
     SocialAccount(id: 'google', name: 'Google'),
   ];
 

@@ -21,7 +21,7 @@ class FakeIdentityGateway implements SocialIdentityGateway {
   int reads = 0;
 
   @override
-  Set<String> get configuredProviders => const {'google', 'facebook'};
+  Set<String> get configuredProviders => const {'google'};
 
   @override
   Future<Set<String>> linkedProviders() async {
@@ -118,7 +118,7 @@ void main() {
     final vm = container.read(settingsExtrasControllerProvider.notifier);
     await settle();
 
-    await vm.setSocial('facebook', true);
+    await vm.setSocial('google', true);
     expect(gateway.linkedRequests, isEmpty);
     expect(container.read(settingsExtrasControllerProvider).connected, isEmpty);
     final error = container.read(settingsExtrasControllerProvider).error;

@@ -157,7 +157,8 @@ void main() {
       await tester.tap(find.text('NEXT'));
       await tester.pumpAndSettle();
       expect(find.text('What is your name?'), findsOneWidget);
-      expect(find.text('SIGN UP WITH APPLE'), findsOneWidget);
+      expect(find.text('SIGN UP WITH APPLE'), findsNothing);
+      expect(find.text('SIGN UP WITH GOOGLE'), findsOneWidget);
       await tester.enterText(
         find.byKey(const ValueKey('register-first')),
         'Sam',

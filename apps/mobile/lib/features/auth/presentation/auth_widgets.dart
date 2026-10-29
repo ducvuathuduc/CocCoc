@@ -22,7 +22,7 @@ class DuoBlueButton extends StatelessWidget {
   );
 }
 
-/// Outlined social sign-in/up buttons (Google, Facebook, Apple).
+/// Outlined social sign-in/up buttons (Google).
 class SocialAuthButtons extends StatelessWidget {
   const SocialAuthButtons({
     required this.verb,
@@ -47,13 +47,9 @@ class SocialAuthButtons extends StatelessWidget {
             label: '$verb WITH ${provider.name.toUpperCase()}',
             outlined: true,
             foregroundColor: DuoFormColors.ink,
-            leading: DuoIllustration(
-              switch (provider) {
-                AuthProvider.google => ReferenceArtRegions.google,
-                AuthProvider.facebook => ReferenceArtRegions.facebook,
-                AuthProvider.apple => ReferenceArtRegions.apple,
-              },
-              width: provider == AuthProvider.apple ? 23 : 24,
+            leading: const DuoIllustration(
+              ReferenceArtRegions.google,
+              width: 24,
               height: 24,
             ),
             onPressed: available.contains(provider)

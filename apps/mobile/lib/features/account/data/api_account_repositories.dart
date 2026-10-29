@@ -114,16 +114,11 @@ class AppwriteSocialIdentityGateway implements SocialIdentityGateway {
 
   final AppwriteAuthService service;
 
-  static const _providers = {
-    'apple': AuthProvider.apple,
-    'facebook': AuthProvider.facebook,
-    'google': AuthProvider.google,
-  };
+  static const _providers = {'google': AuthProvider.google};
 
   @override
   Set<String> get configuredProviders => {
-    for (final provider in service.availableProviders(defaultTargetPlatform))
-      _id(provider),
+    for (final provider in service.availableProviders()) _id(provider),
   };
 
   @override
@@ -156,8 +151,6 @@ class AppwriteSocialIdentityGateway implements SocialIdentityGateway {
 
   static String _id(AuthProvider provider) => switch (provider) {
     AuthProvider.google => 'google',
-    AuthProvider.facebook => 'facebook',
-    AuthProvider.apple => 'apple',
   };
 
   /// Maps SDK failures to a neutral screen message; raw details stay out.

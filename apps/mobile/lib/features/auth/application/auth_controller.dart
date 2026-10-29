@@ -20,9 +20,7 @@ final authAvailableProvidersProvider = Provider<Set<AuthProvider>>((ref) {
   if (ref.watch(appConfigProvider).useMockAuth) {
     return Set.unmodifiable(AuthProvider.values);
   }
-  return ref
-      .watch(appwriteAuthServiceProvider)
-      .availableProviders(defaultTargetPlatform);
+  return ref.watch(appwriteAuthServiceProvider).availableProviders();
 });
 
 final authRepositoryProvider = Provider<AuthRepository>(

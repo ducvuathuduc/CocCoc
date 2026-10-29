@@ -100,7 +100,7 @@ class BundledAccountContent implements AccountContent {
     suggestedEmailLabel: 'Suggested email',
     welcomeTemplate:
         'Welcome, {name}! Your profile has been successfully created.',
-    socialProviders: ['google', 'facebook', 'apple'],
+    socialProviders: ['google'],
   );
 
   @override

@@ -36,11 +36,6 @@ abstract final class ReferenceArtRegions {
     Rect.fromLTWH(440, 1430, 315, 490),
   );
   static const google = ArtRegion('login-03', Rect.fromLTWH(276, 1681, 72, 72));
-  static const facebook = ArtRegion(
-    'login-03',
-    Rect.fromLTWH(245, 1870, 78, 78),
-  );
-  static const apple = ArtRegion('login-03', Rect.fromLTWH(308, 2057, 68, 82));
   static const hiddenEye = ArtRegion(
     'login-03',
     Rect.fromLTWH(984, 548, 84, 64),
