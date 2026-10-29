@@ -30,6 +30,7 @@ The [repository tree](agent/REPOSITORY_TREE.md) is the single layout and ownersh
 | Phases and assigned work | [phase plan](agent/IMPLEMENTATION_PLAN.md), [task status](agent/task-status.json), [task protocol](agent/TASK_PROTOCOL.md), [developer handoff](agent/DEVELOPER_HANDOFF.md) |
 | Real feature integration while preserving approved UI | [Approved 2026-10-25 setup plan](agent/REAL_FEATURES_SETUP_PLAN_20261025.md), [first composition slice](agent/REAL_FEATURES_FIRST_SLICE_20261025.md), [accepted runtime ADR](architecture/adr/0018-container-event-cache-runtime.md), [auth decision: retain Appwrite](architecture/adr/draft-0019-descope-identity.md), [real-features inventory](agent/REAL_FEATURES_INVENTORY_20261025.md), [phase breakdown 2–8](agent/PHASE_BREAKDOWN_2_8.md), [keys and config checklist](devops/KEYS_AND_CONFIG_CHECKLIST.md) |
 | Release and demo evidence | [release gate](quality/RELEASE_GATE.md), [demo playbook](quality/DEMO_PLAYBOOK.md) |
+| Remote branch integration and cleanup | [2026-10-29 consolidation receipt](quality/REMOTE_BRANCH_CONSOLIDATION_20261029.md) |
 
 ## Full specification reading order (V1, checked 2026-10-03)
 

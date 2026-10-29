@@ -8,6 +8,19 @@ This is **our engineering DESIGN.md**, derived from public [Duolingo brand color
 
 ## Visual direction
 
+2026-10-29 remote consolidation adopts the existing orange CocEnglish branding
+branch: the speech-bubble C mark replaces mapped owl artwork and `duo-*` motion,
+and supplies the splash, welcome and platform icons. The native screen layouts,
+ordinary icons and other lesson characters keep their established rendering.
+The branch's existing mapping replaces a whole composite illustration when it
+contains owl artwork; gift backgrounds and the decorative path-return preview
+therefore lose their illustrated scene context. Native controls remain in place,
+including the path-return banner action to `/home`.
+The [brand assets and mapping](../../apps/mobile/assets/brand/README.md) and
+[integration receipt](../quality/REMOTE_BRANCH_CONSOLIDATION_20261029.md) record
+the scope and canonical Linux visual checks. Archived reference images retain
+their provenance role.
+
 Bright learning path, round illustrated exercises, thick outlines, tactile bottom-edge buttons, generous space, one clear next action. Flat surface hierarchy; avoid generic KPI cards, gradients, glass effects and desktop-dashboard composition. Use our CocEnglish character illustration, no production dependency on proprietary fonts/assets.
 
 Typography: bundle Nunito Sans for Vietnamese+Latin UI and Nunito for short headings if glyph coverage is verified; system sans fallback during font load. Do not fetch fonts at runtime. Heading28/32 weight800; title22/28 weight800; body18/26 weight600; caption14/20 weight600; button16/20 weight800. Text scaling is respected; no fixed height for multi-line text. Proprietary Feather/DIN are not required.
@@ -16,6 +29,7 @@ Typography: bundle Nunito Sans for Vietnamese+Latin UI and Nunito for short head
 
 | Token | Value / role |
 |---|---|
+| brand.orange / brand.surface | #F47721 / #FFF7EF; CocEnglish mark and launch surface |
 | brand.green | #58CC02; icon/illustration/accent, not small white text background without contrast check |
 | action.green | #237A00; accessible primary filled control with white text |
 | action.edge | #185900; 4px tactile lower edge |

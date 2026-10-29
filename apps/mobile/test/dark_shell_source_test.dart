@@ -1,3 +1,5 @@
+import 'package:cocenglish/core/design/cocenglish_brand.dart';
+import 'package:cocenglish/core/design/duo_motion.dart';
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/learning/presentation/learning_path.dart';
@@ -11,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets(
-    'dark reduced-motion home keeps the source mascot background transparent',
+    'dark reduced-motion home keeps CocEnglish mascot bounds and transparent background',
     (tester) async {
       await tester.pumpWidget(
         ProviderScope(
@@ -27,11 +29,21 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      final mascot = find.descendant(
+        of: find.byType(DuoMotion),
+        matching: find.byType(CocEnglishMascot),
+      );
+      expect(mascot, findsOneWidget);
+      expect(tester.getSize(mascot), const Size(118, 153));
+      final mark = find.descendant(
+        of: mascot,
+        matching: find.byType(CocEnglishMark),
+      );
+      expect(mark, findsOneWidget);
+      expect(tester.getSize(mark), const Size(118, 118));
       expect(
-        find.byWidgetPredicate(
-          (w) => w is ReferenceArt && w.region.file == 'path-duo-transparent',
-        ),
-        findsOneWidget,
+        find.descendant(of: mascot, matching: find.byType(ColoredBox)),
+        findsNothing,
       );
       expect(tester.takeException(), isNull);
     },

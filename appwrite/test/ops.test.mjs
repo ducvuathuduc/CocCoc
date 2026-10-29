@@ -62,7 +62,13 @@ test('validation rejects unsafe or drifting declarations', () => {
     ],
     [(c) => (c.ops.auth.oauth2.google.clientSecret = 'x'), /never declare provider secrets/],
     [(c) => (c.ops.functions['coc-learning'].variables.COC_X = 'a'.repeat(64)), /key material/],
-    [(c) => (c.ops.schedules[0].status = 'pending-service-worker'), /schedule must equal/],
+    [
+      (c) => {
+        const schedule = c.ops.schedules[0];
+        schedule.status = schedule.status === 'active' ? 'pending-service-worker' : 'active';
+      },
+      /schedule must equal/,
+    ],
     [(c) => (c.config.functions[0].schedule = '*/5 * * * *'), /schedule must equal/],
     [(c) => (c.ops.auth.methods.anonymous = true), /anonymous must be off/],
     [(c) => (c.ops.auth.policies['password-strength'].min = 8), /password-strength/],
@@ -70,7 +76,10 @@ test('validation rejects unsafe or drifting declarations', () => {
     [(c) => (c.ops.functions['coc-progress'].keyringSenders = ['progress']), /keyringSenders/],
     [(c) => (c.config.functions[1].path = '../services/progress/src'), /path must be/],
     [
-      (c) => (c.config.functions.find((f) => f.$id === 'coc-ai').schedule = ''),
+      (c) => {
+        const fn = c.config.functions.find((f) => f.$id === 'coc-ai');
+        fn.schedule = fn.schedule === '' ? '* * * * *' : '';
+      },
       /coc-ai: schedule must equal/,
     ],
   ];

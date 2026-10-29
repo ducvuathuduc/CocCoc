@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:cocenglish/main.dart';
+import 'package:cocenglish/core/design/cocenglish_brand.dart';
+import 'package:cocenglish/core/design/cocenglish_mascot_regions.dart';
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/features/learning/application/unit_skip_controller.dart';
@@ -78,14 +80,36 @@ void main() {
       await t.pumpAndSettle();
       expect(t.takeException(), isNull, reason: name);
       for (final element in find.byType(ReferenceArt).evaluate()) {
+        final art = element.widget as ReferenceArt;
+        final illustration = find.byWidget(art);
+        if (CocEnglishMascotRegions.matches(
+          art.region.file,
+          art.region.source,
+        )) {
+          expect(
+            find.descendant(
+              of: illustration,
+              matching: find.byType(CocEnglishMascot),
+            ),
+            findsOneWidget,
+            reason:
+                '$name: mapped owl illustration must render the CocEnglish mascot',
+          );
+          expect(
+            find.descendant(
+              of: illustration,
+              matching: find.byType(CocEnglishMark),
+            ),
+            findsOneWidget,
+            reason: '$name: replacement mascot must contain the C mark',
+          );
+          continue;
+        }
         expect(
-          find.descendant(
-            of: find.byWidget(element.widget),
-            matching: find.byType(CustomPaint),
-          ),
+          find.descendant(of: illustration, matching: find.byType(CustomPaint)),
           findsWidgets,
           reason:
-              '$name: illustration ${(element.widget as ReferenceArt).region.file} must be decoded before capture',
+              '$name: illustration ${art.region.file} must be decoded before capture',
         );
       }
       await t.runAsync(() async {

@@ -1,8 +1,20 @@
 {
-  "updated": "2026-10-25",
+  "updated": "2026-10-29",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
+    {
+      "taskId": "REMOTE-BRANCH-CONSOLIDATION-20261029",
+      "phase": "Repository integration; no phase gate advancement",
+      "owner": "Codex",
+      "branch": "codex/consolidate-remotes-20261029",
+      "worktree": ".",
+      "status": "VERIFYING",
+      "evidence": [
+        "docs/quality/REMOTE_BRANCH_CONSOLIDATION_20261029.md"
+      ],
+      "remaining": "Canonical Linux validation, reviewed intended golden changes, fast-forward main publication and ancestry/SHA-guarded cleanup."
+    },
     {
       "taskId": "REAL-COMPOSITION-GUARD-20261025",
       "phase": "W0/W2 local composition safety",
