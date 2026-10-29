@@ -1,0 +1,47 @@
+name: Consolidation canonical golden candidates
+on:
+  push:
+    branches: ['codex/consolidate-remotes-20261029']
+permissions:
+  contents: read
+jobs:
+  candidates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22.23.3
+      - name: Install canonical Flutter SDK
+        shell: bash
+        run: |
+          git clone --depth 1 --branch 3.47.0 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "FLUTTER_ROOT=$RUNNER_TEMP/flutter" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Prepare locked dependencies and native test runtime
+        working-directory: apps/mobile
+        run: |
+          flutter config --no-analytics
+          flutter pub get --enforce-lockfile
+          dart run rive_native:setup --platform linux
+      - name: Generate candidates for the merged branding and Google-only UI
+        working-directory: apps/mobile
+        run: flutter test --dart-define=ENABLE_MASCOT_MOTION=false --update-goldens
+      - name: Collect changed candidates for review
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p .cache/canonical-goldens
+          git diff --name-only -- 'apps/mobile/test/**/*.png' > .cache/canonical-goldens/changed.txt
+          while IFS= read -r file; do
+            mkdir -p ".cache/canonical-goldens/$(dirname "$file")"
+            cp "$file" ".cache/canonical-goldens/$file"
+          done < .cache/canonical-goldens/changed.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: canonical-golden-candidates
+          path: .cache/canonical-goldens
+          if-no-files-found: error
+          retention-days: 3

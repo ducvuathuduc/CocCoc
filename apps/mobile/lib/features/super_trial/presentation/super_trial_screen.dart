@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/design/cocenglish_brand.dart';
+import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../application/super_trial_provider.dart';
 import '../domain/super_trial_offer.dart';

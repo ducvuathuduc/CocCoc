@@ -4281,7 +4281,7 @@
                     "sessions"
                   ]
                 },
-                "description": "OpenAPI operation: `POST /v1/sessions` (`startSession`)\n\nOwner: **Learning**. PLACEMENT is allowed before enrollment, uses a fixed published placement lesson, revision0, no XP.\n\nAuth: Authorization: `Bearer {{token_a}}` (Appwrite JWT).\nIdempotency-Key: `{{idem_startSession}}` (scenario-specific UUID; replay reuses it).\n\nTests assert that the status is one of the OpenAPI-documented statuses, that JSON is returned, and that every error uses the canonical error envelope. Positive and negative chains live in the scenario folders.",
+                "description": "OpenAPI operation: `POST /v1/sessions` (`startSession`)\n\nOwner: **Learning**. Start a LESSON, REVIEW, MASTERY, PLACEMENT, or authored activity session.\n\nAuth: Authorization: `Bearer {{token_a}}` (Appwrite JWT).\nIdempotency-Key: `{{idem_startSession}}` (scenario-specific UUID; replay reuses it).\n\nTests assert that the status is one of the OpenAPI-documented statuses, that JSON is returned, and that every error uses the canonical error envelope. Positive and negative chains live in the scenario folders.",
                 "body": {
                   "mode": "raw",
                   "raw": "{\"courseId\":\"{{courseId}}\",\"lessonId\":\"{{lessonId}}\",\"mode\":\"LESSON\",\"expectedEnrollmentRevision\":{{expectedRevision}}}",
