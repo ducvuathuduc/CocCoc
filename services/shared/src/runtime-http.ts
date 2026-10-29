@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import type { RawAppwriteContext } from './appwrite-entry.js';
+import { corsOriginsFromEnv, corsResponseHeaders } from './cors.js';
 import { ServiceError, toErrorResponse } from './errors.js';
 import { LARGE_BODY_LIMIT, type FunctionContext, type ServiceName } from './transport.js';
 
@@ -54,15 +55,25 @@ function sendJson(
   response.end(JSON.stringify(body));
 }
 
-function sendError(response: ServerResponse, error: unknown): void {
+function sendError(
+  response: ServerResponse,
+  error: unknown,
+  cors: Record<string, string> = {},
+): void {
   const requestId = randomUUID();
   const failure = toErrorResponse(error, requestId);
   sendJson(response, failure.body, failure.status, {
     'X-Request-ID': requestId,
+    ...cors,
     ...(failure.retryAfterSeconds === undefined
       ? {}
       : { 'Retry-After': String(failure.retryAfterSeconds) }),
   });
+}
+
+function requestOrigin(request: IncomingMessage): string | undefined {
+  const origin = request.headers.origin;
+  return Array.isArray(origin) ? origin[0] : origin;
 }
 
 async function readBody(request: IncomingMessage): Promise<string> {
@@ -86,11 +97,19 @@ export function createHttpRuntime(
 ): HttpRuntime {
   const timeoutMs = options.requestTimeoutMs ?? 15_000;
   const maxInFlight = boundedInt(String(options.maxInFlight ?? 128), 128, 1, 1024);
+  // Runtime-level failures bypass the router, so they carry the same allow-listed CORS headers.
+  const corsOrigins = corsOriginsFromEnv(process.env['COC_CORS_ALLOWED_ORIGINS']);
+  const errorCors = (request: IncomingMessage) =>
+    corsResponseHeaders(requestOrigin(request), corsOrigins);
   let inFlight = 0;
   const server: Server = createServer({ maxHeaderSize: 16_384 }, async (request, response) => {
     if (inFlight >= maxInFlight) {
       request.resume();
-      sendError(response, new ServiceError('RATE_LIMITED', { retryAfterSeconds: 1 }));
+      sendError(
+        response,
+        new ServiceError('RATE_LIMITED', { retryAfterSeconds: 1 }),
+        errorCors(request),
+      );
       return;
     }
     inFlight++;
@@ -116,23 +135,24 @@ export function createHttpRuntime(
         }),
       );
       const timer = setTimeout(() => {
-        sendError(response, new ServiceError('DEADLINE_EXCEEDED'));
+        sendError(response, new ServiceError('DEADLINE_EXCEEDED'), errorCors(request));
       }, timeoutMs);
       timer.unref();
       try {
         await execution;
       } catch (error) {
-        sendError(response, error);
+        sendError(response, error, errorCors(request));
       } finally {
         clearTimeout(timer);
       }
       if (!response.writableEnded) {
-        sendError(response, new ServiceError('INTERNAL_ERROR'));
+        sendError(response, new ServiceError('INTERNAL_ERROR'), errorCors(request));
       }
     } catch (error) {
       sendError(
         response,
         error instanceof ServiceError ? error : new ServiceError('VALIDATION_ERROR'),
+        errorCors(request),
       );
     } finally {
       inFlight--;

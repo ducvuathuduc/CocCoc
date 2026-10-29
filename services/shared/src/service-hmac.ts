@@ -15,6 +15,12 @@ export type Keyring = ReadonlyMap<string, ServiceKey>;
 
 export const MAX_SKEW_SECONDS = 300;
 export const MIN_KEY_BYTES = 32;
+/** Signed-request header names; also advertised in the CORS preflight allow-list. */
+export const SERVICE_HMAC_HEADERS = [
+  'X-Service-Key-Id',
+  'X-Service-Timestamp',
+  'X-Service-Signature',
+] as const;
 const SENDERS = new Set<ServiceSender>(['learning', 'progress', 'ai', 'maintainer', 'scheduler']);
 const KEY_ID = /^[A-Za-z0-9._-]{1,64}$/;
 const TIMESTAMP = /^[1-9][0-9]{0,15}$/;

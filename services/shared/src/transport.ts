@@ -2,6 +2,7 @@
 // fail-closed /ready and /internal/events. No grading/reward logic lives here.
 import { randomUUID } from 'node:crypto';
 import { createAppwriteAuthPort, extractJwt, type AuthPort, type VerifiedSubject } from './auth.js';
+import { corsOriginsFromEnv, corsResponseHeaders, DEFAULT_CORS_ORIGINS } from './cors.js';
 import { ServiceError, toErrorResponse } from './errors.js';
 import type { BusinessEvent, EventConsumer, PersistencePort, ServiceName } from './ports.js';
 import {
@@ -118,6 +119,8 @@ export interface RouterOptions {
   eventConsumer?: EventConsumer | undefined;
   buildId?: string;
   nowMs?: () => number;
+  /** Browser origins echoed in CORS responses; defaults to the local web dev servers. */
+  corsOrigins?: readonly string[];
 }
 
 /** Strict BusinessEvent envelope shape check (shared by the HTTP route and the AMQP envelope). */
@@ -175,6 +178,7 @@ export function createRouter(options: RouterOptions) {
   }
   const nowMs = options.nowMs ?? Date.now;
   const routes = options.routes ?? [];
+  const corsOrigins = options.corsOrigins ?? DEFAULT_CORS_ORIGINS;
   const allowlist = EVENT_ALLOWLIST[service];
   const eventSenders = [...new Set(Object.values(allowlist).flat())];
 
@@ -237,6 +241,9 @@ export function createRouter(options: RouterOptions) {
     requestId: string,
   ): Promise<RouteResult> {
     const method = req.method.toUpperCase();
+    // Browser preflight carries no credentials: answer before auth, body limits and route lookup.
+    // The wrapper attaches the allow-listed CORS headers (or none for a disallowed origin).
+    if (method === 'OPTIONS') return { status: 204, body: undefined };
     const rawBody = req.bodyText ?? '';
     if (method === 'GET' && req.path === '/health') {
       return { status: 200, body: { service, buildId, status: 'degraded' } };
@@ -301,6 +308,7 @@ export function createRouter(options: RouterOptions) {
     const responseHeaders: Record<string, string> = {
       'X-Request-ID': requestId,
       'Cache-Control': 'no-store',
+      ...corsResponseHeaders(headers['origin'], corsOrigins),
     };
     try {
       const result = await dispatch(context.req, headers, requestId);
@@ -351,6 +359,7 @@ export function createHostedHandler(
     auth,
     keyring,
     buildId: env['BUILD_ID'] ?? 'local-scaffold',
+    corsOrigins: corsOriginsFromEnv(env['COC_CORS_ALLOWED_ORIGINS']),
     ...(wiring.routes ? { routes: wiring.routes } : {}),
     eventConsumer: wiring.eventConsumer,
   });
