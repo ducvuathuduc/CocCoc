@@ -111,5 +111,5 @@ export async function createTestApp(
     });
     return out;
   }
-  return { call, deps, persistence, handler };
+  return { call, deps, persistence, handler, routes: learningWiring(deps).routes };
 }
