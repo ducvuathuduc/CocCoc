@@ -4,7 +4,7 @@ Dark mode, upgradeable quest chests and the remaining Android Super flow are imp
 local code. Payment stays with the existing internal demo checkout. This receipt does not claim
 cloud deployment, physical-device performance or whole-app pixel parity.
 
-Scope: [implementation plan](../../agent/ANDROID_COMPLETION_PLAN_20261024.md).
+Scope: [implementation plan](../../archive/agent/ANDROID_COMPLETION_PLAN_20261024.md).
 Canonical owners remain [design](../DESIGN.md), [OpenAPI](../../api/openapi.yaml) and
 [storage](../../data/DATA_MODEL.md).
 

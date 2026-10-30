@@ -1,6 +1,6 @@
 # Gap polish receipt — 2026-10-13
 
-Scope: [audit](../GAP_AUDIT.md) rows 5, 7, 10, 13, 17, 32, 33 (status updates
+Scope: [audit](../../design/GAP_AUDIT.md) rows 5, 7, 10, 13, 17, 32, 33 (status updates
 for 1–4, 8, 9). All commits are on `main`.
 
 | Commit | Rows | What |
@@ -28,7 +28,7 @@ before the trial is not built.
 ## Rows 13, 32, 33 — No ref, derived
 
 Gummble has no capture for these, so they follow the app's own streak and
-settings pages, with colours only from `palette_from_refs.json`
+settings pages, with colours only from `../../design/qa/palette_from_refs.json`
 (`python3 tools/palette_check.py`: 85 legacy colours, none new). Each has a
 repository + mock + Riverpod provider; promo also has `ApiPromoRepository`
 (`redeemPromoCode`, P10-PROMO-001). Streak repair has no API repository yet

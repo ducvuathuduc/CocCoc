@@ -4,9 +4,9 @@ Scope: compare the current mock frontend at `df2a387` with the saved Duolingo
 language/shared references, to choose the next UI slice. This is a screen audit,
 not authorization to enable SMS, purchases, notifications or cloud adapters.
 
-The [ordered reference index](../references/ORDERED_FLOW_INDEX.json) contains
+The [ordered reference index](../../design/references/ORDERED_FLOW_INDEX.json) contains
 148 journeys / 912 screen occurrences, including repeated screens and versions.
-The [coverage ledger](FLOW_COVERAGE.json), last dated 2026-10-09, records 33
+The [coverage ledger](../../design/qa/FLOW_COVERAGE.json), last dated 2026-10-09, records 33
 reusable families, 14 fully reconciled mock journeys and 105 verified occurrences.
 Its 120 pending journeys are **not** 120 missing features: many already have
 native UI and only lack reconciliation against that particular source variant.

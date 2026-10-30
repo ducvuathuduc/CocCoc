@@ -2,9 +2,9 @@
 
 **Goal:** integrate every outstanding remote commit into `main` and verify the resulting candidate on GitHub, preserving reference-backed UI and real-feature boundaries.
 
-**Architecture:** retain the three owner services and the approved [runtime ADR](../architecture/adr/0018-container-event-cache-runtime.md). AMQP/cache remain opt-in; no deployment, schema apply or paid provider activation.
+**Architecture:** retain the three owner services and the approved [runtime ADR](../../architecture/adr/0018-container-event-cache-runtime.md). AMQP/cache remain opt-in; no deployment, schema apply or paid provider activation.
 
-**Spec:** [approved feature plan](REAL_FEATURES_SETUP_PLAN_20261025.md), [design](../design/DESIGN.md), [release gates](../quality/RELEASE_GATE.md).
+**Spec:** [approved feature plan](../../agent/REAL_FEATURES_SETUP_PLAN_20261025.md), [design](../../design/DESIGN.md), [release gates](../../quality/RELEASE_GATE.md).
 
 ## Constraints and review focus
 
@@ -20,7 +20,7 @@
 - [x] Integrate `fix/mobile-ci-baseline`, `fix/mobile-pixel-perfect-screens` and `wip/phase5-amqp-adapter` on `codex/ci-green-integration`; the WIP includes `feat/phase5-amqp-redis`.
 - [x] Reproduce backend failures; repair AMQP dependency/type/test defects in `services/shared` and validate `pnpm backend:verify`, smokes and runtime checks.
 - [x] Reproduce merged Flutter failures; inspect failing screenshot artifacts against existing source references. Repair fonts/fixtures/layout/lifecycle at their cause and add targeted regressions where behavior changes.
-- [x] Record per-file baseline hashes/reasons in [golden provenance](../quality/ci-green-20261025/golden-provenance.json); retain strict comparisons. This evidence does not assert whole-app Duolingo pixel parity.
+- [x] Record per-file baseline hashes/reasons in [golden provenance](../../quality/ci-green-20261025/golden-provenance.json); retain strict comparisons. This evidence does not assert whole-app Duolingo pixel parity.
 - [x] Run contracts, API lint, schema dry-run/tests, seeds, content, blueprint/audit, secret scan, Flutter analyzer/full tests and Android build.
 - [x] Push the integration candidate and merge all remote branch commits into `main` with a normal fast-forward push.
 - [ ] Verify all final-main workflows and repair remaining Android native failures; record actual remaining release limitations.

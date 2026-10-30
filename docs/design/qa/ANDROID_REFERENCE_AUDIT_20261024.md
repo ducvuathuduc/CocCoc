@@ -85,6 +85,6 @@ from a library's generic marketing copy.
   [Screenshot and exact build/command receipt](native-20261024/README.md).
 
 Local command logs: `.cache/native-surfaces-20261023/`. The existing Windows golden/Rive failures
-are tracked in the [earlier check](MAIN_WINDOWS_CHECK_20261023.md). No baseline was updated to hide
+are tracked in the [earlier check](../../archive/qa-receipts/MAIN_WINDOWS_CHECK_20261023.md). No baseline was updated to hide
 a failure. Mock preview, internal payment simulation and unverified cloud/device gates remain
 visible limitations; no global phase gate advances.

@@ -8,14 +8,14 @@ Lin now uses the previously inspected first-party Rive asset and reset/correct/i
 
 | Command | Actual result / receipt |
 | --- | --- |
-| Pre-implementation catalog/guide behavior tests | Two RED cases in [course-finish-red.log](course-finish-red.log) |
-| Locked-section route and Lin feedback tests before fixes | Two RED cases in [course-finish-guard-motion-red.log](course-finish-guard-motion-red.log) |
-| Native capture + parent/worker behavior + English regression tests | 33 PASS; [capture log](course-finish-captures.log), 17 PNG states at 1180×2556 in [course-finish](course-finish/) |
-| flutter test --dart-define=CAPTURE_COURSE_MOTION=true --dart-define=ENABLE_MASCOT_MOTION=true test/course_motion_capture_test.dart | 1 PASS with native Rive enabled; two different idle frames, incorrect/correct reactions and reduced-motion fallback. [Motion log](course-finish-motion.log) and 5 inspected PNGs in [course-finish-motion](course-finish-motion/) |
-| node tools/scripts/mobile-check.mjs --with-blueprint | Blueprint, format, fatal-info analyzer and 424 Flutter tests PASS; [gate](course-finish-gate.log) |
+| Pre-implementation catalog/guide behavior tests | Two RED cases in [../../archive/qa-logs/course-finish-red.log](../../archive/qa-logs/course-finish-red.log) |
+| Locked-section route and Lin feedback tests before fixes | Two RED cases in [../../archive/qa-logs/course-finish-guard-motion-red.log](../../archive/qa-logs/course-finish-guard-motion-red.log) |
+| Native capture + parent/worker behavior + English regression tests | 33 PASS; [capture log](../../archive/qa-logs/course-finish-captures.log), 17 PNG states at 1180×2556 in [course-finish](course-finish/) |
+| flutter test --dart-define=CAPTURE_COURSE_MOTION=true --dart-define=ENABLE_MASCOT_MOTION=true test/course_motion_capture_test.dart | 1 PASS with native Rive enabled; two different idle frames, incorrect/correct reactions and reduced-motion fallback. [Motion log](../../archive/qa-logs/course-finish-motion.log) and 5 inspected PNGs in [course-finish-motion](course-finish-motion/) |
+| node tools/scripts/mobile-check.mjs --with-blueprint | Blueprint, format, fatal-info analyzer and 424 Flutter tests PASS; [gate](../../archive/qa-logs/course-finish-gate.log) |
 | node tools/scripts/reference-asset-audit.mjs | 951 saved sources / 238 bundled original PNGs match; [hash receipt](reference-assets.json) |
 | node tools/scripts/avatar-asset-audit.mjs | 18 assets / 8 categories / 282 choices pass; [existing avatar analysis](../flows/24_AVATAR_ASSET_RESEARCH.md) |
-| node tools/scripts/mobile-web-build.mjs | Release Flutter web PASS; [build log](course-finish-web-build.log) |
+| node tools/scripts/mobile-web-build.mjs | Release Flutter web PASS; [build log](../../archive/qa-logs/course-finish-web-build.log) |
 | node .cache/course-http.mjs | 20 HTTP200/no-store checks and served main.dart.js matches latest build; [HTTP receipt](course-finish-http.json) |
 
 Visual review covered catalog/detail/CEFR/grammar, guide header/phrases/tip, check intro/answer/incorrect/warning/failure/pass, returned unit path and section-check entry. Captures assert decoded illustrations. Review corrected source-art clipping, sticky-header geometry, text2 overflow and pink unit2 styling. The legacy English translation assertion is now scoped to its phrase bubble because the new tip intentionally repeats the phrase. Native fixtures cover 320px, text scale2 and reduced motion. The enabled Lin rig uses its complete exported artboard, which has more internal padding than the reference still; these captures do not certify identical mascot bounds at every animation frame. The Rive loader emits a diagnostic while attempting Windows DLL candidates; its successful render, active controller, changing frames and reaction assertions establish this native run. HTTP delivery is separate from live browser interaction and physical-device performance.

@@ -2,11 +2,11 @@
 
 **Goal:** run the approved Android application against local durable Auth/data, three owner services and workers; verify login, lessons, progress/reward idempotency and offline recovery before any hosting deployment.
 
-**Checkpoint:** paused at the user's request on 2026-10-26 for commit/push to `main`. See the exact [local evidence and remaining acceptance](../devops/LOCAL_DURABLE_RUNTIME.md#pause-checkpoint). APK build and native offline acceptance remain unfinished.
+**Checkpoint:** paused at the user's request on 2026-10-26 for commit/push to `main`. See the exact [local evidence and remaining acceptance](../../devops/LOCAL_DURABLE_RUNTIME.md#pause-checkpoint). APK build and native offline acceptance remain unfinished.
 
 **Architecture:** retain Flutter/Riverpod, Learning/Progress/AI on Node 22, Appwrite Auth/TablesDB/Storage, Drift and the approved RabbitMQ/Redis boundaries. Isolate this development environment and its generated credentials from existing cloud projects. Preserve the accepted UI.
 
-**Spec:** [approved feature plan](REAL_FEATURES_SETUP_PLAN_20261025.md), [phase tasks](PHASE_BREAKDOWN_2_8.md), [runtime ADR](../architecture/adr/0018-container-event-cache-runtime.md), [SRS](../product/SRS.md).
+**Spec:** [approved feature plan](../../agent/REAL_FEATURES_SETUP_PLAN_20261025.md), [phase tasks](../../agent/PHASE_BREAKDOWN_2_8.md), [runtime ADR](../../architecture/adr/0018-container-event-cache-runtime.md), [SRS](../../product/SRS.md).
 
 ## Execution constraints
 
