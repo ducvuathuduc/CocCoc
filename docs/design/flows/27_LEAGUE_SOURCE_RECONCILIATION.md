@@ -75,10 +75,10 @@ The locked figure has equal flexible space above/below its text group, with a
 and bottom padding. The five-tab native shell has a different height from the
 archived six-tab shell, so absolute bottom coordinates are not equivalent.
 
-Verification: [review regressions](../qa/league-review-red.log) reproduce avatar
-state replacement and duplicated spoken labels; [focused pass](../qa/league-review-green.log)
-covers20tests. [Native capture receipt](../qa/profile-source-complete-captures.log)
+Verification: [review regressions](../../archive/qa-logs/league-review-red.log) reproduce avatar
+state replacement and duplicated spoken labels; [focused pass](../../archive/qa-logs/league-review-green.log)
+covers20tests. [Native capture receipt](../../archive/qa-logs/profile-source-complete-captures.log)
 renders26states and checks entry interaction/large text. The
-[full gate](../qa/profile-source-complete-gate.log) covers363tests; the final
+[full gate](../../archive/qa-logs/profile-source-complete-gate.log) covers363tests; the final
 spacing polish is additionally exercised by the capture/entry rerun. Actual
 original Rive portraits render in the ranking and owner/status captures.

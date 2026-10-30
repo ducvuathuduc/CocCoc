@@ -8,7 +8,7 @@ The manifest also matches the committed hash and names 16 units / 512 lessons.
 
 This is new cloud-read evidence, distinct from the previous offline catalog verification.
 No upload, seed, database write or deployment was performed in this status check.
-See the [machine receipt](CLOUD_CONTENT_STATUS_20261024.json).
+See the [machine receipt](../../design/qa/CLOUD_CONTENT_STATUS_20261024.json).
 
 The database's `l_courses` published-version pointer and authenticated learning session were
 not verified: anonymous hosted Learning `GET /v1/courses` returns `401 AUTH_REQUIRED`, and this
@@ -17,4 +17,4 @@ does not establish private database state, enrollment, grading, progress persist
 readiness. Media files were not downloaded in this cloud check. The existing web preview uses mock
 data/auth and payment remains an internal simulation.
 
-Remaining feature/UI work is tracked in the [Android reference audit](ANDROID_REFERENCE_AUDIT_20261024.md).
+Remaining feature/UI work is tracked in the [Android reference audit](../../design/qa/ANDROID_REFERENCE_AUDIT_20261024.md).

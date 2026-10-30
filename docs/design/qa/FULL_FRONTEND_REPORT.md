@@ -17,12 +17,12 @@ Five indexed-stack tabs preserve the local path and scroll state. Lesson command
 
 | Command, from indicated directory | Result / artifact |
 |---|---|
-| Root: `pnpm verify` | PASS: blueprint,61 Dart files formatted, analyzer with fatal infos,130 Flutter tests. `full-verify.log` |
-| Mobile: `flutter test test/full_frontend_qa_test.dart test/progress_preview_test.dart --dart-define=ENABLE_MASCOT_MOTION=false` | PASS: monthly intro→hub, idempotent claim/purchase, route interactions and all57 new fixtures at360/430 logical widths × text1/2. `quest-intro-green.log` |
-| Mobile: `flutter test test/full_frontend_qa_test.dart --plain-name "capture analyzed frontend states with original fonts" --dart-define=CAPTURE_UI=true --dart-define=ENABLE_MASCOT_MOTION=false` | PASS:57 native PNGs in `frontend/`, source dimensions1179/1180×2556, local original fonts, illustration sources preloaded. `frontend-capture.log` |
+| Root: `pnpm verify` | PASS: blueprint,61 Dart files formatted, analyzer with fatal infos,130 Flutter tests. `../../archive/qa-logs/full-verify.log` |
+| Mobile: `flutter test test/full_frontend_qa_test.dart test/progress_preview_test.dart --dart-define=ENABLE_MASCOT_MOTION=false` | PASS: monthly intro→hub, idempotent claim/purchase, route interactions and all57 new fixtures at360/430 logical widths × text1/2. `../../archive/qa-logs/quest-intro-green.log` |
+| Mobile: `flutter test test/full_frontend_qa_test.dart --plain-name "capture analyzed frontend states with original fonts" --dart-define=CAPTURE_UI=true --dart-define=ENABLE_MASCOT_MOTION=false` | PASS:57 native PNGs in `frontend/`, source dimensions1179/1180×2556, local original fonts, illustration sources preloaded. `../../archive/qa-logs/frontend-capture.log` |
 | Root: `node tools/scripts/reference-asset-audit.mjs` | PASS:150 ordered source PNGs in16 families;127 bundled PNGs byte-identical to saved references. Dimensions match saved MCP metadata. `reference-assets.json` |
-| Mobile: `flutter build web --release --dart-define=USE_MOCK_AUTH=true` | PASS,97.7s compile. `web-build.log`; local preview at http://127.0.0.1:4173/preview.html |
-| Mobile: `flutter build apk --debug --dart-define=USE_MOCK_AUTH=true` | PASS,100.7s Gradle build. `full-android-build.log` |
+| Mobile: `flutter build web --release --dart-define=USE_MOCK_AUTH=true` | PASS,97.7s compile. `../../archive/qa-logs/web-build.log`; local preview at http://127.0.0.1:4173/preview.html |
+| Mobile: `flutter build apk --debug --dart-define=USE_MOCK_AUTH=true` | PASS,100.7s Gradle build. `../../archive/qa-logs/full-android-build.log` |
 
 Current normal application APK: `apps/mobile/build/app/outputs/flutter-apk/app-debug.apk`.
 SHA256: `a713be03a0854153ae9f1ced7519c4228e75b560909867d6a32776fe32d09f2b`.

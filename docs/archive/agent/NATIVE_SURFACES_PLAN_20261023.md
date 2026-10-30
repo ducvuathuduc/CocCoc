@@ -4,13 +4,13 @@
 
 **Architecture:** preserve Flutter/manual Riverpod. Native WidgetKit/ActivityKit render OS-owned surfaces; a local MethodChannel carries display-only lesson progress. Existing legal readers and trial flow are reused. No server/schema/payment integration changes.
 
-**Spec:** [design](../design/DESIGN.md), [screen inventory](../product/SCREEN_INVENTORY.md), [gap audit](../design/GAP_AUDIT.md). User explicitly requires reference-backed reproduction without invented screens.
+**Spec:** [design](../../design/DESIGN.md), [screen inventory](../../product/SCREEN_INVENTORY.md), [gap audit](../../design/GAP_AUDIT.md). User explicitly requires reference-backed reproduction without invented screens.
 
 **2026-10-24 scope update:** Android is the primary target. Gummble access expired; the user
 explicitly requested broad free research (Mobbin, Pinterest, Lazyweb and alternatives), Android
 screen/effect comparison and the full English curriculum. See the
-[source collection](../design/references/android-free-20261024/README.md) and
-[comparison/remaining work](../design/qa/ANDROID_REFERENCE_AUDIT_20261024.md).
+[source collection](../../design/references/android-free-20261024/README.md) and
+[comparison/remaining work](../../design/qa/ANDROID_REFERENCE_AUDIT_20261024.md).
 
 ## Constraints and review focus
 
@@ -39,8 +39,8 @@ screen/effect comparison and the full English curriculum. See the
 
 ## Evidence
 
-See [Android comparison and validation](../design/qa/ANDROID_REFERENCE_AUDIT_20261024.md),
-[render receipts](../design/qa/native-20261024/README.md),
-[asset/source crops](../design/references/android-free-20261024/implementation-assets.json)
-and the earlier [Windows baseline](../design/qa/MAIN_WINDOWS_CHECK_20261023.md).
+See [Android comparison and validation](../../design/qa/ANDROID_REFERENCE_AUDIT_20261024.md),
+[render receipts](../../design/qa/native-20261024/README.md),
+[asset/source crops](../../design/references/android-free-20261024/implementation-assets.json)
+and the earlier [Windows baseline](../qa-receipts/MAIN_WINDOWS_CHECK_20261023.md).
 No full phase gate advances from this slice.

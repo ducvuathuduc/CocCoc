@@ -1,6 +1,6 @@
 # Slice A — hearts, mock ads and energy (2026-10-12)
 
-Scope: [gap audit](../GAP_AUDIT.md) rows 1–4 and 6; [reference spec](../specs/gap-hearts-ads.md).
+Scope: [gap audit](../../design/GAP_AUDIT.md) rows 1–4 and 6; [reference spec](../../design/specs/gap-hearts-ads.md).
 All slice A work is on `main` (fast-forward pushes, no force):
 
 | Commit | What |
@@ -28,7 +28,7 @@ Result: **93 passed, 2 failed**. Both failures are the known baseline on clean
 `shop_screen_test` shop_360_scale1. `app_shell_sprint_test` passes alone; it
 showed a 2.8% image-load timing flake once under parallel load (icons decoded
 before capture), not a code difference. Palette: 85 legacy unmatched colors,
-unchanged; no new literal outside `palette_from_refs.json`.
+unchanged; no new literal outside `../../design/qa/palette_from_refs.json`.
 
 Side-by-side evidence (ours left, Gummble right) was composed with ImageMagick
 outside the repo (`work/qa/gap/*_vs_ref.png`, script `compose.sh`).
@@ -149,5 +149,5 @@ lesson goldens passed byte comparisons without any baseline update.
 - [apps/mobile/test/goldens/gap/house_ad_360.png](../../../apps/mobile/test/goldens/gap/house_ad_360.png)
 - [apps/mobile/test/goldens/gap/lesson_offer_360.png](../../../apps/mobile/test/goldens/gap/lesson_offer_360.png)
 - [apps/mobile/test/goldens/gap/need_hearts_360.png](../../../apps/mobile/test/goldens/gap/need_hearts_360.png)
-- [docs/design/qa/GAP_HEARTS_ADS_RECEIPT.md](../../../docs/design/qa/GAP_HEARTS_ADS_RECEIPT.md)
-- [docs/design/specs/gap-hearts-ads.md](../../../docs/design/specs/gap-hearts-ads.md)
+- [docs/archive/qa-receipts/GAP_HEARTS_ADS_RECEIPT.md](GAP_HEARTS_ADS_RECEIPT.md)
+- [docs/design/specs/gap-hearts-ads.md](../../design/specs/gap-hearts-ads.md)

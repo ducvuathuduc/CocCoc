@@ -303,7 +303,7 @@ Session finish evidence — 2026-10-08:394Flutter tests pass; fatal-info analyze
 English course continuation evidence — 2026-10-09: 424 Flutter tests, fatal-info analyzer, blueprint, format and release web build pass. 33 targeted tests produce 17 native states; a native Lin motion run inspects 5 more frames. 238 bundled PNGs and 282 avatar choices pass audits. 20 HTTP checks serve the exact latest release. The register preserves prior marks and records 33 families/14 complete mock flows/105 verified occurrences. [Course report](../design/qa/COURSE_FINISH_REPORT.md) distinguishes completed native slices from archived path/motion variants.
 
 2026-10-11 screen-gap audit at `df2a387`: the user requests the remaining UI
-screens before choosing further implementation. The [dated comparison](../design/qa/SCREEN_GAP_AUDIT_20261011.md)
+screens before choosing further implementation. The [dated comparison](../archive/qa-receipts/SCREEN_GAP_AUDIT_20261011.md)
 confirms missing phone verification, Roleplay topic navigation and Super gifting;
 partial Notifications/Reminders and icon selection; inactive Settings document
 destinations. Proposed next slice: Notifications/Reminders, reusing current

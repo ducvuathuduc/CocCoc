@@ -17,23 +17,23 @@ rows. All seven widget weekday rows were checked directly against Gummble.
 
 ## Evidence
 
-- Failing-first receipts: `session-league-result-red.log`,
-  `session-year-review-red.log`, `session-widgets-red.log`, `session-routes-red.log`.
+- Failing-first receipts: `../../archive/qa-logs/session-league-result-red.log`,
+  `../../archive/qa-logs/session-year-review-red.log`, `../../archive/qa-logs/session-widgets-red.log`, `../../archive/qa-logs/session-routes-red.log`.
 - Native captures: `session-finish/` contains 17 source-sized Flutter states;
-  `session-finish-captures.log` records the capture command/result.
-- Targeted behavior: `session-finish-targeted-final.log` and
-  `session-widget-routes-final.log`; the full final gate supersedes intermediate
+  `../../archive/qa-logs/session-finish-captures.log` records the capture command/result.
+- Targeted behavior: `../../archive/qa-logs/session-finish-targeted-final.log` and
+  `../../archive/qa-logs/session-widget-routes-final.log`; the full final gate supersedes intermediate
   repair runs.
 - Reference asset audit: 951 ordered saved PNGs, 225 bundled PNGs, byte-identical
   source hashes. Avatar audit: 18 original assets, 8 categories, 282 choices.
 - `node tools/scripts/mobile-check.mjs --with-blueprint` → PASS: blueprint,
   199 Dart files formatted, fatal-info analyzer clean, all 394 Flutter tests.
-  Receipt: `session-finish-gate.log`.
+  Receipt: `../../archive/qa-logs/session-finish-gate.log`.
 - Source capture command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false
   --dart-define=CAPTURE_SESSION_UI=true test/session_finish_capture_test.dart`
   → PASS, 17 PNGs at 1180×2556 using original bundled font and source art.
 - `node tools/scripts/mobile-web-build.mjs` → PASS, release compiled in 78.7s;
-  local original Rive WASM is bundled. Receipt: `session-finish-web-build.log`.
+  local original Rive WASM is bundled. Receipt: `../../archive/qa-logs/session-finish-web-build.log`.
 - Persistent ledger: 30 reusable families, 13 complete scoped mock flows and
   89 verified ordered occurrences. Existing marks remain intact.
 - Local preview: `http://127.0.0.1:4173/preview.html` serves the actual Flutter

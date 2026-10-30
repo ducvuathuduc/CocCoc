@@ -40,25 +40,25 @@ pose. Input changes, lifecycle and animate-property transitions are tested.
   test/avatar_capture_test.dart test/avatar_route_test.dart
   test/profile_editor_test.dart test/password_change_route_test.dart
   --dart-define=ENABLE_MASCOT_MOTION=false --dart-define=CAPTURE_AVATAR_UI=true`:
-  11pass in [targeted log](avatar-targeted.log).
+  11pass in [targeted log](../../archive/qa-logs/avatar-targeted.log).
 - `flutter test test/avatar_motion_test.dart`: actual original native rig/input
   contract, lifecycle, static-mode transition, failed-load retry, concurrent use
-  and in-flight disposal: 3pass in [active motion log](avatar-motion-active.log).
+  and in-flight disposal: 3pass in [active motion log](../../archive/qa-logs/avatar-motion-active.log).
 - Touched speaking, Max, achievements, course guard, profile/QR and motion tests:
-  37pass in [product regression log](avatar-product-green.log). Meaningful RED
+  37pass in [product regression log](../../archive/qa-logs/avatar-product-green.log). Meaningful RED
   receipts cover missing product controls, frozen eyes, failed-load poisoning and
   inconsistent full-name limits before their fixes.
 - `node tools/scripts/avatar-asset-audit.mjs`: 18files/8categories/282choices pass.
 - `node tools/scripts/mobile-check.mjs --with-blueprint`: blueprint, format,
-  fatal-info analyzer and293tests pass in [full gate](avatar-product-gate.log).
+  fatal-info analyzer and293tests pass in [full gate](../../archive/qa-logs/avatar-product-gate.log).
 - Final removal of the demo-wallet button routes GET GEMS into Shop without
   minting a balance and preserves the selected pack on return: 10Timer Boost
-  tests pass in [final wallet regression](product-wallet-final.log). Funding is
+  tests pass in [final wallet regression](../../archive/qa-logs/product-wallet-final.log). Funding is
   injected through test fixtures, not exposed as a product action. The broader
-  wallet/all-screen regression is16pass in [wallet layout log](product-wallet-green.log).
-- Final analyzer has no issues in [analyzer receipt](avatar-analyze.log).
+  wallet/all-screen regression is16pass in [wallet layout log](../../archive/qa-logs/product-wallet-green.log).
+- Final analyzer has no issues in [analyzer receipt](../../archive/qa-logs/avatar-analyze.log).
 - `node tools/scripts/mobile-web-build.mjs`: final release web build passes in
-  [build receipt](avatar-web-build-final.log). The first build exposed a missing
+  [build receipt](../../archive/qa-logs/avatar-web-build-final.log). The first build exposed a missing
   Cupertino font; pinning the official
   [cupertino_icons1.0.9 asset package](https://pub.dev/packages/cupertino_icons/versions/1.0.9)
   includes its glyphs and removes that warning. This does not change the existing

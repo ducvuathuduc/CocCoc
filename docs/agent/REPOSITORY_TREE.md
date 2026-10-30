@@ -140,8 +140,6 @@ CocEnglish/
 │   ├── 00_START_HERE.md
 │   ├── agent/
 │   │   ├── AGENT_SYSTEM.md
-│   │   ├── ANDROID_COMPLETION_PLAN_20261024.md
-│   │   ├── CI_GREEN_INTEGRATION_20261025.md
 │   │   ├── DEEPSEEK_MASTER_PROMPT_20261028.md
 │   │   ├── DEPENDENCY_DAG.md
 │   │   ├── DEVELOPER_HANDOFF.md
@@ -149,9 +147,7 @@ CocEnglish/
 │   │   ├── FRONTEND_FLOW_PLAN.md
 │   │   ├── FRONTEND_REMAINING_PLAN.md
 │   │   ├── IMPLEMENTATION_PLAN.md
-│   │   ├── LOCAL_DEV_EXECUTION_20261026.md
 │   │   ├── MASTER_PROMPT_WAVE2.md
-│   │   ├── NATIVE_SURFACES_PLAN_20261023.md
 │   │   ├── PHASE_BREAKDOWN_2_8.md
 │   │   ├── REAL_FEATURES_FIRST_SLICE_20261025.md
 │   │   ├── REAL_FEATURES_INVENTORY_20261025.md
@@ -183,6 +179,10 @@ CocEnglish/
 │   │   └── STACK.md
 │   ├── ARCHITECTURE_BLUEPRINT_V1.md
 │   ├── ARCHITECTURE_FREEZE_REPORT.md
+│   ├── archive/
+│   │   ├── agent/ (4 files; collapsed)
+│   │   ├── qa-logs/ (226 files; collapsed)
+│   │   └── qa-receipts/ (9 files; collapsed)
 │   ├── ASSUMPTIONS.md
 │   ├── audit/
 │   │   ├── BUILD_ARTIFACTS.json
@@ -207,7 +207,7 @@ CocEnglish/
 │   │   ├── flows/ (30 files; collapsed)
 │   │   ├── GAP_AUDIT.md
 │   │   ├── GUMMBLE_RESEARCH.md
-│   │   ├── qa/ (731 files; collapsed)
+│   │   ├── qa/ (496 files; collapsed)
 │   │   ├── references/ (1123 files; collapsed)
 │   │   ├── refs/ (24 files; collapsed)
 │   │   └── specs/ (2 files; collapsed)

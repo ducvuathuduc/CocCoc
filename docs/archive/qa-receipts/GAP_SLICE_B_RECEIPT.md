@@ -1,8 +1,8 @@
 # Slice B validation — 2026-10-12
 
-Scope: [audit rows 8 and 9](../GAP_AUDIT.md), archived Gummble `sc_12b09a6c`,
+Scope: [audit rows 8 and 9](../../design/GAP_AUDIT.md), archived Gummble `sc_12b09a6c`,
 `sc_269d6ffb`, `sc_b4ac42c6`; Friends Chest flow `f6869640`.
-Measured reference mapping: [slice specification](../specs/gap_slice_b.md).
+Measured reference mapping: [slice specification](../../design/specs/gap_slice_b.md).
 
 Implemented in the current worktree:
 

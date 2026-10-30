@@ -1,8 +1,8 @@
 # Android non-payment completion — 2026-10-24
 
-Scope: the user's request to complete dark mode, upgradeable chests, the remaining Super screens and Android motion. Real billing, deployment and schema application are excluded. Architecture remains governed by [STACK](../architecture/STACK.md).
+Scope: the user's request to complete dark mode, upgradeable chests, the remaining Super screens and Android motion. Real billing, deployment and schema application are excluded. Architecture remains governed by [STACK](../../architecture/STACK.md).
 
-References: [archived Android sources](../design/references/android-free-20261024/README.md), especially Mobbin dark-mode 01–15, Super 01–12 and BestLanguageApp `loot-chest.jpg`. Original art is cropped from archived sources; labels, controls and state remain native Flutter. Source stills establish appearance, not Android animation timing. The iOS chest clip is corroboration only.
+References: [archived Android sources](../../design/references/android-free-20261024/README.md), especially Mobbin dark-mode 01–15, Super 01–12 and BestLanguageApp `loot-chest.jpg`. Original art is cropped from archived sources; labels, controls and state remain native Flutter. Source stills establish appearance, not Android animation timing. The iOS chest clip is corroboration only.
 
 ## Implementation and acceptance
 
@@ -13,6 +13,6 @@ References: [archived Android sources](../design/references/android-free-2026102
 - [x] Add meaningful failing tests first, then targeted tests/analyzer/contracts/backend gates. Capture light/dark and non-payment flow states. Run the installed Android emulator with instrumented acceptance and distinguish screenshots from physical-device verification.
 - [x] Build web/APK after integration, open the current web preview and save exact commands/results and remaining source/device limitations in a dated QA receipt. Preserve existing unrelated changes and golden baselines.
 
-Canonical requirements: [SRS](../product/SRS.md), [screens](../product/SCREEN_INVENTORY.md), [wire contract](../api/openapi.yaml), [storage](../data/DATA_MODEL.md). This plan does not advance global implementation phases or constitute cloud/device acceptance.
+Canonical requirements: [SRS](../../product/SRS.md), [screens](../../product/SCREEN_INVENTORY.md), [wire contract](../../api/openapi.yaml), [storage](../../data/DATA_MODEL.md). This plan does not advance global implementation phases or constitute cloud/device acceptance.
 
-Completion evidence (2026-10-25): [dated receipt](../design/qa/ANDROID_NONPAYMENT_COMPLETION_20261024.md). Full Flutter Windows golden acceptance, physical-device performance and authenticated cloud release remain open as recorded there.
+Completion evidence (2026-10-25): [dated receipt](../../design/qa/ANDROID_NONPAYMENT_COMPLETION_20261024.md). Full Flutter Windows golden acceptance, physical-device performance and authenticated cloud release remain open as recorded there.
