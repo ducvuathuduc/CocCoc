@@ -121,3 +121,19 @@ Winner Riverpod: typed dependency overrides, explicit asynchronous state and can
 | Cross-service delivery | transactional outbox 9; direct-only 4; managed broker 5 | outbox + idempotent inbox | Broker only if tested backlog/reliability cost warrants ADR |
 
 Scores encode suitability for this student project, not general superiority. Source R10 supports separation; R04 enables outbox atomicity; R07 rules out a persistent Function audio relay; R23/R27 establish selected iOS CI cost.
+
+### 2026-11-03 — .NET migration checkpoint (not admission)
+
+The human-approved [ADR-0020](../architecture/adr/0020-dotnet-service-migration.md) introduces a .NET replacement target while Node remains active. The [operation matrix](../../backend-dotnet/migration/operations.json) records ten locally implemented Progress operations out of 91, with durable/differential/native acceptance still open. The deletion API only persists a request/tombstone/outbox; purge and owner acknowledgements are not yet ported.
+
+| Check | Observed result | Scope limit |
+|---|---|---|
+| `dotnet build CocEnglish.sln --no-restore --configuration Release` from `backend-dotnet` | All eight projects built, zero warnings/errors | Compilation only |
+| `dotnet test CocEnglish.sln --no-restore --configuration Release --logger "trx;LogFileName=dotnet-foundation-checkpoint.trx"` | 69 Shared + 32 Progress + 62 Integration = 163 passed, zero skipped | Test-only row drivers/HTTP handlers; no cloud persistence claim |
+| Linux SDK Docker test target | 163 passed (69 Shared + 32 Progress + 62 Integration), zero skipped | Local Linux behavioral tests, not durable admission |
+| Three unconfigured Docker hosts and `node backend-dotnet/tools/smoke-hosts.mjs` | All liveness/HTTP failure-boundary checks passed | No Appwrite credentials, no workers; readiness remains closed |
+| `pnpm backend:verify` | Node baseline: 320 passed, 12 gated live tests skipped, zero failures | Preserves rollback baseline; does not establish .NET parity |
+| `pnpm contracts:check`; .NET generated-contract check | 157 schemas, 110 fixtures, Dart unchanged; 91 operations/52 errors matched | Contract structure only |
+| `pnpm blueprint:check`; `pnpm audit:check` | Passed, including 19 accepted ADRs and all 91 endpoint records | Documentation consistency only |
+
+The separate .NET CI workflow is defined but has not been run on GitHub. No branch push, cloud schema change, deployment, provider activation or service cutover was performed. The full migration remains in progress.

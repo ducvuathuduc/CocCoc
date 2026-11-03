@@ -1,8 +1,32 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-11-03",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
+    {
+      "taskId": "DOTNET-MIGRATION-20261103",
+      "phase": "Full backend migration; Node retained",
+      "owner": "Codex",
+      "branch": "feat/dotnet-backend-foundation",
+      "status": "IN_PROGRESS",
+      "baseline": "12b1222554c9ae248e47f865e3ecb1f1f2a02633",
+      "exclusivePaths": [
+        "backend-dotnet",
+        "docs/architecture/adr/0020-dotnet-service-migration.md"
+      ],
+      "requirements": [
+        "All 91 declared API operations plus workers",
+        "Preserve Appwrite auth/data and owner transactions",
+        "Preserve wire, HMAC, receipts and Flutter compatibility",
+        "Local Docker durable/native acceptance",
+        "Node retained for rollback; no push/cloud deployment"
+      ],
+      "evidence": [
+        "backend-dotnet/migration/operations.json",
+        "backend-dotnet/README.md"
+      ],
+      "remaining": "10 of 91 operations implemented with local tests; all other service ports, workers (including deletion purge/acks), differential parity, durable/native acceptance and rollout remain in progress. Container liveness passed; no service admitted."
+    },
     {
       "taskId": "REMOTE-BRANCH-CONSOLIDATION-20261029",
       "phase": "Repository integration; no phase gate advancement",

@@ -1,0 +1,14 @@
+**
+!backend-dotnet/
+!backend-dotnet/**
+!docs/
+!docs/api/
+!docs/api/openapi.yaml
+!appwrite/
+!appwrite/schema/
+!appwrite/schema/foundation.json
+backend-dotnet/**/bin/
+backend-dotnet/**/obj/
+backend-dotnet/**/TestResults/
+backend-dotnet/**/.secrets/
+backend-dotnet/**/.env*

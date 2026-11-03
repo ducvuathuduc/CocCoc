@@ -8,6 +8,7 @@ Start at [docs/00_START_HERE.md](docs/00_START_HERE.md). Then read the assigned 
 |---|---|---|
 | `apps/mobile/` | Flutter Android/iOS app (all product UI) | [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md) |
 | `services/{learning,progress,ai}/` | Three independently bundled Node 22 services; `services/shared/` holds transport/auth/HMAC only | [services/AGENTS.md](services/AGENTS.md) |
+| `backend-dotnet/` | Approved ASP.NET Core migration, not yet the active runtime | [backend-dotnet/AGENTS.md](backend-dotnet/AGENTS.md) |
 | `appwrite/` | Appwrite TablesDB schema declaration, apply/drift/probe scripts, seeds | [appwrite/AGENTS.md](appwrite/AGENTS.md) |
 | `packages/api_contracts/` | TypeScript wire types generated from OpenAPI + shared schema fixtures | generated: `pnpm contracts:generate` |
 | `docs/` | Specifications, decisions, evidence, task state | [docs/AGENTS.md](docs/AGENTS.md) |
@@ -19,6 +20,8 @@ Start at [docs/00_START_HERE.md](docs/00_START_HERE.md). Then read the assigned 
 The architecture is frozen as follows. Flutter Android/iOS uses feature-first manual Riverpod MVVM. The backend is TypeScript on Node 22 with three services: Learning, Progress and AI. Appwrite provides Auth, TablesDB and Storage. The API is REST described by OpenAPI, and each service owns its writes. The local journal is Drift. The human-approved [ADR-0018](docs/architecture/adr/0018-container-event-cache-runtime.md) permits Docker container API/worker entrypoints, RabbitMQ transport and Redis derived read cache, subject to its admission gates. Other architecture changes use [TASK_PROTOCOL](docs/agent/TASK_PROTOCOL.md); no unapproved cluster, gateway or Python service. The human chose to retain Appwrite Auth after the [closed Descope evaluation](docs/architecture/adr/draft-0019-descope-identity.md); do not introduce an auth-provider migration in this scope.
 
 Canonical owners:
+
+The human-approved [ADR-0020](docs/architecture/adr/0020-dotnet-service-migration.md) permits replacing the three service runtimes with .NET 10 while retaining Flutter, Appwrite and the wire contract. Follow [the migration matrix](backend-dotnet/migration/operations.json); local tests and host liveness do not imply service admission. Node remains the baseline until durable/native acceptance and an authorized cutover.
 
 - Requirements: `docs/product/SRS.md`.
 - Wire format: `docs/api/openapi.yaml`. The file is JSON, which is valid YAML 1.2; every tool reads it as JSON.

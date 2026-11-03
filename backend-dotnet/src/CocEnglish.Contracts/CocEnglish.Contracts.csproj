@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <EmbeddedResource Include="../../../docs/api/openapi.yaml" LogicalName="CocEnglish.OpenApi.json" />
+  </ItemGroup>
+</Project>
