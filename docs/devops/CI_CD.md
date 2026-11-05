@@ -20,7 +20,7 @@ Dependencies and action commits are pinned. Ordinary jobs have only `contents: r
 
 - **Backend foundation → extended_checks:** local tooling/load smoke, Postman scenarios, schema/seed dry run, blueprint/documentation audits and voice fixture evaluation. These commands remain available locally as well.
 - **Container runtime:** build the three owner images, check startup/restart behavior, and collect logs. This duplicates backend compilation, so it runs on demand.
-- **Mobile frontend:** manual dispatch also builds the unsigned iOS simulator artifact after Linux verification succeeds; it does not rerun the Linux visual suite on macOS.
+- **Mobile frontend:** manual dispatch with `build_ios=true` also builds the unsigned iOS simulator artifact after Linux verification succeeds; it does not rerun the Linux visual suite on macOS.
 - **Android E2E:** the existing manual emulator workflow is retained for native/device changes.
 
 ## Deployment

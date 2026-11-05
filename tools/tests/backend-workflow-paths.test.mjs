@@ -47,12 +47,17 @@ test('backend CI runs when its content, contract, toolchain and workspace inputs
   }
 });
 
-test('expensive container checks are manual and ordinary CI stays read-only', () => {
-  const containers = parse(fs.readFileSync('.github/workflows/containers.yml', 'utf8'));
-  assert.deepEqual(Object.keys(containers.on), ['workflow_dispatch']);
+test('expensive container and emulator checks are manual and ordinary CI stays read-only', () => {
+  for (const name of ['containers', 'android-e2e']) {
+    const workflow = parse(fs.readFileSync(`.github/workflows/${name}.yml`, 'utf8'));
+    assert.deepEqual(Object.keys(workflow.on), ['workflow_dispatch']);
+  }
   for (const name of ['backend', 'mobile', 'security', 'containers']) {
     const workflow = parse(fs.readFileSync(`.github/workflows/${name}.yml`, 'utf8'));
     assert.deepEqual(workflow.permissions, { contents: 'read' });
     if (name !== 'containers') assert.deepEqual(workflow.on.push.branches, ['main']);
   }
+  const mobile = parse(fs.readFileSync('.github/workflows/mobile.yml', 'utf8'));
+  assert.equal(mobile.on.workflow_dispatch.inputs.build_ios.default, false);
+  assert.ok(mobile.jobs['macos-simulator'].if.includes('inputs.build_ios'));
 });
