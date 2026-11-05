@@ -35,11 +35,15 @@ public sealed class OutboxBacklogMetricsService(
                 {
                     using var scope = scopeFactory.CreateScope();
                     var store = scope.ServiceProvider.GetRequiredService<OwnerStore>();
-                    var pending = await CountAsync(store, table, "PENDING", stoppingToken);
-                    var leased = await CountAsync(store, table, "LEASED", stoppingToken);
-                    var dead = await CountAsync(store, table, "DEAD", stoppingToken);
-                    var oldestActiveEventAge = await OldestActiveEventAgeMillisecondsAsync(store, table, stoppingToken);
-                    WorkerTelemetry.RecordOutboxBacklog(service, pending, leased, dead, oldestActiveEventAge);
+                    var snapshot = await store.TransactAsync(async (session, ct) =>
+                    {
+                        var pending = await CountAsync(session, table, "PENDING", ct);
+                        var leased = await CountAsync(session, table, "LEASED", ct);
+                        var dead = await CountAsync(session, table, "DEAD", ct);
+                        var oldestActiveEventAge = await OldestActiveEventAgeMillisecondsAsync(session, table, ct);
+                        return (pending, leased, dead, oldestActiveEventAge);
+                    }, stoppingToken);
+                    WorkerTelemetry.RecordOutboxBacklog(service, snapshot.pending, snapshot.leased, snapshot.dead, snapshot.oldestActiveEventAge);
                 }
                 catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
                 {
@@ -62,12 +66,12 @@ public sealed class OutboxBacklogMetricsService(
         }
     }
 
-    private static Task<long> CountAsync(OwnerStore store, string table, string status, CancellationToken ct) =>
-        store.CountAsync(table, new Dictionary<string, object?> { ["status"] = status }, ct);
+    private static Task<long> CountAsync(OwnerSession session, string table, string status, CancellationToken ct) =>
+        session.CountAsync(table, new Dictionary<string, object?> { ["status"] = status }, ct);
 
-    private async Task<double?> OldestActiveEventAgeMillisecondsAsync(OwnerStore store, string table, CancellationToken ct)
+    private async Task<double?> OldestActiveEventAgeMillisecondsAsync(OwnerSession session, string table, CancellationToken ct)
     {
-        var rows = await store.ListAsync(table, new RowQuery(
+        var rows = await session.ListAsync(table, new RowQuery(
             AnyOf: new Dictionary<string, string[]> { ["status"] = ["PENDING", "LEASED"] },
             OrderBy: [new RowOrder("occurredAt")],
             Limit: 1,

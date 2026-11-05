@@ -4,6 +4,22 @@
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
     {
+      "taskId": "CI-DOTNET-REPAIR-20261105",
+      "phase": "Existing migration CI repair; no phase gate advancement",
+      "owner": "Codex",
+      "branch": "codex/ci-dotnet-repair",
+      "worktree": "C:/FPT/PRM193/CocCoc-ci-dotnet",
+      "status": "VERIFYING",
+      "exclusivePaths": [
+        "backend-dotnet/src/CocEnglish.Shared/Hosting/OutboxBacklogMetricsService.cs",
+        "backend-dotnet/tests/CocEnglish.Shared.Tests/OutboxBacklogMetricsTests.cs"
+      ],
+      "evidence": [
+        "docs/quality/CI_DOTNET_REPAIR_20261105.md"
+      ],
+      "remaining": "Local solution and parity gates pass; Linux container and GitHub workflow verification pending."
+    },
+    {
       "taskId": "DOTNET-MIGRATION-20261103",
       "phase": "Full backend migration; Node retained",
       "owner": "Codex",
