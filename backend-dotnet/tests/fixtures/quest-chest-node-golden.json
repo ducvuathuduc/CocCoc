@@ -1,0 +1,2197 @@
+{
+  "nodeSourceSha256": "5467bf6d75595d7c87eb66c45a69125df97cc8f08e952f07b81114515ec5cb26",
+  "cases": [
+    {
+      "operation": "ch1_404040ffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 25,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_404040ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "COMMON",
+                "COMMON"
+              ],
+              "gems": 5
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 25,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_404040ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "COMMON",
+                "COMMON"
+              ],
+              "gems": 5
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 25,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_404040ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "COMMON",
+                "COMMON"
+              ],
+              "gems": 5
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_404040ffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 25,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "5d6cba6f741b9edfc66f94895dbeab2c",
+            "row": {
+              "eventId": "ch1_404040ffffffffffffffffff",
+              "completionId": "ch1_404040ffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 5,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "711a9b5de0bb3f28556d4d5562acb4f2",
+            "row": {
+              "eventId": "ch1_404040ffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 25,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_404040ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "COMMON",
+                    "COMMON"
+                  ],
+                  "gems": 5
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 25,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_404040ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "COMMON",
+                    "COMMON"
+                  ],
+                  "gems": 5
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "operation": "ch1_3f4040ffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f4040ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "RARE",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f4040ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "RARE",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f4040ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "RARE",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_3f4040ffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 30,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "70be36c5e94acb29a1c007b75ad3b8f5",
+            "row": {
+              "eventId": "ch1_3f4040ffffffffffffffffff",
+              "completionId": "ch1_3f4040ffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 10,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "385f915eb2ba85daa028fa77ffa88bfd",
+            "row": {
+              "eventId": "ch1_3f4040ffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 30,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f4040ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "RARE",
+                    "RARE"
+                  ],
+                  "gems": 10
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 30,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f4040ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "RARE",
+                    "RARE"
+                  ],
+                  "gems": 10
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "operation": "ch1_403f40ffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_403f40ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "RARE",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_403f40ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "RARE",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_403f40ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "RARE",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_403f40ffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 30,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "a2468707755901a06ecd0f92889bc531",
+            "row": {
+              "eventId": "ch1_403f40ffffffffffffffffff",
+              "completionId": "ch1_403f40ffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 10,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "aad84594f0baacf9c03c312aac25ad13",
+            "row": {
+              "eventId": "ch1_403f40ffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 30,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_403f40ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "RARE",
+                    "RARE"
+                  ],
+                  "gems": 10
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 30,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_403f40ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "RARE",
+                    "RARE"
+                  ],
+                  "gems": 10
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "operation": "ch1_3f3f40ffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f3f40ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "EPIC",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f3f40ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "EPIC",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f3f40ffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "EPIC",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_3f3f40ffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 40,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "3845e158a5db8f17efd291ec1cb5e20f",
+            "row": {
+              "eventId": "ch1_3f3f40ffffffffffffffffff",
+              "completionId": "ch1_3f3f40ffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "511460c676a37acd27792682ceb9d5a0",
+            "row": {
+              "eventId": "ch1_3f3f40ffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 40,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f3f40ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "EPIC",
+                    "EPIC"
+                  ],
+                  "gems": 20
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 40,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f3f40ffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "EPIC",
+                    "EPIC"
+                  ],
+                  "gems": 20
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "operation": "ch1_40403fffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_40403fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "COMMON",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_40403fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "COMMON",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 30,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_40403fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "COMMON",
+                "RARE"
+              ],
+              "gems": 10
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_40403fffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 30,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "214362a66a627b5f9911d884129137e5",
+            "row": {
+              "eventId": "ch1_40403fffffffffffffffffff",
+              "completionId": "ch1_40403fffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 10,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "8e2741e6915259e56f97159a956cb884",
+            "row": {
+              "eventId": "ch1_40403fffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 30,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_40403fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "COMMON",
+                    "RARE"
+                  ],
+                  "gems": 10
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 30,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_40403fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "COMMON",
+                    "RARE"
+                  ],
+                  "gems": 10
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "operation": "ch1_3f403fffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f403fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "RARE",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f403fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "RARE",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f403fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "RARE",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_3f403fffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 40,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "8b9964307845e68326907a652391f8b9",
+            "row": {
+              "eventId": "ch1_3f403fffffffffffffffffff",
+              "completionId": "ch1_3f403fffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "6cf9da3196a489f80ef024e2a2742926",
+            "row": {
+              "eventId": "ch1_3f403fffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 40,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f403fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "RARE",
+                    "EPIC"
+                  ],
+                  "gems": 20
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 40,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f403fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "RARE",
+                    "EPIC"
+                  ],
+                  "gems": 20
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "operation": "ch1_403f3fffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_403f3fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "RARE",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_403f3fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "RARE",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 40,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_403f3fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "COMMON",
+                "RARE",
+                "EPIC"
+              ],
+              "gems": 20
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_403f3fffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 40,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "1e145542f17d9259b95c27bd1176a4dc",
+            "row": {
+              "eventId": "ch1_403f3fffffffffffffffffff",
+              "completionId": "ch1_403f3fffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "f3f873048c7be9f22c62082b50cfaef7",
+            "row": {
+              "eventId": "ch1_403f3fffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 40,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_403f3fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "RARE",
+                    "EPIC"
+                  ],
+                  "gems": 20
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 40,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_403f3fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "COMMON",
+                    "RARE",
+                    "EPIC"
+                  ],
+                  "gems": 20
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "operation": "ch1_3f3f3fffffffffffffffffff",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 60,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f3f3fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "EPIC",
+                "MEGA"
+              ],
+              "gems": 40
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 60,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f3f3fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "EPIC",
+                "MEGA"
+              ],
+              "gems": 40
+            }
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "completionId": null,
+            "status": "credited",
+            "studyXp": 0,
+            "leagueXp": 0,
+            "gems": 60,
+            "freezeSlots": 0,
+            "currentStreak": 0,
+            "awardXp": null,
+            "revision": 1,
+            "asOf": "2026-11-05T10:00:00.000Z",
+            "chest": {
+              "receiptId": "ch1_3f3f3fffffffffffffffffff",
+              "tiers": [
+                "COMMON",
+                "RARE",
+                "EPIC",
+                "MEGA"
+              ],
+              "gems": 40
+            }
+          }
+        }
+      ],
+      "tables": {
+        "p_quests": [
+          {
+            "id": "310e4e6001515c743839fa1b2394186e",
+            "row": {
+              "userId": "alice",
+              "questId": "daily_lessons",
+              "period": "DAY",
+              "periodKey": "2026-11-05",
+              "metricValue": 2,
+              "target": 2,
+              "claimed": true,
+              "claimOperationId": "ch1_3f3f3fffffffffffffffffff",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_rewards": [
+          {
+            "id": "cba15263275fe361b932151819a6b0b6",
+            "row": {
+              "userId": "alice",
+              "studyXp": 0,
+              "leagueXpLifetime": 0,
+              "gems": 60,
+              "freezeSlots": 0,
+              "currentStreak": 0,
+              "bestStreak": 0,
+              "streakStartDay": null,
+              "lastQualifiedDay": null,
+              "lostStreak": 0,
+              "lostStreakDay": null,
+              "streakGoal": 0,
+              "streakGoalStartDay": null,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 1
+            }
+          }
+        ],
+        "p_reward_ledger": [
+          {
+            "id": "2b50416df66e65013bacf3d1ff9aee09",
+            "row": {
+              "eventId": "ch1_3f3f3fffffffffffffffffff",
+              "completionId": "ch1_3f3f3fffffffffffffffffff",
+              "userId": "alice",
+              "rewardIdentity": "daily_lessons",
+              "kind": "QUEST",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 40,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-02",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          },
+          {
+            "id": "df8b9e90b3bcc62b61b4adddb15b4ca0",
+            "row": {
+              "eventId": "698054f5e32aeed975c26053876ec6ce",
+              "completionId": "698054f5e32aeed975c26053876ec6ce",
+              "userId": "alice",
+              "rewardIdentity": "initialize",
+              "kind": "INITIAL",
+              "studyXpDelta": 0,
+              "leagueXpDelta": 0,
+              "gemsDelta": 20,
+              "learningDay": "2026-11-05",
+              "leagueWeek": "2026-11-05",
+              "occurredAt": "2026-11-05T10:00:00.000Z",
+              "capped": false
+            }
+          }
+        ],
+        "p_activity": [
+          {
+            "id": "59c5765b0929f3675832e06a789c6a88",
+            "row": {
+              "eventId": "ch1_3f3f3fffffffffffffffffff",
+              "userId": "alice",
+              "kind": "QUEST",
+              "publicSummary": "Completed the daily lessons quest",
+              "visible": false,
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ],
+        "p_receipts": [
+          {
+            "id": "037171252a66b0369ba0216354b103d8",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 60,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f3f3fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "EPIC",
+                    "MEGA"
+                  ],
+                  "gems": 40
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "37d0c7062979cd58f1262470b931f99e",
+            "row": {
+              "userId": "alice",
+              "operation": "initializeProfile",
+              "key": "33333333-3333-4333-8333-333333333333",
+              "bodyHash": "c4b5fa7f27ef1cf3a44224639d4b7fa7bb7cff15af80d38f4f8e746254bf31f9",
+              "statusCode": 200,
+              "responseJson": {
+                "userId": "alice",
+                "nickname": "usera63f23edd9cc",
+                "avatarId": null,
+                "publicOptIn": false,
+                "dailyGoal": 10,
+                "learningZone": "UTC",
+                "pendingZone": null,
+                "zoneEffectiveAt": null,
+                "revision": 0,
+                "achievementIds": []
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          },
+          {
+            "id": "7429db9ff6530cee0e4b506583598cea",
+            "row": {
+              "userId": "alice",
+              "operation": "claimQuest",
+              "key": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "bf292348a164706534b6b6ea0cf3a748c48e79e5afc1947279c39d296d0ae7e4",
+              "statusCode": 200,
+              "responseJson": {
+                "completionId": null,
+                "status": "credited",
+                "studyXp": 0,
+                "leagueXp": 0,
+                "gems": 60,
+                "freezeSlots": 0,
+                "currentStreak": 0,
+                "awardXp": null,
+                "revision": 1,
+                "asOf": "2026-11-05T10:00:00.000Z",
+                "chest": {
+                  "receiptId": "ch1_3f3f3fffffffffffffffffff",
+                  "tiers": [
+                    "COMMON",
+                    "RARE",
+                    "EPIC",
+                    "MEGA"
+                  ],
+                  "gems": 40
+                }
+              },
+              "expiresAt": "2026-12-05T10:00:00.000Z",
+              "createdAt": "2026-11-05T10:00:00.000Z",
+              "updatedAt": "2026-11-05T10:00:00.000Z",
+              "revision": 0
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

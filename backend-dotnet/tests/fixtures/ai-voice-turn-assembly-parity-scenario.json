@@ -1,0 +1,30 @@
+{
+  "now": "2026-11-03T12:00:00.000Z",
+  "user": "voice-assembly-parity-user",
+  "sessionId": "abababab-abab-4bab-8bab-abababababab",
+  "scenarioId": "rp_meet_new_friend",
+  "level": "A1",
+  "kind": "VIDEO_CALL",
+  "courseId": "vi_en",
+  "voiceSessionId": "abababab-abab-4bab-8bab-abababababab",
+  "sessionKey": "b1b1b1b1-b1b1-41b1-81b1-b1b1b1b1b1b1",
+  "conversationKey": "b2b2b2b2-b2b2-42b2-82b2-b2b2b2b2b2b2",
+  "turnKey": "b3b3b3b3-b3b3-43b3-83b3-b3b3b3b3b3b3",
+  "turnId": "b4b4b4b4-b4b4-44b4-84b4-b4b4b4b4b4b4",
+  "epoch": 0,
+  "wavSeconds": 1,
+  "azureRegion": "westus2",
+  "uploadUrl": "https://cdn.assemblyai.com/upload/voice-test",
+  "transcriptId": "voice-transcript-test",
+  "transcript": "Hi Tom, my name is Lan.",
+  "confidence": 0.82,
+  "inspect": [
+    "a_voice_sessions",
+    "a_active_slots",
+    "a_conversations",
+    "a_turns",
+    "a_receipts",
+    "a_usage",
+    "a_outbox"
+  ]
+}

@@ -6,5 +6,28 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio"><PrivateAssets>all</PrivateAssets></PackageReference>
     <ProjectReference Include="../../src/CocEnglish.Progress/CocEnglish.Progress.csproj" />
+    <ProjectReference Include="../../src/CocEnglish.Learning/CocEnglish.Learning.csproj" />
+    <ProjectReference Include="../../src/CocEnglish.AI/CocEnglish.AI.csproj" />
+    <EmbeddedResource Include="../fixtures/progress-parity-scenarios.json" LogicalName="CocEnglish.Progress.Parity.Scenarios.json" />
+    <EmbeddedResource Include="../fixtures/progress-node-golden.json" LogicalName="CocEnglish.Progress.Parity.Node.json" />
+    <EmbeddedResource Include="../fixtures/quest-chest-node-golden.json" LogicalName="CocEnglish.Progress.Parity.QuestChest.json" />
+    <EmbeddedResource Include="../fixtures/learning-parity-scenarios.json" LogicalName="CocEnglish.Learning.Parity.Scenarios.json" />
+    <EmbeddedResource Include="../fixtures/learning-node-golden.json" LogicalName="CocEnglish.Learning.Parity.Node.json" />
+    <EmbeddedResource Include="../fixtures/ai-parity-scenarios.json" LogicalName="CocEnglish.AI.Parity.Scenarios.json" />
+    <EmbeddedResource Include="../fixtures/ai-node-golden.json" LogicalName="CocEnglish.AI.Parity.Node.json" />
+    <EmbeddedResource Include="../fixtures/ai-speech-parity-scenario.json" LogicalName="CocEnglish.AI.Parity.SpeechScenarios.json" />
+    <EmbeddedResource Include="../fixtures/ai-speech-node-golden.json" LogicalName="CocEnglish.AI.Parity.SpeechNode.json" />
+    <EmbeddedResource Include="../fixtures/ai-voice-turn-parity-scenario.json" LogicalName="CocEnglish.AI.Parity.VoiceTurnScenarios.json" />
+    <EmbeddedResource Include="../fixtures/ai-voice-turn-node-golden.json" LogicalName="CocEnglish.AI.Parity.VoiceTurnNode.json" />
+    <EmbeddedResource Include="../fixtures/ai-assessment-fallback-parity-scenario.json" LogicalName="CocEnglish.AI.Parity.FallbackScenarios.json" />
+    <EmbeddedResource Include="../fixtures/ai-assessment-fallback-node-golden.json" LogicalName="CocEnglish.AI.Parity.FallbackNode.json" />
+    <EmbeddedResource Include="../fixtures/ai-assessment-assembly-parity-scenario.json" LogicalName="CocEnglish.AI.Parity.AssemblyScenarios.json" />
+    <EmbeddedResource Include="../fixtures/ai-assessment-assembly-node-golden.json" LogicalName="CocEnglish.AI.Parity.AssemblyNode.json" />
+    <EmbeddedResource Include="../fixtures/ai-voice-turn-fallback-parity-scenario.json" LogicalName="CocEnglish.AI.Parity.VoiceFallbackScenarios.json" />
+    <EmbeddedResource Include="../fixtures/ai-voice-turn-fallback-node-golden.json" LogicalName="CocEnglish.AI.Parity.VoiceFallbackNode.json" />
+    <EmbeddedResource Include="../fixtures/ai-voice-turn-assembly-parity-scenario.json" LogicalName="CocEnglish.AI.Parity.VoiceAssemblyScenarios.json" />
+    <EmbeddedResource Include="../fixtures/ai-voice-turn-assembly-node-golden.json" LogicalName="CocEnglish.AI.Parity.VoiceAssemblyNode.json" />
+    <EmbeddedResource Include="../../../content/vi_en/dist/v2/manifest.json" LogicalName="CocEnglish.Learning.Parity.Content.Manifest.json" />
+    <EmbeddedResource Include="../../../content/vi_en/dist/v2/bundles/u1n1l1.json" LogicalName="CocEnglish.Learning.Parity.Content.Bundle.json" />
   </ItemGroup>
 </Project>

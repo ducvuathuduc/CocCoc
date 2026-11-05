@@ -117,7 +117,14 @@ public sealed class OwnerSession(IRowDriver driver)
             foreach (var order in query.OrderBy ?? [])
             {
                 var x = a.Data[order.Column]; var y = b.Data[order.Column];
-                if (x is null && y is null) continue;
+                if (x is null && y is null)
+                {
+                    // Match Node's legacy-row ordering: an absent value precedes an explicit null.
+                    var xMissing = !a.Data.ContainsKey(order.Column);
+                    var yMissing = !b.Data.ContainsKey(order.Column);
+                    if (xMissing != yMissing) return xMissing ? -1 : 1;
+                    continue;
+                }
                 if (x is null) return 1;
                 if (y is null) return -1;
                 var compare = Compare(x, y);
@@ -130,6 +137,12 @@ public sealed class OwnerSession(IRowDriver driver)
 
     public Task<long> CountAsync(string table, IReadOnlyDictionary<string, object?> where, CancellationToken ct)
     { OwnerSchema.For(driver.Owner, table); return driver.CountAsync(table, where, ct); }
+
+    public Task<long> CountAsync(string table, RowQuery query, CancellationToken ct)
+    { OwnerSchema.For(driver.Owner, table); return driver.CountAsync(table, query, ct); }
+
+    public Task<IReadOnlyList<RowDocument>> ListAsync(string table, RowQuery query, CancellationToken ct)
+    { OwnerSchema.For(driver.Owner, table); return driver.ListAsync(table, query, ct); }
 
     public void Put(string table, string id, JsonObject row, IReadOnlyList<string>? readers = null)
     {
@@ -162,6 +175,7 @@ public sealed class OwnerSession(IRowDriver driver)
         foreach (var (key, values) in query.AnyOf ?? new Dictionary<string, string[]>()) if (row[key] is null || !values.Contains(row[key]!.GetValue<string>(), StringComparer.Ordinal)) return false;
         foreach (var (key, value) in query.GreaterThanEqual ?? new Dictionary<string, object?>()) if (row[key] is null || Compare(row[key]!, System.Text.Json.JsonSerializer.SerializeToNode(value)!) < 0) return false;
         foreach (var (key, value) in query.LessThan ?? new Dictionary<string, object?>()) if (row[key] is null || Compare(row[key]!, System.Text.Json.JsonSerializer.SerializeToNode(value)!) >= 0) return false;
+        foreach (var (key, value) in query.LessThanEqual ?? new Dictionary<string, object?>()) if (row[key] is null || Compare(row[key]!, System.Text.Json.JsonSerializer.SerializeToNode(value)!) > 0) return false;
         return true;
     }
 

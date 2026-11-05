@@ -1,0 +1,40 @@
+{
+  "now": "2026-11-03T12:00:00.000Z",
+  "user": "voice-fallback-parity-user",
+  "sessionId": "98989898-9898-4989-8898-989898989898",
+  "scenarioId": "rp_meet_new_friend",
+  "level": "A1",
+  "kind": "VIDEO_CALL",
+  "courseId": "vi_en",
+  "voiceSessionId": "98989898-9898-4989-8898-989898989898",
+  "sessionKey": "a1a1a1a1-a1a1-41a1-81a1-a1a1a1a1a1a1",
+  "conversationKey": "a2a2a2a2-a2a2-42a2-82a2-a2a2a2a2a2a2",
+  "turnKey": "a3a3a3a3-a3a3-43a3-83a3-a3a3a3a3a3a3",
+  "turnId": "a4a4a4a4-a4a4-44a4-84a4-a4a4a4a4a4a4",
+  "epoch": 0,
+  "wavSeconds": 1,
+  "azureRegion": "westus2",
+  "deepgramResponse": {
+    "results": {
+      "channels": [
+        {
+          "alternatives": [
+            {
+              "transcript": "Hi Tom, my name is Lan.",
+              "confidence": 0.93
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "inspect": [
+    "a_voice_sessions",
+    "a_active_slots",
+    "a_conversations",
+    "a_turns",
+    "a_receipts",
+    "a_usage",
+    "a_outbox"
+  ]
+}

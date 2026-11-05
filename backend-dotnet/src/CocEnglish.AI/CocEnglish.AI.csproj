@@ -1,3 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  <ItemGroup><ProjectReference Include="../CocEnglish.Shared/CocEnglish.Shared.csproj" /></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CocEnglish.Shared/CocEnglish.Shared.csproj" />
+    <EmbeddedResource Include="scenarios.json" LogicalName="CocEnglish.AI.Scenarios.json" />
+  </ItemGroup>
 </Project>

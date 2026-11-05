@@ -74,7 +74,13 @@ if (!buildOnly) {
           .map((file) => `services/${name}/test/${file}`)
       : [],
   );
-  const result = spawnSync(process.execPath, ['--test', ...tests], { stdio: 'inherit', cwd: root });
+  const testConcurrency =
+    process.env.BACKEND_TEST_CONCURRENCY ?? (process.platform === 'win32' ? '1' : '4');
+  const result = spawnSync(
+    process.execPath,
+    ['--test', `--test-concurrency=${testConcurrency}`, ...tests],
+    { stdio: 'inherit', cwd: root },
+  );
   if (result.status !== 0) process.exit(result.status || 1);
 }
 console.log(

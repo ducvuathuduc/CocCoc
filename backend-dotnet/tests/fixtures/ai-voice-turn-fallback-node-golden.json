@@ -1,0 +1,349 @@
+{
+  "scenarioSha256": "7f3c90ab3cffd6d95151d75763e7923680e57388b2f7725e70d5f02b44a6edc1",
+  "providerRequests": [
+    {
+      "method": "POST",
+      "url": "https://westus2.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed",
+      "contentType": "audio/wav; codecs=audio/pcm; samplerate=16000",
+      "bodyLength": 32044,
+      "pronunciationAssessment": {
+        "ReferenceText": "Hi Tom, my name is Lan.",
+        "GradingSystem": "HundredMark",
+        "Granularity": "Phoneme",
+        "Dimension": "Comprehensive",
+        "EnableMiscue": true,
+        "EnableProsodyAssessment": true
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://api.deepgram.com/v1/listen?model=nova-3&language=en&smart_format=true",
+      "contentType": "audio/wav",
+      "bodyLength": 32044,
+      "authorizationScheme": "Token"
+    }
+  ],
+  "results": {
+    "session": {
+      "status": 200,
+      "body": {
+        "sessionId": "98989898-9898-4989-8898-989898989898",
+        "mode": "TURN",
+        "providerAlias": "speech",
+        "model": "scripted-roleplay-v1",
+        "ephemeralToken": null,
+        "connectExpiresAt": null,
+        "sessionExpiresAt": "2026-11-03T12:15:00.000Z",
+        "epoch": 0,
+        "inputSampleRate": 16000,
+        "outputSampleRate": 24000,
+        "configVersion": "speech-azure-v1"
+      }
+    },
+    "conversation": {
+      "status": 200,
+      "body": {
+        "conversationId": "7f167d0da83c215c3c6c02a016d38276",
+        "kind": "VIDEO_CALL",
+        "courseId": "vi_en",
+        "scenarioId": "rp_meet_new_friend",
+        "voiceSessionId": "98989898-9898-4989-8898-989898989898",
+        "status": "ACTIVE",
+        "startedAt": "2026-11-03T12:00:00.000Z",
+        "completedAt": null,
+        "turnCount": 0,
+        "wordsUsed": 0,
+        "stars": 0,
+        "xpAwarded": 0,
+        "feedback": null,
+        "expiresAt": "2026-11-03T12:30:00.000Z"
+      }
+    },
+    "firstTurn": {
+      "status": 200,
+      "body": {
+        "turnId": "a4a4a4a4-a4a4-44a4-84a4-a4a4a4a4a4a4",
+        "epoch": 0,
+        "transcript": "Hi Tom, my name is Lan.",
+        "tutor": {
+          "requestId": "a4a4a4a4-a4a4-44a4-84a4-a4a4a4a4a4a4",
+          "tutorText": "Nice to meet you! Where are you from?",
+          "correction": null,
+          "explanation": "Giới thiệu tên: \"My name is ...\"",
+          "source": "authored",
+          "assessedPronunciation": false
+        },
+        "audioAssetId": null,
+        "score": {
+          "scoreState": "NULL_UNAVAILABLE",
+          "referenceText": "Hi Tom, my name is Lan.",
+          "accuracy": null,
+          "fluency": null,
+          "completeness": null,
+          "prosody": null,
+          "words": [],
+          "scorer": null,
+          "transcriptProvider": "deepgram",
+          "unavailableReason": "AZURE_FAILED"
+        },
+        "mode": "TURN"
+      }
+    },
+    "replayTurn": {
+      "status": 200,
+      "body": {
+        "turnId": "a4a4a4a4-a4a4-44a4-84a4-a4a4a4a4a4a4",
+        "epoch": 0,
+        "transcript": "Hi Tom, my name is Lan.",
+        "tutor": {
+          "requestId": "a4a4a4a4-a4a4-44a4-84a4-a4a4a4a4a4a4",
+          "tutorText": "Nice to meet you! Where are you from?",
+          "correction": null,
+          "explanation": "Giới thiệu tên: \"My name is ...\"",
+          "source": "authored",
+          "assessedPronunciation": false
+        },
+        "audioAssetId": null,
+        "score": {
+          "scoreState": "NULL_UNAVAILABLE",
+          "referenceText": "Hi Tom, my name is Lan.",
+          "accuracy": null,
+          "fluency": null,
+          "completeness": null,
+          "prosody": null,
+          "words": [],
+          "scorer": null,
+          "transcriptProvider": "deepgram",
+          "unavailableReason": "AZURE_FAILED"
+        },
+        "mode": "TURN"
+      }
+    }
+  },
+  "tables": {
+    "a_voice_sessions": [
+      {
+        "id": "b7c19f03842e2633fd49a3dcb94c2026",
+        "row": {
+          "userId": "voice-fallback-parity-user",
+          "sessionId": "98989898-9898-4989-8898-989898989898",
+          "providerAlias": "speech",
+          "mode": "TURN",
+          "status": "ACTIVE",
+          "expiresAt": "2026-11-03T12:15:00.000Z",
+          "lastHeartbeatAt": "2026-11-03T12:00:00.000Z",
+          "epoch": 0,
+          "consumedSeconds": 1,
+          "configVersion": "speech-azure-v1",
+          "revision": 1,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_active_slots": [
+      {
+        "id": "5059c455bf2d27c471e6c0e18c354809",
+        "row": {
+          "userId": "voice-fallback-parity-user",
+          "sessionId": "98989898-9898-4989-8898-989898989898",
+          "expiresAt": "2026-11-03T12:15:00.000Z",
+          "epoch": 0,
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_conversations": [
+      {
+        "id": "7f167d0da83c215c3c6c02a016d38276",
+        "row": {
+          "conversationId": "7f167d0da83c215c3c6c02a016d38276",
+          "userId": "voice-fallback-parity-user",
+          "kind": "VIDEO_CALL",
+          "courseId": "vi_en",
+          "scenarioId": "rp_meet_new_friend",
+          "voiceSessionId": "98989898-9898-4989-8898-989898989898",
+          "status": "ACTIVE",
+          "startedAt": "2026-11-03T12:00:00.000Z",
+          "completedAt": null,
+          "turnCount": 1,
+          "wordsUsed": 1,
+          "stars": 0,
+          "xpAwarded": 0,
+          "feedbackJson": {
+            "draft": true,
+            "stepIndex": 1,
+            "onTopicTurns": 1,
+            "usedWords": [
+              "name"
+            ]
+          },
+          "transcriptFileId": null,
+          "expiresAt": "2026-11-03T12:30:00.000Z",
+          "revision": 1,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_turns": [],
+    "a_receipts": [
+      {
+        "id": "d43a3d0cd87447a5fc3431db4ae0cdc5",
+        "row": {
+          "userId": "voice-fallback-parity-user",
+          "operation": "startConversation",
+          "key": "a2a2a2a2-a2a2-42a2-82a2-a2a2a2a2a2a2",
+          "bodyHash": "14ce56eb553d98fc26abe76e8da07c81c8ae6ca4685060a1c033b079209d99d6",
+          "statusCode": 200,
+          "responseJson": {
+            "conversationId": "7f167d0da83c215c3c6c02a016d38276",
+            "kind": "VIDEO_CALL",
+            "courseId": "vi_en",
+            "scenarioId": "rp_meet_new_friend",
+            "voiceSessionId": "98989898-9898-4989-8898-989898989898",
+            "status": "ACTIVE",
+            "startedAt": "2026-11-03T12:00:00.000Z",
+            "completedAt": null,
+            "turnCount": 0,
+            "wordsUsed": 0,
+            "stars": 0,
+            "xpAwarded": 0,
+            "feedback": null,
+            "expiresAt": "2026-11-03T12:30:00.000Z"
+          },
+          "expiresAt": "2026-12-03T12:00:00.000Z",
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      },
+      {
+        "id": "e745aedbee36512f0df7bb262054cfe8",
+        "row": {
+          "userId": "voice-fallback-parity-user",
+          "operation": "createVoiceSession",
+          "key": "a1a1a1a1-a1a1-41a1-81a1-a1a1a1a1a1a1",
+          "bodyHash": "8879d0f9687b35cff7f444d3c47203feab5ea1aa8224c4b5bc31196818da4800",
+          "statusCode": 200,
+          "responseJson": {
+            "sessionId": "98989898-9898-4989-8898-989898989898",
+            "mode": "TURN",
+            "providerAlias": "speech",
+            "model": "scripted-roleplay-v1",
+            "ephemeralToken": null,
+            "connectExpiresAt": null,
+            "sessionExpiresAt": "2026-11-03T12:15:00.000Z",
+            "epoch": 0,
+            "inputSampleRate": 16000,
+            "outputSampleRate": 24000,
+            "configVersion": "speech-azure-v1"
+          },
+          "expiresAt": "2026-12-03T12:00:00.000Z",
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      },
+      {
+        "id": "e77435383de335d45934f7c56c875132",
+        "row": {
+          "userId": "voice-fallback-parity-user",
+          "operation": "submitVoiceTurn",
+          "key": "a3a3a3a3-a3a3-43a3-83a3-a3a3a3a3a3a3",
+          "bodyHash": "ee91e71175036501d4c4d6e4b6ee7173d2656b5121eafc0dcc4a2357377b9348",
+          "statusCode": 200,
+          "responseJson": {
+            "turnId": "a4a4a4a4-a4a4-44a4-84a4-a4a4a4a4a4a4",
+            "epoch": 0,
+            "transcript": "Hi Tom, my name is Lan.",
+            "tutor": {
+              "requestId": "a4a4a4a4-a4a4-44a4-84a4-a4a4a4a4a4a4",
+              "tutorText": "Nice to meet you! Where are you from?",
+              "correction": null,
+              "explanation": "Giới thiệu tên: \"My name is ...\"",
+              "source": "authored",
+              "assessedPronunciation": false
+            },
+            "audioAssetId": null,
+            "score": {
+              "scoreState": "NULL_UNAVAILABLE",
+              "referenceText": "Hi Tom, my name is Lan.",
+              "accuracy": null,
+              "fluency": null,
+              "completeness": null,
+              "prosody": null,
+              "words": [],
+              "scorer": null,
+              "transcriptProvider": "deepgram",
+              "unavailableReason": "AZURE_FAILED"
+            },
+            "mode": "TURN"
+          },
+          "expiresAt": "2026-12-03T12:00:00.000Z",
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_usage": [
+      {
+        "id": "3dde2c5146b49ffdde85e21553034d50",
+        "row": {
+          "userId": "voice-fallback-parity-user",
+          "utcDay": "2026-11-03",
+          "liveReservedSeconds": 0,
+          "liveUsedSeconds": 0,
+          "liveGrants": 0,
+          "textRequests": 0,
+          "recordedSpeechSeconds": 1,
+          "recordedReservedSeconds": 0,
+          "reservationIdsJson": [],
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      },
+      {
+        "id": "6ea532e6b59dbeefc52ffb6146ea5d84",
+        "row": {
+          "userId": "voice-fallback-parity-user",
+          "utcDay": "ENTITLED",
+          "liveReservedSeconds": 0,
+          "liveUsedSeconds": 0,
+          "liveGrants": 0,
+          "textRequests": 0,
+          "recordedSpeechSeconds": 0,
+          "recordedReservedSeconds": 0,
+          "reservationIdsJson": {
+            "plan": "MAX",
+            "status": "ACTIVE",
+            "expiresAt": null,
+            "entitlementRevision": 1
+          }
+        }
+      },
+      {
+        "id": "95a6b9c336d21c1fb79ccb8ae0c474a8",
+        "row": {
+          "userId": "system-speech-azure",
+          "utcDay": "2026-11-03",
+          "liveReservedSeconds": 0,
+          "liveUsedSeconds": 0,
+          "liveGrants": 0,
+          "textRequests": 1,
+          "recordedSpeechSeconds": 1,
+          "recordedReservedSeconds": 0,
+          "reservationIdsJson": [],
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_outbox": []
+  }
+}

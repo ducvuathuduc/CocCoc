@@ -14,6 +14,30 @@ namespace CocEnglish.IntegrationTests;
 
 public sealed class ProgressReadApiTests
 {
+    [Fact]
+    public async Task Entitlement_HttpReturnsOnlyServerCapabilitiesAndMillisecondDates()
+    {
+        await using var factory = new ProgressApiFixture();
+        factory.Driver.Rows[("p_entitlements", CanonicalWire.RowId("p_entitlements", "alice"))] = new()
+        { ["userId"] = "alice", ["plan"] = "MAX", ["status"] = "CANCELED", ["source"] = "PURCHASE", ["expiresAt"] = "2026-11-03T10:00:00.001Z", ["autoRenew"] = false, ["revision"] = 2 };
+        using var client = factory.CreateClient();
+        client.DefaultRequestHeaders.Authorization = new("Bearer", "alice-jwt");
+        client.DefaultRequestHeaders.Add("X-Appwrite-User-ID", "bob");
+        using var response = await client.GetAsync("/v1/me/entitlement");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = (await Body(response)).AsObject();
+        Assert.Equal(new[] { "adFree", "asOf", "autoRenew", "conversations", "expiresAt", "familyGroupId", "plan", "revision", "source", "status", "unlimitedEnergy" }, body.Select(p => p.Key).Order(StringComparer.Ordinal));
+        Assert.True(body["conversations"]!.GetValue<bool>());
+        Assert.True(body["unlimitedEnergy"]!.GetValue<bool>());
+        Assert.Equal("2026-11-03T10:00:00.001Z", body["expiresAt"]!.GetValue<string>());
+        factory.Now = factory.Now.AddMilliseconds(1);
+        using var expired = await client.GetAsync("/v1/me/entitlement");
+        Assert.Equal(HttpStatusCode.OK, expired.StatusCode);
+        var lapsed = await Body(expired);
+        Assert.Equal("FREE", lapsed["plan"]!.GetValue<string>());
+        Assert.False(lapsed["conversations"]!.GetValue<bool>());
+        Assert.Equal(0, factory.Driver.Commits);
+    }
     [Theory]
     [InlineData("/v1/ME")]
     [InlineData("/v1/me/")]

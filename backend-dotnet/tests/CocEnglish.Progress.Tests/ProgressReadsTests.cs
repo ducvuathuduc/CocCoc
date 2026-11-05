@@ -10,6 +10,49 @@ namespace CocEnglish.Progress.Tests;
 
 public sealed class ProgressReadsTests
 {
+    [Theory]
+    [InlineData("FREE", "ACTIVE", null, "FREE", "ACTIVE", false, false, true)]
+    [InlineData("SUPER", "ACTIVE", null, "SUPER", "ACTIVE", true, false, true)]
+    [InlineData("MAX", "GRACE", "2026-11-03T23:30:00.001Z", "MAX", "GRACE", true, true, true)]
+    [InlineData("MAX", "CANCELED", "2026-11-03T23:30:00.001Z", "MAX", "CANCELED", true, true, true)]
+    [InlineData("MAX", "ACTIVE", "2026-11-03T23:30:00.000Z", "FREE", "EXPIRED", false, false, false)]
+    [InlineData("MAX", "HOLD", "2026-11-03T23:30:00.001Z", "MAX", "HOLD", false, false, true)]
+    [InlineData("SUPER", "REVOKED", null, "SUPER", "REVOKED", false, false, true)]
+    public async Task Entitlement_ProjectsExactExpiryAndIndependentAccessFlags(string plan, string status, string? expires,
+        string expectedPlan, string expectedStatus, bool premium, bool conversations, bool renewal)
+    {
+        var driver = Fixture();
+        driver.Rows[("p_entitlements", CanonicalWire.RowId("p_entitlements", "alice"))] = new()
+        { ["userId"] = "alice", ["plan"] = plan, ["status"] = status, ["source"] = "PURCHASE", ["expiresAt"] = expires, ["autoRenew"] = true, ["familyGroupId"] = "family", ["revision"] = 4 };
+        var result = await Service(driver).GetEntitlementAsync("alice", CancellationToken.None);
+        Assert.Equal(expectedPlan, result.Plan);
+        Assert.Equal(expectedStatus, result.Status);
+        Assert.Equal(premium, result.UnlimitedEnergy);
+        Assert.Equal(premium, result.AdFree);
+        Assert.Equal(conversations, result.Conversations);
+        Assert.Equal(renewal, result.AutoRenew);
+        Assert.Equal("PURCHASE", result.Source);
+        Assert.Equal("family", result.FamilyGroupId);
+        Assert.Equal(4, result.Revision);
+        Assert.Equal(Now, result.AsOf);
+    }
+
+    [Fact]
+    public async Task Entitlement_MissingRowProjectsFreeWithoutCreatingData()
+    {
+        var driver = Fixture();
+        var result = await Service(driver).GetEntitlementAsync("alice", CancellationToken.None);
+        Assert.Equal("FREE", result.Plan);
+        Assert.Equal("NONE", result.Source);
+        Assert.Equal("ACTIVE", result.Status);
+        Assert.False(result.UnlimitedEnergy);
+        Assert.False(result.AdFree);
+        Assert.False(result.Conversations);
+        Assert.False(result.AutoRenew);
+        Assert.Null(result.ExpiresAt);
+        Assert.Null(result.FamilyGroupId);
+        Assert.Single(driver.Rows);
+    }
     private static readonly DateTimeOffset Now = DateTimeOffset.Parse("2026-11-03T23:30:00Z", CultureInfo.InvariantCulture);
 
     [Fact]
@@ -47,6 +90,7 @@ public sealed class ProgressReadsTests
         Assert.Equal("PROFILE_UNAVAILABLE", (await Assert.ThrowsAsync<ServiceException>(() => service.GetLearningStatsAsync("alice", CancellationToken.None))).Code);
         Assert.Equal("PROFILE_UNAVAILABLE", (await Assert.ThrowsAsync<ServiceException>(() => service.GetQuestsAsync("alice", 0, 20, CancellationToken.None))).Code);
         Assert.Equal("PROFILE_UNAVAILABLE", (await Assert.ThrowsAsync<ServiceException>(() => service.GetPreferencesAsync("alice", CancellationToken.None))).Code);
+        Assert.Equal("PROFILE_UNAVAILABLE", (await Assert.ThrowsAsync<ServiceException>(() => service.GetEntitlementAsync("alice", CancellationToken.None))).Code);
     }
 
     [Theory]

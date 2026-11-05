@@ -44,6 +44,12 @@ List<String> validateRealProfile(
     }
     if (uri.hasQuery) issues.add('${endpoint.code}_QUERY_FORBIDDEN');
     if (uri.hasFragment) issues.add('${endpoint.code}_FRAGMENT_FORBIDDEN');
+    final normalizedHost = uri.host
+        .toLowerCase()
+        .replaceFirst(RegExp(r'\.$'), '');
+    if (normalizedHost.endsWith('.invalid')) {
+      issues.add('${endpoint.code}_PLACEHOLDER_HOST_FORBIDDEN');
+    }
 
     final scheme = uri.scheme.toLowerCase();
     if (scheme != 'https' && scheme != 'http') {

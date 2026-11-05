@@ -25,6 +25,8 @@ export interface ProgressJobPorts {
   deliver?: RelayDeliver | undefined;
   /** Learning outbox watermark; absent -> settlement keeps cohorts SETTLING. */
   watermark?: WatermarkSource | undefined;
+  /** Optional bounded-jitter source; omitted in production to use the runtime random source. */
+  random?: (() => number) | undefined;
 }
 
 const NO_WATERMARK: WatermarkSource = {
@@ -46,7 +48,7 @@ export function jobRoutes(store: ProgressPersistence, ports: ProgressJobPorts = 
       runDeletionPurge(store, t),
     ),
     jobRoute('/internal/jobs/progress-outbox-relay', 'PROGRESS_OUTBOX_RELAY', now, (t) =>
-      runProgressOutboxRelay(store, ports.deliver, t),
+      runProgressOutboxRelay(store, ports.deliver, t, ports.random),
     ),
   ];
 }

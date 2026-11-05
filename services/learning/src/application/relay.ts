@@ -26,6 +26,7 @@ export function createImmediateRelay(
   getDeps: () => LearningDeps,
   deliver: Deliver,
   deadlineMs = 1500,
+  random: () => number = Math.random,
 ): EventRelay {
   return {
     async afterCommit(eventIds) {
@@ -33,6 +34,7 @@ export function createImmediateRelay(
         eventIds,
         deadlineMs,
         owner: `relay-${getDeps().newId()}`,
+        random,
       });
     },
   };

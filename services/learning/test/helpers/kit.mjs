@@ -3,11 +3,13 @@
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build } from 'esbuild';
+import { cleanupGeneratedBundleOnExit } from '../../../shared/test/cleanup-generated-bundle.mjs';
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');
 
 export async function loadKit(name) {
   const outfile = path.join(root, `.cache/learning-tests/${name}-${process.pid}.mjs`);
+  cleanupGeneratedBundleOnExit(outfile);
   await build({
     entryPoints: [path.join(root, 'services/learning/src/testing/learning-testkit.ts')],
     outfile,

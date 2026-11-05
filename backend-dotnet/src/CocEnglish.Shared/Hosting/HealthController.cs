@@ -12,8 +12,10 @@ public sealed class HealthController(RuntimeSettings settings) : ControllerBase
 
     [HttpGet("/ready")]
     [ContractOperation("getReadiness")]
-    public IActionResult Ready() => throw new ServiceException("SERVICE_NOT_CONFIGURED", new()
-    {
-        ["reason"] = "DOTNET_MIGRATION_IN_PROGRESS"
-    });
+    public IActionResult Ready() => settings.ReadinessAdmitted
+        ? Ok(new { service = settings.Service, buildId = settings.BuildId, status = "ok" })
+        : throw new ServiceException("SERVICE_NOT_CONFIGURED", new()
+        {
+            ["reason"] = "DOTNET_MIGRATION_IN_PROGRESS"
+        });
 }

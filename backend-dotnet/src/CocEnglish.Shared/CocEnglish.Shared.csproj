@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
     <ProjectReference Include="../CocEnglish.Contracts/CocEnglish.Contracts.csproj" />
     <EmbeddedResource Include="../../../appwrite/schema/foundation.json" LogicalName="CocEnglish.StorageSchema.json" />
   </ItemGroup>

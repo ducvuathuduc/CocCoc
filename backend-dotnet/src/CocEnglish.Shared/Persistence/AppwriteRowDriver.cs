@@ -18,9 +18,12 @@ public sealed record RowQuery(
     IReadOnlyDictionary<string, object?>? Where = null,
     IReadOnlyDictionary<string, object?>? GreaterThanEqual = null,
     IReadOnlyDictionary<string, object?>? LessThan = null,
+    IReadOnlyDictionary<string, object?>? LessThanEqual = null,
     IReadOnlyDictionary<string, string[]>? AnyOf = null,
     IReadOnlyList<RowOrder>? OrderBy = null,
-    int Limit = 100);
+    int Limit = 100,
+    int Offset = 0,
+    IReadOnlyList<string>? Select = null);
 public sealed record RowWrite(string Table, string Id, string Action, JsonObject? Data = null, IReadOnlyList<string>? Readers = null);
 public sealed class TransactionConflictException : Exception;
 
@@ -31,6 +34,19 @@ public interface IRowDriver
     Task<RowDocument?> ReadAsync(string table, string id, CancellationToken cancellationToken);
     Task<IReadOnlyList<RowDocument>> ListAsync(string table, RowQuery query, CancellationToken cancellationToken);
     Task<long> CountAsync(string table, IReadOnlyDictionary<string, object?> where, CancellationToken cancellationToken);
+    async Task<long> CountAsync(string table, RowQuery query, CancellationToken cancellationToken)
+    {
+        const int batchSize = 500;
+        var count = 0L;
+        var offset = query.Offset;
+        while (true)
+        {
+            var rows = await ListAsync(table, query with { Limit = batchSize, Offset = offset }, cancellationToken);
+            count = checked(count + rows.Count);
+            if (rows.Count < batchSize) return count;
+            offset = checked(offset + rows.Count);
+        }
+    }
     Task CommitAsync(IReadOnlyList<RowWrite> writes, IReadOnlyList<(string Table, string Id, RowDocument? Document)> reads, CancellationToken cancellationToken);
 }
 
@@ -49,15 +65,17 @@ public sealed class AppwriteRowDriver(HttpClient client, AppwriteConnection conn
     public async Task<IReadOnlyList<RowDocument>> ListAsync(string table, RowQuery query, CancellationToken cancellationToken)
     {
         OwnerSchema.For(owner, table);
+        if (query.Offset < 0) throw new ArgumentOutOfRangeException(nameof(query));
         var limit = Math.Clamp(query.Limit, 1, 500);
         var result = new List<RowDocument>();
-        var baseQueries = Queries(query);
+        var baseQueries = Queries(query, includeOrder: true);
         string? cursor = null;
         while (result.Count < limit)
         {
             var pageSize = Math.Min(100, limit - result.Count);
             var queries = new List<string>(baseQueries) { Query("limit", values: [pageSize]) };
             if (cursor is not null) queries.Add(Query("cursorAfter", values: [cursor]));
+            else if (query.Offset > 0) queries.Add(Query("offset", values: [query.Offset]));
             var response = await SendAsync(HttpMethod.Get, RowsPath(table) + QueryString(queries) + "&total=false", null, cancellationToken);
             var rows = response?["rows"]?.AsArray() ?? throw new ServiceException("DB_UNAVAILABLE");
             foreach (var raw in rows) result.Add(Document(table, raw!.AsObject()));
@@ -71,8 +89,13 @@ public sealed class AppwriteRowDriver(HttpClient client, AppwriteConnection conn
 
     public async Task<long> CountAsync(string table, IReadOnlyDictionary<string, object?> where, CancellationToken cancellationToken)
     {
+        return await CountAsync(table, new RowQuery(Where: where), cancellationToken);
+    }
+
+    public async Task<long> CountAsync(string table, RowQuery query, CancellationToken cancellationToken)
+    {
         OwnerSchema.For(owner, table);
-        var queries = Queries(new(Where: where)).Where(q => !q.Contains("\"$id\"", StringComparison.Ordinal)).ToList();
+        var queries = Queries(query with { OrderBy = null }, includeOrder: false);
         queries.Add(Query("limit", values: [1]));
         var response = await SendAsync(HttpMethod.Get, RowsPath(table) + QueryString(queries), null, cancellationToken);
         return response?["total"]?.GetValue<long>() ?? throw new ServiceException("DB_UNAVAILABLE");
@@ -137,7 +160,7 @@ public sealed class AppwriteRowDriver(HttpClient client, AppwriteConnection conn
     private string RowsPath(string table) => "/tablesdb/" + CanonicalWire.Encode(connection.DatabaseId) + "/tables/" + CanonicalWire.Encode(table) + "/rows";
     private RowDocument Document(string table, JsonObject raw) => new(raw["$id"]!.GetValue<string>(), OwnerSchema.Normalize(owner, table, raw), raw["$updatedAt"]?.GetValue<string>());
 
-    private static List<string> Queries(RowQuery query)
+    private static List<string> Queries(RowQuery query, bool includeOrder)
     {
         var queries = new List<string>();
         foreach (var (key, value) in query.Where ?? new Dictionary<string, object?>())
@@ -149,8 +172,13 @@ public sealed class AppwriteRowDriver(HttpClient client, AppwriteConnection conn
         }
         foreach (var (key, value) in query.GreaterThanEqual ?? new Dictionary<string, object?>()) queries.Add(Query("greaterThanEqual", key, [value]));
         foreach (var (key, value) in query.LessThan ?? new Dictionary<string, object?>()) queries.Add(Query("lessThan", key, [value]));
-        foreach (var order in query.OrderBy ?? []) queries.Add(Query(order.Descending ? "orderDesc" : "orderAsc", order.Column));
-        queries.Add(Query("orderAsc", "$id"));
+        foreach (var (key, value) in query.LessThanEqual ?? new Dictionary<string, object?>()) queries.Add(Query("lessThanEqual", key, [value]));
+        if (includeOrder)
+        {
+            if (query.Select is { Count: > 0 }) queries.Add(Query("select", values: query.Select.Cast<object?>().ToArray()));
+            foreach (var order in query.OrderBy ?? []) queries.Add(Query(order.Descending ? "orderDesc" : "orderAsc", order.Column));
+            queries.Add(Query("orderAsc", "$id"));
+        }
         return queries;
     }
 

@@ -1,0 +1,18 @@
+@learningBaseUrl = https://learning.example.invalid
+@userJwt = appwrite-user-jwt
+
+### List unresolved mistakes for a course
+GET {{learningBaseUrl}}/v1/mistakes?courseId=vi_en&limit=20
+Authorization: Bearer {{userJwt}}
+
+### List activity progress filtered by activity kind
+GET {{learningBaseUrl}}/v1/activities?courseId=vi_en&kind=RADIO&limit=20
+Authorization: Bearer {{userJwt}}
+
+### List due vocabulary across enrolled courses
+GET {{learningBaseUrl}}/v1/review?limit=20
+Authorization: Bearer {{userJwt}}
+
+### List saved vocabulary alphabetically for a course
+GET {{learningBaseUrl}}/v1/words?courseId=vi_en&sort=ALPHABETICAL&limit=20
+Authorization: Bearer {{userJwt}}

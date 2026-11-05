@@ -1,0 +1,21 @@
+[Unit]
+Description=CocEnglish .NET staging containers
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/srv/cocenglish
+# Paths only. Appwrite/HMAC secrets belong in the separately mounted secret files.
+EnvironmentFile=/etc/cocenglish/dotnet-staging.env
+ExecStartPre=/usr/bin/test -r ${COC_IMAGES_ENV_FILE}
+ExecStartPre=/usr/bin/bash ${COC_RELEASE_DIR}/backend-dotnet/tools/check-staging-config.sh ${COC_IMAGES_ENV_FILE}
+ExecStart=/usr/bin/docker compose --project-name cocenglish-dotnet-staging --env-file ${COC_IMAGES_ENV_FILE} -f ${COC_RELEASE_DIR}/backend-dotnet/docker/compose.staging.yaml -f ${COC_RELEASE_DIR}/backend-dotnet/docker/compose.staging.secrets.yaml up --detach --wait --wait-timeout 120 --no-build --pull never
+ExecStop=/usr/bin/docker compose --project-name cocenglish-dotnet-staging --env-file ${COC_IMAGES_ENV_FILE} -f ${COC_RELEASE_DIR}/backend-dotnet/docker/compose.staging.yaml -f ${COC_RELEASE_DIR}/backend-dotnet/docker/compose.staging.secrets.yaml stop --timeout 45
+TimeoutStartSec=180
+TimeoutStopSec=90
+
+[Install]
+WantedBy=multi-user.target

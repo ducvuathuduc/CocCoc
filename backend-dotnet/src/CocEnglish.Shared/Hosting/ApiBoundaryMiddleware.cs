@@ -36,24 +36,25 @@ public sealed class ApiBoundaryMiddleware(RequestDelegate next)
         }
         try
         {
+            var rawTarget = context.Features.Get<IHttpRequestFeature>()?.RawTarget;
+            if (string.IsNullOrEmpty(rawTarget)) rawTarget = context.Request.Path.ToString();
+            var question = rawTarget.IndexOf('?');
+            var rawPath = question >= 0 ? rawTarget[..question] : rawTarget;
             if (HttpMethods.IsOptions(context.Request.Method)) { context.Response.StatusCode = 204; return; }
-            if (HttpMethods.IsGet(context.Request.Method) && context.Request.Path.Value == "/health") { await next(context); return; }
+            if (HttpMethods.IsGet(context.Request.Method) && rawPath == "/health") { await next(context); return; }
             var operationId = context.GetEndpoint()?.Metadata.GetMetadata<ContractOperationAttribute>()?.OperationId;
             var contract = RouteCatalog.All.FirstOrDefault(o => o.OperationId == operationId);
             var limit = operationId is "createAssessment" or "submitVoiceTurn" ? 750000 : 64000;
             var raw = await ReadBody(context.Request, limit, context.RequestAborted);
             if ((HttpMethods.IsGet(context.Request.Method) || HttpMethods.IsHead(context.Request.Method)) && raw.Length > 0)
                 throw new ServiceException("VALIDATION_ERROR", new() { ["field"] = "body" });
-            if (context.Request.Path.Value?.StartsWith("/internal/", StringComparison.Ordinal) == true || context.Request.Path.Value == "/ready")
+            if (rawPath.StartsWith("/internal/", StringComparison.Ordinal) || rawPath == "/ready")
             {
-                var rawTarget = context.Features.Get<IHttpRequestFeature>()?.RawTarget;
-                if (string.IsNullOrEmpty(rawTarget)) rawTarget = context.Request.Path.ToString();
-                var question = rawTarget.IndexOf('?');
-                var path = question >= 0 ? rawTarget[..question] : rawTarget;
-                var allowedSenders = context.Request.Path.Value == "/ready" ? ReadySenders : new HashSet<string>();
+                var allowedSenders = rawPath == "/ready" ? ReadySenders :
+                    context.GetEndpoint()?.Metadata.GetMetadata<ServiceSendersAttribute>()?.Senders ?? new HashSet<string>();
                 var sender = ServiceHmac.Verify(settings.Keyring,
                     new(context.Request.Headers["X-Service-Key-Id"].ToString(), context.Request.Headers["X-Service-Timestamp"].ToString(), context.Request.Headers["X-Service-Signature"].ToString()),
-                    context.Request.Method, path, context.Request.QueryString.Value ?? "", (contract?.QueryKeys ?? []).ToHashSet(StringComparer.Ordinal), raw,
+                    context.Request.Method, rawPath, context.Request.QueryString.Value ?? "", (contract?.QueryKeys ?? []).ToHashSet(StringComparer.Ordinal), raw,
                     clock.GetUtcNow().ToUnixTimeSeconds(), allowedSenders);
                 context.Items["ServiceSender"] = sender;
             }
@@ -65,10 +66,10 @@ public sealed class ApiBoundaryMiddleware(RequestDelegate next)
                 if (!settings.Admitted) throw new ServiceException("SERVICE_NOT_CONFIGURED");
             }
             // ASP.NET routes accept case and trailing-slash aliases; the existing router does not.
-            if (contract is not null && !MatchesPath(contract.Path, context.Request.Path)) throw new ServiceException("NOT_FOUND");
+            if (contract is not null && !MatchesPath(contract.Path, rawPath)) throw new ServiceException("NOT_FOUND");
             if (operationId is null)
             {
-                var known = RouteCatalog.All.Any(o => o.Owner == settings.Service && o.Method == context.Request.Method && MatchesPath(o.Path, context.Request.Path));
+                var known = RouteCatalog.All.Any(o => o.Owner == settings.Service && o.Method == context.Request.Method && MatchesPath(o.Path, rawPath));
                 throw new ServiceException(known ? "SERVICE_NOT_CONFIGURED" : "NOT_FOUND");
             }
             if (!HttpMethods.IsGet(context.Request.Method) && !HttpMethods.IsHead(context.Request.Method))
@@ -82,17 +83,28 @@ public sealed class ApiBoundaryMiddleware(RequestDelegate next)
         catch (Exception error)
         {
             var failure = error as ServiceException ?? new ServiceException("INTERNAL_ERROR");
+            context.Items[RequestTelemetryMiddleware.ErrorCodeItemKey] = failure.Code;
             context.Response.StatusCode = failure.StatusCode;
             if (failure.RetryAfterSeconds is { } retry) context.Response.Headers.RetryAfter = retry.ToString(System.Globalization.CultureInfo.InvariantCulture);
             await context.Response.WriteAsJsonAsync(failure.Envelope(requestId), cancellationToken: context.RequestAborted);
         }
     }
 
-    private static bool MatchesPath(string template, PathString path)
+    private static bool MatchesPath(string template, string path)
     {
         var expected = template.Split('/');
-        var actual = path.ToString().Split('/');
-        return expected.Length == actual.Length && expected.Zip(actual).All(p => p.First.StartsWith('{') || p.First == p.Second);
+        var actual = path.Split('/');
+        if (expected.Length != actual.Length) return false;
+        for (var i = 0; i < expected.Length; i++)
+        {
+            if (!expected[i].StartsWith('{')) { if (expected[i] != actual[i]) return false; continue; }
+            try
+            {
+                if (!Regex.IsMatch(CanonicalWire.Decode(actual[i]), "^[A-Za-z0-9][A-Za-z0-9_.-]{0,35}$", RegexOptions.CultureInvariant)) return false;
+            }
+            catch (ServiceException) { return false; }
+        }
+        return true;
     }
 
     private static async Task<string> ReadBody(HttpRequest request, int limit, CancellationToken cancellationToken)

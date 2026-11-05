@@ -1,0 +1,234 @@
+{
+  "scenarioSha256": "6455863e25b739ce4b0ca994aa2c297838474b53f9c337365790b38060880904",
+  "providerRequests": [
+    {
+      "method": "POST",
+      "url": "https://westus2.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed",
+      "contentType": "audio/wav; codecs=audio/pcm; samplerate=16000",
+      "bodyLength": 32044,
+      "pronunciationAssessment": {
+        "ReferenceText": "I like English.",
+        "GradingSystem": "HundredMark",
+        "Granularity": "Phoneme",
+        "Dimension": "Comprehensive",
+        "EnableMiscue": true,
+        "EnableProsodyAssessment": true
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://api.assemblyai.com/v2/upload",
+      "contentType": "application/octet-stream",
+      "bodyLength": 32044,
+      "authorizationScheme": "raw"
+    },
+    {
+      "method": "POST",
+      "url": "https://api.assemblyai.com/v2/transcript",
+      "contentType": "application/json",
+      "bodyLength": 95,
+      "authorizationScheme": "raw",
+      "jsonBody": {
+        "audio_url": "https://cdn.assemblyai.com/upload/test",
+        "language_code": "en_us",
+        "punctuate": true
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://api.assemblyai.com/v2/transcript/transcript-test",
+      "contentType": null,
+      "bodyLength": 0,
+      "authorizationScheme": "raw"
+    }
+  ],
+  "results": {
+    "first": {
+      "status": 202,
+      "body": {
+        "jobId": "78787878-7878-4878-8878-787878787878",
+        "status": "SUCCEEDED",
+        "transcript": "I like English.",
+        "accuracy": null,
+        "fluency": null,
+        "completeness": null,
+        "prosody": null,
+        "words": [],
+        "scorer": null,
+        "scoreVersion": null,
+        "unavailableReason": "AZURE_FAILED",
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "NULL_UNAVAILABLE",
+        "locale": "en-US",
+        "referenceHash": "d973481310c32cb5b257eb2d9e382f0b3790a2de2d8fb822b12ec91d141da4cf",
+        "provider": "assemblyai",
+        "modelVersion": null,
+        "miscues": []
+      }
+    },
+    "replay": {
+      "status": 202,
+      "body": {
+        "jobId": "78787878-7878-4878-8878-787878787878",
+        "status": "SUCCEEDED",
+        "transcript": "I like English.",
+        "accuracy": null,
+        "fluency": null,
+        "completeness": null,
+        "prosody": null,
+        "words": [],
+        "scorer": null,
+        "scoreVersion": null,
+        "unavailableReason": "AZURE_FAILED",
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "NULL_UNAVAILABLE",
+        "locale": "en-US",
+        "referenceHash": "d973481310c32cb5b257eb2d9e382f0b3790a2de2d8fb822b12ec91d141da4cf",
+        "provider": "assemblyai",
+        "modelVersion": null,
+        "miscues": []
+      }
+    },
+    "read": {
+      "status": 200,
+      "body": {
+        "jobId": "78787878-7878-4878-8878-787878787878",
+        "status": "SUCCEEDED",
+        "transcript": "I like English.",
+        "accuracy": null,
+        "fluency": null,
+        "completeness": null,
+        "prosody": null,
+        "words": [],
+        "scorer": null,
+        "scoreVersion": null,
+        "unavailableReason": "AZURE_FAILED",
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "NULL_UNAVAILABLE",
+        "locale": "en-US",
+        "referenceHash": "d973481310c32cb5b257eb2d9e382f0b3790a2de2d8fb822b12ec91d141da4cf",
+        "provider": "assemblyai",
+        "modelVersion": null,
+        "miscues": []
+      }
+    }
+  },
+  "tables": {
+    "a_jobs": [
+      {
+        "id": "0fd267992978c95a39f68d027e7fcb68",
+        "row": {
+          "userId": "assembly-parity-user",
+          "jobId": "78787878-7878-4878-8878-787878787878",
+          "kind": "ASSESSMENT",
+          "status": "SUCCEEDED",
+          "referenceId": "exercise1",
+          "locale": "en-US",
+          "inputHash": "643f8a8dc8bd9c19225afffad2becfec5426180b3749cb208abdf1a6c8354efc",
+          "audioFileId": null,
+          "leaseUntil": null,
+          "attempt": 1,
+          "dispatchState": "NOT_SENT",
+          "reservedSeconds": 0,
+          "chargedSeconds": 0,
+          "resultJson": {
+            "jobId": "78787878-7878-4878-8878-787878787878",
+            "status": "SUCCEEDED",
+            "transcript": "I like English.",
+            "accuracy": null,
+            "fluency": null,
+            "completeness": null,
+            "prosody": null,
+            "words": [],
+            "scorer": null,
+            "scoreVersion": null,
+            "unavailableReason": "AZURE_FAILED",
+            "expiresAt": "2026-11-04T12:00:00.000Z",
+            "scoreState": "NULL_UNAVAILABLE",
+            "locale": "en-US",
+            "referenceHash": "d973481310c32cb5b257eb2d9e382f0b3790a2de2d8fb822b12ec91d141da4cf",
+            "provider": "assemblyai",
+            "modelVersion": null,
+            "miscues": []
+          },
+          "expiresAt": "2026-11-04T12:00:00.000Z",
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_receipts": [
+      {
+        "id": "f7235d4902f7a3f3178918ce5812003e",
+        "row": {
+          "userId": "assembly-parity-user",
+          "operation": "createAssessment",
+          "key": "89898989-8989-4898-8898-898989898989",
+          "bodyHash": "db5f99ec386ecafdd52b7eaa9519f5b98ed0b8c6acdf8018b1589f03d9ca06fb",
+          "statusCode": 202,
+          "responseJson": {
+            "jobId": "78787878-7878-4878-8878-787878787878",
+            "status": "SUCCEEDED",
+            "transcript": "I like English.",
+            "accuracy": null,
+            "fluency": null,
+            "completeness": null,
+            "prosody": null,
+            "words": [],
+            "scorer": null,
+            "scoreVersion": null,
+            "unavailableReason": "AZURE_FAILED",
+            "expiresAt": "2026-11-04T12:00:00.000Z",
+            "scoreState": "NULL_UNAVAILABLE",
+            "locale": "en-US",
+            "referenceHash": "d973481310c32cb5b257eb2d9e382f0b3790a2de2d8fb822b12ec91d141da4cf",
+            "provider": "assemblyai",
+            "modelVersion": null,
+            "miscues": []
+          },
+          "expiresAt": "2026-12-03T12:00:00.000Z",
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_usage": [
+      {
+        "id": "95a6b9c336d21c1fb79ccb8ae0c474a8",
+        "row": {
+          "userId": "system-speech-azure",
+          "utcDay": "2026-11-03",
+          "liveReservedSeconds": 0,
+          "liveUsedSeconds": 0,
+          "liveGrants": 0,
+          "textRequests": 1,
+          "recordedSpeechSeconds": 1,
+          "recordedReservedSeconds": 0,
+          "reservationIdsJson": [],
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      },
+      {
+        "id": "f9113f7022fa23df4a5d625a8320f2ca",
+        "row": {
+          "userId": "assembly-parity-user",
+          "utcDay": "2026-11-03",
+          "liveReservedSeconds": 0,
+          "liveUsedSeconds": 0,
+          "liveGrants": 0,
+          "textRequests": 0,
+          "recordedSpeechSeconds": 1,
+          "recordedReservedSeconds": 0,
+          "reservationIdsJson": [],
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ]
+  }
+}

@@ -1,12 +1,20 @@
 namespace CocEnglish.Contracts;
 
+/// <summary>Server entitlement projection with effective premium capabilities at read time.</summary>
+public sealed record EntitlementResponse(string Plan, string Source, string Status, DateTimeOffset? ExpiresAt, bool AutoRenew,
+    string? FamilyGroupId, bool UnlimitedEnergy, bool AdFree, bool Conversations, long Revision, DateTimeOffset AsOf);
+
 /// <summary>Private profile projection matching the existing Profile schema.</summary>
 public sealed record ProfileResponse(string UserId, string Nickname, string? AvatarId, bool PublicOptIn, int DailyGoal,
     string LearningZone, string? PendingZone, DateTimeOffset? ZoneEffectiveAt, long Revision, IReadOnlyList<string> AchievementIds);
 
 /// <summary>Server-owned reward totals and optional completion-credit status.</summary>
 public sealed record RewardsResponse(string? CompletionId, string Status, long StudyXp, long LeagueXp, long Gems, long FreezeSlots,
-    long CurrentStreak, long? AwardXp, long Revision, DateTimeOffset AsOf);
+    long CurrentStreak, long? AwardXp, long Revision, DateTimeOffset AsOf,
+    [property: System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)] QuestChestResponse? Chest = null);
+
+/// <summary>Versioned quest chest outcome persisted through its opaque operation identity.</summary>
+public sealed record QuestChestResponse(string ReceiptId, IReadOnlyList<string> Tiers, long Gems);
 
 /// <summary>Persisted activity for one immutable server learning-day key.</summary>
 public sealed record LearningStatsDayResponse(string Day, long StudyXp, long CompletedLessons, long ReviewSessions,

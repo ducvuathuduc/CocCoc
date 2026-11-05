@@ -1,0 +1,13 @@
+@learningBaseUrl = https://learning.example.invalid
+@serviceKeyId = progress-service-key-id
+@serviceTimestamp = unix-timestamp-seconds
+@serviceSignature = hmac-sha256-for-exact-method-path-query-and-empty-body
+
+### Signed Learning outbox watermark (before must be RFC 3339 date-time)
+GET {{learningBaseUrl}}/internal/outbox-watermark?before=2026-11-03T12%3A00%3A00.000Z
+X-Service-Key-Id: {{serviceKeyId}}
+X-Service-Timestamp: {{serviceTimestamp}}
+X-Service-Signature: {{serviceSignature}}
+
+# The signature must use sender "progress" or "maintainer", include the exact query string,
+# and hash an empty request body. Replace the placeholders with values from the test environment.

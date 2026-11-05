@@ -8,6 +8,25 @@ namespace CocEnglish.Shared.Tests;
 
 public sealed class AppwriteRowDriverTests
 {
+    [Fact]
+    public async Task ListAsync_UsesOffsetOnlyOnFirstPageThenCursor()
+    {
+        var calls = 0;
+        using var handler = new Handler((request, _) => {
+            var query = Uri.UnescapeDataString(request.RequestUri!.Query);
+            if (++calls == 1)
+            {
+                Assert.Contains("\"method\":\"offset\",\"values\":[150]", query);
+                return Task.FromResult(Response(200, new JsonObject { ["rows"] = new JsonArray(Enumerable.Range(0, 100).Select(i => (JsonNode)new JsonObject { ["$id"] = "row-" + i }).ToArray()) }.ToJsonString()));
+            }
+            Assert.DoesNotContain("\"method\":\"offset\"", query);
+            Assert.Contains("\"method\":\"cursorAfter\",\"values\":[\"row-99\"]", query);
+            return Task.FromResult(Response(200, "{\"rows\":[{\"$id\":\"last\"}]}"));
+        });
+        using var client = new HttpClient(handler);
+        var rows = await new AppwriteRowDriver(client, Connection, "learning").ListAsync("l_courses", new(Limit: 101, Offset: 150), CancellationToken.None);
+        Assert.Equal(101, rows.Count); Assert.Equal("last", rows[^1].Id); Assert.Equal(2, calls);
+    }
     private static readonly AppwriteConnection Connection = new(new("https://appwrite.test/v1"), "local-project", "private-test-key");
 
     [Fact]
@@ -63,6 +82,47 @@ public sealed class AppwriteRowDriverTests
         Assert.Equal(101, rows.Count);
         Assert.Equal("last", rows[^1].Id);
         Assert.Equal(2, calls);
+    }
+
+    [Fact]
+    public async Task CountAsync_AppliesStatusSetAndCutoffWithoutAnOrderingLimit()
+    {
+        using var handler = new Handler((request, _) =>
+        {
+            var query = Uri.UnescapeDataString(request.RequestUri!.Query);
+            Assert.Contains("\"method\":\"equal\",\"attribute\":\"status\",\"values\":[\"PENDING\",\"LEASED\",\"DEAD\"]", query);
+            Assert.Contains("\"method\":\"lessThan\",\"attribute\":\"occurredAt\",\"values\":[\"2026-11-03T12:00:00.000Z\"]", query);
+            Assert.Contains("\"method\":\"limit\",\"values\":[1]", query);
+            Assert.DoesNotContain("\"method\":\"orderAsc\"", query);
+            return Task.FromResult(Response(200, "{\"total\":3,\"rows\":[]}"));
+        });
+        using var client = new HttpClient(handler);
+
+        var count = await new AppwriteRowDriver(client, Connection, "learning").CountAsync("l_outbox", new RowQuery(
+            LessThan: new Dictionary<string, object?> { ["occurredAt"] = "2026-11-03T12:00:00.000Z" },
+            AnyOf: new Dictionary<string, string[]> { ["status"] = ["PENDING", "LEASED", "DEAD"] }), CancellationToken.None);
+
+        Assert.Equal(3, count);
+        Assert.Single(handler.Calls);
+    }
+
+    [Fact]
+    public async Task ListAsync_AppliesInclusiveDueAtCutoff()
+    {
+        using var handler = new Handler((request, _) =>
+        {
+            var query = Uri.UnescapeDataString(request.RequestUri!.Query);
+            Assert.Contains("\"method\":\"lessThanEqual\",\"attribute\":\"dueAt\",\"values\":[\"2026-11-03T12:00:00.000Z\"]", query);
+            Assert.Contains("\"method\":\"equal\",\"attribute\":\"userId\",\"values\":[\"alice\"]", query);
+            return Task.FromResult(Response(200, "{\"rows\":[{\"$id\":\"due\",\"userId\":\"alice\"}]}"));
+        });
+        using var client = new HttpClient(handler);
+
+        var rows = await new AppwriteRowDriver(client, Connection, "learning").ListAsync("l_review_items", new RowQuery(
+            Where: new Dictionary<string, object?> { ["userId"] = "alice" },
+            LessThanEqual: new Dictionary<string, object?> { ["dueAt"] = "2026-11-03T12:00:00.000Z" }), CancellationToken.None);
+
+        Assert.Equal("due", Assert.Single(rows).Id);
     }
 
     [Fact]

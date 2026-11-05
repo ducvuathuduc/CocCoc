@@ -28,13 +28,7 @@ public sealed class ProgressWrites
             profile["deletedAt"] = tx.NowIso;
             tx.Put("p_profiles", profileId, profile);
         }
-        var eventId = Guid.NewGuid().ToString();
-        tx.Put("p_outbox", CanonicalWire.RowId("p_outbox", eventId), new()
-        {
-            ["eventId"] = eventId, ["type"] = "account.deleted.v1", ["schemaVersion"] = 1, ["aggregateId"] = userId,
-            ["occurredAt"] = tx.NowIso, ["payloadJson"] = CanonicalWire.Stringify(new JsonObject { ["userId"] = userId, ["requestId"] = requestId }),
-            ["attempt"] = 0, ["nextAttemptAt"] = tx.NowIso, ["leaseOwner"] = null, ["leaseUntil"] = null, ["status"] = "PENDING", ["ackAt"] = null
-        });
+        EnqueueEvent(tx, "account.deleted.v1", userId, new() { ["userId"] = userId, ["requestId"] = requestId });
         return new(requestId, "REQUESTED", tx.Now);
     }
 
@@ -94,12 +88,7 @@ public sealed class ProgressWrites
         };
         tx.Put("p_profiles", profileId, profile);
         var rewardsId = CanonicalWire.RowId("p_rewards", userId);
-        var rewards = await tx.GetAsync("p_rewards", rewardsId, ct) ?? new JsonObject
-        {
-            ["userId"] = userId, ["studyXp"] = 0, ["leagueXpLifetime"] = 0, ["gems"] = 0, ["freezeSlots"] = 0,
-            ["currentStreak"] = 0, ["bestStreak"] = 0, ["streakStartDay"] = null, ["lastQualifiedDay"] = null,
-            ["lostStreak"] = 0, ["lostStreakDay"] = null, ["streakGoal"] = 0, ["streakGoalStartDay"] = null
-        };
+        var rewards = await tx.GetAsync("p_rewards", rewardsId, ct) ?? ProgressEconomy.EmptyRewards(userId);
         rewards["gems"] = rewards.Number("gems") + 20;
         tx.Put("p_rewards", rewardsId, rewards);
         var operation = CanonicalWire.RowId("operation", "initialize", userId);
@@ -170,6 +159,17 @@ public sealed class ProgressWrites
         ["soundEffects"] = true, ["haptics"] = true, ["motivationalMessages"] = true, ["listeningExercises"] = true,
         ["speakingExercises"] = true, ["friendStreakInvites"] = true
     };
+
+    internal static void EnqueueEvent(OwnerSession tx, string type, string userId, JsonObject payload)
+    {
+        var eventId = Guid.NewGuid().ToString();
+        tx.Put("p_outbox", CanonicalWire.RowId("p_outbox", eventId), new()
+        {
+            ["eventId"] = eventId, ["type"] = type, ["schemaVersion"] = 1, ["aggregateId"] = userId,
+            ["occurredAt"] = tx.NowIso, ["payloadJson"] = CanonicalWire.Stringify(payload), ["attempt"] = 0,
+            ["nextAttemptAt"] = tx.NowIso, ["leaseOwner"] = null, ["leaseUntil"] = null, ["status"] = "PENDING", ["ackAt"] = null
+        });
+    }
 
     internal static PreferencesResponse PreferencesView(JsonObject row, DateTimeOffset now) => new(
         System.Text.Json.JsonSerializer.Deserialize<string[]>(row.Text("notificationsOffJson") ?? "[]")!,

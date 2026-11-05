@@ -1,0 +1,291 @@
+{
+  "scenarioSha256": "8d3d4309763ddb12fed2a2f720e5cab41f4945576a99f506807eb3b2782678e9",
+  "providerRequest": {
+    "method": "POST",
+    "url": "https://westus2.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed",
+    "contentType": "audio/wav; codecs=audio/pcm; samplerate=16000",
+    "bodyLength": 32044,
+    "pronunciationAssessment": {
+      "ReferenceText": "I like learning English.",
+      "GradingSystem": "HundredMark",
+      "Granularity": "Phoneme",
+      "Dimension": "Comprehensive",
+      "EnableMiscue": true,
+      "EnableProsodyAssessment": true
+    }
+  },
+  "results": {
+    "first": {
+      "status": 202,
+      "body": {
+        "jobId": "23232323-2323-4232-8232-232323232323",
+        "status": "SUCCEEDED",
+        "transcript": "I like learning English.",
+        "accuracy": 100,
+        "fluency": 82,
+        "completeness": 96,
+        "prosody": 74,
+        "words": [
+          {
+            "word": "learning",
+            "accuracy": 91,
+            "errorType": "Mispronunciation",
+            "phonemes": [
+              {
+                "phoneme": "l",
+                "accuracy": 88
+              }
+            ]
+          }
+        ],
+        "scorer": "azure-pronunciation-assessment",
+        "scoreVersion": "azure-rest-v1-hundredmark",
+        "unavailableReason": null,
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "VALID",
+        "locale": "en-US",
+        "referenceHash": "26f6fd4b5a26130894f5d7bf656ee2fa46e142397e119c33decfb146f038db02",
+        "provider": "azure",
+        "modelVersion": "azure-rest-v1-hundredmark",
+        "miscues": [
+          {
+            "word": "learning",
+            "kind": "mispronunciation"
+          }
+        ]
+      }
+    },
+    "replay": {
+      "status": 202,
+      "body": {
+        "jobId": "23232323-2323-4232-8232-232323232323",
+        "status": "SUCCEEDED",
+        "transcript": "I like learning English.",
+        "accuracy": 100,
+        "fluency": 82,
+        "completeness": 96,
+        "prosody": 74,
+        "words": [
+          {
+            "word": "learning",
+            "accuracy": 91,
+            "errorType": "Mispronunciation",
+            "phonemes": [
+              {
+                "phoneme": "l",
+                "accuracy": 88
+              }
+            ]
+          }
+        ],
+        "scorer": "azure-pronunciation-assessment",
+        "scoreVersion": "azure-rest-v1-hundredmark",
+        "unavailableReason": null,
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "VALID",
+        "locale": "en-US",
+        "referenceHash": "26f6fd4b5a26130894f5d7bf656ee2fa46e142397e119c33decfb146f038db02",
+        "provider": "azure",
+        "modelVersion": "azure-rest-v1-hundredmark",
+        "miscues": [
+          {
+            "word": "learning",
+            "kind": "mispronunciation"
+          }
+        ]
+      }
+    },
+    "read": {
+      "status": 200,
+      "body": {
+        "jobId": "23232323-2323-4232-8232-232323232323",
+        "status": "EXPIRED",
+        "transcript": "I like learning English.",
+        "accuracy": 100,
+        "fluency": 82,
+        "completeness": 96,
+        "prosody": 74,
+        "words": [
+          {
+            "word": "learning",
+            "accuracy": 91,
+            "errorType": "Mispronunciation",
+            "phonemes": [
+              {
+                "phoneme": "l",
+                "accuracy": 88
+              }
+            ]
+          }
+        ],
+        "scorer": "azure-pronunciation-assessment",
+        "scoreVersion": "azure-rest-v1-hundredmark",
+        "unavailableReason": null,
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "VALID",
+        "locale": "en-US",
+        "referenceHash": "26f6fd4b5a26130894f5d7bf656ee2fa46e142397e119c33decfb146f038db02",
+        "provider": "azure",
+        "modelVersion": "azure-rest-v1-hundredmark",
+        "miscues": [
+          {
+            "word": "learning",
+            "kind": "mispronunciation"
+          }
+        ]
+      }
+    }
+  },
+  "tables": {
+    "a_jobs": [
+      {
+        "id": "51ae900303756b0e625751aa9c2a46ab",
+        "row": {
+          "userId": "speech-parity-user",
+          "jobId": "23232323-2323-4232-8232-232323232323",
+          "kind": "ASSESSMENT",
+          "status": "SUCCEEDED",
+          "referenceId": "exercise1",
+          "locale": "en-US",
+          "inputHash": "643f8a8dc8bd9c19225afffad2becfec5426180b3749cb208abdf1a6c8354efc",
+          "audioFileId": null,
+          "leaseUntil": null,
+          "attempt": 1,
+          "dispatchState": "NOT_SENT",
+          "reservedSeconds": 0,
+          "chargedSeconds": 0,
+          "resultJson": {
+            "jobId": "23232323-2323-4232-8232-232323232323",
+            "status": "SUCCEEDED",
+            "transcript": "I like learning English.",
+            "accuracy": 100,
+            "fluency": 82,
+            "completeness": 96,
+            "prosody": 74,
+            "words": [
+              {
+                "word": "learning",
+                "accuracy": 91,
+                "errorType": "Mispronunciation",
+                "phonemes": [
+                  {
+                    "phoneme": "l",
+                    "accuracy": 88
+                  }
+                ]
+              }
+            ],
+            "scorer": "azure-pronunciation-assessment",
+            "scoreVersion": "azure-rest-v1-hundredmark",
+            "unavailableReason": null,
+            "expiresAt": "2026-11-04T12:00:00.000Z",
+            "scoreState": "VALID",
+            "locale": "en-US",
+            "referenceHash": "26f6fd4b5a26130894f5d7bf656ee2fa46e142397e119c33decfb146f038db02",
+            "provider": "azure",
+            "modelVersion": "azure-rest-v1-hundredmark",
+            "miscues": [
+              {
+                "word": "learning",
+                "kind": "mispronunciation"
+              }
+            ]
+          },
+          "expiresAt": "2026-11-04T12:00:00.000Z",
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_receipts": [
+      {
+        "id": "b3ce91e02cc95e5d7e97f1877fde26c4",
+        "row": {
+          "userId": "speech-parity-user",
+          "operation": "createAssessment",
+          "key": "12121212-1212-4212-8212-121212121212",
+          "bodyHash": "67d68cd0ab58d7318fe2f8f564283d6f45323682f85ecdcb346047c7d136f7e3",
+          "statusCode": 202,
+          "responseJson": {
+            "jobId": "23232323-2323-4232-8232-232323232323",
+            "status": "SUCCEEDED",
+            "transcript": "I like learning English.",
+            "accuracy": 100,
+            "fluency": 82,
+            "completeness": 96,
+            "prosody": 74,
+            "words": [
+              {
+                "word": "learning",
+                "accuracy": 91,
+                "errorType": "Mispronunciation",
+                "phonemes": [
+                  {
+                    "phoneme": "l",
+                    "accuracy": 88
+                  }
+                ]
+              }
+            ],
+            "scorer": "azure-pronunciation-assessment",
+            "scoreVersion": "azure-rest-v1-hundredmark",
+            "unavailableReason": null,
+            "expiresAt": "2026-11-04T12:00:00.000Z",
+            "scoreState": "VALID",
+            "locale": "en-US",
+            "referenceHash": "26f6fd4b5a26130894f5d7bf656ee2fa46e142397e119c33decfb146f038db02",
+            "provider": "azure",
+            "modelVersion": "azure-rest-v1-hundredmark",
+            "miscues": [
+              {
+                "word": "learning",
+                "kind": "mispronunciation"
+              }
+            ]
+          },
+          "expiresAt": "2026-12-03T12:00:00.000Z",
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ],
+    "a_usage": [
+      {
+        "id": "6e12385b7effd9af1762dff5502e63d6",
+        "row": {
+          "userId": "speech-parity-user",
+          "utcDay": "2026-11-03",
+          "liveReservedSeconds": 0,
+          "liveUsedSeconds": 0,
+          "liveGrants": 0,
+          "textRequests": 0,
+          "recordedSpeechSeconds": 1,
+          "recordedReservedSeconds": 0,
+          "reservationIdsJson": [],
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      },
+      {
+        "id": "95a6b9c336d21c1fb79ccb8ae0c474a8",
+        "row": {
+          "userId": "system-speech-azure",
+          "utcDay": "2026-11-03",
+          "liveReservedSeconds": 0,
+          "liveUsedSeconds": 0,
+          "liveGrants": 0,
+          "textRequests": 1,
+          "recordedSpeechSeconds": 1,
+          "recordedReservedSeconds": 0,
+          "reservationIdsJson": [],
+          "revision": 0,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    ]
+  }
+}

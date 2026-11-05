@@ -1,0 +1,71 @@
+@baseUrl = http://localhost:5103
+@userJwt = replace-with-an-Appwrite-user-JWT
+@sessionId = 88888888-8888-4888-8888-888888888888
+@jobId = cccccccc-cccc-4ccc-8ccc-cccccccccccc
+@wavBase64 = UklGRiUAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQEAAAAA
+@audioSha256 = beef4a05db2f89df70b2f12475040fbc70d9204f1a6a38f2b7a6497dd54950f8
+
+### Read host capabilities (speech features remain disabled until provider/device gates pass)
+GET {{baseUrl}}/v1/ai/capabilities
+Authorization: Bearer {{userJwt}}
+
+### Request a TURN session (expected 503 AI_PROVIDER_UNAVAILABLE while the provider is disabled)
+POST {{baseUrl}}/v1/voice-sessions
+Authorization: Bearer {{userJwt}}
+Idempotency-Key: 77777777-7777-4777-8777-777777777777
+Content-Type: application/json
+
+{
+  "sessionId": "{{sessionId}}",
+  "scenarioId": "rp_cafe_order",
+  "mode": "TURN",
+  "level": "A1"
+}
+
+### Heartbeat an existing owner session
+POST {{baseUrl}}/v1/voice-sessions/{{sessionId}}/heartbeat
+Authorization: Bearer {{userJwt}}
+Content-Type: application/json
+
+{
+  "epoch": 0,
+  "elapsedSeconds": 10,
+  "turnCount": 1
+}
+
+### Close an existing owner session
+POST {{baseUrl}}/v1/voice-sessions/{{sessionId}}/close
+Authorization: Bearer {{userJwt}}
+
+### Submit a recorded turn (expected 404 for an unknown session, or 503 when a valid session has no provider)
+POST {{baseUrl}}/v1/voice-sessions/{{sessionId}}/turns
+Authorization: Bearer {{userJwt}}
+Idempotency-Key: 11111111-1111-4111-8111-111111111111
+Content-Type: application/json
+
+{
+  "turnId": "22222222-2222-4222-8222-222222222222",
+  "epoch": 0,
+  "wavBase64": "{{wavBase64}}",
+  "audioSha256": "{{audioSha256}}"
+}
+
+### Create a recorded assessment (returns null score while Azure is disabled; rotate jobId/key to submit again)
+POST {{baseUrl}}/v1/assessment-jobs
+Authorization: Bearer {{userJwt}}
+Idempotency-Key: 33333333-3333-4333-8333-333333333333
+Content-Type: application/json
+
+{
+  "jobId": "{{jobId}}",
+  "referenceExerciseId": "exercise1",
+  "lessonVersion": "v1",
+  "locale": "en-US",
+  "wavBase64": "{{wavBase64}}",
+  "audioSha256": "{{audioSha256}}",
+  "referenceText": "Could I have a coffee, please?"
+}
+
+### Read an owner assessment result
+GET {{baseUrl}}/v1/assessment-jobs/{{jobId}}
+Authorization: Bearer {{userJwt}}

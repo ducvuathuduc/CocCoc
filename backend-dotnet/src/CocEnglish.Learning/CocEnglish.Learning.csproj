@@ -1,3 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup><ProjectReference Include="../CocEnglish.Shared/CocEnglish.Shared.csproj" /></ItemGroup>
+  <ItemGroup><PackageReference Include="BouncyCastle.Cryptography" /></ItemGroup>
 </Project>

@@ -7,6 +7,7 @@ COPY appwrite/schema/foundation.json /src/appwrite/schema/foundation.json
 RUN dotnet restore CocEnglish.sln --locked-mode
 
 FROM build AS test
+COPY content/vi_en/dist/v2/ /src/content/vi_en/dist/v2/
 RUN dotnet test CocEnglish.sln --no-restore --configuration Release
 
 FROM build AS publish
@@ -16,9 +17,10 @@ RUN case "$SERVICE" in Progress|Learning|AI) ;; *) exit 2 ;; esac && \
     printf '#!/bin/sh\nexec dotnet /app/CocEnglish.%s.dll "$@"\n' "$SERVICE" > /out/entrypoint && chmod 755 /out/entrypoint
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0.12@sha256:0fa044f682cb7d93a5a90401a00c626c66f7b00b86922be9441f869eae039f80 AS runtime
+ARG BUILD_ID=local-scaffold
 WORKDIR /app
 COPY --from=publish /out/ ./
-ENV ASPNETCORE_URLS=http://+:8080 DOTNET_EnableDiagnostics=0
+ENV ASPNETCORE_URLS=http://+:8080 DOTNET_EnableDiagnostics=0 BUILD_ID=${BUILD_ID}
 USER app
 EXPOSE 8080
 ENTRYPOINT ["/app/entrypoint"]

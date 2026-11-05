@@ -4,11 +4,14 @@ using CocEnglish.Shared.Errors;
 using CocEnglish.Shared.Security;
 using System.Globalization;
 using System.Text.Json.Nodes;
+using CocEnglish.Progress.Domain;
+using static CocEnglish.Progress.Domain.ProgressCalendar;
 
 namespace CocEnglish.Progress.Application;
 
 public interface IProgressReads
 {
+    Task<EntitlementResponse> GetEntitlementAsync(string userId, CancellationToken ct);
     Task<ProfileResponse> GetMeAsync(string userId, CancellationToken ct);
     Task<RewardsResponse> GetRewardsAsync(string userId, string? completionId, CancellationToken ct);
     Task<LearningStatsResponse> GetLearningStatsAsync(string userId, CancellationToken ct);
@@ -18,6 +21,24 @@ public interface IProgressReads
 
 public sealed class ProgressReads(OwnerStore store) : IProgressReads
 {
+    public Task<EntitlementResponse> GetEntitlementAsync(string userId, CancellationToken ct) => store.TransactAsync(async (tx, token) =>
+    {
+        await RequireProfile(tx, userId, token);
+        var row = await tx.GetAsync("p_entitlements", CanonicalWire.RowId("p_entitlements", userId), token) ?? new JsonObject();
+        return EntitlementView(row, tx.Now);
+    }, ct);
+
+    internal static EntitlementResponse EntitlementView(JsonObject row, DateTimeOffset now)
+    {
+        var plan = row.Text("plan") ?? "FREE";
+        var status = row.Text("status") ?? "ACTIVE";
+        var expiryText = row.Text("expiresAt");
+        DateTimeOffset? expiry = expiryText is null ? null : DateTimeOffset.Parse(expiryText, CultureInfo.InvariantCulture);
+        var active = plan is "SUPER" or "MAX" && status is "ACTIVE" or "GRACE" or "CANCELED" && (expiry is null || expiry > now);
+        var lapsed = plan != "FREE" && !active && expiry is not null && expiry <= now;
+        return new EntitlementResponse(lapsed ? "FREE" : plan, row.Text("source") ?? "NONE", lapsed ? "EXPIRED" : status,
+            expiry, !lapsed && row.Flag("autoRenew"), row.Text("familyGroupId"), active, active, active && plan == "MAX", row.Number("revision"), now);
+    }
     public Task<PreferencesResponse> GetPreferencesAsync(string userId, CancellationToken ct) => store.TransactAsync(async (tx, token) =>
     {
         await RequireProfile(tx, userId, token);
@@ -29,20 +50,14 @@ public sealed class ProgressReads(OwnerStore store) : IProgressReads
     {
         var profile = await RequireProfile(tx, userId, token);
         var today = DayKey(ZonedDay(tx.Now, profile.Text("learningZone") ?? "UTC"));
-        var templates = new (string Id, string Period, long Target, long Gems)[]
-        {
-            ("daily_lessons", "DAY", 2, 5), ("daily_correct", "DAY", 15, 5),
-            ("daily_review", "DAY", 1, 5), ("monthly_active_days", "MONTH", 20, 0)
-        };
         var items = new List<QuestResponse>();
-        foreach (var template in templates)
+        foreach (var template in ProgressCatalog.Quests)
         {
             var periodKey = template.Period == "DAY" ? today : today[..7];
             var row = await tx.GetAsync("p_quests", CanonicalWire.RowId("p_quests", userId, template.Period, periodKey, template.Id), token) ?? new JsonObject();
             items.Add(new(template.Id, template.Period, periodKey, template.Target, row.Number("metricValue"), row.Flag("claimed"), template.Gems));
         }
-        var utcDate = DateOnly.FromDateTime(tx.Now.UtcDateTime);
-        var week = DayKey(utcDate.AddDays(-(((int)utcDate.DayOfWeek + 6) % 7)));
+        var week = LeagueWeek(tx.Now);
         var weekly = await tx.ListAsync("p_quests", new(Where: new Dictionary<string, object?>
             { ["userId"] = userId, ["period"] = "WEEK", ["periodKey"] = week }, Limit: 10), token);
         foreach (var document in weekly)
@@ -82,16 +97,21 @@ public sealed class ProgressReads(OwnerStore store) : IProgressReads
                 ledger = await tx.GetAsync("p_reward_ledger", CanonicalWire.RowId("p_reward_ledger", userId, completionId, kind), token);
                 if (ledger is not null) break;
             }
+        return RewardsView(tx.Now, profile.Text("learningZone") ?? "UTC", rewards, completionId, ledger);
+    }, ct);
+
+    internal static RewardsResponse RewardsView(DateTimeOffset now, string zone, JsonObject rewards, string? completionId = null, JsonObject? ledger = null)
+    {
         var shownStreak = 0L;
         if (rewards.Text("lastQualifiedDay") is { } last)
         {
-            var gap = ZonedDay(tx.Now, profile.Text("learningZone") ?? "UTC").DayNumber - Day(last).DayNumber;
+            var gap = ZonedDay(now, zone).DayNumber - Day(last).DayNumber;
             if (gap <= 1 || gap - 1 <= Math.Min(rewards.Number("freezeSlots"), 7)) shownStreak = rewards.Number("currentStreak");
         }
         return new RewardsResponse(completionId, completionId is null ? "credited" : ledger is null ? "pending" : ledger.Flag("capped") ? "capped" : "credited",
             rewards.Number("studyXp"), rewards.Number("leagueXpLifetime"), rewards.Number("gems"), rewards.Number("freezeSlots"), shownStreak,
-            ledger is null ? null : ledger.Number("studyXpDelta"), rewards.Number("revision"), tx.Now);
-    }, ct);
+            ledger is null ? null : ledger.Number("studyXpDelta"), rewards.Number("revision"), now);
+    }
 
     public Task<LearningStatsResponse> GetLearningStatsAsync(string userId, CancellationToken ct) => store.TransactAsync(async (tx, token) =>
     {
@@ -139,7 +159,4 @@ public sealed class ProgressReads(OwnerStore store) : IProgressReads
     }
 
     private static Dictionary<string, object?> User(string userId) => new() { ["userId"] = userId };
-    private static DateOnly Day(string value) => DateOnly.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-    private static string DayKey(DateOnly day) => day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-    private static DateOnly ZonedDay(DateTimeOffset instant, string zone) => DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(instant, TimeZoneInfo.FindSystemTimeZoneById(zone)).DateTime);
 }

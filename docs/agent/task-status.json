@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03",
+  "updated": "2026-11-05",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
@@ -23,9 +23,10 @@
       ],
       "evidence": [
         "backend-dotnet/migration/operations.json",
+        "backend-dotnet/migration/runtime.json",
         "backend-dotnet/README.md"
       ],
-      "remaining": "10 of 91 operations implemented with local tests; all other service ports, workers (including deletion purge/acks), differential parity, durable/native acceptance and rollout remain in progress. Container liveness passed; no service admitted."
+      "remaining": "All 91 declared operations have local code and test references; check-operation-parity.mjs passes 91/91 routes with 573 Progress, 81 Learning and 31 AI route fixture steps plus 320 test references. The latest full Windows Release solution passed 747 tests, failed 0 and skipped seven gated Appwrite probes on the current 573-step Progress fixture; the focused Progress Node/.NET differential passed on 573 steps; the focused AI conversation group also passed 42/42 including Node/.NET order tie-break and three-page cursor parity, and the 573-step Progress Node/.NET differential also covers all eight simulated purchase products, newer-entitlement protection, same-owner cancellation with retained expiry, successful gift send/redeem/replay, non-recipient denial, MAX preservation with null expiry, exact-now expiry replacement, referral counters across all five states, preserves an active MAX invitee, and grants a trial at exact-now expiry, rewarded-ad creation/replay by a free owner, foreign-owner event-ID conflict, exact-now expired premium eligibility, the 20-impression cap and Honolulu local-day rollover, Activity cursor pages, Friends/Activity limit and offset boundaries, league tie/exclusion ranking, multi-candidate friend-quest selection, CHILD/deleted-account writer denial, all five interaction kinds, Honolulu local-midnight deduplication, family entitlement null/exact-now expiry projection, and manager removal of a user who is no longer a member. Classroom Unicode validation, Honolulu year-review boundaries, malformed/extra/stale league-result requests, deleted-profile league result reads/writes, follow capacity at 999/1000 with removed edges excluded, and deleted-target profile/follow denials with silent unfollow also match Node; the added streak-repair parity covers day mismatch/expiry, exact two-day continuation, gem/item success and failure, item replay, invalid payment and deleted-profile denial; entitlement parity covers missing rows, all access statuses and exact-now expiry; freeze parity covers exact-price purchase, replay and the 364/365-day capacity thresholds. Monthly quest parity covers old-period badge-only completion with upgradeChest enabled, missing-row and malformed-period denial, and replay with the same or a new request key without another award. FamilyTests.Join_CapacityFiveAllowsSixthAndRejectsSeventhWithoutWrites confirms five existing members can accept a sixth and rejects the seventh without a commit. FamilyTests passed 16/16, including successful SUPER-family creation, exact-now expiry denial, and one-winner handling for concurrent last-seat requests. Six fake-HTTP fixtures compare provider-on Azure assessment/voice-turn and Deepgram/AssemblyAI fallback paths, including requests, replay and persisted rows; the assessment fixture also verifies the exact 24-hour expiry boundary. No real provider call is made. Historical chest replay additionally preserves a 24-gem ledger credit and rejects zero credit, wrong quest identity and missing ledger without wallet or activity changes. Shop parity now covers all five available item kinds, catalog price boundaries, quantity and capacity, invalid catalog/items, purchase replay, exact-price refill and insufficient funds; boost parity covers timer/XP same-kind stacking, replay, expired/exact-end activation and exhausted inventory. Eight controlled-entropy quest chest creation cases now match Node responses and quest/wallet/ledger/activity/receipt rows at all 63/64 roll combinations; same-key and new-key replay never reroll. No operation retains the local full-domain-differential tag; five runtime gates remain pending. A new outbox lease probe is prepared in the live runner; its local rehearsal passed before/at/after expiry, ACK recovery, stale-owner protection and marker-only cleanup. It has not run against cloud. Remaining acceptance: durable Appwrite (Account.get, user permissions, Storage, restart/crash and worker leases), live mixed-runtime event boundaries, current all-.NET Docker/Linux validation, Flutter Android/iOS end-to-end, real pronunciation quality/privacy/cost review, schema drift review and rehearsed one-writer cutover/rollback. All five runtime gates remain pending; no cloud schema apply, deployment or push was performed."
     },
     {
       "taskId": "REMOTE-BRANCH-CONSOLIDATION-20261029",
@@ -410,7 +411,7 @@
       "phase": "user-authorized research and local foundation refresh",
       "owner": "root",
       "branch": "main",
-      "baselineCommit": "8b64cdcff3365e0ae4c5401bf2e799abd3dca649",
+      "baselineCommit": "8b64cdcff3365e0ae4c5731bf2e799abd3dca649",
       "worktree": ".",
       "status": "PASSED",
       "requirementCoverage": "research/document/scaffold/local compilation only; existing UI preserved; full production phase gates remain pending",

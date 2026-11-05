@@ -159,8 +159,7 @@ class AppwriteAuthService {
 
   Future<void> sendRecovery(String email) async {
     final account = _configuredAccount();
-    final uri = Uri.tryParse(recoveryUrl);
-    if (uri == null || uri.scheme != 'https' || uri.host.isEmpty) {
+    if (!_isTrustedCallbackUrl(recoveryUrl)) {
       throw const AppwriteAuthServiceException(configurationMessage);
     }
     try {
@@ -186,13 +185,7 @@ class AppwriteAuthService {
 
   Future<void> sendEmailVerification() async {
     final account = _configuredAccount();
-    final uri = Uri.tryParse(verificationUrl);
-    if (uri == null ||
-        uri.scheme != 'https' ||
-        uri.host.isEmpty ||
-        uri.userInfo.isNotEmpty ||
-        uri.hasQuery ||
-        uri.hasFragment) {
+    if (!_isTrustedCallbackUrl(verificationUrl)) {
       throw const AppwriteAuthServiceException(configurationMessage);
     }
     try {
@@ -220,6 +213,21 @@ class AppwriteAuthService {
     } on Object {
       throw const AppwriteAuthServiceException(requestMessage);
     }
+  }
+
+  static bool _isTrustedCallbackUrl(String value) {
+    final uri = Uri.tryParse(value.trim());
+    final host = uri?.host
+        .toLowerCase()
+        .replaceFirst(RegExp(r'\.$'), '');
+    return uri != null &&
+        uri.scheme.toLowerCase() == 'https' &&
+        host != null &&
+        host.isNotEmpty &&
+        !host.endsWith('.invalid') &&
+        uri.userInfo.isEmpty &&
+        !uri.hasQuery &&
+        !uri.hasFragment;
   }
 
   Future<void> resetPassword(

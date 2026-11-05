@@ -4,8 +4,10 @@ import { buildSync } from 'esbuild';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { root } from './kit.mjs';
+import { cleanupGeneratedBundleOnExit } from './cleanup-generated-bundle.mjs';
 
 const outfile = path.join(root, `.cache/shared-tests/redis-${process.pid}.mjs`);
+cleanupGeneratedBundleOnExit(outfile);
 buildSync({
   entryPoints: [path.join(root, 'services/shared/src/redis-cache.ts')],
   outfile,

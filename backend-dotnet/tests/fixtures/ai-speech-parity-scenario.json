@@ -1,0 +1,45 @@
+{
+  "now": "2026-11-03T12:00:00.000Z",
+  "user": "speech-parity-user",
+  "jobId": "23232323-2323-4232-8232-232323232323",
+  "idempotencyKey": "12121212-1212-4212-8212-121212121212",
+  "referenceExerciseId": "exercise1",
+  "lessonVersion": "v1",
+  "locale": "en-US",
+  "referenceText": "I like learning English.",
+  "wavSeconds": 1,
+  "azureRegion": "westus2",
+  "inspect": ["a_jobs", "a_receipts", "a_usage"],
+  "azureResponse": {
+    "RecognitionStatus": "Success",
+    "NBest": [
+      {
+        "Display": "I like learning English.",
+        "Confidence": 0.94,
+        "PronunciationAssessment": {
+          "AccuracyScore": 101,
+          "FluencyScore": 82,
+          "CompletenessScore": 96,
+          "ProsodyScore": 74
+        },
+        "Words": [
+          {
+            "Word": "learning",
+            "PronunciationAssessment": {
+              "AccuracyScore": 91,
+              "ErrorType": "Mispronunciation"
+            },
+            "Phonemes": [
+              {
+                "Phoneme": "l",
+                "PronunciationAssessment": {
+                  "AccuracyScore": 88
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

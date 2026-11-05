@@ -12,6 +12,12 @@ public sealed class ProgressReadController(IProgressReads reads) : ControllerBas
 {
     private string UserId => ((VerifiedSubject)HttpContext.Items[typeof(VerifiedSubject)]!).UserId;
 
+    /// <summary>Read effective premium capabilities from the verified account's server entitlement.</summary>
+    [HttpGet("/v1/me/entitlement")]
+    [ContractOperation("getEntitlement")]
+    [ProducesResponseType<EntitlementResponse>(200)]
+    public Task<EntitlementResponse> Entitlement(CancellationToken ct) => reads.GetEntitlementAsync(UserId, ct);
+
     /// <summary>Read the verified account's preferences without creating defaults in storage.</summary>
     [HttpGet("/v1/me/preferences")]
     [ContractOperation("getPreferences")]
