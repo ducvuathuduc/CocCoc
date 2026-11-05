@@ -9,7 +9,7 @@
       "owner": "Codex",
       "branch": "codex/ci-dotnet-repair",
       "worktree": "C:/FPT/PRM193/CocCoc-ci-dotnet",
-      "status": "VERIFYING",
+      "status": "DONE",
       "exclusivePaths": [
         "backend-dotnet/src/CocEnglish.Shared/Hosting/OutboxBacklogMetricsService.cs",
         "backend-dotnet/tests/CocEnglish.Shared.Tests/OutboxBacklogMetricsTests.cs"
@@ -17,7 +17,15 @@
       "evidence": [
         "docs/quality/CI_DOTNET_REPAIR_20261105.md"
       ],
-      "remaining": "Local solution and parity gates pass; Linux container and GitHub workflow verification pending."
+      "remaining": "No migration phase gate advanced; durable/native acceptance and authorized cutover remain pending.",
+      "checks": {
+        "solution": "PASS: 750 passed, 7 gated live skips, zero failures",
+        "parity": "PASS: 91/91 operations",
+        "githubDotnet": "SUCCESS: 42068811813 at 1912d0d",
+        "githubBackend": "SUCCESS: 42068818251",
+        "githubSecrets": "SUCCESS: 42068811762",
+        "localHostSmoke": "NOT_RUN: cancelled after Docker Desktop became unresponsive; GitHub host smoke passed"
+      }
     },
     {
       "taskId": "DOTNET-MIGRATION-20261103",
