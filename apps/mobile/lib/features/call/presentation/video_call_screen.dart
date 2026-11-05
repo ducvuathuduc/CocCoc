@@ -9,7 +9,7 @@ import 'call_visuals.dart';
 import 'call_widgets.dart';
 
 const _title = TextStyle(
-  fontFamily: 'DuolingoSans',
+  fontFamily: 'sans-serif',
   fontWeight: FontWeight.w700,
   color: CallColors.white,
 );

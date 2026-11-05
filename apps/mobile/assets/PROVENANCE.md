@@ -1,5 +1,21 @@
 # UI reference assets
 
+## Current Flutter asset set — 2026-11-05
+
+The current app packages the CocEnglish mark and three original transparent
+mascot poses from `brand/`, the project's own `lesson_images/`, original
+Azure-TTS lesson audio, synthesized lesson sound effects, and a sanitized
+avatar-choice catalog. `ReferenceArt` keeps old layout rectangles for screen
+continuity but paints the project's own mascot or Canvas glyphs; it never reads
+anything from `reference_art/`. `CharacterMotion` and the avatar editor now use
+project-owned Canvas/PNG artwork. The default system sans-serif replaces the
+archived DuolingoSans and Feather font files.
+
+Every source log and hash below describes a historical reference archive, not
+an asset shipped or rendered by the current Flutter app. `pubspec.yaml` names
+the packaged files explicitly and excludes `reference_art/`, `fonts/`, original
+`motion/` rigs, avatar SVGs and archived previews.
+
 Source snapshot2026-10-04. Reference illustrations/logotype/icons are sampled by explicit source rectangles at paint time from local Gummble onboarding PNGs. No whole screenshot is rendered as app UI; all text/options/actions/layout/state are Flutter widgets. Original references and IDs live in docs/design/references/onboarding/manifest.json. Atlas inputs retain their original bytes, avoiding image editing/resampling during asset preparation.
 
 Font inputs are publicly served by the official Duolingo web client, discovered in www.duolingo.com's FontFace loader:

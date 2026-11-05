@@ -16,7 +16,7 @@ abstract final class ReferenceColors {
 
 ThemeData referenceTheme() => ThemeData(
   useMaterial3: true,
-  fontFamily: 'DuolingoSans',
+  fontFamily: 'sans-serif',
   scaffoldBackgroundColor: ReferenceColors.surface,
   bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: ReferenceColors.surface,

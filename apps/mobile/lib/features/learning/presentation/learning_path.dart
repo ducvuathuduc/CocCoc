@@ -103,7 +103,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                                   DuoMotion(
                                     pose: DuoPose.reading,
                                     spec: const DuoMotionSpec(
-                                      asset: 'assets/motion/duo-path-jump.json',
+                                      asset: '',
                                       startFrame: 0,
                                       endFrame: 220,
                                       loop: true,

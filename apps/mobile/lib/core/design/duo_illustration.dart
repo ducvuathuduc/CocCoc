@@ -53,7 +53,7 @@ class DuoIllustration extends StatelessWidget {
       viewport: viewport,
       spec: region == ReferenceArtRegions.welcomeDuo
           ? const DuoMotionSpec(
-              asset: 'assets/motion/duo-wave.json',
+              asset: '',
               startFrame: 600,
               endFrame: 755,
               restFrame: 600,

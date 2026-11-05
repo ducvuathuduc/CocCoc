@@ -291,7 +291,7 @@ class _CenteredStep extends StatelessWidget {
         TextPainter(
           text: TextSpan(
             style: const TextStyle(
-              fontFamily: 'DuolingoSans',
+              fontFamily: 'sans-serif',
               fontSize: 20,
               height: 1.42,
             ),

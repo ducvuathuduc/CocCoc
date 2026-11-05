@@ -9,7 +9,7 @@ lib/main.dart                 app entry + router
 lib/core/                     design system (core/design), API contracts (core/api, generated/ = DO NOT EDIT), shared widgets
 lib/features/<feature>/       presentation/ (views) · application/ (ViewModels, Riverpod) · data/ (repositories, mock fixtures) · domain/ · services/ (SDK/HTTP/native I/O)
 test/                         widget/golden/unit tests (~440); test/api_contracts_round_trip_test.dart pins DTOs to OpenAPI
-assets/                       fonts, motion, reference art (see assets/PROVENANCE.md)
+assets/                       CocEnglish brand art, lesson media and avatar choices (see assets/PROVENANCE.md)
 ```
 
 Views contain only widgets. ViewModels own local commands and state. Repositories own cache and retry. Services wrap SDK, HTTP and native I/O. Riverpod providers are written by hand; views never call vendor code directly. Use sealed exercise/answer types and treat results as server-authoritative. Local fake repositories must conform to OpenAPI. The native audio bridge is limited to Kotlin AudioTrack and iOS AVAudioEngine I/O.

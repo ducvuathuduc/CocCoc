@@ -439,7 +439,7 @@ class _FeedSuggestions extends ConsumerWidget {
                 textScaler: MediaQuery.textScalerOf(context),
                 text: const TextSpan(
                   style: TextStyle(
-                    fontFamily: 'DuolingoSans',
+                    fontFamily: 'sans-serif',
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     color: ReferenceColors.ink,

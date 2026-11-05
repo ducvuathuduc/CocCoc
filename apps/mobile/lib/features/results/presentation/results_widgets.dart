@@ -475,7 +475,7 @@ class ResultsLinkButton extends StatelessWidget {
       style: TextButton.styleFrom(
         foregroundColor: ResultsColors.blue,
         textStyle: const TextStyle(
-          fontFamily: 'DuolingoSans',
+          fontFamily: 'sans-serif',
           fontSize: 18,
           fontWeight: FontWeight.w700,
           letterSpacing: .8,

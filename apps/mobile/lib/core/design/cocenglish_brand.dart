@@ -4,6 +4,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 abstract final class CocEnglishBrand {
   static const orange = Color(0xFFF47721);
   static const surface = Color(0xFFFFF7EF);
+  static const teal = Color(0xFF008F8C);
+  static const ink = Color(0xFF21314A);
+}
+
+enum CocEnglishMascotPose { wave, study, celebrate }
+
+extension CocEnglishMascotAsset on CocEnglishMascotPose {
+  String get asset => switch (this) {
+    CocEnglishMascotPose.wave => 'assets/brand/cocenglish-mascot-wave.png',
+    CocEnglishMascotPose.study => 'assets/brand/cocenglish-mascot-study.png',
+    CocEnglishMascotPose.celebrate =>
+      'assets/brand/cocenglish-mascot-celebrate.png',
+  };
 }
 
 class CocEnglishMark extends StatelessWidget {
@@ -41,14 +54,27 @@ class CocEnglishMascot extends StatelessWidget {
   const CocEnglishMascot({
     required this.width,
     required this.height,
+    this.pose = CocEnglishMascotPose.wave,
+    this.semanticsLabel,
     super.key,
   });
   final double width, height;
+  final CocEnglishMascotPose pose;
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) => SizedBox(
     width: width,
     height: height,
-    child: Center(child: CocEnglishMark(size: width < height ? width : height)),
+    child: Center(
+      child: Image.asset(
+        pose.asset,
+        width: width,
+        height: height,
+        fit: BoxFit.contain,
+        excludeFromSemantics: semanticsLabel == null,
+        semanticLabel: semanticsLabel,
+      ),
+    ),
   );
 }

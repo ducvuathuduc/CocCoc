@@ -151,7 +151,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
                   borderRadius: BorderRadius.circular(widget.cornerRadius),
                 ),
                 textStyle: const TextStyle(
-                  fontFamily: 'DuolingoSans',
+                  fontFamily: 'sans-serif',
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.8,
