@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/design/cocenglish_brand.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 
 abstract final class LearningColors {
-  static const green = Color(0xFF58CC02);
-  static const greenDark = Color(0xFF58A700);
+  static const primary = CocEnglishBrand.actionOrange;
+  static const primaryDark = CocEnglishBrand.actionOrangeEdge;
+  // Legacy aliases retained for tests and older feature code.
+  static const green = primary;
+  static const greenDark = primaryDark;
   static const blue = Color(0xFF1CB0F6);
   static const blueDark = Color(0xFF1899D6);
   static const purple = Color(0xFFCE82FF);
@@ -14,7 +18,7 @@ abstract final class LearningColors {
   static const redDark = Color(0xFFEA2B2B);
   static const yellow = Color(0xFFFFC800);
   static const orange = Color(0xFFFF9600);
-  static const correct = Color(0xFFD7FFB8);
+  static const correct = Color(0xFFFFE8D5);
   static const incorrect = Color(0xFFFFDFE0);
 }
 
@@ -227,7 +231,7 @@ class LearningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final border = selected
         ? correct == true
-              ? const Color(0xFFA5ED6E)
+              ? const Color(0xFFF0B581)
               : correct == false
               ? LearningColors.red
               : ReferenceColors.blueBorder

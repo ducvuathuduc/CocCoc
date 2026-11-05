@@ -164,7 +164,9 @@ class SpeakingWordsExercise extends StatelessWidget {
           style: result == null
               ? null
               : TextStyle(
-                  color: result.ok ? LearningColors.green : LearningColors.red,
+                  color: result.ok
+                      ? LearningColors.primary
+                      : LearningColors.red,
                 ),
         ),
       );

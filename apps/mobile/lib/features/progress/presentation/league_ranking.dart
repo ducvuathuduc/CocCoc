@@ -217,11 +217,13 @@ class _LeagueRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void openProfile() => onOpenProfile(entry.userId);
-    final foreground = entry.isOwn ? LearningColors.green : ReferenceColors.ink;
+    final foreground = entry.isOwn
+        ? LearningColors.primary
+        : ReferenceColors.ink;
     final stacked = MediaQuery.textScalerOf(context).scale(19) > 28;
     return Material(
       key: ValueKey('league-row-${entry.userId}'),
-      color: entry.isOwn ? const Color(0xFFD7FFB8) : Colors.white,
+      color: entry.isOwn ? const Color(0xFFFFE8D5) : Colors.white,
       child: Semantics(
         container: true,
         explicitChildNodes: true,
@@ -320,7 +322,7 @@ class _RankMark extends StatelessWidget {
         '$rank',
         textAlign: TextAlign.center,
         style: const TextStyle(
-          color: LearningColors.green,
+          color: LearningColors.primary,
           fontSize: 22,
           fontWeight: FontWeight.w700,
         ),

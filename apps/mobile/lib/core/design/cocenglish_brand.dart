@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 abstract final class CocEnglishBrand {
   static const orange = Color(0xFFF47721);
+  // Dark enough for white labels while staying in the mascot's orange family.
+  static const actionOrange = Color(0xFFC84E08);
+  static const actionOrangeEdge = Color(0xFF963A00);
   static const surface = Color(0xFFFFF7EF);
   static const teal = Color(0xFF008F8C);
   static const ink = Color(0xFF21314A);

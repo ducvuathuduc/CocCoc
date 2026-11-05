@@ -16,7 +16,7 @@ abstract final class ResultsColors {
   static const blueEdge = Color(0xFF189ADA); // 11 button edge
   static const quest = Color(0xFFCF3591); // 11 (300,1060)
   static const questGleam = Color(0xFFD95DA7); // 11 (300,1045)
-  static const promotion = Color(0xFF5AA701); // 12 (350,1040) / 01 palette
+  static const promotion = Color(0xFFC84E08); // CocEnglish orange action accent
   static const userRow = Color(0xFFE8E6E9); // 12 (1000,1250)
   static const rankInk = Color(0xFF4C4A4D); // 12 (120,1250)
   static const avatarPurple = Color(0xFFD082FF); // 12 "W" avatar

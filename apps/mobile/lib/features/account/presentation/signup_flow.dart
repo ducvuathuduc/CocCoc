@@ -342,7 +342,7 @@ class _ProgressBar extends StatelessWidget {
         curve: Curves.easeOutCubic,
         width: c.maxWidth * value.clamp(0, 1),
         decoration: BoxDecoration(
-          color: ReferenceColors.green,
+          color: ReferenceColors.primary,
           borderRadius: BorderRadius.circular(8),
         ),
       ),

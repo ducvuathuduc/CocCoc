@@ -169,7 +169,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                             child: Text(
                               copy.notNowLabel,
                               style: const TextStyle(
-                                color: ReferenceColors.green,
+                                color: ReferenceColors.primary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: .8,

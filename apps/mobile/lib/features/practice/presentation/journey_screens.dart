@@ -50,7 +50,7 @@ class JourneyEntryScreen extends ConsumerWidget {
         !state.complete &&
         (kind != 'roleplay' || state.scenarioId == null);
     final color = kind == 'roleplay'
-        ? LearningColors.green
+        ? LearningColors.primary
         : LearningColors.red;
     return Scaffold(
       body: SafeArea(
@@ -115,7 +115,7 @@ class JourneyEntryScreen extends ConsumerWidget {
                 label: resumed ? 'RESUME' : 'START',
                 backgroundColor: color,
                 edgeColor: kind == 'roleplay'
-                    ? LearningColors.greenDark
+                    ? LearningColors.primaryDark
                     : LearningColors.redDark,
                 onPressed: () {
                   if (!resumed) {
@@ -361,7 +361,7 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
         ? LearningColors.yellow
         : kind == 'rapid'
         ? LearningColors.purple
-        : LearningColors.green;
+        : LearningColors.primary;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -474,7 +474,7 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen>
                         state.feedback! ? 'Excellent!' : 'Keep practicing!',
                         style: headingStyle.copyWith(
                           color: state.feedback!
-                              ? LearningColors.greenDark
+                              ? LearningColors.primaryDark
                               : LearningColors.redDark,
                         ),
                       ),
@@ -846,7 +846,7 @@ class _JourneyComplete extends StatelessWidget {
                         _ResultCard(
                           'ACCURACY',
                           '${state.attempted == 0 ? 0 : (state.correct / state.attempted * 100).round()}%',
-                          LearningColors.green,
+                          LearningColors.primary,
                         ),
                         _ResultCard(
                           'WORDS',
@@ -991,7 +991,7 @@ class _FeedbackState extends ConsumerState<RoleplayFeedbackScreen> {
                           const Text(
                             'YOUR REPLY',
                             style: TextStyle(
-                              color: LearningColors.greenDark,
+                              color: LearningColors.primaryDark,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -1011,7 +1011,7 @@ class _FeedbackState extends ConsumerState<RoleplayFeedbackScreen> {
                               IconButton(
                                 tooltip: 'Helpful feedback ${i + 1}',
                                 color: helpful[i] == true
-                                    ? LearningColors.greenDark
+                                    ? LearningColors.primaryDark
                                     : null,
                                 onPressed: () =>
                                     setState(() => helpful[i] = true),

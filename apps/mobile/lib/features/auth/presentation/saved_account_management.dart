@@ -129,7 +129,7 @@ class _SavedAccountManagementScreenState
                       const SizedBox(width: 14),
                       CircleAvatar(
                         radius: 25,
-                        backgroundColor: const Color(0xFF58A700),
+                        backgroundColor: ReferenceColors.primary,
                         child: Text(
                           name.isEmpty ? '?' : name[0].toUpperCase(),
                           style: const TextStyle(
@@ -174,7 +174,7 @@ class _SavedAccountManagementScreenState
                   child: const Text(
                     'DONE EDITING',
                     style: TextStyle(
-                      color: ReferenceColors.green,
+                      color: ReferenceColors.primary,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       letterSpacing: .8,

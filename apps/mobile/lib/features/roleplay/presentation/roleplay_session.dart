@@ -386,14 +386,14 @@ class _ScenarioFeedbackState extends ConsumerState<RoleplayScenarioFeedback> {
                     children: [
                       Icon(
                         Icons.check_circle_rounded,
-                        color: LearningColors.green,
+                        color: LearningColors.primary,
                         size: 28,
                       ),
                       SizedBox(width: 8),
                       Text(
                         'WELL DONE!',
                         style: TextStyle(
-                          color: LearningColors.green,
+                          color: LearningColors.primary,
                           fontWeight: FontWeight.w700,
                           fontSize: 15,
                           letterSpacing: .6,
@@ -520,7 +520,7 @@ class _ReplyCard extends StatelessWidget {
                   Text(
                     'Great',
                     style: TextStyle(
-                      color: LearningColors.greenDark,
+                      color: LearningColors.primaryDark,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                     ),
@@ -528,7 +528,7 @@ class _ReplyCard extends StatelessWidget {
                   SizedBox(width: 4),
                   Icon(
                     Icons.check_rounded,
-                    color: LearningColors.greenDark,
+                    color: LearningColors.primaryDark,
                     size: 18,
                   ),
                 ],
@@ -567,14 +567,14 @@ class _ReplyCard extends StatelessWidget {
                       visualDensity: VisualDensity.compact,
                       color: helpful == false
                           ? LearningColors.red
-                          : LearningColors.greenDark,
+                          : LearningColors.primaryDark,
                       onPressed: () => onRate(false),
                       icon: const Icon(Icons.thumb_down_outlined),
                     ),
                     IconButton(
                       tooltip: 'Helpful feedback ${index + 1}',
                       visualDensity: VisualDensity.compact,
-                      color: LearningColors.greenDark,
+                      color: LearningColors.primaryDark,
                       onPressed: () => onRate(true),
                       icon: Icon(
                         helpful == true

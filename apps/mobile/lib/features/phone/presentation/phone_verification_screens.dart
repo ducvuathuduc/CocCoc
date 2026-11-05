@@ -679,11 +679,11 @@ class _PhoneVerifiedView extends StatelessWidget {
                           width: 112,
                           height: 112,
                           decoration: const BoxDecoration(
-                            color: LearningColors.green,
+                            color: LearningColors.primary,
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: LearningColors.greenDark,
+                                color: LearningColors.primaryDark,
                                 offset: Offset(0, 6),
                               ),
                             ],

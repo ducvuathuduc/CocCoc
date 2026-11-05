@@ -87,10 +87,10 @@ class _ReferenceButtonState extends State<ReferenceButton> {
               : ReferenceColors.border
         : widget.outlined
         ? ReferenceColors.surface
-        : widget.backgroundColor ?? ReferenceColors.green;
+        : widget.backgroundColor ?? ReferenceColors.primary;
     final edge = widget.outlined
         ? ReferenceColors.border
-        : widget.edgeColor ?? ReferenceColors.greenEdge;
+        : widget.edgeColor ?? ReferenceColors.primaryEdge;
     return Semantics(
       button: true,
       enabled: enabled,
@@ -144,7 +144,7 @@ class _ReferenceButtonState extends State<ReferenceButton> {
                     : widget.foregroundColor != null
                     ? widget.foregroundColor!
                     : widget.outlined
-                    ? ReferenceColors.green
+                    ? ReferenceColors.primary
                     : Colors.white,
                 disabledForegroundColor: ReferenceColors.disabled,
                 shape: RoundedRectangleBorder(
@@ -428,7 +428,7 @@ class FlowHeader extends StatelessWidget {
                             ),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: ReferenceColors.green,
+                            color: ReferenceColors.primary,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Container(

@@ -199,7 +199,7 @@ before painting; the app renders its own actionable button from repository data.
 
 ## Launcher, notification and widget art (original)
 
-The launcher icon (Android adaptive + legacy mipmaps, iOS AppIcon set), the Android 12 splash icon, the notification small icon `ic_stat_coc`, the notification large icon `ic_notification_mascot` and the streak-widget flames were drawn for this repository (original toad mascot in `tool/brand/mascot.svg`, flames as Android vectors). Regenerate the PNGs with `python3 tool/brand/render.py` from `apps/mobile`. Colours come from the existing palette (`ReferenceColors.green` #5BCD05, ink #4D4B4E, surface #FFFDFE); no third-party art is used.
+The launcher icon (Android adaptive + legacy mipmaps, iOS AppIcon set), the Android 12 splash icon, the notification small icon `ic_stat_coc`, the notification large icon `ic_notification_mascot` and the streak-widget flames were drawn for this repository (original toad mascot in `tool/brand/mascot.svg`, flames as Android vectors). Regenerate the PNGs with `python3 tool/brand/render.py` from `apps/mobile`. The active interface uses the CocEnglish orange action palette (#C84E08 with #963A00 edges), warm surface (#FFF7EF), ink (#21314A) and the original mascot orange (#F47721); no third-party art is used.
 
 ### Gap Super trial interstitial (2026-10-13)
 

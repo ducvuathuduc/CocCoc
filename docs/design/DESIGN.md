@@ -16,11 +16,11 @@ Typography: use the platform system sans-serif; the app bundles no proprietary d
 
 | Token | Value / role |
 |---|---|
-| brand.green | #58CC02; icon/illustration/accent, not small white text background without contrast check |
-| action.green | #237A00; accessible primary filled control with white text |
-| action.edge | #185900; 4px tactile lower edge |
+| brand.orange | #F47721; CocEnglish mascot and decorative illustration accent |
+| action.orange | #C84E08; accessible primary filled control with white text |
+| action.edge | #963A00; 4px tactile lower edge |
 | accent.blue | #1CB0F6; audio accent; dark text/outline for legibility |
-| success.surface / text | #D7FFB8 / #235B00 |
+| success.surface / text | #FFE8D5 / #963A00 |
 | error.surface / text | #FFE1E1 / #A41414 |
 | warning.surface / text | #FFF3B0 / #704D00 |
 | surface / subtle / border / text | #FFFFFF / #F7F7F7 / #E5E5E5 / #4B4B4B |
@@ -34,7 +34,7 @@ Typography: use the platform system sans-serif; the app bundles no proprietary d
 | width | mobile body max480; lesson bottom action pinned above keyboard/safe area |
 | shadow | 4px solid lower edge for buttons/nodes; ordinary surfaces no soft elevation |
 
-White on #58CC02 is not assumed to meet small-text contrast. Accent fidelity yields to readable controls; phase2 records contrast ratio for every text/control pairing and uses dark text or action.green where needed.
+The mascot orange is reserved for illustration. Primary controls use the darker CocEnglish orange so white labels remain readable.
 
 ## Components / assets
 

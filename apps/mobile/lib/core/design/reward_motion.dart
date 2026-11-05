@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'cocenglish_brand.dart';
+
 abstract final class RewardMotionTokens {
   static const countDuration = Duration(milliseconds: 500);
   static const celebrationDuration = Duration(milliseconds: 600);
@@ -13,7 +15,7 @@ abstract final class RewardMotionTokens {
   static const particleDrift = 20.0;
   static const colors = [
     Color(0xFFFFC800),
-    Color(0xFF58CC02),
+    CocEnglishBrand.orange,
     Color(0xFF1CB0F6),
     Color(0xFFCE82FF),
   ];

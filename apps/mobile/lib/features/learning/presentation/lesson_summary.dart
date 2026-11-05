@@ -51,7 +51,7 @@ class LessonSummary extends ConsumerWidget {
         suffix: content.accuracy.suffix,
         icon: const ArtRegion('results-02', Rect.fromLTWH(478, 1916, 70, 73)),
         scale: scale,
-        color: ReferenceColors.green,
+        color: ReferenceColors.primary,
         gleam: true,
       ),
       _SummaryStat(

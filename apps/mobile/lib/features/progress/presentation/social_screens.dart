@@ -117,7 +117,7 @@ class StatusAvatar extends StatelessWidget {
             width: size * .2,
             height: size * .2,
             decoration: BoxDecoration(
-              color: ReferenceColors.green,
+              color: ReferenceColors.primary,
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 2),
             ),
