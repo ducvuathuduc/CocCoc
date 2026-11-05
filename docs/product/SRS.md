@@ -72,6 +72,28 @@ AI practice (ai.practice.completed.v1, Roleplay/Video Call): Progress credits th
 
 Timezone command chooses effectiveAt=00:00:00Z on the UTC date immediately after server acceptance. Before that instant use prior history row; at/after use new row. Progress chooses the latest immutable history row with effectiveAt≤event.occurredAt inside the reward transaction; delayed delivery uses event server time, never processing/device time. Reconciliation uses that same rule. Display day is the later of current zone date and most recent credited/protected day, preventing a backward-travel UI regression; stored past keys stay unchanged.
 
+## Authored activity session modes (2026-10-28)
+
+Product decision 2026-10-28: add eight session modes without changing the meaning of LESSON, REVIEW, MASTERY or PLACEMENT. All eight reuse the session lifecycle, persistent idempotency, `expectedRevision`, 24-hour expiry, one active session per user/course, immutable published bundle, 5–20 originals and the 12 registered exercise types. They are online-authoritative in V1; the offline completion journal remains LESSON-only. `activityId` and `opponentId` are optional client correlation/selection hints; `lessonId` remains the authoritative authored content key. `passThreshold` is authored and server-owned; the client cannot set or override it. A failed test-out/checkpoint is a successful completion with `passed=false`, not an error.
+
+| ID / priority | Mode | Rule | Reward | Progression / errors |
+|---|---|---|---|---|
+| FR-ACTIVITY-001 P1 | STORIES, ADVENTURE, RADIO, SIDE_QUEST, CLASH, UNIT_REVIEW | Authored activity content using registered exercise types: linear story and adventure chains (no branching in V1), audio-comprehension sets using listenChoice/dictation and text alternatives (no streaming radio service), optional practice sets, competitive sets and unit-level review with the same grading and review evidence. CLASH accepts an optional `opponentId` that must resolve to a server-known scripted opponent; when absent, the authored deterministic opponent is used, and there is no live multiplayer or matchmaking service | STORIES/ADVENTURE/RADIO/SIDE_QUEST/CLASH: normal online first-completion lesson formula; repeated completion 5 study XP under the 30/day replay cap; league eligible like LESSON; daily “2 lessons” remains LESSON-only. UNIT_REVIEW: 5 study XP under the 30/day replay cap, zero league XP; the existing `reviewSessions` counter remains REVIEW-only | No frontier change; MODE_UNAVAILABLE, ACTIVITY_NOT_FOUND; CLASH additionally OPPONENT_UNAVAILABLE |
+| FR-ACTIVITY-002 P1 | TEST_OUT, CHECKPOINT | Authored unit test-out and section checkpoint using registered exercise types; each requires an authored server-owned `passThreshold`, CHECKPOINT also requires completed section prerequisites, and one completion result either passes or fails without XP | 0 XP, 0 activity, 0 quest credit, 0 league | Pass advances the frontier monotonically (TEST_OUT: marks the target unit's lessons completed; CHECKPOINT: marks the section completed and unlocks the next section); fail changes nothing; MODE_UNAVAILABLE, ACTIVITY_NOT_FOUND, CHECKPOINT_LOCKED |
+
+Per-mode detail:
+
+- **STORIES** — Linear authored story chain using registered exercise types; branching is not part of V1.
+- **ADVENTURE** — Authored adventure chain using registered exercise types.
+- **RADIO** — Authored audio-comprehension set using listenChoice/dictation and text alternatives; no streaming radio service.
+- **SIDE_QUEST** — Optional authored practice set.
+- **CLASH** — Authored competitive set; optional `opponentId` must resolve to a server-known scripted opponent. If absent, the authored deterministic opponent is used; there is no live multiplayer or matchmaking service.
+- **UNIT_REVIEW** — Authored unit-level review with the same grading and review evidence; earns 5 study XP under the 30/day replay cap, zero league XP, and the `reviewSessions` counter remains REVIEW-only.
+- **TEST_OUT** — Authored unit test-out; requires an authored `passThreshold`; one completion result either passes or fails without XP. Pass marks the target unit's lessons completed and advances the frontier monotonically; fail changes nothing.
+- **CHECKPOINT** — Authored section checkpoint; requires an authored `passThreshold` and completed section prerequisites. Pass marks the section completed and unlocks the next section monotonically; fail changes nothing.
+
+The session response echoes optional `passThreshold` when the authored content supplies it. The completion response carries optional `passed` and `unlockedNodeId` fields. `MODE_UNAVAILABLE` is 400, `ACTIVITY_NOT_FOUND` is 404, `CHECKPOINT_LOCKED` is 409 and `OPPONENT_UNAVAILABLE` is 503.
+
 ## Scope exclusions and capability gates
 
 No full translation catalog, live payments, real ad networks, live camera video, chat messaging, math/music/chess, automatic semantic grading, public-store distribution, or claimed production capacity at10,000 connections. Commercialization design and fake payment states are included. Billing uses a server-side mock provider (p_purchases platform SIMULATION) and live store billing is separately gated. Ads: **mock ads for the free tier only, suppressed by entitlement**. Interstitial and rewarded placements are simulated, are never shown to SUPER/MAX users, never block learning, and are capped per day (user decision 2026-10-12, replacing the earlier no-ads rule; P10-ADS-001). Promo codes grant Super days, gems or items once per user (P10-PROMO-001). Cloud live/phoneme scoring requires P8 physical-device/account tests; recorded/typed/shadowing and cached listening are safe fallbacks, not proof the coursework realtime requirement was fulfilled.

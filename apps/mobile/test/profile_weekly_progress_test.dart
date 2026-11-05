@@ -1,3 +1,5 @@
+import 'support/app_fonts.dart';
+
 import 'dart:ui' as ui;
 
 import 'package:cocenglish/core/design/reference_theme.dart';
@@ -17,9 +19,7 @@ void main() {
     'canvas labels inherit font and repaint when typography changes',
     (tester) async {
       await tester.runAsync(() async {
-        await (FontLoader(
-          'DuolingoSans',
-        )..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))).load();
+        await (FontLoader('sans-serif')..addFont(loadTestFont())).load();
       });
       final container = ProviderContainer();
       addTearDown(container.dispose);
@@ -59,7 +59,7 @@ void main() {
         return copy;
       }
 
-      final reference = await painterFor('DuolingoSans');
+      final reference = await painterFor('sans-serif');
       final fallback = await painterFor('Ahem');
       expect(fallback.shouldRepaint(reference), isTrue);
       final referencePixels = await tester.runAsync(

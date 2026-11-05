@@ -9,6 +9,7 @@ import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/application/learning_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../application/league_join_controller.dart';
 import '../application/preview_controller.dart';
 import 'social_screens.dart';
 import '../application/social_controller.dart';
@@ -62,12 +63,12 @@ class LeagueScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final progress = ref.watch(learningStateProvider),
         preview = ref.watch(previewControllerProvider);
-    if (!preview.leagueOptIn) {
+    if (!preview.leagueOptIn && !ref.watch(leagueJoinedProvider)) {
       return LeagueEntrySurface(
         remainingLessons: progress.completedLessons < 1 ? 1 : 0,
         onStartLesson: () => context.go('/home'),
         onContinue: () =>
-            ref.read(previewControllerProvider.notifier).optIntoLeague(),
+            ref.read(leagueJoinControllerProvider.notifier).join(),
       );
     }
     final avatar = ref.watch(avatarControllerProvider);

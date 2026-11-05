@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/auth/application/auth_controller.dart';
 import '../../../features/connectivity/application/connectivity_provider.dart';
 import '../../../features/connectivity/data/api_connectivity_repository.dart';
-import '../../config/app_config.dart';
+import '../../config/validated_app_config.dart';
 import 'access_token.dart';
 import 'api_client.dart';
 import 'api_endpoints.g.dart';
@@ -37,7 +37,7 @@ final accessTokenProvider = Provider<AccessTokenProvider>((ref) {
 });
 
 final apiClientProvider = Provider<ApiClient>((ref) {
-  final config = ref.watch(appConfigProvider);
+  final config = ref.watch(validatedAppConfigProvider);
   final userId = ref.watch(authControllerProvider.select((s) => s.user?.id));
   return ApiClient(
     onUnauthenticated: () {

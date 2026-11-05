@@ -1,5 +1,7 @@
 # How to reproduce the local foundation on Windows
 
+For actual local Auth/database, Docker services and the API Android build, use [durable local setup](LOCAL_DURABLE_RUNTIME.md). The older in-memory foundation commands below remain useful for isolated fixture tests.
+
 From PowerShell at the repository root. Native Flutter Android development requires no local Mac/WSL/Docker/Kubernetes. Baseline Flutter 3.47.0/Dart 3.13.0 and mobile lock are retained. Backend checks passed under local Node24.16.0 and a verified portable Node22.23.3; backend CI pins22.23.3. Appwrite actual runtime remains a separate account probe. pnpm10.15.0 and compatible TypeScript5.9.3 are pinned; latest7.x failed generator/ESLint compatibility.
 
 ```powershell

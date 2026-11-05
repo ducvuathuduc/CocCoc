@@ -35,6 +35,24 @@ const _summaryArt = ArtRegion(
   Rect.fromLTWH(120, 840, 940, 560),
 );
 
+String _reviewDate(DateTime date) {
+  const months = [
+    'Jan.',
+    'Feb.',
+    'Mar.',
+    'Apr.',
+    'May',
+    'Jun.',
+    'Jul.',
+    'Aug.',
+    'Sep.',
+    'Oct.',
+    'Nov.',
+    'Dec.',
+  ];
+  return '${months[date.month - 1]} ${date.day}, ${date.year}';
+}
+
 class YearReviewScreen extends ConsumerStatefulWidget {
   const YearReviewScreen({super.key});
 
@@ -76,6 +94,54 @@ class _YearReviewScreenState extends ConsumerState<YearReviewScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(yearReviewControllerProvider);
+    if (!state.hasSnapshot) {
+      return Scaffold(
+        backgroundColor: const Color(0xFF19559A),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: state.loading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                          semanticsLabel: 'Loading your Year in Review',
+                        )
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              state.loadError ??
+                                  'Your Year in Review is unavailable.',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(height: 20),
+                            ReferenceButton(
+                              label: 'RETRY',
+                              onPressed: () => ref
+                                  .read(yearReviewControllerProvider.notifier)
+                                  .retry(),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
+              SizedBox(
+                width: 56,
+                height: 56,
+                child: IconButton(
+                  tooltip: 'Close Year in Review',
+                  onPressed: () => Navigator.maybePop(context),
+                  icon: const Icon(Icons.close, color: Colors.white, size: 36),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF19559A),
       body: Stack(
@@ -88,12 +154,12 @@ class _YearReviewScreenState extends ConsumerState<YearReviewScreen> {
                 .setIndex,
             children: [
               _IntroPage(onNext: () => _moveTo(1)),
-              _LessonsPage(onNext: () => _moveTo(2)),
-              _XpPage(onNext: () => _moveTo(3)),
-              _LeaguePage(onNext: () => _moveTo(4)),
+              _LessonsPage(snapshot: state.snapshot, onNext: () => _moveTo(2)),
+              _XpPage(snapshot: state.snapshot, onNext: () => _moveTo(3)),
+              _LeaguePage(snapshot: state.snapshot, onNext: () => _moveTo(4)),
               _GatePage(onNext: () => _moveTo(5)),
-              _StudentPage(onNext: () => _moveTo(6)),
-              const _SummaryPage(),
+              _StudentPage(snapshot: state.snapshot, onNext: () => _moveTo(6)),
+              _SummaryPage(snapshot: state.snapshot),
             ],
           ),
           SafeArea(
@@ -181,8 +247,9 @@ class _IntroPage extends StatelessWidget {
 }
 
 class _LessonsPage extends StatelessWidget {
-  const _LessonsPage({required this.onNext});
+  const _LessonsPage({required this.snapshot, required this.onNext});
 
+  final YearReviewSnapshot snapshot;
   final VoidCallback onNext;
 
   @override
@@ -205,10 +272,10 @@ class _LessonsPage extends StatelessWidget {
             children: [
               const TextSpan(text: 'You did '),
               TextSpan(
-                text: '${historical2025.lessons} lessons',
+                text: '${snapshot.lessons} lessons',
                 style: const TextStyle(fontWeight: FontWeight.w700),
               ),
-              TextSpan(text: ' in ${historical2025.course}.\n'),
+              TextSpan(text: ' in ${snapshot.course}.\n'),
               const TextSpan(text: 'That’s twice the fun!'),
             ],
           ),
@@ -223,8 +290,9 @@ class _LessonsPage extends StatelessWidget {
 }
 
 class _XpPage extends StatelessWidget {
-  const _XpPage({required this.onNext});
+  const _XpPage({required this.snapshot, required this.onNext});
 
+  final YearReviewSnapshot snapshot;
   final VoidCallback onNext;
 
   @override
@@ -240,22 +308,30 @@ class _XpPage extends StatelessWidget {
             children: [
               const TextSpan(text: 'You earned '),
               TextSpan(
-                text: '${historical2025.totalXp} XP',
+                text: '${snapshot.totalXp} XP',
                 style: const TextStyle(
                   color: Color(0xFFE6A900),
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const TextSpan(text: ' in total,\nmore than '),
               TextSpan(
-                text: '${historical2025.percentile}%',
+                text: snapshot.percentile == null
+                    ? ' in total.\n'
+                    : ' in total,\nmore than ',
+              ),
+              TextSpan(
+                text: snapshot.percentile == null
+                    ? 'Global comparison unavailable'
+                    : '${snapshot.percentile}%',
                 style: const TextStyle(
                   color: Color(0xFFE6A900),
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const TextSpan(
-                text: ' of learners!\nYou put in the work. It shows.',
+              TextSpan(
+                text: snapshot.percentile == null
+                    ? '\nYou put in the work. It shows.'
+                    : ' of learners!\nYou put in the work. It shows.',
               ),
             ],
           ),
@@ -270,8 +346,9 @@ class _XpPage extends StatelessWidget {
 }
 
 class _LeaguePage extends StatelessWidget {
-  const _LeaguePage({required this.onNext});
+  const _LeaguePage({required this.snapshot, required this.onNext});
 
+  final YearReviewSnapshot snapshot;
   final VoidCallback onNext;
 
   @override
@@ -287,13 +364,17 @@ class _LeaguePage extends StatelessWidget {
             children: [
               const TextSpan(text: 'You competed in the '),
               TextSpan(
-                text: '${historical2025.league} League',
+                text: '${snapshot.league} League',
                 style: const TextStyle(
                   color: Color(0xFFE747AA),
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              TextSpan(text: '\nfor ${historical2025.leagueWeeks} weeks!'),
+              TextSpan(
+                text: snapshot.leagueWeeks == null
+                    ? '\nLeague duration unavailable'
+                    : '\nfor ${snapshot.leagueWeeks} weeks!',
+              ),
             ],
           ),
           textAlign: TextAlign.center,
@@ -337,8 +418,9 @@ class _GatePage extends StatelessWidget {
 }
 
 class _StudentPage extends ConsumerWidget {
-  const _StudentPage({required this.onNext});
+  const _StudentPage({required this.snapshot, required this.onNext});
 
+  final YearReviewSnapshot snapshot;
   final VoidCallback onNext;
 
   @override
@@ -361,7 +443,9 @@ class _StudentPage extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          'You’re in the top ${historical2025.studentTopPercent}% of global learners. Brilliant effort!',
+          snapshot.studentTopPercent == null
+              ? 'Global ranking is unavailable. Keep learning!'
+              : 'You’re in the top ${snapshot.studentTopPercent}% of global learners. Brilliant effort!',
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 20, height: 1.35),
         ),
@@ -375,7 +459,9 @@ class _StudentPage extends ConsumerWidget {
 }
 
 class _SummaryPage extends ConsumerWidget {
-  const _SummaryPage();
+  const _SummaryPage({required this.snapshot});
+
+  final YearReviewSnapshot snapshot;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => _ReviewPage(
@@ -397,12 +483,12 @@ class _SummaryPage extends ConsumerWidget {
           ),
           child: Column(
             children: [
-              const Wrap(
+              Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 runSpacing: 4,
                 spacing: 12,
                 children: [
-                  Text(
+                  const Text(
                     'cocenglish',
                     style: TextStyle(
                       color: Color(0xFF07549A),
@@ -411,8 +497,8 @@ class _SummaryPage extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    '2025 YEAR IN REVIEW',
-                    style: TextStyle(
+                    '${snapshot.year} YEAR IN REVIEW',
+                    style: const TextStyle(
                       color: Color(0xFF07549A),
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -424,7 +510,9 @@ class _SummaryPage extends ConsumerWidget {
               const SizedBox(height: 8),
               const _ReviewArt(_summaryArt, aspectRatio: 940 / 560),
               Text(
-                'I’m a top ${historical2025.studentTopPercent}% learner!',
+                snapshot.studentTopPercent == null
+                    ? 'My year of learning!'
+                    : 'I’m a top ${snapshot.studentTopPercent}% learner!',
                 style: const TextStyle(
                   color: ReferenceColors.ink,
                   fontSize: 22,
@@ -432,12 +520,12 @@ class _SummaryPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              const _SummaryStats(),
+              _SummaryStats(snapshot: snapshot),
             ],
           ),
         ),
         const SizedBox(height: 14),
-        const Text('Your stats as of Nov. 30, 2025'),
+        Text('Your stats as of ${_reviewDate(snapshot.asOf)}'),
         const SizedBox(height: 16),
         _ShareButton(ref: ref),
       ],
@@ -691,15 +779,20 @@ class _Stat extends StatelessWidget {
 }
 
 class _SummaryStats extends StatelessWidget {
-  const _SummaryStats();
+  const _SummaryStats({required this.snapshot});
+
+  final YearReviewSnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
     final stats = [
-      _Stat('${historical2025.englishScore}', 'English Score'),
-      _Stat('${historical2025.longestStreak}', 'longest streak'),
-      _Stat('${historical2025.totalXp}', 'total XP'),
-      _Stat('${historical2025.minutesSpent}', 'minutes spent'),
+      _Stat(
+        snapshot.englishScore == null ? '—' : '${snapshot.englishScore}',
+        'English Score',
+      ),
+      _Stat('${snapshot.longestStreak}', 'longest streak'),
+      _Stat('${snapshot.totalXp}', 'total XP'),
+      _Stat('${snapshot.minutesSpent}', 'minutes spent'),
     ];
     return LayoutBuilder(
       builder: (context, constraints) {

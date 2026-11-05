@@ -1,3 +1,7 @@
+import 'package:flutter/foundation.dart';
+
+import '../../super_trial/presentation/android_super_flow.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,6 +39,9 @@ class _SuperState extends ConsumerState<SuperScreen> {
   void next() => setState(() => step++);
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb || defaultTargetPlatform == TargetPlatform.android) {
+      return const AndroidSuperFlow();
+    }
     final selected = ref.watch(extendedControllerProvider).selectedPlan;
     return Scaffold(
       body: Container(
@@ -433,66 +440,70 @@ class _SuperTourState extends State<SuperTourScreen> {
     ),
   ];
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: Container(
-      decoration: const BoxDecoration(gradient: _superGradient),
-      child: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: LinearProgressIndicator(
-                value: (step + 1) / 3,
-                minHeight: 12,
-                borderRadius: BorderRadius.circular(20),
-                color: const Color(0xFF625CFF),
-                backgroundColor: const Color(0xFF24137F),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 34),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        pages[step].$1,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 27,
-                          fontWeight: FontWeight.w700,
-                          height: 1.3,
-                        ),
+  Widget build(BuildContext context) =>
+      (kIsWeb || defaultTargetPlatform == TargetPlatform.android)
+      ? const AndroidSuperWelcome()
+      : Scaffold(
+          body: Container(
+            decoration: const BoxDecoration(gradient: _superGradient),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: LinearProgressIndicator(
+                      value: (step + 1) / 3,
+                      minHeight: 12,
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xFF625CFF),
+                      backgroundColor: const Color(0xFF24137F),
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 34),
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Text(
+                              pages[step].$1,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 27,
+                                fontWeight: FontWeight.w700,
+                                height: 1.3,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 35),
+                          ReferenceArt(
+                            ArtRegion(pages[step].$2, pages[step].$3),
+                            width: step == 2 ? 175 : 335,
+                            height: step == 2 ? 165 : 347,
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 35),
-                    ReferenceArt(
-                      ArtRegion(pages[step].$2, pages[step].$3),
-                      width: step == 2 ? 175 : 335,
-                      height: step == 2 ? 165 : 347,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                    child: ReferenceButton(
+                      label: step == 2 ? 'LET’S GO' : 'MORE',
+                      backgroundColor: Colors.white,
+                      edgeColor: const Color(0xFF9A90B4),
+                      foregroundColor: _superInk,
+                      onPressed: () => step == 2
+                          ? context.go('/home')
+                          : setState(() => step++),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-              child: ReferenceButton(
-                label: step == 2 ? 'LET’S GO' : 'MORE',
-                backgroundColor: Colors.white,
-                edgeColor: const Color(0xFF9A90B4),
-                foregroundColor: _superInk,
-                onPressed: () =>
-                    step == 2 ? context.go('/home') : setState(() => step++),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+          ),
+        );
 }
 
 class SubscriptionScreen extends ConsumerWidget {

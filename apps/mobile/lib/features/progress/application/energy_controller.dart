@@ -25,12 +25,17 @@ class EnergyController extends Notifier<bool> {
   bool build() => false;
   bool available(EnergyOffer offer) {
     final energy = ref.read(extendedControllerProvider);
+    final api = ref.read(appConfigProvider).isApi;
     return !state &&
         !energy.unlimited &&
         energy.energy < ref.read(energyRepositoryProvider).capacity &&
-        (!ref.read(appConfigProvider).isApi ||
-            offer.kind == EnergyRefillKind.ad) &&
-        (offer.cost == 0 || ref.read(previewWalletProvider) >= offer.cost);
+        (api
+            ? offer.kind == EnergyRefillKind.ad ||
+                  offer.kind == EnergyRefillKind.recharge
+            : true) &&
+        (api ||
+            offer.cost == 0 ||
+            ref.read(previewWalletProvider) >= offer.cost);
   }
 
   bool beginAd(EnergyOffer offer) {
@@ -51,10 +56,12 @@ class EnergyController extends Notifier<bool> {
     }
     state = true;
     try {
+      final api = ref.read(appConfigProvider).isApi;
       final balance = await ref
           .read(energyRepositoryProvider)
           .refill(offer, ref.read(extendedControllerProvider).energy);
-      if (offer.cost > 0 &&
+      if (!api &&
+          offer.cost > 0 &&
           !ref
               .read(previewControllerProvider.notifier)
               .spendRefillGems(offer.cost)) {

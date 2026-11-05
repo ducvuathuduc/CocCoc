@@ -5,10 +5,9 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
-import '../../progress/application/preview_controller.dart';
 import '../application/quests_controller.dart';
 import '../domain/quest_models.dart';
-import 'chest_opening.dart';
+import 'upgrade_chest_screen.dart';
 import 'quest_art.dart';
 
 class QuestsScreen extends ConsumerWidget {
@@ -18,6 +17,7 @@ class QuestsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final palette = context.referencePalette;
     final questState = ref.watch(questsControllerProvider);
     final controller = ref.read(questsControllerProvider.notifier);
 
@@ -81,7 +81,9 @@ class QuestsScreen extends ConsumerWidget {
     final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? palette.surface
+          : Colors.white,
       body: ListView(
         key: const PageStorageKey('quests'),
         padding: EdgeInsets.zero,
@@ -140,7 +142,9 @@ class QuestsScreen extends ConsumerWidget {
                 const SizedBox(height: 14),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? palette.raisedSurface
+                        : Colors.white,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding: const EdgeInsets.all(16),
@@ -196,6 +200,25 @@ class QuestsScreen extends ConsumerWidget {
                   const SizedBox(height: 18),
                   Text(questState.friendsQuest.title, style: headingStyle),
                   const SizedBox(height: 12),
+                  if (!questState.friendsQuest.isOptedIn &&
+                      !questState.friendsQuest.isCompleted) ...[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: 112,
+                        child: ReferenceButton(
+                          label: 'JOIN',
+                          outlined: true,
+                          foregroundColor: const Color(0xFF4B4B4B),
+                          minHeight: 44,
+                          onPressed: () {
+                            controller.optInFriendQuest();
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                   QuestProgress(
                     value: questState.friendsQuest.userLessons,
                     secondaryValue: questState.friendsQuest.friendLessons,
@@ -291,7 +314,7 @@ class QuestsScreen extends ConsumerWidget {
                 ],
 
                 const SizedBox(height: 32),
-                const Divider(color: ReferenceColors.border, thickness: 2),
+                Divider(color: palette.border, thickness: 2),
                 const SizedBox(height: 24),
 
                 _TimedHeader(
@@ -303,17 +326,18 @@ class QuestsScreen extends ConsumerWidget {
                 for (final quest in questState.dailyQuests)
                   _DailyQuestTile(
                     quest: quest,
-                    onClaim: () {
-                      // Row 17: open the chest when the claim credited gems.
-                      final before = ref.read(previewWalletProvider);
-                      if (!controller.claimQuest(quest.id)) return;
-                      final gems = ref.read(previewWalletProvider) - before;
-                      if (gems > 0) {
-                        showChestOpening(
-                          context,
-                          type: quest.chestType,
-                          gems: gems,
-                          copy: ref.read(chestRewardCopyProvider),
+                    onClaim: () async {
+                      final reward = await controller.claimReward(quest.id);
+                      if (!context.mounted) return;
+                      if (reward != null) {
+                        await showUpgradeChest(context, reward);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Could not claim this reward. Check your connection and try again.',
+                            ),
+                          ),
                         );
                       }
                     },
@@ -355,9 +379,9 @@ class _TimedHeader extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
+                Icon(
                   Icons.timer_outlined,
-                  color: ReferenceColors.disabled,
+                  color: context.referencePalette.disabled,
                   size: 16,
                 ),
                 const SizedBox(width: 4),
@@ -416,9 +440,9 @@ class _LessonCountRow extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: constraints.maxWidth / 2),
             child: Text(
               '$lessons lessons',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 19,
-                color: ReferenceColors.disabled,
+                color: context.referencePalette.disabled,
                 fontWeight: FontWeight.w700,
               ),
               maxLines: 1,
@@ -536,7 +560,7 @@ class QuestProgress extends StatelessWidget {
             child: Container(
               width: double.infinity,
               height: height,
-              color: const Color(0xFFE5E5E5),
+              color: context.referencePalette.border,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final maxWidth = constraints.maxWidth;
@@ -578,7 +602,9 @@ class QuestProgress extends StatelessWidget {
               child: Text(
                 '$total / $target',
                 style: TextStyle(
-                  color: hasDarkFill ? Colors.white : const Color(0xFF8E8E93),
+                  color: hasDarkFill
+                      ? Colors.white
+                      : context.referencePalette.muted,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                 ),

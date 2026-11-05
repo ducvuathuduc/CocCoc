@@ -7,7 +7,5 @@
   "PROGRESS_API_URL": "https://coccoc-progress.sgp.appwrite.run",
   "AI_API_URL": "https://coccoc-ai.sgp.appwrite.run",
   "APPWRITE_GOOGLE_ENABLED": "false",
-  "APPWRITE_FACEBOOK_ENABLED": "false",
-  "APPWRITE_APPLE_ENABLED": "false",
   "RIVE_NATIVE_WASM_HOST": "rive/"
 }

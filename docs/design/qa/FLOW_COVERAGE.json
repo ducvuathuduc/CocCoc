@@ -9,7 +9,7 @@
       "evidence": [
         "docs/design/flows/01_ONBOARDING.md",
         "apps/mobile/test/visual_capture_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -20,7 +20,7 @@
       "evidence": [
         "docs/design/flows/02_LOGIN.md",
         "apps/mobile/test/login_visual_capture_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -31,7 +31,7 @@
       "evidence": [
         "docs/design/flows/03_DUO_MOTION.md",
         "apps/mobile/test/duo_motion_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -41,7 +41,7 @@
       "status": "verified_mock",
       "evidence": [
         "docs/design/flows/04_COURSE_PATH.md",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -51,14 +51,14 @@
       "status": "verified_mock",
       "evidence": [
         "docs/design/flows/05_LESSON_RESULTS.md",
-        "docs/design/qa/github-preflight-gate.log",
+        "docs/archive/qa-logs/github-preflight-gate.log",
         "docs/design/flows/30_ENGLISH_SPOKEN_LESSON.md",
         "docs/design/qa/ENGLISH_LESSON_REPORT.md",
         "apps/mobile/test/english_spoken_lesson_test.dart",
         "apps/mobile/test/lesson_summary_test.dart",
-        "docs/design/qa/english-lesson-gate.log",
-        "docs/design/qa/english-lesson-capture.log",
-        "docs/design/qa/english-lesson-motion.log"
+        "docs/archive/qa-logs/english-lesson-gate.log",
+        "docs/archive/qa-logs/english-lesson-capture.log",
+        "docs/archive/qa-logs/english-lesson-motion.log"
       ],
       "openLimits": "Authored English/Vietnamese adaptation verified for Lily, text fallback and actual results. Original Lily reset/correct/incorrect runtime verified; live audio/speech and private motion timing are not certified by these mock tests."
     },
@@ -69,20 +69,20 @@
       "evidence": [
         "docs/design/flows/06_HUBS_ACCOUNT.md",
         "apps/mobile/test/full_frontend_qa_test.dart",
-        "docs/design/qa/github-preflight-gate.log",
+        "docs/archive/qa-logs/github-preflight-gate.log",
         "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-        "docs/design/qa/profile-source-complete-gate.log",
-        "docs/design/qa/profile-source-complete-captures.log",
+        "docs/archive/qa-logs/profile-source-complete-gate.log",
+        "docs/archive/qa-logs/profile-source-complete-captures.log",
         "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
         "apps/mobile/test/foreign_profile_test.dart",
         "apps/mobile/test/profile_weekly_progress_test.dart",
         "apps/mobile/test/foreign_achievements_route_test.dart",
         "apps/mobile/test/foreign_profile_sections_test.dart",
         "apps/mobile/test/foreign_profile_header_test.dart",
-        "docs/design/qa/profile-weekly-font-red.log",
-        "docs/design/qa/profile-weekly-foreign-awards-final.log",
+        "docs/archive/qa-logs/profile-weekly-font-red.log",
+        "docs/archive/qa-logs/profile-weekly-foreign-awards-final.log",
         "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md",
-        "docs/design/qa/league-review-green.log",
+        "docs/archive/qa-logs/league-review-green.log",
         "apps/mobile/test/league_ranking_test.dart",
         "apps/mobile/test/league_entry_surface_test.dart",
         "apps/mobile/test/league_source_route_test.dart"
@@ -96,7 +96,7 @@
       "evidence": [
         "docs/design/flows/07_REGISTRATION_SOCIAL_SPEECH.md",
         "apps/mobile/test/full_frontend_qa_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -107,7 +107,7 @@
       "evidence": [
         "docs/design/flows/08_ENGLISH_EXTENDED.md",
         "apps/mobile/test/extended_flow_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -117,7 +117,7 @@
       "status": "verified_mock",
       "evidence": [
         "docs/design/flows/09_ENGLISH_STORY_RADIO_ROLEPLAY.md",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -128,7 +128,7 @@
       "evidence": [
         "docs/design/flows/10_ENGLISH_CHALLENGES.md",
         "apps/mobile/test/challenge_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -139,7 +139,7 @@
       "evidence": [
         "docs/design/flows/11_ENGLISH_ADVENTURE.md",
         "apps/mobile/test/adventure_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -150,7 +150,7 @@
       "evidence": [
         "docs/design/flows/12_EXPLAIN_ANSWER.md",
         "apps/mobile/test/explanation_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -160,7 +160,7 @@
       "status": "verified_mock",
       "evidence": [
         "docs/design/flows/13_STORIES_LIBRARY.md",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -171,7 +171,7 @@
       "evidence": [
         "docs/design/flows/14_MAX_SUBSCRIPTION.md",
         "apps/mobile/test/max_flow_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -182,7 +182,7 @@
       "evidence": [
         "docs/design/flows/15_TIMER_BOOST.md",
         "apps/mobile/test/timer_boost_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -193,7 +193,7 @@
       "evidence": [
         "docs/design/flows/16_STREAK_SOCIAL.md",
         "apps/mobile/test/streak_social_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -204,10 +204,10 @@
       "evidence": [
         "docs/design/flows/17_ACHIEVEMENTS.md",
         "apps/mobile/test/achievements_flow_test.dart",
-        "docs/design/qa/github-preflight-gate.log",
+        "docs/archive/qa-logs/github-preflight-gate.log",
         "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-        "docs/design/qa/profile-source-complete-gate.log",
-        "docs/design/qa/profile-source-complete-captures.log",
+        "docs/archive/qa-logs/profile-source-complete-gate.log",
+        "docs/archive/qa-logs/profile-source-complete-captures.log",
         "apps/mobile/test/monthly_badges_route_test.dart",
         "apps/mobile/test/profile_sections_test.dart"
       ],
@@ -220,7 +220,7 @@
       "evidence": [
         "docs/design/flows/18_FRIENDS_CLASH.md",
         "apps/mobile/test/clash_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -231,7 +231,7 @@
       "evidence": [
         "docs/design/flows/19_STATUS_FEED.md",
         "apps/mobile/test/status_feed_ui_test.dart",
-        "docs/design/qa/github-preflight-gate.log"
+        "docs/archive/qa-logs/github-preflight-gate.log"
       ],
       "openLimits": "Source variants and exact archived pixel/motion still require reconciliation."
     },
@@ -244,7 +244,7 @@
         "apps/mobile/test/course_management_test.dart",
         "apps/mobile/test/course_management_ui_test.dart",
         "apps/mobile/test/course_management_route_test.dart",
-        "docs/design/qa/english-continuation-gate.log"
+        "docs/archive/qa-logs/english-continuation-gate.log"
       ],
       "openLimits": "English replaces archived French; Math/Music/Chess excluded. Existing Settings layout is reused. Crying Duo is original still;350ms local removal wait does not establish original timing."
     },
@@ -256,21 +256,21 @@
         "docs/design/flows/21_PROFILE_ACTIONS.md",
         "apps/mobile/test/profile_actions_test.dart",
         "apps/mobile/test/profile_actions_route_test.dart",
-        "docs/design/qa/english-continuation-gate.log",
+        "docs/archive/qa-logs/english-continuation-gate.log",
         "apps/mobile/test/profile_actions_ui_test.dart",
         "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-        "docs/design/qa/profile-source-complete-gate.log",
-        "docs/design/qa/profile-source-complete-captures.log",
+        "docs/archive/qa-logs/profile-source-complete-gate.log",
+        "docs/archive/qa-logs/profile-source-complete-captures.log",
         "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
         "apps/mobile/test/profile_lists_route_test.dart",
         "apps/mobile/test/foreign_profile_test.dart",
-        "docs/design/qa/profile-followback-source-green.log",
+        "docs/archive/qa-logs/profile-followback-source-green.log",
         "apps/mobile/test/profile_weekly_progress_test.dart",
         "apps/mobile/test/foreign_achievements_route_test.dart",
         "apps/mobile/test/foreign_profile_sections_test.dart",
         "apps/mobile/test/foreign_profile_header_test.dart",
-        "docs/design/qa/profile-weekly-font-red.log",
-        "docs/design/qa/profile-weekly-foreign-awards-final.log"
+        "docs/archive/qa-logs/profile-weekly-font-red.log",
+        "docs/archive/qa-logs/profile-weekly-foreign-awards-final.log"
       ],
       "openLimits": "Local fixture identity and existing profile layout differ from the archived profile. Report/block confirmation is explicitly local; nothing is sent. Cupertino action sheet uses bundled readable Duo font; exact iOS system typography remains open. QR and clipboard use identical local preview URL; source encoded contents and rounded eye geometry differ. Source profile fixture/layout and original QR dialog timing are not certified."
     },
@@ -282,7 +282,7 @@
         "docs/design/flows/23_SAVED_ACCOUNT_MANAGEMENT.md",
         "apps/mobile/test/saved_account_management_test.dart",
         "apps/mobile/test/login_flow_test.dart",
-        "docs/design/qa/english-continuation-gate.log"
+        "docs/archive/qa-logs/english-continuation-gate.log"
       ],
       "openLimits": "Saved name/email are local demo fixtures. Native opaque popover replaces source liquid-glass compositing. Existing original Welcome/Login motion is reused; exact archived pose/frame timing remains unresolved."
     },
@@ -295,7 +295,7 @@
         "apps/mobile/test/password_change_test.dart",
         "apps/mobile/test/password_change_ui_test.dart",
         "apps/mobile/test/password_change_route_test.dart",
-        "docs/design/qa/english-continuation-gate.log"
+        "docs/archive/qa-logs/english-continuation-gate.log"
       ],
       "openLimits": "Full native Profile editor/password draft return verified locally. Real account updates and exact archived iOS route timing remain pending."
     },
@@ -333,8 +333,8 @@
       "evidence": [
         "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
         "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-        "docs/design/qa/profile-score-final-gate.log",
-        "docs/design/qa/profile-family-crop-final.log",
+        "docs/archive/qa-logs/profile-score-final-gate.log",
+        "docs/archive/qa-logs/profile-family-crop-final.log",
         "apps/mobile/test/own_profile_screen_test.dart",
         "apps/mobile/test/profile_sections_test.dart"
       ],
@@ -347,15 +347,15 @@
       "evidence": [
         "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
         "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-        "docs/design/qa/profile-score-final-gate.log",
-        "docs/design/qa/profile-family-crop-final.log",
+        "docs/archive/qa-logs/profile-score-final-gate.log",
+        "docs/archive/qa-logs/profile-family-crop-final.log",
         "apps/mobile/test/own_profile_screen_test.dart",
         "apps/mobile/test/profile_sections_test.dart",
         "apps/mobile/test/profile_lists_route_test.dart",
-        "docs/design/qa/profile-source-complete-gate.log",
-        "docs/design/qa/profile-source-complete-captures.log",
+        "docs/archive/qa-logs/profile-source-complete-gate.log",
+        "docs/archive/qa-logs/profile-source-complete-captures.log",
         "apps/mobile/test/foreign_profile_test.dart",
-        "docs/design/qa/profile-followback-source-green.log"
+        "docs/archive/qa-logs/profile-followback-source-green.log"
       ],
       "openLimits": "Courses/Following/empty and populated Followers, guarded Follow back and return verified locally. Non-language subjects excluded; names/English counts adapted. Original individual portraits, archived pixel/motion timing and real social service writes remain separate.",
       "status": "verified_mock"
@@ -366,8 +366,8 @@
       "evidence": [
         "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
         "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-        "docs/design/qa/profile-score-final-gate.log",
-        "docs/design/qa/profile-family-crop-final.log",
+        "docs/archive/qa-logs/profile-score-final-gate.log",
+        "docs/archive/qa-logs/profile-family-crop-final.log",
         "apps/mobile/test/score_information_test.dart"
       ],
       "openLimits": "Nine current inclusive bands, locked state, lifecycle and clipboard verified. Examples/audio/share are local fixtures; older range labels and device/pixel/motion proof remain separate.",
@@ -380,8 +380,8 @@
       "evidence": [
         "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
         "docs/design/qa/SESSION_FINISH_REPORT.md",
-        "docs/design/qa/session-finish-gate.log",
-        "docs/design/qa/session-finish-captures.log",
+        "docs/archive/qa-logs/session-finish-gate.log",
+        "docs/archive/qa-logs/session-finish-captures.log",
         "apps/mobile/test/session_finish_routing_test.dart",
         "apps/mobile/test/session_finish_capture_test.dart",
         "apps/mobile/test/year_review_test.dart"
@@ -395,8 +395,8 @@
       "evidence": [
         "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
         "docs/design/qa/SESSION_FINISH_REPORT.md",
-        "docs/design/qa/session-finish-gate.log",
-        "docs/design/qa/session-finish-captures.log",
+        "docs/archive/qa-logs/session-finish-gate.log",
+        "docs/archive/qa-logs/session-finish-captures.log",
         "apps/mobile/test/session_finish_routing_test.dart",
         "apps/mobile/test/session_finish_capture_test.dart",
         "apps/mobile/test/streak_widgets_test.dart"
@@ -411,9 +411,9 @@
       "evidence": [
         "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
         "docs/design/qa/COURSE_FINISH_REPORT.md",
-        "docs/design/qa/course-finish-gate.log",
-        "docs/design/qa/course-finish-captures.log",
-        "docs/design/qa/course-finish-motion.log",
+        "docs/archive/qa-logs/course-finish-gate.log",
+        "docs/archive/qa-logs/course-finish-captures.log",
+        "docs/archive/qa-logs/course-finish-motion.log",
         "apps/mobile/test/course_flow_test.dart",
         "apps/mobile/test/unit_skip_test.dart",
         "apps/mobile/test/course_motion_capture_test.dart"
@@ -427,9 +427,9 @@
       "evidence": [
         "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
         "docs/design/qa/COURSE_FINISH_REPORT.md",
-        "docs/design/qa/course-finish-gate.log",
-        "docs/design/qa/course-finish-captures.log",
-        "docs/design/qa/course-finish-motion.log",
+        "docs/archive/qa-logs/course-finish-gate.log",
+        "docs/archive/qa-logs/course-finish-captures.log",
+        "docs/archive/qa-logs/course-finish-motion.log",
         "apps/mobile/test/course_flow_test.dart",
         "apps/mobile/test/unit_skip_test.dart",
         "apps/mobile/test/course_motion_capture_test.dart"
@@ -443,9 +443,9 @@
       "evidence": [
         "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
         "docs/design/qa/COURSE_FINISH_REPORT.md",
-        "docs/design/qa/course-finish-gate.log",
-        "docs/design/qa/course-finish-captures.log",
-        "docs/design/qa/course-finish-motion.log",
+        "docs/archive/qa-logs/course-finish-gate.log",
+        "docs/archive/qa-logs/course-finish-captures.log",
+        "docs/archive/qa-logs/course-finish-motion.log",
         "apps/mobile/test/course_flow_test.dart",
         "apps/mobile/test/unit_skip_test.dart",
         "apps/mobile/test/course_motion_capture_test.dart"
@@ -508,9 +508,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -524,9 +524,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -556,8 +556,8 @@
           "evidence": [
             "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/score_information_test.dart"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
@@ -569,8 +569,8 @@
           "evidence": [
             "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/score_information_test.dart"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
@@ -582,8 +582,8 @@
           "evidence": [
             "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/score_information_test.dart"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
@@ -609,8 +609,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/streak_widgets_test.dart"
@@ -624,8 +624,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/streak_widgets_test.dart"
@@ -639,8 +639,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/streak_widgets_test.dart"
@@ -654,8 +654,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/streak_widgets_test.dart"
@@ -669,8 +669,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/streak_widgets_test.dart"
@@ -684,8 +684,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/streak_widgets_test.dart"
@@ -699,8 +699,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/streak_widgets_test.dart"
@@ -728,8 +728,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -743,8 +743,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -758,8 +758,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -773,8 +773,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -788,8 +788,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -803,8 +803,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -818,8 +818,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -833,8 +833,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/year_review_test.dart"
@@ -976,7 +976,7 @@
             "apps/mobile/test/course_management_test.dart",
             "apps/mobile/test/course_management_ui_test.dart",
             "apps/mobile/test/course_management_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log"
+            "docs/archive/qa-logs/english-continuation-gate.log"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
           "visualStatus": "reviewed_with_recorded_differences"
@@ -990,7 +990,7 @@
             "apps/mobile/test/course_management_test.dart",
             "apps/mobile/test/course_management_ui_test.dart",
             "apps/mobile/test/course_management_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/courses.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -1005,7 +1005,7 @@
             "apps/mobile/test/course_management_test.dart",
             "apps/mobile/test/course_management_ui_test.dart",
             "apps/mobile/test/course_management_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/course-confirm.png"
           ],
           "motion": "source_still_only",
@@ -1020,7 +1020,7 @@
             "apps/mobile/test/course_management_test.dart",
             "apps/mobile/test/course_management_ui_test.dart",
             "apps/mobile/test/course_management_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/course-removing.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -1035,7 +1035,7 @@
             "apps/mobile/test/course_management_test.dart",
             "apps/mobile/test/course_management_ui_test.dart",
             "apps/mobile/test/course_management_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/course-removed.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -1310,8 +1310,8 @@
           "evidence": [
             "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/score_information_test.dart"
           ],
           "motion": "not_reconciled"
@@ -1323,8 +1323,8 @@
           "evidence": [
             "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/score_information_test.dart"
           ],
           "motion": "not_reconciled"
@@ -1336,8 +1336,8 @@
           "evidence": [
             "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/score_information_test.dart"
           ],
           "motion": "not_reconciled"
@@ -1349,8 +1349,8 @@
           "evidence": [
             "docs/design/flows/26_ENGLISH_SCORE_INFORMATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/score_information_test.dart"
           ],
           "motion": "not_reconciled"
@@ -1412,18 +1412,18 @@
           "status": "verified_mock",
           "evidence": [
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "apps/mobile/test/foreign_profile_test.dart",
             "apps/mobile/test/profile_weekly_progress_test.dart",
             "apps/mobile/test/foreign_achievements_route_test.dart",
             "apps/mobile/test/foreign_profile_sections_test.dart",
             "apps/mobile/test/foreign_profile_header_test.dart",
-            "docs/design/qa/profile-weekly-font-red.log",
-            "docs/design/qa/profile-weekly-foreign-awards-final.log",
+            "docs/archive/qa-logs/profile-weekly-font-red.log",
+            "docs/archive/qa-logs/profile-weekly-foreign-awards-final.log",
             "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md",
-            "docs/design/qa/league-review-green.log",
+            "docs/archive/qa-logs/league-review-green.log",
             "apps/mobile/test/league_ranking_test.dart",
             "apps/mobile/test/league_entry_surface_test.dart",
             "apps/mobile/test/league_source_route_test.dart"
@@ -1436,16 +1436,16 @@
           "status": "in_progress",
           "evidence": [
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "apps/mobile/test/foreign_profile_test.dart",
             "apps/mobile/test/profile_weekly_progress_test.dart",
             "apps/mobile/test/foreign_achievements_route_test.dart",
             "apps/mobile/test/foreign_profile_sections_test.dart",
             "apps/mobile/test/foreign_profile_header_test.dart",
-            "docs/design/qa/profile-weekly-font-red.log",
-            "docs/design/qa/profile-weekly-foreign-awards-final.log"
+            "docs/archive/qa-logs/profile-weekly-font-red.log",
+            "docs/archive/qa-logs/profile-weekly-foreign-awards-final.log"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
         },
@@ -1455,16 +1455,16 @@
           "status": "in_progress",
           "evidence": [
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "apps/mobile/test/foreign_profile_test.dart",
             "apps/mobile/test/profile_weekly_progress_test.dart",
             "apps/mobile/test/foreign_achievements_route_test.dart",
             "apps/mobile/test/foreign_profile_sections_test.dart",
             "apps/mobile/test/foreign_profile_header_test.dart",
-            "docs/design/qa/profile-weekly-font-red.log",
-            "docs/design/qa/profile-weekly-foreign-awards-final.log"
+            "docs/archive/qa-logs/profile-weekly-font-red.log",
+            "docs/archive/qa-logs/profile-weekly-foreign-awards-final.log"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
         },
@@ -1474,16 +1474,16 @@
           "status": "in_progress",
           "evidence": [
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "apps/mobile/test/foreign_profile_test.dart",
             "apps/mobile/test/profile_weekly_progress_test.dart",
             "apps/mobile/test/foreign_achievements_route_test.dart",
             "apps/mobile/test/foreign_profile_sections_test.dart",
             "apps/mobile/test/foreign_profile_header_test.dart",
-            "docs/design/qa/profile-weekly-font-red.log",
-            "docs/design/qa/profile-weekly-foreign-awards-final.log"
+            "docs/archive/qa-logs/profile-weekly-font-red.log",
+            "docs/archive/qa-logs/profile-weekly-foreign-awards-final.log"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
         }
@@ -2574,8 +2574,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -2588,8 +2588,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -2602,8 +2602,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -2616,8 +2616,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -2630,8 +2630,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -2644,8 +2644,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -2929,9 +2929,9 @@
           "evidence": [
             "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
-            "docs/design/qa/league-review-green.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/league-review-green.log",
             "apps/mobile/test/league_ranking_test.dart",
             "apps/mobile/test/league_entry_surface_test.dart",
             "apps/mobile/test/league_source_route_test.dart"
@@ -2945,9 +2945,9 @@
           "evidence": [
             "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
-            "docs/design/qa/league-review-green.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/league-review-green.log",
             "apps/mobile/test/league_ranking_test.dart",
             "apps/mobile/test/league_entry_surface_test.dart",
             "apps/mobile/test/league_source_route_test.dart"
@@ -2961,8 +2961,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/league_result_test.dart",
@@ -2977,8 +2977,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/league_result_test.dart",
@@ -2993,8 +2993,8 @@
           "evidence": [
             "docs/design/flows/28_YEAR_REVIEW_WIDGETS.md",
             "docs/design/qa/SESSION_FINISH_REPORT.md",
-            "docs/design/qa/session-finish-gate.log",
-            "docs/design/qa/session-finish-captures.log",
+            "docs/archive/qa-logs/session-finish-gate.log",
+            "docs/archive/qa-logs/session-finish-captures.log",
             "apps/mobile/test/session_finish_routing_test.dart",
             "apps/mobile/test/session_finish_capture_test.dart",
             "apps/mobile/test/league_result_test.dart",
@@ -3009,9 +3009,9 @@
           "evidence": [
             "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
-            "docs/design/qa/league-review-green.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/league-review-green.log",
             "apps/mobile/test/league_ranking_test.dart",
             "apps/mobile/test/league_entry_surface_test.dart",
             "apps/mobile/test/league_source_route_test.dart"
@@ -3025,9 +3025,9 @@
           "evidence": [
             "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
-            "docs/design/qa/league-review-green.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/league-review-green.log",
             "apps/mobile/test/league_ranking_test.dart",
             "apps/mobile/test/league_entry_surface_test.dart",
             "apps/mobile/test/league_source_route_test.dart"
@@ -3909,7 +3909,7 @@
             "docs/design/flows/21_PROFILE_ACTIONS.md",
             "apps/mobile/test/profile_actions_test.dart",
             "apps/mobile/test/profile_actions_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log"
+            "docs/archive/qa-logs/english-continuation-gate.log"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
           "visualStatus": "reviewed_with_recorded_differences"
@@ -3922,7 +3922,7 @@
             "docs/design/flows/21_PROFILE_ACTIONS.md",
             "apps/mobile/test/profile_actions_test.dart",
             "apps/mobile/test/profile_actions_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/report-reasons.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -3936,7 +3936,7 @@
             "docs/design/flows/21_PROFILE_ACTIONS.md",
             "apps/mobile/test/profile_actions_test.dart",
             "apps/mobile/test/profile_actions_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/profile-blocked.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -4044,7 +4044,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         },
@@ -4055,7 +4055,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         },
@@ -4066,7 +4066,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         },
@@ -4077,7 +4077,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         },
@@ -4088,7 +4088,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         },
@@ -4099,7 +4099,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         },
@@ -4110,7 +4110,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         },
@@ -4121,7 +4121,7 @@
           "evidence": [
             "docs/design/flows/18_FRIENDS_CLASH.md",
             "apps/mobile/test/clash_test.dart",
-            "docs/design/qa/github-preflight-gate.log"
+            "docs/archive/qa-logs/github-preflight-gate.log"
           ],
           "motion": "verified_original_rive_or_still"
         }
@@ -4934,9 +4934,9 @@
             "docs/design/qa/ENGLISH_LESSON_REPORT.md",
             "apps/mobile/test/english_spoken_lesson_test.dart",
             "apps/mobile/test/lesson_summary_test.dart",
-            "docs/design/qa/english-lesson-gate.log",
-            "docs/design/qa/english-lesson-capture.log",
-            "docs/design/qa/english-lesson-motion.log"
+            "docs/archive/qa-logs/english-lesson-gate.log",
+            "docs/archive/qa-logs/english-lesson-capture.log",
+            "docs/archive/qa-logs/english-lesson-motion.log"
           ],
           "motion": "not_reconciled",
           "notes": "Actual streak counter/orange progress verified; source hard-exercise composition, 17-answer count and private PERFECT confetti timeline remain separate."
@@ -4950,9 +4950,9 @@
             "docs/design/qa/ENGLISH_LESSON_REPORT.md",
             "apps/mobile/test/english_spoken_lesson_test.dart",
             "apps/mobile/test/lesson_summary_test.dart",
-            "docs/design/qa/english-lesson-gate.log",
-            "docs/design/qa/english-lesson-capture.log",
-            "docs/design/qa/english-lesson-motion.log"
+            "docs/archive/qa-logs/english-lesson-gate.log",
+            "docs/archive/qa-logs/english-lesson-capture.log",
+            "docs/archive/qa-logs/english-lesson-motion.log"
           ],
           "motion": "static_reference_native",
           "notes": "Native summary with original medal Duo, actual receipt values, uniform cards; Accuracy/Time labels reflect metrics without invented thresholds. Native capture11."
@@ -5399,9 +5399,9 @@
           "evidence": [
             "docs/design/flows/27_LEAGUE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
-            "docs/design/qa/league-review-green.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/league-review-green.log",
             "apps/mobile/test/league_ranking_test.dart",
             "apps/mobile/test/league_entry_surface_test.dart",
             "apps/mobile/test/league_source_route_test.dart"
@@ -5460,7 +5460,7 @@
             "docs/design/flows/21_PROFILE_ACTIONS.md",
             "apps/mobile/test/profile_actions_ui_test.dart",
             "apps/mobile/test/profile_actions_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log"
+            "docs/archive/qa-logs/english-continuation-gate.log"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
           "visualStatus": "reviewed_with_recorded_differences"
@@ -5473,7 +5473,7 @@
             "docs/design/flows/21_PROFILE_ACTIONS.md",
             "apps/mobile/test/profile_actions_ui_test.dart",
             "apps/mobile/test/profile_actions_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/profile-link.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -5487,7 +5487,7 @@
             "docs/design/flows/21_PROFILE_ACTIONS.md",
             "apps/mobile/test/profile_actions_ui_test.dart",
             "apps/mobile/test/profile_actions_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/profile-link-copied.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -6209,9 +6209,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -6225,9 +6225,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -6241,9 +6241,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -6257,9 +6257,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -6400,9 +6400,9 @@
             "docs/design/qa/ENGLISH_LESSON_REPORT.md",
             "apps/mobile/test/english_spoken_lesson_test.dart",
             "apps/mobile/test/lesson_summary_test.dart",
-            "docs/design/qa/english-lesson-gate.log",
-            "docs/design/qa/english-lesson-capture.log",
-            "docs/design/qa/english-lesson-motion.log"
+            "docs/archive/qa-logs/english-lesson-gate.log",
+            "docs/archive/qa-logs/english-lesson-capture.log",
+            "docs/archive/qa-logs/english-lesson-motion.log"
           ],
           "motion": "original_runtime_verified_private_timing_unverified",
           "notes": "Original Lily ready, English prompt and product speech fallback; native capture01 plus enabled idle frames."
@@ -6430,9 +6430,9 @@
             "docs/design/qa/ENGLISH_LESSON_REPORT.md",
             "apps/mobile/test/english_spoken_lesson_test.dart",
             "apps/mobile/test/lesson_summary_test.dart",
-            "docs/design/qa/english-lesson-gate.log",
-            "docs/design/qa/english-lesson-capture.log",
-            "docs/design/qa/english-lesson-motion.log"
+            "docs/archive/qa-logs/english-lesson-gate.log",
+            "docs/archive/qa-logs/english-lesson-capture.log",
+            "docs/archive/qa-logs/english-lesson-motion.log"
           ],
           "motion": "original_runtime_verified_private_timing_unverified",
           "notes": "Correct meaning and original Lily reaction, authored English/Vietnamese; native capture05 plus enabled correct frame."
@@ -6481,9 +6481,9 @@
             "docs/design/qa/ENGLISH_LESSON_REPORT.md",
             "apps/mobile/test/english_spoken_lesson_test.dart",
             "apps/mobile/test/lesson_summary_test.dart",
-            "docs/design/qa/english-lesson-gate.log",
-            "docs/design/qa/english-lesson-capture.log",
-            "docs/design/qa/english-lesson-motion.log"
+            "docs/archive/qa-logs/english-lesson-gate.log",
+            "docs/archive/qa-logs/english-lesson-capture.log",
+            "docs/archive/qa-logs/english-lesson-motion.log"
           ],
           "motion": "static_reference_native",
           "notes": "Native stacked speaking cards and audio-wave action, English repeat sentence, defined text alternative; native captures07..09."
@@ -6539,9 +6539,9 @@
             "docs/design/qa/ENGLISH_LESSON_REPORT.md",
             "apps/mobile/test/english_spoken_lesson_test.dart",
             "apps/mobile/test/lesson_summary_test.dart",
-            "docs/design/qa/english-lesson-gate.log",
-            "docs/design/qa/english-lesson-capture.log",
-            "docs/design/qa/english-lesson-motion.log"
+            "docs/archive/qa-logs/english-lesson-gate.log",
+            "docs/archive/qa-logs/english-lesson-capture.log",
+            "docs/archive/qa-logs/english-lesson-motion.log"
           ],
           "motion": "not_reconciled",
           "notes": "Actual streak counter/orange progress verified; source hard-exercise composition, 17-answer count and private PERFECT confetti timeline remain separate."
@@ -6698,7 +6698,7 @@
             "apps/mobile/test/password_change_test.dart",
             "apps/mobile/test/password_change_ui_test.dart",
             "apps/mobile/test/password_change_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/AVATAR_PRODUCT_SURFACE_REPORT.md",
             "apps/mobile/test/profile_editor_test.dart",
             "apps/mobile/test/avatar_route_test.dart",
@@ -6716,7 +6716,7 @@
             "apps/mobile/test/password_change_test.dart",
             "apps/mobile/test/password_change_ui_test.dart",
             "apps/mobile/test/password_change_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/password-empty.png",
             "docs/design/qa/AVATAR_PRODUCT_SURFACE_REPORT.md",
             "apps/mobile/test/profile_editor_test.dart",
@@ -6735,7 +6735,7 @@
             "apps/mobile/test/password_change_test.dart",
             "apps/mobile/test/password_change_ui_test.dart",
             "apps/mobile/test/password_change_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/password-filled.png",
             "docs/design/qa/AVATAR_PRODUCT_SURFACE_REPORT.md",
             "apps/mobile/test/profile_editor_test.dart",
@@ -6754,7 +6754,7 @@
             "apps/mobile/test/password_change_test.dart",
             "apps/mobile/test/password_change_ui_test.dart",
             "apps/mobile/test/password_change_route_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/AVATAR_PRODUCT_SURFACE_REPORT.md",
             "apps/mobile/test/profile_editor_test.dart",
             "apps/mobile/test/avatar_route_test.dart",
@@ -7361,7 +7361,7 @@
             "docs/design/flows/23_SAVED_ACCOUNT_MANAGEMENT.md",
             "apps/mobile/test/saved_account_management_test.dart",
             "apps/mobile/test/login_flow_test.dart",
-            "docs/design/qa/english-continuation-gate.log"
+            "docs/archive/qa-logs/english-continuation-gate.log"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
           "visualStatus": "reviewed_with_recorded_differences"
@@ -7374,7 +7374,7 @@
             "docs/design/flows/23_SAVED_ACCOUNT_MANAGEMENT.md",
             "apps/mobile/test/saved_account_management_test.dart",
             "apps/mobile/test/login_flow_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/saved-accounts.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -7388,7 +7388,7 @@
             "docs/design/flows/23_SAVED_ACCOUNT_MANAGEMENT.md",
             "apps/mobile/test/saved_account_management_test.dart",
             "apps/mobile/test/login_flow_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/saved-account-remove.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -7402,7 +7402,7 @@
             "docs/design/flows/23_SAVED_ACCOUNT_MANAGEMENT.md",
             "apps/mobile/test/saved_account_management_test.dart",
             "apps/mobile/test/login_flow_test.dart",
-            "docs/design/qa/english-continuation-gate.log",
+            "docs/archive/qa-logs/english-continuation-gate.log",
             "docs/design/qa/english-continuation/saved-account-removed.png"
           ],
           "motion": "native_or_existing_motion_timing_unverified",
@@ -7550,9 +7550,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -7566,9 +7566,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -7582,9 +7582,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -7598,9 +7598,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -7842,8 +7842,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -7856,8 +7856,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -7870,8 +7870,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -7884,8 +7884,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -7898,8 +7898,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -7912,8 +7912,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -7926,8 +7926,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -7940,8 +7940,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -8412,9 +8412,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -8428,9 +8428,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -8444,9 +8444,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -8932,8 +8932,8 @@
           "status": "verified_mock",
           "evidence": [
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "docs/design/flows/17_ACHIEVEMENTS.md",
             "apps/mobile/test/monthly_badges_route_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
@@ -8946,8 +8946,8 @@
           "status": "verified_mock",
           "evidence": [
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "docs/design/flows/17_ACHIEVEMENTS.md",
             "apps/mobile/test/monthly_badges_route_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
@@ -8960,8 +8960,8 @@
           "status": "verified_mock",
           "evidence": [
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "docs/design/flows/17_ACHIEVEMENTS.md",
             "apps/mobile/test/monthly_badges_route_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
@@ -9196,8 +9196,8 @@
             "docs/design/qa/avatar/state-0.png",
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart"
           ],
@@ -9227,9 +9227,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9243,9 +9243,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9259,9 +9259,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9275,9 +9275,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9291,9 +9291,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9307,9 +9307,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9323,9 +9323,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9339,9 +9339,9 @@
           "evidence": [
             "docs/design/flows/29_ENGLISH_COURSE_NAVIGATION.md",
             "docs/design/qa/COURSE_FINISH_REPORT.md",
-            "docs/design/qa/course-finish-gate.log",
-            "docs/design/qa/course-finish-captures.log",
-            "docs/design/qa/course-finish-motion.log",
+            "docs/archive/qa-logs/course-finish-gate.log",
+            "docs/archive/qa-logs/course-finish-captures.log",
+            "docs/archive/qa-logs/course-finish-motion.log",
             "apps/mobile/test/course_flow_test.dart",
             "apps/mobile/test/unit_skip_test.dart",
             "apps/mobile/test/course_motion_capture_test.dart"
@@ -9369,7 +9369,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/01.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9381,7 +9381,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/02.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9393,7 +9393,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/03.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9405,7 +9405,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/04.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9417,7 +9417,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/05.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9429,7 +9429,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/06.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9441,7 +9441,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/07.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9453,7 +9453,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/08.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9465,7 +9465,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/09.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9477,7 +9477,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/10.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9489,7 +9489,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/11.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9501,7 +9501,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/12.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9513,7 +9513,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/13.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9525,7 +9525,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/14.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9537,7 +9537,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/15.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9549,7 +9549,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/16.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9561,7 +9561,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/17.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9573,7 +9573,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/18.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9585,7 +9585,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/19.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9597,7 +9597,7 @@
           "evidence": [
             "docs/design/flows/01_ONBOARDING.md",
             "apps/mobile/test/visual_capture_test.dart",
-            "docs/design/qa/github-preflight-gate.log",
+            "docs/archive/qa-logs/github-preflight-gate.log",
             "docs/design/qa/onboarding/20.png"
           ],
           "motion": "original_assets_with_still_fallback"
@@ -9625,15 +9625,15 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart",
             "apps/mobile/test/profile_lists_route_test.dart",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "apps/mobile/test/foreign_profile_test.dart",
-            "docs/design/qa/profile-followback-source-green.log"
+            "docs/archive/qa-logs/profile-followback-source-green.log"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
         },
@@ -9644,15 +9644,15 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart",
             "apps/mobile/test/profile_lists_route_test.dart",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "apps/mobile/test/foreign_profile_test.dart",
-            "docs/design/qa/profile-followback-source-green.log"
+            "docs/archive/qa-logs/profile-followback-source-green.log"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
         },
@@ -9663,15 +9663,15 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart",
             "apps/mobile/test/profile_lists_route_test.dart",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "apps/mobile/test/foreign_profile_test.dart",
-            "docs/design/qa/profile-followback-source-green.log"
+            "docs/archive/qa-logs/profile-followback-source-green.log"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
         },
@@ -9682,15 +9682,15 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart",
             "apps/mobile/test/profile_lists_route_test.dart",
-            "docs/design/qa/profile-source-complete-gate.log",
-            "docs/design/qa/profile-source-complete-captures.log",
+            "docs/archive/qa-logs/profile-source-complete-gate.log",
+            "docs/archive/qa-logs/profile-source-complete-captures.log",
             "apps/mobile/test/foreign_profile_test.dart",
-            "docs/design/qa/profile-followback-source-green.log"
+            "docs/archive/qa-logs/profile-followback-source-green.log"
           ],
           "motion": "native_state_verified_archived_timing_unverified"
         }
@@ -9847,8 +9847,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart",
             "apps/mobile/test/profile_lists_route_test.dart"
@@ -9862,8 +9862,8 @@
           "evidence": [
             "docs/design/flows/25_PROFILE_SOURCE_RECONCILIATION.md",
             "docs/design/qa/PROFILE_SCORE_CONTINUATION_REPORT.md",
-            "docs/design/qa/profile-score-final-gate.log",
-            "docs/design/qa/profile-family-crop-final.log",
+            "docs/archive/qa-logs/profile-score-final-gate.log",
+            "docs/archive/qa-logs/profile-family-crop-final.log",
             "apps/mobile/test/own_profile_screen_test.dart",
             "apps/mobile/test/profile_sections_test.dart",
             "apps/mobile/test/profile_lists_route_test.dart"

@@ -2,13 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/config/app_config.dart';
+import '../../../core/config/validated_app_config.dart';
 import '../data/auth_repository.dart';
 import '../data/mock_auth_repository.dart';
 import '../domain/auth_state.dart';
 import '../services/appwrite_auth_service.dart';
 
 final appwriteAuthServiceProvider = Provider<AppwriteAuthService>(
-  (ref) => AppwriteAuthService.fromConfig(ref.watch(appConfigProvider)),
+  (ref) =>
+      AppwriteAuthService.fromConfig(ref.watch(validatedAppConfigProvider)),
 );
 
 /// Mock auth unless `DATA_SOURCE=api` (or an explicit `USE_MOCK_AUTH=false`).
@@ -18,9 +20,7 @@ final authAvailableProvidersProvider = Provider<Set<AuthProvider>>((ref) {
   if (ref.watch(appConfigProvider).useMockAuth) {
     return Set.unmodifiable(AuthProvider.values);
   }
-  return ref
-      .watch(appwriteAuthServiceProvider)
-      .availableProviders(defaultTargetPlatform);
+  return ref.watch(appwriteAuthServiceProvider).availableProviders();
 });
 
 final authRepositoryProvider = Provider<AuthRepository>(

@@ -44,8 +44,11 @@ class ProfileTabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = profile;
+    final palette = context.referencePalette;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? palette.surface
+          : Colors.white,
       body: SafeArea(
         top: false,
         child: CustomScrollView(
@@ -62,8 +65,8 @@ class ProfileTabScreen extends StatelessWidget {
                   children: [
                     Text(
                       p.identity,
-                      style: const TextStyle(
-                        color: ReferenceColors.disabled,
+                      style: TextStyle(
+                        color: palette.disabled,
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.1,
@@ -361,76 +364,79 @@ class _Counters extends StatelessWidget {
   final VoidCallback? onOpenFollowers;
 
   @override
-  Widget build(BuildContext context) => Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Expanded(
-        child: _Counter(
-          key: const ValueKey('profile-courses'),
-          label: 'Courses',
-          value: Row(
-            children: [
-              const _FrenchFlag(),
-              if (profile.extraCourses > 0) ...[
-                const SizedBox(width: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: ReferenceColors.border, width: 2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    '+${profile.extraCourses}',
-                    style: const TextStyle(
-                      color: ReferenceColors.disabled,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: _Counter(
+            key: const ValueKey('profile-courses'),
+            label: 'Courses',
+            value: Row(
+              children: [
+                const _FrenchFlag(),
+                if (profile.extraCourses > 0) ...[
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: palette.border, width: 2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      '+${profile.extraCourses}',
+                      style: TextStyle(
+                        color: palette.disabled,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
-          ),
-          onPressed: onOpenCourses ?? () => _showMessage(context, 'Courses'),
-        ),
-      ),
-      Expanded(
-        child: _Counter(
-          key: const ValueKey('profile-following'),
-          label: 'Following',
-          value: Text(
-            '${profile.following}',
-            style: const TextStyle(
-              color: ReferenceColors.ink,
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
             ),
+            onPressed: onOpenCourses ?? () => _showMessage(context, 'Courses'),
           ),
-          onPressed:
-              onOpenFollowing ?? () => _showMessage(context, 'Following'),
         ),
-      ),
-      Expanded(
-        child: _Counter(
-          key: const ValueKey('profile-followers'),
-          label: 'Followers',
-          value: Text(
-            '${profile.followers}',
-            style: const TextStyle(
-              color: ReferenceColors.ink,
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
+        Expanded(
+          child: _Counter(
+            key: const ValueKey('profile-following'),
+            label: 'Following',
+            value: Text(
+              '${profile.following}',
+              style: TextStyle(
+                color: palette.ink,
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+              ),
             ),
+            onPressed:
+                onOpenFollowing ?? () => _showMessage(context, 'Following'),
           ),
-          onPressed:
-              onOpenFollowers ?? () => _showMessage(context, 'Followers'),
         ),
-      ),
-    ],
-  );
+        Expanded(
+          child: _Counter(
+            key: const ValueKey('profile-followers'),
+            label: 'Followers',
+            value: Text(
+              '${profile.followers}',
+              style: TextStyle(
+                color: palette.ink,
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            onPressed:
+                onOpenFollowers ?? () => _showMessage(context, 'Followers'),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class _FrenchFlag extends StatelessWidget {
@@ -494,8 +500,8 @@ class _Counter extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: ReferenceColors.disabled,
+            style: TextStyle(
+              color: context.referencePalette.disabled,
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),
@@ -513,48 +519,52 @@ class _FriendActions extends StatelessWidget {
   final String displayName;
 
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      Expanded(
-        child: ReferenceButton(
-          label: 'ADD FRIENDS',
-          outlined: true,
-          foregroundColor: ReferenceColors.ink,
-          leading: const Icon(Icons.person_add_alt_1, size: 25),
-          onPressed: onAddFriends ?? () => _showMessage(context, 'Add friends'),
-        ),
-      ),
-      const SizedBox(width: 13),
-      Tooltip(
-        message: 'Profile link',
-        child: Material(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-            side: const BorderSide(color: ReferenceColors.border, width: 2),
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Row(
+      children: [
+        Expanded(
+          child: ReferenceButton(
+            label: 'ADD FRIENDS',
+            outlined: true,
+            foregroundColor: palette.ink,
+            leading: const Icon(Icons.person_add_alt_1, size: 25),
+            onPressed:
+                onAddFriends ?? () => _showMessage(context, 'Add friends'),
           ),
-          child: InkWell(
-            onTap: () => showProfileShareSheet(
-              context,
-              userId: 'me',
-              displayName: displayName,
+        ),
+        const SizedBox(width: 13),
+        Tooltip(
+          message: 'Profile link',
+          child: Material(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+              side: const BorderSide(color: ReferenceColors.border, width: 2),
             ),
-            borderRadius: BorderRadius.circular(14),
-            child: const SizedBox(
-              width: 51,
-              height: 51,
-              child: Icon(
-                Icons.qr_code_rounded,
-                color: ReferenceColors.ink,
-                size: 27,
-                semanticLabel: 'Open profile link',
+            child: InkWell(
+              onTap: () => showProfileShareSheet(
+                context,
+                userId: 'me',
+                displayName: displayName,
+              ),
+              borderRadius: BorderRadius.circular(14),
+              child: const SizedBox(
+                width: 51,
+                height: 51,
+                child: Icon(
+                  Icons.qr_code_rounded,
+                  color: ReferenceColors.ink,
+                  size: 27,
+                  semanticLabel: 'Open profile link',
+                ),
               ),
             ),
           ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }
 
 class _FinishProfileCard extends StatelessWidget {
@@ -622,8 +632,8 @@ class _SectionCaption extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(
     label,
-    style: const TextStyle(
-      color: ReferenceColors.disabled,
+    style: TextStyle(
+      color: context.referencePalette.disabled,
       fontSize: 16,
       fontWeight: FontWeight.w700,
       letterSpacing: 1.1,
@@ -698,28 +708,27 @@ class _OverviewItem extends StatelessWidget {
   final bool active;
 
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      Icon(
-        icon,
-        color: active ? iconColor : ReferenceColors.disabled,
-        size: 29,
-      ),
-      const SizedBox(width: 10),
-      Expanded(
-        child: Text(
-          value,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: active ? ReferenceColors.ink : ReferenceColors.disabled,
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Row(
+      children: [
+        Icon(icon, color: active ? iconColor : palette.disabled, size: 29),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            value,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: active ? palette.ink : palette.disabled,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }
 
 class _FriendStreaks extends StatelessWidget {
@@ -818,36 +827,37 @@ class _InviteCell extends StatelessWidget {
   const _InviteCell();
 
   @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    label: 'Invite a friend to a Friend Streak',
-    child: CustomPaint(
-      painter: _InviteCirclePainter(),
-      child: const SizedBox(
-        width: 52,
-        height: 70,
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: SizedBox(
-            width: 48,
-            height: 48,
-            child: Icon(
-              Icons.add_rounded,
-              color: ReferenceColors.disabled,
-              size: 30,
+  Widget build(BuildContext context) {
+    final disabled = context.referencePalette.disabled;
+    return Semantics(
+      button: true,
+      label: 'Invite a friend to a Friend Streak',
+      child: CustomPaint(
+        painter: _InviteCirclePainter(disabled),
+        child: SizedBox(
+          width: 52,
+          height: 70,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              width: 48,
+              height: 48,
+              child: Icon(Icons.add_rounded, color: disabled, size: 30),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _InviteCirclePainter extends CustomPainter {
+  const _InviteCirclePainter(this.color);
+  final Color color;
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = ReferenceColors.disabled
+      ..color = color
       ..strokeWidth = 2.5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -864,7 +874,8 @@ class _InviteCirclePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _InviteCirclePainter oldDelegate) =>
+      color != oldDelegate.color;
 }
 
 class _FamilyRow extends StatelessWidget {
@@ -902,7 +913,7 @@ class _FamilyRow extends StatelessWidget {
       Container(
         height: 88,
         decoration: BoxDecoration(
-          color: const Color(0xFFF7F7F7),
+          color: context.referencePalette.raisedSurface,
           borderRadius: BorderRadius.circular(18),
         ),
         alignment: Alignment.bottomCenter,
@@ -970,7 +981,7 @@ class _FamilyInviteAvatar extends StatelessWidget {
       height: 72,
       child: Icon(
         Icons.person_rounded,
-        color: ReferenceColors.disabled,
+        color: context.referencePalette.disabled,
         size: 56,
         semanticLabel: 'Max Family, invite a member',
       ),
@@ -1006,9 +1017,9 @@ class _BadgeStrip extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(child: _SectionCaption(label: title)),
-                const Icon(
+                Icon(
                   Icons.chevron_right_rounded,
-                  color: ReferenceColors.disabled,
+                  color: context.referencePalette.disabled,
                   size: 31,
                 ),
               ],
@@ -1039,45 +1050,51 @@ class _MonthlyBadgeCell extends StatelessWidget {
   final MonthlyBadgeMock badge;
 
   @override
-  Widget build(BuildContext context) => Semantics(
-    image: true,
-    label: badge.label,
-    child: SizedBox(
-      width: 72,
-      height: 76,
-      child: badge.earned
-          ? Container(
-              width: 68,
-              height: 68,
-              decoration: BoxDecoration(
-                color: badge.color,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 3),
-                boxShadow: const [
-                  BoxShadow(color: Color(0xFFD7D7D7), offset: Offset(0, 4)),
-                ],
+  Widget build(BuildContext context) {
+    final palette = context.referencePalette;
+    return Semantics(
+      image: true,
+      label: badge.label,
+      child: SizedBox(
+        width: 72,
+        height: 76,
+        child: badge.earned
+            ? Container(
+                width: 68,
+                height: 68,
+                decoration: BoxDecoration(
+                  color: badge.color,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: const [
+                    BoxShadow(color: Color(0xFFD7D7D7), offset: Offset(0, 4)),
+                  ],
+                ),
+                child: Icon(badge.icon, color: Colors.white, size: 32),
+              )
+            : Container(
+                width: 68,
+                height: 68,
+                decoration: BoxDecoration(
+                  color: palette.raisedSurface,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: palette.border, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: palette.border,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  Icons.lock_rounded,
+                  size: 27,
+                  color: palette.disabled,
+                ),
               ),
-              child: Icon(badge.icon, color: Colors.white, size: 32),
-            )
-          : Container(
-              width: 68,
-              height: 68,
-              decoration: BoxDecoration(
-                color: const Color(0xFFF0F0F0),
-                shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
-                boxShadow: const [
-                  BoxShadow(color: Color(0xFFD7D7D7), offset: Offset(0, 4)),
-                ],
-              ),
-              child: const Icon(
-                Icons.lock_rounded,
-                size: 27,
-                color: ReferenceColors.disabled,
-              ),
-            ),
-    ),
-  );
+      ),
+    );
+  }
 }
 
 class _AchievementCell extends StatelessWidget {
@@ -1180,17 +1197,17 @@ Future<void> showProfileShareSheet(
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: ReferenceColors.border,
+              color: sheet.referencePalette.border,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
           const SizedBox(height: 16),
           Text(
             displayName,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: ReferenceColors.ink,
+              color: sheet.referencePalette.ink,
             ),
           ),
           const SizedBox(height: 12),
@@ -1198,22 +1215,25 @@ Future<void> showProfileShareSheet(
             width: 200,
             height: 200,
             decoration: BoxDecoration(
-              border: Border.all(color: ReferenceColors.border, width: 2),
+              border: Border.all(
+                color: sheet.referencePalette.border,
+                width: 2,
+              ),
               borderRadius: BorderRadius.circular(18),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.qr_code_2_rounded,
               size: 140,
-              color: ReferenceColors.ink,
+              color: sheet.referencePalette.ink,
               semanticLabel: 'Profile QR code',
             ),
           ),
           const SizedBox(height: 12),
           SelectableText(
             profileShareUrl(userId),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
-              color: ReferenceColors.muted,
+              color: sheet.referencePalette.muted,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -1252,18 +1272,18 @@ Future<void> showAvatarCreateSheet(BuildContext context) =>
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: ReferenceColors.border,
+                  color: sheet.referencePalette.border,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Create your avatar!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
-                  color: ReferenceColors.ink,
+                  color: sheet.referencePalette.ink,
                 ),
               ),
               const SizedBox(height: 20),

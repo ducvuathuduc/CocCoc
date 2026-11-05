@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cocenglish/core/audio/speech_recorder.dart';
 import 'package:cocenglish/core/api/client/active_course.dart';
 import 'package:cocenglish/core/api/client/api_endpoints.g.dart';
+import 'package:cocenglish/core/api/client/api_exception.dart';
 import 'package:cocenglish/core/api/client/api_transport.dart';
 import 'package:cocenglish/features/call/application/call_controller.dart';
 import 'package:cocenglish/features/call/data/api_call_repository.dart';
@@ -15,12 +17,15 @@ import 'package:cocenglish/features/roleplay/data/api_roleplay_repository.dart';
 import 'package:cocenglish/features/roleplay/data/roleplay_repository.dart';
 import 'package:cocenglish/features/roleplay/domain/roleplay_models.dart';
 import 'package:cocenglish/features/roleplay/domain/server_scenarios.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../support/fake_api_transport.dart';
+import '../support/pronunciation_fakes.dart';
 
 const _iso = '2026-10-12T08:00:00.000Z';
+final _testWav = pcm16ToWav(Uint8List.fromList(List<int>.filled(3200, 7)));
 
 Map<String, Object?> conversation(
   String id,
@@ -478,17 +483,71 @@ void main() {
         },
       );
 
-    test('placeholder WAV is 16 kHz mono 16-bit PCM', () {
-      final b = turnPlaceholderWav;
-      expect(String.fromCharCodes(b.sublist(0, 4)), 'RIFF');
-      expect(String.fromCharCodes(b.sublist(8, 12)), 'WAVE');
-      final d = b.buffer.asByteData();
-      expect(d.getUint16(20, Endian.little), 1);
-      expect(d.getUint16(22, Endian.little), 1);
-      expect(d.getUint32(24, Endian.little), 16000);
-      expect(d.getUint16(34, Endian.little), 16);
-      expect(d.getUint32(40, Endian.little), b.length - 44);
-      expect(turnPlaceholderWavSha256, matches(RegExp(r'^[a-f0-9]{64}$')));
+    test('missing or empty capture rejects before voice-turn HTTP', () async {
+      voice(transport);
+      transport.json(
+        'POST /v1/conversations',
+        conversation('no-audio', 'rp_daily_routine', kind: 'VIDEO_CALL'),
+      );
+      final repo = ApiCallRepository(api, course);
+      final session = await repo.loadSession('lily');
+
+      await expectLater(
+        repo.speakTurn(session.id, 1),
+        throwsA(isA<CallCaptureFailure>()),
+      );
+      await expectLater(
+        repo.speakTurn(session.id, 1, wav: pcm16ToWav(Uint8List(0))),
+        throwsA(isA<CallCaptureFailure>()),
+      );
+      expect(
+        transport.to(
+          'POST /v1/voice-sessions/00000000-0000-4000-8000-000000000001/turns',
+        ),
+        isEmpty,
+      );
+    });
+
+    test('uncertain voice turn retry reuses exact request body', () async {
+      voice(transport);
+      transport
+        ..json(
+          'POST /v1/conversations',
+          conversation('retry', 'rp_daily_routine', kind: 'VIDEO_CALL'),
+        )
+        ..once(
+          'POST /v1/voice-sessions/00000000-0000-4000-8000-000000000001/turns',
+          (_) => jsonResponse(errorEnvelope('INTERNAL_ERROR'), status: 500),
+        )
+        ..on(
+          'POST /v1/voice-sessions/00000000-0000-4000-8000-000000000001/turns',
+          (request) {
+            final body = bodyOf(request);
+            return jsonResponse({
+              'turnId': body['turnId'],
+              'epoch': body['epoch'],
+              'transcript': 'Hello.',
+              'tutor': tutor(body['turnId']! as String, 'Next.'),
+              'audioAssetId': null,
+              'score': null,
+              'mode': 'TURN',
+            });
+          },
+        );
+      final repo = ApiCallRepository(api, course);
+      final session = await repo.loadSession('lily');
+
+      await expectLater(
+        repo.speakTurn(session.id, 1, wav: _testWav),
+        throwsA(isA<ApiException>()),
+      );
+      await repo.speakTurn(session.id, 1, wav: _testWav);
+
+      final requests = transport.to(
+        'POST /v1/voice-sessions/00000000-0000-4000-8000-000000000001/turns',
+      );
+      expect(requests, hasLength(2));
+      expect(bodyOf(requests[1]), bodyOf(requests[0]));
     });
 
     test('call runs on the server script with voice turns, then COMPLETED', () async {
@@ -549,7 +608,7 @@ void main() {
         'voiceSessionId': '00000000-0000-4000-8000-000000000001',
       });
       for (var i = 0; i < server.steps.length; i++) {
-        final turn = await repo.speakTurn(session.id, i * 2 + 1);
+        final turn = await repo.speakTurn(session.id, i * 2 + 1, wav: _testWav);
         expect(turn.transcript, server.steps[i].expect);
       }
       final turns = transport.to(
@@ -557,8 +616,8 @@ void main() {
       );
       final first = bodyOf(turns.first);
       expect(first['epoch'], 3);
-      expect(first['audioSha256'], turnPlaceholderWavSha256);
-      expect(base64Decode(first['wavBase64']! as String), turnPlaceholderWav);
+      expect(first['audioSha256'], sha256.convert(_testWav).toString());
+      expect(base64Decode(first['wavBase64']! as String), _testWav);
       await repo.completeCall(session.id, session.script.length);
       expect(
         bodyOf(transport.to('POST /v1/conversations/v9/complete').single),
@@ -604,7 +663,7 @@ void main() {
       final repo = ApiCallRepository(api, course);
       final session = await repo.loadSession('lily');
       for (var i = 0; i < 4; i++) {
-        await repo.speakTurn(session.id, i * 2 + 1);
+        await repo.speakTurn(session.id, i * 2 + 1, wav: _testWav);
       }
       await repo.completeCall(session.id, session.script.length);
       final ends = transport.to('POST /v1/conversations/v2/complete');
@@ -695,6 +754,9 @@ void main() {
           callRepositoryProvider.overrideWithValue(
             _FastCalls(ApiCallRepository(api, course)),
           ),
+          speechRecorderProvider.overrideWithValue(
+            FakeRecorder()..audio = _testWav,
+          ),
         ],
       );
       addTearDown(container.dispose);
@@ -707,6 +769,8 @@ void main() {
       var state = container.read(callControllerProvider);
       expect(state.phase, CallPhase.connected);
       expect(state.awaitingLearner, isTrue);
+      vm.pressMic();
+      await Future<void>.delayed(Duration.zero);
       vm.pressMic();
       for (var i = 0; i < 10; i++) {
         await Future<void>.delayed(const Duration(milliseconds: 2));

@@ -1,3 +1,5 @@
+import 'support/app_fonts.dart';
+
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
@@ -16,11 +18,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/settle_images.dart';
+
 void main() {
   setUpAll(() async {
-    await (FontLoader('DuolingoSans')
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+    await (FontLoader('sans-serif')
+          ..addFont(loadTestFont())
+          ..addFont(loadTestFont(bold: true)))
         .load();
     await ReferenceArt.preloadFiles([
       '05',
@@ -271,6 +275,8 @@ void main() {
           addTearDown(container.dispose);
           await tester.pumpWidget(_harness(container, scale: scale));
           await tester.pumpAndSettle();
+          // Decode the stat and tab artwork so the golden shows the icons.
+          await settleImages(tester);
           for (final label in [
             'Courses',
             'Streak',

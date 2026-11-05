@@ -310,7 +310,9 @@ class _MonthlyBadgesSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final allBadges = ref.watch(monthlyBadgesProvider);
-    final latestYear = allBadges.map((badge) => badge.year).reduce(math.max);
+    final latestYear = allBadges.isEmpty
+        ? null
+        : allBadges.map((badge) => badge.year).reduce(math.max);
     final badges = allBadges
         .where((badge) => badge.year == latestYear)
         .toList(growable: false)

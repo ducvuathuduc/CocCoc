@@ -4,7 +4,9 @@ import 'package:integration_test/integration_test_driver_extended.dart';
 
 Future<void> main() => integrationDriver(
   onScreenshot: (name, bytes, [arguments]) async {
-    final flow = name.contains('motion')
+    final flow = name.startsWith('android-completion')
+        ? 'android-completion-20261024'
+        : name.contains('motion')
         ? 'motion'
         : name.contains('login')
         ? 'login'

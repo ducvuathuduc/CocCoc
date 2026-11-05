@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/app_config.dart';
+import '../../auth/application/auth_controller.dart';
 import '../domain/phone_models.dart';
 
 /// Phone verification backend (SMS code delivery + check).
@@ -22,23 +24,16 @@ abstract class PhoneVerificationRepository {
 }
 
 final phoneVerificationRepositoryProvider =
-    Provider<PhoneVerificationRepository>(
-      (ref) => MockPhoneVerificationRepository(),
-    );
+    Provider<PhoneVerificationRepository>((ref) {
+      ref.watch(authControllerProvider.select((state) => state.user?.id));
+      return ref.watch(appConfigProvider).isApi
+          ? UnavailablePhoneVerificationRepository()
+          : MockPhoneVerificationRepository();
+    });
 
 /// In-memory mock: every code is [mockCode]; [unreachable] numbers fail with
 /// the generic server error Duolingo shows.
-class MockPhoneVerificationRepository implements PhoneVerificationRepository {
-  MockPhoneVerificationRepository({
-    this.mockCode = '123456',
-    this.unreachable = const {'+16502137379'},
-    this.latency = Duration.zero,
-  });
-  final String mockCode;
-  final Set<String> unreachable;
-  final Duration latency;
-  final List<String> sent = [];
-
+abstract class PhoneVerificationCatalog implements PhoneVerificationRepository {
   static const _us = PhoneCountry(
     iso: 'US',
     name: 'United States',
@@ -366,6 +361,31 @@ class MockPhoneVerificationRepository implements PhoneVerificationRepository {
   }
 
   static const _unassignedNanp = {'653', '654', '655', '656', '911', '411'};
+}
+
+/// Until a supported account-verification/SMS adapter is admitted, real builds
+/// use the existing server-error state. A preview OTP can never verify a user.
+class UnavailablePhoneVerificationRepository extends PhoneVerificationCatalog {
+  @override
+  Future<void> sendCode(PhoneNumber number) async =>
+      throw const PhoneVerificationFailure(
+        'An unknown error occurred. Please try again later.',
+      );
+
+  @override
+  Future<bool> verifyCode(PhoneNumber number, String code) async => false;
+}
+
+class MockPhoneVerificationRepository extends PhoneVerificationCatalog {
+  MockPhoneVerificationRepository({
+    this.mockCode = '123456',
+    this.unreachable = const {'+16502137379'},
+    this.latency = Duration.zero,
+  });
+  final String mockCode;
+  final Set<String> unreachable;
+  final Duration latency;
+  final List<String> sent = [];
 
   @override
   Future<void> sendCode(PhoneNumber number) async {

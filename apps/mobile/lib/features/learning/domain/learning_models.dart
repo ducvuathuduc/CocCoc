@@ -1,3 +1,6 @@
+import 'session_mode.dart';
+import 'session_outcome.dart';
+
 enum ExerciseKind {
   textTranslation,
   choice,
@@ -197,6 +200,7 @@ class SessionReceipt {
     required this.placement,
     this.gems = 0,
     this.rewardPending = false,
+    this.outcome,
   });
 
   final String id;
@@ -204,6 +208,9 @@ class SessionReceipt {
   final int xp;
   final int gems;
   final bool rewardPending;
+
+  /// Typed mode and server gate result; null for receipts that predate modes.
+  final SessionOutcome? outcome;
 
   SessionReceipt withReward(int awardedXp) => SessionReceipt(
     id: id,
@@ -215,6 +222,7 @@ class SessionReceipt {
     guest: guest,
     placement: placement,
     gems: gems,
+    outcome: outcome,
   );
   final double accuracy;
   final Duration elapsed;
@@ -256,6 +264,7 @@ class LessonState {
     this.heartsIntroSeen = false,
     this.skipped = false,
     this.heartsEnforced = false,
+    this.mode = SessionMode.lesson,
   });
 
   static const maxHearts = 5;
@@ -296,6 +305,9 @@ class LessonState {
 
   /// Current exercise was skipped via "CAN'T LISTEN NOW" (no heart cost).
   final bool skipped;
+
+  /// Session mode the server accepted for this run.
+  final SessionMode mode;
 
   int get hearts =>
       (maxHearts - (attempted - originalCorrect)).clamp(0, maxHearts);
@@ -373,8 +385,10 @@ class LessonState {
     DateTime? startedAt,
     bool? heartsIntroSeen,
     bool? skipped,
+    SessionMode? mode,
   }) {
     return LessonState(
+      mode: mode ?? this.mode,
       heartsIntroSeen: heartsIntroSeen ?? this.heartsIntroSeen,
       heartsEnforced: heartsEnforced,
       skipped: skipped ?? this.skipped,

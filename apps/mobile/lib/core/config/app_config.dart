@@ -20,6 +20,7 @@ final class AppConfig {
     this.appwriteProjectId = defaultAppwriteProjectId,
     this.serviceUrls = const <ApiService, String>{},
     this.mockAuthOverride,
+    this.allowInsecureLocalEndpoints = false,
     this.requestTimeout = const Duration(seconds: 15),
   });
 
@@ -46,6 +47,10 @@ final class AppConfig {
       defaultValue: 'http://127.0.0.1:4103',
     );
     const mockAuth = String.fromEnvironment('USE_MOCK_AUTH');
+    const allowInsecureLocalEndpoints = String.fromEnvironment(
+      'ALLOW_INSECURE_LOCAL_ENDPOINTS',
+      defaultValue: 'false',
+    );
     return AppConfig(
       dataSource: parseDataSource(source),
       appwriteEndpoint: endpoint,
@@ -55,9 +60,10 @@ final class AppConfig {
         ApiService.progress: progress,
         ApiService.ai: ai,
       },
-      mockAuthOverride: mockAuth == ''
-          ? null
-          : mockAuth.toLowerCase() == 'true',
+      mockAuthOverride: parseOptionalBool(mockAuth),
+      allowInsecureLocalEndpoints: parseOptionalBool(
+        allowInsecureLocalEndpoints,
+      )!,
     );
   }
 
@@ -74,6 +80,13 @@ final class AppConfig {
 
   /// Explicit `USE_MOCK_AUTH` define; null follows [dataSource].
   final bool? mockAuthOverride;
+
+  /// Admits HTTP only for explicit loopback/private-network local profiles.
+  ///
+  /// This is a public build switch, not a transport-security bypass for
+  /// release builds. Set with `ALLOW_INSECURE_LOCAL_ENDPOINTS=true` only when
+  /// the service URLs already contain the emulator or device-reachable host.
+  final bool allowInsecureLocalEndpoints;
   final Duration requestTimeout;
 
   bool get isApi => dataSource == DataSource.api;
@@ -84,13 +97,27 @@ final class AppConfig {
   Uri? baseUrl(ApiService service) {
     final raw = serviceUrls[service];
     if (raw == null || raw.isEmpty) return null;
-    final uri = Uri.tryParse(raw);
+    final uri = Uri.tryParse(raw.trim());
     if (uri == null || !uri.hasScheme || uri.host.isEmpty) return null;
     return uri;
   }
 
   static DataSource parseDataSource(String value) =>
-      value.trim().toLowerCase() == 'api' ? DataSource.api : DataSource.mock;
+      switch (value.trim().toLowerCase()) {
+        'mock' => DataSource.mock,
+        'api' => DataSource.api,
+        _ => throw FormatException('Invalid DATA_SOURCE value.'),
+      };
+
+  /// Parses an optional public boolean build define without permissive truthy
+  /// coercion. The exception deliberately omits the input value.
+  static bool? parseOptionalBool(String value) =>
+      switch (value.trim().toLowerCase()) {
+        '' => null,
+        'true' => true,
+        'false' => false,
+        _ => throw FormatException('Invalid boolean build define.'),
+      };
 }
 
 /// Override in tests (or a flavor entrypoint) to switch the data layer.

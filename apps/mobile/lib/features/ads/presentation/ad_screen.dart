@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +7,7 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../learning/presentation/learning_visuals.dart';
+import '../../super_trial/presentation/super_brand_screen.dart';
 import '../../super_trial/presentation/super_trial_screen.dart';
 import '../application/ads_controller.dart';
 
@@ -83,9 +85,13 @@ class _AdScreenState extends ConsumerState<AdScreen>
     final rewarded = await ref.read(adControllerProvider.notifier).finish();
     if (!mounted || !rewarded) return;
     if (widget.offerTrial) {
-      // Row 5: the Super trial interstitial (sc_e4a392e0); TRY opens the
-      // existing plan screen, NO THANKS returns here.
-      final accepted = await context.push<bool>(SuperTrialScreen.route);
+      // The archived pre-trial brand frame is iOS evidence. Android's
+      // subscription reference starts at the offer, so retain that order.
+      final accepted = await context.push<bool>(
+        defaultTargetPlatform == TargetPlatform.iOS
+            ? SuperBrandScreen.route
+            : SuperTrialScreen.route,
+      );
       if (!mounted) return;
       if (accepted == true) {
         await context.push('/super');

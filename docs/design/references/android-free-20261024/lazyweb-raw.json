@@ -1,0 +1,89 @@
+{
+  "page": "https://www.lazyweb.com/company/duolingo",
+  "retrieved": "2026-10-24",
+  "screens": [
+    {
+      "alt": "Duolingo app screenshot 1",
+      "height": 2622,
+      "src": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700093957_03_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-feed-1785691182.png",
+      "width": 1206
+    },
+    {
+      "alt": "Duolingo app screenshot 2",
+      "height": 2622,
+      "src": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700093343_02_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-profile-1785691180.png",
+      "width": 1206
+    },
+    {
+      "alt": "Duolingo app screenshot 3",
+      "height": 2622,
+      "src": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700092851_01_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-leagues-1785691166.png",
+      "width": 1206
+    },
+    {
+      "alt": "Duolingo app screenshot 4",
+      "height": 2622,
+      "src": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700092387_00_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-quests-1785691164.png",
+      "width": 1206
+    },
+    {
+      "alt": "Duolingo app screenshot 5",
+      "height": 2622,
+      "src": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/locked_feature_paywall/compare/2026-08-02/1785699963342_05_com.duolingo.DuolingoMobile-20260802T165650Z-cap-plan-picker-1785691461.png",
+      "width": 1206
+    }
+  ],
+  "export": {
+    "assets": [
+      {
+        "contentType": "image/png",
+        "id": "8d66e59cc04a6813",
+        "kind": "image",
+        "name": "1785700093957_03_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-feed-1785691182.png",
+        "path": "C:\\Users\\ADMIN\\AppData\\Local\\Temp/browser-use/assets/ade185e9-94d4-4cba-abd6-f2bc03928c0f/8d66e59cc04a6813.png",
+        "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700093957_03_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-feed-1785691182.png"
+      },
+      {
+        "contentType": "image/png",
+        "id": "17dcfdcb62fe47db",
+        "kind": "image",
+        "name": "1785700093343_02_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-profile-1785691180.png",
+        "path": "C:\\Users\\ADMIN\\AppData\\Local\\Temp/browser-use/assets/ade185e9-94d4-4cba-abd6-f2bc03928c0f/17dcfdcb62fe47db.png",
+        "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700093343_02_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-profile-1785691180.png"
+      },
+      {
+        "contentType": "image/png",
+        "id": "651f292df4ee82d0",
+        "kind": "image",
+        "name": "1785700092851_01_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-leagues-1785691166.png",
+        "path": "C:\\Users\\ADMIN\\AppData\\Local\\Temp/browser-use/assets/ade185e9-94d4-4cba-abd6-f2bc03928c0f/651f292df4ee82d0.png",
+        "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700092851_01_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-leagues-1785691166.png"
+      },
+      {
+        "contentType": "image/png",
+        "id": "17e29b3d486512df",
+        "kind": "image",
+        "name": "1785700092387_00_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-quests-1785691164.png",
+        "path": "C:\\Users\\ADMIN\\AppData\\Local\\Temp/browser-use/assets/ade185e9-94d4-4cba-abd6-f2bc03928c0f/17e29b3d486512df.png",
+        "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/tabs/compare/2026-08-02/1785700092387_00_com.duolingo.DuolingoMobile-20260802T165650Z-cap-tab-quests-1785691164.png"
+      },
+      {
+        "contentType": "image/png",
+        "id": "2b8c1afcf92dac03",
+        "kind": "image",
+        "name": "1785699963342_05_com.duolingo.DuolingoMobile-20260802T165650Z-cap-plan-picker-1785691461.png",
+        "path": "C:\\Users\\ADMIN\\AppData\\Local\\Temp/browser-use/assets/ade185e9-94d4-4cba-abd6-f2bc03928c0f/2b8c1afcf92dac03.png",
+        "url": "https://zlfyzdmohcskkucuunmk.supabase.co/storage/v1/object/public/screenshots/uploaded_duolingo/locked_feature_paywall/compare/2026-08-02/1785699963342_05_com.duolingo.DuolingoMobile-20260802T165650Z-cap-plan-picker-1785691461.png"
+      }
+    ],
+    "directoryPath": "C:\\Users\\ADMIN\\AppData\\Local\\Temp/browser-use/assets/ade185e9-94d4-4cba-abd6-f2bc03928c0f",
+    "failures": [],
+    "manifestPath": "C:\\Users\\ADMIN\\AppData\\Local\\Temp/browser-use/assets/ade185e9-94d4-4cba-abd6-f2bc03928c0f/manifest.json",
+    "summary": {
+      "downloadedCount": 5,
+      "elapsedMs": 237.82810000004247,
+      "failedCount": 0,
+      "requestedCount": 5
+    }
+  }
+}

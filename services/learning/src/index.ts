@@ -127,7 +127,7 @@ async function execute(
   req: ReturnType<typeof plainRequest>,
 ): Promise<unknown> {
   if (isScheduledExecution(req)) {
-    if (persistence.kind === 'disabled' || !deps.deliver) {
+    if (!persistence.admittedForHosting || !deps.deliver) {
       return context.res.json({ worker: 'learning', status: 'SERVICE_NOT_CONFIGURED' }, 503);
     }
     const report = await dispatchOutbox(deps, deps.deliver, { deadlineMs: 20_000 });

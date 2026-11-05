@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/api/client/idempotency.dart';
 import '../../../core/cache/lesson_journal.dart';
+import '../../../core/cache/lesson_journal_platform.dart';
 import '../../../core/config/app_config.dart';
 import '../../auth/application/auth_controller.dart';
 import '../data/api_learning_repository.dart';
 import '../data/learning_repository.dart';
 import '../domain/learning_models.dart';
+import '../domain/session_mode.dart';
 import '../../practice/application/mistake_history_controller.dart';
 import '../../practice/data/mistake_history_repository.dart';
 import '../../session/application/real_learning_session.dart';
@@ -26,8 +30,19 @@ final learningRepositoryProvider = Provider<LearningRepository>((ref) {
 /// Durable lesson journal, namespaced per signed-in user so one account never
 /// sees another's queued answers.
 final lessonJournalProvider = Provider<LessonJournal>((ref) {
+  final apiMode = ref.watch(appConfigProvider).isApi;
   final user = ref.watch(authControllerProvider.select((s) => s.user?.id));
-  return PreferencesLessonJournal(namespace: user ?? 'anonymous');
+  if (!apiMode) {
+    return PreferencesLessonJournal(namespace: user ?? 'anonymous');
+  }
+  if (user == null) {
+    return const UnavailableLessonJournal(JournalFailure.accountRequired);
+  }
+  final journal = createDurableLessonJournal(namespace: user);
+  if (journal is ClosableLessonJournal) {
+    ref.onDispose(() => unawaited(journal.close()));
+  }
+  return journal;
 });
 
 final learningStateProvider =
@@ -165,6 +180,10 @@ class LessonController extends Notifier<LessonState> {
     bool guest = false,
     bool placement = false,
     List<Exercise>? exercises,
+    SessionMode mode = SessionMode.lesson,
+    String? lessonId,
+    String? activityId,
+    String? opponentId,
   }) async {
     if (_commandActive) return;
     if (nodeId == placementNodeId && ref.read(appConfigProvider).isApi) {
@@ -174,9 +193,17 @@ class LessonController extends Notifier<LessonState> {
     final revision = ++_revision;
     state = state.copyWith(busy: true, clearError: true);
     try {
-      final loaded = exercises ?? await _repository.loadLesson(nodeId);
+      final targetNodeId = mode.isAuthored ? lessonId ?? nodeId : nodeId;
+      final loaded =
+          exercises ??
+          await _load(
+            mode,
+            targetNodeId,
+            activityId: activityId,
+            opponentId: opponentId,
+          );
       if (!_isCurrent(revision)) return;
-      final restored = _repository is ApiLearningRepository
+      final restored = !mode.isAuthored && _repository is ApiLearningRepository
           ? _repository.loadDraft()
           : null;
       if (restored != null) {
@@ -196,12 +223,13 @@ class LessonController extends Notifier<LessonState> {
       state = LessonState(
         stage: loaded.isEmpty ? LessonStage.idle : LessonStage.answering,
         exercises: loaded,
-        nodeId: nodeId,
+        nodeId: targetNodeId,
         guest: guest,
         placement: placement,
         startedAt: DateTime.now(),
         originalTotal: loaded.length,
         heartsEnforced: _repository.enforcesHearts,
+        mode: mode,
       );
     } on LearningFailure catch (error) {
       if (_isCurrent(revision)) {
@@ -217,6 +245,24 @@ class LessonController extends Notifier<LessonState> {
     } finally {
       if (_isCurrent(revision)) _commandActive = false;
     }
+  }
+
+  Future<List<Exercise>> _load(
+    SessionMode mode,
+    String nodeId, {
+    String? activityId,
+    String? opponentId,
+  }) {
+    final repository = _repository;
+    if (mode.isAuthored && repository is ApiLearningRepository) {
+      return repository.loadAuthored(
+        mode: mode,
+        lessonId: nodeId,
+        activityId: activityId,
+        opponentId: opponentId,
+      );
+    }
+    return repository.loadLesson(nodeId);
   }
 
   void select(String id) {
@@ -446,12 +492,33 @@ class LessonController extends Notifier<LessonState> {
     state = draft.copyWith(stage: draft.resumeStage, busy: false);
   }
 
-  void abandon() {
-    _revision += 1;
-    _repository.clearDraft();
-    _mistakes = <Exercise>[];
-    _nextRetry = <Exercise>[];
-    state = const LessonState();
+  Future<bool> abandon() async {
+    if (state.busy || _commandActive) return false;
+    final repository = _repository;
+    final revision = ++_revision;
+    _commandActive = true;
+    state = state.copyWith(busy: true, clearError: true);
+    try {
+      if (repository is AbandonableSession) {
+        await (repository as AbandonableSession).abandonSession();
+      }
+      if (!_isCurrent(revision)) return false;
+      repository.clearDraft();
+      _mistakes = <Exercise>[];
+      _nextRetry = <Exercise>[];
+      state = const LessonState();
+      return true;
+    } catch (error) {
+      if (_isCurrent(revision)) {
+        state = state.copyWith(
+          busy: false,
+          error: error is LearningFailure ? error.message : 'Could not end this lesson. Your answers are saved. Please retry.',
+        );
+      }
+      return false;
+    } finally {
+      if (_isCurrent(revision)) _commandActive = false;
+    }
   }
 
   Future<void> claim() async {

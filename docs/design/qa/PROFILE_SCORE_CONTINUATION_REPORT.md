@@ -63,44 +63,44 @@ asset/motion evidence remains in [avatar report](AVATAR_PRODUCT_SURFACE_REPORT.m
 
 - `node tools/scripts/mobile-check.mjs --with-blueprint`: structural blueprint,
   Dart format, fatal-info analyzer and363 Flutter tests pass in
-  [canonical gate](profile-source-complete-gate.log). The preceding three stale
+  [canonical gate](../../archive/qa-logs/profile-source-complete-gate.log). The preceding three stale
   profile/QR test expectations are retained in
-  [regression receipt](profile-source-regression-red.log); updated tests target
+  [regression receipt](../../archive/qa-logs/profile-source-regression-red.log); updated tests target
   the unique Unblock semantic action and the foreign owner's original avatar.
 - `flutter test --dart-define=ENABLE_MASCOT_MOTION=false
   --dart-define=CAPTURE_PROFILE_UI=true test/profile_surface_capture_test.dart
   test/league_entry_surface_test.dart`:4pass in
-  [source-capture test receipt](profile-source-complete-captures.log).
+  [source-capture test receipt](../../archive/qa-logs/profile-source-complete-captures.log).
   Windows host capture puts the prebuilt release Rive DLL directory on PATH.
   Required avatar scenes assert actual RiveWidget instances before capture.
   Cupertino's package-prefixed font family is explicitly loaded for test images.
 - `flutter test --dart-define=ENABLE_MASCOT_MOTION=false
   test/league_ranking_test.dart test/league_entry_surface_test.dart
   test/league_source_route_test.dart test/status_feed_ui_test.dart`:20pass in
-  [review regression pass](league-review-green.log). The
-  [meaningful RED](league-review-red.log) reproduces avatar State replacement
+  [review regression pass](../../archive/qa-logs/league-review-green.log). The
+  [meaningful RED](../../archive/qa-logs/league-review-red.log) reproduces avatar State replacement
   and duplicate spoken labels. The final6logical Welcome text gap and16logical
   bottom inset are additionally checked by the capture/entry rerun after the
   full gate. Browser/device motion timing is not inferred from static captures.
 - Profile summary/Weekly/owner awards/Monthly/Followers/header integration:
-  38pass in [focused receipt](profile-weekly-foreign-awards-final.log).
-  Further RED receipts preserve [chart font](profile-weekly-font-red.log),
-  [foreign record dates](profile-foreign-record-date-red.log),
-  [safety action font](profile-safety-font-red.log),
-  [hero/QR owner identity](profile-foreign-share-avatar-red.log).
-- Score state/view tests:10pass in [clipboard/lifecycle receipt](score-controller-green.log).
-  Meaningful RED receipts: [controller contracts](score-controller-red.log),
-  [uncapped165 Score](score-cap-red.log),
-  [missing lower Profile/header](profile-lower-integration-red.log).
+  38pass in [focused receipt](../../archive/qa-logs/profile-weekly-foreign-awards-final.log).
+  Further RED receipts preserve [chart font](../../archive/qa-logs/profile-weekly-font-red.log),
+  [foreign record dates](../../archive/qa-logs/profile-foreign-record-date-red.log),
+  [safety action font](../../archive/qa-logs/profile-safety-font-red.log),
+  [hero/QR owner identity](../../archive/qa-logs/profile-foreign-share-avatar-red.log).
+- Score state/view tests:10pass in [clipboard/lifecycle receipt](../../archive/qa-logs/score-controller-green.log).
+  Meaningful RED receipts: [controller contracts](../../archive/qa-logs/score-controller-red.log),
+  [uncapped165 Score](../../archive/qa-logs/score-cap-red.log),
+  [missing lower Profile/header](../../archive/qa-logs/profile-lower-integration-red.log).
 - After visual review, the empty Family crop excludes a white strip outside the
   original card. Its targeted test/capture rerun is recorded in
-  [final Family crop receipt](profile-family-crop-final.log):5pass. The resulting
+  [final Family crop receipt](../../archive/qa-logs/profile-family-crop-final.log):5pass. The resulting
   image was re-inspected and contains no white strip outside the figure.
 - `node tools/scripts/avatar-asset-audit.mjs`:18 original files,8 categories,
   282 choices; hashes pass. `node tools/scripts/reference-asset-audit.mjs`:
   208 bundled PNGs match saved source bytes, including the Welcome source.
 - `node tools/scripts/mobile-web-build.mjs`: release web build passes in
-  [web receipt](profile-source-web-build.log). Both Material and
+  [web receipt](../../archive/qa-logs/profile-source-web-build.log). Both Material and
   Cupertino font assets are included. Local preview HTTP checks are recorded in
   [delivery receipt](profile-source-http.json).
 

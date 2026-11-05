@@ -8,12 +8,9 @@ import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
 import '../../account/application/avatar_controller.dart';
-import '../../account/application/profile_editor_controller.dart';
 import '../../account/presentation/avatar_motion.dart';
-import '../../learning/application/learning_controller.dart';
 import '../../learning/presentation/learning_visuals.dart';
-import '../application/preview_controller.dart';
-import '../application/extended_controller.dart';
+import '../application/own_profile_projection.dart';
 import '../application/profile_surface_controller.dart';
 import 'profile_actions.dart';
 import 'profile_sections.dart';
@@ -41,13 +38,10 @@ class OwnProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preview = ref.watch(previewControllerProvider);
-    final progress = ref.watch(learningStateProvider);
-    final avatar = ref.watch(avatarControllerProvider);
-    final profile = ref.watch(profileEditorProvider);
+    final profile = ref.watch(ownProfileProjectionProvider);
+    final avatar = profile.avatar;
     final surface = ref.watch(profileSurfaceProvider);
-    final plan = ref.watch(extendedControllerProvider);
-    final name = preview.name;
+    final name = profile.name;
     final heroColor = avatar.hasAvatar
         ? _avatarBackground(avatar)
         : const Color(0xFFDDF4FF);
@@ -67,10 +61,12 @@ class OwnProfileScreen extends ConsumerWidget {
                 name: name,
                 avatar: avatar,
                 backgroundColor: heroColor,
-                badge: plan.unlimited
-                    ? (plan.isMax ? _maxBadge : _superBadge)
+                badge: profile.badge != null
+                    ? (profile.badge == 'MAX' ? _maxBadge : _superBadge)
                     : null,
-                badgeLabel: plan.isMax ? 'Duolingo Max' : 'Duolingo Super',
+                badgeLabel: profile.badge == 'MAX'
+                    ? 'Duolingo Max'
+                    : 'Duolingo Super',
                 topInset: MediaQuery.paddingOf(context).top,
                 headerHeight: headerHeight,
               ),
@@ -82,7 +78,7 @@ class OwnProfileScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '@${profile.username.toUpperCase()} · JOINED 2026',
+                      profile.identityLabel,
                       style: const TextStyle(
                         color: ReferenceColors.disabled,
                         fontSize: 16,
@@ -100,8 +96,8 @@ class OwnProfileScreen extends ConsumerWidget {
                         onTap: () => context.push('/learning-stats'),
                       ),
                     _ProfileCounters(
-                      following: preview.following.length,
-                      followers: surface.followers.length,
+                      following: profile.following,
+                      followers: profile.followers,
                     ),
                     const SizedBox(height: 12),
                     Row(
@@ -124,7 +120,7 @@ class OwnProfileScreen extends ConsumerWidget {
                           icon: Icons.qr_code_rounded,
                           onPressed: () => showProfileShare(
                             context,
-                            userId: 'me',
+                            userId: profile.userId,
                             name: name,
                           ),
                         ),
@@ -155,10 +151,10 @@ class OwnProfileScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 20),
                     _ProfileOverview(
-                      streak: progress.streak,
-                      score: progress.score,
-                      league: preview.leagueOptIn ? 'Bronze' : 'No current',
-                      xp: progress.xp,
+                      streak: profile.streak,
+                      score: profile.score,
+                      league: profile.league,
+                      xp: profile.xp,
                     ),
                     const SizedBox(height: 30),
                     const OwnProfileSections(),
@@ -168,7 +164,7 @@ class OwnProfileScreen extends ConsumerWidget {
                       outlined: true,
                       onPressed: () => context.push('/year-review'),
                     ),
-                    if (!preview.registered) ...[
+                    if (profile.showCreateProfile) ...[
                       const SizedBox(height: 20),
                       ReferenceButton(
                         label: 'CREATE A PROFILE',
@@ -375,8 +371,8 @@ Color _avatarBackground(AvatarState avatar) {
 class _ProfileCounters extends StatelessWidget {
   const _ProfileCounters({required this.following, required this.followers});
 
-  final int following;
-  final int followers;
+  final int? following;
+  final int? followers;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -394,7 +390,7 @@ class _ProfileCounters extends StatelessWidget {
         child: _Counter(
           key: const ValueKey('profile-following'),
           label: 'Following',
-          value: Text('$following', style: _counterValueStyle),
+          value: Text(following?.toString() ?? '—', style: _counterValueStyle),
           onPressed: () => context.push('/profile/friends?tab=following'),
         ),
       ),
@@ -402,7 +398,7 @@ class _ProfileCounters extends StatelessWidget {
         child: _Counter(
           key: const ValueKey('profile-followers'),
           label: 'Followers',
-          value: Text('$followers', style: _counterValueStyle),
+          value: Text(followers?.toString() ?? '—', style: _counterValueStyle),
           onPressed: () => context.push('/profile/friends?tab=followers'),
         ),
       ),
@@ -656,10 +652,10 @@ class _ProfileOverview extends StatelessWidget {
     required this.xp,
   });
 
-  final int streak;
-  final int score;
+  final int? streak;
+  final int? score;
   final String league;
-  final int xp;
+  final int? xp;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -670,11 +666,16 @@ class _ProfileOverview extends StatelessWidget {
           Expanded(
             child: _OverviewItem(
               art: LearningArt.flame,
-              value: '$streak ${streak == 1 ? 'day' : 'days'}',
+              value: streak == null
+                  ? '—'
+                  : '$streak ${streak == 1 ? 'day' : 'days'}',
             ),
           ),
           Expanded(
-            child: _OverviewItem(art: LearningArt.english, value: '$score'),
+            child: _OverviewItem(
+              art: LearningArt.english,
+              value: score?.toString() ?? '—',
+            ),
           ),
         ],
       ),
@@ -694,7 +695,7 @@ class _ProfileOverview extends StatelessWidget {
             child: _OverviewItem(
               icon: Icons.star_rounded,
               iconColor: LearningColors.yellow,
-              value: '$xp XP',
+              value: xp == null ? '—' : '$xp XP',
             ),
           ),
         ],

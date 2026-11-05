@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/config/app_config.dart';
 import '../domain/auth_state.dart';
+import '../domain/email_verification.dart';
 
 class AppwriteAuthServiceException implements Exception {
   const AppwriteAuthServiceException(this.message);
@@ -12,13 +13,23 @@ class AppwriteAuthServiceException implements Exception {
   final String message;
 }
 
+/// One sign-in identity linked to the signed-in account.
+///
+/// Only the identity id and provider name leave the service; the SDK's
+/// provider access/refresh tokens are never copied, stored or logged.
+class LinkedIdentity {
+  const LinkedIdentity({required this.id, required this.provider});
+
+  final String id;
+  final String provider;
+}
+
 class AppwriteAuthService {
   AppwriteAuthService._({
     required this._account,
     required this.recoveryUrl,
+    required this.verificationUrl,
     required this.googleEnabled,
-    required this.facebookEnabled,
-    required this.appleEnabled,
   });
 
   factory AppwriteAuthService.fromEnvironment() =>
@@ -27,9 +38,8 @@ class AppwriteAuthService {
   /// Builds the Account client for [config]'s public endpoint and project.
   factory AppwriteAuthService.fromConfig(AppConfig config) {
     const recoveryUrl = String.fromEnvironment('APPWRITE_RECOVERY_URL');
+    const verificationUrl = String.fromEnvironment('APPWRITE_VERIFICATION_URL');
     const googleEnabled = bool.fromEnvironment('APPWRITE_GOOGLE_ENABLED');
-    const facebookEnabled = bool.fromEnvironment('APPWRITE_FACEBOOK_ENABLED');
-    const appleEnabled = bool.fromEnvironment('APPWRITE_APPLE_ENABLED');
 
     final endpoint = config.appwriteEndpoint;
     final projectId = config.appwriteProjectId;
@@ -45,9 +55,8 @@ class AppwriteAuthService {
     return AppwriteAuthService._(
       account: account,
       recoveryUrl: recoveryUrl,
+      verificationUrl: verificationUrl,
       googleEnabled: googleEnabled,
-      facebookEnabled: facebookEnabled,
-      appleEnabled: appleEnabled,
     );
   }
 
@@ -56,12 +65,12 @@ class AppwriteAuthService {
   factory AppwriteAuthService.withAccount(
     Account? account, {
     String recoveryUrl = '',
+    String verificationUrl = '',
   }) => AppwriteAuthService._(
     account: account,
     recoveryUrl: recoveryUrl,
+    verificationUrl: verificationUrl,
     googleEnabled: false,
-    facebookEnabled: false,
-    appleEnabled: false,
   );
 
   static const configurationMessage =
@@ -79,19 +88,14 @@ class AppwriteAuthService {
 
   final Account? _account;
   final String recoveryUrl;
+  final String verificationUrl;
   final bool googleEnabled;
-  final bool facebookEnabled;
-  final bool appleEnabled;
 
   bool get isConfigured => _account != null;
 
-  Set<AuthProvider> availableProviders(TargetPlatform platform) {
+  Set<AuthProvider> availableProviders() {
     if (!isConfigured) return const {};
-    return {
-      if (googleEnabled) AuthProvider.google,
-      if (facebookEnabled) AuthProvider.facebook,
-      if (appleEnabled && platform == TargetPlatform.iOS) AuthProvider.apple,
-    };
+    return {if (googleEnabled) AuthProvider.google};
   }
 
   Account _configuredAccount() {
@@ -166,6 +170,58 @@ class AppwriteAuthService {
     }
   }
 
+  Future<EmailVerificationStatus> readEmailVerification() async {
+    final account = _configuredAccount();
+    try {
+      final user = await account.get();
+      return EmailVerificationStatus(
+        userId: user.$id,
+        email: user.email,
+        verified: user.emailVerification,
+      );
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  Future<void> sendEmailVerification() async {
+    final account = _configuredAccount();
+    final uri = Uri.tryParse(verificationUrl);
+    if (uri == null ||
+        uri.scheme != 'https' ||
+        uri.host.isEmpty ||
+        uri.userInfo.isNotEmpty ||
+        uri.hasQuery ||
+        uri.hasFragment) {
+      throw const AppwriteAuthServiceException(configurationMessage);
+    }
+    try {
+      await account.createEmailVerification(url: verificationUrl);
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  Future<EmailVerificationStatus> completeEmailVerification(
+    String userId,
+    String secret,
+  ) async {
+    final account = _configuredAccount();
+    if (userId.trim().isEmpty || secret.trim().isEmpty) {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+    final before = await readEmailVerification();
+    if (before.userId != userId) {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+    try {
+      await account.updateEmailVerification(userId: userId, secret: secret);
+      return await readEmailVerification();
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
   Future<void> resetPassword(
     String userId,
     String secret,
@@ -190,7 +246,7 @@ class AppwriteAuthService {
 
   Future<AuthUser> socialSignIn(AuthProvider provider) async {
     final account = _configuredAccount();
-    if (!availableProviders(defaultTargetPlatform).contains(provider)) {
+    if (!availableProviders().contains(provider)) {
       throw const AppwriteAuthServiceException(socialMessage);
     }
     try {
@@ -198,6 +254,49 @@ class AppwriteAuthService {
       return _toAuthUser(await account.get());
     } on Object {
       throw const AppwriteAuthServiceException(socialMessage);
+    }
+  }
+
+  /// Lists the OAuth identities linked to the current account.
+  Future<List<LinkedIdentity>> listIdentities() async {
+    final account = _configuredAccount();
+    try {
+      final result = await account.listIdentities();
+      return [
+        for (final identity in result.identities)
+          LinkedIdentity(id: identity.$id, provider: identity.provider),
+      ];
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+  }
+
+  /// Links [provider] to the signed-in account through Appwrite's OAuth2 flow.
+  ///
+  /// Only call from an explicit user action: the SDK opens the provider's
+  /// consent page and returns after the redirect.
+  Future<void> linkProvider(AuthProvider provider) async {
+    final account = _configuredAccount();
+    if (!availableProviders().contains(provider)) {
+      throw const AppwriteAuthServiceException(socialMessage);
+    }
+    try {
+      await account.createOAuth2Session(provider: _provider(provider));
+    } on Object {
+      throw const AppwriteAuthServiceException(socialMessage);
+    }
+  }
+
+  /// Deletes a linked identity by id; Appwrite refuses to remove the last one.
+  Future<void> unlinkIdentity(String identityId) async {
+    final account = _configuredAccount();
+    if (identityId.trim().isEmpty) {
+      throw const AppwriteAuthServiceException(requestMessage);
+    }
+    try {
+      await account.deleteIdentity(identityId: identityId);
+    } on Object {
+      throw const AppwriteAuthServiceException(requestMessage);
     }
   }
 
@@ -272,8 +371,6 @@ class AppwriteAuthService {
   appwrite_enums.OAuthProvider _provider(AuthProvider provider) =>
       switch (provider) {
         AuthProvider.google => appwrite_enums.OAuthProvider.google,
-        AuthProvider.facebook => appwrite_enums.OAuthProvider.facebook,
-        AuthProvider.apple => appwrite_enums.OAuthProvider.apple,
       };
 
   AuthUser _toAuthUser(appwrite_models.User user) => AuthUser(

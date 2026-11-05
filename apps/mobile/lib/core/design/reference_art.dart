@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -77,14 +78,39 @@ class ReferenceArt extends StatelessWidget {
     this.region, {
     required this.width,
     required this.height,
+    this.blendMode = BlendMode.srcOver,
     super.key,
   });
   final ArtRegion region;
   final double width;
   final double height;
-  static Future<void> preload() async {}
+  final BlendMode blendMode;
+  static Future<void> preload() =>
+      Future.wait(CocEnglishMascotPose.values.map((pose) => _load(pose.asset)));
 
-  static Future<void> preloadFiles(Iterable<String> files) async {}
+  // Archived region IDs now share three owned poses. Keep callers' preload
+  // contract while letting Flutter's bounded image cache own decoded images.
+  static Future<void> preloadFiles(Iterable<String> files) =>
+      files.isEmpty ? Future.value() : preload();
+
+  static Future<void> _load(String asset) {
+    final done = Completer<void>();
+    final stream = AssetImage(asset).resolve(ImageConfiguration.empty);
+    late final ImageStreamListener listener;
+    listener = ImageStreamListener(
+      (info, synchronous) {
+        info.dispose();
+        stream.removeListener(listener);
+        if (!done.isCompleted) done.complete();
+      },
+      onError: (Object error, StackTrace? stack) {
+        stream.removeListener(listener);
+        if (!done.isCompleted) done.completeError(error, stack);
+      },
+    );
+    stream.addListener(listener);
+    return done.future;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +141,7 @@ class ReferenceArt extends StatelessWidget {
       child: SizedBox(
         width: width,
         height: height,
-        child: CustomPaint(painter: _CocEnglishArtPainter(region)),
+        child: CustomPaint(painter: _CocEnglishArtPainter(region, blendMode)),
       ),
     );
   }
@@ -287,13 +313,15 @@ _CocEnglishGlyph _glyphFor(ArtRegion region) {
 }
 
 class _CocEnglishArtPainter extends CustomPainter {
-  const _CocEnglishArtPainter(this.region);
+  const _CocEnglishArtPainter(this.region, this.blendMode);
 
   final ArtRegion region;
+  final BlendMode blendMode;
 
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
+    canvas.saveLayer(Offset.zero & size, Paint()..blendMode = blendMode);
     final side = math.min(size.width, size.height);
     final center = Offset(size.width / 2, size.height / 2);
     final backgroundPaint = Paint()..color = CocEnglishBrand.surface;
@@ -316,6 +344,7 @@ class _CocEnglishArtPainter extends CustomPainter {
     final iconSize = side * (side < 30 ? .9 : .59);
     canvas.scale(iconSize / 100);
     _paintGlyph(canvas, _glyphFor(region));
+    canvas.restore();
     canvas.restore();
   }
 
@@ -688,5 +717,5 @@ class _CocEnglishArtPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_CocEnglishArtPainter oldDelegate) =>
-      oldDelegate.region != region;
+      oldDelegate.region != region || oldDelegate.blendMode != blendMode;
 }

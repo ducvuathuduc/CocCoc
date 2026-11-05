@@ -20,19 +20,19 @@ Text, buttons, forms, feedback, cards and navigation are native Flutter widgets.
 
 | Command | Evidence |
 | --- | --- |
-| `node tools/scripts/mobile-check.mjs --with-blueprint` | PASS blueprint, format, fatal-info analyzer,239 tests. `english-current-gate.log`. Previous177/182/200-test receipts remain historical. |
-| `flutter test test/timer_boost_test.dart test/max_flow_test.dart test/full_frontend_qa_test.dart --dart-define=ENABLE_MASCOT_MOTION=false` | PASS23 tests before final full gate: real modal dismiss/reopen/purchase return, duplicate tap, timer background/resume, wallet at360/text2, Max Back/resume/cancel and baseline tab/Shop regression. `timer-boost-routed.log`. |
-| `flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/challenge_test.dart test/duo_motion_test.dart` | PASS countdown stops when hidden, restarts correctly, wrong-answer retry, reduced motion and original vector parsing. `challenge-motion-tests.log` |
-| `flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/adventure_test.dart` | PASS5 tests: wrong input preserved, idempotent claim,360/430 × text1/2. `adventure-green.log` |
-| `flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/explanation_test.dart` | PASS6 tests: real lesson→explanation→back retains wrong selection/feedback; twelve explanations covered; long answers at360/430 × text1/2. `explanation-green.log`; actual overflow RED in `explanation-red.log` |
-| Static capture tests: `extended_capture_test.dart`, `social_capture_test.dart`, `status_feed_capture_test.dart`, with `CAPTURE_UI=true` / `ENABLE_MASCOT_MOTION=false` | 124 source-sized static PNGs in `english-extended/`,1180×2556 with390 logical width and59/34 safe insets. Latest social/status captures include source art preload and corrected illustration aspect ratios. `social-capture.log`, `status-feed-capture.log`; earlier extended capture logs remain historical. |
-| `flutter test test/clash_runtime_capture_test.dart --dart-define=CAPTURE_CLASH_RIVE=true` | PASS1 test with actual inner RiveWidget assertion; four actual Eddy/Zari/Oscar/reaction frames. `clash-rive-capture.log`. Run separately from static capture settling because the original animation advances continuously. |
-| `flutter test --dart-define=CAPTURE_MOTION=true test/motion_reference_capture_test.dart` | PASS original timeline frames, including Bea0/110/220/330. `motion-source-capture.log`, `motion/` |
-| Original Rive test with `CAPTURE_CAST=true` | PASS3 tests, all ten files and exact inputs, actual cast renders, Falstaff reaction frames. `character-tests.log`, `cast/` |
+| `node tools/scripts/mobile-check.mjs --with-blueprint` | PASS blueprint, format, fatal-info analyzer,239 tests. `../../archive/qa-logs/english-current-gate.log`. Previous177/182/200-test receipts remain historical. |
+| `flutter test test/timer_boost_test.dart test/max_flow_test.dart test/full_frontend_qa_test.dart --dart-define=ENABLE_MASCOT_MOTION=false` | PASS23 tests before final full gate: real modal dismiss/reopen/purchase return, duplicate tap, timer background/resume, wallet at360/text2, Max Back/resume/cancel and baseline tab/Shop regression. `../../archive/qa-logs/timer-boost-routed.log`. |
+| `flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/challenge_test.dart test/duo_motion_test.dart` | PASS countdown stops when hidden, restarts correctly, wrong-answer retry, reduced motion and original vector parsing. `../../archive/qa-logs/challenge-motion-tests.log` |
+| `flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/adventure_test.dart` | PASS5 tests: wrong input preserved, idempotent claim,360/430 × text1/2. `../../archive/qa-logs/adventure-green.log` |
+| `flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/explanation_test.dart` | PASS6 tests: real lesson→explanation→back retains wrong selection/feedback; twelve explanations covered; long answers at360/430 × text1/2. `../../archive/qa-logs/explanation-green.log`; actual overflow RED in `../../archive/qa-logs/explanation-red.log` |
+| Static capture tests: `extended_capture_test.dart`, `social_capture_test.dart`, `status_feed_capture_test.dart`, with `CAPTURE_UI=true` / `ENABLE_MASCOT_MOTION=false` | 124 source-sized static PNGs in `english-extended/`,1180×2556 with390 logical width and59/34 safe insets. Latest social/status captures include source art preload and corrected illustration aspect ratios. `../../archive/qa-logs/social-capture.log`, `../../archive/qa-logs/status-feed-capture.log`; earlier extended capture logs remain historical. |
+| `flutter test test/clash_runtime_capture_test.dart --dart-define=CAPTURE_CLASH_RIVE=true` | PASS1 test with actual inner RiveWidget assertion; four actual Eddy/Zari/Oscar/reaction frames. `../../archive/qa-logs/clash-rive-capture.log`. Run separately from static capture settling because the original animation advances continuously. |
+| `flutter test --dart-define=CAPTURE_MOTION=true test/motion_reference_capture_test.dart` | PASS original timeline frames, including Bea0/110/220/330. `../../archive/qa-logs/motion-source-capture.log`, `motion/` |
+| Original Rive test with `CAPTURE_CAST=true` | PASS3 tests, all ten files and exact inputs, actual cast renders, Falstaff reaction frames. `../../archive/qa-logs/character-tests.log`, `cast/` |
 | `node tools/scripts/reference-asset-audit.mjs` | PASS951 ordered instances across18 families;201 bundled PNGs match saved source hashes. `reference-assets.json` |
-| `node tools/scripts/mobile-web-build.mjs` | PASS current release web with local Rive44 JS/WASM,87.8s. `english-current-web-build.log` |
-| `flutter build apk --release --split-per-abi` | PASS current mock-default release APKs: armeabi-v7a40,870,471 bytes, arm6444,182,381 bytes, x86_6446,070,238 bytes,136.3s. `english-current-android-build.log`; hashes in [artifact receipt](english-current-artifacts.json). |
-| `flutter build apk --debug --dart-define=USE_MOCK_AUTH=true` | PASS normal Android debug APK. `english-android-build.log`. No new device execution in this slice. |
+| `node tools/scripts/mobile-web-build.mjs` | PASS current release web with local Rive44 JS/WASM,87.8s. `../../archive/qa-logs/english-current-web-build.log` |
+| `flutter build apk --release --split-per-abi` | PASS current mock-default release APKs: armeabi-v7a40,870,471 bytes, arm6444,182,381 bytes, x86_6446,070,238 bytes,136.3s. `../../archive/qa-logs/english-current-android-build.log`; hashes in [artifact receipt](english-current-artifacts.json). |
+| `flutter build apk --debug --dart-define=USE_MOCK_AUTH=true` | PASS normal Android debug APK. `../../archive/qa-logs/english-android-build.log`. No new device execution in this slice. |
 
 Commands with Windows Rive native tests first prepend the SDK release DLL
 directory to the existing case-insensitive Path key. The repository check script
@@ -110,7 +110,7 @@ funds preserve selection and expose one clearly labeled local demo top-up.
 
 Narrow text-scale2 purchase testing exposed a37px Home status-row overflow after
 the wallet increased; native status controls now wrap while retaining text size.
-RED: `timer-wallet-text2-red.log`; final239-test gate includes the fix. Home and
+RED: `../../archive/qa-logs/timer-wallet-text2-red.log`; final239-test gate includes the fix. Home and
 Shop now display the same local wallet. A baseline Shop test required a settled
 frame after scrolling to its now-lower freeze purchase button; its original
 insufficient-funds behavior remains covered.

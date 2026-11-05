@@ -1,10 +1,69 @@
 name: Backend foundation
 on:
   pull_request:
-    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+    paths:
+      - services/**
+      - packages/**
+      - appwrite/**
+      - content/**
+      - tools/audit/**
+      - tools/blueprint/**
+      - tools/evals/**
+      - tools/postman/**
+      - tools/toolchain.json
+      - tools/scripts/backend*.mjs
+      - tools/scripts/dev-*.mjs
+      - tools/scripts/local-*.mjs
+      - tools/scripts/local-*.sh
+      - tools/tests/local-*.test.mjs
+      - tools/tests/dart-contract-line-endings.test.mjs
+      - tools/tests/backend-workflow-paths.test.mjs
+      - infra/docker/**
+      - docs/api/**
+      - docs/data/**
+      - .gitattributes
+      - package.json
+      - pnpm-workspace.yaml
+      - pnpm-lock.yaml
+      - tsconfig.backend.json
+      - eslint.config.mjs
+      - .github/workflows/*.yml
   push:
-    paths: ['services/**', 'packages/**', 'appwrite/**', 'tools/audit/**', 'tools/evals/**', 'tools/scripts/backend*.mjs', 'tools/scripts/dev-*.mjs', 'docs/**', 'package.json', 'pnpm-lock.yaml', 'tsconfig.backend.json', 'eslint.config.mjs', '.github/workflows/backend.yml']
+    paths:
+      - services/**
+      - packages/**
+      - appwrite/**
+      - content/**
+      - tools/audit/**
+      - tools/blueprint/**
+      - tools/evals/**
+      - tools/postman/**
+      - tools/toolchain.json
+      - tools/scripts/backend*.mjs
+      - tools/scripts/dev-*.mjs
+      - tools/scripts/local-*.mjs
+      - tools/scripts/local-*.sh
+      - tools/tests/local-*.test.mjs
+      - tools/tests/dart-contract-line-endings.test.mjs
+      - tools/tests/backend-workflow-paths.test.mjs
+      - infra/docker/**
+      - docs/api/**
+      - docs/data/**
+      - .gitattributes
+      - package.json
+      - pnpm-workspace.yaml
+      - pnpm-lock.yaml
+      - tsconfig.backend.json
+      - eslint.config.mjs
+      - .github/workflows/*.yml
+    branches:
+      - main
   workflow_dispatch:
+    inputs:
+      extended_checks:
+        description: Run documentation, schema, Postman, local tooling and load checks
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -25,12 +84,23 @@ jobs:
       - run: pnpm backend:smoke
       - run: pnpm dev:smoke
       - run: pnpm contracts:check
+      - run: node --test tools/tests/dart-contract-line-endings.test.mjs
+      - run: node --test tools/tests/backend-workflow-paths.test.mjs
       - run: pnpm api:lint
-      - run: pnpm schema:plan
-      - run: pnpm schema:test
-      - run: pnpm seed:check
-      - run: pnpm audit:check
-      - run: node tools/evals/voice-harness.mjs
+      - name: Extended checks (manual)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.extended_checks }}
+        run: |-
+          pnpm local:test
+          node tools/scripts/local-load.mjs --requests=100 --concurrency=10
+          pnpm postman:check
+          pnpm postman:test
+          pnpm postman:run:local
+          pnpm schema:plan
+          pnpm schema:test
+          pnpm seed:check
+          pnpm blueprint:check
+          pnpm audit:check
+          node tools/evals/voice-harness.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: independent-function-scaffolds

@@ -19,7 +19,7 @@ Views contain only widgets. ViewModels own local commands and state. Repositorie
 ## Commands (from repository root unless noted)
 
 ```sh
-pnpm verify                                   # format + analyze + all Flutter tests + blueprint
+pnpm verify                                   # format + analyze + all Flutter tests
 cd apps/mobile && flutter pub get --offline   # restore deps; revert any pubspec.lock mirror-URL rewrite
 flutter analyze --no-pub
 flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false

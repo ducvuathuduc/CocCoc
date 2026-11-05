@@ -12,18 +12,18 @@ Error envelope:
 
 | HTTP | Codes | Behavior |
 |---|---|---|
-| 400 | VALIDATION_ERROR, UNKNOWN_EXERCISE_TYPE, INVALID_AUDIO, INVALID_TIMEZONE | show safe field details, fix input, no auto-retry |
+| 400 | VALIDATION_ERROR, UNKNOWN_EXERCISE_TYPE, INVALID_AUDIO, INVALID_TIMEZONE, MODE_UNAVAILABLE | show safe field details, fix input, no auto-retry |
 | 401 | AUTH_REQUIRED, AUTH_EXPIRED | restore session/login once, pause sync |
 | 403 | FORBIDDEN, ACCOUNT_BLOCKED, MAINTAINER_REQUIRED | no retry, generic inaccessible resource |
 | 403 | ENTITLEMENT_REQUIRED, USER_BLOCKED, AD_NOT_ELIGIBLE | plan/block/ad eligibility decided server-side; no retry (details per code below) |
-| 404 | NOT_FOUND, PROFILE_UNAVAILABLE | avoid exposing private existence; refresh permitted listing |
+| 404 | NOT_FOUND, PROFILE_UNAVAILABLE, ACTIVITY_NOT_FOUND | avoid exposing private existence; refresh permitted listing |
 | 404 | CLASSROOM_CODE_INVALID | unknown and archived codes answer identically |
-| 409 | NODE_LOCKED, SESSION_CONFLICT, SESSION_INCOMPLETE, SESSION_EXPIRED, CONTENT_VERSION_RETIRED, IDEMPOTENCY_CONFLICT, REVISION_CONFLICT, INSUFFICIENT_GEMS, FREEZE_CAPACITY | preserve state, fetch current entity or repeat current version; no blind retry |
+| 409 | NODE_LOCKED, SESSION_CONFLICT, SESSION_INCOMPLETE, SESSION_EXPIRED, CONTENT_VERSION_RETIRED, IDEMPOTENCY_CONFLICT, REVISION_CONFLICT, INSUFFICIENT_GEMS, FREEZE_CAPACITY, CHECKPOINT_LOCKED | preserve state, fetch current entity or repeat current version; no blind retry |
 | 409 | ENERGY_DEPLETED, FRIEND_STREAK_LIMIT, ITEM_UNAVAILABLE, STREAK_REPAIR_EXPIRED, PURCHASE_PENDING, PROMO_ALREADY_REDEEMED, AD_DAILY_CAP | economy/social state conflict; refetch the owning resource, no blind retry (details per code below) |
 | 409 | ACTIVE_VOICE_SESSION, VOICE_RESERVATION_CONFLICT, VOICE_SESSION_EXPIRED, VOICE_EPOCH_CONFLICT, VOICE_TOKEN_DELIVERY_UNCERTAIN | voice rules below; no blind remint or client budget refund |
 | 413 | PAYLOAD_TOO_LARGE | shorter input/recording; never auto-split graded utterance |
 | 429 | RATE_LIMITED, QUOTA_EXHAUSTED | honor Retry-After; capability fallback |
-| 503 | AUTH_UNAVAILABLE, DB_UNAVAILABLE, STORAGE_UNAVAILABLE, AI_PROVIDER_UNAVAILABLE, ASSESSMENT_UNAVAILABLE | idempotent transient retry bounded; offline/template fallback |
+| 503 | AUTH_UNAVAILABLE, DB_UNAVAILABLE, STORAGE_UNAVAILABLE, AI_PROVIDER_UNAVAILABLE, ASSESSMENT_UNAVAILABLE, OPPONENT_UNAVAILABLE | idempotent transient retry bounded; offline/template fallback |
 | 503 | SERVICE_NOT_CONFIGURED | hosted service has no enabled business adapter (P1 scaffold fail-closed, also /ready and unsigned internal routes); not retryable until deployment changes |
 | 503 | NATIVE_LIVE_DISABLED | current account/device gate failed; select TURN with new session/key, never a paid provider |
 | 504 | DEADLINE_EXCEEDED | same-key receipt lookup/retry; never assume uncommitted |
@@ -44,6 +44,8 @@ IDEMPOTENCY_REPLAY (EDGE_CASE_MATRIX EC07) is a telemetry outcome for a same-key
 | PROMO_ALREADY_REDEEMED | 409 | redeemPromoCode | new key for a code this user already redeemed; same-key replay returns the stored receipt; unknown/expired/exhausted codes stay NOT_FOUND |
 | AD_NOT_ELIGIBLE | 403 | recordAdEvent | SUPER/MAX (ACTIVE/GRACE) users never see ads |
 | AD_DAILY_CAP | 409 | recordAdEvent | no free dailyIndex under the configured cap for this placement/kind/day |
+
+Authored activity modes add four codes: `MODE_UNAVAILABLE` (400) when the published content does not author the requested mode or a required `passThreshold`; `ACTIVITY_NOT_FOUND` (404) when `lessonId`/`activityId` does not resolve to authored content; `CHECKPOINT_LOCKED` (409) when section prerequisites are incomplete; `OPPONENT_UNAVAILABLE` (503) when CLASH has no authored scripted opponent. A failed TEST_OUT/CHECKPOINT is **not** an error: the completion succeeds with HTTP 200 and `passed=false`, and it changes no frontier. `passThreshold` is authored and server-owned; clients cannot set or override it.
 
 Client-only codes NETWORK_TIMEOUT, CACHE_CORRUPT, JOURNAL_CORRUPT, MIC_PERMISSION_DENIED, MIC_UNAVAILABLE, SPEECH_NO_INPUT, AUDIO_INTERRUPTED, AUDIO_PLAYBACK_FAILED, VOICE_DISCONNECTED, VOICE_STALE_EVENT, AI_INVALID_OUTPUT, SYNC_REJECTED map to [edge cases](../product/EDGE_CASE_MATRIX.md); never returned as fictional vendor error codes.
 

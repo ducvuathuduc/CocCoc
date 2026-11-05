@@ -27,7 +27,44 @@ class FriendStreakLink {
 
 enum SocialInteraction { nudge, highFive, kudos, giftBoost, congrats }
 
-/// Friend streaks, friend interactions and blocks (Progress social).
+/// One public profile projection (`GET /v1/profiles/{userId}`).
+class SocialProfile {
+  const SocialProfile({
+    required this.userId,
+    required this.nickname,
+    required this.avatarId,
+    required this.studyXp,
+    required this.streak,
+    required this.achievementIds,
+    required this.followStatus,
+  });
+
+  final String userId, nickname;
+  final String? avatarId;
+  final int studyXp, streak;
+  final List<String> achievementIds;
+  final String followStatus;
+
+  bool get isFollowing =>
+      followStatus == 'following' || followStatus == 'friend';
+}
+
+/// One friend activity entry (`GET /v1/activity`).
+class SocialActivity {
+  const SocialActivity({
+    required this.eventId,
+    required this.userId,
+    required this.kind,
+    required this.summary,
+    required this.createdAt,
+  });
+
+  final String eventId, userId, kind, summary;
+  final DateTime createdAt;
+}
+
+/// Friend streaks, friend interactions, profiles, follows, reports and blocks
+/// (Progress social).
 abstract interface class SocialRepository {
   /// Server friend streaks; `null` keeps the local preview state (mock).
   List<FriendStreakLink>? friendStreaks();
@@ -41,6 +78,20 @@ abstract interface class SocialRepository {
   });
   Future<void> block(String userId);
   Future<void> unblock(String userId);
+
+  /// Public profile projection; `null` keeps the local mock summary.
+  Future<SocialProfile?> publicProfile(String userId);
+
+  /// Friend activity feed, newest server page order.
+  Future<List<SocialActivity>> activity({int limit = 50});
+
+  Future<void> follow(String userId);
+  Future<void> unfollow(String userId);
+
+  /// Reports [userId] with the human-readable action-sheet [reason].
+  Future<void> report(String userId, {required String reason});
+
+  Future<void> leaveClassroom(String classroomId);
 }
 
 /// Mock: no server; controllers keep their local preview state.
@@ -71,6 +122,24 @@ class MockSocialRepository implements SocialRepository {
 
   @override
   Future<void> unblock(String userId) async {}
+
+  @override
+  Future<SocialProfile?> publicProfile(String userId) async => null;
+
+  @override
+  Future<List<SocialActivity>> activity({int limit = 50}) async => const [];
+
+  @override
+  Future<void> follow(String userId) async {}
+
+  @override
+  Future<void> unfollow(String userId) async {}
+
+  @override
+  Future<void> report(String userId, {required String reason}) async {}
+
+  @override
+  Future<void> leaveClassroom(String classroomId) async {}
 }
 
 /// [SocialRepository] over `/v1/friend-streaks`, `/v1/interactions` and
@@ -170,6 +239,77 @@ class ApiSocialRepository implements SocialRepository {
   Future<void> unblock(String userId) async {
     await api.unblockUser(userId);
   }
+
+  @override
+  Future<SocialProfile?> publicProfile(String userId) async {
+    final profile = await api.getPublicProfile(userId);
+    return SocialProfile(
+      userId: profile.userId,
+      nickname: profile.nickname,
+      avatarId: profile.avatarId,
+      studyXp: profile.studyXp,
+      streak: profile.streak,
+      achievementIds: profile.achievementIds,
+      followStatus: profile.followStatus,
+    );
+  }
+
+  @override
+  Future<List<SocialActivity>> activity({int limit = 50}) async {
+    final entries = <SocialActivity>[];
+    String? cursor;
+    do {
+      final page = await api.listActivity(cursor: cursor, limit: 50);
+      for (final item in page.items) {
+        final createdAt = DateTime.tryParse(item.createdAt);
+        if (createdAt == null) continue;
+        entries.add(
+          SocialActivity(
+            eventId: item.eventId,
+            userId: item.userId,
+            kind: item.kind,
+            summary: item.summary,
+            createdAt: createdAt,
+          ),
+        );
+      }
+      cursor = page.nextCursor;
+    } while (cursor != null && entries.length < limit && entries.length < 500);
+    return List.unmodifiable(entries.take(limit));
+  }
+
+  @override
+  Future<void> follow(String userId) async {
+    await api.followUser(wire.FollowRequest(targetUserId: userId));
+  }
+
+  @override
+  Future<void> unfollow(String userId) async {
+    await api.unfollowUser(userId);
+  }
+
+  @override
+  Future<void> report(String userId, {required String reason}) async {
+    await api.reportUser(
+      wire.UserReportRequest(
+        targetUserId: userId,
+        reason: _reportReasons[reason] ?? 'OTHER',
+        note: null,
+      ),
+    );
+  }
+
+  @override
+  Future<void> leaveClassroom(String classroomId) async {
+    await api.leaveClassroom(classroomId);
+  }
+
+  /// The action sheet shows human labels; the wire only admits its enum.
+  static const _reportReasons = {
+    'Spam': 'SPAM',
+    'Nudity': 'INAPPROPRIATE_AVATAR',
+    'Something else': 'OTHER',
+  };
 }
 
 final socialRepositoryProvider = Provider<SocialRepository>((ref) {

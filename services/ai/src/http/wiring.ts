@@ -137,6 +137,7 @@ export function aiRoutes(deps: AiDeps): Route[] {
     }),
     user('POST', '/v1/voice-sessions/{sessionId}/close', async (c) => {
       const uid = userId(c);
+      v.object(c.body, 'body', [], []);
       return { status: 200, body: await closeVoiceSession(deps, uid, pathParam('sessionId')) };
     }),
     user(

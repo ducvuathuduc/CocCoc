@@ -135,3 +135,61 @@ test('offline completion: client verdicts are regraded; order, completeness, has
   assert.equal(unknown.status, 400);
   assert.equal(h.a.persistence.dump('l_outbox').length, 0, 'nothing committed');
 });
+
+test('concurrent offline submissions with the same local completion and different logs conflict', async () => {
+  const h = await setup();
+  const { index, bundle } = await h.pinned('u1n1l1');
+  const first = request(index, log(bundle), 0);
+  const second = {
+    ...first,
+    operationId: randomUUID(),
+    answers: log(bundle, [bundle.exercises[0].id]),
+  };
+  const outcomes = await Promise.all([
+    h.post('/v1/offline-completions', first),
+    h.post('/v1/offline-completions', second),
+  ]);
+  assert.equal(
+    outcomes.filter((result) => result.status === 200).length,
+    1,
+    JSON.stringify(outcomes),
+  );
+  assert.equal(
+    outcomes.find((result) => result.status !== 200)?.body.error?.code,
+    'IDEMPOTENCY_CONFLICT',
+  );
+  assert.equal(h.a.persistence.dump('l_outbox').length, 1);
+});
+
+test('completed offline replay still validates the idempotency key against the entire request', async () => {
+  const h = await setup();
+  const { index, bundle } = await h.pinned('u1n1l1');
+  const body = request(index, log(bundle), 0);
+  const key = randomUUID();
+  const first = await h.post('/v1/offline-completions', body, key);
+  assert.equal(first.status, 200, JSON.stringify(first.body));
+  const changedWrapper = await h.post(
+    '/v1/offline-completions',
+    {
+      ...body,
+      operationId: randomUUID(),
+    },
+    key,
+  );
+  assert.equal(changedWrapper.body.error?.code, 'IDEMPOTENCY_CONFLICT');
+  assert.equal(h.a.persistence.dump('l_outbox').length, 1);
+});
+
+test('concurrent identical offline logs with different keys replay one completion', async () => {
+  const h = await setup();
+  const { index, bundle } = await h.pinned('u1n1l1');
+  const body = request(index, log(bundle), 0);
+  const outcomes = await Promise.all([
+    h.post('/v1/offline-completions', body),
+    h.post('/v1/offline-completions', { ...body, operationId: randomUUID() }),
+  ]);
+  assert.equal(outcomes[0].status, 200, JSON.stringify(outcomes[0].body));
+  assert.equal(outcomes[1].status, 200, JSON.stringify(outcomes[1].body));
+  assert.deepEqual(outcomes[0].body, outcomes[1].body);
+  assert.equal(h.a.persistence.dump('l_outbox').length, 1);
+});

@@ -35,6 +35,18 @@ abstract interface class EvidenceLearningRepository {
   });
 }
 
+abstract interface class OfflineLearningSync {
+  Future<int> syncPending();
+}
+
+/// Releases the server's active session slot when the learner leaves.
+///
+/// Implementations keep the local journal when the outcome is unknown so the
+/// lesson (and its unsent answers) can still be resumed.
+abstract interface class AbandonableSession {
+  Future<void> abandonSession();
+}
+
 class LearningFailure implements Exception {
   const LearningFailure(this.message);
 
@@ -44,7 +56,7 @@ class LearningFailure implements Exception {
   String toString() => message;
 }
 
-class MockLearningRepository implements LearningRepository {
+class MockLearningRepository implements LearningRepository, AbandonableSession {
   MockLearningRepository({
     this.delay = const Duration(milliseconds: 25),
     this.enforcesHearts = false,
@@ -130,6 +142,9 @@ class MockLearningRepository implements LearningRepository {
 
   @override
   void clearDraft() => _draft = null;
+
+  @override
+  Future<void> abandonSession() async {}
 }
 
 bool _sameIds(List<String> actual, List<String> expected) {

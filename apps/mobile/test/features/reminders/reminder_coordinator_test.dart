@@ -7,6 +7,8 @@ import 'package:cocenglish/features/reminders/presentation/reminder_permission_s
 import 'package:cocenglish/features/reminders/services/device_zone.dart';
 import 'package:cocenglish/features/reminders/services/home_widget_gateway.dart';
 import 'package:cocenglish/features/reminders/services/notification_gateway.dart';
+import 'package:cocenglish/features/progress/application/streak_widgets_controller.dart';
+import 'package:cocenglish/features/progress/domain/streak_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -99,14 +101,35 @@ void main() {
 
   ReminderCoordinator c() => container.read(reminderCoordinatorProvider);
 
+  test('home widget storage supports every selected visual mood', () {
+    for (final mood in StreakWidgetMood.values) {
+      final data = StreakHomeWidgetData.from(
+        streak: 1,
+        practicedToday: true,
+        goalMinutes: 10,
+        todayMinutes: 5,
+        mood: mood,
+      );
+      expect(data.toStorage()['coc_widget_mood'], mood.name);
+    }
+  });
+
   test(
     'sync schedules today\'s daily and at-risk reminders, publishes widget',
     () async {
+      container
+          .read(streakWidgetsProvider.notifier)
+          .select(StreakWidgetMood.lastChance);
       await c().sync();
       expect(notes.scheduled.keys, containsAll([100, 101, 200]));
       expect(notes.scheduled[200]!.at.hour, 20);
       expect(widget.published.last.flame, WidgetFlame.atRisk);
       expect(widget.published.last.streak, 6);
+      expect(widget.published.last.mood, StreakWidgetMood.lastChance);
+      expect(
+        widget.published.last.toStorage()['coc_widget_mood'],
+        'lastChance',
+      );
       expect(store.state.timezoneId, 'Asia/Ho_Chi_Minh');
     },
   );

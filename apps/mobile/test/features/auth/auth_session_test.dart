@@ -1,4 +1,7 @@
 import 'package:cocenglish/core/config/app_config.dart';
+
+import '../../support/real_profile.dart';
+
 import 'package:cocenglish/features/auth/application/auth_controller.dart';
 import 'package:cocenglish/features/auth/data/auth_repository.dart';
 import 'package:cocenglish/features/auth/data/mock_auth_repository.dart';
@@ -56,9 +59,7 @@ void main() {
   test('API data source selects the Appwrite repository', () {
     final container = ProviderContainer(
       overrides: [
-        appConfigProvider.overrideWithValue(
-          const AppConfig(dataSource: DataSource.api),
-        ),
+        appConfigProvider.overrideWithValue(realTestConfig),
         appwriteAuthServiceProvider.overrideWithValue(
           AppwriteAuthService.withAccount(null),
         ),

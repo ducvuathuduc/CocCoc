@@ -1,3 +1,5 @@
+import 'support/app_fonts.dart';
+
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/core/ui/duo_form.dart';
@@ -36,9 +38,9 @@ class _FailingAuth implements AuthRepository {
 
 Future<void> _fonts(WidgetTester tester) async {
   await tester.runAsync(() async {
-    await (FontLoader('DuolingoSans')
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+    await (FontLoader('sans-serif')
+          ..addFont(loadTestFont())
+          ..addFont(loadTestFont(bold: true)))
         .load();
     await (FontLoader(
       'MaterialIcons',
@@ -157,7 +159,8 @@ void main() {
       await tester.tap(find.text('NEXT'));
       await tester.pumpAndSettle();
       expect(find.text('What is your name?'), findsOneWidget);
-      expect(find.text('SIGN UP WITH APPLE'), findsOneWidget);
+      expect(find.text('SIGN UP WITH APPLE'), findsNothing);
+      expect(find.text('SIGN UP WITH GOOGLE'), findsOneWidget);
       await tester.enterText(
         find.byKey(const ValueKey('register-first')),
         'Sam',

@@ -1,9 +1,9 @@
 // `pnpm dev:services [learning|progress|ai ...]` — run the services locally in DEV MODE.
 // Each service uses its real router/wiring (services/<svc>/src/dev.ts) with the explicit
-// in-memory adapter: nothing is durable, /ready stays 503 (memory is never admitted), and
-// user routes fail closed without an auth port. Ports: learning 4101, progress 4102, ai 4103
-// (COC_DEV_PORT_BASE shifts all three). Internal HMAC uses built-in dev keys unless
-// COC_SERVICE_KEYS is set. Binds 127.0.0.1 only.
+// in-memory adapter: nothing is durable and /ready stays 503 (memory is never admitted).
+// User routes fail closed unless COC_DEV_AUTH=1 opts into `Authorization: Bearer dev-<userId>`.
+// Ports: learning 4101, progress 4102, ai 4103 (COC_DEV_PORT_BASE shifts all three). Internal
+// HMAC uses built-in dev keys unless COC_SERVICE_KEYS is set. Binds 127.0.0.1 only.
 import http from 'node:http';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -78,7 +78,7 @@ export async function startDevServices(names = SERVICES, env = process.env) {
   const servers = [];
   for (const name of names) {
     const { createDevHandler } = await import(pathToFileURL(path.join(outdir, `${name}.mjs`)));
-    const { handler } = createDevHandler(keyring);
+    const { handler } = createDevHandler(keyring, env);
     const server = http.createServer((req, res) => {
       const chunks = [];
       let size = 0;

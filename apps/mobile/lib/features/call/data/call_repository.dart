@@ -20,7 +20,7 @@ abstract class CallRepository {
 /// does not implement it, so its timed, offline flow is unchanged.
 abstract interface class CallTurns {
   /// Sends the learner turn at script index [cursor] of call [sessionId];
-  /// [wav] is the recorded 16 kHz mono PCM16 clip (null: none was captured).
+  /// [wav] must contain the captured 16 kHz mono PCM16 WAV clip.
   Future<CallTurnResult> speakTurn(
     String sessionId,
     int cursor, {
@@ -79,8 +79,10 @@ class MockCallRepository implements CallRepository {
 
 final callRepositoryProvider = Provider<CallRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return const MockCallRepository();
-  return ApiCallRepository(
+  final repository = ApiCallRepository(
     ref.watch(apiEndpointsProvider),
     ref.watch(activeCourseProvider),
   );
+  ref.onDispose(repository.dispose);
+  return repository;
 });

@@ -1,0 +1,8 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/full_frontend_qa_test.dart
+00:00 +0: all frontend states render at 360 / text 1.0
+00:02 +1: all frontend states render at 360 / text 2.0
+00:04 +2: all frontend states render at 430 / text 1.0
+00:05 +3: all frontend states render at 430 / text 2.0
+00:06 +4: five tabs preserve path, words reveal, and shop rejects insufficient funds
+00:07 +5: capture analyzed frontend states with original fonts
+00:08 +6: All tests passed!

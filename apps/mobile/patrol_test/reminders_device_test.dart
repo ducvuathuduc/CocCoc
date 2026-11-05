@@ -34,6 +34,8 @@ import 'package:patrol/patrol.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 
+import 'support/advance_frame.dart';
+
 const _pathTitle = 'Use basic phrases';
 const _explainerTitle = 'Make learning a habit';
 
@@ -53,18 +55,8 @@ Future<void> _shot(PatrolIntegrationTester $, String tag) async {
   }
 }
 
-/// pumpAndSettle that tolerates never-ending idle animations.
-Future<void> _settle(WidgetTester t, [int seconds = 6]) async {
-  try {
-    await t.pumpAndSettle(
-      const Duration(milliseconds: 100),
-      EnginePhase.sendSemanticsUpdate,
-      Duration(seconds: seconds),
-    );
-  } catch (_) {
-    await t.pump(const Duration(milliseconds: 500));
-  }
-}
+/// Advances transient UI work without waiting for continuous audio/idle frames.
+Future<void> _settle(WidgetTester t) => advanceFrame(t);
 
 Future<bool> _waitFor(
   WidgetTester t,
@@ -167,7 +159,7 @@ Future<void> _completeLesson(WidgetTester t) async {
   await _tapText(t, 'CLAIM XP');
   // Result chain (streak, goal, widget, friends, gems, quests, league).
   for (var i = 0; i < 16; i++) {
-    await _settle(t, 3);
+    await _settle(t);
     if (find.text(_explainerTitle).evaluate().isNotEmpty) return;
     if (find.text(_pathTitle).hitTestable().evaluate().isNotEmpty &&
         find.byType(LessonScreen).evaluate().isEmpty) {

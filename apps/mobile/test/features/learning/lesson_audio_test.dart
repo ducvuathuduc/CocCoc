@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cocenglish/core/api/api_contracts.dart' as wire;
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
@@ -14,6 +15,7 @@ import 'package:cocenglish/features/learning/presentation/lesson_screen.dart';
 import 'package:cocenglish/features/learning/services/lesson_audio_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -41,12 +43,11 @@ class RecordingOutput implements LessonSoundOutput {
   final effects = <String>[];
 
   @override
-  Future<void> playVoice(LessonAudioSource source) async => voice.add(
-    switch (source) {
-      BundledLessonAudio(:final path) => path,
-      CachedLessonAudio(:final path) => path,
-    },
-  );
+  Future<void> playVoice(LessonAudioSource source) async =>
+      voice.add(switch (source) {
+        BundledLessonAudio(:final path) => path,
+        CachedLessonAudio(:final path) => path,
+      });
 
   @override
   Future<void> playEffect(String asset) async => effects.add(asset);
@@ -61,6 +62,83 @@ class RecordingOutput implements LessonSoundOutput {
 void main() {
   final clipBytes = Uint8List.fromList(utf8.encode('fake aac clip'));
   final clipHash = hashOf(clipBytes);
+
+  test(
+    'native lesson audio plays without an idle frame polling loop',
+    () async {
+      final binding = TestWidgetsFlutterBinding.ensureInitialized();
+      final messenger = binding.defaultBinaryMessenger;
+      const methods = MethodChannel('xyz.luan/audioplayers');
+      const global = MethodChannel('xyz.luan/audioplayers.global');
+      const globalEvents = MethodChannel('xyz.luan/audioplayers.global/events');
+      const codec = StandardMethodCodec();
+      final calls = <MethodCall>[];
+      final disposed = Completer<void>();
+      final eventChannels = <MethodChannel>[];
+      final output = AudioplayersSoundOutput();
+      final cache = AudioCache.instance.loadedFiles;
+      const asset = 'sfx/correct.wav';
+      final previous = cache[asset];
+      cache[asset] = Uri.file('/test/correct.wav');
+      messenger.setMockMethodCallHandler(global, (_) async => null);
+      messenger.setMockMethodCallHandler(globalEvents, (_) async => null);
+      messenger.setMockMethodCallHandler(methods, (call) async {
+        calls.add(call);
+        final args = call.arguments as Map<Object?, Object?>;
+        final playerId = args['playerId'] as String;
+        final events = MethodChannel('xyz.luan/audioplayers/events/$playerId');
+        if (call.method == 'create') {
+          eventChannels.add(events);
+          messenger.setMockMethodCallHandler(events, (_) async => null);
+        }
+        if (call.method == 'setSourceUrl') {
+          await messenger.handlePlatformMessage(
+            events.name,
+            codec.encodeSuccessEnvelope({
+              'event': 'audio.onPrepared',
+              'value': true,
+            }),
+            (_) {},
+          );
+        }
+        if (call.method == 'dispose' &&
+            calls.where((call) => call.method == 'dispose').length == 3) {
+          disposed.complete();
+        }
+        return call.method == 'getCurrentPosition' ? 0 : null;
+      });
+      try {
+        await output.playEffect(asset);
+        await output.playEffect(asset);
+        await output.playVoice(const CachedLessonAudio('/test/prompt.aac'));
+        final resumed = calls
+            .where((call) => call.method == 'resume')
+            .map((call) => (call.arguments as Map)['playerId']);
+        expect(resumed, ['lesson-sfx-0', 'lesson-sfx-1', 'lesson-voice']);
+        // Low-latency effects never send a completion event. Playback must
+        // remain active without polling the native position on every UI frame.
+        expect(binding.transientCallbackCount, 0);
+        expect(
+          calls.where((call) => call.method == 'getCurrentPosition'),
+          isEmpty,
+        );
+      } finally {
+        output.dispose();
+        await disposed.future.timeout(const Duration(seconds: 5));
+        messenger.setMockMethodCallHandler(methods, null);
+        messenger.setMockMethodCallHandler(global, null);
+        messenger.setMockMethodCallHandler(globalEvents, null);
+        for (final channel in eventChannels) {
+          messenger.setMockMethodCallHandler(channel, null);
+        }
+        if (previous == null) {
+          cache.remove(asset);
+        } else {
+          cache[asset] = previous;
+        }
+      }
+    },
+  );
 
   group('LessonAudioStore', () {
     LessonAudioStore store({
@@ -79,55 +157,64 @@ void main() {
       },
     );
 
-    test('uses the shipped clip when its hash matches (or mock has none)',
-        () async {
-      final s = store();
-      expect(
-        await s.resolve(LessonAudio('a.u1.s1.n', clipHash)),
-        const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
-      );
-      expect(
-        await s.resolve(const LessonAudio('a.u1.s1.n')),
-        const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
-      );
-      expect(await s.resolve(const LessonAudio('a.u9.s9.n')), isNull);
-    });
+    test(
+      'uses the shipped clip when its hash matches (or mock has none)',
+      () async {
+        final s = store();
+        expect(
+          await s.resolve(LessonAudio('a.u1.s1.n', clipHash)),
+          const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
+        );
+        expect(
+          await s.resolve(const LessonAudio('a.u1.s1.n')),
+          const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
+        );
+        expect(await s.resolve(const LessonAudio('a.u9.s9.n')), isNull);
+      },
+    );
 
-    test('downloads a published clip by fileId, verifies and caches it',
-        () async {
-      final requests = <Uri>[];
-      final cache = MemoryAudioCache();
-      final s = store(served: clipBytes, cache: cache, requests: requests);
-      final clip = LessonAudio('a.u2.s3.s', clipHash);
-      expect(
-        await s.resolve(clip),
-        CachedLessonAudio('/cache/$clipHash.aac'),
-      );
-      expect(
-        requests.single.toString(),
-        'https://sgp.cloud.appwrite.io/v1/storage/buckets/learning-assets/'
-        'files/a.u2.s3.s/view?project=p1',
-      );
-      expect(cache.files[clipHash], clipBytes);
-      // Second time: served from the cache, no network.
-      expect(await s.resolve(clip), CachedLessonAudio('/cache/$clipHash.aac'));
-      expect(requests, hasLength(1));
-    });
+    test(
+      'downloads a published clip by fileId, verifies and caches it',
+      () async {
+        final requests = <Uri>[];
+        final cache = MemoryAudioCache();
+        final s = store(served: clipBytes, cache: cache, requests: requests);
+        final clip = LessonAudio('a.u2.s3.s', clipHash);
+        expect(
+          await s.resolve(clip),
+          CachedLessonAudio('/cache/$clipHash.aac'),
+        );
+        expect(
+          requests.single.toString(),
+          'https://sgp.cloud.appwrite.io/v1/storage/buckets/learning-assets/'
+          'files/a.u2.s3.s/view?project=p1',
+        );
+        expect(cache.files[clipHash], clipBytes);
+        // Second time: served from the cache, no network.
+        expect(
+          await s.resolve(clip),
+          CachedLessonAudio('/cache/$clipHash.aac'),
+        );
+        expect(requests, hasLength(1));
+      },
+    );
 
-    test('rejects bytes whose hash differs; falls back to the shipped clip',
-        () async {
-      final tampered = Uint8List.fromList(utf8.encode('other bytes'));
-      final cache = MemoryAudioCache();
-      final s = store(served: tampered, cache: cache);
-      // Newer published hash than the shipped clip: download is bad, so the
-      // shipped clip with the same fileId plays.
-      expect(
-        await s.resolve(LessonAudio('a.u1.s1.n', hashOf(utf8.encode('v2')))),
-        const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
-      );
-      expect(await s.resolve(LessonAudio('a.u5.d1.n', clipHash)), isNull);
-      expect(cache.files, isEmpty);
-    });
+    test(
+      'rejects bytes whose hash differs; falls back to the shipped clip',
+      () async {
+        final tampered = Uint8List.fromList(utf8.encode('other bytes'));
+        final cache = MemoryAudioCache();
+        final s = store(served: tampered, cache: cache);
+        // Newer published hash than the shipped clip: download is bad, so the
+        // shipped clip with the same fileId plays.
+        expect(
+          await s.resolve(LessonAudio('a.u1.s1.n', hashOf(utf8.encode('v2')))),
+          const BundledLessonAudio('lesson_audio/a.u1.s1.n.aac'),
+        );
+        expect(await s.resolve(LessonAudio('a.u5.d1.n', clipHash)), isNull);
+        expect(cache.files, isEmpty);
+      },
+    );
 
     test('word slugs match the content generator', () {
       expect(wordAudioSlug('Hello'), 'hello');
@@ -157,11 +244,9 @@ void main() {
   group('LessonWireMapper audio', () {
     final bundle = wire.LessonBundle.fromJson(
       jsonDecode(
-            File(
-              '../../content/vi_en/dist/v2/bundles/u1n1l3.json',
-            ).readAsStringSync(),
-          )
-          as Map<String, Object?>,
+        File('../../content/vi_en/dist/v2/bundles/u1n1l3.json')
+            .readAsStringSync(),
+      ) as Map<String, Object?>,
     );
     final mapper = LessonWireMapper(bundle.exercises, assets: bundle.assets);
     final hashes = {for (final a in bundle.assets) a.fileId: a.sha256};
@@ -235,9 +320,7 @@ void main() {
     testWidgets('listen prompt autoplays; speaker alternates normal/slow', (
       tester,
     ) async {
-      final (_, output) = await pumpLesson(tester, [
-        byId('english-06-listen'),
-      ]);
+      final (_, output) = await pumpLesson(tester, [byId('english-06-listen')]);
       expect(output.voice, ['lesson_audio/m.a_girl.n.aac']);
       await tester.tap(find.byTooltip('Listen'));
       await tester.pump();

@@ -67,6 +67,70 @@ class MonthlyBadge {
   final bool earned;
 }
 
+/// Month labels and reference art for monthly badges.
+///
+/// The bundled sheets only contain 2025 and 2024 frames. Later years (for
+/// example 2026) reuse the 2025 sheet and earlier years reuse the 2024 history
+/// sheet, so new seasons render with existing art instead of a new asset.
+abstract final class MonthlyBadgeCatalog {
+  static const months = <String>[
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  /// One-based month number to its English label.
+  static String monthName(int month) => months[month - 1];
+
+  /// Art for [year] [month] (one-based), inset like the mock fixtures.
+  static ArtRegion artFor(int year, int month) {
+    final frames = year >= 2025 ? _frames2025 : _frames2024;
+    final frame = frames[month - 1];
+    return ArtRegion(
+      year >= 2025 ? 'achievement-monthly-2025' : 'achievement-monthly-history',
+      Rect.fromLTWH(frame[0] - 4, frame[1] - 4, frame[2] + 8, frame[3] + 8),
+    );
+  }
+
+  static const _frames2025 = <List<double>>[
+    [104, 541, 250, 263],
+    [465, 542, 255, 263],
+    [795, 530, 287, 275],
+    [104, 898, 250, 297],
+    [465, 905, 250, 290],
+    [813, 911, 263, 284],
+    [66, 1302, 288, 283],
+    [460, 1321, 260, 264],
+    [826, 1322, 250, 263],
+    [95, 1694, 259, 281],
+    [465, 1673, 250, 302],
+    [815, 1689, 272, 286],
+  ];
+  static const _frames2024 = <List<double>>[
+    [94, 513, 270, 270],
+    [463, 518, 252, 264],
+    [824, 519, 252, 264],
+    [100, 905, 256, 268],
+    [461, 905, 256, 268],
+    [822, 904, 256, 268],
+    [99, 1293, 257, 270],
+    [460, 1293, 257, 269],
+    [821, 1293, 257, 269],
+    [101, 1684, 254, 268],
+    [460, 1683, 259, 270],
+    [824, 1687, 250, 265],
+  ];
+}
+
 abstract final class AchievementArt {
   static const longestStreak = ArtRegion(
     'achievement-awards-top',

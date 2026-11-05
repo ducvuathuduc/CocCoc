@@ -8,6 +8,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { course, sections, unitModules } from '../../content/vi_en/source/v2/course.mjs';
 import { loadContentTools, root } from '../../content/tools/lib.mjs';
 import {
@@ -1193,7 +1194,7 @@ export async function buildCourse() {
 
 const isMain =
   process.argv[1] &&
-  path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
   const built = await buildCourse();
   if (built.problems.length) {

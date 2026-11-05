@@ -323,7 +323,14 @@ void main() {
       expect(find.text('longest streak'), findsOneWidget);
       expect(find.text('total XP'), findsOneWidget);
       expect(find.text('minutes spent'), findsOneWidget);
-      expect(find.byType(FittedBox), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byType(FittedBox),
+          matching: find.byWidgetPredicate((w) => w is Text || w is RichText),
+        ),
+        findsNothing,
+        reason: 'Review text must retain the requested text scale',
+      );
       expect(tester.takeException(), isNull);
     },
   );

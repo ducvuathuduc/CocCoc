@@ -24,9 +24,9 @@ receipt covers the new slices; the published GitHub release is historical.
 
 `node tools/scripts/mobile-check.mjs --with-blueprint` passed:278 tests, clean
 analyzer and formatting, plus structural blueprint validation. Evidence:
-[english-continuation-gate.log](english-continuation-gate.log). `node
+[../../archive/qa-logs/english-continuation-gate.log](../../archive/qa-logs/english-continuation-gate.log). `node
 tools/scripts/mobile-web-build.mjs` passed the refreshed release web build,
-explicit mock auth and bundled Rive runtime: [build log](english-continuation-web-build.log).
+explicit mock auth and bundled Rive runtime: [build log](../../archive/qa-logs/english-continuation-web-build.log).
 The local server serves preview/new art with HTTP200 at
 http://127.0.0.1:4173/preview.html. Codex browser opening was queued for this hidden
 chat; live browser interaction in this slice remains unverified. Build reports an

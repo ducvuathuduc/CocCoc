@@ -18,8 +18,49 @@ export const EXERCISE_TYPES = [
 ] as const;
 export type ExerciseType = (typeof EXERCISE_TYPES)[number];
 
-export const SESSION_MODES = ['LESSON', 'REVIEW', 'MASTERY', 'PLACEMENT'] as const;
+export const SESSION_MODES = [
+  'LESSON',
+  'REVIEW',
+  'MASTERY',
+  'PLACEMENT',
+  'STORIES',
+  'ADVENTURE',
+  'RADIO',
+  'SIDE_QUEST',
+  'CLASH',
+  'UNIT_REVIEW',
+  'TEST_OUT',
+  'CHECKPOINT',
+] as const;
 export type SessionMode = (typeof SESSION_MODES)[number];
+
+/** Authored activity modes (FR-ACTIVITY-001): lesson-shaped, frontier-neutral, reward-bearing. */
+export const ACTIVITY_SESSION_MODES = [
+  'STORIES',
+  'ADVENTURE',
+  'RADIO',
+  'SIDE_QUEST',
+  'CLASH',
+  'UNIT_REVIEW',
+] as const;
+/** Authored gating modes (FR-ACTIVITY-002): threshold pass/fail, zero reward, frontier on pass. */
+export const GATE_SESSION_MODES = ['TEST_OUT', 'CHECKPOINT'] as const;
+export const AUTHORED_SESSION_MODES = [...ACTIVITY_SESSION_MODES, ...GATE_SESSION_MODES] as const;
+
+/**
+ * Server-owned authored metadata for the authored session modes. Optional and internal: it is never
+ * part of the OpenAPI LessonBundle wire DTO, so the session view strips it before responding.
+ */
+export interface AuthoredModeConfig {
+  /** Modes this bundle supports; absent means the six activity modes are allowed. */
+  modes?: SessionMode[];
+  /** First-attempt accuracy needed to pass TEST_OUT/CHECKPOINT, in 0..1. */
+  passThreshold?: number;
+  /** Server-known scripted opponents a CLASH client may select. */
+  opponents?: string[];
+  /** Authored deterministic opponent used when the client selects none. */
+  defaultOpponentId?: string;
+}
 
 export interface Prompt {
   text: string;
@@ -108,6 +149,7 @@ export interface LessonBundle {
   manifestHash: string;
   signature: string;
   signatureKeyId: string;
+  modeConfig?: AuthoredModeConfig;
 }
 
 export type NodeKind = 'lesson' | 'story' | 'listening' | 'speaking' | 'mastery';

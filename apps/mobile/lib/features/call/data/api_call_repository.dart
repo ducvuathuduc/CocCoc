@@ -10,45 +10,25 @@ import '../../../core/api/client/api_exception.dart';
 import '../../roleplay/domain/server_scenarios.dart';
 import '../domain/call_models.dart';
 import 'call_repository.dart';
+import 'voice_session_heartbeat.dart';
 
-/// Fallback learner audio for TURN voice turns when nothing was recorded
-/// (microphone denied/unavailable): 0.1 s of 16 kHz mono 16-bit PCM silence.
-/// The scripted provider answers it with the step's model line; the real
-/// speech provider hears nothing, so the script waits for a retry.
-final Uint8List turnPlaceholderWav = () {
-  const dataBytes = 3200;
-  final b = ByteData(44 + dataBytes);
-  void tag(int at, String s) {
-    for (var i = 0; i < 4; i++) {
-      b.setUint8(at + i, s.codeUnitAt(i));
-    }
-  }
+final class CallCaptureFailure implements Exception {
+  const CallCaptureFailure(this.message);
+  final String message;
+}
 
-  tag(0, 'RIFF');
-  b.setUint32(4, 36 + dataBytes, Endian.little);
-  tag(8, 'WAVE');
-  tag(12, 'fmt ');
-  b.setUint32(16, 16, Endian.little);
-  b.setUint16(20, 1, Endian.little); // PCM
-  b.setUint16(22, 1, Endian.little); // mono
-  b.setUint32(24, 16000, Endian.little);
-  b.setUint32(28, 32000, Endian.little);
-  b.setUint16(32, 2, Endian.little);
-  b.setUint16(34, 16, Endian.little);
-  tag(36, 'data');
-  b.setUint32(40, dataBytes, Endian.little);
-  return b.buffer.asUint8List();
-}();
-
-/// SHA-256 (hex) of [turnPlaceholderWav]; checked by the call repository test.
-const turnPlaceholderWavSha256 =
-    '2976da01e205a110c9fa41d47659e238a5c6d3c3f3137582f2949853faa201dd';
+final class _PendingVoiceTurn {
+  const _PendingVoiceTurn(this.request, this.audioSha256);
+  final wire.TurnRequest request;
+  final String audioSha256;
+}
 
 class _LiveCall {
-  _LiveCall(this.voiceSessionId, this.epoch, this.steps);
+  _LiveCall(this.voiceSessionId, this.epoch, this.steps, this.heartbeat);
   final String voiceSessionId;
   final int epoch;
   final int steps;
+  final VoiceSessionHeartbeat heartbeat;
   int spoken = 0;
 }
 
@@ -64,15 +44,24 @@ class ApiCallRepository implements CallRepository, CallTurns {
     this.api,
     this.course, {
     this.content = const MockCallRepository(),
+    this.heartbeatInterval = const Duration(seconds: 10),
+    this.clock,
   });
 
   final ApiEndpoints api;
   final ActiveCourse course;
 
+  /// How often an open voice session reports advisory telemetry.
+  final Duration heartbeatInterval;
+
+  /// Injectable clock for elapsed-second telemetry (and tests).
+  final DateTime Function()? clock;
+
   /// Bundled call presentation (partner, copy, timing), not user data.
   final CallRepository content;
 
   final Map<String, _LiveCall> _live = {};
+  final Map<(String, int), _PendingVoiceTurn> _pendingTurns = {};
 
   /// Server script as call lines: partner, learner (model answer, replaced by
   /// the server transcript when spoken), …, partner closing.
@@ -122,6 +111,12 @@ class ApiCallRepository implements CallRepository, CallTurns {
       voiceSessionId,
       epoch,
       server.steps.length,
+      VoiceSessionHeartbeat(
+        beat: (body) => api.heartbeatVoiceSession(voiceSessionId, body),
+        epoch: epoch,
+        interval: heartbeatInterval,
+        clock: clock,
+      )..start(),
     );
     return preview
         .withScript(scriptFor(server))
@@ -142,18 +137,36 @@ class ApiCallRepository implements CallRepository, CallTurns {
   }) async {
     final live = _live[sessionId];
     if (live == null) throw StateError('No live call $sessionId');
+    if (wav == null || !_isCapturedWav(wav)) {
+      throw const CallCaptureFailure('A recorded WAV clip is required.');
+    }
+    final key = (sessionId, cursor);
+    final audioSha256 = sha256.convert(wav).toString();
+    final previous = _pendingTurns[key];
+    if (previous != null && previous.audioSha256 != audioSha256) {
+      throw const CallCaptureFailure(
+        'Retry the pending turn before recording another clip.',
+      );
+    }
+    final pending =
+        previous ??
+        _PendingVoiceTurn(
+          wire.TurnRequest(
+            turnId: api.client.ids.next(),
+            epoch: live.epoch,
+            wavBase64: base64Encode(wav),
+            audioSha256: audioSha256,
+          ),
+          audioSha256,
+        );
+    _pendingTurns[key] = pending;
     final result = await api.submitVoiceTurn(
       live.voiceSessionId,
-      wire.TurnRequest(
-        turnId: api.client.ids.next(),
-        epoch: live.epoch,
-        wavBase64: base64Encode(wav ?? turnPlaceholderWav),
-        audioSha256: wav == null
-            ? turnPlaceholderWavSha256
-            : sha256.convert(wav).toString(),
-      ),
+      pending.request,
     );
+    _pendingTurns.remove(key);
     live.spoken++;
+    live.heartbeat.countTurn();
     return CallTurnResult(
       transcript: result.transcript,
       reply: result.tutor.tutorText,
@@ -163,6 +176,8 @@ class ApiCallRepository implements CallRepository, CallTurns {
   @override
   Future<void> completeCall(String sessionId, int linesSpoken) async {
     final live = _live.remove(sessionId);
+    live?.heartbeat.stop();
+    _pendingTurns.removeWhere((key, _) => key.$1 == sessionId);
     final finished = live != null && live.spoken >= live.steps;
     Future<void> end(String reason) => api.completeConversation(
       sessionId,
@@ -174,7 +189,30 @@ class ApiCallRepository implements CallRepository, CallTurns {
       // Server still has steps left: close the run as an exit instead.
       if (e.code != 'SESSION_INCOMPLETE') rethrow;
       await end('USER_EXIT');
+    } finally {
+      if (live != null) await _closeVoice(live.voiceSessionId);
     }
+  }
+
+  /// Stops every heartbeat when the repository is torn down; the server still
+  /// expires unclosed leases, so no client timer is authority for budget.
+  void dispose() {
+    for (final live in _live.values) {
+      live.heartbeat.stop();
+    }
+    _live.clear();
+  }
+
+  static bool _isCapturedWav(Uint8List wav) {
+    if (wav.length <= 44) return false;
+    final bytes = ByteData.sublistView(wav);
+    String tag(int offset) =>
+        String.fromCharCodes(wav.sublist(offset, offset + 4));
+    return tag(0) == 'RIFF' &&
+        tag(8) == 'WAVE' &&
+        tag(36) == 'data' &&
+        bytes.getUint32(40, Endian.little) > 0 &&
+        bytes.getUint32(40, Endian.little) <= wav.length - 44;
   }
 }
 

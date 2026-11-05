@@ -1,6 +1,7 @@
 // Test-only bundle entry (built to .cache/backend-fixtures/foundation-testkit.mjs).
 export * from '../errors.js';
 export * from '../auth.js';
+export * from '../cors.js';
 export * from '../service-hmac.js';
 export * from '../transport.js';
 export { createDisabledOwnerStore } from '../disabled-store.js';

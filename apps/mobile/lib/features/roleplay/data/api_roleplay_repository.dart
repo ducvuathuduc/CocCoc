@@ -5,6 +5,7 @@ import '../../../core/api/client/active_course.dart';
 import '../../../core/api/client/api_endpoints.g.dart';
 import '../../../core/api/client/api_exception.dart';
 import '../../../core/cache/snapshot_cache.dart';
+import '../../call/data/voice_session_heartbeat.dart';
 import '../domain/roleplay_models.dart';
 import '../domain/server_scenarios.dart';
 import 'roleplay_repository.dart';
@@ -57,17 +58,36 @@ Never rethrowRoleplayError(Object error, StackTrace stack) {
 /// comes from conversation history (`GET /v1/conversations`, kind=ROLEPLAY).
 class ApiRoleplayRepository extends MockRoleplayRepository
     implements RoleplayCommands {
-  ApiRoleplayRepository(this.api, this.course, {SnapshotHost? host})
-    : cache = SnapshotCache<wire.ConversationPage>(
-        key: 'conversations.roleplay',
-        host: host ?? SnapshotHost.detached(),
-        decode: wire.ConversationPage.fromJson,
-        encode: (p) => p.toJson(),
-      ),
-      super(progress: const {});
+  ApiRoleplayRepository(
+    this.api,
+    this.course, {
+    SnapshotHost? host,
+    this.heartbeatInterval = const Duration(seconds: 10),
+    this.clock,
+    this.capabilities,
+  }) : cache = SnapshotCache<wire.ConversationPage>(
+         key: 'conversations.roleplay',
+         host: host ?? SnapshotHost.detached(),
+         decode: wire.ConversationPage.fromJson,
+         encode: (p) => p.toJson(),
+       ),
+       super(progress: const {});
 
   final ApiEndpoints api;
   final ActiveCourse course;
+
+  /// How often a capability-enabled voice session reports telemetry.
+  final Duration heartbeatInterval;
+
+  /// Injectable clock for elapsed-second telemetry (and tests).
+  final DateTime Function()? clock;
+
+  /// Reads the cached AI capability manifest before opening a voice session.
+  /// Null (the direct-construction default) keeps roleplay text-only.
+  final Future<wire.Capabilities?> Function()? capabilities;
+
+  final Map<String, VoiceSessionHeartbeat> _heartbeats = {};
+  final Map<String, String> _ownedVoice = {};
   final SnapshotCache<wire.ConversationPage> cache;
 
   Future<wire.ConversationPage> _fetch() =>
@@ -155,24 +175,80 @@ class ApiRoleplayRepository extends MockRoleplayRepository
 
   @override
   Future<RoleplayLiveSession> startSession(String cardId) async {
-    final serverId = serverScenarioIdFor(cardId);
+    final server = serverScenarioById(serverScenarioIdFor(cardId))!;
+    final voice = await _openVoice(server);
     try {
       final started = await api.startConversation(
         wire.ConversationStartRequest(
           kind: 'ROLEPLAY',
           courseId: await course.id(),
-          scenarioId: serverId,
-          voiceSessionId: null,
+          scenarioId: server.id,
+          voiceSessionId: voice?.$1,
         ),
       );
+      if (voice != null) {
+        _heartbeats[started.conversationId] = VoiceSessionHeartbeat(
+          beat: (body) => api.heartbeatVoiceSession(voice.$1, body),
+          epoch: voice.$2,
+          interval: heartbeatInterval,
+          clock: clock,
+        )..start();
+        _ownedVoice[started.conversationId] = voice.$1;
+      }
       return RoleplayLiveSession(
         conversationId: started.conversationId,
         cardId: cardId,
-        serverScenarioId: serverId,
+        serverScenarioId: server.id,
+        voiceSessionId: voice?.$1,
       );
     } catch (error, stack) {
+      if (voice != null) await _closeVoice(voice.$1);
       rethrowRoleplayError(error, stack);
     }
+  }
+
+  /// Opens a TURN voice session only when the server's capability manifest
+  /// enables speech; otherwise roleplay stays text-only. A capability read or
+  /// lease failure degrades to text instead of failing the run.
+  Future<(String, int)?> _openVoice(ServerScenario server) async {
+    try {
+      final caps = await capabilities?.call();
+      if (caps?.turnSpeech != true) return null;
+    } catch (_) {
+      return null;
+    }
+    final sessionId = api.client.ids.next();
+    try {
+      final lease = await api.createVoiceSession(
+        wire.VoiceRequest(
+          sessionId: sessionId,
+          scenarioId: server.id,
+          mode: 'TURN',
+          level: server.level,
+        ),
+      );
+      final epoch = switch (lease) {
+        wire.TurnVoiceLease(:final epoch) => epoch,
+        wire.LiveVoiceLease(:final epoch) => epoch,
+      };
+      return (sessionId, epoch);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> _closeVoice(String sessionId) async {
+    try {
+      await api.closeVoiceSession(sessionId);
+    } catch (_) {}
+  }
+
+  /// Stops telemetry; when [close] is true also closes the session this
+  /// repository opened.
+  Future<void> _endVoice(String conversationId, {required bool close}) async {
+    _heartbeats.remove(conversationId)?.stop();
+    final sessionId = _ownedVoice.remove(conversationId);
+    if (close && sessionId != null) await _closeVoice(sessionId);
   }
 
   @override
@@ -192,6 +268,7 @@ class ApiRoleplayRepository extends MockRoleplayRepository
           feedbackLocale: 'vi-VN',
         ),
       );
+      _heartbeats[session.conversationId]?.countTurn();
       return RoleplayTurn(
         reply: result.tutorText,
         // The scripted provider marks an off-topic turn with the model answer
@@ -212,6 +289,7 @@ class ApiRoleplayRepository extends MockRoleplayRepository
         session.conversationId,
         const wire.ConversationCompleteRequest(endReason: 'COMPLETED'),
       );
+      await _endVoice(session.conversationId, close: true);
       unawaited(refresh().catchError((Object _) {}));
       return RoleplayServerResult(
         stars: done.stars,
@@ -230,6 +308,19 @@ class ApiRoleplayRepository extends MockRoleplayRepository
         session.conversationId,
         const wire.ConversationCompleteRequest(endReason: 'USER_EXIT'),
       );
-    } catch (_) {}
+    } catch (_) {
+      // Best effort: still stop telemetry and release the session.
+    } finally {
+      await _endVoice(session.conversationId, close: true);
+    }
+  }
+
+  /// Stops all roleplay heartbeats when the repository is disposed.
+  void dispose() {
+    for (final heartbeat in _heartbeats.values) {
+      heartbeat.stop();
+    }
+    _heartbeats.clear();
+    _ownedVoice.clear();
   }
 }

@@ -39,7 +39,7 @@ const screens=ids('docs/product/SCREEN_INVENTORY.md',/^\| (SC\d+) /gm);
 const tasks=ids('docs/agent/IMPLEMENTATION_PLAN.md',/^\| (P\d+-[A-Z]+-\d+) /gm);
 const edges=ids('docs/product/EDGE_CASE_MATRIX.md',/^\| (EC\d+) /gm);
 for(const [name,list] of Object.entries({requirements,nfr,screens,tasks,edges}))check(new Set(list).size===list.length,'Duplicate '+name+' ID');
-check(requirements.length===39,'Functional requirement baseline changed; review traceability/freeze');
+check(requirements.length===41,'Functional requirement baseline changed; review traceability/freeze');
 check(screens.length===42,'Screen baseline changed; review fixture gate');
 const tables=new Map([...read('docs/data/DATA_MODEL.md').matchAll(/^\| ([lpa]_[a-z_]+) \/ (Learning|Progress|AI) \|/gm)].map(m=>[m[1],m[2].toLowerCase()]));
 check(tables.size>30,'Data ownership inventory is incomplete');
@@ -96,7 +96,7 @@ for(let phase=0;phase<=11;phase++)check(new RegExp('^\\| '+phase+' ','m').test(r
 const parts=ids('docs/ARCHITECTURE_BLUEPRINT_V1.md',/^## PART ([A-L]) —/gm);
 check(parts.join('')==='ABCDEFGHIJKL','Blueprint A–L order incomplete');
 const adrs=inventory.filter(p=>/^docs\/architecture\/adr\/\d{4}-.+\.md$/.test(p));
-check(adrs.length===17,'Expected17ADR decisions');
+check(adrs.length===18,'Expected18ADR decisions (including human-approved ADR-0018)');
 for(const file of adrs)for(const field of ['Status','Context','Decision','Alternatives','Rationale','Consequences','Revisit triggers'])check(read(file).includes('## '+field),file+' missing '+field);
 const skills=inventory.filter(p=>p.endsWith('/SKILL.md'));
 check(skills.length===8,'Four canonical skills plus four discovery wrappers required');

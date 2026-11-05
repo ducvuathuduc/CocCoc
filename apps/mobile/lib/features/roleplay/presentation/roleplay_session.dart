@@ -272,16 +272,18 @@ class _PromptBubble extends StatelessWidget {
         const SizedBox(height: 6),
         GestureDetector(
           onTap: onTranslate,
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.translate_rounded,
-                color: LearningColors.blue,
-                size: 20,
-              ),
-              SizedBox(width: 8),
-              Text(
+              if (MediaQuery.textScalerOf(context).scale(15) <= 24) ...[
+                const Icon(
+                  Icons.translate_rounded,
+                  color: LearningColors.blue,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+              ],
+              const Text(
                 'TRANSLATE',
                 style: TextStyle(
                   color: LearningColors.blue,

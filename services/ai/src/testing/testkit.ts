@@ -1,4 +1,5 @@
 // Test-only bundle entry for services/ai/test (never bundled into dist/).
+export { createDevHandler, devAuth } from '../dev.js';
 export * from '../../../shared/src/errors.js';
 export * from '../../../shared/src/transport.js';
 export * from '../../../shared/src/service-hmac.js';

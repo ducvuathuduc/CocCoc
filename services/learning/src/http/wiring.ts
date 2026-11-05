@@ -121,7 +121,7 @@ export function learningRoutes(deps: LearningDeps): Route[] {
       const b = v.object(
         c.body,
         'body',
-        ['courseId', 'lessonId', 'mode', 'expectedEnrollmentRevision'],
+        ['courseId', 'lessonId', 'mode', 'expectedEnrollmentRevision', 'activityId', 'opponentId'],
         ['courseId', 'lessonId', 'mode', 'expectedEnrollmentRevision'],
       );
       const body = {
@@ -134,6 +134,12 @@ export function learningRoutes(deps: LearningDeps): Route[] {
           0,
           2147483647,
         ),
+        ...(b['activityId'] !== undefined
+          ? { activityId: v.id(b['activityId'], 'activityId') }
+          : {}),
+        ...(b['opponentId'] !== undefined
+          ? { opponentId: v.id(b['opponentId'], 'opponentId') }
+          : {}),
       };
       const outcome = await startSession(
         deps,

@@ -1,8 +1,138 @@
 {
-  "updated": "2026-10-22",
+  "updated": "2026-11-06",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
+    {
+      "taskId": "CI-REPAIR-20261105",
+      "phase": "P1-OPS-001 scoped CI repair; no phase gate advancement",
+      "owner": "Codex",
+      "branch": "codex/ci-brand-repair",
+      "worktree": ".",
+      "status": "VERIFYING",
+      "dependencyGateReceipts": [
+        "PR #6 head 02b20e5",
+        "origin/main 12b1222",
+        "GitHub Actions 41983359837 and 41983359878"
+      ],
+      "exclusivePaths": [
+        ".github/workflows",
+        "tools/scripts/mobile-check.mjs",
+        "tools/tests/backend-workflow-paths.test.mjs",
+        "package.json",
+        "apps/mobile/pubspec.yaml",
+        "apps/mobile/lib/core/design",
+        "docs/devops/CI_CD.md",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": [
+        "Make PR #6 mergeable with current main",
+        "Retain new branding and removal of proprietary assets",
+        "Minimal automatic code/test/build/secret gates; extended checks manual"
+      ],
+      "testCommand": "pnpm backend:verify; pnpm backend:smoke; pnpm dev:smoke; pnpm contracts:check; pnpm api:lint; pnpm verify",
+      "evidence": [
+        "docs/quality/CI_BRANDING_REPAIR_20261106.md"
+      ]
+    },
+    {
+      "taskId": "REMOTE-BRANCH-CONSOLIDATION-20261029",
+      "phase": "Repository integration; no phase gate advancement",
+      "owner": "Codex",
+      "branch": "main",
+      "worktree": ".",
+      "status": "DONE",
+      "evidence": [
+        "docs/quality/REMOTE_BRANCH_CONSOLIDATION_20261029.md"
+      ],
+      "remaining": "Consolidation complete: all 23 original tips retained in main; 22 old remote branches and the temporary integration branch removed atomically with audited SHA guards. Linux 1645 tests, Android APK, backend and secret gates passed. Extra emulator E2E evidence is recorded separately; no product phase gate advanced."
+    },
+    {
+      "taskId": "REAL-COMPOSITION-GUARD-20261025",
+      "phase": "W0/W2 local composition safety",
+      "owner": "Codex",
+      "branch": "codex/real-features-integration",
+      "worktree": ".",
+      "status": "VERIFYING",
+      "exclusivePaths": [
+        "apps/mobile/lib/core/config"
+      ],
+      "evidence": [
+        "docs/agent/REAL_FEATURES_FIRST_SLICE_20261025.md",
+        "docs/quality/real-features-20261025/ui-baseline.json",
+        "docs/quality/real-features-20261025/runtime-register.json"
+      ],
+      "remaining": "Semantic mapping of remaining callbacks and full cloud/provider acceptance. Latest full Windows gate:1207 pass/273 historical failures, same failure names; later auth/notification targeted gates recorded separately."
+    },
+    {
+      "taskId": "REAL-RUNTIME-FOUNDATION-20261025",
+      "phase": "W1 local HTTP/worker/container foundation",
+      "owner": "Codex",
+      "branch": "codex/real-features-integration",
+      "worktree": ".",
+      "status": "IN_PROGRESS",
+      "exclusivePaths": [
+        "services/shared/src/runtime-http.ts",
+        "services/shared/src/runtime-worker.ts",
+        "services/shared/src/transport.ts"
+      ],
+      "evidence": [
+        "infra/docker/README.md",
+        "docs/architecture/adr/0018-container-event-cache-runtime.md"
+      ],
+      "remaining": "Local backend/native gates pass; Compose CLI config valid. Docker Engine, durable credentials/TLS relay/cloud admission and actual CI remain pending. RabbitMQ/Redis cutover follows ADR-0018 gates; no deployment."
+    },
+    {
+      "taskId": "REAL-SYNC-RECOVERY-20261025",
+      "phase": "W3 real sync/recovery and rejected journal local implementation",
+      "owner": "Codex",
+      "branch": "codex/real-features-integration",
+      "worktree": ".",
+      "status": "DONE",
+      "evidence": [
+        "apps/mobile/test/real_sync_status_test.dart",
+        "apps/mobile/test/core/cache/drift_journal_upgrade_test.dart",
+        "apps/mobile/integration_test/real_journal_native_test.dart"
+      ],
+      "remaining": "Local code, 145-test combined regression, clean analyzer and APK build verified. Full admitted backend process-kill/reconnect and cross-service settlement remain pending."
+    },
+    {
+      "taskId": "REAL-DRIFT-NATIVE-20261025",
+      "phase": "W3 native journal implementation and emulator acceptance",
+      "owner": "Codex",
+      "branch": "codex/real-features-integration",
+      "worktree": ".",
+      "status": "DONE",
+      "evidence": [
+        "apps/mobile/integration_test/real_journal_native_test.dart"
+      ],
+      "remaining": "Android API34 native v2 close/reopen, rejection and legacy migration tests pass (3). Full admitted backend offline process-kill/reconnect remains pending."
+    },
+    {
+      "taskId": "REAL-NOTIFICATIONS-20261025",
+      "phase": "W7 notification preference persistence local implementation",
+      "owner": "Codex",
+      "branch": "codex/real-features-integration",
+      "worktree": ".",
+      "status": "DONE",
+      "evidence": [
+        "apps/mobile/test/real_notification_settings_test.dart"
+      ],
+      "remaining": "Physical OS delivery and admitted backend acceptance pending."
+    },
+    {
+      "taskId": "REAL-EMAIL-VERIFICATION-20261025",
+      "phase": "W2 email verification local implementation",
+      "owner": "Codex",
+      "branch": "codex/real-features-integration",
+      "worktree": ".",
+      "status": "DONE",
+      "evidence": [
+        "apps/mobile/test/real_email_verification_test.dart",
+        "apps/mobile/test/features/auth/email_verification_service_test.dart"
+      ],
+      "remaining": "Configured email delivery, HTTPS app-link association and real-account callback acceptance pending."
+    },
     {
       "taskId": "REAL-STATS-20261022",
       "phase": "Real learning statistics — local code",
@@ -239,8 +369,8 @@
       ],
       "evidence": [
         "docs/design/qa/FULL_FRONTEND_REPORT.md",
-        "docs/design/qa/full-verify.log",
-        "docs/design/qa/frontend-capture.log"
+        "docs/archive/qa-logs/full-verify.log",
+        "docs/archive/qa-logs/frontend-capture.log"
       ]
     },
     {
@@ -354,7 +484,7 @@
       "testCommand": "flutter analyze --no-pub --fatal-infos; proxy-free flutter test --no-pub test/reference_button_test.dart test/design_ui_master_golden_test.dart",
       "status": "CLAIMED",
       "evidence": [
-        "docs/design/qa/TEAM_STATE.md"
+        "docs/archive/qa-receipts/TEAM_STATE.md"
       ],
       "remaining": "Scoped tactile slice first; whole P2-DES acceptance remains open."
     },

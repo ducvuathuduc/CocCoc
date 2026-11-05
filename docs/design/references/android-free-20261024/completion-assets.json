@@ -1,0 +1,821 @@
+{
+  "assets": [
+    {
+      "asset": "android-super-02.png",
+      "sha256": "fc35dbb66d7618adab777fa80d73c012401f850ef5e0a1315e1a5c5a1d932a58",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-super-02.webp",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "android-super-03.png",
+      "sha256": "f15728d559f4c85c41268dde6722f0b69d78db9a2601ee1e5bacb19dc47da254",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-super-03.webp",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "android-super-04.png",
+      "sha256": "5e9197fe3377062911356a0c7ef439f3a21691df63ddd61a7914cec63e7cea21",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-super-04.webp",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "android-super-08.png",
+      "sha256": "79b60fdb6e3b0baaddcf1673da6a6198ff4180fceeb74b751a40ccc6a64828f1",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-super-08.webp",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "android-super-09.png",
+      "sha256": "2b15a7a1997dcdbeb915bf3593eae49d6ff8cae173078ef30f6bed4300ba83a2",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-super-09.webp",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "android-super-10.png",
+      "sha256": "4d54ee49e57c4e52f34364c9446f8dfba8875a1189906d8e3d827a0f97f24567",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-super-10.webp",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "android-super-11.png",
+      "sha256": "b1f31e4a975ae60ace91fad7ad7cb52bba28ea80474d1a7d1e61d2e3965ec15a",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-super-11.webp",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "android-chest-common.png",
+      "sha256": "70214a9b5d007c0e55a076ab19cf065d1813cedc4da60ed3af5c0c702c3f5557",
+      "dimensions": [
+        640,
+        1360
+      ],
+      "source": "loot-chest.jpg",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": null
+    },
+    {
+      "asset": "chest-rare-source.png",
+      "sha256": "f415f855061a9cd53b450c4deff1777fa68f4778a2c5c1d6bfa2cf9627b99c6d",
+      "dimensions": [
+        2160,
+        2160
+      ],
+      "source": "https://video.gumlet.io/66b49d08225b7b88f78b7b44/68e7129101fefe1a9aa3a14d/main.mp4",
+      "platform": "iOS corroboration; Android adaptation",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": 8
+    },
+    {
+      "asset": "chest-epic-source.png",
+      "sha256": "fc32c6ba44345b43f47bedf1def0bef7f1f8f39a39fd1ad0a083808fa0db8c33",
+      "dimensions": [
+        2160,
+        2160
+      ],
+      "source": "https://video.gumlet.io/66b49d08225b7b88f78b7b44/68e7129101fefe1a9aa3a14d/main.mp4",
+      "platform": "iOS corroboration; Android adaptation",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": 15
+    },
+    {
+      "asset": "chest-reward-source.png",
+      "sha256": "024483d3bd78a721e50f22bb034b334d7ecb2d51c8c3fe3a9630f5442b722242",
+      "dimensions": [
+        2160,
+        2160
+      ],
+      "source": "https://video.gumlet.io/66b49d08225b7b88f78b7b44/68e7129101fefe1a9aa3a14d/main.mp4",
+      "platform": "iOS corroboration; Android adaptation",
+      "transformation": "unmodified RGB decode / frame extraction; crop at paint time",
+      "requestedVideoTimestampSeconds": 20
+    },
+    {
+      "asset": "chest-mega-source.png",
+      "source": "aa-chest-5.jpg",
+      "platform": "iOS corroboration; Android adaptation",
+      "transformation": "RGB decode; crop at paint time",
+      "dimensions": [
+        883,
+        1920
+      ],
+      "sha256": "35232a412324ec3853a082170f57d106c18df0872653538bf1d666dda402bfb4",
+      "crops": [
+        [
+          70,
+          680,
+          740,
+          490
+        ]
+      ]
+    },
+    {
+      "asset": "android-super-gradient.png",
+      "source": "mobbin-super-02.webp",
+      "platform": "Android",
+      "transformation": "Per-row linear interpolation between original x=0 and x=359 background pixels, y=48..764; removes source controls/art while keeping native interactive widgets",
+      "dimensions": [
+        360,
+        717
+      ],
+      "sha256": "2abb0cd6f18de7298a08dcc0f5237e36aedd55af13d4a46cfb92e83a559b3c72",
+      "crops": [
+        [
+          0,
+          0,
+          360,
+          717
+        ]
+      ]
+    },
+    {
+      "asset": "android-dark-04.png",
+      "sha256": "8fc9621922defdb7c7e3315a2b7e92086a38285951396faeddf0c1ed32911e86",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-dark-mode-04.webp",
+      "sourceSha256": "9765598d1dfb11ed7b33389c40d63b4e610f685bbf95e80cc07c3ffc4cb97a67",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode; profile bottom-tab icon cropped at paint time without the source selected border",
+      "crops": [
+        [
+          191,
+          705,
+          39,
+          43
+        ]
+      ]
+    },
+    {
+      "asset": "android-dark-06.png",
+      "sha256": "d42efcb079c55f7767cf5a463e7502ed6977f340466ea8f1e1e58d263e0923ed",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-dark-mode-06.webp",
+      "sourceSha256": "4ac8ee436aa54329041bc4c433d96085bac31d4c1974e1fbb1df419fa7cf91a8",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode; home bottom-tab, flame and gem icons cropped at paint time without the source selected border",
+      "crops": [
+        [
+          20,
+          713,
+          34,
+          34
+        ],
+        [
+          93,
+          53,
+          25,
+          30
+        ],
+        [
+          193,
+          53,
+          26,
+          30
+        ]
+      ]
+    },
+    {
+      "asset": "android-dark-09.png",
+      "sha256": "94532e48beb2192fb2821b0af7fe3f1a77b5958194ff1fb80d8033caa3161c75",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-dark-mode-09.webp",
+      "sourceSha256": "21c5b3a31a6c4613d23fe9cc00a17a571dbe729feea0f59d514a35c7783f630a",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode; heart icon cropped at paint time",
+      "crops": [
+        [
+          293,
+          64,
+          27,
+          22
+        ]
+      ]
+    },
+    {
+      "asset": "android-dark-12.png",
+      "sha256": "2d62a6f1d72c0dc30403de5ab009032271733085b5a74f5fae1f4ad29f77bee0",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-dark-mode-12.webp",
+      "sourceSha256": "f9f5824018f156ac4e79e85a8ae40af92bfe31d985e1c0fd4272df9e51be92ff",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode; practice bottom-tab icon cropped at paint time without the source selected border",
+      "crops": [
+        [
+          77,
+          709,
+          35,
+          38
+        ]
+      ]
+    },
+    {
+      "asset": "android-dark-13.png",
+      "sha256": "76010f28a0bf67aace3ab7f910dd047d8b26ee27f7097ece5524e86e7d4173d5",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-dark-mode-13.webp",
+      "sourceSha256": "4c2991a3139971ec019051124d885400ca23baeb091bd109717a5b27de817f04",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode; league bottom-tab icon cropped at paint time without the source selected border",
+      "crops": [
+        [
+          135,
+          709,
+          34,
+          39
+        ]
+      ]
+    },
+    {
+      "asset": "android-dark-14.png",
+      "sha256": "18b09aed8870d70832ba3ff3ba41a1a79741591c8224081ff78f54d718294b7d",
+      "dimensions": [
+        360,
+        900
+      ],
+      "source": "mobbin-dark-mode-14.webp",
+      "sourceSha256": "6a2096a99c33613b89ff2cecf3f5381aa37d73b5cfffb654e62c0997d32b87d1",
+      "platform": "Android archived cohort",
+      "transformation": "unmodified RGB decode; quests bottom-tab icon cropped at paint time without the source selected border",
+      "crops": [
+        [
+          249,
+          709,
+          37,
+          38
+        ]
+      ]
+    },
+    {
+      "asset": "energy-icon-transparent.png",
+      "sha256": "f4ff0638b797023502166f38e3070e417bb42b2d9f7609ded12cb6fe5451f20f",
+      "dimensions": [
+        160,
+        110
+      ],
+      "source": "energy-02.png",
+      "sourceSha256": "35e9df1eff56476affde810fd74d3fe7c08c79aa48d353417340165b3c32b0e3",
+      "platform": "iOS archived energy reference; Android dark-source gap",
+      "transformation": "crop x977 y350 w160 h110; flood-mask only near-white pixels connected to the crop edge (RGB channels >=240 and channel spread <=12); enclosed white lightning pixels preserved",
+      "crops": [
+        [
+          0,
+          0,
+          160,
+          110
+        ]
+      ]
+    },
+    {
+      "asset": "android-dark-shell-icons.png",
+      "sha256": "f7454c2b7a8056dc53b7557603b78b8bdd0c5cf6f6638ac6b72cd84e4f2f91e1",
+      "dimensions": [
+        256,
+        110
+      ],
+      "platform": "Android archived dark cohort; inactive flame and limited red heart retain existing reference art",
+      "transformation": "Original-size source crops placed in transparent atlas. Only edge-connected pixels within max RGB distance 20 of source crop top-left background sample have alpha set to zero; RGB values and enclosed pixels unchanged. No rescaling or redrawing.",
+      "regions": [
+        {
+          "name": "home",
+          "source": "mobbin-dark-mode-06.webp",
+          "sourceSha256": "4ac8ee436aa54329041bc4c433d96085bac31d4c1974e1fbb1df419fa7cf91a8",
+          "sourceRect": [
+            20,
+            713,
+            32,
+            30
+          ],
+          "atlasRect": [
+            0,
+            0,
+            32,
+            30
+          ],
+          "backgroundSample": [
+            33,
+            51,
+            51
+          ]
+        },
+        {
+          "name": "practice",
+          "source": "mobbin-dark-mode-12.webp",
+          "sourceSha256": "f9f5824018f156ac4e79e85a8ae40af92bfe31d985e1c0fd4272df9e51be92ff",
+          "sourceRect": [
+            78,
+            714,
+            30,
+            28
+          ],
+          "atlasRect": [
+            32,
+            0,
+            30,
+            28
+          ],
+          "backgroundSample": [
+            37,
+            48,
+            55
+          ]
+        },
+        {
+          "name": "quests",
+          "source": "mobbin-dark-mode-14.webp",
+          "sourceSha256": "6a2096a99c33613b89ff2cecf3f5381aa37d73b5cfffb654e62c0997d32b87d1",
+          "sourceRect": [
+            252,
+            713,
+            29,
+            30
+          ],
+          "atlasRect": [
+            64,
+            0,
+            29,
+            30
+          ],
+          "backgroundSample": [
+            38,
+            45,
+            45
+          ]
+        },
+        {
+          "name": "league",
+          "source": "mobbin-dark-mode-13.webp",
+          "sourceSha256": "4c2991a3139971ec019051124d885400ca23baeb091bd109717a5b27de817f04",
+          "sourceRect": [
+            139,
+            714,
+            24,
+            27
+          ],
+          "atlasRect": [
+            96,
+            0,
+            24,
+            27
+          ],
+          "backgroundSample": [
+            45,
+            44,
+            35
+          ]
+        },
+        {
+          "name": "profile",
+          "source": "mobbin-dark-mode-04.webp",
+          "sourceSha256": "9765598d1dfb11ed7b33389c40d63b4e610f685bbf95e80cc07c3ffc4cb97a67",
+          "sourceRect": [
+            194,
+            713,
+            32,
+            29
+          ],
+          "atlasRect": [
+            128,
+            0,
+            32,
+            29
+          ],
+          "backgroundSample": [
+            35,
+            48,
+            48
+          ]
+        },
+        {
+          "name": "flame",
+          "source": "mobbin-dark-mode-06.webp",
+          "sourceSha256": "4ac8ee436aa54329041bc4c433d96085bac31d4c1974e1fbb1df419fa7cf91a8",
+          "sourceRect": [
+            93,
+            53,
+            25,
+            30
+          ],
+          "atlasRect": [
+            160,
+            0,
+            25,
+            30
+          ],
+          "backgroundSample": [
+            35,
+            48,
+            52
+          ]
+        },
+        {
+          "name": "gem",
+          "source": "mobbin-dark-mode-06.webp",
+          "sourceSha256": "4ac8ee436aa54329041bc4c433d96085bac31d4c1974e1fbb1df419fa7cf91a8",
+          "sourceRect": [
+            193,
+            53,
+            26,
+            30
+          ],
+          "atlasRect": [
+            192,
+            0,
+            26,
+            30
+          ],
+          "backgroundSample": [
+            35,
+            48,
+            52
+          ]
+        },
+        {
+          "name": "heart",
+          "source": "lesson-01.png",
+          "sourceSha256": "55dffdc1f0ede2da6a4f60cb34226bf0c0180b3e7876aa13b5f684da7df239a8",
+          "sourceRect": [
+            1015,
+            220,
+            78,
+            65
+          ],
+          "atlasRect": [
+            96,
+            32,
+            78,
+            65
+          ],
+          "backgroundSample": [
+            255,
+            253,
+            254
+          ]
+        },
+        {
+          "name": "inactive-flame",
+          "source": "energy-01.png",
+          "sourceSha256": "898b47241009e8e33d741637bfc0e951767ce07456d2c64606555fe81861b472",
+          "sourceRect": [
+            343,
+            212,
+            77,
+            78
+          ],
+          "atlasRect": [
+            0,
+            32,
+            77,
+            78
+          ],
+          "backgroundSample": [
+            254,
+            254,
+            254
+          ]
+        }
+      ]
+    },
+    {
+      "asset": "path-duo-transparent.png",
+      "sha256": "dec25cb454ec09f7efb673bb950a78c852acc92227044d8e7b161a23370e1665",
+      "dimensions": [
+        255,
+        263
+      ],
+      "source": "practice-01.png",
+      "sourceSha256": "7f543231f2d412c1a595295dcd0cc6fc00cb43921d399e43d6d6e2d719bff9d4",
+      "platform": "Existing archived practice reference; Android dark fallback adaptation",
+      "transformation": "Original-size crop x757 y1079 w255 h263; only edge-connected pixels within RGB distance20 from corner background sample receive alpha0; enclosed eyes/illustration RGB unchanged. Used only for dark reduced-motion/error fallback.",
+      "crops": [
+        [
+          0,
+          0,
+          255,
+          263
+        ]
+      ],
+      "backgroundSample": [
+        255,
+        253,
+        254
+      ]
+    }
+  ],
+  "paletteSamples": [
+    {
+      "file": "mobbin-dark-mode-03.webp",
+      "xy": [
+        0,
+        48
+      ],
+      "color": "#172021"
+    },
+    {
+      "file": "mobbin-dark-mode-03.webp",
+      "xy": [
+        36,
+        264
+      ],
+      "color": "#233034"
+    },
+    {
+      "file": "mobbin-dark-mode-03.webp",
+      "xy": [
+        36,
+        739
+      ],
+      "color": "#3A464E"
+    },
+    {
+      "file": "mobbin-dark-mode-08.webp",
+      "xy": [
+        68,
+        473
+      ],
+      "color": "#F4FDFE"
+    },
+    {
+      "file": "mobbin-dark-mode-08.webp",
+      "xy": [
+        164,
+        476
+      ],
+      "color": "#B2BABC"
+    },
+    {
+      "file": "mobbin-dark-mode-08.webp",
+      "xy": [
+        68,
+        472
+      ],
+      "color": "#7C8586"
+    },
+    {
+      "file": "mobbin-dark-mode-15.webp",
+      "xy": [
+        313,
+        707
+      ],
+      "color": "#1C3749"
+    },
+    {
+      "file": "android-super-08.png",
+      "xy": [
+        16,
+        0
+      ],
+      "color": "#000433",
+      "use": "apps/mobile/lib/features/super_trial/presentation/android_super_flow.dart"
+    },
+    {
+      "file": "android-super-02.png",
+      "xy": [
+        86,
+        31
+      ],
+      "color": "#193876",
+      "use": "apps/mobile/lib/features/super_trial/presentation/android_super_flow.dart"
+    },
+    {
+      "file": "android-super-11.png",
+      "xy": [
+        164,
+        510
+      ],
+      "color": "#4225E5",
+      "use": "apps/mobile/lib/features/super_trial/presentation/android_super_flow.dart"
+    },
+    {
+      "file": "android-super-08.png",
+      "xy": [
+        212,
+        405
+      ],
+      "color": "#4569A4",
+      "use": "apps/mobile/lib/features/super_trial/presentation/android_super_flow.dart"
+    },
+    {
+      "file": "android-super-02.png",
+      "xy": [
+        270,
+        71
+      ],
+      "color": "#67DE96",
+      "use": "apps/mobile/lib/features/super_trial/presentation/android_super_flow.dart"
+    },
+    {
+      "file": "chest-rare-source.png",
+      "xy": [
+        782,
+        204
+      ],
+      "color": "#42B8FF",
+      "use": "apps/mobile/lib/features/quests/presentation/upgrade_chest_screen.dart"
+    },
+    {
+      "file": "chest-epic-source.png",
+      "xy": [
+        778,
+        204
+      ],
+      "color": "#935EEF",
+      "use": "apps/mobile/lib/features/quests/presentation/upgrade_chest_screen.dart"
+    },
+    {
+      "file": "android-chest-common.png",
+      "xy": [
+        280,
+        462
+      ],
+      "color": "#CF7D00",
+      "use": "apps/mobile/lib/features/quests/presentation/upgrade_chest_screen.dart"
+    },
+    {
+      "file": "aa-chest-5.jpg",
+      "xy": [
+        100,
+        600
+      ],
+      "color": "#F19B36"
+    }
+  ],
+  "motion": "CocEnglish-authored timings; no claim of Android source timing parity",
+  "supplementalSource": {
+    "page": "https://www.androidauthority.com/duolingo-xp-boost-ux-trap-3674572/",
+    "published": "2026-06-21",
+    "screens": [
+      {
+        "file": "aa-chest-2.jpg",
+        "url": "https://www.androidauthority.com/wp-content/uploads/2026/06/Duolingo-Treasure-chest-dropping-an-XP-boost-2.jpg",
+        "sha256": "e014f764629d2aace74993a3e2904dc4a0d4fcc3e729da4e341e5619bfc0bcee"
+      },
+      {
+        "file": "aa-chest-3.jpg",
+        "url": "https://www.androidauthority.com/wp-content/uploads/2026/06/Duolingo-Treasure-chest-dropping-an-XP-boost-3.jpg",
+        "sha256": "512c7ea9c1928d0f04612db889439f900a707ee168697df2562fa9f833654700"
+      },
+      {
+        "file": "aa-chest-4.jpg",
+        "url": "https://www.androidauthority.com/wp-content/uploads/2026/06/Duolingo-Treasure-chest-dropping-an-XP-boost-4.jpg",
+        "sha256": "b83044b5ffcb3b5e432d7f623488c59bd2db20f6d0923f3eaa8584333a6f14af"
+      },
+      {
+        "file": "aa-chest-5.jpg",
+        "url": "https://www.androidauthority.com/wp-content/uploads/2026/06/Duolingo-Treasure-chest-dropping-an-XP-boost-5.jpg",
+        "sha256": "2601cf5708dea4a80d4cc1690a5a0795325162aa0a4e542e1feaeff067822d64"
+      }
+    ],
+    "platform": "iOS inferred from status-bar icons; cross-platform corroboration only, not Android acceptance"
+  },
+  "paintCrops": {
+    "android-super-02.png": [
+      [
+        266,
+        58,
+        79,
+        25
+      ],
+      [
+        88,
+        390,
+        180,
+        215
+      ]
+    ],
+    "android-super-08.png": [
+      [
+        88,
+        380,
+        185,
+        185
+      ]
+    ],
+    "android-super-09.png": [
+      [
+        125,
+        220,
+        120,
+        180
+      ]
+    ],
+    "android-super-10.png": [
+      [
+        92,
+        345,
+        175,
+        75
+      ],
+      [
+        120,
+        665,
+        125,
+        100
+      ]
+    ],
+    "android-super-11.png": [
+      [
+        313,
+        51,
+        30,
+        31
+      ]
+    ],
+    "android-chest-common.png": [
+      [
+        40,
+        380,
+        540,
+        350
+      ]
+    ],
+    "chest-rare-source.png": [
+      [
+        760,
+        820,
+        680,
+        460
+      ]
+    ],
+    "chest-epic-source.png": [
+      [
+        760,
+        820,
+        680,
+        460
+      ]
+    ],
+    "chest-reward-source.png": [
+      [
+        880,
+        790,
+        420,
+        410
+      ]
+    ],
+    "chest-mega-source.png": [
+      [
+        70,
+        680,
+        740,
+        490
+      ]
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+Analyzing mobile...                                             
+
+  error - The property 'year' can't be unconditionally accessed because the receiver can be 'null'. Try making the access conditional (using '?.') or adding a null check to the target ('!') - lib\features\progress\application\streak_controller.dart:75:44 - unchecked_use_of_nullable_value
+  error - The property 'month' can't be unconditionally accessed because the receiver can be 'null'. Try making the access conditional (using '?.') or adding a null check to the target ('!') - lib\features\progress\application\streak_controller.dart:75:54 - unchecked_use_of_nullable_value
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\progress\application\streak_controller.dart:82:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\progress\application\streak_controller.dart:101:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\progress\presentation\streak_screen.dart:621:29 - curly_braces_in_flow_control_structures
+
+5 issues found. (ran in 4.7s)

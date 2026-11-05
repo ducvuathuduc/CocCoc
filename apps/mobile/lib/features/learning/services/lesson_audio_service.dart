@@ -4,7 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../progress/application/preview_controller.dart';
+import '../../account/application/account_preferences_controller.dart';
 import '../data/lesson_audio_io_stub.dart'
     if (dart.library.io) '../data/lesson_audio_io.dart'
     as platform;
@@ -46,6 +46,7 @@ class AudioplayersSoundOutput implements LessonSoundOutput {
 
   AudioPlayer get _voicePlayer =>
       _voice ??= AudioPlayer(playerId: 'lesson-voice')
+        ..positionUpdater = null
         ..setReleaseMode(ReleaseMode.stop);
 
   /// Two low-latency effect players used in turn, so a heart-loss pop can
@@ -53,7 +54,10 @@ class AudioplayersSoundOutput implements LessonSoundOutput {
   AudioPlayer _effectPlayer() {
     final index = _nextEffect;
     _nextEffect = (_nextEffect + 1) % _effects.length;
+    // No lesson UI consumes playback positions. Android low-latency effects
+    // have no completion event, so frame polling would keep running at idle.
     return _effects[index] ??= AudioPlayer(playerId: 'lesson-sfx-$index')
+      ..positionUpdater = null
       ..setReleaseMode(ReleaseMode.stop)
       ..setPlayerMode(PlayerMode.lowLatency);
   }
@@ -190,6 +194,6 @@ final lessonAudioServiceProvider = Provider<LessonAudioService>((ref) {
   return LessonAudioService(
     store: ref.watch(lessonAudioStoreProvider),
     output: ref.watch(lessonSoundOutputProvider),
-    effectsEnabled: () => ref.read(previewControllerProvider).sound,
+    effectsEnabled: () => ref.read(soundEffectsEnabledProvider),
   );
 });

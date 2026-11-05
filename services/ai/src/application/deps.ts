@@ -9,11 +9,11 @@ import type { SpeechEngine } from './speech.js';
  * Provider configuration. The conversation script is always the deterministic authored one.
  * Speech: with COC_AI_PROVIDER=speech and provider keys (secret function variables), recorded
  * audio is transcribed for real (Azure, fallbacks AssemblyAI/Deepgram) and scored by Azure
- * Pronunciation Assessment; otherwise (`scripted`) TURN transcripts are scripted and every
- * assessment metric stays null (NULL_UNAVAILABLE, AZURE_DISABLED).
+ * Pronunciation Assessment. Hosted defaults to disabled recorded speech; explicit dev/test
+ * scripted TURN fixtures keep every assessment metric null.
  */
 export interface ProviderConfig {
-  kind: 'scripted' | 'speech';
+  kind: 'disabled' | 'scripted' | 'speech';
   configVersion: string;
   /** Azure pronunciation scorer configured; false keeps assessment metrics null. */
   azureEnabled: boolean;
@@ -24,6 +24,16 @@ export const SCRIPTED_PROVIDER: ProviderConfig = {
   configVersion: 'scripted-v1',
   azureEnabled: false,
 };
+/** Hosted default: no synthetic transcript may stand in for actual microphone audio. */
+export const DISABLED_PROVIDER: ProviderConfig = {
+  kind: 'disabled',
+  configVersion: 'disabled-v1',
+  azureEnabled: false,
+};
+
+export function turnSpeechAvailable(provider: ProviderConfig): boolean {
+  return provider.kind === 'scripted' || (provider.kind === 'speech' && Boolean(provider.speech));
+}
 export function speechProvider(speech: SpeechEngine): ProviderConfig {
   return {
     kind: 'speech',

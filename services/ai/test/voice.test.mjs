@@ -10,6 +10,17 @@ const voice = (h, user, mode = 'TURN', sessionId = randomUUID()) =>
     body: { sessionId, scenarioId: 'rp_meet_new_friend', mode, level: 'A1' },
   });
 
+test('voice close accepts the bodyless OpenAPI request and rejects unknown fields', async () => {
+  const h = setup();
+  const lease = await voice(h, 'alice');
+  const endpoint = `/v1/voice-sessions/${lease.body.sessionId}/close`;
+  const extra = await h.call('POST', endpoint, { user: 'alice', body: { unexpected: true } });
+  assert.equal(extra.status, 400);
+  const closed = await h.call('POST', endpoint, { user: 'alice' });
+  assert.equal(closed.status, 200);
+  assert.equal(closed.body.status, 'CLOSED');
+});
+
 test('LIVE is disabled; TURN session has one active slot, heartbeat and idempotent close', async () => {
   const h = setup();
   const live = await voice(h, 'alice', 'LIVE');

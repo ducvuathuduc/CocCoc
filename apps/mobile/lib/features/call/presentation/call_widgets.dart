@@ -213,12 +213,13 @@ class _ListeningWaveformState extends State<ListeningWaveform>
                   (.3 +
                       .7 *
                           (.5 +
-                              .5 *
-                                  math.sin(
-                                    (_controller.value + i / widget.bars) *
-                                        math.pi *
-                                        2,
-                                  )).abs()),
+                                  .5 *
+                                      math.sin(
+                                        (_controller.value + i / widget.bars) *
+                                            math.pi *
+                                            2,
+                                      ))
+                              .abs()),
               decoration: BoxDecoration(
                 color: CallColors.cyan,
                 borderRadius: BorderRadius.circular(3),
@@ -612,11 +613,7 @@ class ReviewBubble extends StatelessWidget {
             : MainAxisAlignment.end,
         children: partner
             ? [
-                const ReferenceArt(
-                  CallArt.reviewAvatar,
-                  width: 46,
-                  height: 44,
-                ),
+                const ReferenceArt(CallArt.reviewAvatar, width: 46, height: 44),
                 const SizedBox(width: 22),
                 bubble,
                 const SizedBox(width: 48),

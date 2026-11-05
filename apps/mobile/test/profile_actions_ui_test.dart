@@ -26,7 +26,7 @@ void main() {
       vm.select('Body', 3);
       vm.save();
       expect(
-        c
+        await c
             .read(profileEditorProvider.notifier)
             .save(
               const ProfileDetails(

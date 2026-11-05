@@ -48,4 +48,4 @@ Priority: P0 = a Free user hits it in a normal session; P1 = common secondary st
 
 - Rows: 33. Updated 2026-10-13 (main `e05762b`).
 - Present: 31 (rows 5, 7, 10, 13, 17, 32, 33 added on 2026-10-13; 13, 32, 33 are **No ref – derived**, built in the app's own style because Gummble has no capture) · Partial: 0 · Owned: 2 (21, 22) · No ref (unbuilt): 0 · Missing: 0.
-- Side-by-side QA (ours vs Gummble) for rows 1–5, 7–10 and derived sheets for 13, 17, 32, 33: [GAP_HEARTS_ADS_RECEIPT](qa/GAP_HEARTS_ADS_RECEIPT.md), [GAP_SLICE_B_RECEIPT](qa/GAP_SLICE_B_RECEIPT.md), [GAP_POLISH_RECEIPT](qa/GAP_POLISH_RECEIPT.md).
+- Side-by-side QA (ours vs Gummble) for rows 1–5, 7–10 and derived sheets for 13, 17, 32, 33: [GAP_HEARTS_ADS_RECEIPT](../archive/qa-receipts/GAP_HEARTS_ADS_RECEIPT.md), [GAP_SLICE_B_RECEIPT](../archive/qa-receipts/GAP_SLICE_B_RECEIPT.md), [GAP_POLISH_RECEIPT](../archive/qa-receipts/GAP_POLISH_RECEIPT.md).

@@ -7,6 +7,8 @@ import '../domain/learning_models.dart';
 import 'learning_repository.dart';
 import 'lesson_wire_mapper.dart';
 import '../domain/review_resume.dart';
+import '../domain/session_mode.dart';
+import '../domain/session_outcome.dart';
 
 const mistakeReviewNodeId = 'mistake-review';
 const reviewLessonId = 'review_dynamic';
@@ -25,7 +27,11 @@ const placementNodeId = 'placement';
 /// * XP is never computed on the client: the receipt carries the reward the
 ///   Progress service credited (0 while it is still pending).
 class ApiLearningRepository
-    implements LearningRepository, EvidenceLearningRepository {
+    implements
+        LearningRepository,
+        EvidenceLearningRepository,
+        OfflineLearningSync,
+        AbandonableSession {
   ApiLearningRepository({
     required this.learning,
     required this.journal,
@@ -54,6 +60,8 @@ class ApiLearningRepository
   LessonWireMapper? _mapper;
   final Map<String, int> _attempts = {};
   LessonState? _draft;
+  SessionMode _mode = SessionMode.lesson;
+  double? _passThreshold;
 
   /// Exposed for tests and diagnostics.
   JournalSession? get activeSession => _session;
@@ -62,6 +70,8 @@ class ApiLearningRepository
   Future<List<Exercise>> loadLesson(String nodeId) async {
     if (nodeId == placementNodeId) return _loadPlacement();
     if (nodeId == mistakeReviewNodeId) return _loadReview();
+    _mode = SessionMode.lesson;
+    _passThreshold = null;
     await syncPending();
     final journaled = await journal.active();
     if (journaled?.lessonId == reviewLessonId) {
@@ -133,9 +143,13 @@ class ApiLearningRepository
   }
 
   bool _onlineOnly(JournalSession session) =>
-      session.lessonId == reviewLessonId || session.nodeId == placementNodeId;
+      _mode.isOnlineOnly ||
+      session.lessonId == reviewLessonId ||
+      session.nodeId == placementNodeId;
 
   Future<List<Exercise>> _loadPlacement() async {
+    _mode = SessionMode.placement;
+    _passThreshold = null;
     try {
       var saved = await journal.active();
       final course = await _courseId();
@@ -233,6 +247,8 @@ class ApiLearningRepository
   }
 
   Future<List<Exercise>> _loadReview() async {
+    _mode = SessionMode.review;
+    _passThreshold = null;
     try {
       await syncPending();
       var saved = await journal.active();
@@ -261,6 +277,14 @@ class ApiLearningRepository
         }
         saved =
             null; // Expired/abandoned reviews start a fresh private snapshot.
+      }
+      final review = await learning.getReview(courseId: course, limit: 1);
+      if (review.items.isEmpty) {
+        await journal.clearActive();
+        _session = null;
+        throw const LearningFailure(
+          'Complete a lesson before starting a review.',
+        );
       }
       final path = await learning.getPath(course);
       final intent =
@@ -329,13 +353,131 @@ class ApiLearningRepository
     }
   }
 
+  /// Starts or resumes one of the eight authored session modes. They reuse the
+  /// same bundle, answer and completion lifecycle; only their mode, optional
+  /// activity hints and gate result differ.
+  Future<List<Exercise>> loadAuthored({
+    required SessionMode mode,
+    required String lessonId,
+    String? activityId,
+    String? opponentId,
+  }) async {
+    if (!mode.isAuthored) {
+      throw ArgumentError.value(mode, 'mode', 'Not an authored session mode');
+    }
+    _mode = mode;
+    _passThreshold = null;
+    try {
+      await syncPending();
+      final saved = await journal.active();
+      final course = await _courseId();
+      if (saved != null && saved.courseId == course) {
+        if (saved.lessonId != lessonId) {
+          throw const LearningFailure(
+            'Finish your saved lesson before starting another one.',
+          );
+        }
+        final sessionId = saved.sessionId;
+        if (sessionId != null) {
+          try {
+            final server = await learning.getSession(sessionId);
+            if (server.status == 'ACTIVE' || server.status == 'COMPLETED') {
+              if (server.mode != mode.wireName ||
+                  server.courseId != course ||
+                  server.lessonId != lessonId) {
+                throw const LearningFailure(
+                  'This saved activity no longer matches the session.',
+                );
+              }
+              var current = _reviewJournal(
+                server,
+                saved.enrollmentRevision,
+                saved.startKey,
+                saved.completeKey,
+                saved,
+                nodeId: lessonId,
+              );
+              if (server.status == 'ACTIVE') {
+                current = await _replayUnsynced(current);
+              }
+              await _save(current);
+              return _activate(current);
+            }
+          } on ApiException catch (error) {
+            if (!error.isNotFound) rethrow;
+            // Expired or unknown: start a fresh authored attempt below.
+          }
+        }
+      }
+      final path = await learning.getPath(course, limit: 1);
+      final intent = JournalSession(
+        nodeId: lessonId,
+        courseId: course,
+        lessonId: lessonId,
+        lessonVersion: '',
+        bundleHash: '',
+        enrollmentRevision: path.enrollment.revision,
+        bundle: const {},
+        startKey: ids.next(),
+        completeKey: ids.next(),
+      );
+      await _save(intent);
+      wire.Session server;
+      try {
+        server = await learning.startSession(
+          wire.SessionRequest(
+            courseId: course,
+            lessonId: lessonId,
+            mode: mode.wireName,
+            expectedEnrollmentRevision: intent.enrollmentRevision,
+            activityId: activityId,
+            opponentId: opponentId,
+          ),
+          idempotencyKey: intent.startKey,
+        );
+      } on ApiException catch (error) {
+        final active = error.details['activeSessionId'];
+        if (error.code != 'SESSION_CONFLICT' || active is! String) rethrow;
+        server = await learning.getSession(active);
+        if (server.mode != mode.wireName ||
+            server.courseId != course ||
+            server.lessonId != lessonId) {
+          throw const LearningFailure(
+            'Finish the session already open on your account first.',
+          );
+        }
+      }
+      if (server.mode != mode.wireName ||
+          server.courseId != course ||
+          server.lessonId != lessonId) {
+        throw const LearningFailure(
+          'This activity is unavailable. Please retry.',
+        );
+      }
+      final current = _reviewJournal(
+        server,
+        intent.enrollmentRevision,
+        intent.startKey,
+        intent.completeKey,
+        null,
+        nodeId: lessonId,
+      );
+      await _save(current);
+      return _activate(current);
+    } on ApiException catch (error) {
+      throw LearningFailure(error.userMessage);
+    }
+  }
+
   JournalSession _reviewJournal(
     wire.Session server,
     int enrollmentRevision,
     String startKey,
     String completeKey,
-    JournalSession? saved,
-  ) {
+    JournalSession? saved, {
+    String? nodeId,
+  }) {
+    _passThreshold = server.passThreshold?.toDouble();
     final mapper = LessonWireMapper(
       server.bundle.exercises,
       assets: server.bundle.assets,
@@ -375,7 +517,7 @@ class ApiLearningRepository
       }
     }
     return JournalSession(
-      nodeId: saved?.nodeId ?? mistakeReviewNodeId,
+      nodeId: nodeId ?? saved?.nodeId ?? mistakeReviewNodeId,
       courseId: server.courseId,
       lessonId: server.lessonId,
       lessonVersion: server.lessonVersion,
@@ -529,6 +671,7 @@ class ApiLearningRepository
             ?.correct,
       );
     }
+    _draft = _draft?.copyWith(mode: _mode);
     _attempts
       ..clear()
       ..addAll({
@@ -646,6 +789,63 @@ class ApiLearningRepository
   }
 
   @override
+  Future<void> abandonSession() async {
+    final saved = _session ?? await journal.active();
+    if (saved == null) return;
+    var current = saved;
+    final sessionId = current.sessionId;
+    if (sessionId == null) {
+      await journal.clearActive();
+      _session = null;
+      return;
+    }
+    if (current.abandonKey == null ||
+        current.abandonRevision != current.revision) {
+      current = current.copyWith(
+        abandonKey: ids.next(),
+        abandonRevision: current.revision,
+      );
+      await _save(current);
+    }
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        await learning.abandonSession(
+          sessionId,
+          wire.CompleteRequest(expectedRevision: current.abandonRevision!),
+          idempotencyKey: current.abandonKey,
+        );
+        await journal.clearActive();
+        _session = null;
+        return;
+      } on ApiException catch (error) {
+        if (error.code == 'SESSION_CONFLICT') {
+          // Already completed elsewhere; nothing will resume this journal.
+          await journal.clearActive();
+          _session = null;
+          return;
+        }
+        if (error.code == 'REVISION_CONFLICT' && attempt == 0) {
+          try {
+            final server = await learning.getSession(sessionId);
+            current = current.copyWith(
+              revision: server.revision,
+              abandonKey: ids.next(),
+              abandonRevision: server.revision,
+            );
+            await _save(current);
+            continue;
+          } on ApiException catch (refreshError) {
+            throw LearningFailure(refreshError.userMessage);
+          }
+        }
+        // Offline or an unknown outcome: keep the journal so the lesson,
+        // including unsent answers, can still resume.
+        throw LearningFailure(error.userMessage);
+      }
+    }
+  }
+
+  @override
   Future<SessionReceipt> complete({
     required String nodeId,
     required int originalCorrect,
@@ -692,13 +892,24 @@ class ApiLearningRepository
         }
         await journal.clearActive();
         _session = null;
-        final rewards = isPlacement ? null : await _creditedRewards(completion);
+        final outcomeMode = SessionMode.tryParse(completion.mode) ?? _mode;
+        final gate = outcomeMode.isGate;
+        final outcome = SessionOutcome(
+          mode: outcomeMode,
+          passThreshold: _passThreshold,
+          passed: completion.passed,
+          unlockedNodeId: completion.unlockedNodeId,
+        );
+        final rewards = isPlacement || gate
+            ? null
+            : await _creditedRewards(completion);
         return SessionReceipt(
           id: completion.completionId,
           nodeId: nodeId,
-          xp: isPlacement ? 0 : rewards?.awardXp ?? 0,
+          xp: isPlacement || gate ? 0 : rewards?.awardXp ?? 0,
           rewardPending:
               !isPlacement &&
+              !gate &&
               completion.rewardStatus == 'pending' &&
               rewards == null,
           accuracy: completion.originalCount == 0
@@ -707,10 +918,12 @@ class ApiLearningRepository
           elapsed: elapsed,
           firstCompletion:
               !isPlacement &&
+              !gate &&
               session.lessonId != reviewLessonId &&
               completion.rewardStatus == 'pending',
           guest: guest,
           placement: isPlacement || placement,
+          outcome: outcome,
         );
       } on ApiException catch (error) {
         if (!error.isOffline) throw LearningFailure(error.userMessage);
@@ -772,8 +985,14 @@ class ApiLearningRepository
           wire.OfflineAnswer.fromJson(answer.toOfflineAnswerJson()),
       ],
     );
-    await journal.enqueueCompletion(request.toJson());
-    await journal.clearActive();
+    final requestJson = request.toJson();
+    final localJournal = journal;
+    if (localJournal is AtomicLessonJournal) {
+      await localJournal.stageCompletionAndClearActive(requestJson);
+    } else {
+      await localJournal.enqueueCompletion(requestJson);
+      await localJournal.clearActive();
+    }
     _session = null;
     return SessionReceipt(
       id: 'offline-$localId',
@@ -785,32 +1004,54 @@ class ApiLearningRepository
       firstCompletion: false,
       guest: guest,
       placement: placement,
+      outcome: SessionOutcome(mode: _mode),
     );
   }
 
   /// Replays queued offline completions; stops at the first network failure.
   /// Returns how many were accepted (or rejected for good) by the server.
+  @override
   Future<int> syncPending() async {
     var settled = 0;
     for (final json in await journal.pendingCompletions()) {
       final operationId = json['operationId']! as String;
+      final wire.OfflineCompletionRequest request;
+      try {
+        request = wire.OfflineCompletionRequest.fromJson(json);
+      } on wire.ContractViolation {
+        final storage = journal;
+        if (storage is! RejectedLessonJournal) break;
+        await storage.rejectCompletion(operationId, 'INVALID_LOCAL_COMPLETION');
+        settled++;
+        continue;
+      }
       try {
         await learning.syncOfflineCompletion(
-          wire.OfflineCompletionRequest.fromJson(json),
+          request,
           idempotencyKey: operationId,
         );
         await journal.removeCompletion(operationId);
         settled++;
       } on ApiException catch (error) {
-        if (error.isOffline || error.retryable || error.isUnauthenticated) {
+        if (error.isOffline ||
+            error.retryable ||
+            error.isUnauthenticated ||
+            error.code == 'BAD_RESPONSE' ||
+            error.code.startsWith('HTTP_') ||
+            error.statusCode == null ||
+            error.statusCode == 403 ||
+            error.statusCode == 429 ||
+            error.statusCode! >= 500) {
           break;
         }
-        // Permanently rejected (stale bundle, conflict): drop it, the server
-        // stays authoritative and grants nothing for it.
-        await journal.removeCompletion(operationId);
+        final storage = journal;
+        if (storage is! RejectedLessonJournal) break;
+        await storage.rejectCompletion(operationId, error.code);
         settled++;
       } on wire.ContractViolation {
-        await journal.removeCompletion(operationId);
+        // A malformed success receipt can follow a committed request. Preserve
+        // the operation and retry its original key instead of rejecting it.
+        break;
       }
     }
     return settled;

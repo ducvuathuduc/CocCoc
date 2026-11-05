@@ -51,42 +51,133 @@ struct StreakProvider: TimelineProvider {
   }
 }
 
-private let accent = Color(red: 0x5B / 255, green: 0xCD / 255, blue: 0x05 / 255)
-private let flameOn = Color(red: 1, green: 0x96 / 255, blue: 0)
-private let flameOff = Color(red: 0xB0 / 255, green: 0xAE / 255, blue: 0xB0 / 255)
-private let ink = Color(red: 0x4D / 255, green: 0x4B / 255, blue: 0x4E / 255)
-private let border = Color(red: 0xE7 / 255, green: 0xE5 / 255, blue: 0xE7 / 255)
+private enum StreakMood: String {
+  case ready, early, practice, lastChance, save, protected, away
+}
 
-struct StreakWidgetView: View {
-  let entry: StreakEntry
+private struct StreakStyle {
+  let title: String
+  let smallTitle: String
+  let start: Color
+  let end: Color
+  let asset: String
+  let weekdays: [(String, Bool)]
 
-  var body: some View {
-    HStack(spacing: 10) {
-      Image(systemName: entry.flame == "none" ? "flame" : "flame.fill")
-        .font(.system(size: 34, weight: .bold))
-        .foregroundStyle(entry.flame == "lit" ? flameOn : flameOff)
-        .accessibilityLabel("Ngọn lửa chuỗi ngày học")
-      VStack(alignment: .leading, spacing: 4) {
-        Text("\(entry.streak)")
-          .font(.system(size: 26, weight: .heavy, design: .rounded))
-          .foregroundStyle(entry.flame == "lit" ? flameOn : flameOff)
-        Text(entry.headline)
-          .font(.system(size: 13, weight: .bold, design: .rounded))
-          .foregroundStyle(ink)
-          .lineLimit(2)
-        ProgressView(value: Double(entry.goalPercent), total: 100)
-          .tint(accent)
-        Text("\(min(entry.todayMinutes, entry.goalMinutes))/\(entry.goalMinutes) phút hôm nay")
-          .font(.system(size: 11, weight: .semibold, design: .rounded))
-          .foregroundStyle(.secondary)
-      }
+  var mediumAsset: String { "\(asset)Medium" }
+  var smallAsset: String { "\(asset)Small" }
+}
+
+private extension StreakMood {
+  var style: StreakStyle {
+    switch self {
+    case .ready:
+      StreakStyle(
+        title: "Ready to start learning?", smallTitle: "Ready to start learning?",
+        start: Color(red: 0.00, green: 0.65, blue: 0.96),
+        end: Color(red: 0.67, green: 0.90, blue: 0.99), asset: "WidgetReady", weekdays: [])
+    case .early:
+      StreakStyle(
+        title: "Get started early!", smallTitle: "Get started early!",
+        start: Color(red: 0.22, green: 0.59, blue: 0.91),
+        end: Color(red: 0.51, green: 0.73, blue: 0.94), asset: "WidgetEarly",
+        weekdays: [("T", true), ("F", true), ("S", true), ("S", true), ("M", false)])
+    case .practice:
+      StreakStyle(
+        title: "Please practice!", smallTitle: "Extend your streak!",
+        start: Color(red: 0.62, green: 0.26, blue: 0.96),
+        end: Color(red: 0.75, green: 0.40, blue: 0.93), asset: "WidgetPractice",
+        weekdays: [("F", true), ("S", true), ("S", true), ("M", true), ("T", false)])
+    case .lastChance:
+      StreakStyle(
+        title: "Last chance!", smallTitle: "Last chance!",
+        start: Color(red: 0.69, green: 0.20, blue: 0.00),
+        end: Color(red: 0.60, green: 0.03, blue: 0.31), asset: "WidgetLastChance",
+        weekdays: [("F", true), ("S", true), ("S", true), ("M", true), ("T", false)])
+    case .save:
+      StreakStyle(
+        title: "Save your streak!", smallTitle: "Don’t forget me!",
+        start: Color(red: 0.22, green: 0.01, blue: 0.00),
+        end: Color(red: 0.67, green: 0.17, blue: 0.16), asset: "WidgetSave",
+        weekdays: [("S", true), ("M", true), ("T", true), ("W", true), ("T", false)])
+    case .protected:
+      StreakStyle(
+        title: "Don’t forget me!", smallTitle: "Come back soon!",
+        start: Color(red: 0.28, green: 0.02, blue: 0.16),
+        end: Color(red: 0.67, green: 0.09, blue: 0.35), asset: "WidgetProtected",
+        weekdays: [("F", true), ("S", true), ("S", true), ("M", true), ("T", true)])
+    case .away:
+      StreakStyle(
+        title: "Come back to English!", smallTitle: "Come back to English!",
+        start: Color(red: 0.07, green: 0.14, blue: 0.32),
+        end: Color(red: 0.09, green: 0.53, blue: 0.67), asset: "WidgetAway", weekdays: [])
     }
-    .widgetURL(URL(string: "cocenglish://widget\(entry.link)?homeWidget"))
-    .containerBackground(for: .widget) { Color.white }
   }
 }
 
-@main
+struct StreakWidgetView: View {
+  let entry: StreakEntry
+  @Environment(\.widgetFamily) private var family
+
+  var body: some View {
+    let style = mood.style
+    ZStack(alignment: .bottomTrailing) {
+      LinearGradient(colors: [style.start, style.end], startPoint: .topLeading, endPoint: .bottomTrailing)
+      Image(family == .systemSmall ? style.smallAsset : style.mediumAsset)
+        .resizable()
+        .scaledToFit()
+        .frame(
+          maxWidth: family == .systemSmall ? .infinity : 145,
+          maxHeight: family == .systemSmall ? 82 : 100,
+          alignment: .bottomTrailing
+        )
+        .accessibilityHidden(true)
+      VStack(alignment: .leading, spacing: 5) {
+        if mood != .ready {
+          Label(family == .systemSmall ? "\(entry.streak)" : "\(entry.streak) days", systemImage: "flame.fill")
+            .font(.system(size: 23, weight: .heavy, design: .rounded))
+            .foregroundStyle(.white)
+            .labelStyle(.titleAndIcon)
+        }
+        Text(family == .systemSmall ? style.smallTitle : style.title)
+          .font(.system(size: mood == .ready ? 20 : 16, weight: .bold, design: .rounded))
+          .foregroundStyle(.white)
+          .lineLimit(2)
+          .minimumScaleFactor(0.75)
+        if family == .systemMedium && !style.weekdays.isEmpty {
+          HStack(spacing: 9) {
+            ForEach(Array(style.weekdays.enumerated()), id: \.offset) { _, day in
+              VStack(spacing: 3) {
+                Text(day.0).font(.system(size: 10, weight: .bold, design: .rounded))
+                Image(systemName: day.1 ? "checkmark.circle.fill" : "circle.fill")
+                  .font(.system(size: 14, weight: .bold))
+                  .opacity(day.1 ? 1 : 0.35)
+              }
+            }
+          }
+          .foregroundStyle(.white)
+        }
+        Spacer(minLength: family == .systemSmall ? 52 : 0)
+      }
+      .frame(maxWidth: family == .systemSmall ? .infinity : 190, alignment: .leading)
+      .padding(16)
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+    .widgetURL(URL(string: "cocenglish://widget\(entry.link)?homeWidget"))
+    .containerBackground(for: .widget) { style.start }
+    .accessibilityElement(children: .ignore)
+    .accessibilityLabel("\(entry.streak) day streak. \(family == .systemSmall ? style.smallTitle : style.title)")
+  }
+
+  private var mood: StreakMood {
+    let defaults = UserDefaults(suiteName: appGroup)
+    if let raw = defaults?.string(forKey: "coc_widget_mood"), let selected = StreakMood(rawValue: raw) {
+      return selected
+    }
+    if entry.streak == 0 { return .ready }
+    return entry.flame == "lit" ? .practice : .lastChance
+  }
+}
+
 struct StreakWidget: Widget {
   let kind = "StreakWidget"
 

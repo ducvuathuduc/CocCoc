@@ -1,4 +1,5 @@
 import 'reminder_models.dart';
+import '../../progress/domain/streak_widget.dart';
 
 /// Flame state on the home-screen streak widget.
 enum WidgetFlame {
@@ -22,6 +23,7 @@ class StreakHomeWidgetData {
     required this.goalMinutes,
     required this.todayMinutes,
     required this.headline,
+    this.mood = StreakWidgetMood.ready,
     this.link = ReminderLinks.lesson,
   });
 
@@ -30,6 +32,7 @@ class StreakHomeWidgetData {
     required bool practicedToday,
     required int goalMinutes,
     required int todayMinutes,
+    StreakWidgetMood mood = StreakWidgetMood.ready,
   }) {
     final flame = practicedToday
         ? WidgetFlame.lit
@@ -50,11 +53,13 @@ class StreakHomeWidgetData {
       goalMinutes: goal,
       todayMinutes: done,
       headline: headline,
+      mood: mood,
     );
   }
 
   final int streak, goalMinutes, todayMinutes;
   final WidgetFlame flame;
+  final StreakWidgetMood mood;
   final String headline, link;
 
   /// 0..100 daily goal progress.
@@ -68,6 +73,7 @@ class StreakHomeWidgetData {
     'coc_today_minutes': todayMinutes,
     'coc_goal_percent': goalPercent,
     'coc_headline': headline,
+    'coc_widget_mood': mood.name,
     'coc_link': link,
   };
 }

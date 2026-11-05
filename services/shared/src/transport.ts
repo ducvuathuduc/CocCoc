@@ -2,6 +2,7 @@
 // fail-closed /ready and /internal/events. No grading/reward logic lives here.
 import { randomUUID } from 'node:crypto';
 import { createAppwriteAuthPort, extractJwt, type AuthPort, type VerifiedSubject } from './auth.js';
+import { corsOriginsFromEnv, corsResponseHeaders, DEFAULT_CORS_ORIGINS } from './cors.js';
 import { ServiceError, toErrorResponse } from './errors.js';
 import type { BusinessEvent, EventConsumer, PersistencePort, ServiceName } from './ports.js';
 import {
@@ -118,9 +119,12 @@ export interface RouterOptions {
   eventConsumer?: EventConsumer | undefined;
   buildId?: string;
   nowMs?: () => number;
+  /** Browser origins echoed in CORS responses; defaults to the local web dev servers. */
+  corsOrigins?: readonly string[];
 }
 
-function validateEventEnvelope(value: unknown): BusinessEvent {
+/** Strict BusinessEvent envelope shape check (shared by the HTTP route and the AMQP envelope). */
+export function validateEventEnvelope(value: unknown): BusinessEvent {
   const event = value as Record<string, unknown> | null;
   if (!event || typeof event !== 'object' || Array.isArray(event)) {
     throw new ServiceError('VALIDATION_ERROR');
@@ -145,6 +149,27 @@ function validateEventEnvelope(value: unknown): BusinessEvent {
   return event as unknown as BusinessEvent;
 }
 
+/**
+ * Receiver-side acceptance shared by POST /internal/events and the AMQP consumer: the event type
+ * must be in this receiver's allowlist, its producer allowed and equal to the authenticated
+ * sender; then the owner consumer commits inbox + effects atomically.
+ */
+export async function acceptBusinessEvent(
+  service: ServiceName,
+  consumer: EventConsumer | undefined,
+  event: BusinessEvent,
+  sender: ServiceSender | undefined,
+  requestId: string,
+): Promise<'accepted' | 'replayed'> {
+  const producers = EVENT_ALLOWLIST[service][event.type];
+  if (!producers) throw new ServiceError('VALIDATION_ERROR', { details: { field: 'type' } });
+  if (!sender || !producers.includes(event.producer as ServiceName) || event.producer !== sender) {
+    throw new ServiceError('FORBIDDEN');
+  }
+  if (!consumer) throw new ServiceError('SERVICE_NOT_CONFIGURED');
+  return consumer.consume(event, { bodyHash: canonicalBodyHash(event), requestId, sender });
+}
+
 export function createRouter(options: RouterOptions) {
   const { service, persistence, mode } = options;
   if (persistence.service !== service) throw new Error('PERSISTENCE_OWNER_MISMATCH');
@@ -153,6 +178,7 @@ export function createRouter(options: RouterOptions) {
   }
   const nowMs = options.nowMs ?? Date.now;
   const routes = options.routes ?? [];
+  const corsOrigins = options.corsOrigins ?? DEFAULT_CORS_ORIGINS;
   const allowlist = EVENT_ALLOWLIST[service];
   const eventSenders = [...new Set(Object.values(allowlist).flat())];
 
@@ -178,17 +204,13 @@ export function createRouter(options: RouterOptions) {
 
   async function consumeEvent(context: RouteContext): Promise<RouteResult> {
     const event = validateEventEnvelope(context.body);
-    const producers = allowlist[event.type];
-    if (!producers) throw new ServiceError('VALIDATION_ERROR', { details: { field: 'type' } });
-    if (!producers.includes(event.producer as ServiceName) || event.producer !== context.sender) {
-      throw new ServiceError('FORBIDDEN');
-    }
-    if (!options.eventConsumer) throw new ServiceError('SERVICE_NOT_CONFIGURED');
-    const status = await options.eventConsumer.consume(event, {
-      bodyHash: canonicalBodyHash(event),
-      requestId: context.requestId,
-      sender: context.sender,
-    });
+    const status = await acceptBusinessEvent(
+      service,
+      options.eventConsumer,
+      event,
+      context.sender,
+      context.requestId,
+    );
     return {
       status: 200,
       body: { operationId: event.eventId, status, requestId: context.requestId },
@@ -219,6 +241,9 @@ export function createRouter(options: RouterOptions) {
     requestId: string,
   ): Promise<RouteResult> {
     const method = req.method.toUpperCase();
+    // Browser preflight carries no credentials: answer before auth, body limits and route lookup.
+    // The wrapper attaches the allow-listed CORS headers (or none for a disallowed origin).
+    if (method === 'OPTIONS') return { status: 204, body: undefined };
     const rawBody = req.bodyText ?? '';
     if (method === 'GET' && req.path === '/health') {
       return { status: 200, body: { service, buildId, status: 'degraded' } };
@@ -283,6 +308,7 @@ export function createRouter(options: RouterOptions) {
     const responseHeaders: Record<string, string> = {
       'X-Request-ID': requestId,
       'Cache-Control': 'no-store',
+      ...corsResponseHeaders(headers['origin'], corsOrigins),
     };
     try {
       const result = await dispatch(context.req, headers, requestId);
@@ -314,8 +340,8 @@ export function createHostedHandler(
   env: Record<string, string | undefined> = process.env,
   wiring: ServiceWiring = {},
 ) {
-  const endpoint = env['APPWRITE_FUNCTION_API_ENDPOINT'];
-  const project = env['APPWRITE_FUNCTION_PROJECT_ID'];
+  const endpoint = env['APPWRITE_FUNCTION_API_ENDPOINT'] ?? env['APPWRITE_ENDPOINT'];
+  const project = env['APPWRITE_FUNCTION_PROJECT_ID'] ?? env['APPWRITE_PROJECT_ID'];
   let auth: AuthPort | undefined;
   if (endpoint && project && endpoint.startsWith('https://')) {
     auth = createAppwriteAuthPort(createAccountVerifier(endpoint, project));
@@ -333,6 +359,7 @@ export function createHostedHandler(
     auth,
     keyring,
     buildId: env['BUILD_ID'] ?? 'local-scaffold',
+    corsOrigins: corsOriginsFromEnv(env['COC_CORS_ALLOWED_ORIGINS']),
     ...(wiring.routes ? { routes: wiring.routes } : {}),
     eventConsumer: wiring.eventConsumer,
   });

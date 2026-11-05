@@ -148,6 +148,7 @@ final class SnapshotCache<T> {
   bool _hydrated = false;
   bool _fetched = false;
   Future<T?>? _inflight;
+  bool _disposed = false;
 
   T? get value => _value;
   Object? get error => _error;
@@ -156,6 +157,7 @@ final class SnapshotCache<T> {
   bool get isFresh => _fetched;
 
   void ensureLoaded(Future<T> Function() fetch) {
+    if (_disposed) return;
     if (_started) {
       final age = maxAge, at = _fetchedAt;
       if (age == null || at == null || _inflight != null) return;
@@ -166,6 +168,7 @@ final class SnapshotCache<T> {
   }
 
   Future<T?> refresh(Future<T> Function() fetch) {
+    if (_disposed) return Future.value(null);
     _started = true;
     return _inflight ??= _run(fetch).whenComplete(() => _inflight = null);
   }
@@ -173,12 +176,15 @@ final class SnapshotCache<T> {
   Future<T?> _run(Future<T> Function() fetch) async {
     _fetchedAt = _clock();
     await _hydrate();
+    if (_disposed) return null;
     try {
       final next = await fetch();
+      if (_disposed) return null;
       _error = null;
       _fetched = true;
       _set(next);
     } catch (error) {
+      if (_disposed) return null;
       _error = error;
     }
     return _value;
@@ -186,6 +192,7 @@ final class SnapshotCache<T> {
 
   /// Replaces the snapshot with a server-authoritative mutation result.
   void put(T value) {
+    if (_disposed) return;
     _fetched = true;
     _fetchedAt = _clock();
     _set(value);
@@ -196,7 +203,7 @@ final class SnapshotCache<T> {
     _hydrated = true;
     if (_value != null) return;
     final raw = await host.store.read(key);
-    if (raw == null || _value != null) return;
+    if (_disposed || raw == null || _value != null) return;
     try {
       final json = jsonDecode(raw);
       if (json is Map) {
@@ -212,5 +219,12 @@ final class SnapshotCache<T> {
     _value = next;
     host.onChanged();
     unawaited(host.store.write(key, jsonEncode(encode(next))));
+  }
+
+  /// Revokes a retired account/provider's pending work before it can publish.
+  void dispose() {
+    _disposed = true;
+    _value = null;
+    _error = null;
   }
 }

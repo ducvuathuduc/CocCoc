@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-25",
+  "scope": "read-only local preparation; no production inspection or mutation",
+  "host": "Windows / PowerShell",
+  "branch": "codex/real-features-integration",
+  "nodeForBackend": ".cache/toolchains/node-v22.23.3-win-x64/node.exe",
+  "flutter": "C:/flutter/bin/flutter.bat",
+  "docker": {
+    "status": "UNAVAILABLE",
+    "reason": "Executable absent from PATH and standard Docker Desktop location"
+  },
+  "wsl": {
+    "status": "UNVERIFIED",
+    "executableFound": true,
+    "reportedDefaultVersion": 2,
+    "engineUsable": "UNVERIFIED"
+  },
+  "publicProfile": "apps/mobile/config/real.public.json",
+  "appwrite": {
+    "auth": "retained",
+    "liveStatus": "UNVERIFIED",
+    "schemaMutationByThisTask": false,
+    "liveSchemaStatus": "UNVERIFIED"
+  },
+  "providers": {
+    "liveStatus": "UNVERIFIED",
+    "autoEnablePaidAdapters": false
+  },
+  "secrets": {
+    "valuesRecorded": false,
+    "productionPresence": "UNVERIFIED",
+    "localCredentialFile": "not supplied; configure later per human instruction"
+  },
+  "productionHost": {
+    "status": "UNVERIFIED",
+    "humanInstruction": "Prepare local first; no VPS available"
+  },
+  "identities": {
+    "contract": "runtime-register.json#contractSha256",
+    "schema": "appwrite/schema",
+    "content": "content",
+    "serviceBuildIds": "UNVERIFIED"
+  },
+  "liveAcceptance": "Pending credential injection, admitted durable test environment, actual provider and device evidence",
+  "composeCli": {
+    "version": "2.39.1",
+    "source": "verified official release digest",
+    "config": "PASS",
+    "engineExecution": "UNAVAILABLE"
+  },
+  "android": {
+    "device": "PRM392_API34_Lite / emulator-5554 / API 34 x86_64",
+    "nativeDriftTests": 3,
+    "result": "PASS",
+    "physicalDevice": "UNVERIFIED",
+    "approvedPreviewRestored": true
+  }
+}

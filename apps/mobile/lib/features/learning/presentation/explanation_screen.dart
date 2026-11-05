@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/config/app_config.dart';
 import '../../../core/design/reference_art.dart';
 import '../../../core/design/reference_theme.dart';
 import '../../../core/design/reference_widgets.dart';
@@ -25,7 +26,24 @@ class _ExplanationScreenState extends ConsumerState<ExplanationScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(lessonControllerProvider);
     final exercise = state.current;
-    final explanation = englishExplanations[exercise?.id];
+    // Mock keeps its authored map (no request); API lessons ask the tutor for
+    // the same screen using the published exercise id.
+    final explanation = exercise == null
+        ? null
+        : ref.watch(appConfigProvider).isApi
+        ? ref
+              .watch(
+                exerciseExplanationProvider(
+                  ExplanationRequest(
+                    exercise: exercise,
+                    nodeId: state.nodeId,
+                    answer: submittedAnswer(exercise, state),
+                  ),
+                ),
+              )
+              .asData
+              ?.value
+        : englishExplanations[exercise.id];
     if (exercise == null ||
         explanation == null ||
         state.stage != LessonStage.feedback) {

@@ -1,5 +1,8 @@
+import 'support/app_fonts.dart';
+
 import 'dart:io';
 import 'dart:ui' as ui;
+
 import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 
 import 'package:cocenglish/core/design/reference_art.dart';
@@ -46,13 +49,11 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPadding);
     await tester.runAsync(() async {
-      await (FontLoader('DuolingoSans')
-            ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-            ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+      await (FontLoader('sans-serif')
+            ..addFont(loadTestFont())
+            ..addFont(loadTestFont(bold: true)))
           .load();
-      await (FontLoader(
-        'Feather',
-      )..addFont(rootBundle.load('assets/fonts/Feather.ttf'))).load();
+      await (FontLoader('sans-serif')..addFont(loadTestFont())).load();
       await (FontLoader(
         'MaterialIcons',
       )..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))).load();

@@ -24,12 +24,17 @@ run('node_modules/typescript/bin/tsc', ['-p', 'tsconfig.backend.json']);
 for (const name of selected.length ? selected : names) {
   fs.mkdirSync(`services/${name}/dist`, { recursive: true });
   await build({
-    entryPoints: [`services/${name}/src/index.ts`],
-    outfile: `services/${name}/dist/function.mjs`,
+    entryPoints: {
+      function: `services/${name}/src/index.ts`,
+      http: `services/${name}/src/runtime/http.ts`,
+      worker: `services/${name}/src/runtime/worker.ts`,
+    },
+    outdir: `services/${name}/dist`,
     bundle: true,
     platform: 'node',
     target: 'node22',
     format: 'esm',
+    outExtension: { '.js': '.mjs' },
     sourcemap: true,
     banner,
   });
@@ -39,6 +44,8 @@ await build({
     'mock-completion': 'services/learning/src/testing/mock-completion.ts',
     'mock-rewards': 'services/progress/src/testing/mock-rewards.ts',
     'foundation-testkit': 'services/shared/src/testing/testkit.ts',
+    'runtime-http': 'services/shared/src/runtime-http.ts',
+    'runtime-worker': 'services/shared/src/runtime-worker.ts',
   },
   outdir: '.cache/backend-fixtures',
   bundle: true,

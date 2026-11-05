@@ -4,6 +4,7 @@
 import { ServiceError } from '../../../shared/src/errors.js';
 import type { ProgressTx, Row } from '../persistence/port.js';
 import { FRIEND_QUEST, FRIEND_QUEST_PREFIX, QUESTS } from '../domain/catalog.js';
+import { newChestOperation, questChestReceipt } from '../domain/quest-chest.js';
 import { FREEZE_PRICE_GEMS, freezeCapacity } from '../domain/streak.js';
 import { addDays, leagueWeek, monthKey, zonedDay } from '../domain/time.js';
 import { putActivity } from './rewards.js';
@@ -92,6 +93,7 @@ export async function claimQuest(
   userId: string,
   questId: string,
   periodKey: string,
+  upgradeChest = false,
 ): Promise<RewardsView> {
   const profile = await requireProfile(tx, userId);
   const zone = String(profile['learningZone'] ?? DEFAULT_ZONE);
@@ -105,13 +107,43 @@ export async function claimQuest(
   const row = await tx.get('p_quests', id);
   const rewardsId = ids.rewards(userId);
   const stored = (await tx.get('p_rewards', rewardsId)) ?? emptyRewards(userId);
-  if (row?.['claimed']) return rewardsView(stored, zone, tx.nowIso);
+  if (row?.['claimed']) {
+    const operation = String(row['claimOperationId'] ?? '');
+    if (!operation.startsWith('ch1_')) return rewardsView(stored, zone, tx.nowIso);
+    const chest = questChestReceipt(operation, 1);
+    const ledger = await tx.get('p_reward_ledger', ids.ledger(userId, operation, 'QUEST'));
+    const creditedGems = Number(ledger?.['gemsDelta']);
+    if (
+      !chest ||
+      !ledger ||
+      ledger['eventId'] !== operation ||
+      ledger['completionId'] !== operation ||
+      ledger['userId'] !== userId ||
+      ledger['rewardIdentity'] !== questId ||
+      ledger['kind'] !== 'QUEST' ||
+      !Number.isSafeInteger(creditedGems) ||
+      creditedGems <= 0
+    ) {
+      throw new ServiceError('INTERNAL_ERROR', {
+        details: { reason: 'CHEST_LEDGER_MISSING_OR_INVALID' },
+      });
+    }
+    return {
+      ...rewardsView(stored, zone, tx.nowIso),
+      chest: { ...chest, gems: creditedGems },
+    };
+  }
   if (!row || Number(row['metricValue']) < quest.target) {
     throw new ServiceError('VALIDATION_ERROR', {
       details: { reason: 'QUEST_NOT_COMPLETE', questId, periodKey },
     });
   }
-  const opId = operationId('quest-claim', userId, quest.period, periodKey, questId);
+  const opId =
+    upgradeChest && quest.rewardGems > 0
+      ? newChestOperation()
+      : operationId('quest-claim', userId, quest.period, periodKey, questId);
+  const chest = questChestReceipt(opId, quest.rewardGems);
+  const rewardGems = chest?.gems ?? quest.rewardGems;
   tx.put('p_quests', id, { ...editable(row), claimed: true, claimOperationId: opId });
   const rewards = editable(stored);
   if (quest.rewardGems > 0) {
@@ -123,13 +155,13 @@ export async function claimQuest(
       kind: 'QUEST',
       studyXpDelta: 0,
       leagueXpDelta: 0,
-      gemsDelta: quest.rewardGems,
+      gemsDelta: rewardGems,
       learningDay: zonedDay(tx.nowIso, zone),
       leagueWeek: leagueWeek(tx.nowIso),
       occurredAt: tx.nowIso,
       capped: false,
     });
-    rewards['gems'] = Number(rewards['gems']) + quest.rewardGems;
+    rewards['gems'] = Number(rewards['gems']) + rewardGems;
   }
   if (quest.badge) {
     const badgeId = `monthly_${periodKey.replace('-', '_')}`;
@@ -154,11 +186,12 @@ export async function claimQuest(
     visible,
   );
   tx.put('p_rewards', rewardsId, rewards);
-  return rewardsView(
+  const result = rewardsView(
     { ...rewards, revision: Number(stored['revision'] ?? -1) + 1 },
     zone,
     tx.nowIso,
   );
+  return { ...result, ...(chest ? { chest } : {}) };
 }
 
 /** FR-GAME-003: debit 20 gems, add one equipped freeze, within capacity; ledger + freeze row. */

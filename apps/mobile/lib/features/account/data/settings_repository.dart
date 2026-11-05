@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/client/api_providers.dart';
 import '../../../core/config/app_config.dart';
+import '../../auth/application/auth_controller.dart';
 import 'api_account_repositories.dart';
 
 /// Copy + catalog for Settings > Duolingo for Schools.
@@ -50,26 +51,30 @@ class ClassroomJoin {
 
 /// Settings boundary for Schools, Social accounts and Feedback. Swap the API
 /// implementation by overriding [settingsRepositoryProvider].
-abstract class SettingsRepository {
+abstract interface class SettingsContent {
   SchoolsContent get schools;
   List<SocialAccount> get socialAccounts;
-  Set<String> get connectedSocial;
   FeedbackContent get feedback;
+}
+
+abstract class SettingsRepository implements SettingsContent {
+  /// Last known linked providers; the first frame of Settings > Social
+  /// accounts reads this before [loadSocialConnections] answers.
+  Set<String> get connectedSocial;
+
+  /// Reads the providers linked to the signed-in account.
+  Future<Set<String>> loadSocialConnections();
+
   Future<ClassroomJoin> joinClassroom(String code);
   Future<void> setSocialConnected(String id, {required bool connected});
   Future<void> sendFeedback(String topic, String message);
 }
 
-class MockSettingsRepository implements SettingsRepository {
-  MockSettingsRepository({this.latency = const Duration(milliseconds: 60)});
-  final Duration latency;
-  final List<({String topic, String message})> sent = [];
-
-  // Mock classroom directory; codes are 6 letters/digits like the real ones.
-  static const _classrooms = {'ABC123': 'Ms. Rivera’s English class'};
+class BundledSettingsContent implements SettingsContent {
+  const BundledSettingsContent();
 
   @override
-  final SchoolsContent schools = const SchoolsContent(
+  SchoolsContent get schools => const SchoolsContent(
     heading: 'Join a classroom',
     body:
         'Enter the classroom code your teacher gave you to share your '
@@ -82,17 +87,12 @@ class MockSettingsRepository implements SettingsRepository {
   );
 
   @override
-  final List<SocialAccount> socialAccounts = const [
-    SocialAccount(id: 'facebook', name: 'Facebook'),
+  List<SocialAccount> get socialAccounts => const [
     SocialAccount(id: 'google', name: 'Google'),
   ];
 
-  final Set<String> _connected = {};
   @override
-  Set<String> get connectedSocial => {..._connected};
-
-  @override
-  final FeedbackContent feedback = const FeedbackContent(
+  FeedbackContent get feedback => const FeedbackContent(
     topicLabel: 'What is your feedback about?',
     topics: ['Bug report', 'Lesson content', 'Suggestion'],
     messageLabel: 'Tell us more',
@@ -101,6 +101,23 @@ class MockSettingsRepository implements SettingsRepository {
     thanksTitle: 'Thanks for your feedback!',
     thanksBody: 'Our team reads every message to make learning better.',
   );
+}
+
+class MockSettingsRepository extends BundledSettingsContent
+    implements SettingsRepository {
+  MockSettingsRepository({this.latency = const Duration(milliseconds: 60)});
+  final Duration latency;
+  final List<({String topic, String message})> sent = [];
+  static const _classrooms = {'ABC123': 'Ms. Rivera’s English class'};
+  final Set<String> _connected = {};
+  @override
+  Set<String> get connectedSocial => {..._connected};
+
+  @override
+  Future<Set<String>> loadSocialConnections() async {
+    await Future<void>.delayed(latency);
+    return connectedSocial;
+  }
 
   @override
   Future<ClassroomJoin> joinClassroom(String code) async {
@@ -133,11 +150,18 @@ class MockSettingsRepository implements SettingsRepository {
 }
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
-  if (ref.watch(appConfigProvider).isApi) {
-    return ApiSettingsRepository(
-      api: ref.watch(apiEndpointsProvider),
-      content: MockSettingsRepository(),
-    );
-  }
-  return MockSettingsRepository();
+  final config = ref.watch(appConfigProvider);
+  if (!config.isApi) return MockSettingsRepository();
+  // Identity-scoped: a different signed-in account gets a fresh repository so
+  // the cached linked providers never carry over.
+  final signedIn = ref.watch(
+    authControllerProvider.select((state) => state.user != null),
+  );
+  return ApiSettingsRepository(
+    api: ref.watch(apiEndpointsProvider),
+    content: const BundledSettingsContent(),
+    identities: config.useMockAuth || !signedIn
+        ? null
+        : AppwriteSocialIdentityGateway(ref.watch(appwriteAuthServiceProvider)),
+  );
 });

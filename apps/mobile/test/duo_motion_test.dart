@@ -1,3 +1,5 @@
+import 'support/app_fonts.dart';
+
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -97,41 +99,20 @@ void main() {
   });
 
   testWidgets(
-    'non-owl animation advances and retains reduced-motion fallback',
+    'legacy animation specs render brand art without loading old assets',
     (tester) async {
-      await tester.pumpWidget(harness(spec: humanSpec));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-      final first = motionPainter(tester).frame;
-      await tester.pump(const Duration(milliseconds: 300));
-      expect(motionPainter(tester).frame, greaterThan(first));
-      expect(find.byType(CocEnglishMascot), findsNothing);
+      final bundle = RecordingBundle();
+      await tester.pumpWidget(harness(spec: humanSpec, bundle: bundle));
+      await tester.pumpAndSettle();
+      expect(find.byType(CocEnglishMascot), findsOneWidget);
+      expect(bundle.requested.where((p) => p.contains('/motion/')), isEmpty);
       await tester.pumpWidget(harness(spec: humanSpec, reduced: true));
-      expect(find.byKey(fallbackKey), findsOneWidget);
-    },
-  );
-
-  testWidgets(
-    'switching a running non-owl asset to owl stops animation and disposes safely',
-    (tester) async {
-      const transition = DuoMotionSpec(
-        asset: 'assets/motion/test-human-transition.json',
-        startFrame: 0,
-        endFrame: 440,
-        loop: true,
-      );
-      await tester.pumpWidget(
-        harness(spec: transition, bundle: RecordingBundle()),
-      );
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-      expect(motionPainter(tester).frame, greaterThanOrEqualTo(0));
-      await tester.pumpWidget(harness());
       await tester.pumpAndSettle();
       expect(find.byType(CocEnglishMascot), findsOneWidget);
       expect(tester.binding.transientCallbackCount, 0);
+      await tester.pumpWidget(harness());
+      await tester.pumpAndSettle();
       await tester.pumpWidget(const SizedBox());
-      await tester.pump(const Duration(seconds: 1));
       expect(tester.takeException(), isNull);
     },
   );
@@ -183,11 +164,10 @@ void routineBrandTest() {
     final boundary = GlobalKey();
     if (const bool.fromEnvironment('CAPTURE_COC_BRAND')) {
       await tester.runAsync(() async {
-        final body = FontLoader('DuolingoSans')
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf'));
-        final heading = FontLoader('Feather')
-          ..addFont(rootBundle.load('assets/fonts/Feather.ttf'));
+        final body = FontLoader('sans-serif')
+          ..addFont(loadTestFont())
+          ..addFont(loadTestFont(bold: true));
+        final heading = FontLoader('sans-serif')..addFont(loadTestFont());
         await Future.wait([body.load(), heading.load()]);
       });
     }

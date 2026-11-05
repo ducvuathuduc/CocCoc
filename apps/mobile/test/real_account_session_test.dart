@@ -7,6 +7,7 @@ import 'package:cocenglish/core/api/client/api_operation.dart';
 import 'package:cocenglish/core/api/client/api_exception.dart';
 
 import 'support/fake_api_transport.dart';
+import 'support/real_profile.dart';
 import 'features/api_snapshot_repositories_test.dart' as fixtures;
 import 'features/learning/api_learning_repository_test.dart' as learning;
 
@@ -67,6 +68,7 @@ void main() {
               serviceUrls: {
                 ApiService.progress: 'https://progress.test',
                 ApiService.learning: 'https://learning.test',
+                ApiService.ai: 'https://ai.test',
               },
             ),
           ),
@@ -98,12 +100,7 @@ void main() {
       ..json('GET /v1/me', errorEnvelope('UNAUTHENTICATED'), status: 401);
     final container = ProviderContainer(
       overrides: [
-        appConfigProvider.overrideWithValue(
-          const AppConfig(
-            dataSource: DataSource.api,
-            serviceUrls: {ApiService.progress: 'https://progress.test'},
-          ),
-        ),
+        appConfigProvider.overrideWithValue(realTestConfig),
         authRepositoryProvider.overrideWithValue(SessionFake()),
         apiTransportProvider.overrideWithValue(transport),
       ],
@@ -133,9 +130,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            appConfigProvider.overrideWithValue(
-              const AppConfig(dataSource: DataSource.api),
-            ),
+            appConfigProvider.overrideWithValue(realTestConfig),
             authRepositoryProvider.overrideWithValue(SessionFake()),
           ],
           child: MainApp(
@@ -181,9 +176,7 @@ void main() {
       final repository = SessionFake();
       final container = ProviderContainer(
         overrides: [
-          appConfigProvider.overrideWithValue(
-            const AppConfig(dataSource: DataSource.api),
-          ),
+          appConfigProvider.overrideWithValue(realTestConfig),
           authRepositoryProvider.overrideWithValue(repository),
         ],
       );
@@ -210,11 +203,7 @@ void main() {
   );
   test('real receipt cannot mint local XP, streak or path progress', () {
     final container = ProviderContainer(
-      overrides: [
-        appConfigProvider.overrideWithValue(
-          const AppConfig(dataSource: DataSource.api),
-        ),
-      ],
+      overrides: [appConfigProvider.overrideWithValue(realTestConfig)],
     );
     addTearDown(container.dispose);
     container

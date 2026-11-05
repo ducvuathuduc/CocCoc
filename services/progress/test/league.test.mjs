@@ -21,6 +21,20 @@ test('domain: ranking ties and promotion/demotion rules', async () => {
   assert.equal(kit.movementFor(1, 30, 9), 'STAY');
 });
 
+test('league tie-breaking compares timestamp instants rather than timezone strings', () => {
+  const { kit } = setup();
+  const ranked = kit.rankMembers([
+    { userId: 'z', eligibleXp: 10, lastXpAt: '2026-10-12T08:00:00+07:00' },
+    { userId: 'a', eligibleXp: 10, lastXpAt: '2026-10-12T04:00:00Z' },
+    { userId: 'b', eligibleXp: 10, lastXpAt: '2026-10-12T05:00:00.000Z' },
+    { userId: 'c', eligibleXp: 10, lastXpAt: '2026-10-12T12:00:00+07:00' },
+  ]);
+  assert.deepEqual(
+    ranked.map((member) => member.userId),
+    ['z', 'a', 'b', 'c'],
+  );
+});
+
 test('league: opt-in required, join idempotent, 30-member cohorts under concurrency, eligible XP only', async () => {
   const h = setup();
   await initUser(h, 'priv');
@@ -66,6 +80,33 @@ test('league: opt-in required, join idempotent, 30-member cohorts under concurre
     ['u00', 25, 1],
   );
   assert.equal((await h.call('GET', '/v1/league', { user: 'priv' })).body.error.code, 'NOT_FOUND');
+});
+
+test('late deliveries cannot move the last XP timestamp backwards or change tie order', async () => {
+  const h = setup({ start: Date.parse('2026-10-12T02:00:00.000Z') });
+  for (const user of ['alice', 'bob']) {
+    await initUser(h, user, { publicOptIn: true });
+    assert.equal((await h.call('POST', '/v1/league/join', { user })).status, 200);
+  }
+  h.clock.now = Date.parse('2026-10-12T06:00:00.000Z');
+  const event = (user, id, hour) =>
+    lessonEvent(
+      { occurredAt: `2026-10-12T0${hour}:00:00.000Z` },
+      { userId: user, completionId: id },
+    );
+  await h.deliver(event('alice', 'alice-later', 5));
+  await h.deliver(event('alice', 'alice-earlier', 3));
+  await h.deliver(event('bob', 'bob-earlier', 3));
+  await h.deliver(event('bob', 'bob-later', 4));
+  const league = await h.call('GET', '/v1/league', { user: 'alice' });
+  const members = league.body.members;
+  assert.deepEqual(
+    members.map((member) => member.userId),
+    ['bob', 'alice'],
+  );
+  assert.equal(members[0].eligibleXp, members[1].eligibleXp);
+  const alice = h.store.dump('p_league_members').find(({ row }) => row.userId === 'alice').row;
+  assert.equal(alice.lastXpAt, '2026-10-12T05:00:00.000Z');
 });
 
 test('settlement: waits for watermark (SETTLING), then closes once with promote/demote', async () => {

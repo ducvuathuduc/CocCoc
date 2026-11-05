@@ -4,6 +4,8 @@
 
 Accepted V1; decision2026-10-04.
 
+2026-10-25 amendment: [ADR-0018](0018-container-event-cache-runtime.md) is human-approved for container API/worker entrypoints and RabbitMQ/Redis infrastructure. It supersedes only the no-broker/cache runtime restriction below; the three business owners are unchanged. Runtime admission is still required.
+
 ## Context
 
 Microservices are required without fragmented critical learning transactions.

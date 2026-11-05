@@ -149,14 +149,8 @@ Future<bool> _confirm(
       context: context,
       builder: (dialog) => _iosPanel(
         CupertinoAlertDialog(
-          title: Text(
-            title,
-            style: const TextStyle(fontFamily: 'sans-serif'),
-          ),
-          content: Text(
-            body,
-            style: const TextStyle(fontFamily: 'sans-serif'),
-          ),
+          title: Text(title, style: const TextStyle(fontFamily: 'sans-serif')),
+          content: Text(body, style: const TextStyle(fontFamily: 'sans-serif')),
           actions: [
             CupertinoDialogAction(
               onPressed: () => Navigator.pop(dialog, false),

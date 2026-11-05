@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/api_contracts.dart' as wire;
+import '../../../core/api/client/idempotency.dart';
 import '../../../core/cache/snapshot_cache.dart';
 import '../../../core/config/app_config.dart';
 import '../domain/league_ranking.dart';
@@ -64,6 +65,12 @@ abstract interface class LeagueRepository {
   /// Server standings; `null` means "use the local preview ranking" (mock).
   LeagueRanking? ranking();
 
+  /// Whether the server has already placed this learner in a cohort.
+  bool get joined;
+
+  /// Opts in for the current week; returns the server standings when placed.
+  Future<LeagueRanking?> join();
+
   /// Unseen weekly result to celebrate, or `null` when there is none.
   LeagueResultFixture? lastResult();
 
@@ -77,6 +84,12 @@ class MockLeagueRepository implements LeagueRepository {
 
   @override
   LeagueRanking? ranking() => null;
+
+  @override
+  bool get joined => false;
+
+  @override
+  Future<LeagueRanking?> join() async => null;
 
   @override
   LeagueResultFixture? lastResult() => LeagueResultFixture(
@@ -98,13 +111,48 @@ class ApiLeagueRepository implements LeagueRepository {
   ApiLeagueRepository(this.source);
 
   final ProgressSnapshotSource source;
+  String? _joinKey;
+
+  @override
+  bool get joined => source.cache.value?.league != null;
 
   @override
   LeagueRanking? ranking() {
     final snapshot = source.value;
-    final members = [...?snapshot?.league?.members]
+    final league = snapshot?.league;
+    if (league == null || snapshot == null) return _rankingOf(null, null);
+    return _rankingOf(league, snapshot.profile.userId);
+  }
+
+  /// At most one cohort per week: the server replays the same membership for a
+  /// repeated key and returns the authoritative tier and standings.
+  @override
+  Future<LeagueRanking?> join() async {
+    final league = await source.api.joinLeague(
+      idempotencyKey: _joinKey ??= UuidV4Generator().next(),
+    );
+    _joinKey = null;
+    final current = source.cache.value;
+    if (current != null) {
+      source.cache.put(
+        ProgressSnapshot(
+          profile: current.profile,
+          rewards: current.rewards,
+          energy: current.energy,
+          league: league,
+          leagueResult: current.leagueResult,
+          quests: current.quests,
+        ),
+      );
+    }
+    return _rankingOf(league, current?.profile.userId);
+  }
+
+  LeagueRanking _rankingOf(wire.League? league, String? ownUserId) {
+    final members = [...?league?.members]
       ..sort((a, b) => a.rank.compareTo(b.rank));
     return LeagueRanking(
+      tier: league == null ? null : tierOf(league.tier),
       entries: [
         for (final m in members)
           LeagueRankingEntry(
@@ -112,7 +160,7 @@ class ApiLeagueRepository implements LeagueRepository {
             name: m.nickname.isEmpty ? 'Learner' : m.nickname,
             xp: m.eligibleXp,
             rank: m.rank,
-            isOwn: m.userId == snapshot!.profile.userId,
+            isOwn: m.userId == ownUserId,
           ),
       ],
     );

@@ -108,3 +108,61 @@ export function placementFrontier(manifest: CourseManifest, passed: boolean): nu
   const target = nodes.find((node) => node.unitId === secondUnit);
   return target ? target.order : first;
 }
+
+function completeLessons(
+  manifest: CourseManifest,
+  enrollment: EnrollmentView,
+  lessonIds: readonly string[],
+): EnrollmentView {
+  let next = enrollment;
+  for (const lessonId of lessonIds) next = completeLesson(manifest, next, lessonId);
+  return next;
+}
+
+/** TEST_OUT pass: every lesson of the target unit becomes completed (frontier stays monotonic). */
+export function completeUnit(
+  manifest: CourseManifest,
+  enrollment: EnrollmentView,
+  unitId: string,
+): EnrollmentView {
+  const lessonIds = manifest.nodes
+    .filter((node) => node.unitId === unitId)
+    .flatMap((node) => node.lessonIds);
+  return completeLessons(manifest, enrollment, lessonIds);
+}
+
+/** CHECKPOINT pass: every lesson of the target section becomes completed, unlocking the next. */
+export function completeSection(
+  manifest: CourseManifest,
+  enrollment: EnrollmentView,
+  sectionId: string,
+): EnrollmentView {
+  const lessonIds = manifest.nodes
+    .filter((node) => node.sectionId === sectionId)
+    .flatMap((node) => node.lessonIds);
+  return completeLessons(manifest, enrollment, lessonIds);
+}
+
+/** A checkpoint requires every earlier node of its own section to be complete. */
+export function assertCheckpointUnlocked(
+  manifest: CourseManifest,
+  enrollment: EnrollmentView,
+  lessonId: string,
+): ContentNode {
+  const node = nodeOfLesson(manifest, lessonId);
+  if (!node) throw new ServiceError('ACTIVITY_NOT_FOUND', { details: { lessonId } });
+  const unmet = manifest.nodes.filter(
+    (candidate) =>
+      candidate.sectionId === node.sectionId &&
+      candidate.order < node.order &&
+      candidate.lessonIds.some((id) => !enrollment.completedLessonIds.includes(id)),
+  );
+  if (unmet.length)
+    throw new ServiceError('CHECKPOINT_LOCKED', {
+      details: {
+        sectionId: node.sectionId,
+        unmetNodeIds: unmet.slice(0, 20).map((candidate) => candidate.nodeId),
+      },
+    });
+  return node;
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/app_config.dart';
 import '../data/social_repository.dart';
 import 'preview_controller.dart';
 
@@ -52,11 +53,36 @@ class ProfileActionsController extends Notifier<ProfileActionsState> {
   @override
   ProfileActionsState build() {
     ref.onDispose(() => _alive = false);
+    _mirrorFollows();
     return const ProfileActionsState();
   }
 
+  /// API mode mirrors the local Follow/Following toggle to `/v1/follows`.
+  /// Mock mode keeps the archived preview-only behaviour.
+  void _mirrorFollows() {
+    ref.listen<Set<String>>(
+      previewControllerProvider.select((state) => state.following),
+      (previous, next) {
+        if (previous == null || previous == next) return;
+        if (!ref.read(appConfigProvider).isApi) return;
+        final social = ref.read(socialRepositoryProvider);
+        for (final userId in next.difference(previous)) {
+          sendSocial(() => social.follow(userId));
+        }
+        for (final userId in previous.difference(next)) {
+          sendSocial(() => social.unfollow(userId));
+        }
+      },
+    );
+  }
+
+  /// API mode accepts any server user id; mock mode keeps sample ids only.
+  bool _knownProfile(String userId) => ref.read(appConfigProvider).isApi
+      ? userId.isNotEmpty && userId.length <= 36
+      : sampleProfileIds.contains(userId);
+
   bool reportAndBlock(String userId, String reason) {
-    if (!sampleProfileIds.contains(userId) ||
+    if (!_knownProfile(userId) ||
         !reportReasons.contains(reason) ||
         state.reports.containsKey(userId)) {
       return false;
@@ -65,6 +91,7 @@ class ProfileActionsController extends Notifier<ProfileActionsState> {
       ref.read(previewControllerProvider.notifier).follow(userId);
     }
     final social = ref.read(socialRepositoryProvider);
+    sendSocial(() => social.report(userId, reason: reason));
     sendSocial(() => social.block(userId));
     state = ProfileActionsState(
       blocked: {...state.blocked, userId},
@@ -77,7 +104,7 @@ class ProfileActionsController extends Notifier<ProfileActionsState> {
   }
 
   void block(String userId) {
-    if (!sampleProfileIds.contains(userId) || state.blocked.contains(userId)) {
+    if (!_knownProfile(userId) || state.blocked.contains(userId)) {
       return;
     }
     if (ref.read(previewControllerProvider).following.contains(userId)) {

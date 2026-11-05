@@ -20,11 +20,11 @@ export function rankMembers<T extends LeagueEntry>(
   return [...members]
     .sort((a, b) => {
       if (a.eligibleXp !== b.eligibleXp) return b.eligibleXp - a.eligibleXp;
-      if (a.lastXpAt !== b.lastXpAt) {
-        if (a.lastXpAt === null) return 1;
-        if (b.lastXpAt === null) return -1;
-        return a.lastXpAt < b.lastXpAt ? -1 : 1;
-      }
+      const aTime = a.lastXpAt === null ? NaN : Date.parse(a.lastXpAt);
+      const bTime = b.lastXpAt === null ? NaN : Date.parse(b.lastXpAt);
+      const aRankTime = Number.isFinite(aTime) ? aTime : Number.POSITIVE_INFINITY;
+      const bRankTime = Number.isFinite(bTime) ? bTime : Number.POSITIVE_INFINITY;
+      if (aRankTime !== bRankTime) return aRankTime < bRankTime ? -1 : 1;
       return a.userId < b.userId ? -1 : a.userId > b.userId ? 1 : 0;
     })
     .map((member, index) => ({ ...member, rank: index + 1 }));

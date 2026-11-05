@@ -109,8 +109,31 @@ class ApiAchievementsRepository implements AchievementsRepository {
     );
   }
 
-  /// Monthly badges have no read endpoint yet; API mode shows none rather than
-  /// archived fixtures.
+  /// Monthly challenge completion writes `monthly_YYYY_MM` achievement ids
+  /// (services/progress economy.ts); the profile carries them, so badges are
+  /// derived from [wire.Profile.achievementIds] with no archived fixtures.
+  static final _monthlyBadgeId = RegExp(r'^monthly_(\d{4})_(\d{2})$');
+
   @override
-  List<MonthlyBadge> loadMonthlyBadges() => const [];
+  List<MonthlyBadge> loadMonthlyBadges() {
+    cache.ensureLoaded(_fetch);
+    final snapshot = cache.value;
+    if (snapshot == null) return const [];
+    final byMonth = <int, MonthlyBadge>{};
+    for (final id in snapshot.profile.achievementIds) {
+      final match = _monthlyBadgeId.firstMatch(id);
+      if (match == null) continue;
+      final year = int.parse(match.group(1)!);
+      final month = int.parse(match.group(2)!);
+      if (month < 1 || month > 12) continue;
+      byMonth[year * 100 + month] = MonthlyBadge(
+        year: year,
+        month: MonthlyBadgeCatalog.monthName(month),
+        art: MonthlyBadgeCatalog.artFor(year, month),
+        earned: true,
+      );
+    }
+    final keys = byMonth.keys.toList()..sort();
+    return List.unmodifiable([for (final key in keys) byMonth[key]!]);
+  }
 }

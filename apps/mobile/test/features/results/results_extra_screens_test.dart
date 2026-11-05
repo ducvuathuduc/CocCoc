@@ -1,3 +1,5 @@
+import '../../support/app_fonts.dart';
+
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/account/presentation/signup_flow.dart';
@@ -11,6 +13,7 @@ import 'package:cocenglish/features/results/domain/results_models.dart';
 import 'package:cocenglish/features/results/presentation/results_chain.dart';
 import 'package:cocenglish/features/results/presentation/results_extra_screens.dart';
 import 'package:cocenglish/features/results/presentation/results_screens.dart';
+import 'package:cocenglish/features/results/presentation/score_unlock_screen.dart';
 import 'package:cocenglish/features/results/presentation/results_theme.dart';
 import 'package:cocenglish/features/results/presentation/results_widgets.dart';
 import 'package:cocenglish/main.dart';
@@ -146,9 +149,9 @@ Future<void> _tap(WidgetTester tester, String text) async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
-    await (FontLoader('DuolingoSans')
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+    await (FontLoader('sans-serif')
+          ..addFont(loadTestFont())
+          ..addFont(loadTestFont(bold: true)))
         .load();
     await (FontLoader(
       'MaterialIcons',
@@ -322,11 +325,13 @@ void main() {
   });
 
   testWidgets(
-    'router: lesson complete → streak → gems → quests → league → home',
+    'router: lesson complete → score → streak → gems → quests → league → home',
     (tester) async {
       await _openRouterResults(tester, _receipt());
       await _tap(tester, 'CLAIM XP');
-      // Streak went 0 → 1, so the streak celebrations lead the chain.
+      expect(find.byType(ScoreUnlockScreen), findsOneWidget);
+      await _tap(tester, 'CONTINUE');
+      // Streak went 0 → 1; its celebrations follow the first Score unlock.
       expect(find.byType(StreakExtendedScreen), findsOneWidget);
       await _tap(tester, 'CONTINUE');
       expect(find.byType(StreakGoalScreen), findsOneWidget);

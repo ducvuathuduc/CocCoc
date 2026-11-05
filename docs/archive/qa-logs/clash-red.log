@@ -1,0 +1,24 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/clash_test.dart
+00:00 +0: clash checks validated answer once and ends only after foreground sixty seconds
+00:00 +0 -1: clash checks validated answer once and ends only after foreground sixty seconds [E]
+  Expected: ClashStage:<ClashStage.playing>
+    Actual: ClashStage:<ClashStage.intro>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\clash_test.dart 9:5                            main.<fn>
+  
+00:00 +0 -1: word bank retains order, can remove and retry wrong without extra score
+00:00 +0 -2: word bank retains order, can remove and retry wrong without extra score [E]
+  Expected: true
+    Actual: <false>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\clash_test.dart 24:5                           main.<fn>
+  
+00:00 +0 -2: Some tests failed.
+
+Failing tests:
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/clash_test.dart: clash checks validated answer once and ends only after foreground sixty seconds
+  C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/clash_test.dart: word bank retains order, can remove and retry wrong without extra score

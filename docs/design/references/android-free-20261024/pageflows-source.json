@@ -1,0 +1,16 @@
+{
+  "page": "https://pageflows.com/post/android/general-browsing/duolingo/",
+  "retrieved": "2026-10-24",
+  "platform": "Android",
+  "captureVersionLabel": "April 2024",
+  "media": [
+    {
+      "duration": 312.54,
+      "height": 2400,
+      "paused": false,
+      "url": "https://pageflows.com/media/videos/General_Browsing_on_Duolingo.mp4",
+      "width": 1080
+    }
+  ],
+  "note": "Public video loads without sign-in; archive cohort, not current rollout evidence."
+}

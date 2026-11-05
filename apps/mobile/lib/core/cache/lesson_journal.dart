@@ -92,6 +92,8 @@ final class JournalSession {
     required this.completeKey,
     this.sessionId,
     this.revision = 0,
+    this.abandonKey,
+    this.abandonRevision,
     this.answers = const <JournalAnswer>[],
   });
 
@@ -107,6 +109,8 @@ final class JournalSession {
     completeKey: json['completeKey']! as String,
     sessionId: json['sessionId'] as String?,
     revision: (json['revision'] as num?)?.toInt() ?? 0,
+    abandonKey: json['abandonKey'] as String?,
+    abandonRevision: (json['abandonRevision'] as num?)?.toInt(),
     answers: [
       for (final item in (json['answers'] as List<Object?>? ?? const []))
         JournalAnswer.fromJson(Map<String, Object?>.from(item! as Map)),
@@ -134,6 +138,8 @@ final class JournalSession {
   /// Server session; null when the lesson started offline.
   final String? sessionId;
   final int revision;
+  final String? abandonKey;
+  final int? abandonRevision;
   final List<JournalAnswer> answers;
 
   bool get offline => sessionId == null;
@@ -141,6 +147,8 @@ final class JournalSession {
   JournalSession copyWith({
     String? sessionId,
     int? revision,
+    String? abandonKey,
+    int? abandonRevision,
     List<JournalAnswer>? answers,
   }) => JournalSession(
     nodeId: nodeId,
@@ -154,6 +162,8 @@ final class JournalSession {
     completeKey: completeKey,
     sessionId: sessionId ?? this.sessionId,
     revision: revision ?? this.revision,
+    abandonKey: abandonKey ?? this.abandonKey,
+    abandonRevision: abandonRevision ?? this.abandonRevision,
     answers: answers ?? this.answers,
   );
 
@@ -170,15 +180,16 @@ final class JournalSession {
     'completeKey': completeKey,
     'sessionId': sessionId,
     'revision': revision,
+    if (abandonKey != null) 'abandonKey': abandonKey,
+    if (abandonRevision != null) 'abandonRevision': abandonRevision,
     'answers': [for (final answer in answers) answer.toJson()],
   };
 }
 
 /// Durable local journal for lessons and queued offline completions.
 ///
-/// The frozen architecture names Drift; Drift is not in the locked
-/// dependency set yet, so this interface is backed by shared preferences and
-/// can be swapped for a Drift implementation without touching repositories.
+/// API mode uses the account-scoped Drift adapter. Preview keeps its existing
+/// preferences adapter; repositories depend only on this port.
 abstract interface class LessonJournal {
   Future<JournalSession?> active();
   Future<void> saveActive(JournalSession session);
@@ -193,9 +204,87 @@ abstract interface class LessonJournal {
   Future<void> clear();
 }
 
-final class InMemoryLessonJournal implements LessonJournal {
+abstract interface class AtomicLessonJournal implements LessonJournal {
+  Future<void> stageCompletionAndClearActive(Map<String, Object?> request);
+}
+
+abstract interface class ClosableLessonJournal implements LessonJournal {
+  Future<void> close();
+}
+
+final class RejectedLessonCompletion {
+  const RejectedLessonCompletion({
+    required this.operationId,
+    required this.reasonCode,
+    required this.payload,
+  });
+  final String operationId, reasonCode;
+  final Map<String, Object?> payload;
+}
+
+/// Keeps permanently rejected answers for review without replaying them forever.
+abstract interface class RejectedLessonJournal implements LessonJournal {
+  Future<void> rejectCompletion(String operationId, String reasonCode);
+  Future<List<RejectedLessonCompletion>> rejectedCompletions();
+}
+
+final class JournalFailure implements Exception {
+  const JournalFailure(this.code);
+
+  static const closed = 'JOURNAL_CLOSED';
+  static const accountRequired = 'JOURNAL_ACCOUNT_REQUIRED';
+  static const operationConflict = 'JOURNAL_OPERATION_CONFLICT';
+  static const queueCountLimit = 'JOURNAL_QUEUE_COUNT_LIMIT';
+  static const queueSizeLimit = 'JOURNAL_QUEUE_SIZE_LIMIT';
+  static const corrupt = 'JOURNAL_CORRUPT';
+  static const legacyCorrupt = 'JOURNAL_LEGACY_CORRUPT';
+  static const storageUnavailable = 'JOURNAL_STORAGE_UNAVAILABLE';
+
+  final String code;
+
+  @override
+  String toString() => 'JournalFailure($code)';
+}
+
+final class UnavailableLessonJournal implements AtomicLessonJournal {
+  const UnavailableLessonJournal(this.code);
+
+  final String code;
+
+  Never _fail() => throw JournalFailure(code);
+
+  @override
+  Future<JournalSession?> active() async => _fail();
+
+  @override
+  Future<void> clear() async => _fail();
+
+  @override
+  Future<void> clearActive() async => _fail();
+
+  @override
+  Future<void> enqueueCompletion(Map<String, Object?> request) async => _fail();
+
+  @override
+  Future<List<Map<String, Object?>>> pendingCompletions() async => _fail();
+
+  @override
+  Future<void> removeCompletion(String operationId) async => _fail();
+
+  @override
+  Future<void> saveActive(JournalSession session) async => _fail();
+
+  @override
+  Future<void> stageCompletionAndClearActive(
+    Map<String, Object?> request,
+  ) async => _fail();
+}
+
+final class InMemoryLessonJournal
+    implements AtomicLessonJournal, RejectedLessonJournal {
   JournalSession? _active;
   final List<Map<String, Object?>> _pending = [];
+  final List<RejectedLessonCompletion> _rejected = [];
 
   @override
   Future<JournalSession?> active() async => _active;
@@ -213,8 +302,25 @@ final class InMemoryLessonJournal implements LessonJournal {
   @override
   Future<void> enqueueCompletion(Map<String, Object?> request) async {
     final id = request['operationId'];
-    if (_pending.any((item) => item['operationId'] == id)) return;
+    final existing = [
+      ..._pending,
+      for (final row in _rejected) row.payload,
+    ].where((item) => item['operationId'] == id);
+    if (existing.isNotEmpty) {
+      if (jsonEncode(existing.single) != jsonEncode(request)) {
+        throw const JournalFailure(JournalFailure.operationConflict);
+      }
+      return;
+    }
     _pending.add(request);
+  }
+
+  @override
+  Future<void> stageCompletionAndClearActive(
+    Map<String, Object?> request,
+  ) async {
+    await enqueueCompletion(request);
+    _active = null;
   }
 
   @override
@@ -222,9 +328,31 @@ final class InMemoryLessonJournal implements LessonJournal {
       _pending.removeWhere((item) => item['operationId'] == operationId);
 
   @override
+  Future<void> rejectCompletion(String operationId, String reasonCode) async {
+    final rows = _pending.where((item) => item['operationId'] == operationId);
+    if (rows.isEmpty) return;
+    final payload = Map<String, Object?>.from(
+      jsonDecode(jsonEncode(rows.single)) as Map,
+    );
+    _rejected.add(
+      RejectedLessonCompletion(
+        operationId: operationId,
+        reasonCode: reasonCode,
+        payload: payload,
+      ),
+    );
+    await removeCompletion(operationId);
+  }
+
+  @override
+  Future<List<RejectedLessonCompletion>> rejectedCompletions() async =>
+      List.unmodifiable(_rejected);
+
+  @override
   Future<void> clear() async {
     _active = null;
     _pending.clear();
+    _rejected.clear();
   }
 }
 

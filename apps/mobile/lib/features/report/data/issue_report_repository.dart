@@ -1,7 +1,6 @@
 import '../domain/issue_report.dart';
 
-/// No issue-report API contract exists yet; the mock keeps reports in memory
-/// so the UI can be exercised end to end.
+/// Reporting port shared by the Learning API and the local preview.
 abstract class IssueReportRepository {
   IssueReportContent get content;
   Future<bool> submit(IssueReport report);

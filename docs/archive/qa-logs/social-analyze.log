@@ -1,0 +1,19 @@
+Analyzing mobile...                                             
+
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\practice\application\clash_controller.dart:104:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\practice\application\clash_controller.dart:122:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\practice\application\clash_controller.dart:138:7 - curly_braces_in_flow_control_structures
+warning - Unused import: 'package:go_router/go_router.dart'. Try removing the import directive - lib\features\practice\presentation\clash_screen.dart:4:8 - unused_import
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\progress\application\family_reaction_controller.dart:42:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\features\progress\presentation\family_subscription_screen.dart:38:7 - curly_braces_in_flow_control_structures
+  error - Invalid constant value - lib\features\progress\presentation\family_subscription_screen.dart:129:34 - invalid_constant
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\social_capture_test.dart:109:9 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\social_capture_test.dart:111:9 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\social_capture_test.dart:118:9 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block. Try wrapping the statement in a block - test\social_capture_test.dart:130:41 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\social_capture_test.dart:135:11 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\social_capture_test.dart:139:11 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block. Try wrapping the statement in a block - test\social_route_test.dart:250:5 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block. Try wrapping the statement in a block - test\social_route_test.dart:251:7 - curly_braces_in_flow_control_structures
+
+15 issues found. (ran in 6.9s)

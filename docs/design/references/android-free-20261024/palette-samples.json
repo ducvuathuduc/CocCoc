@@ -1,0 +1,59 @@
+{
+  "samples": [
+    {
+      "file": "score-unlock.jpg",
+      "points": [
+        {
+          "x": 0,
+          "y": 0,
+          "hex": "#165DC7"
+        },
+        {
+          "x": 320,
+          "y": 650,
+          "hex": "#338AEB"
+        },
+        {
+          "x": 630,
+          "y": 1320,
+          "hex": "#76D1FD"
+        }
+      ]
+    },
+    {
+      "file": "mobbin-super-01.webp",
+      "points": [
+        {
+          "x": 52,
+          "y": 47,
+          "hex": "#24504A"
+        },
+        {
+          "x": 260,
+          "y": 176,
+          "hex": "#183A73"
+        },
+        {
+          "x": 352,
+          "y": 668,
+          "hex": "#4F2276"
+        }
+      ]
+    },
+    {
+      "file": "apps/mobile/assets/reference_art/gap-super-brand.png",
+      "points": [
+        {
+          "x": 485,
+          "y": 2336,
+          "hex": "#000437"
+        },
+        {
+          "x": 1080,
+          "y": 253,
+          "hex": "#D6D5DE"
+        }
+      ]
+    }
+  ]
+}

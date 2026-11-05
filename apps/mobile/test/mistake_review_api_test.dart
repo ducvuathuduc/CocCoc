@@ -19,6 +19,19 @@ void main() {
     final reviewBundle = {...fixtures.bundle, 'lessonId': 'review_dynamic'};
     transport = FakeApiTransport()
       ..json('GET /v1/courses/vi_en/path', fixtures.path())
+      ..json('GET /v1/review', {
+        'items': [
+          {
+            'vocabularyId': 'vocab-coffee',
+            'skillId': 'u1.vocab',
+            'dueAt': isoNow,
+            'stage': 2,
+            'mastery': 0.5,
+          },
+        ],
+        'nextCursor': null,
+        'asOf': isoNow,
+      })
       ..json('POST /v1/sessions', {
         ...fixtures.session(),
         'mode': 'REVIEW',

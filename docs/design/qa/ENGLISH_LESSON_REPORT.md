@@ -26,14 +26,14 @@ credentials or engineering reward disclaimer.
 
 | Command / check | Actual result |
 | --- | --- |
-| Existing-screen tests before implementation | Three RED cases: [baseline](english-lesson-red.log) |
-| Same-question retry and source heading alignment before corrections | RED: [retry](english-lesson-retry-red.log), [alignment](english-lesson-alignment-red.log) |
-| flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/english_spoken_lesson_test.dart test/lesson_summary_test.dart test/learning_flow_test.dart test/learning_controller_test.dart test/english_content_test.dart | 31 PASS: [scoped log](english-lesson-targeted.log) |
-| flutter test --dart-define=ENABLE_MASCOT_MOTION=false --dart-define=CAPTURE_ENGLISH_LESSON=true test/english_lesson_capture_test.dart | 1 PASS; 15 native PNG states: [log](english-lesson-capture.log), [hash manifest](english-lesson-captures.json) |
-| flutter test --dart-define=CAPTURE_ENGLISH_LESSON=true --dart-define=CAPTURE_ENGLISH_LILY_MOTION=true test/english_lesson_capture_test.dart | 1 PASS; active original Rive, different idle frames, correct/incorrect bindings, reduced-motion still: [log](english-lesson-motion.log) |
-| node tools/scripts/mobile-check.mjs --with-blueprint | Blueprint PASS, 216 Dart files formatted without changes, fatal-info analyzer clean, 439 tests PASS: [gate](english-lesson-gate.log) |
+| Existing-screen tests before implementation | Three RED cases: [baseline](../../archive/qa-logs/english-lesson-red.log) |
+| Same-question retry and source heading alignment before corrections | RED: [retry](../../archive/qa-logs/english-lesson-retry-red.log), [alignment](../../archive/qa-logs/english-lesson-alignment-red.log) |
+| flutter test --dart-define=ENABLE_MASCOT_MOTION=false test/english_spoken_lesson_test.dart test/lesson_summary_test.dart test/learning_flow_test.dart test/learning_controller_test.dart test/english_content_test.dart | 31 PASS: [scoped log](../../archive/qa-logs/english-lesson-targeted.log) |
+| flutter test --dart-define=ENABLE_MASCOT_MOTION=false --dart-define=CAPTURE_ENGLISH_LESSON=true test/english_lesson_capture_test.dart | 1 PASS; 15 native PNG states: [log](../../archive/qa-logs/english-lesson-capture.log), [hash manifest](english-lesson-captures.json) |
+| flutter test --dart-define=CAPTURE_ENGLISH_LESSON=true --dart-define=CAPTURE_ENGLISH_LILY_MOTION=true test/english_lesson_capture_test.dart | 1 PASS; active original Rive, different idle frames, correct/incorrect bindings, reduced-motion still: [log](../../archive/qa-logs/english-lesson-motion.log) |
+| node tools/scripts/mobile-check.mjs --with-blueprint | Blueprint PASS, 216 Dart files formatted without changes, fatal-info analyzer clean, 439 tests PASS: [gate](../../archive/qa-logs/english-lesson-gate.log) |
 | node tools/scripts/reference-asset-audit.mjs | 951 saved originals / 239 bundled PNGs match bytes: [asset receipt](reference-assets.json) |
-| node tools/scripts/mobile-web-build.mjs | Release Flutter web build PASS: [build log](english-lesson-web-build.log) |
+| node tools/scripts/mobile-web-build.mjs | Release Flutter web build PASS: [build log](../../archive/qa-logs/english-lesson-web-build.log) |
 | HTTP delivery of release and lesson assets | Nine HTTP200/no-store checks; served main.dart.js equals latest build: [HTTP proof](english-lesson-http.json) |
 
 Visual review corrected duplicate speech fallback, wrong bubble-tail direction,

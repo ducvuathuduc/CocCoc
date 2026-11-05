@@ -171,67 +171,81 @@ void main() {
       await t.pumpAndSettle();
     }
 
-    testWidgets('Shop > Gift Super runs the whole mock purchase', (t) async {
+    testWidgets('Shop subscriptions match the Duolingo reference', (t) async {
+      // docs/design/references/shop: Subscriptions lists only Max Family Plan.
       final router = await boot(t);
       router.push('/shop');
       await t.pumpAndSettle();
-      await tapVisible(t, find.text('GIFT'));
-      expect(find.byType(GiftSubscriptionScreen), findsOneWidget);
-      expect(find.text('GIFT SUBSCRIPTION'), findsOneWidget);
-
-      await tapVisible(t, find.byKey(const ValueKey('gift-super')));
-      expect(find.byType(GiftSuperIntroScreen), findsOneWidget);
-      expect(
-        find.text('Gift an entire year of unlimited energy and no ads!'),
-        findsOneWidget,
-      );
-      await t.tap(find.byKey(const ValueKey('gift-intro-continue')));
-      await t.pumpAndSettle();
-      expect(find.byType(GiftRecipientScreen), findsOneWidget);
-
-      // CONTINUE is disabled until a friend is picked.
-      await t.tap(find.byKey(const ValueKey('gift-recipient-continue')));
-      await t.pumpAndSettle();
-      expect(find.byType(GiftRecipientScreen), findsOneWidget);
-
-      await t.tap(find.byKey(const ValueKey('gift-recipient-maya')));
-      await t.pumpAndSettle();
-      await t.tap(find.byKey(const ValueKey('gift-recipient-continue')));
-      await t.pumpAndSettle();
-      expect(find.byType(GiftNoteScreen), findsOneWidget);
-      expect(
-        find.text(r'$95.99 for 1 year of Super. No auto-renewal'),
-        findsOneWidget,
-      );
-
-      await t.enterText(
-        find.byKey(const ValueKey('gift-note-field')),
-        'Surprise! Can’t wait to see you flex those new phrases',
-      );
-      await t.pumpAndSettle();
-      await t.tap(find.byKey(const ValueKey('gift-continue-payment')));
-      await t.pumpAndSettle();
-      expect(find.byType(GiftCheckoutSheet), findsOneWidget);
-      expect(find.text('Maya (@maya.speaks)'), findsOneWidget);
-
-      await t.tap(find.byKey(const ValueKey('gift-buy')));
-      await t.pump();
-      expect(find.text('PROCESSING…'), findsOneWidget);
-      await t.pump(const Duration(milliseconds: 500));
-      await t.pumpAndSettle();
-      expect(find.byType(GiftSentScreen), findsOneWidget);
-      expect(find.text('Gift sent!'), findsOneWidget);
-      expect(
-        find.textContaining('Maya will get 1 year of Super'),
-        findsOneWidget,
-      );
-
-      await t.tap(find.byKey(const ValueKey('gift-done')));
-      await t.pumpAndSettle();
-      expect(find.byType(GiftSubscriptionScreen), findsOneWidget);
-      expect(find.text('SENT GIFTS'), findsOneWidget);
-      expect(find.text('Super • 1 year for Maya'), findsOneWidget);
+      expect(find.text('Gift Super'), findsNothing);
     });
+
+    testWidgets(
+      'Manage subscription > Gift Super runs the whole mock purchase',
+      (t) async {
+        final router = await boot(t);
+        router.push('/subscription');
+        await t.pumpAndSettle();
+        await tapVisible(
+          t,
+          find.byKey(const ValueKey('subscription-gift-super')),
+        );
+        expect(find.byType(GiftSubscriptionScreen), findsOneWidget);
+        expect(find.text('GIFT SUBSCRIPTION'), findsOneWidget);
+
+        await tapVisible(t, find.byKey(const ValueKey('gift-super')));
+        expect(find.byType(GiftSuperIntroScreen), findsOneWidget);
+        expect(
+          find.text('Gift an entire year of unlimited energy and no ads!'),
+          findsOneWidget,
+        );
+        await t.tap(find.byKey(const ValueKey('gift-intro-continue')));
+        await t.pumpAndSettle();
+        expect(find.byType(GiftRecipientScreen), findsOneWidget);
+
+        // CONTINUE is disabled until a friend is picked.
+        await t.tap(find.byKey(const ValueKey('gift-recipient-continue')));
+        await t.pumpAndSettle();
+        expect(find.byType(GiftRecipientScreen), findsOneWidget);
+
+        await t.tap(find.byKey(const ValueKey('gift-recipient-maya')));
+        await t.pumpAndSettle();
+        await t.tap(find.byKey(const ValueKey('gift-recipient-continue')));
+        await t.pumpAndSettle();
+        expect(find.byType(GiftNoteScreen), findsOneWidget);
+        expect(
+          find.text(r'$95.99 for 1 year of Super. No auto-renewal'),
+          findsOneWidget,
+        );
+
+        await t.enterText(
+          find.byKey(const ValueKey('gift-note-field')),
+          'Surprise! Can’t wait to see you flex those new phrases',
+        );
+        await t.pumpAndSettle();
+        await t.tap(find.byKey(const ValueKey('gift-continue-payment')));
+        await t.pumpAndSettle();
+        expect(find.byType(GiftCheckoutSheet), findsOneWidget);
+        expect(find.text('Maya (@maya.speaks)'), findsOneWidget);
+
+        await t.tap(find.byKey(const ValueKey('gift-buy')));
+        await t.pump();
+        expect(find.text('PROCESSING…'), findsOneWidget);
+        await t.pump(const Duration(milliseconds: 500));
+        await t.pumpAndSettle();
+        expect(find.byType(GiftSentScreen), findsOneWidget);
+        expect(find.text('Gift sent!'), findsOneWidget);
+        expect(
+          find.textContaining('Maya will get 1 year of Super'),
+          findsOneWidget,
+        );
+
+        await t.tap(find.byKey(const ValueKey('gift-done')));
+        await t.pumpAndSettle();
+        expect(find.byType(GiftSubscriptionScreen), findsOneWidget);
+        expect(find.text('SENT GIFTS'), findsOneWidget);
+        expect(find.text('Super • 1 year for Maya'), findsOneWidget);
+      },
+    );
 
     testWidgets('Manage subscription has a GIFT SUPER entry', (t) async {
       final router = await boot(t);

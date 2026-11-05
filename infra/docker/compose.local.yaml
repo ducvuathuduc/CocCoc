@@ -1,0 +1,94 @@
+name: cocenglish-local
+
+x-common: &common
+  init: true
+  restart: unless-stopped
+  read_only: true
+  tmpfs: ['/tmp:size=16m,mode=1777']
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  stop_grace_period: 30s
+  cpus: 1.0
+  mem_limit: 384m
+  pids_limit: 128
+  environment: &environment
+    NODE_ENV: production
+    HOST: 0.0.0.0
+    PORT: '8080'
+    NODE_OPTIONS: --max-old-space-size=256
+  networks: [backend]
+
+x-learning-env: &learning-env
+  - path: ./env.public.example
+  - path: ${COC_LEARNING_ENV_FILE:-../../.secrets/learning.env}
+    required: false
+x-progress-env: &progress-env
+  - path: ./env.public.example
+  - path: ${COC_PROGRESS_ENV_FILE:-../../.secrets/progress.env}
+    required: false
+x-ai-env: &ai-env
+  - path: ./env.public.example
+  - path: ${COC_AI_ENV_FILE:-../../.secrets/ai.env}
+    required: false
+
+x-health: &health
+  test:
+    [
+      CMD,
+      node,
+      -e,
+      "fetch('http://127.0.0.1:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+    ]
+  interval: 15s
+  timeout: 5s
+  retries: 3
+  start_period: 10s
+
+services:
+  learning:
+    <<: *common
+    env_file: *learning-env
+    image: cocenglish/learning:local
+    build:
+      { context: ../.., dockerfile: infra/docker/Dockerfile.service, args: { SERVICE: learning } }
+    ports: ['127.0.0.1:4101:8080']
+    healthcheck: *health
+  progress:
+    <<: *common
+    env_file: *progress-env
+    image: cocenglish/progress:local
+    build:
+      { context: ../.., dockerfile: infra/docker/Dockerfile.service, args: { SERVICE: progress } }
+    ports: ['127.0.0.1:4102:8080']
+    healthcheck: *health
+  ai:
+    <<: *common
+    env_file: *ai-env
+    image: cocenglish/ai:local
+    build: { context: ../.., dockerfile: infra/docker/Dockerfile.service, args: { SERVICE: ai } }
+    ports: ['127.0.0.1:4103:8080']
+    healthcheck: *health
+  learning-worker:
+    <<: *common
+    env_file: *learning-env
+    image: cocenglish/learning:local
+    command: [node, worker.mjs]
+    profiles: [workers]
+    depends_on: { learning: { condition: service_healthy } }
+  progress-worker:
+    <<: *common
+    env_file: *progress-env
+    image: cocenglish/progress:local
+    command: [node, worker.mjs]
+    profiles: [workers]
+    depends_on: { progress: { condition: service_healthy } }
+  ai-worker:
+    <<: *common
+    env_file: *ai-env
+    image: cocenglish/ai:local
+    command: [node, worker.mjs]
+    profiles: [workers]
+    depends_on: { ai: { condition: service_healthy } }
+
+networks:
+  backend: { driver: bridge }

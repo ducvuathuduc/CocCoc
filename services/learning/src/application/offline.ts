@@ -15,6 +15,7 @@ import { gradeAnswer, gradedExercise } from '../domain/grading.js';
 import { assertLessonUnlocked, completeLesson } from '../domain/path.js';
 import { queueState, tally, type AttemptRecord } from '../domain/session-queue.js';
 import { ids } from '../persistence/ids.js';
+import type { Row } from '../persistence/port.js';
 import { bumped, created, iso, jsonObject, type LearningDeps } from './deps.js';
 import { activeEnrollment, enrollmentView } from './enrollment.js';
 import { stageOutboxEvent, type LessonCompletedEvent } from './outbox.js';
@@ -52,13 +53,21 @@ export async function syncOfflineCompletion(
   // returned as is (lost response, retry with a new key) without regrading.
   const existing = await deps.persistence.read('l_sessions', sessionId);
   if (existing && existing['userId'] === userId && existing['status'] === 'COMPLETED') {
-    const stored = jsonObject<{ completion: unknown; logHash?: string }>(existing['resultJson']);
-    if (stored?.logHash && stored.logHash !== logHashOf(body)) {
-      throw new ServiceError('IDEMPOTENCY_CONFLICT', {
-        details: { localCompletionId: body.localCompletionId },
-      });
-    }
-    return { statusCode: 200, response: stored?.completion ?? null };
+    // Check the full request against the idempotency receipt even when the
+    // local completion already exists. A new key may replay the immutable log;
+    // an existing key must never accept a different request wrapper.
+    const replay = await deps.persistence.commitWithReceipt(
+      { userId, operation: 'syncOfflineCompletion', key },
+      bodyHash,
+      async (tx) => {
+        const current = await tx.get('l_sessions', sessionId);
+        if (!current || current['userId'] !== userId || current['status'] !== 'COMPLETED') {
+          throw new ServiceError('NOT_FOUND');
+        }
+        return { statusCode: 200, response: replayCompletion(current, body) };
+      },
+    );
+    return { statusCode: replay.receipt.statusCode, response: replay.receipt.response };
   }
 
   const { manifest } = await deps.content.published(body.courseId);
@@ -122,8 +131,7 @@ export async function syncOfflineCompletion(
       const completedAt = iso(now);
       const prior = await tx.get('l_sessions', sessionId);
       if (prior && prior['status'] === 'COMPLETED') {
-        const stored = jsonObject<{ completion: unknown }>(prior['resultJson']);
-        return { statusCode: 200, response: stored?.completion ?? null };
+        return { statusCode: 200, response: replayCompletion(prior, body) };
       }
       const enrollmentId = ids.enrollment(userId, body.courseId);
       const enrollment = activeEnrollment(await tx.get('l_enrollments', enrollmentId));
@@ -231,6 +239,17 @@ export async function syncOfflineCompletion(
     await deps.relay.afterCommit([eventId]).catch(() => undefined);
   }
   return { statusCode: outcome.receipt.statusCode, response: outcome.receipt.response };
+}
+
+/** Apply the same immutable-log check on both the early and transactional replay paths. */
+function replayCompletion(row: Row, body: OfflineCompletionBody): unknown {
+  const stored = jsonObject<{ completion: unknown; logHash?: string }>(row['resultJson']);
+  if (stored?.logHash && stored.logHash !== logHashOf(body)) {
+    throw new ServiceError('IDEMPOTENCY_CONFLICT', {
+      details: { localCompletionId: body.localCompletionId },
+    });
+  }
+  return stored?.completion ?? null;
 }
 
 /** Hash of what the localCompletionId stands for (lesson + answer log), not of the retry wrapper. */

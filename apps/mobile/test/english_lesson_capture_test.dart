@@ -1,7 +1,11 @@
+import 'support/app_fonts.dart';
+
 import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:cocenglish/core/design/character_motion.dart';
+import 'package:cocenglish/core/design/cocenglish_brand.dart';
+import 'package:cocenglish/core/design/cocenglish_mascot_regions.dart';
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
@@ -30,9 +34,9 @@ void main() {
     addTearDown(t.view.resetPhysicalSize);
     addTearDown(t.view.resetDevicePixelRatio);
     await t.runAsync(() async {
-      await (FontLoader('DuolingoSans')
-            ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-            ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+      await (FontLoader('sans-serif')
+            ..addFont(loadTestFont())
+            ..addFont(loadTestFont(bold: true)))
           .load();
       await (FontLoader(
         'MaterialIcons',
@@ -107,11 +111,33 @@ void main() {
       await render();
       expect(t.takeException(), isNull, reason: name);
       for (final element in find.byType(ReferenceArt).evaluate()) {
+        final art = element.widget as ReferenceArt;
+        final illustration = find.byWidget(art);
+        if (CocEnglishMascotRegions.matches(
+          art.region.file,
+          art.region.source,
+        )) {
+          expect(
+            find.descendant(
+              of: illustration,
+              matching: find.byType(CocEnglishMascot),
+            ),
+            findsOneWidget,
+            reason:
+                '$name: mapped owl illustration must render the CocEnglish mascot',
+          );
+          expect(
+            find.descendant(
+              of: illustration,
+              matching: find.byType(CocEnglishMark),
+            ),
+            findsOneWidget,
+            reason: '$name: replacement mascot must contain the C mark',
+          );
+          continue;
+        }
         expect(
-          find.descendant(
-            of: find.byWidget(element.widget),
-            matching: find.byType(CustomPaint),
-          ),
+          find.descendant(of: illustration, matching: find.byType(CustomPaint)),
           findsWidgets,
           reason: '$name: source illustration must be decoded',
         );

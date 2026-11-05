@@ -1,8 +1,11 @@
+import '../../support/app_fonts.dart';
+
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/shop/presentation/shop_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cocenglish/features/progress/application/preview_controller.dart';
+import 'package:cocenglish/features/progress/application/extended_controller.dart';
 import 'package:cocenglish/features/progress/domain/preview_state.dart';
 import 'package:cocenglish/features/learning/presentation/learning_visuals.dart';
 import 'package:flutter/services.dart';
@@ -13,9 +16,9 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {
-    await (FontLoader('DuolingoSans')
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+    await (FontLoader('sans-serif')
+          ..addFont(loadTestFont())
+          ..addFont(loadTestFont(bold: true)))
         .load();
     await (FontLoader(
       'MaterialIcons',
@@ -42,6 +45,8 @@ void main() {
             overrides: [
               previewControllerProvider.overrideWith(_ShopPreview.new),
               previewWalletProvider.overrideWithValue(1035),
+              // This reference depicts an existing Max subscriber.
+              extendedControllerProvider.overrideWith(_MaxSubscriber.new),
             ],
             child: MaterialApp(
               theme: referenceTheme(),
@@ -89,4 +94,9 @@ void main() {
 class _ShopPreview extends PreviewController {
   @override
   PreviewState build() => const PreviewState(freezes: 2);
+}
+
+class _MaxSubscriber extends ExtendedController {
+  @override
+  ExtendedState build() => const ExtendedState(plan: 'max-individual');
 }

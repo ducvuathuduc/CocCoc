@@ -9,6 +9,7 @@ import { spawnSync } from 'node:child_process';
 import Ajv from 'ajv/dist/2020.js';
 import formats from 'ajv-formats';
 import { loadContentTools, root } from './lib.mjs';
+import { verifyMediaAssets } from '../../tools/content/verify-media.mjs';
 
 const tools = await loadContentTools();
 const api = JSON.parse(fs.readFileSync(path.join(root, 'docs/api/openapi.yaml'), 'utf8'));
@@ -40,12 +41,14 @@ for (const courseDir of fs
     assert.ok(validateManifest(manifest), JSON.stringify(validateManifest.errors?.slice(0, 3)));
     assert.ok(tools.verifyManifest(keyring, manifest), 'manifest signature/structure hash');
     const bundles = [];
+    const mediaBundles = [];
     for (const index of [...manifest.bundles, manifest.placementBundle]) {
       const file = publish.files.find((f) => f.fileId === index.fileId);
       assert.ok(file, `${index.fileId} listed in publish.json`);
       const text = read(file.path);
       assert.equal(tools.sha256(text), index.sha256, `${index.lessonId} sha256 matches manifest`);
       const bundle = JSON.parse(text);
+      mediaBundles.push(bundle);
       assert.ok(
         validateBundle(bundle),
         `${index.lessonId}: ${JSON.stringify(validateBundle.errors?.slice(0, 3))}`,
@@ -57,11 +60,16 @@ for (const courseDir of fs
     }
     const problems = tools.validateCourse(manifest, bundles);
     assert.deepEqual(problems, [], JSON.stringify(problems.slice(0, 10)));
+    const media = verifyMediaAssets({
+      courseDir: path.join(root, 'content', courseDir),
+      bundles: mediaBundles,
+    });
     summary.push({
       courseId: manifest.courseId,
       version,
       lessons: bundles.length,
       nodes: manifest.nodes.length,
+      media,
     });
   }
 }
@@ -76,7 +84,7 @@ summary.push({ lint: JSON.parse(lint.stdout.trim().split('\n').pop()) });
 console.log(
   JSON.stringify({
     status: 'PASS',
-    scope: 'offline content schema/hash/signature/answer-key check',
+    scope: 'offline content schema/hash/signature/answer-key/media check',
     courses: summary,
   }),
 );

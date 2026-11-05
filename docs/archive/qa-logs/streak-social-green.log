@@ -1,0 +1,6 @@
+00:00 +0: loading C:/Users/ADMIN/Desktop/CocEnglish/apps/mobile/test/streak_social_test.dart
+00:00 +0: incoming accept is validated, once-only and reserves one slot
+00:00 +1: declining frees candidate, invitation and removal cannot duplicate
+00:00 +2: all five candidates reserve slots without overfilling
+00:00 +3: calendar crosses year and switching personal clears edit without losing friends
+00:00 +4: All tests passed!

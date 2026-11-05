@@ -11,10 +11,10 @@ Generated from [OpenAPI](openapi.yaml); wire DTOs/headers/errors/idempotency/rat
 | POST /v1/enrollments | enrollCourse / learning | FR-COURSE-002 | l_enrollments, l_receipts | JWT or specified internal signature |
 | GET /v1/courses/{courseId}/path | getPath / learning | FR-PATH-001 | l_enrollments, l_content_versions | JWT or specified internal signature |
 | GET /v1/lessons/{lessonId}/bundle | getBundle / learning | FR-CONTENT-001, FR-LISTEN-001 | l_content_versions | JWT or specified internal signature |
-| POST /v1/sessions | startSession / learning | FR-LESSON-001, FR-COURSE-002, FR-PRACTICE-001, FR-PATH-002 | l_sessions, l_active_slots, l_receipts | JWT or specified internal signature |
+| POST /v1/sessions | startSession / learning | FR-LESSON-001, FR-COURSE-002, FR-PRACTICE-001, FR-PATH-002, FR-ACTIVITY-001, FR-ACTIVITY-002 | l_sessions, l_active_slots, l_receipts | JWT or specified internal signature |
 | GET /v1/sessions/{sessionId} | getSession / learning | FR-LESSON-004 | l_sessions, l_answers | JWT or specified internal signature |
 | POST /v1/sessions/{sessionId}/answers | submitAnswer / learning | FR-LESSON-003 | l_sessions, l_answers, l_receipts | JWT or specified internal signature |
-| POST /v1/sessions/{sessionId}/complete | completeSession / learning | FR-LESSON-006, FR-GAME-001 | l_sessions, l_enrollments, l_review_items, l_outbox, l_receipts | JWT or specified internal signature |
+| POST /v1/sessions/{sessionId}/complete | completeSession / learning | FR-LESSON-006, FR-GAME-001, FR-ACTIVITY-001, FR-ACTIVITY-002 | l_sessions, l_enrollments, l_review_items, l_outbox, l_receipts | JWT or specified internal signature |
 | POST /v1/sessions/{sessionId}/abandon | abandonSession / learning | FR-LESSON-004 | l_sessions, l_active_slots, l_receipts | JWT or specified internal signature |
 | POST /v1/offline-completions | syncOfflineCompletion / learning | FR-LESSON-007, FR-SYNC-001 | l_sessions, l_answers, l_enrollments, l_outbox, l_receipts | JWT or specified internal signature |
 | GET /v1/review | getReview / learning | FR-PRACTICE-001, FR-PRACTICE-002 | l_review_items | JWT or specified internal signature |

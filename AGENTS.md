@@ -16,7 +16,7 @@ Start at [docs/00_START_HERE.md](docs/00_START_HERE.md). Then read the assigned 
 
 ## Frozen architecture
 
-The architecture is frozen as follows. Flutter Android/iOS uses feature-first manual Riverpod MVVM. The backend is TypeScript on Node 22 with three services: Learning, Progress and AI. Appwrite provides Auth, TablesDB and Storage. The API is REST described by OpenAPI, and each service owns its writes. The local journal is Drift. Change the architecture only through the ADR procedure in [docs/agent/TASK_PROTOCOL.md](docs/agent/TASK_PROTOCOL.md). Do not add a broker, cluster, cache, gateway or a Python service.
+The architecture is frozen as follows. Flutter Android/iOS uses feature-first manual Riverpod MVVM. The backend is TypeScript on Node 22 with three services: Learning, Progress and AI. Appwrite provides Auth, TablesDB and Storage. The API is REST described by OpenAPI, and each service owns its writes. The local journal is Drift. The human-approved [ADR-0018](docs/architecture/adr/0018-container-event-cache-runtime.md) permits Docker container API/worker entrypoints, RabbitMQ transport and Redis derived read cache, subject to its admission gates. Other architecture changes use [TASK_PROTOCOL](docs/agent/TASK_PROTOCOL.md); no unapproved cluster, gateway or Python service. The human chose to retain Appwrite Auth after the [closed Descope evaluation](docs/architecture/adr/draft-0019-descope-identity.md); do not introduce an auth-provider migration in this scope.
 
 Canonical owners:
 
@@ -36,7 +36,7 @@ Link to these owners; never duplicate them.
 - For a behavior change, write a meaningful failing test first. Then implement, run the area's targeted checks, then the gates. Report exact commands and evidence. Never claim a device or cloud result from a document check.
 - No deploy, publish, `schema:apply`, merge to `main`, reset/delete, force-push or paid plan without an explicit request.
 
-## Gates (run from root after `pnpm install --frozen-lockfile`)
+## Core gates (run from root after `pnpm install --frozen-lockfile`)
 
 ```sh
 pnpm backend:verify   # tsc + esbuild bundles + eslint + prettier + node tests
@@ -44,10 +44,10 @@ pnpm backend:smoke    # in-process outbox->inbox fixture
 pnpm dev:smoke        # real HTTP: 3 dev services, /health, signed cross-service event
 pnpm contracts:check  # schema fixtures + Dart DTOs in sync with OpenAPI
 pnpm api:lint         # redocly
-pnpm schema:plan && pnpm schema:test && pnpm seed:check
-pnpm blueprint:check && pnpm audit:check   # traceability, links, Mermaid, endpoint matrix
-pnpm verify           # Flutter format/analyze/test + blueprint (see apps/mobile/AGENTS.md)
-python3 tools/palette_check.py              # informational: known baseline of unmatched colors
+pnpm verify           # Flutter format/analyze/test (see apps/mobile/AGENTS.md)
+
 ```
+
+The human-approved minimal CI policy (2026-11-06) is in [CI/CD](docs/devops/CI_CD.md). Run Postman, schema/seed, blueprint/audit, load/eval and container checks manually when relevant to the change; they are not universal PR gates. Palette scanning remains informational.
 
 Run locally: `pnpm dev:services`. Learning runs on :4101, Progress on :4102 and AI on :4103, all with in-memory dev adapters. See [services/AGENTS.md](services/AGENTS.md).

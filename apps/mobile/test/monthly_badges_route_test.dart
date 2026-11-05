@@ -1,3 +1,7 @@
+import 'package:cocenglish/core/api/client/api_endpoints.g.dart';
+import 'package:cocenglish/core/api/client/api_providers.dart';
+import 'package:cocenglish/core/cache/snapshot_cache.dart';
+import 'package:cocenglish/core/config/app_config.dart';
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/learning/application/learning_controller.dart';
@@ -8,6 +12,8 @@ import 'package:cocenglish/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'support/fake_api_transport.dart';
 
 void main() {
   testWidgets(
@@ -166,6 +172,63 @@ void main() {
     expect(november.height, greaterThan(november.width));
     expect(tester.getSize(january).height, lessThan(220));
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('API mode renders a 2026 badge from monthly achievement ids', (
+    tester,
+  ) async {
+    final transport = FakeApiTransport()
+      ..json('GET /base/v1/me', {
+        'userId': 'me',
+        'nickname': 'Thanh',
+        'avatarId': null,
+        'publicOptIn': true,
+        'dailyGoal': 10,
+        'learningZone': 'Asia/Ho_Chi_Minh',
+        'pendingZone': null,
+        'zoneEffectiveAt': null,
+        'revision': 1,
+        'achievementIds': ['monthly_2026_10'],
+      })
+      ..json('GET /base/v1/me/rewards', {
+        'completionId': null,
+        'status': 'credited',
+        'studyXp': 300,
+        'leagueXp': 120,
+        'gems': 420,
+        'freezeSlots': 1,
+        'currentStreak': 4,
+        'awardXp': null,
+        'revision': 3,
+        'asOf': '2026-10-12T08:00:00.000Z',
+      });
+    final container = ProviderContainer(
+      overrides: [
+        appConfigProvider.overrideWithValue(
+          const AppConfig(dataSource: DataSource.api),
+        ),
+        apiEndpointsProvider.overrideWithValue(
+          ApiEndpoints(fakeClient(transport)),
+        ),
+        snapshotStoreProvider.overrideWithValue(MemorySnapshotStore()),
+      ],
+    );
+    addTearDown(container.dispose);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          theme: referenceTheme(),
+          home: const MonthlyBadgesScreen(),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pumpAndSettle();
+
+    expect(find.text('2026 Badges'), findsOneWidget);
+    expect(find.bySemanticsLabel('October 2026, earned'), findsOneWidget);
+    expect(find.text('2025 Badges'), findsNothing, reason: 'no fixtures');
   });
 }
 

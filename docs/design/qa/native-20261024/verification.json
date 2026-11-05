@@ -1,0 +1,80 @@
+{
+  "checkedAt": "2026-10-23T18:41:19.517Z",
+  "timeZone": "Asia/Saigon",
+  "preview": {
+    "url": "http://127.0.0.1:4173/preview.html",
+    "dataSource": "mock",
+    "payment": "internal simulation",
+    "httpStatus": 200,
+    "cacheControl": "no-store",
+    "sha256": "b6a36a2a378fda96837aca8cb15d5949f9dc2756db2cf5c69c484f7890a53927",
+    "servedSha256": "b6a36a2a378fda96837aca8cb15d5949f9dc2756db2cf5c69c484f7890a53927",
+    "matches": true,
+    "builtAt": "2026-10-23T18:39:56.828Z"
+  },
+  "android": {
+    "path": "apps/mobile/build/app/outputs/flutter-apk/app-debug.apk",
+    "sha256": "74aa8b45b1d924c90d3a3313d4463374cc48d2ddc544bb873801b75c783e9398",
+    "bytes": 261051565,
+    "builtAt": "2026-10-23T18:40:19.831Z",
+    "deviceAcceptance": false
+  },
+  "functional": {
+    "executable": "C:/flutter/bin/cache/dart-sdk/bin/dart.exe",
+    "cwd": "apps/mobile",
+    "args": [
+      "C:/flutter/bin/cache/flutter_tools.snapshot",
+      "test",
+      "--no-pub",
+      "--dart-define=ENABLE_MASCOT_MOTION=false",
+      "--dart-define=NATIVE_SURFACES_CAPTURE_DIR=C:/Users/ADMIN/Desktop/CocEnglish/.cache/native-surfaces-20261023/layout",
+      "test/auth_legal_navigation_test.dart",
+      "test/legal_flow_test.dart",
+      "test/android_promo_flow_test.dart",
+      "test/super_brand_flow_test.dart",
+      "test/score_unlock_flow_test.dart",
+      "test/learning_flow_test.dart",
+      "test/native_surfaces_layout_test.dart",
+      "test/android_shop_promo_test.dart",
+      "test/features/learning/lesson_activity_coordinator_test.dart",
+      "test/features/reminders/reminder_coordinator_test.dart",
+      "test/features/gap/super_trial_test.dart",
+      "test/features/gap/energy_actions_test.dart",
+      "test/features/results/results_extra_screens_test.dart",
+      "test/settings_shop_taps_test.dart",
+      "--name",
+      "^(?!.*[Gg]olden)"
+    ],
+    "passed": 112,
+    "failed": 0,
+    "note": "Final crop-only correction separately passed 18 Shop/layout tests; no golden update"
+  },
+  "fullWindowsGate": {
+    "command": "pnpm verify",
+    "passed": 1093,
+    "failed": 273,
+    "newFailedCaseNamesVersus20261023": [],
+    "note": "Precedes final small Shop/safe-area corrections; remains failing"
+  },
+  "backend": {
+    "command": "pnpm backend:verify",
+    "passed": 174,
+    "failed": 0,
+    "skipped": 12
+  },
+  "nativeMediaStructure": {
+    "command": "node --test tools/tests/ios-streak-widget-project.test.mjs tools/tests/ios-lesson-activity.test.mjs tools/content/verify-media.test.mjs",
+    "passed": 12,
+    "failed": 0
+  },
+  "ios": {
+    "compiled": false,
+    "reason": "Windows host; Mac/Xcode/device gate remains open"
+  },
+  "limits": [
+    "No cloud seed publication or authenticated database write acceptance",
+    "No store sandbox or real payment integration",
+    "No whole-app pixel/motion acceptance",
+    "85 unmatched legacy palette colors remain"
+  ]
+}

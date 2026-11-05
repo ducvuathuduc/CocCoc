@@ -151,13 +151,16 @@ class _NotificationCategoryState
             dimmed: !timeEnabled,
             onTap: timeEnabled
                 ? () async {
+                    final generation = vm.generation;
                     setState(() => picking = true);
                     final t = await showReminderTimePicker(
                       context,
                       prefs.reminderTime,
                     );
                     if (mounted) setState(() => picking = false);
-                    if (t != null) vm.setReminderTime(t);
+                    if (t != null && mounted && generation == vm.generation) {
+                      await vm.setReminderTime(t);
+                    }
                   }
                 : null,
             trailing: Text(
@@ -179,7 +182,18 @@ class _NotificationCategoryState
       title: cat.title,
       dimmed: picking,
       children: [
-        ...cards,
+        for (final card in cards)
+          Semantics(
+            enabled: prefs.ready && !prefs.busy && prefs.error == null,
+            child: AbsorbPointer(
+              absorbing: !prefs.ready || prefs.busy || prefs.error != null,
+              child: card,
+            ),
+          ),
+        if (prefs.error != null) ...[
+          Text(prefs.error!, textAlign: TextAlign.center),
+          TextButton(onPressed: vm.retry, child: const Text('RETRY')),
+        ],
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 180),
           child: vm.isDefault(categoryId)

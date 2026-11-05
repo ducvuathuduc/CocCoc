@@ -13,6 +13,7 @@ abstract class NotificationRepository {
   List<NotificationCategory> get categories;
   NotificationPrefs get defaults;
   NotificationPrefs load();
+  Future<NotificationPrefs> fetch() async => load();
   Future<void> save(NotificationPrefs prefs);
 }
 
@@ -140,7 +141,7 @@ const notificationCatalog = <NotificationCategory>[
   ),
 ];
 
-class MockNotificationRepository implements NotificationRepository {
+class MockNotificationRepository extends NotificationRepository {
   MockNotificationRepository({NotificationPrefs? initial})
     : _saved =
           initial ??
@@ -168,8 +169,10 @@ class MockNotificationRepository implements NotificationRepository {
 
 final notificationRepositoryProvider = Provider<NotificationRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return MockNotificationRepository();
-  return ApiNotificationRepository(
+  final repository = ApiNotificationRepository(
     ref.watch(apiEndpointsProvider),
     host: SnapshotHost.of(ref, 'notifications'),
   );
+  ref.onDispose(repository.cache.dispose);
+  return repository;
 });

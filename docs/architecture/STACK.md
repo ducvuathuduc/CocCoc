@@ -1,5 +1,33 @@
 # Frozen stack and package research
 
+## Approved implementation stack — 2026-10-25
+
+Human approval accepts [ADR-0018](adr/0018-container-event-cache-runtime.md) for implementation. The table identifies selected technology, not successful installation or production enablement. Keep existing lock/toolchain pins; pin and compatibility-test new SDK/image versions before adding them. The historical registry research below is not an instruction to install every listed library.
+
+| Layer | Selected technology | Current vs planned |
+|---|---|---|
+| Android-first UI | Flutter / Dart, existing source art, Rive and Lottie | Existing; preserve approved UI and motion |
+| Frontend state/navigation | Manual Riverpod MVVM, `go_router` | Existing; keep repository ports |
+| Backend | TypeScript / Node 22, existing thin REST/HTTP routers, pnpm workspace | Existing handlers; approved real container composition roots to implement |
+| Business boundaries | Learning / Progress / AI | Existing three write owners; workers stay with their owner |
+| Identity/auth | **Appwrite Auth retained by human choice**, including existing OTP, recovery and session adapters | [Closed Descope evaluation](adr/draft-0019-descope-identity.md); no provider migration or second auth stack |
+| Durable data and media | Appwrite TablesDB / Storage, owner-local `node-appwrite` adapters | Existing code; per-environment schema/permission/admission proof still required |
+| Event bus | RabbitMQ AMQP 0-9-1; `amqplib` client | Approved to implement; transactional outbox/inbox, confirms, manual ack and application receipts |
+| Shared read cache | Redis; official `redis` / node-redis client | Approved to implement; TTL/invalidation, disposable derived data |
+| Local durable journal | Drift / SQLite; SharedPreferences for simple settings | API-mode Drift journal implemented locally with transaction/reopen tests; Android process-kill acceptance pending. Preview retains Preferences. |
+| Contracts | REST / OpenAPI 3.1, existing TS/Dart generators, AJV / Redocly | Existing; contract first for new identity/event interfaces |
+| Container runtime | Docker images and Docker Compose local integration | Approved; host, image pins, resources and admission evidence required |
+| CI/CD | **GitHub Actions**, existing YAML workflows plus container/integration/protected-deploy jobs | Existing pipelines; new jobs to implement and run |
+| Tests | Node `node:test`, Flutter unit/widget/integration tests, existing Patrol Android automation | Existing; add meaningful fault/account/device cases |
+| Operations | Redacted JSON logs/request IDs and API/event/cache/provider metrics | Existing bounded observability policy; runtime instrumentation/recovery receipts to complete |
+| AI text/conversation | Gemini adapter behind AI capability gates; authored explanations and scenarios retained | Planned live text integration; model allowlist/account/device proof owned by AI docs |
+| Speech/assessment | Existing Azure Speech adapter; existing AssemblyAI/Deepgram fallback code; bundled/device playback | Speech adapters exist; provider admission and real-device proof required. [AI owner](../ai/AI_ARCHITECTURE.md) retains planned routing decisions; reconcile code before enabling a route |
+| Monetary payments | Existing isolated simulation | Real store payment remains excluded |
+
+Primary references checked 2026-10-25: [GitHub Actions](https://docs.github.com/en/actions/get-started/understand-github-actions), [Jenkins controller/agent model](https://www.jenkins.io/doc/book/using/using-agents/), [amqplib](https://amqp-node.github.io/amqplib/), [official node-redis](https://redis.io/docs/latest/develop/clients/nodejs/), [Descope custom mobile UI](https://docs.descope.com/mobile-sdk). Provider/platform account entitlements are not inferred from public docs.
+
+## Historical stack research
+
 Resolved supplement 2026-10-09–10: mobile lock preserved; root pnpm-lock.yaml pins TypeScript5.9.3, node-appwrite29.2.0, ESLint10.12.0/typescript-eslint8.71.1, Prettier3.9.9, AJV8.20.0, Redocly2.62.1 and openapi-typescript7.13.0. [Compatibility receipt](../audit/VALIDATION.md): latest TS7 was incompatible with generator/parser. Backend16 tests/smoke/audit also passed under verified portable Node22.23.3; CI pins that version. Drift/http/DTO generation below remain planned mobile integrations; Cloud runtime is still an account gate.
 
 Research snapshot2026-10-03; final validation2026-10-04. Version numbers below came from **pub.dev package API** and npm registry, not memory. Local command confirmed Flutter3.47.0/Dart3.13.0, Node24.16.0, Codex0.153.4. Latest Flutter patch is not established from official rendered archive; pin known stable3.47.0 until approved update. Backend runtime baseline Node22; installed Node24 is not assumed to match Cloud Functions.

@@ -181,7 +181,7 @@ void main() {
     expect(const AppConfig().isApi, isFalse);
     expect(const AppConfig().useMockAuth, isTrue);
     expect(AppConfig.parseDataSource('API'), DataSource.api);
-    expect(AppConfig.parseDataSource('anything'), DataSource.mock);
+    expect(() => AppConfig.parseDataSource('anything'), throwsFormatException);
     const api = AppConfig(dataSource: DataSource.api);
     expect(api.useMockAuth, isFalse);
     expect(

@@ -89,6 +89,7 @@ class FriendsQuest {
   final bool isNudged;
   final bool isGifted;
   final bool isHighFived;
+  final bool isOptedIn;
 
   const FriendsQuest({
     required this.title,
@@ -100,6 +101,7 @@ class FriendsQuest {
     this.isNudged = false,
     this.isGifted = false,
     this.isHighFived = false,
+    this.isOptedIn = false,
   });
 
   int get currentLessons => userLessons + friendLessons;
@@ -115,6 +117,7 @@ class FriendsQuest {
     bool? isNudged,
     bool? isGifted,
     bool? isHighFived,
+    bool? isOptedIn,
   }) => FriendsQuest(
     title: title ?? this.title,
     timeRemaining: timeRemaining ?? this.timeRemaining,
@@ -125,6 +128,7 @@ class FriendsQuest {
     isNudged: isNudged ?? this.isNudged,
     isGifted: isGifted ?? this.isGifted,
     isHighFived: isHighFived ?? this.isHighFived,
+    isOptedIn: isOptedIn ?? this.isOptedIn,
   );
 }
 

@@ -28,16 +28,18 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          questsRepositoryProvider.overrideWithValue(const MockQuestsRepository()),
-          previewControllerProvider.overrideWith(() => _SprintPreviewController()),
+          questsRepositoryProvider.overrideWithValue(
+            const MockQuestsRepository(),
+          ),
+          previewControllerProvider.overrideWith(
+            () => _SprintPreviewController(),
+          ),
         ],
         child: MaterialApp(
           theme: referenceTheme(),
           debugShowCheckedModeBanner: false,
           builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              disableAnimations: true,
-            ),
+            data: MediaQuery.of(context).copyWith(disableAnimations: true),
             child: child!,
           ),
           home: RepaintBoundary(

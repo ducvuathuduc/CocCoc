@@ -154,8 +154,8 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * PLACEMENT is allowed before enrollment, uses a fixed published placement lesson, revision0, no XP.
-         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. PLACEMENT is allowed before enrollment, uses a fixed published placement lesson, revision0, no XP.
+         * Start a LESSON, REVIEW, MASTERY, PLACEMENT, or authored activity session.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. PLACEMENT is allowed before enrollment, uses a fixed published placement lesson, revision0, no XP. Authored modes (STORIES, ADVENTURE, RADIO, SIDE_QUEST, CLASH, UNIT_REVIEW, TEST_OUT, CHECKPOINT) use online-authoritative bundles; TEST_OUT/CHECKPOINT require an authored passThreshold and advance the frontier only on pass.
          */
         post: operations["startSession"];
         delete?: never;
@@ -215,7 +215,7 @@ export interface paths {
         put?: never;
         /**
          * Commit session/frontier/review/receipt/outbox atomically; placement is reward-ineligible.
-         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Commit session/frontier/review/receipt/outbox atomically; placement is reward-ineligible.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Commit session/frontier/review/receipt/outbox atomically; placement is reward-ineligible. Authored modes use the same completion lifecycle; TEST_OUT/CHECKPOINT return passed=false on a failed attempt with no frontier change.
          */
         post: operations["completeSession"];
         delete?: never;
@@ -2146,8 +2146,10 @@ export interface components {
             courseId: string;
             lessonId: string;
             /** @enum {string} */
-            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT";
+            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT" | "STORIES" | "ADVENTURE" | "RADIO" | "SIDE_QUEST" | "CLASH" | "UNIT_REVIEW" | "TEST_OUT" | "CHECKPOINT";
             expectedEnrollmentRevision: number;
+            activityId?: string;
+            opponentId?: string;
         };
         Session: {
             sessionId: string;
@@ -2157,7 +2159,7 @@ export interface components {
             /** @enum {string} */
             status: "ACTIVE" | "COMPLETED" | "ABANDONED" | "EXPIRED";
             /** @enum {string} */
-            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT";
+            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT" | "STORIES" | "ADVENTURE" | "RADIO" | "SIDE_QUEST" | "CLASH" | "UNIT_REVIEW" | "TEST_OUT" | "CHECKPOINT";
             revision: number;
             nextOriginalOrdinal: number;
             retryPass: number;
@@ -2166,6 +2168,9 @@ export interface components {
             bundle: components["schemas"]["LessonBundle"];
             answerHistory: components["schemas"]["OfflineAnswer"][];
             lastFeedback: components["schemas"]["AnswerResult"] | null;
+            activityId?: string;
+            opponentId?: string;
+            passThreshold?: number;
         };
         TextAnswer: {
             /**
@@ -2241,13 +2246,15 @@ export interface components {
             /** @enum {string} */
             source: "ONLINE" | "OFFLINE";
             /** @enum {string} */
-            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT";
+            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT" | "STORIES" | "ADVENTURE" | "RADIO" | "SIDE_QUEST" | "CLASH" | "UNIT_REVIEW" | "TEST_OUT" | "CHECKPOINT";
             /** Format: date-time */
             completedAt: string;
             enrollmentRevision: number;
             /** @enum {string} */
             rewardStatus: "pending" | "notEligible";
             needsReviewIds: string[];
+            passed?: boolean;
+            unlockedNodeId?: string;
         };
         OfflineAnswer: {
             exerciseId: string;
@@ -2341,6 +2348,7 @@ export interface components {
             revision: number;
             /** Format: date-time */
             asOf: string;
+            chest?: components["schemas"]["QuestChestReceipt"];
         };
         Quest: {
             questId: string;
@@ -2354,6 +2362,7 @@ export interface components {
         };
         QuestClaimRequest: {
             periodKey: string;
+            upgradeChest?: boolean;
         };
         FollowRequest: {
             targetUserId: string;
@@ -2558,7 +2567,7 @@ export interface components {
             /** @enum {string} */
             source: "ONLINE" | "OFFLINE";
             /** @enum {string} */
-            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT";
+            mode: "LESSON" | "REVIEW" | "MASTERY" | "PLACEMENT" | "STORIES" | "ADVENTURE" | "RADIO" | "SIDE_QUEST" | "CLASH" | "UNIT_REVIEW" | "TEST_OUT" | "CHECKPOINT";
             originalCount: number;
             originalCorrect: number;
             assisted: boolean;
@@ -3270,6 +3279,11 @@ export interface components {
             asOf: string;
             learningZone: string;
             days: components["schemas"]["LearningStatsDay"][];
+        };
+        QuestChestReceipt: {
+            receiptId: string;
+            tiers: ("COMMON" | "RARE" | "EPIC" | "MEGA")[];
+            gems: number;
         };
     };
     responses: {

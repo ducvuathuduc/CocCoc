@@ -10,9 +10,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 final Directory _repoRoot = Directory.current.parent.parent;
 
-Object? _readJson(String repoRelativePath) => jsonDecode(
-  File('${_repoRoot.path}/$repoRelativePath').readAsStringSync(),
-);
+Object? _readJson(String repoRelativePath) =>
+    jsonDecode(File('${_repoRoot.path}/$repoRelativePath').readAsStringSync());
 
 /// Mirrors the expansion markers documented in schema-cases.json.
 Object? _expand(Object? value) {
@@ -43,10 +42,14 @@ void main() {
 
   test('shared fixture file is present and non-trivial', () {
     expect(cases.length, greaterThanOrEqualTo(30));
-    expect(cases.where((Map<String, Object?> c) => c['valid'] == true),
-        isNotEmpty);
-    expect(cases.where((Map<String, Object?> c) => c['valid'] == false),
-        isNotEmpty);
+    expect(
+      cases.where((Map<String, Object?> c) => c['valid'] == true),
+      isNotEmpty,
+    );
+    expect(
+      cases.where((Map<String, Object?> c) => c['valid'] == false),
+      isNotEmpty,
+    );
   });
 
   group('shared schema fixtures', () {
@@ -68,8 +71,10 @@ void main() {
           expect(reEncoded, equals(value));
         } else {
           expect(() => decode(value), throwsA(isA<ContractViolation>()));
-          expect(ContractValidator.instance.validate(schema, value),
-              isNotEmpty);
+          expect(
+            ContractValidator.instance.validate(schema, value),
+            isNotEmpty,
+          );
         }
       });
     }
@@ -77,8 +82,10 @@ void main() {
 
   test('every OpenAPI component schema has a generated decoder', () {
     expect(apiContractDecoders.keys.toSet(), componentSchemas.keys.toSet());
-    expect(ContractValidator.instance.schemaNames.toSet(),
-        componentSchemas.keys.toSet());
+    expect(
+      ContractValidator.instance.schemaNames.toSet(),
+      componentSchemas.keys.toSet(),
+    );
   });
 
   test('embedded schemas are a verbatim copy of docs/api/openapi.yaml', () {
@@ -86,25 +93,28 @@ void main() {
   });
 
   group('typed unions', () {
-    Map<String, Object?> caseValue(String label) =>
-        _expand(cases.firstWhere(
-          (Map<String, Object?> c) => c['label'] == label,
-        )['value']) as Map<String, Object?>;
+    Map<String, Object?> caseValue(String label) => _expand(
+      cases.firstWhere(
+        (Map<String, Object?> c) => c['label'] == label,
+      )['value'],
+    ) as Map<String, Object?>;
 
     test('VoiceLease decodes to the discriminated variant', () {
       final VoiceLease live = VoiceLease.fromJson(caseValue('LIVE complete'));
       expect(live, isA<LiveVoiceLease>());
       expect(live.mode, 'LIVE');
       expect((live as LiveVoiceLease).inputSampleRate, 16000);
-      final VoiceLease turn =
-          VoiceLease.fromJson(caseValue('TURN no credential'));
+      final VoiceLease turn = VoiceLease.fromJson(
+        caseValue('TURN no credential'),
+      );
       expect(turn, isA<TurnVoiceLease>());
       expect((turn as TurnVoiceLease).ephemeralToken, isNull);
     });
 
     test('Exercise variants carry their typed payloads', () {
-      final Exercise exercise =
-          Exercise.fromJson(caseValue('listen exercise with non-audio alternative'));
+      final Exercise exercise = Exercise.fromJson(
+        caseValue('listen exercise with non-audio alternative'),
+      );
       expect(exercise, isA<ListenChoiceExercise>());
       final ListenChoiceExercise listen = exercise as ListenChoiceExercise;
       expect(listen.content.choices.single.id, 'a');
@@ -113,27 +123,35 @@ void main() {
     });
 
     test('Answer union keeps typed pair connections', () {
-      final Answer answer =
-          Answer.fromJson(caseValue('matching connections retained'));
+      final Answer answer = Answer.fromJson(
+        caseValue('matching connections retained'),
+      );
       expect(answer, isA<PairAnswer>());
       expect((answer as PairAnswer).matches.single.rightId, 'right-b');
     });
 
     test('BusinessEvent dispatches on the const event type', () {
-      final BusinessEvent event =
-          BusinessEvent.fromJson(caseValue('lesson.completed.v1 example event'));
+      final BusinessEvent event = BusinessEvent.fromJson(
+        caseValue('lesson.completed.v1 example event'),
+      );
       expect(event, isA<BusinessEventLessonCompletedV1>());
       expect(event.type, 'lesson.completed.v1');
-      expect((event as BusinessEventLessonCompletedV1).payload.originalCorrect,
-          8);
+      expect(
+        (event as BusinessEventLessonCompletedV1).payload.originalCorrect,
+        8,
+      );
     });
 
     test('a valid variant is rejected through the wrong union', () {
       final Map<String, Object?> textAnswer = caseValue('text answer retained');
-      expect(() => Exercise.fromJson(textAnswer),
-          throwsA(isA<ContractViolation>()));
-      expect(() => VoiceLease.fromJson(textAnswer),
-          throwsA(isA<ContractViolation>()));
+      expect(
+        () => Exercise.fromJson(textAnswer),
+        throwsA(isA<ContractViolation>()),
+      );
+      expect(
+        () => VoiceLease.fromJson(textAnswer),
+        throwsA(isA<ContractViolation>()),
+      );
     });
   });
 
@@ -167,8 +185,9 @@ void main() {
         'avatarId': null,
         'expectedRevision': 3,
       });
-      final ProfilePatch keep =
-          ProfilePatch.fromJson(<String, Object?>{'expectedRevision': 3});
+      final ProfilePatch keep = ProfilePatch.fromJson(<String, Object?>{
+        'expectedRevision': 3,
+      });
       expect(keep.avatarId.isPresent, isFalse);
       expect(keep.toJson().containsKey('avatarId'), isFalse);
     });
@@ -179,8 +198,10 @@ void main() {
         avatarId: JsonPresence<String>.value('owl-1'),
         expectedRevision: 7,
       );
-      expect(ContractValidator.instance.validate('ProfilePatch', patch.toJson()),
-          isEmpty);
+      expect(
+        ContractValidator.instance.validate('ProfilePatch', patch.toJson()),
+        isEmpty,
+      );
     });
   });
 }
