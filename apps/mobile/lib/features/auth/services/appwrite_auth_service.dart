@@ -217,9 +217,7 @@ class AppwriteAuthService {
 
   static bool _isTrustedCallbackUrl(String value) {
     final uri = Uri.tryParse(value.trim());
-    final host = uri?.host
-        .toLowerCase()
-        .replaceFirst(RegExp(r'\.$'), '');
+    final host = uri?.host.toLowerCase().replaceFirst(RegExp(r'\.$'), '');
     return uri != null &&
         uri.scheme.toLowerCase() == 'https' &&
         host != null &&

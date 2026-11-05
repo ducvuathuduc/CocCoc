@@ -141,9 +141,6 @@ public sealed class OwnerSession(IRowDriver driver)
     public Task<long> CountAsync(string table, RowQuery query, CancellationToken ct)
     { OwnerSchema.For(driver.Owner, table); return driver.CountAsync(table, query, ct); }
 
-    public Task<IReadOnlyList<RowDocument>> ListAsync(string table, RowQuery query, CancellationToken ct)
-    { OwnerSchema.For(driver.Owner, table); return driver.ListAsync(table, query, ct); }
-
     public void Put(string table, string id, JsonObject row, IReadOnlyList<string>? readers = null)
     {
         var mutable = OwnerSchema.IsMutable(driver.Owner, table);
