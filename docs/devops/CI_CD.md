@@ -25,6 +25,6 @@ Dependencies and action commits are pinned. Ordinary jobs have only `contents: r
 
 ## Deployment
 
-The existing Appwrite test deployment remains manual and uses its protected environment and scoped secret. PR builds do not deploy, publish, apply schema, enable paid adapters or contain provider credentials. A deployment requires an explicit execution request and the admitted runtime/configuration described in [operations](OPERATIONS.md). No automatic production promotion or extra CI controller is introduced.
+The existing Appwrite test deployment remains manual and uses the `appwrite-test` environment and its scoped secret. PR builds do not deploy, publish, apply schema, enable paid adapters or contain provider credentials. A deployment requires an explicit execution request and the admitted runtime/configuration described in [operations](OPERATIONS.md). No automatic production promotion or extra CI controller is introduced.
 
 Build/test evidence, cloud integration, emulator evidence and physical-device acceptance are different results. The pipeline reports only what actually ran. Current repair evidence: [2026-11-06 CI receipt](../quality/CI_BRANDING_REPAIR_20261106.md).
