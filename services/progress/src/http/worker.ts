@@ -43,7 +43,10 @@ export async function runProgressWorker(
   const minute = new Date(nowMs).getUTCMinutes();
   const plan: Array<[string, () => Promise<JobCounts>]> = [];
   if (ports.deliver)
-    plan.push(['outboxRelay', () => runProgressOutboxRelay(store, ports.deliver, tick)]);
+    plan.push([
+      'outboxRelay',
+      () => runProgressOutboxRelay(store, ports.deliver, tick, ports.random),
+    ]);
   plan.push(['deletionPurge', () => runDeletionPurge(store, tick)]);
   if (minute === STREAK_MINUTE) plan.push(['streakRollover', () => runStreakRollover(store, tick)]);
   if (minute === LEAGUE_MINUTE)

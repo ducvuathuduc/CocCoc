@@ -1,5 +1,7 @@
 # System architecture
 
+2026-11-03 approved migration target: [ADR-0020](adr/0020-dotnet-service-migration.md) replaces the three service runtimes with ASP.NET Core/.NET 10 while preserving the Flutter client, Appwrite identity/data/storage, REST contract and existing ownership/consistency rules. Node remains the active baseline. The [.NET operation matrix](../../backend-dotnet/migration/operations.json) and [local evidence](../research/RESEARCH_EVIDENCE.md#2026-11-03--net-migration-checkpoint-not-admission) distinguish implementation from durable/native acceptance; no service has been cut over.
+
 2026-10-25 approved runtime amendment: [ADR-0018](adr/0018-container-event-cache-runtime.md) permits container API/owner-worker entrypoints, RabbitMQ and Redis without changing the three business services. It supersedes the no-broker/no-cache runtime statements in the V1 baseline below. Installation/admission/deployment are not established by approval. The human chose to retain Appwrite Auth after the [closed Descope evaluation](adr/draft-0019-descope-identity.md); existing identity rules and OTP/recovery integration remain the active baseline.
 
 Current audit: [evidence](../research/RESEARCH_EVIDENCE.md), [consistency contract](CONSISTENCY.md), [conditional freeze](../ARCHITECTURE_FREEZE_REPORT.md). Three service deploy artifacts exist locally; cloud/domain adapters are disabled. The managed platform is not counted as a bespoke service.

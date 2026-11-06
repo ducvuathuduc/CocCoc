@@ -1,0 +1,37 @@
+name: cocenglish-dotnet-foundation
+x-host: &host
+  platform: linux/amd64
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  tmpfs: ['/tmp:rw,noexec,nosuid,size=64m']
+  mem_limit: 256m
+  pids_limit: 128
+  healthcheck:
+    test: [CMD, /app/entrypoint, --probe]
+    interval: 10s
+    timeout: 5s
+    retries: 5
+    start_period: 10s
+services:
+  progress:
+    <<: *host
+    build:
+      context: ../..
+      dockerfile: backend-dotnet/docker/Dockerfile
+      args: { SERVICE: Progress }
+    ports: [127.0.0.1:5102:8080]
+  learning:
+    <<: *host
+    build:
+      context: ../..
+      dockerfile: backend-dotnet/docker/Dockerfile
+      args: { SERVICE: Learning }
+    ports: [127.0.0.1:5101:8080]
+  ai:
+    <<: *host
+    build:
+      context: ../..
+      dockerfile: backend-dotnet/docker/Dockerfile
+      args: { SERVICE: AI }
+    ports: [127.0.0.1:5103:8080]

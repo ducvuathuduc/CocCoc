@@ -1,0 +1,17 @@
+{
+  "now": "2026-11-03T12:00:00.000Z",
+  "user": "assembly-parity-user",
+  "jobId": "78787878-7878-4878-8878-787878787878",
+  "idempotencyKey": "89898989-8989-4898-8898-898989898989",
+  "referenceExerciseId": "exercise1",
+  "lessonVersion": "v1",
+  "locale": "en-US",
+  "referenceText": "I like English.",
+  "wavSeconds": 1,
+  "azureRegion": "westus2",
+  "uploadUrl": "https://cdn.assemblyai.com/upload/test",
+  "transcriptId": "transcript-test",
+  "transcript": "I like English.",
+  "confidence": 0.82,
+  "inspect": ["a_jobs", "a_receipts", "a_usage"]
+}

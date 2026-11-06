@@ -22,6 +22,12 @@
 *.ts text eol=lf
 *.mjs text eol=lf
 *.md text eol=lf
+backend-dotnet/**/*.cs text eol=lf
+backend-dotnet/**/*.csproj text eol=lf
+backend-dotnet/**/*.props text eol=lf
+backend-dotnet/*.sln text eol=lf
+backend-dotnet/docker/Dockerfile text eol=lf
+backend-dotnet/docker/*.dockerignore text eol=lf
 
 # Windows batch scripts must keep CRLF: cmd.exe resolves `goto` labels
 # unreliably in an LF-only .bat, and gradlew.bat uses 20 of them.

@@ -1,5 +1,9 @@
 # Frozen stack and package research
 
+## Approved .NET migration target — 2026-11-03
+
+[ADR-0020](adr/0020-dotnet-service-migration.md) approves three ASP.NET Core controller hosts on .NET 10, retaining Flutter and Appwrite. The migration tree pins SDK `10.0.401`, ASP.NET runtime image `10.0.12`, central NuGet versions and per-project package locks. See [backend-dotnet](../../backend-dotnet/README.md) for reproducible build/test commands and the distinction between local host liveness and service admission. These are the replacement target's checked configuration; the Node baseline below remains active until acceptance and cutover.
+
 ## Approved implementation stack — 2026-10-25
 
 Human approval accepts [ADR-0018](adr/0018-container-event-cache-runtime.md) for implementation. The table identifies selected technology, not successful installation or production enablement. Keep existing lock/toolchain pins; pin and compatibility-test new SDK/image versions before adding them. The historical registry research below is not an instruction to install every listed library.

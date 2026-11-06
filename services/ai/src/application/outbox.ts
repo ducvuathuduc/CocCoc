@@ -202,11 +202,13 @@ export function httpDeliver(options: {
   key: ServiceKey;
   progressBaseUrl: string;
   fetchImpl?: typeof fetch;
+  nowSeconds?: () => number;
 }): Deliver {
   const client = createInternalClient({
     key: options.key,
     baseUrl: options.progressBaseUrl,
     ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
+    ...(options.nowSeconds ? { nowSeconds: options.nowSeconds } : {}),
   });
   return async (event) => {
     const response = await client.deliverEvent(event);
@@ -219,13 +221,14 @@ export function createImmediateRelay(
   getDeps: () => AiDeps,
   deliver: Deliver,
   deadlineMs = 1500,
+  random: () => number = Math.random,
 ): EventRelay {
   return {
     async afterCommit(eventIds) {
       if (!eventIds.length) return;
       try {
         await Promise.race([
-          dispatchOutbox(getDeps(), deliver, { eventIds, deadlineMs }),
+          dispatchOutbox(getDeps(), deliver, { eventIds, deadlineMs, random }),
           new Promise<void>((resolve) => {
             setTimeout(resolve, deadlineMs).unref();
           }),

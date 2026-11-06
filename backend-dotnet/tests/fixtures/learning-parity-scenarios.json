@@ -1,0 +1,1654 @@
+{
+  "now": "2026-11-03T12:00:00.000Z",
+  "requestId": "6b970104-6c8b-4f43-9717-30cc081ca602",
+  "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca603",
+  "reportKey": "6b970104-6c8b-4f43-9717-30cc081ca614",
+  "reviewSessionKey": "6b970104-6c8b-4f43-9717-30cc081ca612",
+  "activeSessionKey": "6b970104-6c8b-4f43-9717-30cc081ca611",
+  "publication": {
+    "now": "2026-11-03T12:00:00.000Z",
+    "requestId": "6b970104-6c8b-4f43-9717-30cc081ca640",
+    "publishKey": "6b970104-6c8b-4f43-9717-30cc081ca641",
+    "duplicateKey": "6b970104-6c8b-4f43-9717-30cc081ca642"
+  },
+  "outbox": {
+    "now": "2026-11-03T12:00:00.000Z",
+    "eventId": "11111111-1111-4111-8111-111111111111",
+    "owner": "parity-owner"
+  },
+  "dispatchJob": {
+    "now": "2026-11-03T12:00:00.000Z",
+    "requestId": "learning-dispatch-parity-request",
+    "tick": {
+      "tickId": "33333333-3333-4333-8333-333333333333",
+      "scheduledAt": "2026-11-03T12:00:00.000Z"
+    },
+    "event": {
+      "eventId": "77777777-7777-4777-8777-777777777777",
+      "type": "lesson.completed.v1",
+      "schemaVersion": 1,
+      "producer": "learning",
+      "aggregateId": "parity-job",
+      "occurredAt": "2026-11-03T12:00:00.000Z",
+      "requestId": "77777777-7777-4777-8777-777777777777",
+      "payload": {
+        "userId": "parity-job",
+        "courseId": "vi_en",
+        "sessionId": "job-session-parity",
+        "originalCorrect": 8
+      }
+    }
+  },
+  "immediateRelay": {
+    "now": "2026-11-03T12:00:00.000Z",
+    "eventId": "22222222-2222-4222-8222-222222222222"
+  },
+  "seedRows": [
+    {
+      "table": "l_sessions",
+      "id": "placement-pass-session",
+      "row": {
+        "userId": "placement-pass",
+        "courseId": "vi_en",
+        "lessonId": "placement",
+        "lessonVersion": "v2.placement",
+        "rewardIdentity": "placement",
+        "mode": "PLACEMENT",
+        "source": "ONLINE",
+        "status": "COMPLETED",
+        "bundleHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "nextOriginalOrdinal": 10,
+        "retryPass": 0,
+        "assisted": false,
+        "energySpent": 0,
+        "energyEarned": 0,
+        "startedAt": "2026-11-03T12:00:00.000Z",
+        "expiresAt": "2026-11-03T13:00:00.000Z",
+        "completedAt": "2026-11-03T12:10:00.000Z",
+        "resultJson": "{\"completion\":{\"originalCorrect\":8}}",
+        "revision": 10,
+        "createdAt": "2026-11-03T12:00:00.000Z",
+        "updatedAt": "2026-11-03T12:10:00.000Z"
+      }
+    },
+    {
+      "table": "l_sessions",
+      "id": "placement-fail-session",
+      "row": {
+        "userId": "placement-fail",
+        "courseId": "vi_en",
+        "lessonId": "placement",
+        "lessonVersion": "v2.placement",
+        "rewardIdentity": "placement",
+        "mode": "PLACEMENT",
+        "source": "ONLINE",
+        "status": "COMPLETED",
+        "bundleHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "nextOriginalOrdinal": 10,
+        "retryPass": 0,
+        "assisted": false,
+        "energySpent": 0,
+        "energyEarned": 0,
+        "startedAt": "2026-11-03T12:00:00.000Z",
+        "expiresAt": "2026-11-03T13:00:00.000Z",
+        "completedAt": "2026-11-03T12:10:00.000Z",
+        "resultJson": "{\"completion\":{\"originalCorrect\":7}}",
+        "revision": 10,
+        "createdAt": "2026-11-03T12:00:00.000Z",
+        "updatedAt": "2026-11-03T12:10:00.000Z"
+      }
+    },
+    {
+      "table": "l_enrollments",
+      "id": "reviver-active-old-course",
+      "row": {
+        "userId": "reviver",
+        "courseId": "old_course",
+        "courseVersion": "v1",
+        "frontierNodeOrder": 4,
+        "completedLessonsJson": "[\"old-lesson\"]",
+        "masteredNodesJson": "[]",
+        "legendaryNodesJson": "[]",
+        "placementUsed": false,
+        "active": true,
+        "proficiencyScore": 5,
+        "lastPracticedAt": null,
+        "removedAt": null,
+        "revision": 6,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-02-01T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_enrollments",
+      "id": "reviver-removed-vi-en",
+      "row": {
+        "userId": "reviver",
+        "courseId": "vi_en",
+        "courseVersion": "v1",
+        "frontierNodeOrder": 4,
+        "completedLessonsJson": "[\"old-lesson\"]",
+        "masteredNodesJson": "[]",
+        "legendaryNodesJson": "[]",
+        "placementUsed": false,
+        "active": false,
+        "proficiencyScore": 5,
+        "lastPracticedAt": null,
+        "removedAt": "2026-02-01T00:00:00.000Z",
+        "revision": 4,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-02-01T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_enrollments",
+      "id": "0c39f8a3754939cb44030ba656d6b983",
+      "row": {
+        "userId": "switcher",
+        "courseId": "target_course",
+        "courseVersion": "v2",
+        "frontierNodeOrder": 3,
+        "completedLessonsJson": "[\"target-done\"]",
+        "masteredNodesJson": "[]",
+        "legendaryNodesJson": "[]",
+        "placementUsed": false,
+        "active": false,
+        "proficiencyScore": 2,
+        "lastPracticedAt": null,
+        "removedAt": null,
+        "revision": 3,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-02-01T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_enrollments",
+      "id": "ecaf1ad907afd6824afddbeedc187330",
+      "row": {
+        "userId": "switcher",
+        "courseId": "other_course",
+        "courseVersion": "v1",
+        "frontierNodeOrder": 5,
+        "completedLessonsJson": "[\"other-done\"]",
+        "masteredNodesJson": "[]",
+        "legendaryNodesJson": "[]",
+        "placementUsed": false,
+        "active": true,
+        "proficiencyScore": 4,
+        "lastPracticedAt": null,
+        "removedAt": null,
+        "revision": 7,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-02-01T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_enrollments",
+      "id": "07b33825805980ec40a45d406222039b",
+      "row": {
+        "userId": "other-user",
+        "courseId": "other_course",
+        "courseVersion": "v1",
+        "frontierNodeOrder": 6,
+        "completedLessonsJson": "[]",
+        "masteredNodesJson": "[]",
+        "legendaryNodesJson": "[]",
+        "placementUsed": false,
+        "active": true,
+        "proficiencyScore": 1,
+        "lastPracticedAt": null,
+        "removedAt": null,
+        "revision": 2,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-02-01T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_outbox",
+      "id": "00000000-0000-4000-8000-000000000111",
+      "row": {
+        "eventId": "00000000-0000-4000-8000-000000000111",
+        "type": "lesson.completed.v1",
+        "schemaVersion": 1,
+        "aggregateId": "parity-watermark",
+        "occurredAt": "2026-11-03T10:00:00.000Z",
+        "payloadJson": "{}",
+        "attempt": 0,
+        "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+        "leaseOwner": null,
+        "leaseUntil": null,
+        "status": "PENDING",
+        "ackAt": null,
+        "revision": 0,
+        "createdAt": "2026-11-03T10:00:00.000Z",
+        "updatedAt": "2026-11-03T10:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_outbox",
+      "id": "00000000-0000-4000-8000-000000000112",
+      "row": {
+        "eventId": "00000000-0000-4000-8000-000000000112",
+        "type": "lesson.completed.v1",
+        "schemaVersion": 1,
+        "aggregateId": "parity-watermark",
+        "occurredAt": "2026-11-03T11:00:00.000Z",
+        "payloadJson": "{}",
+        "attempt": 1,
+        "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+        "leaseOwner": "watermark-worker",
+        "leaseUntil": "2026-11-03T12:01:00.000Z",
+        "status": "LEASED",
+        "ackAt": null,
+        "revision": 1,
+        "createdAt": "2026-11-03T11:00:00.000Z",
+        "updatedAt": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_outbox",
+      "id": "00000000-0000-4000-8000-000000000113",
+      "row": {
+        "eventId": "00000000-0000-4000-8000-000000000113",
+        "type": "lesson.completed.v1",
+        "schemaVersion": 1,
+        "aggregateId": "parity-watermark",
+        "occurredAt": "2026-11-03T11:30:00.000Z",
+        "payloadJson": "{}",
+        "attempt": 10,
+        "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+        "leaseOwner": null,
+        "leaseUntil": null,
+        "status": "DEAD",
+        "ackAt": null,
+        "revision": 10,
+        "createdAt": "2026-11-03T11:30:00.000Z",
+        "updatedAt": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "table": "l_outbox",
+      "id": "00000000-0000-4000-8000-000000000114",
+      "row": {
+        "eventId": "00000000-0000-4000-8000-000000000114",
+        "type": "lesson.completed.v1",
+        "schemaVersion": 1,
+        "aggregateId": "parity-watermark",
+        "occurredAt": "2026-11-03T09:00:00.000Z",
+        "payloadJson": "{}",
+        "attempt": 1,
+        "nextAttemptAt": "2026-11-03T09:00:00.000Z",
+        "leaseOwner": null,
+        "leaseUntil": null,
+        "status": "ACK",
+        "ackAt": "2026-11-03T09:01:00.000Z",
+        "revision": 2,
+        "createdAt": "2026-11-03T09:00:00.000Z",
+        "updatedAt": "2026-11-03T09:01:00.000Z"
+      }
+    },
+    {
+      "table": "l_outbox",
+      "id": "00000000-0000-4000-8000-000000000115",
+      "row": {
+        "eventId": "00000000-0000-4000-8000-000000000115",
+        "type": "lesson.completed.v1",
+        "schemaVersion": 1,
+        "aggregateId": "parity-watermark",
+        "occurredAt": "2026-11-03T12:00:00.000Z",
+        "payloadJson": "{}",
+        "attempt": 0,
+        "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+        "leaseOwner": null,
+        "leaseUntil": null,
+        "status": "PENDING",
+        "ackAt": null,
+        "revision": 0,
+        "createdAt": "2026-11-03T12:00:00.000Z",
+        "updatedAt": "2026-11-03T12:00:00.000Z"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/ready",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/internal/outbox-watermark",
+      "query": "before=2026-11-03T12%3A00%3A00.000Z",
+      "sender": "progress",
+      "user": "parity-watermark"
+    },
+    {
+      "inspect": ["l_outbox"],
+      "user": "parity-watermark"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca604",
+      "body": { "courseId": "vi_en", "startPoint": "beginner" }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/courses",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/courses",
+      "query": "limit=1e0",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/energy",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/courses/vi_en/manifest",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/lessons/u1n1l1/bundle",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/courses/vi_en/path",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/courses/vi_en/path",
+      "query": "limit=1e0",
+      "user": "alice"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca604",
+      "body": { "courseId": "vi_en", "startPoint": "beginner" }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/vi_en/activate",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca606",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/vi_en/activate",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca606",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/offline-completions",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca623",
+      "body": {
+        "operationId": "6b970104-6c8b-4f43-9717-30cc081ca619",
+        "localCompletionId": "6b970104-6c8b-4f43-9717-30cc081ca620",
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "lessonVersion": "v2.u1n1l1",
+        "bundleHash": "bde6b88aae0267ec188f0f9defad0aee81c5c9969562504f1cf8e02cfe1cbc3b",
+        "expectedEnrollmentRevision": 1,
+        "answers": [
+          {
+            "exerciseId": "u1n1l1-e01",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c2" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e02",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c4" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e03",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c4" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e04",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c3" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e05",
+            "attemptOrdinal": 0,
+            "answer": {
+              "kind": "pairs",
+              "matches": [
+                { "leftId": "p1l", "rightId": "p1r" },
+                { "leftId": "p2l", "rightId": "p2r" },
+                { "leftId": "p3l", "rightId": "p3r" },
+                { "leftId": "p4l", "rightId": "p4r" }
+              ]
+            },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e06",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t5"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e07",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c3" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e08",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c2" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e09",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t8", "t1", "t4"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e10",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t1"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e11",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "text", "text": "No" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e12",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "text", "text": "Hello, Mai!" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e13",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t1", "t4"] },
+            "assisted": false,
+            "substituted": false
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/offline-completions",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca624",
+      "body": {
+        "operationId": "6b970104-6c8b-4f43-9717-30cc081ca621",
+        "localCompletionId": "6b970104-6c8b-4f43-9717-30cc081ca620",
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "lessonVersion": "v2.u1n1l1",
+        "bundleHash": "bde6b88aae0267ec188f0f9defad0aee81c5c9969562504f1cf8e02cfe1cbc3b",
+        "expectedEnrollmentRevision": 1,
+        "answers": [
+          {
+            "exerciseId": "u1n1l1-e01",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c2" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e02",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c4" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e03",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c4" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e04",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c3" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e05",
+            "attemptOrdinal": 0,
+            "answer": {
+              "kind": "pairs",
+              "matches": [
+                { "leftId": "p1l", "rightId": "p1r" },
+                { "leftId": "p2l", "rightId": "p2r" },
+                { "leftId": "p3l", "rightId": "p3r" },
+                { "leftId": "p4l", "rightId": "p4r" }
+              ]
+            },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e06",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t5"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e07",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c3" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e08",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c2" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e09",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t8", "t1", "t4"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e10",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t1"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e11",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "text", "text": "No" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e12",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "text", "text": "Hello, Mai!" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e13",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t1", "t4"] },
+            "assisted": false,
+            "substituted": false
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/offline-completions",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca625",
+      "body": {
+        "operationId": "6b970104-6c8b-4f43-9717-30cc081ca622",
+        "localCompletionId": "6b970104-6c8b-4f43-9717-30cc081ca620",
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "lessonVersion": "v2.u1n1l1",
+        "bundleHash": "bde6b88aae0267ec188f0f9defad0aee81c5c9969562504f1cf8e02cfe1cbc3b",
+        "expectedEnrollmentRevision": 1,
+        "answers": [
+          {
+            "exerciseId": "u1n1l1-e01",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c1" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e02",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c4" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e03",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c4" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e04",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c3" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e05",
+            "attemptOrdinal": 0,
+            "answer": {
+              "kind": "pairs",
+              "matches": [
+                { "leftId": "p1l", "rightId": "p1r" },
+                { "leftId": "p2l", "rightId": "p2r" },
+                { "leftId": "p3l", "rightId": "p3r" },
+                { "leftId": "p4l", "rightId": "p4r" }
+              ]
+            },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e06",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t5"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e07",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c3" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e08",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "choice", "choiceId": "c2" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e09",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t8", "t1", "t4"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e10",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t2", "t1"] },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e11",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "text", "text": "No" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e12",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "text", "text": "Hello, Mai!" },
+            "assisted": false,
+            "substituted": false
+          },
+          {
+            "exerciseId": "u1n1l1-e13",
+            "attemptOrdinal": 0,
+            "answer": { "kind": "tokens", "tokenIds": ["t1", "t4"] },
+            "assisted": false,
+            "substituted": false
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "alice",
+      "key": "$sessionKey",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "LESSON",
+        "expectedEnrollmentRevision": 2
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "alice",
+      "key": "$sessionKey",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "LESSON",
+        "expectedEnrollmentRevision": 2
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/sessions/$sessionId",
+      "user": "alice"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/answers",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca609",
+      "body": {
+        "exerciseId": "u1n1l1-e01",
+        "attemptOrdinal": 0,
+        "answer": { "kind": "choice", "choiceId": "missing" },
+        "assisted": false,
+        "substituted": false,
+        "expectedRevision": 0
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/answers",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca605",
+      "body": {
+        "exerciseId": "u1n1l1-e01",
+        "attemptOrdinal": 0,
+        "answer": { "kind": "choice", "choiceId": "c2" },
+        "assisted": false,
+        "substituted": false,
+        "expectedRevision": 0
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/answers",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca605",
+      "body": {
+        "exerciseId": "u1n1l1-e01",
+        "attemptOrdinal": 0,
+        "answer": { "kind": "choice", "choiceId": "c2" },
+        "assisted": false,
+        "substituted": false,
+        "expectedRevision": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/sessions/$sessionId",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/sessions/$sessionId",
+      "user": "bob"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/answers",
+      "user": "bob",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca616",
+      "body": {
+        "exerciseId": "u1n1l1-e02",
+        "attemptOrdinal": 0,
+        "answer": { "kind": "choice", "choiceId": "c4" },
+        "assisted": false,
+        "substituted": false,
+        "expectedRevision": 1
+      }
+    },
+    {
+      "inspect": ["l_sessions", "l_answers", "l_receipts"]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca615",
+      "body": { "expectedRevision": 1 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca615",
+      "body": { "expectedRevision": 1 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/vi_en/reset",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca607",
+      "body": { "expectedRevision": 2 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/vi_en/reset",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca610",
+      "body": { "expectedRevision": 1 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/reports",
+      "user": "alice",
+      "key": "$reportKey",
+      "body": {
+        "exerciseId": "u1n1l1-e01",
+        "lessonVersion": "v2.u1n1l1",
+        "category": "CONTENT",
+        "note": "Fixture report"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/reports",
+      "user": "alice",
+      "key": "$reportKey",
+      "body": {
+        "exerciseId": "u1n1l1-e01",
+        "lessonVersion": "v2.u1n1l1",
+        "category": "CONTENT",
+        "note": "Fixture report"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/reports",
+      "user": "alice",
+      "key": "$reportKey",
+      "body": {
+        "exerciseId": "u1n1l1-e01",
+        "lessonVersion": "v2.u1n1l1",
+        "category": "CONTENT",
+        "note": "Changed report body"
+      }
+    },
+    {
+      "seedReview": {
+        "completedLessonId": "u1n1l1",
+        "mistakeExerciseId": "u1n1l1-e02",
+        "reviewItems": [
+          { "vocabularyId": "u1.goodbye", "skillId": "u1.vocab", "dueMinutesAgo": 4 },
+          { "vocabularyId": "u1.hello", "skillId": "u1.grammar", "dueMinutesAgo": 3 },
+          { "vocabularyId": "u1.yes", "skillId": "listening", "dueMinutesAgo": 2 },
+          { "vocabularyId": "u1.no", "skillId": "u1.vocab", "dueMinutesAgo": 1 }
+        ],
+        "additionalMistakes": [
+          { "exerciseId": "u1n1l1-e03", "minutesAgo": 6 },
+          { "exerciseId": "u1n1l1-e04", "minutesAgo": 7 }
+        ],
+        "activities": [
+          {
+            "kind": "ADVENTURE",
+            "activityId": "adventure-1",
+            "completions": 2,
+            "bestScore": 91,
+            "stars": 3
+          },
+          {
+            "kind": "RADIO",
+            "activityId": "radio-1",
+            "completions": 3,
+            "bestScore": 86,
+            "stars": 2
+          },
+          {
+            "kind": "STORY",
+            "activityId": "story-1",
+            "completions": 1,
+            "bestScore": 72,
+            "stars": 1
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/review",
+      "query": "courseId=vi_en&limit=20",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/review",
+      "query": "courseId=vi_en&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/review",
+      "query": "courseId=vi_en&cursor=bzoy&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/words",
+      "query": "courseId=vi_en&sort=ALPHABETICAL&limit=20",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/words",
+      "query": "courseId=vi_en&sort=ALPHABETICAL&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/words",
+      "query": "courseId=vi_en&sort=ALPHABETICAL&cursor=bzoy&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/mistakes",
+      "query": "courseId=vi_en&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/mistakes",
+      "query": "courseId=vi_en&cursor=bzoy&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/activities",
+      "query": "courseId=vi_en&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/activities",
+      "query": "courseId=vi_en&cursor=bzoy&limit=2",
+      "user": "alice"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "alice",
+      "key": "$reviewSessionKey",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "review_dynamic",
+        "mode": "REVIEW",
+        "expectedEnrollmentRevision": 3
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/sessions/$reviewSessionId",
+      "user": "alice"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$reviewSessionId/abandon",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca613",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "alice",
+      "key": "$activeSessionKey",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "STORIES",
+        "expectedEnrollmentRevision": 3
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/vi_en/reset",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca607",
+      "body": { "expectedRevision": 2 }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/enrollments/vi_en",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca608"
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/enrollments/vi_en",
+      "user": "alice",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca608"
+    },
+    {
+      "inspect": [
+        "l_enrollments",
+        "l_sessions",
+        "l_active_slots",
+        "l_answers",
+        "l_mistakes",
+        "l_review_items",
+        "l_activity_progress",
+        "l_reports",
+        "l_receipts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments",
+      "user": "placement-pass",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca630",
+      "body": {
+        "courseId": "vi_en",
+        "startPoint": "placement",
+        "placementSessionId": "placement-pass-session"
+      }
+    },
+    {
+      "inspect": ["l_enrollments", "l_receipts"]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments",
+      "user": "placement-fail",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca631",
+      "body": {
+        "courseId": "vi_en",
+        "startPoint": "placement",
+        "placementSessionId": "placement-fail-session"
+      }
+    },
+    {
+      "inspect": ["l_enrollments", "l_receipts"]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments",
+      "user": "reviver",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca632",
+      "body": { "courseId": "vi_en", "startPoint": "beginner" }
+    },
+    {
+      "inspect": ["l_enrollments", "l_receipts"]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/target_course/activate",
+      "user": "switcher",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca633",
+      "body": { "expectedRevision": 3 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/target_course/activate",
+      "user": "switcher",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca633",
+      "body": { "expectedRevision": 3 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments/target_course/activate",
+      "user": "switcher",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca634",
+      "body": { "expectedRevision": 3 }
+    },
+    {
+      "inspect": ["l_enrollments", "l_receipts"]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/enrollments",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca6f0",
+      "body": { "courseId": "vi_en", "startPoint": "beginner" }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca700",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca700",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "placement",
+        "mode": "PLACEMENT",
+        "expectedEnrollmentRevision": 0
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "mode-runner",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca700",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca701",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca702",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca702",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "ADVENTURE",
+        "expectedEnrollmentRevision": 0,
+        "activityId": "fixture-adventure"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "mode-runner",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca702",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca703",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca704",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca704",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "RADIO",
+        "expectedEnrollmentRevision": 0,
+        "activityId": "fixture-radio"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "mode-runner",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca704",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca705",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca706",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca706",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "SIDE_QUEST",
+        "expectedEnrollmentRevision": 0,
+        "activityId": "fixture-side-quest"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "mode-runner",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca706",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca707",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca708",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca708",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "CLASH",
+        "expectedEnrollmentRevision": 0,
+        "activityId": "fixture-clash"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "mode-runner",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca708",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca709",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca70a",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca70a",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "UNIT_REVIEW",
+        "expectedEnrollmentRevision": 0,
+        "activityId": "fixture-unit-review"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions/$sessionId/abandon",
+      "user": "mode-runner",
+      "sessionKey": "6b970104-6c8b-4f43-9717-30cc081ca70a",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca70b",
+      "body": { "expectedRevision": 0 }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca70c",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "MASTERY",
+        "expectedEnrollmentRevision": 0
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca70d",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "TEST_OUT",
+        "expectedEnrollmentRevision": 0
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/sessions",
+      "user": "mode-runner",
+      "key": "6b970104-6c8b-4f43-9717-30cc081ca70e",
+      "body": {
+        "courseId": "vi_en",
+        "lessonId": "u1n1l1",
+        "mode": "CHECKPOINT",
+        "expectedEnrollmentRevision": 0
+      }
+    },
+    {
+      "inspect": ["l_enrollments", "l_sessions", "l_active_slots", "l_receipts"]
+    }
+  ],
+  "completionParity": {
+    "now": "2026-11-03T12:00:00.000Z",
+    "requestId": "6b970104-6c8b-4f43-9717-30cc081ca720",
+    "tables": [
+      "l_enrollments",
+      "l_sessions",
+      "l_active_slots",
+      "l_answers",
+      "l_review_items",
+      "l_mistakes",
+      "l_outbox",
+      "l_receipts"
+    ],
+    "cases": [
+      {
+        "name": "lesson",
+        "user": "completion-lesson",
+        "sessionId": "completion-session-lesson",
+        "key": "ab000000-0000-4000-8000-000000000001",
+        "mode": "LESSON",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "review",
+        "user": "completion-review",
+        "sessionId": "completion-session-review",
+        "key": "ab000000-0000-4000-8000-000000000002",
+        "mode": "REVIEW",
+        "lessonId": "review_dynamic",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "review-wrong-first-retry",
+        "user": "completion-review-retry",
+        "sessionId": "completion-session-review-retry",
+        "key": "ab000000-0000-4000-8000-000000000016",
+        "mode": "REVIEW",
+        "lessonId": "review_dynamic",
+        "enrollment": "standard",
+        "correct": false,
+        "assisted": false,
+        "retryWrong": true
+      },
+      {
+        "name": "mastery",
+        "user": "completion-mastery",
+        "sessionId": "completion-session-mastery",
+        "key": "ab000000-0000-4000-8000-000000000003",
+        "mode": "MASTERY",
+        "lessonId": "u1n1l1",
+        "enrollment": "mastery",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "mastery-assisted",
+        "user": "completion-mastery-assisted",
+        "sessionId": "completion-session-mastery-assisted",
+        "key": "ab000000-0000-4000-8000-000000000004",
+        "mode": "MASTERY",
+        "lessonId": "u1n1l1",
+        "enrollment": "mastery",
+        "correct": true,
+        "assisted": true
+      },
+      {
+        "name": "placement",
+        "user": "completion-placement",
+        "sessionId": "completion-session-placement",
+        "key": "ab000000-0000-4000-8000-000000000005",
+        "mode": "PLACEMENT",
+        "lessonId": "placement",
+        "enrollment": "none",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "stories",
+        "user": "completion-stories",
+        "sessionId": "completion-session-stories",
+        "key": "ab000000-0000-4000-8000-000000000006",
+        "mode": "STORIES",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "adventure",
+        "user": "completion-adventure",
+        "sessionId": "completion-session-adventure",
+        "key": "ab000000-0000-4000-8000-000000000007",
+        "mode": "ADVENTURE",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "radio",
+        "user": "completion-radio",
+        "sessionId": "completion-session-radio",
+        "key": "ab000000-0000-4000-8000-000000000008",
+        "mode": "RADIO",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "side-quest",
+        "user": "completion-side-quest",
+        "sessionId": "completion-session-side-quest",
+        "key": "ab000000-0000-4000-8000-000000000009",
+        "mode": "SIDE_QUEST",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "clash",
+        "user": "completion-clash",
+        "sessionId": "completion-session-clash",
+        "key": "ab000000-0000-4000-8000-000000000010",
+        "mode": "CLASH",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "unit-review",
+        "user": "completion-unit-review",
+        "sessionId": "completion-session-unit-review",
+        "key": "ab000000-0000-4000-8000-000000000011",
+        "mode": "UNIT_REVIEW",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "test-out-pass",
+        "user": "completion-test-out-pass",
+        "sessionId": "completion-session-test-out-pass",
+        "key": "ab000000-0000-4000-8000-000000000012",
+        "mode": "TEST_OUT",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "test-out-fail",
+        "user": "completion-test-out-fail",
+        "sessionId": "completion-session-test-out-fail",
+        "key": "ab000000-0000-4000-8000-000000000013",
+        "mode": "TEST_OUT",
+        "lessonId": "u1n1l1",
+        "enrollment": "standard",
+        "correct": false,
+        "assisted": false
+      },
+      {
+        "name": "checkpoint-pass",
+        "user": "completion-checkpoint-pass",
+        "sessionId": "completion-session-checkpoint-pass",
+        "key": "ab000000-0000-4000-8000-000000000014",
+        "mode": "CHECKPOINT",
+        "lessonId": "u1n2l1",
+        "enrollment": "checkpoint",
+        "correct": true,
+        "assisted": false
+      },
+      {
+        "name": "checkpoint-fail",
+        "user": "completion-checkpoint-fail",
+        "sessionId": "completion-session-checkpoint-fail",
+        "key": "ab000000-0000-4000-8000-000000000015",
+        "mode": "CHECKPOINT",
+        "lessonId": "u1n2l1",
+        "enrollment": "checkpoint",
+        "correct": false,
+        "assisted": false
+      }
+    ]
+  },
+  "eventParity": {
+    "now": "2026-11-03T12:00:00.000Z",
+    "seed": {
+      "aliceReviewItems": 81,
+      "bobReviewItems": 1,
+      "energy": {
+        "userId": "alice",
+        "mode": "LIMITED",
+        "balance": 2,
+        "capacity": 25,
+        "anchorAt": "2026-11-03T12:00:00.000Z",
+        "entitlementRevision": 0,
+        "revision": 0,
+        "createdAt": "2026-11-03T12:00:00.000Z",
+        "updatedAt": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    "inspect": ["l_energy", "l_inbox", "l_outbox", "l_review_items"],
+    "steps": [
+      {
+        "eventId": "11111111-1111-4111-8111-111111111111",
+        "type": "entitlement.changed.v1",
+        "payload": {
+          "userId": "alice",
+          "plan": "MAX",
+          "status": "ACTIVE",
+          "expiresAt": null,
+          "entitlementRevision": 5
+        }
+      },
+      {
+        "eventId": "11111111-1111-4111-8111-111111111111",
+        "type": "entitlement.changed.v1",
+        "payload": {
+          "userId": "alice",
+          "plan": "MAX",
+          "status": "ACTIVE",
+          "expiresAt": null,
+          "entitlementRevision": 5
+        }
+      },
+      {
+        "eventId": "22222222-2222-4222-8222-222222222222",
+        "type": "entitlement.changed.v1",
+        "payload": {
+          "userId": "alice",
+          "plan": "FREE",
+          "status": "ACTIVE",
+          "expiresAt": null,
+          "entitlementRevision": 4
+        }
+      },
+      {
+        "eventId": "11111111-1111-4111-8111-111111111111",
+        "type": "entitlement.changed.v1",
+        "payload": {
+          "userId": "alice",
+          "plan": "SUPER",
+          "status": "ACTIVE",
+          "expiresAt": null,
+          "entitlementRevision": 5
+        }
+      },
+      {
+        "eventId": "55555555-5555-4555-8555-555555555555",
+        "type": "entitlement.changed.v1",
+        "payload": {
+          "userId": "alice",
+          "plan": "GOLD",
+          "status": "ACTIVE",
+          "expiresAt": null,
+          "entitlementRevision": 6
+        }
+      },
+      {
+        "eventId": "66666666-6666-4666-8666-666666666666",
+        "type": "energy.granted.v1",
+        "payload": {
+          "operationId": "ad-op-1",
+          "userId": "alice",
+          "amount": 5,
+          "refillToCapacity": false,
+          "reason": "AD"
+        }
+      },
+      {
+        "eventId": "66666666-6666-4666-8666-666666666666",
+        "type": "energy.granted.v1",
+        "payload": {
+          "operationId": "ad-op-1",
+          "userId": "alice",
+          "amount": 5,
+          "refillToCapacity": false,
+          "reason": "AD"
+        }
+      },
+      {
+        "eventId": "66666666-6666-4666-8666-666666666666",
+        "type": "energy.granted.v1",
+        "payload": {
+          "operationId": "ad-op-1",
+          "userId": "alice",
+          "amount": 50,
+          "refillToCapacity": false,
+          "reason": "AD"
+        }
+      },
+      {
+        "eventId": "99999999-9999-4999-8999-999999999999",
+        "type": "entitlement.changed.v1",
+        "sender": "learning",
+        "payload": {
+          "userId": "alice",
+          "plan": "MAX",
+          "status": "ACTIVE",
+          "expiresAt": null,
+          "entitlementRevision": 6
+        }
+      },
+      {
+        "eventId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "type": "account.deleted.v1",
+        "payload": {
+          "userId": "alice",
+          "requestId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        }
+      },
+      {
+        "eventId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "type": "account.deleted.v1",
+        "payload": {
+          "userId": "alice",
+          "requestId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+        }
+      },
+      {
+        "eventId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "type": "account.deleted.v1",
+        "payload": {
+          "userId": "alice",
+          "requestId": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+        }
+      }
+    ]
+  }
+}

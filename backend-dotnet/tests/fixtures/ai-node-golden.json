@@ -1,0 +1,4948 @@
+{
+  "nodeSourceSha256": "8326e799687dced9489ff6050b340b7b513b1a988afd6b6a6ae3e7a8a585a36d",
+  "scenarioSha256": "32ba04e20c2b4161aa9e44918756fc4e1af29d0c47266267725c192e078b80b2",
+  "results": [
+    {
+      "index": 0,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "configVersion": "disabled-v1",
+        "textTutor": true,
+        "nativeLive": false,
+        "turnSpeech": false,
+        "pronunciation": false,
+        "offlineShadowing": true,
+        "nativeLiveReason": "NATIVE_LIVE_DISABLED",
+        "pronunciationReason": "AZURE_DISABLED",
+        "liveUiMaxSeconds": 180,
+        "dailyLiveSessionLimit": 0
+      }
+    },
+    {
+      "index": 1,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "items": [],
+        "nextCursor": null,
+        "asOf": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "index": 2,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "requestId": "11111111-1111-4111-8111-111111111111",
+        "tutorText": "Good try! Keep your sentence short and clear, and check the example answer.",
+        "correction": null,
+        "explanation": "Hãy so sánh câu của bạn với đáp án mẫu trong bài học.",
+        "source": "fallback",
+        "assessedPronunciation": false
+      }
+    },
+    {
+      "index": 3,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "requestId": "11111111-1111-4111-8111-111111111111",
+        "tutorText": "Good try! Keep your sentence short and clear, and check the example answer.",
+        "correction": null,
+        "explanation": "Hãy so sánh câu của bạn với đáp án mẫu trong bài học.",
+        "source": "fallback",
+        "assessedPronunciation": false
+      }
+    },
+    {
+      "index": 4,
+      "kind": "call",
+      "status": 403,
+      "body": {
+        "error": {
+          "code": "ENTITLEMENT_REQUIRED",
+          "message": "ENTITLEMENT_REQUIRED",
+          "requestId": "ai-node-parity-request",
+          "details": {
+            "feature": "ROLEPLAY",
+            "required": "MAX"
+          },
+          "retryable": false
+        }
+      }
+    },
+    {
+      "index": 5,
+      "kind": "call",
+      "status": 503,
+      "body": {
+        "error": {
+          "code": "AI_PROVIDER_UNAVAILABLE",
+          "message": "AI_PROVIDER_UNAVAILABLE",
+          "requestId": "ai-node-parity-request",
+          "details": {},
+          "retryable": true
+        }
+      }
+    },
+    {
+      "index": 6,
+      "kind": "call",
+      "status": 404,
+      "body": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "Not found.",
+          "requestId": "ai-node-parity-request",
+          "details": {},
+          "retryable": false
+        }
+      }
+    },
+    {
+      "index": 7,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+        "kind": "ROLEPLAY",
+        "courseId": "course1",
+        "scenarioId": "rp_cafe_order",
+        "voiceSessionId": null,
+        "status": "ACTIVE",
+        "startedAt": "2026-11-03T12:00:00.000Z",
+        "completedAt": null,
+        "turnCount": 0,
+        "wordsUsed": 0,
+        "stars": 0,
+        "xpAwarded": 0,
+        "feedback": null,
+        "expiresAt": "2026-11-03T12:30:00.000Z"
+      }
+    },
+    {
+      "index": 8,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "items": [
+          {
+            "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+            "kind": "ROLEPLAY",
+            "courseId": "course1",
+            "scenarioId": "rp_cafe_order",
+            "voiceSessionId": null,
+            "status": "ACTIVE",
+            "startedAt": "2026-11-03T12:00:00.000Z",
+            "completedAt": null,
+            "turnCount": 0,
+            "wordsUsed": 0,
+            "stars": 0,
+            "xpAwarded": 0,
+            "feedback": null,
+            "expiresAt": "2026-11-03T12:30:00.000Z"
+          }
+        ],
+        "nextCursor": null,
+        "asOf": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "index": 9,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "requestId": "12121212-1212-4121-8121-121212121212",
+        "tutorText": "Sure. Small or large?",
+        "correction": null,
+        "explanation": "Tốt lắm! Gọi đồ uống: \"I would like a coffee, please.\"",
+        "source": "authored",
+        "assessedPronunciation": false
+      }
+    },
+    {
+      "index": 10,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "requestId": "23232323-2323-4232-8232-232323232323",
+        "tutorText": "Do you want milk or sugar?",
+        "correction": null,
+        "explanation": "Tốt lắm! Chọn cỡ: \"A small one, please.\"",
+        "source": "authored",
+        "assessedPronunciation": false
+      }
+    },
+    {
+      "index": 11,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "requestId": "34343434-3434-4434-8434-343434343434",
+        "tutorText": "That is three dollars. Here or to go?",
+        "correction": null,
+        "explanation": "Tốt lắm! Trả lời: \"Milk, no sugar, thank you.\"",
+        "source": "authored",
+        "assessedPronunciation": false
+      }
+    },
+    {
+      "index": 12,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "requestId": "45454545-4545-4454-8454-454545454545",
+        "tutorText": "Here is your coffee. Have a nice day!",
+        "correction": null,
+        "explanation": "Tốt lắm! Mang đi là \"to go\", dùng tại chỗ là \"for here\".",
+        "source": "authored",
+        "assessedPronunciation": false
+      }
+    },
+    {
+      "index": 13,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+        "kind": "ROLEPLAY",
+        "courseId": "course1",
+        "scenarioId": "rp_cafe_order",
+        "voiceSessionId": null,
+        "status": "COMPLETED",
+        "startedAt": "2026-11-03T12:00:00.000Z",
+        "completedAt": "2026-11-03T12:00:00.000Z",
+        "turnCount": 4,
+        "wordsUsed": 6,
+        "stars": 3,
+        "xpAwarded": 20,
+        "feedback": {
+          "summary": "Excellent! You completed \"Ordering at a café\" with Mia.",
+          "strengths": [
+            "You answered every question on topic.",
+            "You used 6 useful words.",
+            "You finished \"Ordering at a café\"."
+          ],
+          "improvements": [],
+          "usedWords": [
+            "coffee",
+            "please",
+            "small",
+            "milk",
+            "sugar",
+            "thank"
+          ]
+        },
+        "expiresAt": "2027-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "index": 14,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "items": [
+          {
+            "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+            "kind": "ROLEPLAY",
+            "courseId": "course1",
+            "scenarioId": "rp_cafe_order",
+            "voiceSessionId": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-11-03T12:00:00.000Z",
+            "completedAt": "2026-11-03T12:00:00.000Z",
+            "turnCount": 4,
+            "wordsUsed": 6,
+            "stars": 3,
+            "xpAwarded": 20,
+            "feedback": {
+              "summary": "Excellent! You completed \"Ordering at a café\" with Mia.",
+              "strengths": [
+                "You answered every question on topic.",
+                "You used 6 useful words.",
+                "You finished \"Ordering at a café\"."
+              ],
+              "improvements": [],
+              "usedWords": [
+                "coffee",
+                "please",
+                "small",
+                "milk",
+                "sugar",
+                "thank"
+              ]
+            },
+            "expiresAt": "2027-11-03T12:00:00.000Z"
+          }
+        ],
+        "nextCursor": null,
+        "asOf": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "index": 15,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "conversationId": "5f034e63f4e781fd1639ec0a69b6e70c",
+        "kind": "ROLEPLAY",
+        "courseId": "course1",
+        "scenarioId": "rp_meet_new_friend",
+        "voiceSessionId": null,
+        "status": "ACTIVE",
+        "startedAt": "2026-11-03T12:00:00.000Z",
+        "completedAt": null,
+        "turnCount": 0,
+        "wordsUsed": 0,
+        "stars": 0,
+        "xpAwarded": 0,
+        "feedback": null,
+        "expiresAt": "2026-11-03T12:30:00.000Z"
+      }
+    },
+    {
+      "index": 16,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "conversationId": "213fda8b35ae36e7517e80175fbd5d5e",
+        "kind": "ROLEPLAY",
+        "courseId": "course1",
+        "scenarioId": "rp_ask_directions",
+        "voiceSessionId": null,
+        "status": "ACTIVE",
+        "startedAt": "2026-11-03T12:00:00.000Z",
+        "completedAt": null,
+        "turnCount": 0,
+        "wordsUsed": 0,
+        "stars": 0,
+        "xpAwarded": 0,
+        "feedback": null,
+        "expiresAt": "2026-11-03T12:30:00.000Z"
+      }
+    },
+    {
+      "index": 17,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "items": [
+          {
+            "conversationId": "213fda8b35ae36e7517e80175fbd5d5e",
+            "kind": "ROLEPLAY",
+            "courseId": "course1",
+            "scenarioId": "rp_ask_directions",
+            "voiceSessionId": null,
+            "status": "ACTIVE",
+            "startedAt": "2026-11-03T12:00:00.000Z",
+            "completedAt": null,
+            "turnCount": 0,
+            "wordsUsed": 0,
+            "stars": 0,
+            "xpAwarded": 0,
+            "feedback": null,
+            "expiresAt": "2026-11-03T12:30:00.000Z"
+          }
+        ],
+        "nextCursor": "o1",
+        "asOf": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "index": 18,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "items": [
+          {
+            "conversationId": "5f034e63f4e781fd1639ec0a69b6e70c",
+            "kind": "ROLEPLAY",
+            "courseId": "course1",
+            "scenarioId": "rp_meet_new_friend",
+            "voiceSessionId": null,
+            "status": "ACTIVE",
+            "startedAt": "2026-11-03T12:00:00.000Z",
+            "completedAt": null,
+            "turnCount": 0,
+            "wordsUsed": 0,
+            "stars": 0,
+            "xpAwarded": 0,
+            "feedback": null,
+            "expiresAt": "2026-11-03T12:30:00.000Z"
+          }
+        ],
+        "nextCursor": "o2",
+        "asOf": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "index": 19,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "items": [
+          {
+            "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+            "kind": "ROLEPLAY",
+            "courseId": "course1",
+            "scenarioId": "rp_cafe_order",
+            "voiceSessionId": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-11-03T12:00:00.000Z",
+            "completedAt": "2026-11-03T12:00:00.000Z",
+            "turnCount": 4,
+            "wordsUsed": 6,
+            "stars": 3,
+            "xpAwarded": 20,
+            "feedback": {
+              "summary": "Excellent! You completed \"Ordering at a café\" with Mia.",
+              "strengths": [
+                "You answered every question on topic.",
+                "You used 6 useful words.",
+                "You finished \"Ordering at a café\"."
+              ],
+              "improvements": [],
+              "usedWords": [
+                "coffee",
+                "please",
+                "small",
+                "milk",
+                "sugar",
+                "thank"
+              ]
+            },
+            "expiresAt": "2027-11-03T12:00:00.000Z"
+          }
+        ],
+        "nextCursor": null,
+        "asOf": "2026-11-03T12:00:00.000Z"
+      }
+    },
+    {
+      "index": 20,
+      "kind": "call",
+      "status": 503,
+      "body": {
+        "error": {
+          "code": "AI_PROVIDER_UNAVAILABLE",
+          "message": "AI_PROVIDER_UNAVAILABLE",
+          "requestId": "ai-node-parity-request",
+          "details": {},
+          "retryable": true
+        }
+      }
+    },
+    {
+      "index": 21,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "sessionId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "status": "ACTIVE",
+        "epoch": 3,
+        "accountedSeconds": 120
+      }
+    },
+    {
+      "index": 22,
+      "kind": "call",
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "VOICE_EPOCH_CONFLICT",
+          "message": "VOICE_EPOCH_CONFLICT",
+          "requestId": "ai-node-parity-request",
+          "details": {},
+          "retryable": false
+        }
+      }
+    },
+    {
+      "index": 23,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "sessionId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "status": "CLOSED",
+        "epoch": 3,
+        "accountedSeconds": 120
+      }
+    },
+    {
+      "index": 24,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "sessionId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "status": "CLOSED",
+        "epoch": 3,
+        "accountedSeconds": 120
+      }
+    },
+    {
+      "index": 25,
+      "kind": "call",
+      "status": 404,
+      "body": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "Not found.",
+          "requestId": "ai-node-parity-request",
+          "details": {},
+          "retryable": false
+        }
+      }
+    },
+    {
+      "index": 26,
+      "kind": "call",
+      "status": 202,
+      "body": {
+        "jobId": "97979797-9797-4979-8979-979797979797",
+        "status": "SUCCEEDED",
+        "transcript": null,
+        "accuracy": null,
+        "fluency": null,
+        "completeness": null,
+        "prosody": null,
+        "words": [],
+        "scorer": null,
+        "scoreVersion": null,
+        "unavailableReason": "AZURE_DISABLED",
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "NULL_UNAVAILABLE",
+        "locale": "en-US",
+        "referenceHash": "cbf81a6b3781cb17c44c1b93dfcb1914327818a39e6eda06a65cbddbfb5eea77",
+        "provider": null,
+        "modelVersion": null,
+        "miscues": []
+      }
+    },
+    {
+      "index": 27,
+      "kind": "call",
+      "status": 202,
+      "body": {
+        "jobId": "97979797-9797-4979-8979-979797979797",
+        "status": "SUCCEEDED",
+        "transcript": null,
+        "accuracy": null,
+        "fluency": null,
+        "completeness": null,
+        "prosody": null,
+        "words": [],
+        "scorer": null,
+        "scoreVersion": null,
+        "unavailableReason": "AZURE_DISABLED",
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "NULL_UNAVAILABLE",
+        "locale": "en-US",
+        "referenceHash": "cbf81a6b3781cb17c44c1b93dfcb1914327818a39e6eda06a65cbddbfb5eea77",
+        "provider": null,
+        "modelVersion": null,
+        "miscues": []
+      }
+    },
+    {
+      "index": 28,
+      "kind": "call",
+      "status": 200,
+      "body": {
+        "jobId": "97979797-9797-4979-8979-979797979797",
+        "status": "SUCCEEDED",
+        "transcript": null,
+        "accuracy": null,
+        "fluency": null,
+        "completeness": null,
+        "prosody": null,
+        "words": [],
+        "scorer": null,
+        "scoreVersion": null,
+        "unavailableReason": "AZURE_DISABLED",
+        "expiresAt": "2026-11-04T12:00:00.000Z",
+        "scoreState": "NULL_UNAVAILABLE",
+        "locale": "en-US",
+        "referenceHash": "cbf81a6b3781cb17c44c1b93dfcb1914327818a39e6eda06a65cbddbfb5eea77",
+        "provider": null,
+        "modelVersion": null,
+        "miscues": []
+      }
+    },
+    {
+      "index": 29,
+      "kind": "call",
+      "status": 404,
+      "body": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "Not found.",
+          "requestId": "ai-node-parity-request",
+          "details": {},
+          "retryable": false
+        }
+      }
+    },
+    {
+      "index": 30,
+      "kind": "inspect",
+      "tables": {
+        "a_conversations": [
+          {
+            "id": "213fda8b35ae36e7517e80175fbd5d5e",
+            "row": {
+              "conversationId": "213fda8b35ae36e7517e80175fbd5d5e",
+              "userId": "bob",
+              "kind": "ROLEPLAY",
+              "courseId": "course1",
+              "scenarioId": "rp_ask_directions",
+              "voiceSessionId": null,
+              "status": "ACTIVE",
+              "startedAt": "2026-11-03T12:00:00.000Z",
+              "completedAt": null,
+              "turnCount": 0,
+              "wordsUsed": 0,
+              "stars": 0,
+              "xpAwarded": 0,
+              "feedbackJson": {
+                "draft": true,
+                "stepIndex": 0,
+                "onTopicTurns": 0,
+                "usedWords": []
+              },
+              "transcriptFileId": null,
+              "expiresAt": "2026-11-03T12:30:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "5f034e63f4e781fd1639ec0a69b6e70c",
+            "row": {
+              "conversationId": "5f034e63f4e781fd1639ec0a69b6e70c",
+              "userId": "bob",
+              "kind": "ROLEPLAY",
+              "courseId": "course1",
+              "scenarioId": "rp_meet_new_friend",
+              "voiceSessionId": null,
+              "status": "ACTIVE",
+              "startedAt": "2026-11-03T12:00:00.000Z",
+              "completedAt": null,
+              "turnCount": 0,
+              "wordsUsed": 0,
+              "stars": 0,
+              "xpAwarded": 0,
+              "feedbackJson": {
+                "draft": true,
+                "stepIndex": 0,
+                "onTopicTurns": 0,
+                "usedWords": []
+              },
+              "transcriptFileId": null,
+              "expiresAt": "2026-11-03T12:30:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "74a4bd68d743b3c7865dbdd3f67d01cc",
+            "row": {
+              "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+              "userId": "bob",
+              "kind": "ROLEPLAY",
+              "courseId": "course1",
+              "scenarioId": "rp_cafe_order",
+              "voiceSessionId": null,
+              "status": "COMPLETED",
+              "startedAt": "2026-11-03T12:00:00.000Z",
+              "completedAt": "2026-11-03T12:00:00.000Z",
+              "turnCount": 4,
+              "wordsUsed": 6,
+              "stars": 3,
+              "xpAwarded": 20,
+              "feedbackJson": {
+                "summary": "Excellent! You completed \"Ordering at a café\" with Mia.",
+                "strengths": [
+                  "You answered every question on topic.",
+                  "You used 6 useful words.",
+                  "You finished \"Ordering at a café\"."
+                ],
+                "improvements": [],
+                "usedWords": [
+                  "coffee",
+                  "please",
+                  "small",
+                  "milk",
+                  "sugar",
+                  "thank"
+                ]
+              },
+              "transcriptFileId": null,
+              "expiresAt": "2027-11-03T12:00:00.000Z",
+              "revision": 5,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "c14bb24f-bfb0-51c5-bec5-c471dcb3d6b5",
+            "row": {
+              "eventId": "c14bb24f-bfb0-51c5-bec5-c471dcb3d6b5",
+              "type": "ai.practice.completed.v1",
+              "schemaVersion": 1,
+              "aggregateId": "bob",
+              "occurredAt": "2026-11-03T12:00:00.000Z",
+              "payloadJson": {
+                "eventId": "c14bb24f-bfb0-51c5-bec5-c471dcb3d6b5",
+                "type": "ai.practice.completed.v1",
+                "schemaVersion": 1,
+                "producer": "ai",
+                "aggregateId": "bob",
+                "occurredAt": "2026-11-03T12:00:00.000Z",
+                "requestId": "c14bb24f-bfb0-51c5-bec5-c471dcb3d6b5",
+                "payload": {
+                  "completionId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+                  "userId": "bob",
+                  "kind": "ROLEPLAY",
+                  "courseId": "course1",
+                  "scenarioId": "rp_cafe_order",
+                  "xp": 20,
+                  "wordsUsed": 6,
+                  "stars": 3
+                }
+              },
+              "attempt": 0,
+              "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+              "leaseOwner": null,
+              "leaseUntil": null,
+              "status": "PENDING",
+              "ackAt": null,
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_receipts": [
+          {
+            "id": "1a91c52b7d0f37ade9b71dfa25b09bf0",
+            "row": {
+              "userId": "bob",
+              "operation": "tutorFeedback",
+              "key": "45454545-4545-4454-8454-454545454545",
+              "bodyHash": "c4dd6c8d41950659a3deff42fc6b924d7133cf069f964b38806e7b49d8b35e5c",
+              "statusCode": 200,
+              "responseJson": {
+                "requestId": "45454545-4545-4454-8454-454545454545",
+                "tutorText": "Here is your coffee. Have a nice day!",
+                "correction": null,
+                "explanation": "Tốt lắm! Mang đi là \"to go\", dùng tại chỗ là \"for here\".",
+                "source": "authored",
+                "assessedPronunciation": false
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "77b034b409e3bcc9fe774ab3bf5ec95f",
+            "row": {
+              "userId": "bob",
+              "operation": "startConversation",
+              "key": "90909090-9090-4090-8090-909090909090",
+              "bodyHash": "1d6e66b602c81bf7cdfef2a4c34da9678a31888475f0ee83b6b19cf48012eada",
+              "statusCode": 200,
+              "responseJson": {
+                "conversationId": "5f034e63f4e781fd1639ec0a69b6e70c",
+                "kind": "ROLEPLAY",
+                "courseId": "course1",
+                "scenarioId": "rp_meet_new_friend",
+                "voiceSessionId": null,
+                "status": "ACTIVE",
+                "startedAt": "2026-11-03T12:00:00.000Z",
+                "completedAt": null,
+                "turnCount": 0,
+                "wordsUsed": 0,
+                "stars": 0,
+                "xpAwarded": 0,
+                "feedback": null,
+                "expiresAt": "2026-11-03T12:30:00.000Z"
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "804103e6d1d5381e81a7d35745373ff5",
+            "row": {
+              "userId": "bob",
+              "operation": "createAssessment",
+              "key": "89898989-8989-4898-8898-898989898989",
+              "bodyHash": "2dfa78fa131d2cbdfd9fa8cd1f4fadfa31813af7d0978b306ee8fa546bd2dea9",
+              "statusCode": 202,
+              "responseJson": {
+                "jobId": "97979797-9797-4979-8979-979797979797",
+                "status": "SUCCEEDED",
+                "transcript": null,
+                "accuracy": null,
+                "fluency": null,
+                "completeness": null,
+                "prosody": null,
+                "words": [],
+                "scorer": null,
+                "scoreVersion": null,
+                "unavailableReason": "AZURE_DISABLED",
+                "expiresAt": "2026-11-04T12:00:00.000Z",
+                "scoreState": "NULL_UNAVAILABLE",
+                "locale": "en-US",
+                "referenceHash": "cbf81a6b3781cb17c44c1b93dfcb1914327818a39e6eda06a65cbddbfb5eea77",
+                "provider": null,
+                "modelVersion": null,
+                "miscues": []
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "82192b8135c6d22e3119236bd3d2d24f",
+            "row": {
+              "userId": "bob",
+              "operation": "tutorFeedback",
+              "key": "34343434-3434-4434-8434-343434343434",
+              "bodyHash": "18f1526a0e40672def38e901c14f64ff5a517753d5c7c1adfbd7096db8797ab5",
+              "statusCode": 200,
+              "responseJson": {
+                "requestId": "34343434-3434-4434-8434-343434343434",
+                "tutorText": "That is three dollars. Here or to go?",
+                "correction": null,
+                "explanation": "Tốt lắm! Trả lời: \"Milk, no sugar, thank you.\"",
+                "source": "authored",
+                "assessedPronunciation": false
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "877c023167e76a79747f2db24ab4d0b9",
+            "row": {
+              "userId": "bob",
+              "operation": "completeConversation",
+              "key": "56565656-5656-4656-8656-565656565656",
+              "bodyHash": "a848a0382afadee2d3ef351920e73b0a8b2918a098114725053301d5370e7534",
+              "statusCode": 200,
+              "responseJson": {
+                "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+                "kind": "ROLEPLAY",
+                "courseId": "course1",
+                "scenarioId": "rp_cafe_order",
+                "voiceSessionId": null,
+                "status": "COMPLETED",
+                "startedAt": "2026-11-03T12:00:00.000Z",
+                "completedAt": "2026-11-03T12:00:00.000Z",
+                "turnCount": 4,
+                "wordsUsed": 6,
+                "stars": 3,
+                "xpAwarded": 20,
+                "feedback": {
+                  "summary": "Excellent! You completed \"Ordering at a café\" with Mia.",
+                  "strengths": [
+                    "You answered every question on topic.",
+                    "You used 6 useful words.",
+                    "You finished \"Ordering at a café\"."
+                  ],
+                  "improvements": [],
+                  "usedWords": [
+                    "coffee",
+                    "please",
+                    "small",
+                    "milk",
+                    "sugar",
+                    "thank"
+                  ]
+                },
+                "expiresAt": "2027-11-03T12:00:00.000Z"
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "a14641c3730c858cc48112d2b25844bd",
+            "row": {
+              "userId": "bob",
+              "operation": "startConversation",
+              "key": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+              "bodyHash": "38a84572d1692d02ad5ff8afcc70471407eb0179803fd9380edf21f5dabcbd7a",
+              "statusCode": 200,
+              "responseJson": {
+                "conversationId": "74a4bd68d743b3c7865dbdd3f67d01cc",
+                "kind": "ROLEPLAY",
+                "courseId": "course1",
+                "scenarioId": "rp_cafe_order",
+                "voiceSessionId": null,
+                "status": "ACTIVE",
+                "startedAt": "2026-11-03T12:00:00.000Z",
+                "completedAt": null,
+                "turnCount": 0,
+                "wordsUsed": 0,
+                "stars": 0,
+                "xpAwarded": 0,
+                "feedback": null,
+                "expiresAt": "2026-11-03T12:30:00.000Z"
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "b764bb54ebd9a127713faadf8b972132",
+            "row": {
+              "userId": "bob",
+              "operation": "tutorFeedback",
+              "key": "23232323-2323-4232-8232-232323232323",
+              "bodyHash": "b2d26e9ef0c340c280ad86f6b564930b18a15a0a3f9912fcef61e2de75a950a4",
+              "statusCode": 200,
+              "responseJson": {
+                "requestId": "23232323-2323-4232-8232-232323232323",
+                "tutorText": "Do you want milk or sugar?",
+                "correction": null,
+                "explanation": "Tốt lắm! Chọn cỡ: \"A small one, please.\"",
+                "source": "authored",
+                "assessedPronunciation": false
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "d8d9ce10892e47f190a03e4451d8b36a",
+            "row": {
+              "userId": "bob",
+              "operation": "tutorFeedback",
+              "key": "12121212-1212-4121-8121-121212121212",
+              "bodyHash": "8304b960e656ef7453751433d3fac89d62a80b3c0c8afec8c9884686525d29a8",
+              "statusCode": 200,
+              "responseJson": {
+                "requestId": "12121212-1212-4121-8121-121212121212",
+                "tutorText": "Sure. Small or large?",
+                "correction": null,
+                "explanation": "Tốt lắm! Gọi đồ uống: \"I would like a coffee, please.\"",
+                "source": "authored",
+                "assessedPronunciation": false
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "fc51f326314f081557a344dd564134ac",
+            "row": {
+              "userId": "bob",
+              "operation": "startConversation",
+              "key": "91919191-9191-4191-8191-919191919191",
+              "bodyHash": "d60cf31a594a1fe01f6bbbeaf040abfb8e3ca9e45a5909590e25fcd675b7fff0",
+              "statusCode": 200,
+              "responseJson": {
+                "conversationId": "213fda8b35ae36e7517e80175fbd5d5e",
+                "kind": "ROLEPLAY",
+                "courseId": "course1",
+                "scenarioId": "rp_ask_directions",
+                "voiceSessionId": null,
+                "status": "ACTIVE",
+                "startedAt": "2026-11-03T12:00:00.000Z",
+                "completedAt": null,
+                "turnCount": 0,
+                "wordsUsed": 0,
+                "stars": 0,
+                "xpAwarded": 0,
+                "feedback": null,
+                "expiresAt": "2026-11-03T12:30:00.000Z"
+              },
+              "expiresAt": "2026-12-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_usage": [
+          {
+            "id": "252ec4151fbc8139d9e37a62e7300a63",
+            "row": {
+              "userId": "bob",
+              "utcDay": "ENTITLED",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 0,
+              "recordedSpeechSeconds": 0,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": {
+                "plan": "MAX",
+                "status": "ACTIVE",
+                "expiresAt": null,
+                "entitlementRevision": 1
+              }
+            }
+          },
+          {
+            "id": "fffff5db5d65ff1218e0d74479a5c2de",
+            "row": {
+              "userId": "bob",
+              "utcDay": "2026-11-03",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 4,
+              "recordedSpeechSeconds": 1,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": [],
+              "revision": 4,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_voice_sessions": [
+          {
+            "id": "a7aaa994393a7a1719c0c0aead3c416c",
+            "row": {
+              "userId": "bob",
+              "sessionId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+              "providerAlias": "scripted",
+              "mode": "TURN",
+              "status": "CLOSED",
+              "createdAt": "2026-11-03T11:59:00.000Z",
+              "expiresAt": "2026-11-03T12:10:00.000Z",
+              "lastHeartbeatAt": "2026-11-03T12:00:00.000Z",
+              "epoch": 3,
+              "consumedSeconds": 120,
+              "configVersion": "scripted-v1",
+              "revision": 2,
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_active_slots": [],
+        "a_jobs": [
+          {
+            "id": "8e9d1f19e87a54c341a820642c9d852b",
+            "row": {
+              "userId": "bob",
+              "jobId": "97979797-9797-4979-8979-979797979797",
+              "kind": "ASSESSMENT",
+              "status": "SUCCEEDED",
+              "referenceId": "exercise1",
+              "locale": "en-US",
+              "inputHash": "156075e2635b9b2c186258f4db987ed9fbdfb727f49e5eac4b9a126aefbdf727",
+              "audioFileId": null,
+              "leaseUntil": null,
+              "attempt": 1,
+              "dispatchState": "NOT_SENT",
+              "reservedSeconds": 0,
+              "chargedSeconds": 0,
+              "resultJson": "{\"jobId\":\"97979797-9797-4979-8979-979797979797\",\"status\":\"SUCCEEDED\",\"transcript\":null,\"accuracy\":null,\"fluency\":null,\"completeness\":null,\"prosody\":null,\"words\":[],\"scorer\":null,\"scoreVersion\":null,\"unavailableReason\":\"AZURE_DISABLED\",\"expiresAt\":\"2026-11-04T12:00:00.000Z\",\"scoreState\":\"NULL_UNAVAILABLE\",\"locale\":\"en-US\",\"referenceHash\":\"cbf81a6b3781cb17c44c1b93dfcb1914327818a39e6eda06a65cbddbfb5eea77\",\"provider\":null,\"modelVersion\":null,\"miscues\":[]}",
+              "expiresAt": "2026-11-04T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outboxResults": [
+    {
+      "index": 0,
+      "report": {
+        "leased": 1,
+        "acked": 0,
+        "retried": 1,
+        "dead": 0
+      },
+      "row": {
+        "id": "88888888-8888-4888-8888-888888888888",
+        "row": {
+          "eventId": "88888888-8888-4888-8888-888888888888",
+          "type": "ai.practice.completed.v1",
+          "schemaVersion": 1,
+          "aggregateId": "alice",
+          "occurredAt": "2026-11-03T12:00:00.000Z",
+          "payloadJson": {
+            "eventId": "88888888-8888-4888-8888-888888888888",
+            "type": "ai.practice.completed.v1",
+            "schemaVersion": 1,
+            "producer": "ai",
+            "aggregateId": "alice",
+            "occurredAt": "2026-11-03T12:00:00.000Z",
+            "requestId": "88888888-8888-4888-8888-888888888888",
+            "payload": {
+              "userId": "alice",
+              "conversationId": "ai-parity-conversation",
+              "xpAwarded": 20
+            }
+          },
+          "attempt": 1,
+          "nextAttemptAt": "2026-11-03T12:00:01.000Z",
+          "leaseOwner": null,
+          "leaseUntil": null,
+          "status": "PENDING",
+          "ackAt": null,
+          "revision": 2,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:00.000Z"
+        }
+      }
+    },
+    {
+      "index": 1,
+      "report": {
+        "leased": 1,
+        "acked": 1,
+        "retried": 0,
+        "dead": 0
+      },
+      "row": {
+        "id": "88888888-8888-4888-8888-888888888888",
+        "row": {
+          "eventId": "88888888-8888-4888-8888-888888888888",
+          "type": "ai.practice.completed.v1",
+          "schemaVersion": 1,
+          "aggregateId": "alice",
+          "occurredAt": "2026-11-03T12:00:00.000Z",
+          "payloadJson": {
+            "eventId": "88888888-8888-4888-8888-888888888888",
+            "type": "ai.practice.completed.v1",
+            "schemaVersion": 1,
+            "producer": "ai",
+            "aggregateId": "alice",
+            "occurredAt": "2026-11-03T12:00:00.000Z",
+            "requestId": "88888888-8888-4888-8888-888888888888",
+            "payload": {
+              "userId": "alice",
+              "conversationId": "ai-parity-conversation",
+              "xpAwarded": 20
+            }
+          },
+          "attempt": 1,
+          "nextAttemptAt": "2026-11-03T12:00:01.000Z",
+          "leaseOwner": null,
+          "leaseUntil": null,
+          "status": "ACK",
+          "ackAt": "2026-11-03T12:00:01.000Z",
+          "revision": 4,
+          "createdAt": "2026-11-03T12:00:00.000Z",
+          "updatedAt": "2026-11-03T12:00:01.000Z"
+        }
+      }
+    }
+  ],
+  "immediateRelay": {
+    "deliveredEventIds": [
+      "99999999-9999-4999-8999-999999999999"
+    ],
+    "row": {
+      "id": "99999999-9999-4999-8999-999999999999",
+      "row": {
+        "eventId": "99999999-9999-4999-8999-999999999999",
+        "type": "ai.practice.completed.v1",
+        "schemaVersion": 1,
+        "aggregateId": "alice",
+        "occurredAt": "2026-11-03T12:00:00.000Z",
+        "payloadJson": {
+          "eventId": "99999999-9999-4999-8999-999999999999",
+          "type": "ai.practice.completed.v1",
+          "schemaVersion": 1,
+          "producer": "ai",
+          "aggregateId": "alice",
+          "occurredAt": "2026-11-03T12:00:00.000Z",
+          "requestId": "99999999-9999-4999-8999-999999999999",
+          "payload": {
+            "userId": "alice",
+            "conversationId": "ai-parity-conversation",
+            "xpAwarded": 20
+          }
+        },
+        "attempt": 1,
+        "nextAttemptAt": "2026-11-03T12:00:01.000Z",
+        "leaseOwner": null,
+        "leaseUntil": null,
+        "status": "PENDING",
+        "ackAt": null,
+        "revision": 2,
+        "createdAt": "2026-11-03T12:00:00.000Z",
+        "updatedAt": "2026-11-03T12:00:00.000Z"
+      }
+    }
+  },
+  "httpRelay": {
+    "request": {
+      "method": "POST",
+      "url": "https://progress.test/internal/events",
+      "body": "{\"eventId\":\"88888888-8888-4888-8888-888888888888\",\"type\":\"ai.practice.completed.v1\",\"schemaVersion\":1,\"producer\":\"ai\",\"aggregateId\":\"alice\",\"occurredAt\":\"2026-11-03T12:00:00.000Z\",\"requestId\":\"88888888-8888-4888-8888-888888888888\",\"payload\":{\"userId\":\"alice\",\"conversationId\":\"ai-parity-conversation\",\"xpAwarded\":20}}",
+      "keyId": "ai-node-parity-key",
+      "timestamp": "1793707200",
+      "signature": "3f93aa9c65cec63d82044ae77d70582af2b55c73c9d17a0087097f84be5ce9a7",
+      "contentType": "application/json"
+    },
+    "outcomes": [
+      {
+        "index": 0,
+        "status": 200,
+        "body": {},
+        "outcome": "ack"
+      },
+      {
+        "index": 1,
+        "status": 409,
+        "body": {
+          "error": {
+            "code": "IDEMPOTENCY_CONFLICT"
+          }
+        },
+        "outcome": "dead"
+      },
+      {
+        "index": 2,
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "VALIDATION_ERROR",
+            "details": {
+              "field": "type"
+            }
+          }
+        },
+        "outcome": "retry"
+      },
+      {
+        "index": 3,
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "VALIDATION_ERROR",
+            "details": {
+              "field": "event"
+            }
+          }
+        },
+        "outcome": "dead"
+      },
+      {
+        "index": 4,
+        "status": 403,
+        "body": {},
+        "outcome": "dead"
+      },
+      {
+        "index": 5,
+        "status": 503,
+        "body": {},
+        "outcome": "retry"
+      }
+    ]
+  },
+  "eventParityResults": [
+    {
+      "index": 0,
+      "status": 200,
+      "body": {
+        "operationId": "11111111-1111-4111-8111-111111111111",
+        "status": "accepted",
+        "requestId": "<request-id>"
+      },
+      "tables": {
+        "a_usage": [
+          {
+            "id": "43feb5c29d38c5d4793784e05954d086",
+            "row": {
+              "userId": "alice",
+              "utcDay": "ENTITLED",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 0,
+              "recordedSpeechSeconds": 0,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": {
+                "plan": "MAX",
+                "status": "ACTIVE",
+                "expiresAt": null,
+                "entitlementRevision": 5
+              },
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_inbox": [
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "alice-practice-000",
+            "row": {
+              "aggregateId": "alice",
+              "type": "ai.practice.completed.v1"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "alice-conversation-000",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-001",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-002",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-003",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-004",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-005",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-006",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-007",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-008",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-009",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-010",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-011",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-012",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-013",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-014",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-015",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-016",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-017",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-018",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-019",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-020",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-021",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-022",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-023",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-024",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-025",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-026",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-027",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-028",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-029",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-030",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-031",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-032",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-033",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-034",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-035",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-036",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-037",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-038",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-039",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-040",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-041",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-042",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-043",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-044",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-045",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-046",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-047",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-048",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-049",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-050",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-051",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-052",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-053",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-054",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-055",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-056",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-057",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-058",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-059",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-060",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-061",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-062",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-063",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-064",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-065",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-066",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-067",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-068",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-069",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-070",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-071",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-072",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-073",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-074",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-075",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-076",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-077",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-078",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-079",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-080",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-081",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "status": 200,
+      "body": {
+        "operationId": "11111111-1111-4111-8111-111111111111",
+        "status": "replayed",
+        "requestId": "<request-id>"
+      },
+      "tables": {
+        "a_usage": [
+          {
+            "id": "43feb5c29d38c5d4793784e05954d086",
+            "row": {
+              "userId": "alice",
+              "utcDay": "ENTITLED",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 0,
+              "recordedSpeechSeconds": 0,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": {
+                "plan": "MAX",
+                "status": "ACTIVE",
+                "expiresAt": null,
+                "entitlementRevision": 5
+              },
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_inbox": [
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "alice-practice-000",
+            "row": {
+              "aggregateId": "alice",
+              "type": "ai.practice.completed.v1"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "alice-conversation-000",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-001",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-002",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-003",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-004",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-005",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-006",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-007",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-008",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-009",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-010",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-011",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-012",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-013",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-014",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-015",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-016",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-017",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-018",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-019",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-020",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-021",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-022",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-023",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-024",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-025",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-026",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-027",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-028",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-029",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-030",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-031",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-032",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-033",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-034",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-035",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-036",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-037",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-038",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-039",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-040",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-041",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-042",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-043",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-044",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-045",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-046",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-047",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-048",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-049",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-050",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-051",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-052",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-053",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-054",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-055",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-056",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-057",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-058",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-059",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-060",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-061",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-062",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-063",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-064",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-065",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-066",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-067",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-068",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-069",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-070",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-071",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-072",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-073",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-074",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-075",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-076",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-077",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-078",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-079",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-080",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-081",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "status": 200,
+      "body": {
+        "operationId": "22222222-2222-4222-8222-222222222222",
+        "status": "accepted",
+        "requestId": "<request-id>"
+      },
+      "tables": {
+        "a_usage": [
+          {
+            "id": "43feb5c29d38c5d4793784e05954d086",
+            "row": {
+              "userId": "alice",
+              "utcDay": "ENTITLED",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 0,
+              "recordedSpeechSeconds": 0,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": {
+                "plan": "MAX",
+                "status": "ACTIVE",
+                "expiresAt": null,
+                "entitlementRevision": 5
+              },
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_inbox": [
+          {
+            "id": "33aa48f044629a97836a96db6ecb8438",
+            "row": {
+              "eventId": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "cc42f159046b9252de75b80f242676384f5f1825ef2e9108ba23a6c3b067b60e",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "alice-practice-000",
+            "row": {
+              "aggregateId": "alice",
+              "type": "ai.practice.completed.v1"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "alice-conversation-000",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-001",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-002",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-003",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-004",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-005",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-006",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-007",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-008",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-009",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-010",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-011",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-012",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-013",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-014",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-015",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-016",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-017",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-018",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-019",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-020",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-021",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-022",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-023",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-024",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-025",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-026",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-027",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-028",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-029",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-030",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-031",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-032",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-033",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-034",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-035",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-036",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-037",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-038",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-039",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-040",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-041",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-042",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-043",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-044",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-045",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-046",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-047",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-048",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-049",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-050",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-051",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-052",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-053",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-054",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-055",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-056",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-057",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-058",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-059",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-060",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-061",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-062",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-063",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-064",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-065",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-066",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-067",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-068",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-069",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-070",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-071",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-072",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-073",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-074",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-075",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-076",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-077",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-078",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-079",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-080",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-081",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "IDEMPOTENCY_CONFLICT",
+          "message": "This operation key was already used with a different request.",
+          "requestId": "<request-id>",
+          "details": {
+            "eventId": "11111111-1111-4111-8111-111111111111"
+          },
+          "retryable": false
+        }
+      },
+      "tables": {
+        "a_usage": [
+          {
+            "id": "43feb5c29d38c5d4793784e05954d086",
+            "row": {
+              "userId": "alice",
+              "utcDay": "ENTITLED",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 0,
+              "recordedSpeechSeconds": 0,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": {
+                "plan": "MAX",
+                "status": "ACTIVE",
+                "expiresAt": null,
+                "entitlementRevision": 5
+              },
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_inbox": [
+          {
+            "id": "33aa48f044629a97836a96db6ecb8438",
+            "row": {
+              "eventId": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "cc42f159046b9252de75b80f242676384f5f1825ef2e9108ba23a6c3b067b60e",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "alice-practice-000",
+            "row": {
+              "aggregateId": "alice",
+              "type": "ai.practice.completed.v1"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "alice-conversation-000",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-001",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-002",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-003",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-004",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-005",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-006",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-007",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-008",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-009",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-010",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-011",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-012",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-013",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-014",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-015",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-016",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-017",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-018",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-019",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-020",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-021",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-022",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-023",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-024",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-025",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-026",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-027",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-028",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-029",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-030",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-031",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-032",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-033",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-034",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-035",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-036",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-037",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-038",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-039",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-040",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-041",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-042",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-043",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-044",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-045",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-046",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-047",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-048",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-049",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-050",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-051",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-052",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-053",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-054",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-055",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-056",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-057",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-058",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-059",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-060",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-061",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-062",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-063",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-064",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-065",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-066",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-067",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-068",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-069",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-070",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-071",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-072",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-073",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-074",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-075",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-076",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-077",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-078",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-079",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-080",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-081",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "VALIDATION_ERROR",
+          "message": "The request is invalid.",
+          "requestId": "<request-id>",
+          "details": {
+            "reason": "PLAN"
+          },
+          "retryable": false
+        }
+      },
+      "tables": {
+        "a_usage": [
+          {
+            "id": "43feb5c29d38c5d4793784e05954d086",
+            "row": {
+              "userId": "alice",
+              "utcDay": "ENTITLED",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 0,
+              "recordedSpeechSeconds": 0,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": {
+                "plan": "MAX",
+                "status": "ACTIVE",
+                "expiresAt": null,
+                "entitlementRevision": 5
+              },
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_inbox": [
+          {
+            "id": "33aa48f044629a97836a96db6ecb8438",
+            "row": {
+              "eventId": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "cc42f159046b9252de75b80f242676384f5f1825ef2e9108ba23a6c3b067b60e",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "alice-practice-000",
+            "row": {
+              "aggregateId": "alice",
+              "type": "ai.practice.completed.v1"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "alice-conversation-000",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-001",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-002",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-003",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-004",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-005",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-006",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-007",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-008",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-009",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-010",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-011",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-012",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-013",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-014",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-015",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-016",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-017",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-018",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-019",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-020",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-021",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-022",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-023",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-024",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-025",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-026",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-027",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-028",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-029",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-030",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-031",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-032",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-033",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-034",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-035",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-036",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-037",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-038",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-039",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-040",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-041",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-042",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-043",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-044",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-045",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-046",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-047",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-048",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-049",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-050",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-051",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-052",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-053",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-054",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-055",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-056",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-057",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-058",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-059",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-060",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-061",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-062",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-063",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-064",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-065",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-066",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-067",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-068",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-069",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-070",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-071",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-072",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-073",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-074",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-075",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-076",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-077",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-078",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-079",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-080",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-081",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "status": 403,
+      "body": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "This resource is not accessible.",
+          "requestId": "<request-id>",
+          "details": {},
+          "retryable": false
+        }
+      },
+      "tables": {
+        "a_usage": [
+          {
+            "id": "43feb5c29d38c5d4793784e05954d086",
+            "row": {
+              "userId": "alice",
+              "utcDay": "ENTITLED",
+              "liveReservedSeconds": 0,
+              "liveUsedSeconds": 0,
+              "liveGrants": 0,
+              "textRequests": 0,
+              "recordedSpeechSeconds": 0,
+              "recordedReservedSeconds": 0,
+              "reservationIdsJson": {
+                "plan": "MAX",
+                "status": "ACTIVE",
+                "expiresAt": null,
+                "entitlementRevision": 5
+              },
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_inbox": [
+          {
+            "id": "33aa48f044629a97836a96db6ecb8438",
+            "row": {
+              "eventId": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "cc42f159046b9252de75b80f242676384f5f1825ef2e9108ba23a6c3b067b60e",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "alice-practice-000",
+            "row": {
+              "aggregateId": "alice",
+              "type": "ai.practice.completed.v1"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "alice-conversation-000",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-001",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-002",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-003",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-004",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-005",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-006",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-007",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-008",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-009",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-010",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-011",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-012",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-013",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-014",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-015",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-016",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-017",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-018",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-019",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-020",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-021",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-022",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-023",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-024",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-025",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-026",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-027",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-028",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-029",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-030",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-031",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-032",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-033",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-034",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-035",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-036",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-037",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-038",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-039",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-040",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-041",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-042",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-043",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-044",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-045",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-046",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-047",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-048",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-049",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-050",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-051",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-052",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-053",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-054",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-055",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-056",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-057",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-058",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-059",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-060",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-061",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-062",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-063",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-064",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-065",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-066",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-067",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-068",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-069",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-070",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-071",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-072",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-073",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-074",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-075",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-076",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-077",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-078",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-079",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-080",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "alice-conversation-081",
+            "row": {
+              "userId": "alice"
+            }
+          },
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "status": 200,
+      "body": {
+        "operationId": "77777777-7777-4777-8777-777777777777",
+        "status": "accepted",
+        "requestId": "<request-id>"
+      },
+      "tables": {
+        "a_usage": [],
+        "a_inbox": [
+          {
+            "id": "33aa48f044629a97836a96db6ecb8438",
+            "row": {
+              "eventId": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "cc42f159046b9252de75b80f242676384f5f1825ef2e9108ba23a6c3b067b60e",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "a0a9ec242cb418f38d72be75e9e6720f",
+            "row": {
+              "eventId": "77777777-7777-4777-8777-777777777777",
+              "bodyHash": "a13d3668ebfd1cbe5ef717e3786d7fa1cfb5849877d043e80da1092c0424cfcc",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+            "row": {
+              "eventId": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+              "type": "account.purged.v1",
+              "schemaVersion": 1,
+              "aggregateId": "alice",
+              "occurredAt": "2026-11-03T12:00:00.000Z",
+              "payloadJson": {
+                "eventId": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+                "type": "account.purged.v1",
+                "schemaVersion": 1,
+                "producer": "ai",
+                "aggregateId": "alice",
+                "occurredAt": "2026-11-03T12:00:00.000Z",
+                "requestId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                "payload": {
+                  "userId": "alice",
+                  "requestId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                  "owner": "ai"
+                }
+              },
+              "attempt": 0,
+              "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+              "leaseOwner": null,
+              "leaseUntil": null,
+              "status": "PENDING",
+              "ackAt": null,
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "status": 200,
+      "body": {
+        "operationId": "77777777-7777-4777-8777-777777777777",
+        "status": "replayed",
+        "requestId": "<request-id>"
+      },
+      "tables": {
+        "a_usage": [],
+        "a_inbox": [
+          {
+            "id": "33aa48f044629a97836a96db6ecb8438",
+            "row": {
+              "eventId": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "cc42f159046b9252de75b80f242676384f5f1825ef2e9108ba23a6c3b067b60e",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "a0a9ec242cb418f38d72be75e9e6720f",
+            "row": {
+              "eventId": "77777777-7777-4777-8777-777777777777",
+              "bodyHash": "a13d3668ebfd1cbe5ef717e3786d7fa1cfb5849877d043e80da1092c0424cfcc",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+            "row": {
+              "eventId": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+              "type": "account.purged.v1",
+              "schemaVersion": 1,
+              "aggregateId": "alice",
+              "occurredAt": "2026-11-03T12:00:00.000Z",
+              "payloadJson": {
+                "eventId": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+                "type": "account.purged.v1",
+                "schemaVersion": 1,
+                "producer": "ai",
+                "aggregateId": "alice",
+                "occurredAt": "2026-11-03T12:00:00.000Z",
+                "requestId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                "payload": {
+                  "userId": "alice",
+                  "requestId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                  "owner": "ai"
+                }
+              },
+              "attempt": 0,
+              "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+              "leaseOwner": null,
+              "leaseUntil": null,
+              "status": "PENDING",
+              "ackAt": null,
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "index": 8,
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "IDEMPOTENCY_CONFLICT",
+          "message": "This operation key was already used with a different request.",
+          "requestId": "<request-id>",
+          "details": {
+            "eventId": "77777777-7777-4777-8777-777777777777"
+          },
+          "retryable": false
+        }
+      },
+      "tables": {
+        "a_usage": [],
+        "a_inbox": [
+          {
+            "id": "33aa48f044629a97836a96db6ecb8438",
+            "row": {
+              "eventId": "22222222-2222-4222-8222-222222222222",
+              "bodyHash": "cc42f159046b9252de75b80f242676384f5f1825ef2e9108ba23a6c3b067b60e",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "8e15f4594a0cdffd08ac56cfa139be86",
+            "row": {
+              "eventId": "11111111-1111-4111-8111-111111111111",
+              "bodyHash": "c96e09a86a043fb434937502890fd60b183c60432710ea56fef3aa730b4d22fe",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          },
+          {
+            "id": "a0a9ec242cb418f38d72be75e9e6720f",
+            "row": {
+              "eventId": "77777777-7777-4777-8777-777777777777",
+              "bodyHash": "a13d3668ebfd1cbe5ef717e3786d7fa1cfb5849877d043e80da1092c0424cfcc",
+              "appliedAt": "2026-11-03T12:00:00.000Z",
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_outbox": [
+          {
+            "id": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+            "row": {
+              "eventId": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+              "type": "account.purged.v1",
+              "schemaVersion": 1,
+              "aggregateId": "alice",
+              "occurredAt": "2026-11-03T12:00:00.000Z",
+              "payloadJson": {
+                "eventId": "41d78db5-9c33-556d-82c5-dff151cf75fc",
+                "type": "account.purged.v1",
+                "schemaVersion": 1,
+                "producer": "ai",
+                "aggregateId": "alice",
+                "occurredAt": "2026-11-03T12:00:00.000Z",
+                "requestId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                "payload": {
+                  "userId": "alice",
+                  "requestId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                  "owner": "ai"
+                }
+              },
+              "attempt": 0,
+              "nextAttemptAt": "2026-11-03T12:00:00.000Z",
+              "leaseOwner": null,
+              "leaseUntil": null,
+              "status": "PENDING",
+              "ackAt": null,
+              "revision": 0,
+              "createdAt": "2026-11-03T12:00:00.000Z",
+              "updatedAt": "2026-11-03T12:00:00.000Z"
+            }
+          }
+        ],
+        "a_conversations": [
+          {
+            "id": "bob-conversation-000",
+            "row": {
+              "userId": "bob"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

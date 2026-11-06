@@ -1,0 +1,1453 @@
+{
+  "baseline": "12b1222554c9ae248e47f865e3ecb1f1f2a02633",
+  "status": "in-progress",
+  "operations": [
+    {
+      "operationId": "getHealth",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/health",
+      "status": "implemented-local-tests",
+      "tests": ["LearningHostTests.Health_IsPublicAndReadinessRemainsClosedUntilMigrationGatesPass"]
+    },
+    {
+      "operationId": "getReadiness",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/ready",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningHostTests.Health_IsPublicAndReadinessRemainsClosedUntilMigrationGatesPass"
+      ],
+      "remainingAcceptance": ["release-gate-activation", "native-system-acceptance"]
+    },
+    {
+      "operationId": "listCourses",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/courses",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningCoursesTests.Courses_ReturnPublishedRowsInOrderedPagesAndRejectInvalidCursor",
+        "LearningCursorTests.Decode_MatchesNodeOffsetCursor",
+        "AppwriteRowDriverTests.ListAsync_UsesOffsetOnlyOnFirstPageThenCursor",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite-pagination", "native-system-acceptance"]
+    },
+    {
+      "operationId": "getManifest",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/courses/{courseId}/manifest",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningIntegrityTests.Manifest_VerifiesStructureAndSignatureAndRejectsTampering",
+        "LearningStorageTests.Read_UsesLearningBucketAndDistinguishesMissingFile",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite-storage", "native-system-acceptance"]
+    },
+    {
+      "operationId": "enrollCourse",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/enrollments",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningEnrollmentTests.Placement_RequiresOwnedCompletedSessionAndCreatesEnrollmentAtomically",
+        "LearningEnrollmentTests.Revival_DeactivatesOnlyOwnersOtherCoursesAndPreservesCreationTime",
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-concurrency", "native-system-acceptance"]
+    },
+    {
+      "operationId": "getPath",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/courses/{courseId}/path",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningPathTests.NodeState_UsesMasteryThenFrontierAndCompletedLessons",
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "native-system-acceptance"]
+    },
+    {
+      "operationId": "getBundle",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/lessons/{lessonId}/bundle",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite-storage", "native-system-acceptance"]
+    },
+    {
+      "operationId": "startSession",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/sessions",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningCompletionTests.ReviewStart_RejectsAnInsufficientPoolWithoutCreatingASessionOrReceipt",
+        "LearningCompletionTests.ReviewStart_PrioritizesMistakesAndDueWordsAndPinsPrivateSnapshot",
+        "LearningCompletionTests.Start_AuthoredActivityReturnsResolvedMetadataAndHidesPrivateConfig",
+        "LearningCompletionTests.Start_AuthoredActivityModesAreAvailableWhenBundleDoesNotRestrictThem",
+        "LearningCompletionTests.Start_AuthoredModesFailClosedWhenTheBundleDoesNotDeclareThem",
+        "LearningCompletionTests.Start_UnknownAuthoredLessonUsesActivityNotFound",
+        "LearningCompletionTests.Start_GatesRequireAnAuthoredThresholdAndCheckpointPrerequisites",
+        "LearningCompletionTests.Start_ClashRejectsAnOpponentOutsideTheServerAuthoredSet",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-concurrency",
+        "native-system-acceptance",
+        "reviewed-test-schema-apply"
+      ]
+    },
+    {
+      "operationId": "getSession",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/sessions/{sessionId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningCompletionTests.ReviewStart_PrioritizesMistakesAndDueWordsAndPinsPrivateSnapshot",
+        "LearningCompletionTests.Start_AuthoredActivityReturnsResolvedMetadataAndHidesPrivateConfig",
+        "LearningRetiredSessionTests.GetSession_RecoversBundleFromItsRetainedPublishedContentVersion",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-retained-content-version",
+        "durable-owner-isolation",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "submitAnswer",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/sessions/{sessionId}/answers",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningCompletionTests.ReviewStart_PrioritizesMistakesAndDueWordsAndPinsPrivateSnapshot",
+        "LearningCompletionTests.Answer_AuthoredActivityUsesTheNormalGradingAndRevisionRulesWithoutEnergyCost",
+        "LearningCompletionTests.Answer_SpeechSubstitutionStoresAssistanceFlagsAndUsesOnlyAuthoredAlternative",
+        "LearningCompletionTests.Answer_SpeechAssessmentJobWithoutAdmittedProviderFailsBeforeWrites",
+        "LearningGradingTests.Grade_AcceptsCorrectAnswerForEveryPublishedExerciseType",
+        "LearningGradingTests.Grade_DoesNotTreatAnAssessmentJobIdAsAScore",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "two-device-concurrent-answer",
+        "durable-energy-and-session-conflicts",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "completeSession",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/sessions/{sessionId}/complete",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningCompletionTests.Complete_CommitsEnrollmentReviewOutboxAndReceiptOnce",
+        "LearningCompletionTests.Complete_RejectsIncompleteOriginalQueueWithoutWrites",
+        "LearningCompletionTests.Complete_RecordsFirstAttemptMistakeAndResetsReviewSchedule",
+        "LearningCompletionTests.Complete_TestOutPassAdvancesUnitWithoutRewardOrReviewEffects",
+        "LearningCompletionTests.Complete_TestOutFailureLeavesEnrollmentUnchanged",
+        "LearningCompletionTests.Complete_CheckpointPassMarksSectionCompleteWithoutReward",
+        "LearningCompletionTests.Complete_AuthoredActivityCreatesCompletionEventWithoutChangingCourseFrontier",
+        "LearningNodeParityTests.AuthoredModeCompletionsMatchNodeResponsesAndEffects"
+      ],
+      "remainingAcceptance": [
+        "durable-concurrent-completion-and-receipts",
+        "flutter-native-completion-parity"
+      ]
+    },
+    {
+      "operationId": "abandonSession",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/sessions/{sessionId}/abandon",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-appwrite-session-transactions",
+        "flutter-native-session-parity"
+      ]
+    },
+    {
+      "operationId": "syncOfflineCompletion",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/offline-completions",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningCompletionTests.OfflineCompletion_RegradesAndDeduplicatesByLocalCompletionId",
+        "LearningCompletionTests.OfflineCompletion_RegradesClientClaimAndRequiresRetryForWrongAnswer",
+        "LearningCompletionTests.OfflineCompletion_RejectsAlteredBundleHashWithoutWrites",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-concurrent-local-completion-dedupe",
+        "flutter-offline-sync-parity"
+      ]
+    },
+    {
+      "operationId": "getReview",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/review",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningStudyReadTests.Review_ListsOnlyOwnedDueItemsAndInterleavesSkills",
+        "AppwriteRowDriverTests.ListAsync_AppliesInclusiveDueAtCutoff",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite-due-query", "flutter-native-review-parity"]
+    },
+    {
+      "operationId": "createReport",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/reports",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningCompletionTests.CreateReport_StoresOwnerReportAndReplaysItsReceipt",
+        "LearningCompletionTests.CreateReport_RejectsUnknownFieldsAndOversizedNotes",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-concurrent-owner-reports-and-receipts",
+        "flutter-native-report-parity"
+      ]
+    },
+    {
+      "operationId": "publishContent",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/admin/content-versions",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Publish_VerifiesCommittedSignedCourseAndAtomicallyReplaysImmutableVersion",
+        "LearningManifestTests.Publish_DeniesNonMaintainerAndRefusesTamperingOrMissingBundleWithoutPointerWrites",
+        "LearningManifestTests.Publish_MatchesNodeResponsesAndOwnerRows"
+      ],
+      "remainingAcceptance": [
+        "durable-atomic-pointer-and-concurrent-publisher-races",
+        "production-signing-key-rotation-and-maintainer-configuration",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "getMe",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/me",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressReadsTests.GetMe_PromotesEffectiveZoneAndReturnsOnlyPrivateContractProjection",
+        "ProgressReadApiTests.Me_ReturnsExactProfileWireKeysAndIgnoresForgedUserId"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "updateMe",
+      "owner": "progress",
+      "method": "PATCH",
+      "path": "/v1/me",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressWritesTests.ProfileUpdate_NormalizesNicknameAndDistinguishesAvatarClearFromOmission",
+        "ProgressWritesTests.ProfileUpdate_SchedulesImmutableZoneAtNextUtcMidnightAndRateLimitsExactly24Hours",
+        "ProgressMutationApiTests.ProfileUpdate_HttpNormalizesReplaysAndClearsAvatar"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "initializeProfile",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/me/initialize",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressWritesTests.Initialize_CreatesFullOwnerStateAndDoesNotCreditAgainOnAnotherRequest",
+        "ProgressWritesTests.Initialize_PreservesEarlierRewardsAndExistingPreferencesAndRejectsTombstone",
+        "ProgressMutationApiTests.Initialize_EmptyBodyCreatesOwnerRowsAndNewKeyNeverDuplicatesInitialCredit"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "getRewards",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/me/rewards",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressReadsTests.Rewards_UsesOwnLedgerAndDistinguishesPendingCappedAndAggregate",
+        "ProgressReadApiTests.Rewards_ReadsAuthoritativeTotalsWithMillisecondUtcTimestamp"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "listQuests",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/quests",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressReadsTests.Quests_DefaultCatalogUsesEffectiveLearningDayButFriendWeekUsesUtc",
+        "ProgressReadsTests.Quests_WeekChangesExactlyAtMondayUtcDespiteLocalMonday",
+        "ProgressReadApiTests.Quests_HttpPaginatesWithExistingCursorContract"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "claimQuest",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/quests/{questId}/claim",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressEconomyTests.Quest_ClaimsOldCompletedPeriodOnceWithLedgerAndPrivateActivity",
+        "ProgressEconomyTests.ChestClaim_PersistsOneOutcomeAndReplaysLedgerCreditEvenWhenCurrentWalletChanges",
+        "QuestChestNodeParityTests.CreationAndReplayMatchNodeResponsesAndEveryDomainRow",
+        "ProgressMutationApiTests.Claim_HttpPermanentlyDeduplicatesQuestAndBindsReceiptToPathParameters"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "buyFreeze",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/me/freezes",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressEconomyTests.Freeze_ExactPriceDebitsWalletAndWritesBothLedgersInSameTransaction",
+        "ProgressMutationApiTests.Freeze_HttpDebitsExactlyOnceAndKeepsRewardWireShape"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "getPublicProfile",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/profiles/{userId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Follow_TransitionsFromNoneToFollowingToFriendAndUnfollowIsSilent",
+        "ProgressSocialTests.Privacy_DeniesFollowWithoutWritesAndHidesTargetWithoutReason",
+        "ProgressSocialTests.Http_ProjectsOnlyPublicFieldsAndReplaysFollowReceipt"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "followUser",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/follows",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Follow_TransitionsFromNoneToFollowingToFriendAndUnfollowIsSilent",
+        "ProgressSocialTests.Privacy_DeniesFollowWithoutWritesAndHidesTargetWithoutReason",
+        "ProgressSocialTests.Http_ProjectsOnlyPublicFieldsAndReplaysFollowReceipt",
+        "ProgressSocialTests.Follow_LimitCountsOnlyActiveOutgoingRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "unfollowUser",
+      "owner": "progress",
+      "method": "DELETE",
+      "path": "/v1/follows/{userId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Follow_TransitionsFromNoneToFollowingToFriendAndUnfollowIsSilent",
+        "ProgressSocialTests.Privacy_DeniesFollowWithoutWritesAndHidesTargetWithoutReason",
+        "ProgressSocialTests.Http_ProjectsOnlyPublicFieldsAndReplaysFollowReceipt"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "listFriends",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/friends",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Friends_SkipsPrivateMutualAccountsAndCursorTracksScannedCandidates",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-appwrite",
+        "flutter-native"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "listActivity",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/activity",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Activity_FiltersAuthorPrivacyAndVisibilityButIncludesOwnPrivateActivity",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-appwrite",
+        "flutter-native"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "getLeague",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/league",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LeagueTests.Join_UsesFirstOpenCohortAndRepeatsWithoutWrites",
+        "LeagueTests.Join_SkipsFullOrNonOpenCohorts"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "concurrent-cohort-capacity",
+        "settlement-and-watermark",
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "joinLeague",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/league/join",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LeagueTests.Join_UsesFirstOpenCohortAndRepeatsWithoutWrites",
+        "LeagueTests.Join_SkipsFullOrNonOpenCohorts"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "concurrent-cohort-capacity",
+        "settlement-and-watermark",
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "optInFriendQuest",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/friend-quests/opt-in",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FriendQuestInteractionTests.QuestOptIn_PairsMutualFriendAndPreservesSoloProgress",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-pairing",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "deleteAccount",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/me/deletion",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressWritesTests.Deletion_AtomicallyTombstonesAndEnqueuesExactlyOneOwnerEvent",
+        "ProgressMutationApiTests.Deletion_HttpReturnsAcceptedAndReplaysWithoutDuplicatingOutbox",
+        "ProgressMutationApiTests.Deletion_RequiresExactConfirmationBeforeReadingStorage"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "deletion-workers-and-acks", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "getCapabilities",
+      "owner": "ai",
+      "method": "GET",
+      "path": "/v1/ai/capabilities",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiCapabilitiesTests.Capabilities_RequiresVerifiedIdentityAndReportsOnlyFeaturesEnabledByThisHost",
+        "AiCapabilitiesTests.Capabilities_EnablesRecordedSpeechOnlyAfterExplicitAdmissionGate",
+        "AiCapabilitiesTests.Capabilities_ProviderSecretsAloneDoNotEnableSpeechBeforeReviewGate",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "production-provider-configuration-and-secret-rotation",
+        "native-device-capability-acceptance"
+      ]
+    },
+    {
+      "operationId": "tutorFeedback",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/tutor",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.Tutor_FallbackUsesDailyQuotaAndReceiptReplayDoesNotCountTwice",
+        "AiConversationTests.Conversation_StartIsEntitlementGatedAndTutorAdvancesOnlyOwnedAuthoredScenario",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "durable-concurrent-quota-and-receipt-boundaries",
+        "flutter-roleplay-parity"
+      ]
+    },
+    {
+      "operationId": "createVoiceSession",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/voice-sessions",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.VoiceCreation_KeepsLiveAndTurnDisabledWithoutReservationsOrReceipts",
+        "AiConversationTests.VoiceTurn_UsesRecognizedAudioAndCurrentExpectedLineWithReceiptIdempotency",
+        "AiConversationTests.VoiceTurn_AzureProviderOnSequenceMatchesNodeResponsesProviderRequestAndRows",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "durable-active-slot-concurrency",
+        "native-device-privacy-cost-acceptance"
+      ]
+    },
+    {
+      "operationId": "heartbeatVoiceSession",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/voice-sessions/{sessionId}/heartbeat",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.VoiceLifecycle_HeartbeatIsMonotonicAndCloseReleasesOnlyItsOwnedSlot",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "durable-appwrite-epoch-and-slot-boundaries",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "closeVoiceSession",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/voice-sessions/{sessionId}/close",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.VoiceLifecycle_HeartbeatIsMonotonicAndCloseReleasesOnlyItsOwnedSlot",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": ["durable-appwrite-close-replay", "native-system-acceptance"]
+    },
+    {
+      "operationId": "createAssessment",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/assessment-jobs",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.Assessment_ValidatesWavStoresOnlyHashAndReturnsNullScoreWithoutScorer",
+        "AiConversationTests.Assessment_AzureScoresAreBoundedAndReceiptReplayDoesNotCallProviderAgain",
+        "AiConversationTests.Assessment_AzureProviderOnSequenceMatchesNodeResponsesProviderRequestAndRows",
+        "AiConversationTests.Assessment_DeepgramFallbackSequenceMatchesNodeResponsesProviderRequestsAndRows",
+        "AiConversationTests.Assessment_AssemblyAiFallbackSequenceMatchesNodeResponsesProviderRequestsAndRows",
+        "AiConversationTests.Assessment_LowAzureConfidenceNeverReturnsNumericScores",
+        "AiConversationTests.Assessment_DeepgramFallbackReturnsTranscriptWithoutPronunciationScore",
+        "AiConversationTests.Assessment_AssemblyAiFallbackUploadsThenPollsWithoutInventingScore",
+        "AiConversationTests.Assessment_GlobalAzureDailyCapPreventsProviderCall"
+      ],
+      "remainingAcceptance": [
+        "live-provider-and-pronunciation-quality-gate",
+        "durable-quota-and-receipt-concurrency",
+        "native-device-privacy-cost-acceptance"
+      ]
+    },
+    {
+      "operationId": "getAssessment",
+      "owner": "ai",
+      "method": "GET",
+      "path": "/v1/assessment-jobs/{jobId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.Assessment_ValidatesWavStoresOnlyHashAndReturnsNullScoreWithoutScorer",
+        "AiConversationTests.Assessment_AzureProviderOnSequenceMatchesNodeResponsesProviderRequestAndRows",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "durable-owner-isolation",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "submitVoiceTurn",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/voice-sessions/{sessionId}/turns",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.VoiceTurn_ValidatesAudioAndOwnershipThenFailsClosedWithoutWrites",
+        "AiConversationTests.VoiceTurn_UsesRecognizedAudioAndCurrentExpectedLineWithReceiptIdempotency",
+        "AiConversationTests.VoiceTurn_AzureProviderOnSequenceMatchesNodeResponsesProviderRequestAndRows",
+        "AiConversationTests.VoiceTurn_DeepgramFallbackSequenceMatchesNodeResponsesProviderRequestsAndRows",
+        "AiConversationTests.VoiceTurn_AssemblyAiFallbackSequenceMatchesNodeResponsesProviderRequestsAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-quota-and-receipt-concurrency",
+        "native-device-privacy-cost-acceptance"
+      ]
+    },
+    {
+      "operationId": "consumeEvent",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/internal/events",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LessonCompletionTests.SignedLessonEvent_RequiresLearningAndReplaysWithoutDoubleCredit",
+        "LessonCompletionTests.SignedLessonEvent_RejectsUnknownPayloadFieldsBeforeInboxWrites",
+        "PracticeCompletionTests.SignedEvent_RequiresAiAndDeduplicatesInbox",
+        "PracticeCompletionTests.SignedPracticeEvent_RejectsAggregateMismatchBeforeInboxWrites",
+        "DeletionPurgeTests.SignedPurgeEvent_RequiresMatchingProducerAndDeduplicates",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-inbox-and-effects",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "getOutboxWatermark",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/internal/outbox-watermark",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningOutboxWatermarkTests.SignedWatermark_CountsPendingLeasedAndDeadBeforeCutoff",
+        "LearningOutboxWatermarkTests.Watermark_RejectsUnapprovedSenderAndInvalidCutoff",
+        "AppwriteRowDriverTests.CountAsync_AppliesStatusSetAndCutoffWithoutAnOrderingLimit"
+      ],
+      "remainingAcceptance": [
+        "durable-Appwrite-watermark-query",
+        "mixed-runtime-and-native-acceptance"
+      ]
+    },
+    {
+      "operationId": "getEnergy",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/me/energy",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningEnergyTests.View_RegeneratesAtUnitBoundariesAndRespectsUnlimitedMode",
+        "LearningCoursesTests.Courses_ReturnPublishedRowsInOrderedPagesAndRejectInvalidCursor",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "entitlement-and-grant-consumers",
+        "durable-appwrite",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "switchCourse",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/enrollments/{courseId}/activate",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-concurrency", "native-system-acceptance"]
+    },
+    {
+      "operationId": "resetCourse",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/v1/enrollments/{courseId}/reset",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningEnrollmentTests.Reset_RejectsStaleRevisionAndAbandonsOwnedSession",
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-concurrency", "native-system-acceptance"]
+    },
+    {
+      "operationId": "removeCourse",
+      "owner": "learning",
+      "method": "DELETE",
+      "path": "/v1/enrollments/{courseId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningManifestTests.Manifest_UsesPublishedVersionAndRejectsAlteredFiles",
+        "LearningEnrollmentTests.Remove_ClosesItsActiveSessionAndPreservesOtherEnrollments",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-active-session-removal",
+        "durable-concurrency",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "listMistakes",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/mistakes",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningStudyReadTests.Mistakes_AreOwnerScopedOrderedFilteredAndPaginated",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite-query", "flutter-native-review-parity"]
+    },
+    {
+      "operationId": "listWords",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/words",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningStudyReadTests.Words_UsesPublishedMatchPairsFallbackStrengthSortAndPagination",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-published-bundle-storage",
+        "flutter-native-vocabulary-parity"
+      ]
+    },
+    {
+      "operationId": "listActivityProgress",
+      "owner": "learning",
+      "method": "GET",
+      "path": "/v1/activities",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningStudyReadTests.Activities_FilterByKindAndPaginateByActivityId",
+        "LearningNodeParityTests.EnrollmentLifecycleSessionAndAnswerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": ["durable-appwrite-query", "flutter-native-activity-parity"]
+    },
+    {
+      "operationId": "getPreferences",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/me/preferences",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressReadsTests.Preferences_DefaultsAreReturnedWithoutCreatingRows",
+        "ProgressReadsTests.Preferences_UsesPersistedFalseValuesAndOnlyOwnSettings",
+        "ProgressReadApiTests.Preferences_HttpReturnsDefaultWireProjectionWithoutPrivateIdentity"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "updatePreferences",
+      "owner": "progress",
+      "method": "PATCH",
+      "path": "/v1/me/preferences",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressWritesTests.Preferences_CreateDefaultsAndChangeOnlySuppliedFieldsInOneCommit",
+        "ProgressMutationApiTests.Preferences_ReplaysCanonicalBodyAndRejectsChangedBodyWithoutAnotherWrite",
+        "ProgressMutationApiTests.SameOperationKeyIsIsolatedBetweenVerifiedAccounts"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "sendFeedback",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/feedback",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressWritesTests.Feedback_StoresExactUnicodeTextAndVerifiedSubjectAtDeterministicId",
+        "ProgressMutationApiTests.Feedback_ReplayUsesCurrentRequestIdAndOperationScopedReceipt"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "listShop",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/shop",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressEconomyTests.Shop_CatalogProjectsWalletCapacityAndOwnInventoryWithoutWrites",
+        "ProgressMutationApiTests.Shop_HttpCatalogPurchaseActivationAndRepairPreserveReceiptsAndWireDates"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "buyItem",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/shop/purchases",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressEconomyTests.Shop_PurchaseDebitsOneWalletAndCommitsInventoryOrEnergyEvent",
+        "ProgressEconomyTests.Shop_ReusedLedgerIdentityCannotDebitAgainEvenWithoutHttpReceipt",
+        "ProgressMutationApiTests.Shop_HttpEnergyRefillQueuesOneOwnerGrantWithoutFakeLearningMutation"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "activateBoost",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/me/boosts",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressEconomyTests.Shop_ActivationConsumesInventoryAndStacksAfterSameKindWindow",
+        "ProgressMutationApiTests.Shop_HttpCatalogPurchaseActivationAndRepairPreserveReceiptsAndWireDates"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "repairStreak",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/me/streak-repair",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressEconomyTests.Shop_RepairAtTwoDayBoundaryRestoresRunAndConsumesSelectedPayment",
+        "ProgressEconomyTests.Shop_InvalidRepairLeavesWalletAndOfferUnchanged",
+        "ProgressMutationApiTests.Shop_HttpCatalogPurchaseActivationAndRepairPreserveReceiptsAndWireDates"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "listFriendStreaks",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/friend-streaks",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FriendStreakTests.Invitation_OnlyRecipientRespondsAndRepeatsDoNotRewrite",
+        "FriendStreakTests.Invitation_DenialsDoNotCreateRelationship",
+        "FriendStreakTests.Invitation_EnforcesOpenRelationshipCapacityAtFive"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "response-capacity-and-authorization-expansion",
+        "completion-consumer-extension",
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "inviteFriendStreak",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/friend-streaks",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FriendStreakTests.Invitation_OnlyRecipientRespondsAndRepeatsDoNotRewrite",
+        "FriendStreakTests.Invitation_DenialsDoNotCreateRelationship",
+        "FriendStreakTests.Invitation_EnforcesOpenRelationshipCapacityAtFive"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "response-capacity-and-authorization-expansion",
+        "completion-consumer-extension",
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "respondFriendStreak",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/friend-streaks/{pairId}/respond",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FriendStreakTests.Invitation_OnlyRecipientRespondsAndRepeatsDoNotRewrite",
+        "FriendStreakTests.Invitation_DenialsDoNotCreateRelationship",
+        "FriendStreakTests.Invitation_EnforcesOpenRelationshipCapacityAtFive"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "response-capacity-and-authorization-expansion",
+        "completion-consumer-extension",
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "sendInteraction",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/interactions",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FriendQuestInteractionTests.Interaction_DeduplicatesByLocalDayAndContextAcrossRequestKeys",
+        "FriendQuestInteractionTests.Interaction_DenialDoesNotSpendOrCreateBoost",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-gift-receipt-and-wallet",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "blockUser",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/blocks",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Block_RemovesBothFollowsAndUnblockDoesNotRestoreThem",
+        "ProgressSocialTests.SafetyHttp_ReplaysReceiptWithoutDuplicateWrites",
+        "ProgressSocialTests.Block_EndsOnlyOpenFriendStreakAndPreservesHistoricalState"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "unblockUser",
+      "owner": "progress",
+      "method": "DELETE",
+      "path": "/v1/blocks/{userId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Block_RemovesBothFollowsAndUnblockDoesNotRestoreThem",
+        "ProgressSocialTests.SafetyHttp_ReplaysReceiptWithoutDuplicateWrites"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "reportUser",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/user-reports",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressSocialTests.Report_IsUniqueByReporterTargetAndReasonAndNeverOverwritesOriginalNote",
+        "ProgressSocialTests.SafetyHttp_ReplaysReceiptWithoutDuplicateWrites"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    },
+    {
+      "operationId": "joinClassroom",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/classrooms/join",
+      "status": "implemented-local-tests",
+      "tests": ["ClassroomTests.Membership_NormalizesCodeAndJoinLeaveAreIdempotent"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "leaveClassroom",
+      "owner": "progress",
+      "method": "DELETE",
+      "path": "/v1/classrooms/{classroomId}/membership",
+      "status": "implemented-local-tests",
+      "tests": ["ClassroomTests.Membership_NormalizesCodeAndJoinLeaveAreIdempotent"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "getYearReview",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/me/year-review/{year}",
+      "status": "implemented-local-tests",
+      "tests": ["ClassroomTests.Year_SumsOwnDaysAndFreezesOnlyFinishedYears"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "getLeagueResult",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/league/result",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LeagueResultTests.Result_DefaultProjectionDoesNotCreateStateAndUnknownSeenIsRejected"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "markLeagueResultSeen",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/league/result/seen",
+      "status": "implemented-local-tests",
+      "tests": ["LeagueResultTests.Result_OnlyLatestWeekCanBeSeenAndRepeatedSeenDoesNotRewrite"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": [
+        "durable-appwrite",
+        "flutter-native"
+      ]
+    },
+    {
+      "operationId": "getEntitlement",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/me/entitlement",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressReadsTests.Entitlement_ProjectsExactExpiryAndIndependentAccessFlags",
+        "ProgressReadsTests.Entitlement_MissingRowProjectsFreeWithoutCreatingData",
+        "ProgressReadApiTests.Entitlement_HttpReturnsOnlyServerCapabilitiesAndMillisecondDates"
+      ],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows",
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"]
+    },
+    {
+      "operationId": "verifyPurchase",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/billing/purchases",
+      "status": "implemented-local-tests",
+      "tests": [
+        "BillingSimulationTests.Subscription_VerificationPreservesStateAndEffectiveAccess",
+        "BillingSimulationTests.HttpVerification_DefaultsClosedAndExplicitTestCompositionReplaysReceipt",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-receipts-ledger-outbox",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "billingNotification",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/internal/billing/notifications",
+      "status": "implemented-local-tests",
+      "tests": [
+        "BillingSimulationTests.Gems_NotificationDeduplicationRefundClampsBalanceAndTerminalStateStaysClosed",
+        "BillingSimulationTests.HttpNotification_RequiresMaintainerAndSimulationComposition",
+        "BillingSimulationTests.HttpNotification_NormalizesLikeJavaScriptDateParse",
+        "BillingSimulationTests.Notification_RejectsValuesJavascriptDateParseRejects",
+        "BillingSimulationTests.Notification_AdvancesSameStateTimestampAndIgnoresEqualOrOlderEvents",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-inbox-ledger-outbox",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "createFamily",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/family",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FamilyTests.CreateJoinLeave_PreservesManagerCodeAndRevokesMemberAccess",
+        "FamilyTests.Create_DenialsLeaveNoGroupOrEvent",
+        "FamilyTests.Create_ActiveSuperPurchaseCanCreateSuperFamily",
+        "FamilyTests.Create_ExpiryAtNowDeniesFamilyWithoutWrites",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-receipts-group-entitlement-outbox",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "joinFamily",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/family/{groupId}/members",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FamilyTests.CreateJoinLeave_PreservesManagerCodeAndRevokesMemberAccess",
+        "FamilyTests.Join_DenialsPreserveMembersAndEntitlements",
+        "FamilyTests.Join_CapacityFiveAllowsSixthAndRejectsSeventhWithoutWrites",
+        "FamilyTests.Join_ConcurrentRequestsForLastSeatAdmitOnlyOneMember",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-receipts-group-entitlement-outbox",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "removeFamilyMember",
+      "owner": "progress",
+      "method": "DELETE",
+      "path": "/v1/family/{groupId}/members/{userId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "FamilyTests.CreateJoinLeave_PreservesManagerCodeAndRevokesMemberAccess",
+        "FamilyTests.Remove_ProtectsManagerAndRejectsUnrelatedActor",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-receipts-group-entitlement-outbox",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "sendGift",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/gifts",
+      "status": "implemented-local-tests",
+      "tests": [
+        "GiftTests.SendAndRedeem_RespectsPaymentOutcomeAndNeverExtendsTwice",
+        "GiftTests.Send_DenialsDoNotCreatePurchaseOrGift",
+        "GiftTests.DefaultHost_KeepsBothSimulationRoutesClosed",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-purchase-gift-receipt",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "redeemGift",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/gifts/{giftId}/redeem",
+      "status": "implemented-local-tests",
+      "tests": [
+        "GiftTests.SendAndRedeem_RespectsPaymentOutcomeAndNeverExtendsTwice",
+        "GiftTests.DefaultHost_KeepsBothSimulationRoutesClosed",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-gift-entitlement-outbox",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "getReferral",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/me/referral",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ReferralTests.IssueRedeem_GrantsTrialOnceAndPreservesExistingPaidPlan",
+        "ReferralTests.Issue_WithoutServerSecretFailsBeforeWriting",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-code-issuance",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "redeemReferral",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/referrals/redeem",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ReferralTests.IssueRedeem_GrantsTrialOnceAndPreservesExistingPaidPlan",
+        "ReferralTests.SelfOrUnknownCode_DoesNotGrantEntitlement",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-once-per-invitee",
+        "entitlement-event-consumers",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "redeemPromoCode",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/promo-codes/redeem",
+      "status": "implemented-local-tests",
+      "tests": [
+        "PromoTests.Redeem_AppliesRewardOnceAndDistinguishesOwnUsedCodeFromExhaustion",
+        "PromoTests.UnavailableCode_LeavesNoRedemptionOrReward",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-last-slot-and-once-per-user",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "recordAdEvent",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/ad-events",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AdTests.Event_DeduplicatesAcrossRequestKeysAndProjectsReward",
+        "AdTests.RewardCap_RejectsSixthThenResetsNextDay",
+        "AdTests.IneligibleOrSubstitutedEvent_DoesNotApplyEffects",
+        "AdTests.DefaultHost_RejectsSimulationWithoutWrites",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-daily-slot-and-ledger",
+        "learning-energy-consumer-and-native-acceptance"
+      ]
+    },
+    {
+      "operationId": "listConversations",
+      "owner": "ai",
+      "method": "GET",
+      "path": "/v1/conversations",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.Conversation_StartIsEntitlementGatedAndTutorAdvancesOnlyOwnedAuthoredScenario",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "durable-owner-isolation-and-pagination",
+        "flutter-conversation-history-parity"
+      ]
+    },
+    {
+      "operationId": "startConversation",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/conversations",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.Conversation_StartIsEntitlementGatedAndTutorAdvancesOnlyOwnedAuthoredScenario",
+        "AiConversationTests.Conversation_CompletionScoresServerTurnsAndStagesOneOutboxEvent",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "entitlement-event-projection-parity",
+        "durable-concurrent-active-scenario-and-receipts",
+        "flutter-roleplay-parity"
+      ]
+    },
+    {
+      "operationId": "completeConversation",
+      "owner": "ai",
+      "method": "POST",
+      "path": "/v1/conversations/{conversationId}/complete",
+      "status": "implemented-local-tests",
+      "tests": [
+        "AiConversationTests.Conversation_CompletionScoresServerTurnsAndStagesOneOutboxEvent",
+        "AiConversationTests.DisabledSpeechRouteSequence_MatchesNodeResponses"
+      ],
+      "remainingAcceptance": [
+        "immediate-relay-and-outbox-worker",
+        "durable-concurrent-completion-and-receipts",
+        "flutter-completion-parity"
+      ]
+    },
+    {
+      "operationId": "runStreakRollover",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/internal/jobs/streak-rollover",
+      "status": "implemented-local-tests",
+      "tests": [
+        "RolloverTests.MissedDays_ConsumesOnceThenRecordsLostStreakAndRepeatsWithoutWrites",
+        "RolloverTests.MissingYesterday_UsesAccountZoneAtServerMidnight",
+        "RolloverTests.ExistingQualifiedDaysAdvanceAndAnExistingFreezeLedgerCannotConsumeAgain",
+        "RolloverTests.CatchUpStopsAtFourHundredDaysAndResumesOnTheNextTick",
+        "RolloverTests.CandidateBatch_UsesOldestFirstAndHonorsRequestedLimit",
+        "RolloverTests.CandidateWithoutActiveProfileIsReportedAsSkipped",
+        "RolloverTests.TransactionConflictsAreReportedForRetryOnTheNextTick",
+        "RolloverTests.SignedJob_UsesDurableCandidatesAndRepeatsWithoutAnotherFreeze",
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "concurrent-durable-freeze-and-day-activity",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "runLeagueSettlement",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/internal/jobs/league-settlement",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LeagueTests.Settlement_NonzeroOrFailedWatermarkNeverClosesCohort",
+        "LeagueTests.Settlement_ZeroWatermarkClosesOnceAndSmallCohortHasNoPodiumCredit",
+        "LeagueTests.Settlement_FullCohortRanksTiesAwardsPodiumAndExcludesRemovedMember",
+        "LeaguePolicyTests.Movement_PreservesSmallCohortAndTierBoundaries",
+        "SettlementJobTests.SignedTick_EnforcesAuthorityAndReportsEmptyWeek",
+        "SettlementJobTests.InvalidTick_ReturnsValidationField",
+        "SettlementJobTests.HttpWatermarkFailure_RetriesThenClosesWithoutDuplicateEffects",
+        "WatermarkTests.Request_SignsExactGetPathQueryAndEmptyBody",
+        "WatermarkTests.InvalidResponse_NeverBecomesZeroWatermark",
+        "WatermarkTests.CallerCancellation_PropagatesInsteadOfBecomingWatermarkFailure",
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-recovery",
+        "single-worker-replica-operational-gate",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "runDeletionPurge",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/internal/jobs/deletion-purge",
+      "status": "implemented-local-tests",
+      "tests": [
+        "DeletionPurgeTests.Acknowledgements_IgnoreStaleRequestsAndWaitForBothOwners",
+        "DeletionPurgeTests.BoundedPurge_ResumesAcrossBatchesAndPreservesOtherUsersAndTombstone",
+        "DeletionPurgeTests.SignedJob_PurgesOnlyReadyAccountsAndRetainsTombstone",
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-concurrent-recovery",
+        "single-worker-replica-operational-gate",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "runProgressOutboxRelay",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/internal/jobs/progress-outbox-relay",
+      "status": "implemented-local-tests",
+      "tests": [
+        "RelayTests.Ack_RequiresAllTargetsAndRebuildsStableEnvelope",
+        "RelayTests.FailedTarget_RequeuesWithBackoffOrStopsAtTenthAttempt",
+        "RelayTests.InvalidStoredEvent_DeadLettersWithoutNetwork",
+        "RelayTests.LeaseExpiry_RequiresStrictlyEarlierThanServerTime",
+        "RelayTests.LostLease_DoesNotOverwriteNewOwnersState",
+        "RelayTests.Deadline_LeavesUnattemptedRowsLeasedAndRecoverableAfterExpiry",
+        "RelayTests.Relay_ClampsBatchToTwenty",
+        "RelayTests.RowIds_RestrictSelectionToRequestedPendingEvent",
+        "RelayTests.CancellationDuringDeliveryLeavesLeaseRecoverable",
+        "RelayHttpTests.SignedDelivery_PreservesNodeResponseOutcomeTable",
+        "RelayHttpTests.MissingOrInvalidTarget_RetriesWithoutCallingNetwork",
+        "RelayJobTests.SignedJob_RetriesUntilEveryTargetAcknowledgesOrFailsClosedWithoutKey",
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "concurrent-durable-leases-and-crash-recovery",
+        "mixed-runtime-and-native-acceptance"
+      ]
+    },
+    {
+      "operationId": "runLearningOutboxDispatch",
+      "owner": "learning",
+      "method": "POST",
+      "path": "/internal/jobs/learning-outbox-dispatch",
+      "status": "implemented-local-tests",
+      "tests": [
+        "LearningOutboxDispatchTests.ScheduledDispatch_DeliversPendingEventAndAcknowledgesIt",
+        "LearningOutboxDispatchTests.ScheduledDispatch_RejectsWrongSenderAndFailsClosedWithoutTransport",
+        "LearningOutboxDispatchTests.Dispatcher_RetriesWithBackoffThenAcknowledgesWhenDue",
+        "LearningOutboxDispatchTests.Dispatcher_RetryThenAckMatchesNodeReportsAndPersistedRows",
+        "LearningNodeParityTests.SignedOutboxDispatchHttpMatchesNodeResponseAndRow",
+        "LearningRelayHttpTests.SignedDelivery_PreservesNodeResponseOutcomeTable",
+        "LearningRelayHttpTests.MissingOrInvalidTarget_RetriesWithoutCallingNetwork"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-lease-recovery",
+        "concurrent-durable-leases",
+        "mixed-runtime-and-native-acceptance"
+      ]
+    },
+    {
+      "operationId": "getPurchase",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/billing/purchases/{purchaseId}",
+      "status": "implemented-local-tests",
+      "tests": [
+        "BillingReadCancelTests.PurchaseRead_HidesForeignOwnerAndVendorState",
+        "BillingReadCancelTests.PurchaseRead_ReturnsProfileUnavailableAfterDeletionTombstone",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-owner-isolation",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "cancelSubscription",
+      "owner": "progress",
+      "method": "POST",
+      "path": "/v1/billing/subscription/cancel",
+      "status": "implemented-local-tests",
+      "tests": [
+        "BillingReadCancelTests.Cancel_ChangesEntitlementAndEventAtomicallyAndKeepsAccessUntilExpiry",
+        "BillingReadCancelTests.Cancel_DeniedOrInactiveSubscriptionDoesNotChangePurchaseOrEmitEvent",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "concurrent-durable-receipts-and-outbox",
+        "entitlement-event-consumers",
+        "native-system-acceptance"
+      ]
+    },
+    {
+      "operationId": "getLearningStats",
+      "owner": "progress",
+      "method": "GET",
+      "path": "/v1/me/learning-stats",
+      "status": "implemented-local-tests",
+      "tests": [
+        "ProgressReadsTests.Statistics_Fills28DaysAndUsesEffectiveHistoryWithoutChangingPastKeys",
+        "ProgressReadApiTests.Statistics_HttpUsesServerCountsAndFillsMissingDays"
+      ],
+      "remainingAcceptance": ["durable-appwrite", "flutter-native"],
+      "localSequenceEvidence": "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+    }
+  ]
+}

@@ -73,6 +73,8 @@ catalog are documented in the [avatar analysis](../../docs/design/flows/24_AVATA
 
 Use `flutter run --dart-define-from-file=config/real.public.json` from this folder for the existing coccoc-test project. See [scope, limits and acceptance](../../docs/quality/REAL_LEARNING_FLOW.md). The browser preview remains a fixture preview; billing remains simulated.
 
+For the .NET VPS candidate, copy [dotnet-vps.public.example.json](config/dotnet-vps.public.example.json) to a local public profile, replace the `.invalid` HTTPS hostnames with the reviewed VPS API domains and the configured Appwrite recovery/verification callback domain, then run/build with `--dart-define-from-file=config/<your-profile>.json`. This profile keeps the same Appwrite project for Auth while pointing Learning, Progress and AI to the .NET hosts. Do not replace `real.public.json` until owner acceptance and the one-writer cutover are approved. API/HMAC keys must never be added to a Flutter define; the app sends only the signed-in Appwrite JWT.
+
 ## Real placement test (native API mode)
 
 New learners can choose a 10-question placement test before enrollment. Completed tests select the server starting point and award no XP. Existing progress is preserved. See [usage, recovery and verification](../../docs/quality/REAL_PLACEMENT_TEST.md).

@@ -1,0 +1,27 @@
+{
+  "now": "2026-11-03T12:00:00.000Z",
+  "user": "fallback-parity-user",
+  "jobId": "67676767-6767-4676-8676-676767676767",
+  "idempotencyKey": "56565656-5656-4656-8656-565656565656",
+  "referenceExerciseId": "exercise1",
+  "lessonVersion": "v1",
+  "locale": "en-US",
+  "referenceText": "I like English.",
+  "wavSeconds": 1,
+  "azureRegion": "westus2",
+  "inspect": ["a_jobs", "a_receipts", "a_usage"],
+  "deepgramResponse": {
+    "results": {
+      "channels": [
+        {
+          "alternatives": [
+            {
+              "transcript": "I like English.",
+              "confidence": 0.89
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

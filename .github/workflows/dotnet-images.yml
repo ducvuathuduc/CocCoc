@@ -1,0 +1,65 @@
+name: .NET staging images (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the three images to this repository's GHCR namespace
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dotnet-images-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: ${{ !inputs.publish }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - name: Build runtime images and record local image IDs
+        env:
+          COC_IMAGE_PUBLISH: 'false'
+          COC_IMAGE_OUTPUT_DIR: ${{ runner.temp }}/dotnet-images
+        run: bash backend-dotnet/tools/build-images.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dotnet-image-metadata-${{ github.run_id }}
+          path: ${{ runner.temp }}/dotnet-images/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    if: ${{ inputs.publish }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - name: Authenticate to GHCR
+        env:
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_USER: ${{ github.actor }}
+        run: printf '%s' "$REGISTRY_TOKEN" | docker login ghcr.io --username "$REGISTRY_USER" --password-stdin
+      - name: Build, publish and record immutable pull references
+        env:
+          COC_IMAGE_PUBLISH: 'true'
+          COC_IMAGE_OUTPUT_DIR: ${{ runner.temp }}/dotnet-images
+        run: bash backend-dotnet/tools/build-images.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dotnet-image-metadata-${{ github.run_id }}
+          path: ${{ runner.temp }}/dotnet-images/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Clear registry login
+        if: always()
+        run: docker logout ghcr.io
