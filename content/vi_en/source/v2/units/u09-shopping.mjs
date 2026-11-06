@@ -1,9 +1,9 @@
 // Unit 9 — Shopping (A2).
 export default {
-  theme: 'shopping',
-  cefr: 'A2',
-  title: 'Mua sắm',
-  levels: ['Đi mua sắm', 'Áo, giày, váy', 'Màu sắc', 'Trả tiền', 'Ở chợ'],
+  theme: "shopping",
+  cefr: "A2",
+  title: "Mua sắm",
+  levels: ["Đi mua sắm", "Áo, giày, váy", "Màu sắc", "Trả tiền", "Ở chợ"],
   guide: `
 Mẫu câu chính: "How much is this dress?" (Cái váy này bao nhiêu tiền?) — "Can I pay by card?" (Tôi trả bằng thẻ được không?) — "It is on sale." (Nó đang giảm giá.)
 How much is + số ít / How much are + số nhiều: "How much are the shoes?"
@@ -74,7 +74,7 @@ Is it on sale? => Yes, it is cheap today. ## Yes, it is. = Vâng, hôm nay nó r
 Where do you buy fish? => At the market. ## I buy fish at the market. = Ở chợ.
 `,
   story: {
-    title: 'Món quà cho mẹ',
+    title: "Món quà cho mẹ",
     passage: `Mai and Anna go shopping. Mai wants to buy a gift for her mother. At the first shop, there is a beautiful red dress.
 "How much is it?" Mai asks. "Nine hundred thousand dong." It is too expensive!
 They go to the market. A woman sells nice bags. "This black bag is on sale," she says. "Two hundred thousand dong."

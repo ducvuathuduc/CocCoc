@@ -1,15 +1,9 @@
 // Unit 13 — Hobbies and free time (A2).
 export default {
-  theme: 'hobbies',
-  cefr: 'A2',
-  title: 'Sở thích',
-  levels: [
-    'Âm nhạc và phim',
-    'Chơi, xem, hát',
-    'Bóng đá và đàn',
-    'Sở thích của tôi',
-    'Chụp ảnh và nấu ăn',
-  ],
+  theme: "hobbies",
+  cefr: "A2",
+  title: "Sở thích",
+  levels: ["Âm nhạc và phim", "Chơi, xem, hát", "Bóng đá và đàn", "Sở thích của tôi", "Chụp ảnh và nấu ăn"],
   guide: `
 Mẫu câu chính: "What is your hobby?" (Sở thích của bạn là gì?) — "I like to draw." (Tôi thích vẽ.) — "My favorite sport is football." (Môn thể thao yêu thích của tôi là bóng đá.)
 Like + to V hoặc like + V-ing đều đúng: "I like to dance" = "I like dancing".
@@ -80,7 +74,7 @@ Do you want to watch a movie together? => Yes, let's go! ## Yes, sure. = Có, đ
 Can you play the piano? => Yes, a little. ## Yes, I can. = Có, một chút.
 `,
   story: {
-    title: 'Câu lạc bộ thứ Bảy',
+    title: "Câu lạc bộ thứ Bảy",
     passage: `Every Saturday, Mai's school has clubs. Nam plays football. He is very good. Anna plays the piano and Tom plays the guitar. Together they make music.
 Mai cannot sing well, but she loves to dance. Huy likes to draw.
 Last Saturday, Linh came with her new camera and took many photos of everyone. Then Mai's father cooked chicken for them.

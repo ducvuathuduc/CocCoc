@@ -1,9 +1,9 @@
 // Unit 14 — Health (A2).
 export default {
-  theme: 'health',
-  cefr: 'A2',
-  title: 'Sức khỏe',
-  levels: ['Tôi bị ốm', 'Thuốc và nghỉ ngơi', 'Bạn nên...', 'Sống khỏe', 'Đi nha sĩ'],
+  theme: "health",
+  cefr: "A2",
+  title: "Sức khỏe",
+  levels: ["Tôi bị ốm", "Thuốc và nghỉ ngơi", "Bạn nên...", "Sống khỏe", "Đi nha sĩ"],
   guide: `
 Mẫu câu chính: "How do you feel?" (Bạn thấy thế nào?) — "I have a headache." (Tôi bị đau đầu.) — "You should rest." (Bạn nên nghỉ ngơi.)
 Bệnh dùng "have": have a fever (bị sốt), have a cough (bị ho), have a headache (bị đau đầu). Tính từ dùng "be": I am sick, I am tired.
@@ -74,7 +74,7 @@ Do you exercise? => Yes, I exercise every day. ## Yes, I do. = Có, tôi tập t
 When is your appointment? => It is at three o'clock. ## At three. = Lúc ba giờ.
 `,
   story: {
-    title: 'Nam bị ốm',
+    title: "Nam bị ốm",
     passage: `On Monday, Nam does not go to school. He is sick. He has a fever and a headache, and his stomach hurts.
 "You should go to the doctor," his mother says. The doctor says, "You ate too much last night! You should rest and drink water. Take this medicine after dinner."
 Nam sleeps all day. On Wednesday, he feels better. "No more chicken at midnight," he says. Mai brings him fruit and his homework.`,

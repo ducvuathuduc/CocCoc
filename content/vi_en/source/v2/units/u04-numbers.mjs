@@ -1,9 +1,9 @@
 // Unit 4 — Numbers and age (A1).
 export default {
-  theme: 'numbers',
-  cefr: 'A1',
-  title: 'Số đếm và tuổi',
-  levels: ['Một, hai, ba', 'Năm đến tám', 'Bạn bao nhiêu tuổi?', 'Số điện thoại', 'Bao nhiêu?'],
+  theme: "numbers",
+  cefr: "A1",
+  title: "Số đếm và tuổi",
+  levels: ["Một, hai, ba", "Năm đến tám", "Bạn bao nhiêu tuổi?", "Số điện thoại", "Bao nhiêu?"],
   guide: `
 Mẫu câu chính: "How old are you?" (Bạn bao nhiêu tuổi?) — "I am twenty years old." (Tôi hai mươi tuổi.) — "How many books do you have?" (Bạn có bao nhiêu quyển sách?)
 Số nhiều: thêm -s sau danh từ khi nhiều hơn một: one cat, two cats; one egg, six eggs. Tiếng Việt không đổi danh từ, nhưng tiếng Anh thì có.
@@ -74,7 +74,7 @@ How many pens do you want? => Three pens, please. ## I want three pens. = Cho t�
 Is your grandfather old? => Yes, he is eighty. ## Yes, he is. = Vâng, ông ấy tám mươi tuổi.
 `,
   story: {
-    title: 'Ở hiệu sách',
+    title: "Ở hiệu sách",
     passage: `Mai and her brother Huy are at a bookshop. Huy is ten years old. He wants many books!
 "How many books do you want?" Mai asks. "Five books!" Huy says. "No, Huy. Two books."
 The man at the shop is old and nice. "Two books and three pens. That is forty thousand dong," he says.

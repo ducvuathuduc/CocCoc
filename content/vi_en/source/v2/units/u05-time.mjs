@@ -1,15 +1,9 @@
 // Unit 5 — Time and daily routine (A1).
 export default {
-  theme: 'time',
-  cefr: 'A1',
-  title: 'Thời gian và một ngày của tôi',
-  levels: [
-    'Mấy giờ rồi?',
-    'Đi học, về nhà',
-    'Buổi tối và hôm nay',
-    'Các ngày trong tuần',
-    'Luôn luôn, thỉnh thoảng',
-  ],
+  theme: "time",
+  cefr: "A1",
+  title: "Thời gian và một ngày của tôi",
+  levels: ["Mấy giờ rồi?", "Đi học, về nhà", "Buổi tối và hôm nay", "Các ngày trong tuần", "Luôn luôn, thỉnh thoảng"],
   guide: `
 Mẫu câu chính: "What time is it?" (Mấy giờ rồi?) — "It is seven o'clock." (Bảy giờ rồi.) — "I get up at six." (Tôi dậy lúc sáu giờ.)
 Giới từ thời gian: at + giờ (at six o'clock), on + thứ (on Monday), in + buổi (in the morning, in the evening).
@@ -22,7 +16,7 @@ Thứ trong tuần luôn viết hoa: Monday, Sunday.
 1 o'clock | giờ (đúng) | id=oclock
 1 now | bây giờ
 1 day | ngày
-2 get up | thức dậy / dậy | forms=gets up,getting up
+2 get up | thức dậy / dậy | forms=gets
 2 go | đi | forms=goes,going
 2 school | trường / trường học | img
 2 home | nhà / về nhà
@@ -80,7 +74,7 @@ Where is your mother now? => She is at home. ## At home. = Mẹ tôi đang ở n
 Do you drink tea every day? => Yes, I drink tea every day. ## Yes, I do. = Có, tôi uống trà mỗi ngày.
 `,
   story: {
-    title: 'Một ngày của Mai',
+    title: "Một ngày của Mai",
     passage: `Mai always gets up at six o'clock. She drinks tea and eats bread for breakfast. At seven, she goes to school with Nam.
 Mai has lunch at school. She usually goes home at five. In the evening, she eats dinner with her family.
 Kiko never gets up in the morning. Kiko sleeps all day! On Sunday, Mai does not go to school. She meets Linh and they drink coffee.`,

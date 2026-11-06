@@ -1,15 +1,9 @@
 // Unit 15 — Friends and feelings (A2). Comparatives.
 export default {
-  theme: 'feelings',
-  cefr: 'A2',
-  title: 'Bạn bè và cảm xúc',
-  levels: [
-    'Vui hay buồn?',
-    'Cao hơn, trẻ hơn',
-    'Tính cách',
-    'Lo lắng và hào hứng',
-    'Bữa tiệc sinh nhật',
-  ],
+  theme: "feelings",
+  cefr: "A2",
+  title: "Bạn bè và cảm xúc",
+  levels: ["Vui hay buồn?", "Cao hơn, trẻ hơn", "Tính cách", "Lo lắng và hào hứng", "Bữa tiệc sinh nhật"],
   guide: `
 Mẫu câu chính: "Why are you sad?" (Sao bạn buồn?) — "Nam is taller than Tom." (Nam cao hơn Tom.) — "Happy birthday!" (Chúc mừng sinh nhật!)
 So sánh hơn với tính từ ngắn: thêm -er + than: tall → taller than, young → younger than, smart → smarter than.
@@ -80,7 +74,7 @@ When is your birthday? => It is in May. ## In May. = Sinh nhật tôi vào thán
 Do you want to come to my party? => Yes, thank you for inviting me. ## Yes, I would love to. = Có, cảm ơn bạn đã mời.
 `,
   story: {
-    title: 'Bữa tiệc bất ngờ',
+    title: "Bữa tiệc bất ngờ",
     passage: `Saturday is Mai's birthday. Her friends want to celebrate, but it is a secret. Mai is a little sad because nobody says "Happy birthday" in the morning. She is bored at home.
 In the evening, Linh calls her: "Come to the café, please." When Mai arrives, all her friends are there: Nam, Tom, Anna and Mr. Long.
 "Surprise!" they shout. Mai is very surprised and happy. Nam is funny and dances on a chair. Mrs. Rosa brings a big cake.

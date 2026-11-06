@@ -1,15 +1,9 @@
 // Unit 3 — Food and drinks (A1).
 export default {
-  theme: 'food',
-  cefr: 'A1',
-  title: 'Đồ ăn và thức uống',
-  levels: [
-    'Cơm và bánh mì',
-    'Trà hay cà phê?',
-    'Tôi thích, tôi muốn',
-    'Bữa ăn trong ngày',
-    'Ngon quá!',
-  ],
+  theme: "food",
+  cefr: "A1",
+  title: "Đồ ăn và thức uống",
+  levels: ["Cơm và bánh mì", "Trà hay cà phê?", "Tôi thích, tôi muốn", "Bữa ăn trong ngày", "Ngon quá!"],
   guide: `
 Mẫu câu chính: "Water, please." (Cho tôi nước.) — "I like tea." (Tôi thích trà.) — "Do you want coffee?" (Bạn có muốn cà phê không?)
 Mạo từ: "a" trước phụ âm (a banana), "an" trước nguyên âm (an apple, an egg).
@@ -82,7 +76,7 @@ What do you eat for breakfast? => I eat bread and eggs. ## Bread and eggs. = Tô
 Is the fish delicious? => Yes, it is delicious. ## Yes, it is. = Vâng, nó rất ngon.
 `,
   story: {
-    title: 'Ở quán của bà Rosa',
+    title: "Ở quán của bà Rosa",
     passage: `Mai and Tom are hungry. They go to Mrs. Rosa's café. "Good morning! What do you want?" Mrs. Rosa asks.
 "I want bread and an egg, please," Mai says. Tom looks at the menu. "Do you have chicken?" "Yes, we have chicken and rice."
 "Chicken and rice, please. And apple juice." Mai drinks tea. She does not like coffee.

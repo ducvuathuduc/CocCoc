@@ -1,9 +1,9 @@
 // Unit 6 — Home and rooms (A1).
 export default {
-  theme: 'home',
-  cefr: 'A1',
-  title: 'Nhà của tôi',
-  levels: ['Các phòng', 'Bàn ghế', 'Cửa sổ và đèn', 'To hay nhỏ?', 'Bạn sống ở đâu?'],
+  theme: "home",
+  cefr: "A1",
+  title: "Nhà của tôi",
+  levels: ["Các phòng", "Bàn ghế", "Cửa sổ và đèn", "To hay nhỏ?", "Bạn sống ở đâu?"],
   guide: `
 Mẫu câu chính: "There is a lamp in my room." (Có một cái đèn trong phòng tôi.) — "There are four chairs." (Có bốn cái ghế.) — "Where do you live?" (Bạn sống ở đâu?)
 There is + danh từ số ít; there are + danh từ số nhiều. Rút gọn: there's.
@@ -74,7 +74,7 @@ Is the bathroom clean? => Yes, it is clean. ## Yes, it is. = Vâng, nó sạch.
 Where is your bedroom? => It is on the second floor. ## On the second floor. = Nó ở tầng hai.
 `,
   story: {
-    title: 'Căn hộ mới của Linh',
+    title: "Căn hộ mới của Linh",
     passage: `Linh has a new apartment. It is on the ninth floor. The apartment is small, but it is clean.
 There is a bedroom, a kitchen and a small bathroom. In the bedroom, there is a bed, a lamp and a big window.
 Mai and Kiko visit Linh. Kiko loves the sofa! "Your apartment is nice," Mai says.

@@ -1,9 +1,9 @@
 // Unit 11 — Travel and transport (A2).
 export default {
-  theme: 'travel',
-  cefr: 'A2',
-  title: 'Du lịch',
-  levels: ['Máy bay và tàu hỏa', 'Xe buýt và vé', 'Khách sạn', 'Biển và núi', 'Khởi hành sớm'],
+  theme: "travel",
+  cefr: "A2",
+  title: "Du lịch",
+  levels: ["Máy bay và tàu hỏa", "Xe buýt và vé", "Khách sạn", "Biển và núi", "Khởi hành sớm"],
   guide: `
 Mẫu câu chính: "I want to visit Hanoi." (Tôi muốn đi thăm Hà Nội.) — "When does the train leave?" (Khi nào tàu chạy?) — "Can I have a ticket, please?" (Cho tôi một vé.)
 Phương tiện: by plane, by train, by bus, by taxi (không có "the"). Hoặc: take the bus / take a taxi.
@@ -74,7 +74,7 @@ Where do you want to visit? => I want to visit Da Nang. = Tôi muốn đến th�
 Is the hotel near the beach? => Yes, it is next to the beach. ## Yes, it is. = Vâng, nó ở cạnh bãi biển.
 `,
   story: {
-    title: 'Chuyến đi Đà Nẵng',
+    title: "Chuyến đi Đà Nẵng",
     passage: `In the summer, Mai and her family travel to Da Nang. They leave home early, at five o'clock, and take a taxi to the airport.
 Huy cannot find his ticket! It is in Mom's bag. The plane leaves at seven and arrives at eight thirty.
 Their hotel is next to the beach. The sea is blue and beautiful. The next day, they visit the Marble Mountains and an old bridge.

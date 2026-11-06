@@ -1,15 +1,9 @@
 // Unit 16 — Plans, the weekend and the future (A2). Irregular past + will.
 export default {
-  theme: 'plans',
-  cefr: 'A2',
-  title: 'Kế hoạch và tương lai',
-  levels: [
-    'Tôi sẽ...',
-    'Cuối tuần trước',
-    'Hòa nhạc và lễ hội',
-    'Sẵn sàng chưa?',
-    'Ước mơ của tôi',
-  ],
+  theme: "plans",
+  cefr: "A2",
+  title: "Kế hoạch và tương lai",
+  levels: ["Tôi sẽ...", "Cuối tuần trước", "Hòa nhạc và lễ hội", "Sẵn sàng chưa?", "Ước mơ của tôi"],
   guide: `
 Mẫu câu chính: "What will you do this weekend?" (Cuối tuần này bạn sẽ làm gì?) — "I went to the museum." (Tôi đã đi bảo tàng.) — "That is a good idea!" (Ý hay đấy!)
 Tương lai: will + động từ nguyên mẫu: "I will call you." Rút gọn: I'll, you'll, we'll. Phủ định: will not = won't.
@@ -80,7 +74,7 @@ What is your dream? => I want to be a doctor. = Tôi muốn trở thành bác s�
 Can you wait for me? => Sure, I will wait. ## Yes, I can. = Được, tôi sẽ đợi.
 `,
   story: {
-    title: 'Kế hoạch mùa hè',
+    title: "Kế hoạch mùa hè",
     passage: `Last weekend, Mai and her friends went to the Mid-Autumn Festival. They saw lanterns and ate mooncakes.
 Now they have a plan for the summer. "Let's go to Phu Quoc island!" Tom says. "That is a great idea," Anna says.
 Nam is worried: "I do not have money." "Maybe we can work at Mrs. Rosa's café," Mai says. "Then we will have money soon."

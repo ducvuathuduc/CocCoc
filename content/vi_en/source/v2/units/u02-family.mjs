@@ -1,9 +1,9 @@
 // Unit 2 — Family (A1).
 export default {
-  theme: 'family',
-  cefr: 'A1',
-  title: 'Gia đình',
-  levels: ['Bố và mẹ', 'Ông bà và em bé', 'Vợ chồng, con cái', 'Tôi có một con mèo', 'Họ hàng'],
+  theme: "family",
+  cefr: "A1",
+  title: "Gia đình",
+  levels: ["Bố và mẹ", "Ông bà và em bé", "Vợ chồng, con cái", "Tôi có một con mèo", "Họ hàng"],
   guide: `
 Mẫu câu chính: "This is my mother." (Đây là mẹ tôi.) — "I have a brother." (Tôi có một anh/em trai.)
 Tính từ sở hữu: my (của tôi), your (của bạn), his (của anh ấy), her (của cô ấy), their (của họ). Đặt TRƯỚC danh từ: "my father", không nói "father my".
@@ -73,7 +73,7 @@ Do you love your family? => Yes, I love my family. ## Yes, I do. = Có, tôi yê
 Is Linh your sister? => No, she is my cousin. = Không, chị ấy là chị họ tôi.
 `,
   story: {
-    title: 'Gia đình của Mai',
+    title: "Gia đình của Mai",
     passage: `Tom visits Mai's family on Sunday. "This is my family," Mai says. "This is my mother, and this is my father. My father is a teacher."
 Mai has a brother, Huy. Huy is a student too. Grandma Hoa lives with them. She has a cat, Kiko.
 "Kiko loves Grandma," Mai says. Tom laughs. "I have a big family in Canada. I have two sisters and a dog."`,
