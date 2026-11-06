@@ -9,6 +9,7 @@ Appwrite table and row permissions are additive: a broad table read grant defeat
 | p_purchases.purchaseToken, p_family_groups.inviteCodeHash, p_referrals.codeHash, p_classrooms.joinCodeHash, p_promo_codes.codeHash | server-only columns | never returned by any API, log or export; codes compared by hash | Progress only |
 | p_notifications | no broad table grant, Row Security enabled | read(Role.user(userId)); no client writes | Progress |
 | All a_ tables (including a_conversations and its private transcript files) | no client grant | no client grant | AI |
+| Every c_ table (c_courses, c_units, c_build_runs, c_admin_audit) | no client read/create/update/delete, Row Security enabled | no client grant; drafts are never readable from a device | CMS server process only (its own API key, allowlisted to the c_ table prefix); publish is still Learning's admin command, audit rows are written by the CMS and read only by CMS screens |
 | learning-assets bucket | no broad bucket read/write, File Security enabled | published l_ file read(Role.any()); drafts/private a_ none | Learning content CLI / AI within owned prefix |
 | Function execute access / public domains | Any needed for direct HTTP | authenticate every protected route; /health only public | verify JWT, then domain authorization |
 | Maintainer content publish | verified JWT + server-authoritative maintainer team membership | no trusting nickname/header role | Learning |

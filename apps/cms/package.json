@@ -1,0 +1,48 @@
+{
+  "name": "@cocenglish/cms",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 5174",
+    "build": "next build",
+    "start": "next start --port 5174",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint",
+    "check:parse": "node scripts/roundtrip.mjs",
+    "check:export": "node scripts/export-diff.mjs",
+    "check:store": "node scripts/store-contract.mjs",
+    "check:auth": "node scripts/auth-login-check.mjs",
+    "check:structure": "node scripts/structure-check.mjs",
+    "check:order": "node scripts/order-check.mjs",
+    "check:media": "node scripts/media-check.mjs",
+    "check:media-upload": "node scripts/media-upload-check.mjs",
+    "check:media-report": "node scripts/media-report-check.mjs",
+    "check:placement": "node scripts/placement-check.mjs",
+    "check:search": "node scripts/search-check.mjs",
+    "check:replace": "node scripts/replace-check.mjs",
+    "check:lesson": "node scripts/lesson-check.mjs",
+    "check:readiness": "node scripts/readiness-check.mjs",
+    "check:publish": "node scripts/publish-check.mjs",
+    "check:lifecycle": "node scripts/lifecycle-check.mjs"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "next": "16.4.5",
+    "node-appwrite": "29.2.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4.3.4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^5"
+  }
+}

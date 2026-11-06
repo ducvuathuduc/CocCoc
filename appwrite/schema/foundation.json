@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "databaseId": "cocenglish",
-  "scope": "All 62 canonical TablesDB tables from docs/data/DATA_MODEL.md plus the learning-assets bucket. Declaration only: no client table/bucket grants, rowSecurity on every table, p_notifications owner read row grant only. Live apply, availability and permission probes remain gated on an admitted test project.",
+  "scope": "All 66 canonical TablesDB tables from docs/data/DATA_MODEL.md plus the learning-assets bucket. Declaration only: no client table/bucket grants, rowSecurity on every table, p_notifications owner read row grant only. Live apply, availability and permission probes remain gated on an admitted test project.",
   "sources": [
     "docs/data/DATA_MODEL.md",
     "docs/data/PERMISSIONS.md"
@@ -985,6 +985,63 @@
       {"key": "u_conversationId", "type": "unique", "columns": ["conversationId"]},
       {"key": "k_userId_kind_completedAt", "type": "key", "columns": ["userId", "kind", "completedAt"]},
       {"key": "k_userId_scenarioId", "type": "key", "columns": ["userId", "scenarioId"]}
+    ]},
+    {"id": "c_courses", "owner": "cms", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "title", "type": "string", "size": 120},
+      {"key": "updatedBy", "type": "string", "size": 36},
+      {"key": "draftJson", "type": "string", "size": 65536},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_courseId", "type": "unique", "columns": ["courseId"]}
+    ]},
+    {"id": "c_units", "owner": "cms", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "unitId", "type": "string", "size": 36},
+      {"key": "unitKey", "type": "string", "size": 80},
+      {"key": "order", "type": "integer"},
+      {"key": "updatedBy", "type": "string", "size": 36},
+      {"key": "theme", "type": "string", "size": 40},
+      {"key": "title", "type": "string", "size": 120},
+      {"key": "cefr", "type": "enum", "elements": ["A1", "A2", "B1", "B2"]},
+      {"key": "vocabCount", "type": "integer"},
+      {"key": "sentenceCount", "type": "integer"},
+      {"key": "draftJson", "type": "string", "size": 65536},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "u_unitKey", "type": "unique", "columns": ["unitKey"]},
+      {"key": "k_courseId_order", "type": "key", "columns": ["courseId", "order"]}
+    ]},
+    {"id": "c_build_runs", "owner": "cms", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "runId", "type": "string", "size": 36},
+      {"key": "courseId", "type": "string", "size": 36},
+      {"key": "versionId", "type": "string", "size": 36},
+      {"key": "kind", "type": "enum", "elements": ["GATES", "PUBLISH"]},
+      {"key": "status", "type": "enum", "elements": ["RUNNING", "SUCCEEDED", "FAILED"]},
+      {"key": "message", "type": "string", "size": 500},
+      {"key": "actorId", "type": "string", "size": 36},
+      {"key": "logJson", "type": "string", "size": 65536},
+      {"key": "createdAt", "type": "datetime"},
+      {"key": "revision", "type": "integer", "min": 0},
+      {"key": "updatedAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "k_courseId_createdAt", "type": "key", "columns": ["courseId", "createdAt"]}
+    ]},
+    {"id": "c_admin_audit", "owner": "cms", "mutable": false, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
+      {"key": "entryId", "type": "string", "size": 36},
+      {"key": "actorId", "type": "string", "size": 36},
+      {"key": "operation", "type": "string", "size": 64},
+      {"key": "targetId", "type": "string", "size": 120},
+      {"key": "requestId", "type": "string", "size": 36},
+      {"key": "beforeJson", "type": "string", "size": 20000},
+      {"key": "afterJson", "type": "string", "size": 20000},
+      {"key": "createdAt", "type": "datetime"}
+    ], "indexes": [
+      {"key": "k_createdAt", "type": "key", "columns": ["createdAt"]}
     ]}
   ],
   "buckets": [{"id": "learning-assets", "permissions": [], "fileSecurity": true, "note": "Published l_ files get file-level read(Role.any()) at publish time; drafts and a_ audio get none."}]

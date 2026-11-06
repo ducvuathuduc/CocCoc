@@ -1,0 +1,467 @@
+@import 'tailwindcss';
+
+/* Light-first palette. Every surface reads through a token, so a screen never
+   hardcodes a shade: `src/components/theme.tsx` swaps the whole set by putting
+   `.dark` on <html>, and nothing else has to know a theme changed. */
+:root {
+  color-scheme: light;
+
+  --bg: #f4f4f6;
+  --surface: #fbfbfc;
+  --card: #ffffff;
+  --elevated: #f7f7f9;
+  --input-bg: #ffffff;
+
+  --line: #e4e4e9;
+  --line-strong: #cfcfd8;
+
+  --fg: #1a1a1f;
+  --fg-2: #3f3f48;
+  --fg-3: #5f5f6a;
+  --fg-4: #6b6b77;
+
+  --primary: #ea580c;
+  --primary-hover: #c2410c;
+  --primary-fg: #ffffff;
+  /* Links and labels need the darker step: orange-500 on white falls under the
+     4.5:1 text minimum, orange-700 does not. */
+  --primary-text: #c2410c;
+  --primary-soft: rgba(234, 88, 12, 0.1);
+  --ring: rgba(234, 88, 12, 0.45);
+
+  --ok-fg: #047857;
+  --ok-bg: #ecfdf5;
+  --ok-bd: #a7f3d0;
+  --warn-fg: #92400e;
+  --warn-bg: #fffbeb;
+  --warn-bd: #fde68a;
+  --danger-fg: #b91c1c;
+  --danger-bg: #fef2f2;
+  --danger-bd: #fecaca;
+
+  --skeleton: #e9e9ee;
+  --shimmer: rgba(255, 255, 255, 0.75);
+  --sh-card: 0 1px 2px rgba(20, 20, 25, 0.05), 0 1px 3px rgba(20, 20, 25, 0.04);
+  --sh-lift: 0 8px 20px -10px rgba(20, 20, 25, 0.22), 0 2px 6px -2px rgba(20, 20, 25, 0.08);
+
+  --radius: 0.625rem;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #0b0b0d;
+  --surface: #0f0f12;
+  --card: #15151a;
+  --elevated: #101014;
+  --input-bg: #1b1b20;
+
+  --line: #292930;
+  --line-strong: #3a3a44;
+
+  --fg: #ededf0;
+  --fg-2: #c9c9d2;
+  --fg-3: #9a9aa5;
+  --fg-4: #84848e;
+
+  --primary: #ea580c;
+  /* Reverses here: on a dark fill the hover state has to brighten to stay
+     visible, while on light it has to darken. */
+  --primary-hover: #f97316;
+  --primary-text: #fb923c;
+  --primary-soft: rgba(249, 115, 22, 0.16);
+  --ring: rgba(249, 115, 22, 0.55);
+
+  --ok-fg: #6ee7b7;
+  --ok-bg: rgba(6, 78, 59, 0.35);
+  --ok-bd: #065f46;
+  --warn-fg: #fcd34d;
+  --warn-bg: rgba(120, 53, 15, 0.28);
+  --warn-bd: #78350f;
+  --danger-fg: #fca5a5;
+  --danger-bg: rgba(127, 29, 29, 0.32);
+  --danger-bd: #7f1d1d;
+
+  --skeleton: #1d1d22;
+  --shimmer: rgba(255, 255, 255, 0.06);
+  --sh-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sh-lift: 0 10px 24px -12px rgba(0, 0, 0, 0.7);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-elevated: var(--elevated);
+  --color-input-bg: var(--input-bg);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-fg-4: var(--fg-4);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-fg: var(--primary-fg);
+  --color-primary-text: var(--primary-text);
+  --color-primary-soft: var(--primary-soft);
+  --color-ring: var(--ring);
+  --color-ok-fg: var(--ok-fg);
+  --color-ok-bg: var(--ok-bg);
+  --color-ok-bd: var(--ok-bd);
+  --color-warn-fg: var(--warn-fg);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-bd: var(--warn-bd);
+  --color-danger-fg: var(--danger-fg);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-bd: var(--danger-bd);
+  --shadow-card: var(--sh-card);
+  --shadow-lift: var(--sh-lift);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@theme {
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+
+  --animate-fade-up: fade-up 0.45s var(--ease-out-soft) both;
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  --animate-scale-in: scale-in 0.3s var(--ease-out-soft) both;
+  --animate-pop: pop 0.3s var(--ease-spring) both;
+  --animate-slide-left: slide-left 0.35s var(--ease-out-soft) both;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 30%, transparent);
+    color: var(--fg);
+  }
+
+  /* One motion vocabulary for the whole app: interactive elements animate the
+     same properties on the same curve, so hover never feels per-screen. */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [role='button'] {
+    transition-property:
+      color, background-color, border-color, box-shadow, transform, opacity, outline-color;
+    transition-duration: 160ms;
+    transition-timing-function: var(--ease-out-soft);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Thin scrollbar: `scrollbar-*` handles Firefox/Chromium 121+, the webkit
+   pseudo-elements handle Safari and older Electron/Chromium shells. */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--line-strong);
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--fg-4);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@layer utilities {
+  /* Staggered entrance for grids and lists. Children animate in source order,
+     so a table that just arrived reads as one moving object rather than a
+     flicker of unrelated rows. */
+  .rise > * {
+    animation: fade-up 0.5s var(--ease-out-soft) both;
+  }
+
+  .rise > *:nth-child(2) {
+    animation-delay: 45ms;
+  }
+  .rise > *:nth-child(3) {
+    animation-delay: 90ms;
+  }
+  .rise > *:nth-child(4) {
+    animation-delay: 135ms;
+  }
+  .rise > *:nth-child(5) {
+    animation-delay: 180ms;
+  }
+  .rise > *:nth-child(6) {
+    animation-delay: 225ms;
+  }
+  .rise > *:nth-child(n + 7) {
+    animation-delay: 270ms;
+  }
+
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--skeleton);
+  }
+
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, var(--shimmer), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 1.5s var(--ease-out-soft) infinite;
+  }
+
+  /* Sun/moon pair on the theme button: markup stays theme-independent so the
+     server render cannot disagree with the pre-paint script. */
+  .t-sun,
+  .t-moon {
+    transition:
+      opacity 200ms ease-out,
+      transform 340ms var(--ease-out-soft);
+  }
+
+  .t-moon {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+  }
+
+  .dark .t-sun {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+
+  .dark .t-moon {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Applied to <html> for one frame around a theme switch, so the whole page
+     crossfades instead of snapping. */
+  .theme-anim,
+  .theme-anim *,
+  .theme-anim *::before,
+  .theme-anim *::after {
+    transition:
+      background-color 320ms var(--ease-out-soft),
+      border-color 320ms var(--ease-out-soft),
+      color 220ms ease-out,
+      box-shadow 320ms ease-out;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Navigation motion. React's <ViewTransition> names the participants; these
+   classes carry the direction (see app/src/app/(admin) pages). Exit is fast so
+   the old screen stops competing for attention, enter is slower so the new one
+   has time to be read. */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(sidebar) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-image-pair(sidebar) {
+  animation: none;
+}
+
+::view-transition-old(sidebar),
+::view-transition-new(sidebar) {
+  animation: none;
+}
+
+::view-transition-old(.leave-up) {
+  animation:
+    vt-fade 140ms ease-in both reverse,
+    vt-slide 140ms ease-in both reverse;
+}
+
+::view-transition-new(.enter-up) {
+  --vt-offset: 14px;
+  animation:
+    vt-fade 220ms ease-out 120ms both,
+    vt-slide 400ms var(--ease-out-soft) both;
+}
+
+::view-transition-old(.nav-forward) {
+  --vt-offset: -60px;
+  animation:
+    vt-fade 150ms ease-in both reverse,
+    vt-slide 400ms ease-in-out both reverse;
+}
+
+::view-transition-new(.nav-forward) {
+  --vt-offset: 60px;
+  animation:
+    vt-fade 210ms ease-out 150ms both,
+    vt-slide 400ms ease-in-out both;
+}
+
+::view-transition-old(.nav-back) {
+  --vt-offset: 60px;
+  animation:
+    vt-fade 150ms ease-in both reverse,
+    vt-slide 400ms ease-in-out both reverse;
+}
+
+::view-transition-new(.nav-back) {
+  --vt-offset: -60px;
+  animation:
+    vt-fade 210ms ease-out 150ms both,
+    vt-slide 400ms ease-in-out both;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes vt-slide {
+  from {
+    translate: var(--vt-offset, 14px);
+  }
+  to {
+    translate: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise > *,
+  .skeleton::after {
+    animation: none;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [role='button'] {
+    transition-duration: 1ms;
+  }
+
+  /* Crossfades carry no travel, so they stay; only positional movement is
+     removed for motion-sensitive users. */
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    animation-name: fade-in !important;
+    translate: none !important;
+  }
+
+  ::view-transition-group(sidebar) {
+    animation-name: none !important;
+  }
+}
