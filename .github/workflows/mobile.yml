@@ -64,7 +64,7 @@ jobs:
         run: node tools/scripts/mobile-check.mjs
       - name: Build Android debug APK
         working-directory: apps/mobile
-        run: flutter build apk --debug --no-pub
+        run: flutter build apk --debug --no-pub --dart-define-from-file=config/real.public.json
       - name: Upload golden failure diffs
         if: failure() && steps.verify.conclusion == 'failure'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -110,7 +110,7 @@ jobs:
           flutter pub get --enforce-lockfile
       - name: Build unsigned simulator app
         working-directory: apps/mobile
-        run: flutter build ios --simulator --no-codesign
+        run: flutter build ios --simulator --no-codesign --dart-define-from-file=config/real.public.json
       - name: Upload simulator app
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

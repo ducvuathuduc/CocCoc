@@ -92,6 +92,13 @@ import 'features/super_features/presentation/super_features_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  // A build compiled without DATA_SOURCE used to open the bundled fixtures and show them as
+  // lessons from the dashboard. It has to say that instead of starting.
+  final problem = AppConfig.current.buildProblem;
+  if (problem != null) {
+    runApp(_UnconfiguredBuild(message: problem));
+    return;
+  }
   configureLocalDevelopmentTls();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -114,6 +121,30 @@ void main() {
               .disableAnimations
           ? Duration.zero
           : const Duration(milliseconds: 500),
+    ),
+  );
+}
+
+/// What an undeclared build shows: the sentence a maintainer has to act on, never a lesson list
+/// borrowed from the fixtures.
+class _UnconfiguredBuild extends StatelessWidget {
+  const _UnconfiguredBuild({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: referenceTheme(),
+    home: Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Text(message, textAlign: TextAlign.center),
+          ),
+        ),
+      ),
     ),
   );
 }

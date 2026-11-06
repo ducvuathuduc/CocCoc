@@ -4,9 +4,9 @@ import '../api/client/api_operation.dart';
 
 /// Where repositories read their data from.
 ///
-/// [mock] (default) keeps the app fully runnable offline with local fixtures.
 /// [api] selects the HTTP repositories backed by the OpenAPI services and
-/// Appwrite Account auth: `--dart-define=DATA_SOURCE=api`.
+/// Appwrite Account auth. [mock] keeps the app runnable offline on local
+/// fixtures and is only reached when a build or a test says so explicitly.
 enum DataSource { mock, api }
 
 /// Single runtime switch for the data layer plus public service endpoints.
@@ -22,10 +22,13 @@ final class AppConfig {
     this.mockAuthOverride,
     this.allowInsecureLocalEndpoints = false,
     this.requestTimeout = const Duration(seconds: 15),
+    this.declaredDataSource = true,
   });
 
   factory AppConfig.fromEnvironment() {
-    const source = String.fromEnvironment('DATA_SOURCE', defaultValue: 'mock');
+    // Deliberately no `defaultValue`: the absence of the define has to stay visible, because a
+    // build that never declared its source would otherwise ship fixtures as dashboard lessons.
+    const source = String.fromEnvironment('DATA_SOURCE');
     const endpoint = String.fromEnvironment(
       'APPWRITE_ENDPOINT',
       defaultValue: defaultAppwriteEndpoint,
@@ -52,7 +55,8 @@ final class AppConfig {
       defaultValue: 'false',
     );
     return AppConfig(
-      dataSource: parseDataSource(source),
+      dataSource: source.isEmpty ? DataSource.mock : parseDataSource(source),
+      declaredDataSource: source.isNotEmpty,
       appwriteEndpoint: endpoint,
       appwriteProjectId: project,
       serviceUrls: const {
@@ -88,6 +92,18 @@ final class AppConfig {
   /// the service URLs already contain the emulator or device-reachable host.
   final bool allowInsecureLocalEndpoints;
   final Duration requestTimeout;
+
+  /// False when this build was compiled without a `DATA_SOURCE` define.
+  final bool declaredDataSource;
+
+  /// Why this build must not start: with no declared source the app would open the bundled
+  /// fixtures, and they would read to a learner as lessons delivered by the dashboard.
+  String? get buildProblem => declaredDataSource
+      ? null
+      : 'This build did not declare DATA_SOURCE, so it would open the bundled '
+            'fixtures instead of the lessons published by the dashboard. '
+            'Rebuild with --dart-define-from-file=config/real.public.json '
+            '(or config/local.android.public.json for a local backend).';
 
   bool get isApi => dataSource == DataSource.api;
 

@@ -6,7 +6,12 @@ Persistent mistake review: finish a lesson with an incorrect first answer, then 
 
 Flutter 3.47.0 / Dart 3.13.0; feature-first manual Riverpod MVVM and go_router. Android/iOS platform projects are generated; recorded Android evidence is kept in QA receipts, and iOS needs macOS/Xcode. New collaborators should start with the [developer handoff](../../docs/agent/DEVELOPER_HANDOFF.md).
 
-Run `flutter pub get` then `flutter run` from this directory. Run `pnpm verify` from the repository root for the complete local gate. Direct regression command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false`. Mascot and avatar art use the CocEnglish PNG and Canvas assets listed in `assets/PROVENANCE.md`.
+Run `flutter pub get` then `flutter run --dart-define-from-file=config/real.public.json` from this
+directory. A build that declares no `DATA_SOURCE` opens a screen naming that flag instead of the
+bundled fixture lessons, so the flag is part of every run and build command below. Run `pnpm verify`
+from the repository root for the complete local gate. Direct regression command: `flutter test
+--dart-define=ENABLE_MASCOT_MOTION=false`. Mascot and avatar art use the CocEnglish PNG and Canvas
+assets listed in `assets/PROVENANCE.md`.
 
 Simulated payments: open Super/Max → select a plan → confirm demo payment. The
 checkout supports success, pending and declined outcomes, with no real money.
