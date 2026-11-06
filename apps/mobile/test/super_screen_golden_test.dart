@@ -7,9 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support/app_fonts.dart';
 import 'support/settle_images.dart';
 
-/// Android Super comparison (Mobbin Super 01). Real fonts and a decoded
-/// source gradient are required: without them the first golden of a run
-/// rendered Ahem boxes on a flat fallback colour and later ones did not.
+/// Android Super comparison with the bundled UI font and native brand gradient.
 void main() {
   setUpAll(loadAppFonts);
 
@@ -41,13 +39,6 @@ void main() {
               ),
               home: const SuperScreen(),
             ),
-          ),
-        );
-        final context = tester.element(find.byType(SuperScreen));
-        await tester.runAsync(
-          () => precacheImage(
-            const AssetImage('assets/reference_art/android-super-gradient.png'),
-            context,
           ),
         );
         await settleImages(tester);

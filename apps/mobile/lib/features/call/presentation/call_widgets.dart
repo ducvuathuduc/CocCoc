@@ -7,7 +7,7 @@ import '../domain/call_models.dart';
 import 'call_visuals.dart';
 
 const _bold = TextStyle(
-  fontFamily: 'DuolingoSans',
+  fontFamily: 'sans-serif',
   fontWeight: FontWeight.w700,
   color: CallColors.white,
 );

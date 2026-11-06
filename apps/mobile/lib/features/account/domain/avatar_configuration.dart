@@ -33,16 +33,10 @@ class AvatarSection {
 }
 
 class AvatarTab {
-  AvatarTab({
-    required this.name,
-    required this.selectedIconAsset,
-    required this.unselectedIconAsset,
-    required List<AvatarSection> sections,
-  }) : sections = List.unmodifiable(sections);
+  AvatarTab({required this.name, required List<AvatarSection> sections})
+    : sections = List.unmodifiable(sections);
 
   final String name;
-  final String selectedIconAsset;
-  final String unselectedIconAsset;
   final List<AvatarSection> sections;
 }
 

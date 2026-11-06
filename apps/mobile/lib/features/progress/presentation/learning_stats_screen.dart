@@ -146,7 +146,7 @@ class _StatsContent extends StatelessWidget {
                   const SizedBox(height: 4),
                   LinearProgressIndicator(
                     value: day.studyXp / maximum,
-                    color: ReferenceColors.green,
+                    color: ReferenceColors.primary,
                     backgroundColor: ReferenceColors.border,
                     minHeight: 10,
                   ),

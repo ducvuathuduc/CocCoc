@@ -1,8 +1,40 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-11-06",
   "project": ".",
   "phaseGateState": "Full P1/P2/P3 remain pending; mock frontend and scoped local backend foundation verified separately",
   "records": [
+    {
+      "taskId": "CI-REPAIR-20261105",
+      "phase": "P1-OPS-001 scoped CI repair; no phase gate advancement",
+      "owner": "Codex",
+      "branch": "codex/ci-brand-repair",
+      "worktree": ".",
+      "status": "VERIFYING",
+      "dependencyGateReceipts": [
+        "PR #6 head 02b20e5",
+        "origin/main 12b1222",
+        "GitHub Actions 41983359837 and 41983359878"
+      ],
+      "exclusivePaths": [
+        ".github/workflows",
+        "tools/scripts/mobile-check.mjs",
+        "tools/tests/backend-workflow-paths.test.mjs",
+        "package.json",
+        "apps/mobile/pubspec.yaml",
+        "apps/mobile/lib/core/design",
+        "docs/devops/CI_CD.md",
+        "docs/agent/task-status.json"
+      ],
+      "requirements": [
+        "Make PR #6 mergeable with current main",
+        "Retain new branding and removal of proprietary assets",
+        "Minimal automatic code/test/build/secret gates; extended checks manual"
+      ],
+      "testCommand": "pnpm backend:verify; pnpm backend:smoke; pnpm dev:smoke; pnpm contracts:check; pnpm api:lint; pnpm verify",
+      "evidence": [
+        "docs/quality/CI_BRANDING_REPAIR_20261106.md"
+      ]
+    },
     {
       "taskId": "REMOTE-BRANCH-CONSOLIDATION-20261029",
       "phase": "Repository integration; no phase gate advancement",

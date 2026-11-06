@@ -274,7 +274,7 @@ class _ResultRow extends StatelessWidget {
                   '${entry.rank}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: ReferenceColors.green,
+                    color: ReferenceColors.primary,
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),

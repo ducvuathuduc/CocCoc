@@ -339,7 +339,7 @@ class _ReminderTimeSheetState extends State<_ReminderTimeSheet> {
       ReminderTime((hour12 % 12) + (pm ? 12 : 0), half * 30);
 
   static const _style = TextStyle(
-    fontFamily: 'DuolingoSans',
+    fontFamily: 'sans-serif',
     fontSize: 22,
     color: NotifColors.ink,
   );

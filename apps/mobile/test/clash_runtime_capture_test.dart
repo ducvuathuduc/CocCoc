@@ -1,3 +1,5 @@
+import 'support/app_fonts.dart';
+
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -29,9 +31,9 @@ void main() {
       addTearDown(tester.view.resetPadding);
       await tester.runAsync(() async {
         await rive.RiveNative.init();
-        await (FontLoader('DuolingoSans')
-              ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-              ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+        await (FontLoader('sans-serif')
+              ..addFont(loadTestFont())
+              ..addFont(loadTestFont(bold: true)))
             .load();
         await (FontLoader(
           'MaterialIcons',

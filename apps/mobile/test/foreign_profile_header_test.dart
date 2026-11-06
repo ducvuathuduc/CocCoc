@@ -8,6 +8,7 @@ import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/features/progress/application/preview_controller.dart';
 import 'package:cocenglish/features/progress/application/profile_actions_controller.dart';
 import 'package:cocenglish/features/progress/application/profile_appearance_provider.dart';
+import 'package:cocenglish/features/progress/domain/profile_appearance.dart';
 import 'package:cocenglish/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,12 +47,28 @@ void main() {
     },
   );
 
-  Future<(GoRouter, ProviderContainer)> open(WidgetTester tester) async {
+  Future<(GoRouter, ProviderContainer)> open(
+    WidgetTester tester, {
+    bool darkJames = false,
+  }) async {
     await tester.pumpWidget(
-      MainApp(
-        initial: OnboardingState(
-          step: OnboardingStep.lessonEntry,
-          language: 'English',
+      ProviderScope(
+        overrides: [
+          if (darkJames)
+            profileAppearanceProvider('James Smith').overrideWithValue(
+              const ProfileAppearance(
+                hair: 5,
+                background: 8,
+                skinTone: 4,
+                clothing: 3,
+              ),
+            ),
+        ],
+        child: MainApp(
+          initial: OnboardingState(
+            step: OnboardingStep.lessonEntry,
+            language: 'English',
+          ),
         ),
       ),
     );
@@ -167,7 +184,7 @@ void main() {
   testWidgets(
     'hero controls follow source light and dark background metadata',
     (tester) async {
-      final (router, _) = await open(tester);
+      final (router, _) = await open(tester, darkJames: true);
       Icon backIcon() => tester.widget<Icon>(
         find.descendant(
           of: find.byTooltip('Back'),
@@ -176,10 +193,10 @@ void main() {
       );
       router.go('/profile/Alex');
       await settle(tester);
-      expect(backIcon().color, const Color(0xFF4B4B4B));
+      expect(backIcon().color, const Color(0xFF21314A));
       router.go('/profile/James%20Smith');
       await settle(tester);
-      expect(backIcon().color, const Color(0xFFFFFFFD));
+      expect(backIcon().color, const Color(0xFFFFFFFF));
       expect(tester.takeException(), isNull);
     },
   );

@@ -36,19 +36,18 @@ Link to these owners; never duplicate them.
 - For a behavior change, write a meaningful failing test first. Then implement, run the area's targeted checks, then the gates. Report exact commands and evidence. Never claim a device or cloud result from a document check.
 - No deploy, publish, `schema:apply`, merge to `main`, reset/delete, force-push or paid plan without an explicit request.
 
-## Gates (run from root after `pnpm install --frozen-lockfile`)
+## Core gates (run from root after `pnpm install --frozen-lockfile`)
 
 ```sh
 pnpm backend:verify   # tsc + esbuild bundles + eslint + prettier + node tests
 pnpm backend:smoke    # in-process outbox->inbox fixture
 pnpm dev:smoke        # real HTTP: 3 dev services, /health, signed cross-service event
 pnpm contracts:check  # schema fixtures + Dart DTOs in sync with OpenAPI
-pnpm postman:check    # Postman collection covers every OpenAPI operation, secrets empty
 pnpm api:lint         # redocly
-pnpm schema:plan && pnpm schema:test && pnpm seed:check
-pnpm blueprint:check && pnpm audit:check   # traceability, links, Mermaid, endpoint matrix
-pnpm verify           # Flutter format/analyze/test + blueprint (see apps/mobile/AGENTS.md)
-python3 tools/palette_check.py              # informational: known baseline of unmatched colors
+pnpm verify           # Flutter format/analyze/test (see apps/mobile/AGENTS.md)
+
 ```
+
+The human-approved minimal CI policy (2026-11-06) is in [CI/CD](docs/devops/CI_CD.md). Run Postman, schema/seed, blueprint/audit, load/eval and container checks manually when relevant to the change; they are not universal PR gates. Palette scanning remains informational.
 
 Run locally: `pnpm dev:services`. Learning runs on :4101, Progress on :4102 and AI on :4103, all with in-memory dev adapters. See [services/AGENTS.md](services/AGENTS.md).

@@ -215,7 +215,7 @@ void main() {
       DefaultTextStyle.of(tester.element(find.text('REPORT USER')))
           .style
           .fontFamily,
-      'DuolingoSans',
+      'sans-serif',
     );
     expect(tester.takeException(), isNull);
   });

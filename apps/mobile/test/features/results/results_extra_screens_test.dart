@@ -1,3 +1,5 @@
+import '../../support/app_fonts.dart';
+
 import 'package:cocenglish/core/design/reference_art.dart';
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/account/presentation/signup_flow.dart';
@@ -147,9 +149,9 @@ Future<void> _tap(WidgetTester tester, String text) async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
-    await (FontLoader('DuolingoSans')
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+    await (FontLoader('sans-serif')
+          ..addFont(loadTestFont())
+          ..addFont(loadTestFont(bold: true)))
         .load();
     await (FontLoader(
       'MaterialIcons',

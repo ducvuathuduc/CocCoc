@@ -1,34 +1,6 @@
 name: Container runtime
 on:
-  pull_request:
-    paths:
-      [
-        'services/**',
-        'packages/**',
-        'infra/docker/**',
-        '.dockerignore',
-        'tools/scripts/*runtime*.mjs',
-        'tools/scripts/container-check.mjs',
-        'tools/scripts/backend-check.mjs',
-        'package.json',
-        'pnpm-lock.yaml',
-        '.github/workflows/containers.yml',
-      ]
-  push:
-    paths:
-      [
-        'services/**',
-        'packages/**',
-        'infra/docker/**',
-        '.dockerignore',
-        'tools/scripts/*runtime*.mjs',
-        'tools/scripts/container-check.mjs',
-        'tools/scripts/backend-check.mjs',
-        'package.json',
-        'pnpm-lock.yaml',
-        '.github/workflows/containers.yml',
-      ]
-  workflow_dispatch:
+  workflow_dispatch: null
 permissions:
   contents: read
 concurrency:

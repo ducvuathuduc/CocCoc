@@ -1,3 +1,5 @@
+import 'support/app_fonts.dart';
+
 import 'package:cocenglish/core/design/reference_theme.dart';
 import 'package:cocenglish/features/notifications/application/notification_settings_controller.dart';
 import 'package:cocenglish/features/notifications/data/notification_repository.dart';
@@ -10,9 +12,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 Future<void> _fonts(WidgetTester t) => t.runAsync(() async {
-  await (FontLoader('DuolingoSans')
-        ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-        ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf')))
+  await (FontLoader('sans-serif')
+        ..addFont(loadTestFont())
+        ..addFont(loadTestFont(bold: true)))
       .load();
   await (FontLoader(
     'MaterialIcons',

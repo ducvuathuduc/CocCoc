@@ -100,7 +100,7 @@ class ChallengeIntroScreen extends ConsumerWidget {
                         height: 250,
                         viewport: Rect.fromLTWH(150, 65, 740, 990),
                         spec: DuoMotionSpec(
-                          asset: 'assets/motion/bea-smores.json',
+                          asset: '',
                           startFrame: 0,
                           endFrame: 440,
                           loop: true,

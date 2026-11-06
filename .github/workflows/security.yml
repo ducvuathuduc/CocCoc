@@ -1,17 +1,15 @@
 name: Source secret scan
-
 on:
-  pull_request:
+  pull_request: null
   push:
-  workflow_dispatch:
-
+    branches:
+      - main
+  workflow_dispatch: null
 permissions:
   contents: read
-
 concurrency:
   group: secrets-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   source-secrets:
     runs-on: ubuntu-24.04
@@ -23,11 +21,19 @@ jobs:
           node-version: 22.23.3
       - name: Install checksum-pinned Gitleaks
         shell: bash
-        run: |
+        run: >
           mkdir -p "$RUNNER_TEMP/gitleaks"
-          curl --fail --location --retry 2 --output "$RUNNER_TEMP/gitleaks.tar.gz" https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
-          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $RUNNER_TEMP/gitleaks.tar.gz" | sha256sum --check --strict
-          tar --extract --gzip --file "$RUNNER_TEMP/gitleaks.tar.gz" --directory "$RUNNER_TEMP/gitleaks" gitleaks
+
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/gitleaks.tar.gz"
+          https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+
+          echo
+          "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $RUNNER_TEMP/gitleaks.tar.gz" |
+          sha256sum --check --strict
+
+          tar --extract --gzip --file "$RUNNER_TEMP/gitleaks.tar.gz" --directory "$RUNNER_TEMP/gitleaks"
+          gitleaks
+
           echo "$RUNNER_TEMP/gitleaks" >> "$GITHUB_PATH"
       - name: Scan tracked and unignored source without deployment credentials
         run: node tools/audit/secret-check.mjs --all

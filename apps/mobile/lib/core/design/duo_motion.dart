@@ -1,11 +1,9 @@
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'cocenglish_brand.dart';
-
-import 'package:lottie/lottie.dart';
 
 enum DuoPose { wave, idle, scribble, pencil, celebrate, clipboard, reading }
 
@@ -19,6 +17,8 @@ class DuoMotionSpec {
     this.restFrame,
   });
 
+  /// Retained so older callers can keep their timing metadata during migration.
+  /// The app no longer loads motion files from another brand.
   final String asset;
   final double startFrame;
   final double endFrame;
@@ -29,49 +29,45 @@ class DuoMotionSpec {
 extension DuoPoseSpec on DuoPose {
   DuoMotionSpec get spec => switch (this) {
     DuoPose.wave => const DuoMotionSpec(
-      asset: 'assets/motion/duo-wave.json',
-      startFrame: 600,
-      endFrame: 755,
-      restFrame: 635,
+      asset: '',
+      startFrame: 0,
+      endFrame: 1,
       loop: false,
     ),
     DuoPose.idle => const DuoMotionSpec(
-      asset: 'assets/motion/duo-idle.json',
+      asset: '',
       startFrame: 0,
-      endFrame: 220,
+      endFrame: 1,
       loop: true,
     ),
     DuoPose.scribble => const DuoMotionSpec(
-      asset: 'assets/motion/duo-idle.json',
-      startFrame: 220,
-      endFrame: 360,
+      asset: '',
+      startFrame: 0,
+      endFrame: 1,
       loop: true,
     ),
     DuoPose.pencil => const DuoMotionSpec(
-      asset: 'assets/motion/duo-pencil.json',
+      asset: '',
       startFrame: 0,
-      endFrame: 213,
-      restFrame: 25,
+      endFrame: 1,
       loop: false,
     ),
     DuoPose.celebrate => const DuoMotionSpec(
-      asset: 'assets/motion/duo-celebrate.json',
-      startFrame: 759,
-      endFrame: 965,
-      restFrame: 965,
+      asset: '',
+      startFrame: 0,
+      endFrame: 1,
       loop: false,
     ),
     DuoPose.clipboard => const DuoMotionSpec(
-      asset: 'assets/motion/duo-celebrate.json',
-      startFrame: 966,
-      endFrame: 1079,
-      restFrame: 1079,
+      asset: '',
+      startFrame: 0,
+      endFrame: 1,
       loop: false,
     ),
     DuoPose.reading => const DuoMotionSpec(
-      asset: 'assets/motion/duo-reading.json',
+      asset: '',
       startFrame: 0,
-      endFrame: 365,
+      endFrame: 1,
       loop: true,
     ),
   };
@@ -87,7 +83,9 @@ double duoFrameProgress({
   return ((frame - compositionStartFrame) / duration).clamp(0.0, 1.0);
 }
 
-class DuoMotion extends StatefulWidget {
+/// Keeps the measured layout while displaying the CocEnglish mascot in a
+/// matching still pose. No third-party character or animation is loaded.
+class DuoMotion extends StatelessWidget {
   const DuoMotion({
     required this.pose,
     required this.width,
@@ -110,200 +108,25 @@ class DuoMotion extends StatefulWidget {
   final Rect? viewport;
   final bool enabled;
 
-  /// Test hook: when true, looping specs hold their first frame instead of
-  /// repeating, so `pumpAndSettle` can settle screens that show an
-  /// idle mascot. Set globally in `test/flutter_test_config.dart`.
   @visibleForTesting
   static bool debugSingleCycleLoops = false;
 
   @override
-  State<DuoMotion> createState() => _DuoMotionState();
-}
-
-class _DuoMotionState extends State<DuoMotion>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  static final Map<String, Future<LottieComposition>> _compositionCache = {};
-
-  late final AnimationController _controller;
-  LottieComposition? _composition;
-  LottieDrawable? _drawable;
-  Object? _loadError;
-  int _loadRevision = 0;
-  bool _motionAllowed = false;
-  bool _appActive = true;
-
-  DuoMotionSpec get _spec => widget.spec ?? widget.pose.spec;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final allowed = _calculateMotionAllowed();
-    if (_composition == null && _loadError == null && allowed) {
-      unawaited(_loadComposition());
-    }
-    if (_motionAllowed != allowed) {
-      _motionAllowed = allowed;
-      if (allowed && _composition != null) {
-        _play();
-      } else {
-        _controller.stop();
-      }
-    }
-  }
-
-  @override
-  void didUpdateWidget(DuoMotion oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _motionAllowed = _calculateMotionAllowed();
-    if (!_motionAllowed) _controller.stop();
-    final oldSpec = oldWidget.spec ?? oldWidget.pose.spec;
-    if (oldWidget.enabled != widget.enabled) {
-      _motionAllowed = _calculateMotionAllowed();
-      if (!_motionAllowed) {
-        _controller.stop();
-      }
-    }
-    if (oldSpec.asset != _spec.asset) {
-      _loadRevision++;
-      _controller.stop();
-      _composition = null;
-      _drawable = null;
-      _loadError = null;
-      if (_motionAllowed) unawaited(_loadComposition());
-    } else if (oldSpec != _spec) {
-      _play(fromStart: true);
-    } else if (_motionAllowed && !_controller.isAnimating) {
-      if (_composition == null && _loadError == null) {
-        unawaited(_loadComposition());
-      } else {
-        _play();
-      }
-    }
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final active = state == AppLifecycleState.resumed;
-    if (_appActive == active) return;
-    _appActive = active;
-    _motionAllowed = _calculateMotionAllowed();
-    if (_motionAllowed) {
-      if (_composition == null && _loadError == null) {
-        unawaited(_loadComposition());
-      } else {
-        _play();
-      }
-    } else {
-      _controller.stop();
-    }
-  }
-
-  bool _calculateMotionAllowed() =>
-      !_spec.asset.split('/').last.startsWith('duo-') &&
-      widget.enabled &&
-      _appActive &&
-      !MediaQuery.disableAnimationsOf(context) &&
-      TickerMode.valuesOf(context).enabled;
-
-  Future<void> _loadComposition() async {
-    if (_spec.asset.split('/').last.startsWith('duo-')) return;
-    final revision = ++_loadRevision;
-    try {
-      final composition = await _compositionCache.putIfAbsent(
-        _spec.asset,
-        () => AssetLottie(_spec.asset).load(context: context),
-      );
-      if (!mounted || revision != _loadRevision) return;
-      setState(() {
-        _composition = composition;
-        _drawable = LottieDrawable(composition, frameRate: FrameRate.max);
-      });
-      _play(fromStart: true);
-    } on Object catch (error) {
-      _compositionCache.remove(_spec.asset);
-      if (!mounted || revision != _loadRevision) return;
-      setState(() => _loadError = error);
-    }
-  }
-
-  void _play({bool fromStart = false}) {
-    final composition = _composition;
-    if (!_motionAllowed || composition == null) return;
-    final segmentFrames = math.max(0, _spec.endFrame - _spec.startFrame);
-    _controller.duration = Duration(
-      microseconds: (segmentFrames / composition.frameRate * 1000000).round(),
-    );
-    if (fromStart) _controller.value = 0;
-    if (_spec.loop && DuoMotion.debugSingleCycleLoops) {
-      // Tests: hold the loop's first frame so screens settle.
-      _controller.value = 0;
-    } else if (_spec.loop) {
-      _controller.repeat();
-    } else {
-      _controller.forward().whenComplete(() {
-        if (mounted && _motionAllowed) setState(() {});
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _loadRevision++;
-    WidgetsBinding.instance.removeObserver(this);
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_spec.asset.split('/').last.startsWith('duo-')) {
-      return CocEnglishMascot(width: widget.width, height: widget.height);
-    }
-    if (!_motionAllowed || _loadError != null) return _fallback();
-    final composition = _composition;
-    final drawable = _drawable;
-    if (composition == null || drawable == null) return _fallback();
-    return SizedBox(
-      width: widget.width,
-      height: widget.height,
-      child: ClipRect(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            final completed =
-                !_spec.loop && _controller.status == AnimationStatus.completed;
-            final frame = completed
-                ? _spec.restFrame ?? _spec.endFrame
-                : _spec.startFrame +
-                      (_spec.endFrame - _spec.startFrame) * _controller.value;
-            return CustomPaint(
-              painter: DuoMotionPainter(
-                composition: composition,
-                drawable: drawable,
-                frame: frame,
-                viewport: widget.viewport,
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _fallback() => SizedBox(
-    width: widget.width,
-    height: widget.height,
-    child: widget.fallback,
+  Widget build(BuildContext context) => CocEnglishMascot(
+    width: width,
+    height: height,
+    pose: switch (pose) {
+      DuoPose.wave || DuoPose.idle => CocEnglishMascotPose.wave,
+      DuoPose.celebrate => CocEnglishMascotPose.celebrate,
+      DuoPose.scribble ||
+      DuoPose.pencil ||
+      DuoPose.clipboard ||
+      DuoPose.reading => CocEnglishMascotPose.study,
+    },
   );
 }
 
+/// Geometry utility retained for the local animation QA helpers.
 class DuoMotionPainter extends CustomPainter {
   DuoMotionPainter({
     required this.composition,

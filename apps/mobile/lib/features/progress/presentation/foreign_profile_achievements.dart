@@ -194,7 +194,7 @@ class _SafetyAction extends StatelessWidget {
       style: TextButton.styleFrom(
         foregroundColor: ReferenceColors.muted,
         textStyle: const TextStyle(
-          fontFamily: 'DuolingoSans',
+          fontFamily: 'sans-serif',
           fontWeight: FontWeight.w700,
           fontSize: 15,
         ),

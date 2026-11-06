@@ -18,9 +18,7 @@ if (unknownFlags.length > 0) {
 }
 
 if (flags.has('--help')) {
-  console.log(
-    'Usage: node tools/scripts/mobile-check.mjs [--with-blueprint] [--build-android]',
-  );
+  console.log('Usage: node tools/scripts/mobile-check.mjs [--with-blueprint] [--build-android]');
   process.exit(0);
 }
 
@@ -75,12 +73,7 @@ function findFlutterRoot() {
       'bin',
       isWindows ? 'dart.exe' : 'dart',
     );
-    const flutterSnapshot = path.join(
-      candidate,
-      'bin',
-      'cache',
-      'flutter_tools.snapshot',
-    );
+    const flutterSnapshot = path.join(candidate, 'bin', 'cache', 'flutter_tools.snapshot');
 
     if (existsSync(dartExecutable) && existsSync(flutterSnapshot)) {
       return { dartExecutable, flutterRoot: candidate, flutterSnapshot };
@@ -124,23 +117,18 @@ const runFlutter = (label, arguments_) =>
 run(
   'Dart format check',
   toolchain.dartExecutable,
-  ['format', '--output=none', '--set-exit-if-changed', 'lib', 'test', 'integration_test', 'test_driver'],
+  [
+    'format',
+    '--output=none',
+    '--set-exit-if-changed',
+    'lib',
+    'test',
+    'integration_test',
+    'test_driver',
+  ],
   { cwd: mobileDirectory, env: flutterEnvironment },
 );
 runFlutter('Flutter analyze', ['analyze', '--fatal-infos']);
-// Rive's official setup downloads the host test runtime. Windows debug DLLs
-// require the Visual C++ debug CRT; the release DLL works on normal developer PCs.
-const riveHost = { win32: 'windows', linux: 'linux', darwin: 'macos' }[process.platform];
-if (riveHost) {
-  // Flutter clean removes the app copy but leaves Rive's Pub-cache marker.
-  // Official setup needs --clean to restore that missing prebuilt runtime.
-  const missingWindowsRuntime = isWindows && !existsSync(path.join(mobileDirectory, 'build/rive_native/native/build/windows/bin/lib/release/rive_native.dll'));
-  run('Rive host test runtime', toolchain.dartExecutable, ['run', 'rive_native:setup', '--platform', riveHost, ...(missingWindowsRuntime ? ['--clean'] : [])], { cwd: mobileDirectory, env: flutterEnvironment });
-}
-if (isWindows) {
-  const pathKey = Object.keys(flutterEnvironment).find((key) => key.toLowerCase() === 'path') ?? 'PATH';
-  flutterEnvironment[pathKey] = path.join(mobileDirectory, 'build/rive_native/native/build/windows/bin/lib/release') + path.delimiter + (flutterEnvironment[pathKey] ?? '');
-}
 runFlutter('Flutter test', ['test', '--dart-define=ENABLE_MASCOT_MOTION=false']);
 
 if (flags.has('--build-android')) {

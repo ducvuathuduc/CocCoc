@@ -2,133 +2,133 @@
   "avatarBuilderConfig": {
     "avatarOnProfileDisplayOptions": {
       "1": {
-        "backgroundColor": "#E5E5E5",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#FFF2E8",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "2": {
-        "backgroundColor": "#AFAFAF",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#FFE2CF",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "3": {
-        "backgroundColor": "#4B4B4B",
-        "learningAppIconColor": "#FFFFFD",
-        "systemIconDisplayOption": "LIGHT"
+        "backgroundColor": "#FFD0B8",
+        "learningAppIconColor": "#21314A",
+        "systemIconDisplayOption": "DARK"
       },
       "4": {
-        "backgroundColor": "#F3E0FF",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#F9B59E",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "5": {
-        "backgroundColor": "#DDB1F9",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#F3D5BB",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "6": {
-        "backgroundColor": "#9069CD",
-        "learningAppIconColor": "#FFFFFD",
-        "systemIconDisplayOption": "LIGHT"
+        "backgroundColor": "#E9C5AF",
+        "learningAppIconColor": "#21314A",
+        "systemIconDisplayOption": "DARK"
       },
       "7": {
-        "backgroundColor": "#DDF4FF",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#E1B48C",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "8": {
-        "backgroundColor": "#84D7FF",
-        "learningAppIconColor": "#4B4B4B",
-        "systemIconDisplayOption": "DARK"
+        "backgroundColor": "#B7785D",
+        "learningAppIconColor": "#FFFFFF",
+        "systemIconDisplayOption": "LIGHT"
       },
       "9": {
-        "backgroundColor": "#2561AC",
-        "learningAppIconColor": "#FFFFFD",
+        "backgroundColor": "#6E473B",
+        "learningAppIconColor": "#FFFFFF",
         "systemIconDisplayOption": "LIGHT"
       },
       "10": {
-        "backgroundColor": "#C6FDE7",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#E1DAD1",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "11": {
-        "backgroundColor": "#5AEAB1",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#C7C5C0",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "12": {
-        "backgroundColor": "#43B487",
-        "learningAppIconColor": "#FFFFFD",
+        "backgroundColor": "#8B8581",
+        "learningAppIconColor": "#FFFFFF",
         "systemIconDisplayOption": "LIGHT"
       },
       "13": {
-        "backgroundColor": "#D7FFB8",
-        "learningAppIconColor": "#4B4B4B",
-        "systemIconDisplayOption": "DARK"
+        "backgroundColor": "#5E5B5C",
+        "learningAppIconColor": "#FFFFFF",
+        "systemIconDisplayOption": "LIGHT"
       },
       "14": {
-        "backgroundColor": "#B8F28B",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#F4E4C2",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "15": {
-        "backgroundColor": "#7DB84F",
-        "learningAppIconColor": "#FFFFFD",
-        "systemIconDisplayOption": "LIGHT"
+        "backgroundColor": "#E6C99B",
+        "learningAppIconColor": "#21314A",
+        "systemIconDisplayOption": "DARK"
       },
       "16": {
-        "backgroundColor": "#FFF1A7",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#CDAE72",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "17": {
-        "backgroundColor": "#FFCB80",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#FFF0B3",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "18": {
-        "backgroundColor": "#E5A259",
-        "learningAppIconColor": "#FFFFFD",
-        "systemIconDisplayOption": "LIGHT"
+        "backgroundColor": "#FFD87A",
+        "learningAppIconColor": "#21314A",
+        "systemIconDisplayOption": "DARK"
       },
       "19": {
-        "backgroundColor": "#FFDFE0",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#FFC273",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "20": {
-        "backgroundColor": "#FFB2B2",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#F9AB6C",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "21": {
-        "backgroundColor": "#E56464",
-        "learningAppIconColor": "#FFFFFD",
-        "systemIconDisplayOption": "LIGHT"
+        "backgroundColor": "#F7D4DB",
+        "learningAppIconColor": "#21314A",
+        "systemIconDisplayOption": "DARK"
       },
       "22": {
-        "backgroundColor": "#FFD0F2",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#E9ADC8",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "23": {
-        "backgroundColor": "#F9A3D7",
-        "learningAppIconColor": "#4B4B4B",
-        "systemIconDisplayOption": "DARK"
+        "backgroundColor": "#D67BA4",
+        "learningAppIconColor": "#FFFFFF",
+        "systemIconDisplayOption": "LIGHT"
       },
       "24": {
-        "backgroundColor": "#D45DA6",
-        "learningAppIconColor": "#FFFFFD",
+        "backgroundColor": "#B65D82",
+        "learningAppIconColor": "#FFFFFF",
         "systemIconDisplayOption": "LIGHT"
       },
       "25": {
-        "backgroundColor": "#8CE31B",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#DAF0EA",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       },
       "26": {
-        "backgroundColor": "#73D70E",
-        "learningAppIconColor": "#4B4B4B",
+        "backgroundColor": "#ACE0D3",
+        "learningAppIconColor": "#21314A",
         "systemIconDisplayOption": "DARK"
       }
     },
@@ -148,103 +148,103 @@
       "Nose Piercing": 0,
       "Piercings": 0,
       "SkinTone": 15,
-      "Wrinkles": 0
+      "Wrinkles": 0,
+      "EyeColor": 1
     },
-    "riveFileUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_25_sept2025.riv",
-    "riveFileVersion": "avatar_builder_25_sept2025",
-    "riveServerRenderingFileUrl": "https://avatars.duolingo.com/avatar-builder/avatar_v2_deliv_112.riv",
-    "skinProperties": {},
     "stateChooserTabs": [
       {
+        "tabName": "Body",
         "sections": [
           {
-            "buttonType": "IMAGE",
-            "featureButtons": [],
             "header": "Skin tone",
-            "imageButtons": [
+            "layoutType": "LINEAR",
+            "buttonType": "IMAGE",
+            "options": [
               {
-                "color": "#6E3D3A",
                 "state": "SkinTone",
-                "value": 15
+                "value": 15,
+                "color": "#6E3D3A"
               },
               {
-                "color": "#7D4A3F",
                 "state": "SkinTone",
-                "value": 14
+                "value": 14,
+                "color": "#7D4A3F"
               },
               {
-                "color": "#8C4A25",
                 "state": "SkinTone",
-                "value": 13
+                "value": 13,
+                "color": "#8C4A25"
               },
               {
-                "color": "#97513F",
                 "state": "SkinTone",
-                "value": 12
+                "value": 12,
+                "color": "#97513F"
               },
               {
-                "color": "#985C30",
                 "state": "SkinTone",
-                "value": 11
+                "value": 11,
+                "color": "#985C30"
               },
               {
-                "color": "#A46648",
                 "state": "SkinTone",
-                "value": 10
+                "value": 10,
+                "color": "#A46648"
               },
               {
-                "color": "#B76E45",
                 "state": "SkinTone",
-                "value": 9
+                "value": 9,
+                "color": "#B76E45"
               },
               {
-                "color": "#C6775C",
                 "state": "SkinTone",
-                "value": 8
+                "value": 8,
+                "color": "#C6775C"
               },
               {
-                "color": "#E18E70",
                 "state": "SkinTone",
-                "value": 7
+                "value": 7,
+                "color": "#E18E70"
               },
               {
-                "color": "#E59D65",
                 "state": "SkinTone",
-                "value": 6
+                "value": 6,
+                "color": "#E59D65"
               },
               {
-                "color": "#F2A07D",
                 "state": "SkinTone",
-                "value": 5
+                "value": 5,
+                "color": "#F2A07D"
               },
               {
-                "color": "#FFB89D",
                 "state": "SkinTone",
-                "value": 4
+                "value": 4,
+                "color": "#FFB89D"
               },
               {
-                "color": "#FFC6B7",
                 "state": "SkinTone",
-                "value": 3
+                "value": 3,
+                "color": "#FFC6B7"
               },
               {
-                "color": "#FFCBA3",
                 "state": "SkinTone",
-                "value": 2
+                "value": 2,
+                "color": "#FFCBA3"
               },
               {
-                "color": "#FFE2D6",
                 "state": "SkinTone",
-                "value": 1
+                "value": 1,
+                "color": "#FFE2D6"
               }
-            ],
-            "layoutType": "LINEAR"
+            ]
           },
           {
+            "header": "Body",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "Body",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 3,
@@ -256,11 +256,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 3
+                }
               },
               {
                 "state": "Body",
+                "value": 4,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 4,
@@ -272,11 +272,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 4
+                }
               },
               {
                 "state": "Body",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 1,
@@ -288,11 +288,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 1
+                }
               },
               {
                 "state": "Body",
+                "value": 5,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 5,
@@ -304,11 +304,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 5
+                }
               },
               {
                 "state": "Body",
+                "value": 6,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 6,
@@ -320,11 +320,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 6
+                }
               },
               {
                 "state": "Body",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 2,
@@ -336,841 +336,821 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 2
+                }
               }
-            ],
-            "header": "Body",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_body_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_body_selected.svg"
-        },
-        "tabName": "Body",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_body_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_body_unselected.svg"
-        }
+        ]
       },
       {
+        "tabName": "Expression",
         "sections": [
           {
-            "buttonType": "IMAGE",
-            "featureButtons": [],
             "header": "Eye color",
-            "imageButtons": [
+            "layoutType": "LINEAR",
+            "buttonType": "IMAGE",
+            "options": [
               {
-                "color": "#3D3D3D",
                 "state": "EyeColor",
-                "value": 1
+                "value": 1,
+                "color": "#3D3D3D"
               },
               {
-                "color": "#A44407",
                 "state": "EyeColor",
-                "value": 2
+                "value": 2,
+                "color": "#A44407"
               },
               {
-                "color": "#947300",
                 "state": "EyeColor",
-                "value": 3
+                "value": 3,
+                "color": "#947300"
               },
               {
-                "color": "#549002",
                 "state": "EyeColor",
-                "value": 4
+                "value": 4,
+                "color": "#549002"
               },
               {
-                "color": "#0B8890",
                 "state": "EyeColor",
-                "value": 5
+                "value": 5,
+                "color": "#0B8890"
               },
               {
-                "color": "#007FCF",
                 "state": "EyeColor",
-                "value": 6
+                "value": 6,
+                "color": "#007FCF"
               },
               {
-                "color": "#7386A1",
                 "state": "EyeColor",
-                "value": 7
+                "value": 7,
+                "color": "#7386A1"
               },
               {
-                "color": "#945EF0",
                 "state": "EyeColor",
-                "value": 8
+                "value": 8,
+                "color": "#945EF0"
               },
               {
-                "color": "#CE26D3",
                 "state": "EyeColor",
-                "value": 9
+                "value": 9,
+                "color": "#CE26D3"
               },
               {
-                "color": "#FB4CB7",
                 "state": "EyeColor",
-                "value": 10
+                "value": 10,
+                "color": "#FB4CB7"
               },
               {
-                "color": "#F03535",
                 "state": "EyeColor",
-                "value": 11
+                "value": 11,
+                "color": "#F03535"
               },
               {
-                "color": "#F28300",
                 "state": "EyeColor",
-                "value": 12
+                "value": 12,
+                "color": "#F28300"
               },
               {
-                "color": "#F0AD00",
                 "state": "EyeColor",
-                "value": 13
+                "value": 13,
+                "color": "#F0AD00"
               }
-            ],
-            "layoutType": "LINEAR"
+            ]
           },
           {
+            "header": "Expression",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "Expression",
+                "value": 17,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 17
-                },
-                "value": 17
+                }
               },
               {
                 "state": "Expression",
+                "value": 54,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 54
-                },
-                "value": 54
+                }
               },
               {
                 "state": "Expression",
+                "value": 55,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 55
-                },
-                "value": 55
+                }
               },
               {
                 "state": "Expression",
+                "value": 5,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 5
-                },
-                "value": 5
+                }
               },
               {
                 "state": "Expression",
+                "value": 31,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 31
-                },
-                "value": 31
+                }
               },
               {
                 "state": "Expression",
+                "value": 32,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 32
-                },
-                "value": 32
+                }
               },
               {
                 "state": "Expression",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 1
-                },
-                "value": 1
+                }
               },
               {
                 "state": "Expression",
+                "value": 21,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 21
-                },
-                "value": 21
+                }
               },
               {
                 "state": "Expression",
+                "value": 20,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 20
-                },
-                "value": 20
+                }
               },
               {
                 "state": "Expression",
+                "value": 22,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 22
-                },
-                "value": 22
+                }
               },
               {
                 "state": "Expression",
+                "value": 23,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 23
-                },
-                "value": 23
+                }
               },
               {
                 "state": "Expression",
+                "value": 24,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 24
-                },
-                "value": 24
+                }
               },
               {
                 "state": "Expression",
+                "value": 11,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 11
-                },
-                "value": 11
+                }
               },
               {
                 "state": "Expression",
+                "value": 43,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 43
-                },
-                "value": 43
+                }
               },
               {
                 "state": "Expression",
+                "value": 44,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 44
-                },
-                "value": 44
+                }
               },
               {
                 "state": "Expression",
+                "value": 16,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 16
-                },
-                "value": 16
+                }
               },
               {
                 "state": "Expression",
+                "value": 18,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 18
-                },
-                "value": 18
+                }
               },
               {
                 "state": "Expression",
+                "value": 53,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 53
-                },
-                "value": 53
+                }
               },
               {
                 "state": "Expression",
+                "value": 8,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 8
-                },
-                "value": 8
+                }
               },
               {
                 "state": "Expression",
+                "value": 37,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 37
-                },
-                "value": 37
+                }
               },
               {
                 "state": "Expression",
+                "value": 38,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 38
-                },
-                "value": 38
+                }
               },
               {
                 "state": "Expression",
+                "value": 9,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 9
-                },
-                "value": 9
+                }
               },
               {
                 "state": "Expression",
+                "value": 39,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 39
-                },
-                "value": 39
+                }
               },
               {
                 "state": "Expression",
+                "value": 40,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 40
-                },
-                "value": 40
+                }
               },
               {
                 "state": "Expression",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 3
-                },
-                "value": 3
+                }
               },
               {
                 "state": "Expression",
+                "value": 27,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 27
-                },
-                "value": 27
+                }
               },
               {
                 "state": "Expression",
+                "value": 28,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 28
-                },
-                "value": 28
+                }
               },
               {
                 "state": "Expression",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 2
-                },
-                "value": 2
+                }
               },
               {
                 "state": "Expression",
+                "value": 25,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 25
-                },
-                "value": 25
+                }
               },
               {
                 "state": "Expression",
+                "value": 26,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 26
-                },
-                "value": 26
+                }
               },
               {
                 "state": "Expression",
+                "value": 4,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 4
-                },
-                "value": 4
+                }
               },
               {
                 "state": "Expression",
+                "value": 29,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 29
-                },
-                "value": 29
+                }
               },
               {
                 "state": "Expression",
+                "value": 30,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 30
-                },
-                "value": 30
+                }
               },
               {
                 "state": "Expression",
+                "value": 45,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 45
-                },
-                "value": 45
+                }
               },
               {
                 "state": "Expression",
+                "value": 46,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 46
-                },
-                "value": 46
+                }
               },
               {
                 "state": "Expression",
+                "value": 12,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 12
-                },
-                "value": 12
+                }
               },
               {
                 "state": "Expression",
+                "value": 10,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 10
-                },
-                "value": 10
+                }
               },
               {
                 "state": "Expression",
+                "value": 41,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 41
-                },
-                "value": 41
+                }
               },
               {
                 "state": "Expression",
+                "value": 42,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 42
-                },
-                "value": 42
+                }
               },
               {
                 "state": "Expression",
+                "value": 19,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 19
-                },
-                "value": 19
+                }
               },
               {
                 "state": "Expression",
+                "value": 56,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 56
-                },
-                "value": 56
+                }
               },
               {
                 "state": "Expression",
+                "value": 57,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 57
-                },
-                "value": 57
+                }
               },
               {
                 "state": "Expression",
+                "value": 6,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 6
-                },
-                "value": 6
+                }
               },
               {
                 "state": "Expression",
+                "value": 33,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 33
-                },
-                "value": 33
+                }
               },
               {
                 "state": "Expression",
+                "value": 34,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 34
-                },
-                "value": 34
+                }
               },
               {
                 "state": "Expression",
+                "value": 13,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 13
-                },
-                "value": 13
+                }
               },
               {
                 "state": "Expression",
+                "value": 47,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 47
-                },
-                "value": 47
+                }
               },
               {
                 "state": "Expression",
+                "value": 48,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 48
-                },
-                "value": 48
+                }
               },
               {
                 "state": "Expression",
+                "value": 14,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 14
-                },
-                "value": 14
+                }
               },
               {
                 "state": "Expression",
+                "value": 49,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 49
-                },
-                "value": 49
+                }
               },
               {
                 "state": "Expression",
+                "value": 50,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 50
-                },
-                "value": 50
+                }
               },
               {
                 "state": "Expression",
+                "value": 15,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 15
-                },
-                "value": 15
+                }
               },
               {
                 "state": "Expression",
+                "value": 51,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 51
-                },
-                "value": 51
+                }
               },
               {
                 "state": "Expression",
+                "value": 52,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 52
-                },
-                "value": 52
+                }
               },
               {
                 "state": "Expression",
+                "value": 7,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 7
-                },
-                "value": 7
+                }
               },
               {
                 "state": "Expression",
+                "value": 35,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 35
-                },
-                "value": 35
+                }
               },
               {
                 "state": "Expression",
+                "value": 36,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Expression": 36
-                },
-                "value": 36
+                }
               }
-            ],
-            "header": "Expression",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_selected.svg"
-        },
-        "tabName": "Expression",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_unselected.svg"
-        }
+        ]
       },
       {
+        "tabName": "Hairstyle",
         "sections": [
           {
-            "buttonType": "IMAGE",
-            "featureButtons": [],
             "header": "Main hair color",
-            "imageButtons": [
+            "layoutType": "LINEAR",
+            "buttonType": "IMAGE",
+            "options": [
               {
-                "color": "#3D3D3D",
                 "state": "MainHairColor",
-                "value": 1
+                "value": 1,
+                "color": "#3D3D3D"
               },
               {
-                "color": "#553629",
                 "state": "MainHairColor",
-                "value": 2
+                "value": 2,
+                "color": "#553629"
               },
               {
-                "color": "#662C2C",
                 "state": "MainHairColor",
-                "value": 3
+                "value": 3,
+                "color": "#662C2C"
               },
               {
-                "color": "#753A23",
                 "state": "MainHairColor",
-                "value": 4
+                "value": 4,
+                "color": "#753A23"
               },
               {
-                "color": "#A34242",
                 "state": "MainHairColor",
-                "value": 5
+                "value": 5,
+                "color": "#A34242"
               },
               {
-                "color": "#947872",
                 "state": "MainHairColor",
-                "value": 6
+                "value": 6,
+                "color": "#947872"
               },
               {
-                "color": "#BB6A20",
                 "state": "MainHairColor",
-                "value": 7
+                "value": 7,
+                "color": "#BB6A20"
               },
               {
-                "color": "#CA6049",
                 "state": "MainHairColor",
-                "value": 8
+                "value": 8,
+                "color": "#CA6049"
               },
               {
-                "color": "#F5AF62",
                 "state": "MainHairColor",
-                "value": 9
+                "value": 9,
+                "color": "#F5AF62"
               },
               {
-                "color": "#FFDEBB",
                 "state": "MainHairColor",
-                "value": 10
+                "value": 10,
+                "color": "#FFDEBB"
               },
               {
-                "color": "#E4DDD6",
                 "state": "MainHairColor",
-                "value": 11
+                "value": 11,
+                "color": "#E4DDD6"
               },
               {
-                "color": "#ECF0F1",
                 "state": "MainHairColor",
-                "value": 12
+                "value": 12,
+                "color": "#ECF0F1"
               },
               {
-                "color": "#FF97CF",
                 "state": "MainHairColor",
-                "value": 13
+                "value": 13,
+                "color": "#FF97CF"
               },
               {
-                "color": "#9961FF",
                 "state": "MainHairColor",
-                "value": 14
+                "value": 14,
+                "color": "#9961FF"
               },
               {
-                "color": "#3F83D7",
                 "state": "MainHairColor",
-                "value": 15
+                "value": 15,
+                "color": "#3F83D7"
               },
               {
-                "color": "#249472",
                 "state": "MainHairColor",
-                "value": 16
+                "value": 16,
+                "color": "#249472"
               }
-            ],
-            "layoutType": "LINEAR"
+            ]
           },
           {
+            "header": "Hairstyle",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "MainHair",
+                "value": 58,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1184,11 +1164,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 58
+                }
               },
               {
                 "state": "MainHair",
+                "value": 59,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1202,11 +1182,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 59
+                }
               },
               {
                 "state": "MainHair",
+                "value": 60,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1220,11 +1200,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 60
+                }
               },
               {
                 "state": "MainHair",
+                "value": 55,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1238,11 +1218,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 55
+                }
               },
               {
                 "state": "MainHair",
+                "value": 56,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1256,11 +1236,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 56
+                }
               },
               {
                 "state": "MainHair",
+                "value": 57,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1274,11 +1254,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 57
+                }
               },
               {
                 "state": "MainHair",
+                "value": 50,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1292,11 +1272,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 50
+                }
               },
               {
                 "state": "MainHair",
+                "value": 53,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1310,11 +1290,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 53
+                }
               },
               {
                 "state": "MainHair",
+                "value": 54,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1328,11 +1308,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 54
+                }
               },
               {
                 "state": "MainHair",
+                "value": 52,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1346,11 +1326,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 52
+                }
               },
               {
                 "state": "MainHair",
+                "value": 49,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1364,11 +1344,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 49
+                }
               },
               {
                 "state": "MainHair",
+                "value": 51,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1382,11 +1362,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 51
+                }
               },
               {
                 "state": "MainHair",
+                "value": 46,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1400,11 +1380,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 46
+                }
               },
               {
                 "state": "MainHair",
+                "value": 47,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1418,11 +1398,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 47
+                }
               },
               {
                 "state": "MainHair",
+                "value": 48,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1436,11 +1416,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 48
+                }
               },
               {
                 "state": "MainHair",
+                "value": 63,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1454,11 +1434,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 63
+                }
               },
               {
                 "state": "MainHair",
+                "value": 61,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1472,11 +1452,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 61
+                }
               },
               {
                 "state": "MainHair",
+                "value": 64,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1490,11 +1470,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 64
+                }
               },
               {
                 "state": "MainHair",
+                "value": 66,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1508,11 +1488,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 66
+                }
               },
               {
                 "state": "MainHair",
+                "value": 62,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1526,11 +1506,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 62
+                }
               },
               {
                 "state": "MainHair",
+                "value": 65,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1544,11 +1524,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 65
+                }
               },
               {
                 "state": "MainHair",
+                "value": 43,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1562,11 +1542,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 43
+                }
               },
               {
                 "state": "MainHair",
+                "value": 44,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1580,11 +1560,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 44
+                }
               },
               {
                 "state": "MainHair",
+                "value": 45,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1598,11 +1578,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 45
+                }
               },
               {
                 "state": "MainHair",
+                "value": 7,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1616,11 +1596,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 7
+                }
               },
               {
                 "state": "MainHair",
+                "value": 8,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1634,11 +1614,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 8
+                }
               },
               {
                 "state": "MainHair",
+                "value": 9,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1652,11 +1632,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 9
+                }
               },
               {
                 "state": "MainHair",
+                "value": 10,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1670,11 +1650,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 10
+                }
               },
               {
                 "state": "MainHair",
+                "value": 11,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1688,11 +1668,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 11
+                }
               },
               {
                 "state": "MainHair",
+                "value": 12,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1706,11 +1686,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 12
+                }
               },
               {
                 "state": "MainHair",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1724,11 +1704,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 1
+                }
               },
               {
                 "state": "MainHair",
+                "value": 68,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1742,11 +1722,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 68
+                }
               },
               {
                 "state": "MainHair",
+                "value": 69,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1760,11 +1740,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 69
+                }
               },
               {
                 "state": "MainHair",
+                "value": 5,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1778,11 +1758,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 5
+                }
               },
               {
                 "state": "MainHair",
+                "value": 70,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1796,11 +1776,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 70
+                }
               },
               {
                 "state": "MainHair",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1814,11 +1794,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 2
+                }
               },
               {
                 "state": "MainHair",
+                "value": 34,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1832,11 +1812,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 34
+                }
               },
               {
                 "state": "MainHair",
+                "value": 4,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1850,11 +1830,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 4
+                }
               },
               {
                 "state": "MainHair",
+                "value": 6,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1868,11 +1848,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 6
+                }
               },
               {
                 "state": "MainHair",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1886,11 +1866,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 3
+                }
               },
               {
                 "state": "MainHair",
+                "value": 29,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1904,11 +1884,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 29
+                }
               },
               {
                 "state": "MainHair",
+                "value": 30,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1922,11 +1902,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 30
+                }
               },
               {
                 "state": "MainHair",
+                "value": 37,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1940,11 +1920,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 37
+                }
               },
               {
                 "state": "MainHair",
+                "value": 38,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1958,11 +1938,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 38
+                }
               },
               {
                 "state": "MainHair",
+                "value": 39,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1976,11 +1956,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 39
+                }
               },
               {
                 "state": "MainHair",
+                "value": 32,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -1994,11 +1974,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 32
+                }
               },
               {
                 "state": "MainHair",
+                "value": 33,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2012,11 +1992,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 33
+                }
               },
               {
                 "state": "MainHair",
+                "value": 31,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2030,11 +2010,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 31
+                }
               },
               {
                 "state": "MainHair",
+                "value": 71,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2048,11 +2028,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 71
+                }
               },
               {
                 "state": "MainHair",
+                "value": 72,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2066,11 +2046,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 72
+                }
               },
               {
                 "state": "MainHair",
+                "value": 73,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2084,11 +2064,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 73
+                }
               },
               {
                 "state": "MainHair",
+                "value": 40,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2102,11 +2082,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 40
+                }
               },
               {
                 "state": "MainHair",
+                "value": 41,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2120,11 +2100,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 41
+                }
               },
               {
                 "state": "MainHair",
+                "value": 42,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2138,11 +2118,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 42
+                }
               },
               {
                 "state": "MainHair",
+                "value": 35,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2156,11 +2136,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 35
+                }
               },
               {
                 "state": "MainHair",
+                "value": 36,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2174,11 +2154,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 36
+                }
               },
               {
                 "state": "MainHair",
+                "value": 28,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2192,11 +2172,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 28
+                }
               },
               {
                 "state": "MainHair",
+                "value": 25,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2210,11 +2190,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 25
+                }
               },
               {
                 "state": "MainHair",
+                "value": 26,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2228,11 +2208,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 26
+                }
               },
               {
                 "state": "MainHair",
+                "value": 27,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2246,11 +2226,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 27
+                }
               },
               {
                 "state": "MainHair",
+                "value": 19,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2264,11 +2244,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 19
+                }
               },
               {
                 "state": "MainHair",
+                "value": 20,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2282,11 +2262,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 20
+                }
               },
               {
                 "state": "MainHair",
+                "value": 21,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2300,11 +2280,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 21
+                }
               },
               {
                 "state": "MainHair",
+                "value": 22,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2318,11 +2298,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 22
+                }
               },
               {
                 "state": "MainHair",
+                "value": 23,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2336,11 +2316,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 23
+                }
               },
               {
                 "state": "MainHair",
+                "value": 24,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2354,11 +2334,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 24
+                }
               },
               {
                 "state": "MainHair",
+                "value": 13,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2372,11 +2352,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 13
+                }
               },
               {
                 "state": "MainHair",
+                "value": 14,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2390,11 +2370,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 14
+                }
               },
               {
                 "state": "MainHair",
+                "value": 15,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2408,11 +2388,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 15
+                }
               },
               {
                 "state": "MainHair",
+                "value": 16,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2426,11 +2406,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 16
+                }
               },
               {
                 "state": "MainHair",
+                "value": 17,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2444,11 +2424,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 17
+                }
               },
               {
                 "state": "MainHair",
+                "value": 18,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2462,165 +2442,154 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 18
+                }
               }
-            ],
-            "header": "Hairstyle",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_hair_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_hair_selected.svg"
-        },
-        "tabName": "Hairstyle",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_hair_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_hair_unselected.svg"
-        }
+        ]
       },
       {
+        "tabName": "Accessories",
         "sections": [
           {
-            "buttonType": "IMAGE",
-            "featureButtons": [],
             "header": "Glasses color",
-            "imageButtons": [
+            "layoutType": "LINEAR",
+            "buttonType": "IMAGE",
+            "options": [
               {
-                "color": "#9069CD",
                 "state": "GlassesColor",
-                "value": 2
+                "value": 2,
+                "color": "#008F8C"
               },
               {
-                "color": "#1453A3",
                 "state": "GlassesColor",
-                "value": 1
+                "value": 1,
+                "color": "#21314A"
               },
               {
-                "color": "#5F8428",
                 "state": "GlassesColor",
-                "value": 3
+                "value": 3,
+                "color": "#F47721"
               },
               {
-                "color": "#EA7E00",
                 "state": "GlassesColor",
-                "value": 4
+                "value": 4,
+                "color": "#715C9F"
               },
               {
-                "color": "#FF4B4B",
                 "state": "GlassesColor",
-                "value": 5
+                "value": 5,
+                "color": "#D76568"
               },
               {
-                "color": "#FF9BD8",
                 "state": "GlassesColor",
-                "value": 6
+                "value": 6,
+                "color": "#E5A93E"
               },
               {
-                "color": "#EAD5C6",
                 "state": "GlassesColor",
-                "value": 7
+                "value": 7,
+                "color": "#496473"
               },
               {
-                "color": "#434343",
                 "state": "GlassesColor",
-                "value": 8
+                "value": 8,
+                "color": "#5C6268"
               }
-            ],
-            "layoutType": "LINEAR"
+            ]
           },
           {
+            "header": "Glasses",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "Glasses",
+                "value": 0,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Glasses": 0
-                },
-                "value": 0
+                }
               },
               {
                 "state": "Glasses",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Glasses": 1
-                },
-                "value": 1
+                }
               },
               {
                 "state": "Glasses",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Glasses": 2
-                },
-                "value": 2
+                }
               },
               {
                 "state": "Glasses",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Glasses": 3
-                },
-                "value": 3
+                }
               },
               {
                 "state": "Glasses",
+                "value": 4,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Glasses": 4
-                },
-                "value": 4
+                }
               },
               {
                 "state": "Glasses",
+                "value": 5,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Glasses": 5
-                },
-                "value": 5
+                }
               },
               {
                 "state": "Glasses",
+                "value": 6,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
                   "ENG_ONLY_Animation": 0,
                   "ENG_ONLY_Zoom": 0,
                   "Glasses": 6
-                },
-                "value": 6
+                }
               }
-            ],
-            "header": "Glasses",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           },
           {
+            "header": "Face details",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "Wrinkles",
+                "value": 0,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2633,11 +2602,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 0
+                }
               },
               {
                 "state": "Wrinkles",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2650,11 +2619,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 1
-                },
-                "value": 1
+                }
               },
               {
                 "state": "Wrinkles",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2667,19 +2636,18 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 2
-                },
-                "value": 2
+                }
               }
-            ],
-            "header": "Face details",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           },
           {
+            "header": "Earrings",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "Piercings",
+                "value": 0,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2692,11 +2660,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 0
+                }
               },
               {
                 "state": "Piercings",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2709,11 +2677,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 1,
                   "Wrinkles": 0
-                },
-                "value": 1
+                }
               },
               {
                 "state": "Piercings",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2726,11 +2694,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 2,
                   "Wrinkles": 0
-                },
-                "value": 2
+                }
               },
               {
                 "state": "Piercings",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2743,11 +2711,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 3,
                   "Wrinkles": 0
-                },
-                "value": 3
+                }
               },
               {
                 "state": "Piercings",
+                "value": 4,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2760,11 +2728,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 4,
                   "Wrinkles": 0
-                },
-                "value": 4
+                }
               },
               {
                 "state": "Piercings",
+                "value": 5,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2777,11 +2745,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 5,
                   "Wrinkles": 0
-                },
-                "value": 5
+                }
               },
               {
                 "state": "Piercings",
+                "value": 6,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2794,19 +2762,18 @@
                   "Nose Piercing": 0,
                   "Piercings": 6,
                   "Wrinkles": 0
-                },
-                "value": 6
+                }
               }
-            ],
-            "header": "Earrings",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           },
           {
+            "header": "Nose rings",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "Nose Piercing",
+                "value": 0,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2814,11 +2781,11 @@
                   "ENG_ONLY_Zoom": 0,
                   "Nose Piercing": 0,
                   "Piercings": 0
-                },
-                "value": 0
+                }
               },
               {
                 "state": "Nose Piercing",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2826,11 +2793,11 @@
                   "ENG_ONLY_Zoom": 0,
                   "Nose Piercing": 1,
                   "Piercings": 0
-                },
-                "value": 1
+                }
               },
               {
                 "state": "Nose Piercing",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2838,11 +2805,11 @@
                   "ENG_ONLY_Zoom": 0,
                   "Nose Piercing": 2,
                   "Piercings": 0
-                },
-                "value": 2
+                }
               },
               {
                 "state": "Nose Piercing",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2850,105 +2817,95 @@
                   "ENG_ONLY_Zoom": 0,
                   "Nose Piercing": 3,
                   "Piercings": 0
-                },
-                "value": 3
+                }
               }
-            ],
-            "header": "Nose rings",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_details_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_details_selected.svg"
-        },
-        "tabName": "Accessories",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_details_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_face_details_unselected.svg"
-        }
+        ]
       },
       {
+        "tabName": "Facial hair",
         "sections": [
           {
-            "buttonType": "IMAGE",
-            "featureButtons": [],
             "header": "Facial hair color",
-            "imageButtons": [
+            "layoutType": "LINEAR",
+            "buttonType": "IMAGE",
+            "options": [
               {
-                "color": "#434343",
                 "state": "FacialHairColor",
-                "value": 1
+                "value": 1,
+                "color": "#434343"
               },
               {
-                "color": "#5D3B2D",
                 "state": "FacialHairColor",
-                "value": 2
+                "value": 2,
+                "color": "#5D3B2D"
               },
               {
-                "color": "#592615",
                 "state": "FacialHairColor",
-                "value": 3
+                "value": 3,
+                "color": "#592615"
               },
               {
-                "color": "#703030",
                 "state": "FacialHairColor",
-                "value": 4
+                "value": 4,
+                "color": "#703030"
               },
               {
-                "color": "#785B56",
                 "state": "FacialHairColor",
-                "value": 6
+                "value": 6,
+                "color": "#785B56"
               },
               {
-                "color": "#A44D13",
                 "state": "FacialHairColor",
-                "value": 7
+                "value": 7,
+                "color": "#A44D13"
               },
               {
-                "color": "#F09647",
                 "state": "FacialHairColor",
-                "value": 9
+                "value": 9,
+                "color": "#F09647"
               },
               {
-                "color": "#FFD1A4",
                 "state": "FacialHairColor",
-                "value": 10
+                "value": 10,
+                "color": "#FFD1A4"
               },
               {
-                "color": "#D9D0C7",
                 "state": "FacialHairColor",
-                "value": 11
+                "value": 11,
+                "color": "#D9D0C7"
               },
               {
-                "color": "#E4EAEB",
                 "state": "FacialHairColor",
-                "value": 12
+                "value": 12,
+                "color": "#E4EAEB"
               },
               {
-                "color": "#7D46FF",
                 "state": "FacialHairColor",
-                "value": 14
+                "value": 14,
+                "color": "#7D46FF"
               },
               {
-                "color": "#2A66C8",
                 "state": "FacialHairColor",
-                "value": 15
+                "value": 15,
+                "color": "#2A66C8"
               },
               {
-                "color": "#167856",
                 "state": "FacialHairColor",
-                "value": 16
+                "value": 16,
+                "color": "#167856"
               }
-            ],
-            "layoutType": "LINEAR"
+            ]
           },
           {
+            "header": "Facial hair",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "FacialHair",
+                "value": 0,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2961,11 +2918,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 0
+                }
               },
               {
                 "state": "FacialHair",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2978,11 +2935,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 1
+                }
               },
               {
                 "state": "FacialHair",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -2995,11 +2952,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 2
+                }
               },
               {
                 "state": "FacialHair",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3012,11 +2969,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 3
+                }
               },
               {
                 "state": "FacialHair",
+                "value": 4,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3029,11 +2986,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 4
+                }
               },
               {
                 "state": "FacialHair",
+                "value": 5,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3046,11 +3003,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 5
+                }
               },
               {
                 "state": "FacialHair",
+                "value": 6,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3063,85 +3020,75 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 6
+                }
               }
-            ],
-            "header": "Facial hair",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_facial_hair_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_facial_hair_selected.svg"
-        },
-        "tabName": "Facial hair",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_facial_hair_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_facial_hair_unselected.svg"
-        }
+        ]
       },
       {
+        "tabName": "Headwear",
         "sections": [
           {
-            "buttonType": "IMAGE",
-            "featureButtons": [],
             "header": "Headwear color",
-            "imageButtons": [
+            "layoutType": "LINEAR",
+            "buttonType": "IMAGE",
+            "options": [
               {
-                "color": "#9069CD",
                 "state": "HeadwearColor",
-                "value": 1
+                "value": 1,
+                "color": "#F47721"
               },
               {
-                "color": "#0084C2",
                 "state": "HeadwearColor",
-                "value": 2
+                "value": 2,
+                "color": "#008F8C"
               },
               {
-                "color": "#58A700",
                 "state": "HeadwearColor",
-                "value": 3
+                "value": 3,
+                "color": "#287CAD"
               },
               {
-                "color": "#FFC700",
                 "state": "HeadwearColor",
-                "value": 4
+                "value": 4,
+                "color": "#715C9F"
               },
               {
-                "color": "#FF9600",
                 "state": "HeadwearColor",
-                "value": 5
+                "value": 5,
+                "color": "#D76568"
               },
               {
-                "color": "#BC0038",
                 "state": "HeadwearColor",
-                "value": 6
+                "value": 6,
+                "color": "#E5A93E"
               },
               {
-                "color": "#FFB7E3",
                 "state": "HeadwearColor",
-                "value": 7
+                "value": 7,
+                "color": "#214D5A"
               },
               {
-                "color": "#ECF0F1",
                 "state": "HeadwearColor",
-                "value": 8
+                "value": 8,
+                "color": "#5C6268"
               },
               {
-                "color": "#575757",
                 "state": "HeadwearColor",
-                "value": 9
+                "value": 9,
+                "color": "#F47721"
               }
-            ],
-            "layoutType": "LINEAR"
+            ]
           },
           {
+            "header": "Headwear",
+            "layoutType": "GRID",
             "buttonType": "FEATURE",
-            "featureButtons": [
+            "options": [
               {
                 "state": "Headwear",
+                "value": 0,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3154,11 +3101,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 0
+                }
               },
               {
                 "state": "Headwear",
+                "value": 10,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3171,11 +3118,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 10
+                }
               },
               {
                 "state": "Headwear",
+                "value": 11,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3188,11 +3135,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 11
+                }
               },
               {
                 "state": "Headwear",
+                "value": 7,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3205,11 +3152,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 7
+                }
               },
               {
                 "state": "Headwear",
+                "value": 8,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3222,11 +3169,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 8
+                }
               },
               {
                 "state": "Headwear",
+                "value": 9,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3239,11 +3186,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 9
+                }
               },
               {
                 "state": "Headwear",
+                "value": 1,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3256,11 +3203,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 1
+                }
               },
               {
                 "state": "Headwear",
+                "value": 2,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3273,11 +3220,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 2
+                }
               },
               {
                 "state": "Headwear",
+                "value": 3,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3290,11 +3237,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 3
+                }
               },
               {
                 "state": "Headwear",
+                "value": 4,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3307,11 +3254,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 4
+                }
               },
               {
                 "state": "Headwear",
+                "value": 5,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3324,11 +3271,11 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 5
+                }
               },
               {
                 "state": "Headwear",
+                "value": 6,
                 "statesToOverride": {
                   "BackgroundColor": 0,
                   "Body": 0,
@@ -3341,231 +3288,200 @@
                   "Nose Piercing": 0,
                   "Piercings": 0,
                   "Wrinkles": 0
-                },
-                "value": 6
+                }
               }
-            ],
-            "header": "Headwear",
-            "imageButtons": [],
-            "layoutType": "GRID"
+            ]
           }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_headwear_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_headwear_selected.svg"
-        },
-        "tabName": "Headwear",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_headwear_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_headwear_unselected.svg"
-        }
+        ]
       },
       {
-        "sections": [
-          {
-            "buttonType": "IMAGE",
-            "featureButtons": [],
-            "header": "Clothing color",
-            "imageButtons": [
-              {
-                "color": "#B782C2",
-                "state": "ClothingColor",
-                "value": 1
-              },
-              {
-                "color": "#44A1CD",
-                "state": "ClothingColor",
-                "value": 2
-              },
-              {
-                "color": "#78B13B",
-                "state": "ClothingColor",
-                "value": 3
-              },
-              {
-                "color": "#F3CB3F",
-                "state": "ClothingColor",
-                "value": 4
-              },
-              {
-                "color": "#F3A13F",
-                "state": "ClothingColor",
-                "value": 5
-              },
-              {
-                "color": "#C03C64",
-                "state": "ClothingColor",
-                "value": 6
-              },
-              {
-                "color": "#FBC8DE",
-                "state": "ClothingColor",
-                "value": 7
-              },
-              {
-                "color": "#ECF0F1",
-                "state": "ClothingColor",
-                "value": 8
-              },
-              {
-                "color": "#424242",
-                "state": "ClothingColor",
-                "value": 9
-              }
-            ],
-            "layoutType": "GRID"
-          }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_tshirt_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_tshirt_selected.svg"
-        },
         "tabName": "Clothing",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_tshirt_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_tshirt_unselected.svg"
-        }
-      },
-      {
         "sections": [
           {
+            "header": "Clothing color",
+            "layoutType": "GRID",
             "buttonType": "IMAGE",
-            "featureButtons": [],
-            "header": "Background color",
-            "imageButtons": [
+            "options": [
               {
-                "color": "#E5E5E5",
-                "state": "BackgroundColor",
-                "value": 1
+                "state": "ClothingColor",
+                "value": 1,
+                "color": "#F47721"
               },
               {
-                "color": "#AFAFAF",
-                "state": "BackgroundColor",
-                "value": 2
+                "state": "ClothingColor",
+                "value": 2,
+                "color": "#008F8C"
               },
               {
-                "color": "#4B4B4B",
-                "state": "BackgroundColor",
-                "value": 3
+                "state": "ClothingColor",
+                "value": 3,
+                "color": "#287CAD"
               },
               {
-                "color": "#F3E0FF",
-                "state": "BackgroundColor",
-                "value": 4
+                "state": "ClothingColor",
+                "value": 4,
+                "color": "#715C9F"
               },
               {
-                "color": "#DDB1F9",
-                "state": "BackgroundColor",
-                "value": 5
+                "state": "ClothingColor",
+                "value": 5,
+                "color": "#D76568"
               },
               {
-                "color": "#9069CD",
-                "state": "BackgroundColor",
-                "value": 6
+                "state": "ClothingColor",
+                "value": 6,
+                "color": "#E5A93E"
               },
               {
-                "color": "#B9E8FF",
-                "state": "BackgroundColor",
-                "value": 7
+                "state": "ClothingColor",
+                "value": 7,
+                "color": "#214D5A"
               },
               {
-                "color": "#84D7FF",
-                "state": "BackgroundColor",
-                "value": 8
+                "state": "ClothingColor",
+                "value": 8,
+                "color": "#5C6268"
               },
               {
-                "color": "#2561AC",
-                "state": "BackgroundColor",
-                "value": 9
-              },
-              {
-                "color": "#C6FDE7",
-                "state": "BackgroundColor",
-                "value": 10
-              },
-              {
-                "color": "#5AEAB1",
-                "state": "BackgroundColor",
-                "value": 11
-              },
-              {
-                "color": "#43B487",
-                "state": "BackgroundColor",
-                "value": 12
-              },
-              {
-                "color": "#D7FFB8",
-                "state": "BackgroundColor",
-                "value": 13
-              },
-              {
-                "color": "#B8F28B",
-                "state": "BackgroundColor",
-                "value": 14
-              },
-              {
-                "color": "#7DB84F",
-                "state": "BackgroundColor",
-                "value": 15
-              },
-              {
-                "color": "#FFF1A7",
-                "state": "BackgroundColor",
-                "value": 16
-              },
-              {
-                "color": "#FFCB80",
-                "state": "BackgroundColor",
-                "value": 17
-              },
-              {
-                "color": "#E5A259",
-                "state": "BackgroundColor",
-                "value": 18
-              },
-              {
-                "color": "#FFDFE0",
-                "state": "BackgroundColor",
-                "value": 19
-              },
-              {
-                "color": "#FFB2B2",
-                "state": "BackgroundColor",
-                "value": 20
-              },
-              {
-                "color": "#E56464",
-                "state": "BackgroundColor",
-                "value": 21
-              },
-              {
-                "color": "#FFD0F2",
-                "state": "BackgroundColor",
-                "value": 22
-              },
-              {
-                "color": "#F9A3D7",
-                "state": "BackgroundColor",
-                "value": 23
-              },
-              {
-                "color": "#D45DA6",
-                "state": "BackgroundColor",
-                "value": 24
+                "state": "ClothingColor",
+                "value": 9,
+                "color": "#F47721"
               }
-            ],
-            "layoutType": "GRID"
+            ]
           }
-        ],
-        "selectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_background_selected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_background_selected.svg"
-        },
+        ]
+      },
+      {
         "tabName": "Background",
-        "unselectedIcon": {
-          "darkUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_background_unselected_dark.svg",
-          "lightUrl": "https://avatars.duolingo.com/avatar-builder/avatar_builder_background_unselected.svg"
-        }
+        "sections": [
+          {
+            "header": "Background color",
+            "layoutType": "GRID",
+            "buttonType": "IMAGE",
+            "options": [
+              {
+                "state": "BackgroundColor",
+                "value": 1,
+                "color": "#FFF2E8"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 2,
+                "color": "#FFE2CF"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 3,
+                "color": "#FFD0B8"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 4,
+                "color": "#F9B59E"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 5,
+                "color": "#F3D5BB"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 6,
+                "color": "#E9C5AF"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 7,
+                "color": "#E1B48C"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 8,
+                "color": "#B7785D"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 9,
+                "color": "#6E473B"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 10,
+                "color": "#E1DAD1"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 11,
+                "color": "#C7C5C0"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 12,
+                "color": "#8B8581"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 13,
+                "color": "#5E5B5C"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 14,
+                "color": "#F4E4C2"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 15,
+                "color": "#E6C99B"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 16,
+                "color": "#CDAE72"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 17,
+                "color": "#FFF0B3"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 18,
+                "color": "#FFD87A"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 19,
+                "color": "#FFC273"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 20,
+                "color": "#F9AB6C"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 21,
+                "color": "#F7D4DB"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 22,
+                "color": "#E9ADC8"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 23,
+                "color": "#D67BA4"
+              },
+              {
+                "state": "BackgroundColor",
+                "value": 24,
+                "color": "#B65D82"
+              }
+            ]
+          }
+        ]
       }
     ]
   }

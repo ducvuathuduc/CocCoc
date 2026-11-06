@@ -175,7 +175,7 @@ class WordsScreen extends ConsumerWidget {
                                       Icons.circle,
                                       size: 7,
                                       color: state.recalledIds.contains(word.id)
-                                          ? LearningColors.green
+                                          ? LearningColors.primary
                                           : LearningColors.red,
                                     ),
                                   ),
