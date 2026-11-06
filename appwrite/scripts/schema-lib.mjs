@@ -3,9 +3,9 @@
 // Pure functions only: no network, no environment access.
 import crypto from 'node:crypto';
 
-export const OWNERS = { Learning: 'learning', Progress: 'progress', AI: 'ai' };
-export const PREFIXES = { learning: 'l_', progress: 'p_', ai: 'a_' };
-export const CANONICAL_TABLE_COUNT = 62;
+export const OWNERS = { Learning: 'learning', Progress: 'progress', AI: 'ai', CMS: 'cms' };
+export const PREFIXES = { learning: 'l_', progress: 'p_', ai: 'a_', cms: 'c_' };
+export const CANONICAL_TABLE_COUNT = 66;
 // Appwrite varchar maximum (node-appwrite 29.2.0 createVarcharColumn: "Maximum size is 16381").
 export const VARCHAR_MAX = 16381;
 // Appwrite index key length limit (same as other Appwrite keys).
@@ -31,7 +31,7 @@ const MUTABLE_FIELDS = [
 export function parseTableRows(markdown) {
   const rows = [];
   for (const line of markdown.split('\n')) {
-    const match = /^\| ([lpa]_[a-z_]+) \/ (Learning|Progress|AI) \| (.*) \| (.*) \|$/.exec(line);
+    const match = /^\| ([lpac]_[a-z_]+) \/ (Learning|Progress|AI|CMS) \| (.*) \| (.*) \|$/.exec(line);
     if (match) rows.push({ id: match[1], owner: OWNERS[match[2]], columnsCell: match[3].trim(), indexCell: match[4].trim() });
   }
   return rows;
@@ -58,7 +58,9 @@ export function parseColumnToken(token) {
   take(/≤(\d+)/, (m) => (hints.size = Number(m[1])));
   take(/≥(\d+)/, (m) => (hints.min = Number(m[1])));
   take(/(\d+)\.\.(\d+)/, (m) => ((hints.min = Number(m[1])), (hints.max = Number(m[2]))));
-  take(/\b([A-Z][A-Z_]+(?:\/[A-Z][A-Z_]+)+)\b/, (m) => (hints.elements = m[1].split('/')));
+  // Enum elements are uppercase identifiers; the digit in `cefr A1/A2/B1/B2` is part of the value,
+  // not a size, so the character class allows it after the leading letter.
+  take(/\b([A-Z][A-Z0-9_]+(?:\/[A-Z][A-Z0-9_]+)+)\b/, (m) => (hints.elements = m[1].split('/')));
   take(/^\s*(\d+(?:\/\d+)*)\s*$/, (m) => (hints.allowed = m[1].split('/').map(Number)));
   if (rest.trim()) throw new Error(`Unrecognised column annotation "${rest.trim()}" in "${token}"`);
   return hints;

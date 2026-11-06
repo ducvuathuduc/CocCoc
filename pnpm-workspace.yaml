@@ -1,3 +1,8 @@
 packages:
   - "services/*"
   - "packages/*"
+  - "apps/cms"
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
