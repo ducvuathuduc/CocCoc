@@ -1,7 +1,8 @@
 # CocEnglish CMS (`apps/cms`)
 
 Trang quản trị chạy trên máy tính, viết bằng Next.js (App Router) để soạn nội dung cho app mobile.
-CMS chỉ sở hữu các bảng `c_*`; bản nội dung đã publish (`l_*`) vẫn do service Learning quản.
+CMS chỉ sở hữu các bảng `c_*`; bản nội dung đã publish (`l_*`) vẫn do service Learning quản. CMS **đọc**
+các bảng của app (`p_*`, `l_*`) để cho thấy một người học đã làm gì, nhưng không ghi vào đó một dòng nào.
 
 ## Chạy local
 
@@ -35,6 +36,9 @@ Không có Appwrite thì cũng không đăng nhập được: file store chỉ c
 | `/courses/[courseId]/units/[unitId]/lesson` | Những gì bản dựng gần nhất thực sự giao cho app: node/bài/câu theo `manifest.json`, đáp án đọc từ đúng trường bộ dựng dùng để chấm, mỗi câu trỏ lại dòng soạn (kể cả khi từ ấy thuộc unit khác), bài thay thế khi máy không có mic/loa, và danh sách id mà không bản nháp nào còn sở hữu |
 | `/courses/[courseId]/readiness` | Checklist "còn việc gì trước khi app nhận bản này": mọi điều kiện của bản hiện hành trong một bảng, mỗi dòng lấy số từ đúng màn hình sở hữu nó và có lối `sửa →` |
 | `/builds?course=` | Nút xuất file tác giả + chạy ba cổng kiểm tra nội dung, panel Publish (chạy thử / publish thật) và lịch sử mọi lần chạy kèm log |
+| `/users?q=` | Mọi tài khoản người học trong Appwrite (mới nhất trước), tìm theo email hoặc mã tài khoản |
+| `/users/[userId]` | Một người học: hồ sơ, gói đang dùng, khóa đang học, 14 ngày gần nhất, góp ý còn mở, và nút khóa/mở tài khoản |
+| `/ops/inbox` | Thư của người học: góp ý còn mở, báo cáo về một người, báo lỗi câu hỏi |
 | `/ops/reports` | Báo cáo lỗi & cảnh báo theo unit |
 | `/ops/audit` | Nhật ký thao tác của admin |
 | `/ops/access` | Danh sách userId được phép vào CMS |
@@ -377,6 +381,7 @@ pnpm --filter @cocenglish/cms check:lesson      # đọc bundle thật: 12 dạn
 pnpm --filter @cocenglish/cms check:readiness   # mỗi dòng checklist = đúng con số của màn hình sở hữu nó; chặn/cảnh báo khớp bộ điều kiện của nút Publish; khóa chưa từng dựng thì bảng khắt khe hơn nút; mọi lối "sửa →" trỏ tới một màn hình thật; đo cả trên 512 bài · 6384 câu · 3891 tài nguyên của bản vi_en (42 checks)
 pnpm --filter @cocenglish/cms check:publish     # gate + publish: đúng ba cổng của repo chạy ở thư mục repo, một dòng lịch sử được ghi đè bằng chính runId; nút mặc định là --dry-run, publish thật cần CMS_ALLOW_PUBLISH=1 và bị từ chối trước khi khởi động tiến trình; sửa nháp sau gate chặn publish kèm tên unit; gate đỏ giữa đường dừng cả vòng lặp lẫn nút; bộ publish chết giữa chừng thành PUBLISH/FAILED kèm stderr; bốn kịch bản chỉ ghi bảng c_* đã khai báo (26 checks)
 pnpm --filter @cocenglish/cms check:lifecycle    # năm nút soạn nội dung chạy thật, trên store c_* giả + repo thật (chỉ đọc): nhập 16 unit sinh đúng mã NN-theme theo file tác giả, section nguyên văn, lint sạch, id đủ, nhập lại ghi đè không nhân đôi; lưu thông tin khóa không đụng cấu trúc; tạo unit đưa theme vào section trước khi ghi hàng; cấu trúc bị từ chối bằng đúng câu của panel; lưu unit tự sinh id và trả danh sách lỗi thay vì ghi nửa bản; xóa unit gỡ theme theo; folder tác giả không đổi một byte (46 checks)
+pnpm --filter @cocenglish/cms check:users        # màn người học: đọc Appwrite Auth + đúng những cột có index của bảng app (mọi `equal` đối chiếu foundation.json); người chưa có hồ sơ thì là null chứ không phải số 0; hộp thư chỉ tin còn mở; thứ duy nhất ghi xuống là status của tài khoản, kèm audit user.lock/user.unlock; bị từ chối khi khóa chính tài khoản quản trị, userId sai, tài khoản đã mất, Appwrite không gọi được, khóa lần hai, người không ở trong CMS_ADMIN_USER_IDS, và máy chưa nối project (30 checks)
 ```
 
 ## Cổng kiểm tra và publish
@@ -410,6 +415,50 @@ theo `foundation.json`. Stub phải mô phỏng cả chi tiết `execFile` tự 
 không, hành động gọi `await run(...)` nhận về một chuỗi thay vì `{ stdout, stderr }` và hỏng theo cách mà
 tiến trình thật không bao giờ hỏng.
 
+## Quản lý người học
+
+Soạn bài rồi mà không biết người học đang ở đâu thì chưa gọi là vận hành. `/users`,
+`/users/[userId]` và `/ops/inbox` đọc đúng những bảng app đã ghi — `p_profiles`, `p_entitlements`,
+`l_enrollments`, `p_day_activity`, `p_feedback`, `p_user_reports`, `l_reports` — qua cùng một server key
+mà store `c_*` dùng, và **không ghi một dòng nào** vào đó (`src/server/ops/appwrite.ts`).
+
+- **Chỉ lọc trên cột có index.** Appwrite từ chối filter trên cột chưa được index bằng một 400 mà chỉ
+  project thật mới báo, nên `users-check.mjs` đối chiếu từng `equal` mà code gửi với index khai báo trong
+  `appwrite/schema/foundation.json` và fail nếu lệch. Mỗi hàng là một câu hỏi đã định sẵn
+  (`firstRow` / `userRows` / `openRows`), không có đường nào để ai đó tự ghép filter tùy ý.
+- **Không có số 0 nào được bịa.** Người học chưa đi qua onboarding thì hồ sơ/gói/tiến độ là `null`, và
+  màn hình nói "App chưa lưu hồ sơ nào cho tài khoản này" thay vì đưa ra `0 XP · 0 bài` — con số 0 trông
+  như một kết luận, còn null là sự thật.
+- **Từ khóa rỗng không được biến thành tham số.** `Users.list` trả 400 cho `search=""` ("Value must be a
+  valid string and at least 1 chars"), nên `listAccounts` bỏ hẳn tham số khi ô tìm trống hoặc toàn khoảng
+  trắng. Đây là lỗi đầu tiên mà màn `/users` gặp khi chạy thật — danh sách mặc định chết ngay, chỉ vì
+  một chuỗi rỗng được gửi đi như một từ khóa; `users-check.mjs` giờ dựng lại đúng 400 đó trong stub.
+- **Khóa tài khoản = đổi status trên Appwrite Auth.** Đó là bản ghi duy nhất CMS chạm tới ngoài `c_*`,
+  và là thứ app kiểm khi đăng nhập; tiến độ, điểm và file media của người kia vẫn nguyên, mở khóa thì mọi
+  thứ trở lại. Vì vậy không có "reset tiến độ", "xóa tài khoản" hay "đổi gói" trong các trang này: những
+  việc đó thuộc service Learning, không thuộc CMS.
+- **Nút trả lời trước khi gọi đi** trong năm trường hợp: userId sai định dạng, tài khoản nằm trong
+  `CMS_ADMIN_USER_IDS` (khóa nó là mất quyền vào CMS — và đó là cách duy nhất một admin tự nhốt mình),
+  tài khoản đã bị xóa, Appwrite không gọi được, và máy chưa nối project nào. Khóa lại một tài khoản đang
+  khóa trả `{ ok: true, unchanged: true }`: không ghi Appwrite, không ghi nhật ký, và toast nói thẳng là
+  đã khóa sẵn.
+- Mỗi lần khóa/mở ghi một mục `user.lock` / `user.unlock` vào `/ops/audit` với `targetId` là userId và
+  `beforeJson` là trạng thái trước đó, nên lịch sử trả lời được "ai khóa ai, lúc nào, trước đó ra sao".
+  Hai động từ đó phải có mặt trong `OPERATION_LABELS`: thiếu một dòng, `/ops/audit` in ra nhãn dự phòng
+  và một lần khóa bị đọc thành "Cập nhật nội dung" — cột đối tượng vì thế giờ là "Đối tượng" (bài, file
+  media hoặc tài khoản) và ô userId bấm được sang `/users/<id>`. `users-check.mjs` chốt cả hai.
+- `'use server'` chỉ cho phép export hàm async. Đặt một hằng chuỗi trong file action làm `next build`
+  bỏ cả module và mọi client import chết bằng câu "The module has no exports at all" — trông như sai
+  đường dẫn, nhưng là một quy tắc khác. `LEARNER_GONE` vì thế nằm ở `src/server/ops/learners.ts`.
+
+Cả ba màn đã chạy thật trong trình duyệt với project test, trên một tài khoản giả có đủ hồ sơ/gói/tiến độ
+(rồi xóa sạch sau khi chụp): bấm "Khóa tài khoản" → badge đổi sang "Đang khóa", và lời gọi đăng nhập thật
+sau đó bị Appwrite trả `403 user_blocked` — đúng câu màn hình hứa; bấm mở lại thì đăng nhập được ngay.
+Một tab cũ bấm khóa lần hai chỉ nhận toast "Tài khoản đã bị khóa trước đó." và `c_admin_audit` vẫn chỉ có
+bốn mục cho hai lần khóa hai lần mở, không có dòng thứ năm. Màn `/users/<id>` của một userId không còn
+trong project (các dòng `p_day_activity` do probe cũ để lại) hiện đúng trang "Không có tài khoản này" thay
+vì một bộ số toàn 0.
+
 ## Khi Appwrite chập chờn
 
 Endpoint region thỉnh thoảng đứt một nhịp (connect timeout), nên `AppwriteStore` tự thử lại 3 lần
@@ -424,13 +473,18 @@ giả, nạp audio/ảnh, chạy gate và publish.
 Đã diễn lại cả hai nhánh trong trình duyệt bằng một server giả lập Appwrite (chỉ bảng `c_admin_audit` trả
 500): nút "Nhập bảng tác giả từ repo" và "Chạy gate kiểm tra nội dung" vẫn báo thành công kèm dòng cảnh báo
 màu vàng về nhật ký — không có trang 500, không có nút kẹt ở "Đang…".
+Phần đọc người học (`src/server/ops/appwrite.ts`) đi qua đúng `withTransientRetry` đó, nên một nhịp đứt ở
+Appwrite cũng chỉ nhận về một câu (`LEARNERS_UNAVAILABLE`) thay vì một trang trắng hoặc một danh sách rỗng
+trông như "chưa có ai".
 
 ## Bảng Appwrite của CMS
 
 Bốn bảng `c_*` đã là một phần sơ đồ chính thức của repo: khai báo ở `docs/data/DATA_MODEL.md`
 (owner `CMS`) + `docs/data/PERMISSIONS.md`, rồi `pnpm schema:declare` sinh ra
 `appwrite/schema/foundation.json` (66 bảng). Tất cả `rowSecurity: true`, không cấp quyền cho client —
-chỉ server key của CMS đọc/ghi, và CMS không bao giờ ghi `l_*`/`p_*`/`a_*`.
+chỉ server key của CMS đọc/ghi, và CMS không bao giờ ghi `l_*`/`p_*`/`a_*`. Phần quản lý người học đọc
+các bảng `p_*`/`l_*` bằng chính key đó (chỉ lọc trên cột có index) và không ghi lại gì; thay đổi duy nhất
+nó tạo ra nằm ở Appwrite Auth, không phải trong bảng nào.
 
 | Bảng | Row id | Cột | Index |
 | --- | --- | --- | --- |
