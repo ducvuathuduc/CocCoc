@@ -1,15 +1,9 @@
 // Unit 10 — Directions and the city (A2).
 export default {
-  theme: 'directions',
-  cefr: 'A2',
-  title: 'Hỏi đường và thành phố',
-  levels: [
-    'Trái, phải, thẳng',
-    'Rẽ ở ngân hàng',
-    'Gần, bên cạnh',
-    'Thành phố của tôi',
-    'Tôi bị lạc!',
-  ],
+  theme: "directions",
+  cefr: "A2",
+  title: "Hỏi đường và thành phố",
+  levels: ["Trái, phải, thẳng", "Rẽ ở ngân hàng", "Gần, bên cạnh", "Thành phố của tôi", "Tôi bị lạc!"],
   guide: `
 Mẫu câu chính: "Excuse me, where is the bank?" (Xin lỗi, ngân hàng ở đâu?) — "Go straight and turn left." (Đi thẳng rồi rẽ trái.) — "Is it far?" (Có xa không?)
 Chỉ đường dùng câu mệnh lệnh: Go straight. Turn right. Turn left at the corner.
@@ -80,7 +74,7 @@ Are you lost? => Yes, I cannot find the bridge. = Vâng, tôi không tìm thấy
 Do you have a map? => Yes, here it is. ## Yes, I do. = Có, đây này.
 `,
   story: {
-    title: 'Tom bị lạc',
+    title: "Tom bị lạc",
     passage: `On Saturday, Tom wants to go to the bookshop. He walks from his house, but the city is big and he is lost. He does not have a map.
 He asks a woman, "Excuse me, where is the bookshop?" "Go straight on this street. Turn left at the bank. The bookshop is next to the park, opposite the hospital."
 "Is it far?" "No, it is near. You can walk." Tom finds the bookshop. Mai is there too! "You are not lost now," she laughs.`,

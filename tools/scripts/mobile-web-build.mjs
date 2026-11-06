@@ -13,6 +13,8 @@ for (const record of receipt.records) {
 }
 const dart = path.join(sdk, 'bin/cache/dart-sdk/bin', process.platform === 'win32' ? 'dart.exe' : 'dart');
 const snapshot = path.join(sdk, 'bin/cache/flutter_tools.snapshot');
-const result = spawnSync(dart, [snapshot, 'build', 'web', '--release', '--dart-define=USE_MOCK_AUTH=true', '--dart-define=RIVE_NATIVE_WASM_HOST=rive/'], { cwd: app, env: { ...process.env, FLUTTER_ROOT: sdk }, stdio: 'inherit' });
+// The browser preview stays the documented fixture preview, but it has to say so: DATA_SOURCE is
+// declared here because an undeclared build now refuses to open the fixtures unnoticed.
+const result = spawnSync(dart, [snapshot, 'build', 'web', '--release', '--dart-define=DATA_SOURCE=mock', '--dart-define=USE_MOCK_AUTH=true', '--dart-define=RIVE_NATIVE_WASM_HOST=rive/'], { cwd: app, env: { ...process.env, FLUTTER_ROOT: sdk }, stdio: 'inherit' });
 if (result.error) throw result.error;
 process.exitCode = result.status ?? 1;

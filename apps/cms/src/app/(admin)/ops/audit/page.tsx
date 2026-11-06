@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { PageTransition } from '@/components/page-transition';
 import { auditLog } from '@/server/queries';
+import { isUserId } from '@/server/ops/port';
 import { requireAdmin } from '@/server/session';
 import { operationLabel } from '@/lib/activity';
 import { cn, formatDateTime, truncate } from '@/lib/utils';
@@ -17,7 +19,8 @@ export default async function AuditPage() {
         <header>
           <h1 className="text-2xl font-semibold tracking-tight">Lịch sử hoạt động</h1>
           <p className="mt-1 text-sm text-fg-3">
-            Ai đã làm gì, lúc nào và ở bài nào. 200 hoạt động gần nhất.
+            Ai đã làm gì, lúc nào và với đối tượng nào: một bài, một file media hay một tài khoản.
+            200 hoạt động gần nhất.
           </p>
         </header>
 
@@ -32,7 +35,7 @@ export default async function AuditPage() {
                     <th className="px-4 py-2 font-medium">Thời gian</th>
                     <th className="px-4 py-2 font-medium">Ai làm</th>
                     <th className="px-4 py-2 font-medium">Việc đã làm</th>
-                    <th className="px-4 py-2 font-medium">Bài nào</th>
+                    <th className="px-4 py-2 font-medium">Đối tượng</th>
                     <th className="px-4 py-2 font-medium">Bản ghi chi tiết</th>
                   </tr>
                 </thead>
@@ -46,7 +49,18 @@ export default async function AuditPage() {
                       <td className="px-4 py-2">
                         <span className={badge}>{operationLabel(entry.operation)}</span>
                       </td>
-                      <td className="px-4 py-2 font-mono text-xs text-fg-2">{entry.targetId}</td>
+                      <td className="px-4 py-2 font-mono text-xs text-fg-2">
+                        {entry.operation.startsWith('user.') && isUserId(entry.targetId) ? (
+                          <Link
+                            href={`/users/${entry.targetId}`}
+                            className="text-primary-text hover:underline"
+                          >
+                            {entry.targetId}
+                          </Link>
+                        ) : (
+                          entry.targetId
+                        )}
+                      </td>
                       <td className="px-4 py-2 text-xs text-fg-4">
                         <details>
                           <summary className="cursor-pointer hover:text-fg-3">xem chi tiết</summary>

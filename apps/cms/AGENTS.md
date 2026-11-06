@@ -16,9 +16,35 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Login has two Appwrite calls and neither alone is enough: `Account.createEmailPasswordSession`
   proves the password but **never returns a secret for a server-side call**, so `Users.createSession`
   mints the one the cookie can hold, and the proof session is deleted right after. Do not "simplify"
-  this to a single call — dropping the first silently turns the password check off.
+  this to a single call — dropping the first silently turns the password check off. The account itself
+  must carry an email/password credential: an account made through the admin API without a password has
+  no provider attached, and every login attempt is a 401 no matter what the cookie code does.
 - The CMS writes `c_*` tables only. Published content (`l_*`) stays Learning's, through
-  `POST /v1/admin/content-versions`.
+  `POST /v1/admin/content-versions`. It may **read** the app's own tables (`p_profiles`,
+  `p_entitlements`, `p_day_activity`, `p_feedback`, `p_user_reports`, `l_enrollments`, `l_reports`) so a
+  maintainer can see what a learner actually did — each read on one indexed column, and the only
+  non-`c_*` thing it changes is the account status on Appwrite Auth (`Users.updateStatus`), which is what
+  "locking" means here. No row of `l_*`/`p_*` is ever created, edited or deleted by this app.
+- **Learner administration** (`src/server/ops/*`, `src/server/actions/users.ts`, `/users`,
+  `/users/[userId]`, `/ops/inbox`) therefore has three hard rules beyond the usual `assertAdmin()`: a
+  filter that is not covered by an index in `appwrite/schema/foundation.json` is a 400 that only a live
+  project reports, so `users-check.mjs` rejects any `equal` on an unindexed column; `Users.list` rejects
+  `search=""` the same way, so an empty or whitespace-only term must **omit the param** rather than send
+  it (this is what first broke the default account list in a real browser); and a person whose
+  rows do not exist is shown as missing, never as zeros — `learnerDetail` returns `null`/`null` views
+  rather than inventing a profile, an entitlement or a progress number the app never wrote. The lock
+  action answers before a request leaves the process for a malformed userId, for an account in
+  `CMS_ADMIN_USER_IDS` (locking it would lock the operator out of the CMS), for an account that is gone,
+  and for a machine with no Appwrite pair; a second identical lock reports `unchanged` and writes
+  neither Appwrite nor audit. Locking is real, not a flag in a table: Appwrite then answers the app's
+  own login with `403 user_blocked`, which is why the button says "chỉ ngăn đăng nhập". A new
+  `operation` string must also be added to `OPERATION_LABELS` in `src/lib/activity.ts`, or `/ops/audit`
+  prints a wrong sentence for it — an unknown verb now stays raw instead of claiming "Cập nhật nội dung".
+  After touching any of this, run `node apps/cms/scripts/users-check.mjs`.
+- **A `'use server'` file may export async functions only.** `next build` drops the whole module
+  otherwise and every client import fails with "The export X was not found … The module has no exports
+  at all" — a sentence that looks like a path problem, not a rule one. Shared strings and result types
+  belong in the non-action module (`src/server/ops/learners.ts`), which the action imports.
 - `src/cms/` (schema, tables, lint, render) must stay lossless against `tools/content/course-lib.mjs`.
   After touching it, run `node apps/cms/scripts/roundtrip.mjs`.
 - Course section membership keys on **theme**, and `build-course.mjs` renumbers `uNN` by position, so

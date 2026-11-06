@@ -27,22 +27,22 @@ import * as u15 from './units/u15-feelings.mjs';
 import * as u16 from './units/u16-plans.mjs';
 
 export const course = {
-  courseId: 'vi_en',
-  title: 'Tiếng Anh cho người Việt',
-  sourceLocale: 'vi-VN',
-  targetLocale: 'en-US',
+  courseId: "vi_en",
+  title: "Tiếng Anh cho người Việt",
+  sourceLocale: "vi-VN",
+  targetLocale: "en-US",
 };
 
 export const sections = [
   {
-    sectionId: 'sec1',
-    title: 'Phần 1: Nền tảng (A1)',
-    units: ['greetings', 'family', 'food', 'numbers', 'time', 'home', 'school', 'weather'],
+    sectionId: "sec1",
+    title: "Phần 1: Nền tảng (A1)",
+    units: ["greetings", "family", "food", "numbers", "time", "home", "school", "weather"],
   },
   {
-    sectionId: 'sec2',
-    title: 'Phần 2: Cuộc sống hằng ngày (A2)',
-    units: ['shopping', 'directions', 'travel', 'work', 'hobbies', 'health', 'feelings', 'plans'],
+    sectionId: "sec2",
+    title: "Phần 2: Cuộc sống hằng ngày (A2)",
+    units: ["shopping", "directions", "travel", "work", "hobbies", "health", "feelings", "plans"],
   },
 ];
 

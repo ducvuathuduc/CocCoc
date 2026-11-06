@@ -1,9 +1,9 @@
 // Unit 12 — Work and jobs (A2). Introduces the past simple (regular verbs, was/were).
 export default {
-  theme: 'work',
-  cefr: 'A2',
-  title: 'Công việc',
-  levels: ['Công việc của tôi', 'Nghề nghiệp', 'Ở công ty', 'Email và phỏng vấn', 'Hôm qua'],
+  theme: "work",
+  cefr: "A2",
+  title: "Công việc",
+  levels: ["Công việc của tôi", "Nghề nghiệp", "Ở công ty", "Email và phỏng vấn", "Hôm qua"],
   guide: `
 Mẫu câu chính: "What do you do?" (Bạn làm nghề gì?) — "I am an engineer." (Tôi là kỹ sư.) — "I worked late yesterday." (Hôm qua tôi làm việc muộn.)
 Nghề nghiệp luôn có a/an: "She is a nurse", "He is an engineer" (an trước nguyên âm).
@@ -74,7 +74,7 @@ Why are you late? => Sorry, the bus was late. = Xin lỗi, xe buýt đến muộ
 How was your interview? => It was good, thank you. ## It was good. = Nó tốt, cảm ơn bạn.
 `,
   story: {
-    title: 'Ngày đầu đi làm của Linh',
+    title: "Ngày đầu đi làm của Linh",
     passage: `Yesterday was Linh's first day at her new job. She is an engineer at a big company. She started work at eight o'clock.
 Her boss, Mr. Hai, is nice. Her colleagues are friendly. At ten, she had a meeting.
 In the afternoon, she wrote many emails on her new computer. She finished work at six.

@@ -132,5 +132,11 @@ runFlutter('Flutter analyze', ['analyze', '--fatal-infos']);
 runFlutter('Flutter test', ['test', '--dart-define=ENABLE_MASCOT_MOTION=false']);
 
 if (flags.has('--build-android')) {
-  runFlutter('Flutter Android debug build', ['build', 'apk', '--debug']);
+  // The same profile CI ships, so a local build can never boot the fixtures unnoticed.
+  runFlutter('Flutter Android debug build', [
+    'build',
+    'apk',
+    '--debug',
+    '--dart-define-from-file=config/real.public.json',
+  ]);
 }

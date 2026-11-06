@@ -1,15 +1,9 @@
 // Unit 8 — Weather and seasons (A1).
 export default {
-  theme: 'weather',
-  cefr: 'A1',
-  title: 'Thời tiết và các mùa',
-  levels: [
-    'Nóng hay lạnh?',
-    'Nắng và mưa',
-    'Mùa hè, mùa đông',
-    'Mùa xuân, mùa thu',
-    'Mang ô theo!',
-  ],
+  theme: "weather",
+  cefr: "A1",
+  title: "Thời tiết và các mùa",
+  levels: ["Nóng hay lạnh?", "Nắng và mưa", "Mùa hè, mùa đông", "Mùa xuân, mùa thu", "Mang ô theo!"],
   guide: `
 Mẫu câu chính: "How is the weather today?" (Thời tiết hôm nay thế nào?) — "It is sunny." (Trời nắng.) — "It is raining." (Trời đang mưa.)
 Chủ ngữ giả "it": tiếng Việt nói "trời nắng", tiếng Anh phải có chủ ngữ: "It is sunny", không nói "Is sunny".
@@ -80,7 +74,7 @@ Is it cold in Canada? => Yes, it is very cold in winter. ## Yes, it is. = Có, m
 What do you wear in winter? => I wear a coat. ## A coat. = Tôi mặc áo khoác.
 `,
   story: {
-    title: 'Tom và mùa mưa',
+    title: "Tom và mùa mưa",
     passage: `In Canada, Tom wears a coat in winter. It is very cold and there is snow. In Ho Chi Minh City, it is always hot.
 Today it is sunny in the morning. Tom does not take an umbrella. In the afternoon, the sky is cloudy and it starts to rain. Tom is outside!
 Mai has an umbrella. "Here, Tom. Vietnam has two seasons: the dry season and the rainy season. Now it is the rainy season!"

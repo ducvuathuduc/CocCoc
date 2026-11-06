@@ -1,9 +1,9 @@
 // Unit 7 — School and learning (A1).
 export default {
-  theme: 'school',
-  cefr: 'A1',
-  title: 'Trường lớp',
-  levels: ['Lớp học tiếng Anh', 'Đọc và viết', 'Tôi có thể', 'Dễ hay khó?', 'Mở sách ra!'],
+  theme: "school",
+  cefr: "A1",
+  title: "Trường lớp",
+  levels: ["Lớp học tiếng Anh", "Đọc và viết", "Tôi có thể", "Dễ hay khó?", "Mở sách ra!"],
   guide: `
 Mẫu câu chính: "Can you help me?" (Bạn có thể giúp tôi không?) — "I do not understand." (Tôi không hiểu.) — "Please open your books." (Hãy mở sách ra.)
 "Can" + động từ nguyên mẫu (không thêm -s, không "to"): "She can speak English", không nói "She cans speaks".
@@ -74,7 +74,7 @@ Do you have homework today? => Yes, I have homework. ## Yes, I do. = Có, tôi c
 Can I open the window? => Yes, please. ## Yes, you can. = Vâng, bạn cứ mở.
 `,
   story: {
-    title: 'Giờ học tiếng Anh',
+    title: "Giờ học tiếng Anh",
     passage: `It is Monday. Mai, Nam and Tom are in English class. Mr. Long writes a question on the board: "What do you do every day?"
 Nam does not understand the question. "Can you read it again, please?" he asks. Mr. Long reads it again. Now Nam understands.
 He answers, "I get up, I go to school and I study English!" Everyone laughs.

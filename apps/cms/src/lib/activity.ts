@@ -21,10 +21,13 @@ export const OPERATION_LABELS: Record<string, string> = {
   'media.delete': 'Xóa audio hoặc ảnh',
   'auth.login': 'Đăng nhập',
   'auth.logout': 'Đăng xuất',
+  'user.lock': 'Khóa tài khoản người học',
+  'user.unlock': 'Mở khóa tài khoản người học',
 };
 
+/** An verb this map does not know stays its own name: a vague true label beats a specific wrong one. */
 export function operationLabel(operation: string): string {
-  return OPERATION_LABELS[operation] ?? 'Cập nhật nội dung';
+  return OPERATION_LABELS[operation] ?? operation;
 }
 
 export interface ActivityTarget {

@@ -23,6 +23,7 @@
     "check:lesson": "node scripts/lesson-check.mjs",
     "check:readiness": "node scripts/readiness-check.mjs",
     "check:publish": "node scripts/publish-check.mjs",
+    "check:users": "node scripts/users-check.mjs",
     "check:lifecycle": "node scripts/lifecycle-check.mjs"
   },
   "dependencies": {

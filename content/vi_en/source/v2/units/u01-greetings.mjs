@@ -1,9 +1,9 @@
 // Unit 1 — Greetings and introductions (A1). Format: see tools/content/course-lib.mjs.
 export default {
-  theme: 'greetings',
-  cefr: 'A1',
-  title: 'Chào hỏi và làm quen',
-  levels: ['Xin chào', 'Bạn là ai?', 'Lời lịch sự', 'Rất vui được gặp bạn', 'Bạn đến từ đâu?'],
+  theme: "greetings",
+  cefr: "A1",
+  title: "Chào hỏi và làm quen",
+  levels: ["Xin chào", "Bạn là ai?", "Lời lịch sự", "Rất vui được gặp bạn", "Bạn đến từ đâu?"],
   guide: `
 Mẫu câu chính: "Hello, I am Mai." (Xin chào, tôi là Mai.) — "What is your name?" (Bạn tên là gì?) — "Nice to meet you." (Rất vui được gặp bạn.)
 Ngữ pháp: động từ "to be": I am, you are, he/she is. Khi nói, người bản xứ hay rút gọn: I'm, you're, he's, she's. Cả hai cách viết đều được chấp nhận.
@@ -77,7 +77,7 @@ Nice to meet you! => Nice to meet you too. ## You too. = Tôi cũng rất vui đ
 Where are you from? => I am from Vietnam. ## From Vietnam. = Tôi đến từ Việt Nam.
 `,
   story: {
-    title: 'Ngày đầu tiên',
+    title: "Ngày đầu tiên",
     passage: `It is Monday morning. Mai is a student in Ho Chi Minh City. She meets a new student.
 "Hi! My name is Mai. What is your name?" "Hello, Mai. I am Tom. I am from Canada."
 "Nice to meet you, Tom!" Then Mr. Long comes in. "Good morning, class!" he says.

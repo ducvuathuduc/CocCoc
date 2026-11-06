@@ -28,6 +28,12 @@ python3 tools/palette_check.py                # (root) colors must come from doc
 pnpm contracts:dart                           # regenerate lib/core/api/generated after an OpenAPI change
 ```
 
+`DATA_SOURCE` has no build default, so `flutter run` and `flutter build` must carry
+`--dart-define-from-file=config/real.public.json` (or `config/local.android.public.json` for a local
+backend). An undeclared build opens a screen naming that flag rather than the fixture lessons;
+`test/core/config/data_source_declaration_test.dart` pins both that guard and CI passing the flag.
+`flutter test` stays the undeclared case on purpose — it pumps widgets, never `main()`.
+
 ## Gates
 
 Before handing off, run analyze with no issues, all tests green, and the targeted tests of the feature you touched. A new color must pass `palette_check`, which already has a known baseline of unmatched legacy colors; never add to it. Test lifecycle and disposal, text scale 2 and semantics, denied permission, offline kill and resume, and the feature you were assigned. Never treat an emulator golden as physical speech QA. `pubspec.lock` is an exclusive change area.
