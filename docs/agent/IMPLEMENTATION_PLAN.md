@@ -124,3 +124,7 @@ Local branch `feat/real-learning-stats`: private Progress read of the last 28 se
 ## 2026-10-28 — local API testability and mobile wiring (no phase gate)
 
 On `wip/codex-20261027-hardening` (checkpoint `60728e2`): opt-in `COC_DEV_AUTH=1` identity for all three services with forged-token/A-B/hosted-bundle tests; a generated Postman v2.1 collection covering 91/91 OpenAPI operations with local/TEST environments and `pnpm postman:check`; mobile `AbandonableSession`/abandon and the review-pool gate, plus server-backed year-review, energy (including API-mode recharge without preview-gem spend), quests and shop wiring; `flutter analyze` zero. Evidence: [API audit](../quality/API_PROGRESS_20261028.md), [operation register](../quality/OPERATION_EVIDENCE_20261028.md), [Postman README](../../tools/postman/README.md). Backend verify 276 tests/264 pass/12 skip; `dev:smoke` pass; targeted mobile tests pass; the full Flutter suite still carries the Windows golden/Rive baseline. Friends Quest opt-in has no screen action and Year in Review still falls back to the fixture until the server answers. No cloud/device proof and no phase gate advanced.
+
+## 2026-11-03 — approved .NET migration
+
+See [ADR-0020](../architecture/adr/0020-dotnet-service-migration.md). Full 91-operation migration and worker parity, preserving Appwrite and Flutter; Node retained for rollback. Local Docker acceptance precedes any separately authorized cloud action. Migration status is IN_PROGRESS.

@@ -332,7 +332,7 @@ class StreakExtendedScreen extends ConsumerWidget {
               style: TextButton.styleFrom(
                 foregroundColor: ResultsColors.streakWhite,
                 textStyle: const TextStyle(
-                  fontFamily: 'DuolingoSans',
+                  fontFamily: 'sans-serif',
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   letterSpacing: .8,

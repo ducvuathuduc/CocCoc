@@ -329,7 +329,7 @@ class _AdventureComplete extends ConsumerWidget {
                         (
                           'ACCURACY',
                           '${state.accuracy}%',
-                          LearningColors.green,
+                          LearningColors.primary,
                         ),
                       ]) ...[
                         Expanded(

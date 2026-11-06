@@ -1,0 +1,41 @@
+{
+  "now": "2026-11-03T12:00:00.000Z",
+  "user": "voice-parity-user",
+  "sessionId": "89898989-8989-4898-8898-898989898989",
+  "scenarioId": "rp_meet_new_friend",
+  "level": "A1",
+  "kind": "VIDEO_CALL",
+  "courseId": "vi_en",
+  "voiceSessionId": "89898989-8989-4898-8898-898989898989",
+  "sessionKey": "78787878-7878-4878-8878-787878787878",
+  "conversationKey": "90909090-9090-4909-8909-909090909090",
+  "turnKey": "abababab-abab-4bab-8bab-abababababab",
+  "turnId": "bcbcbcbc-bcbc-4cbc-8cbc-bcbcbcbcbcbc",
+  "epoch": 0,
+  "wavSeconds": 1,
+  "azureRegion": "westus2",
+  "inspect": [
+    "a_voice_sessions",
+    "a_active_slots",
+    "a_conversations",
+    "a_turns",
+    "a_receipts",
+    "a_usage",
+    "a_outbox"
+  ],
+  "azureResponse": {
+    "RecognitionStatus": "Success",
+    "NBest": [
+      {
+        "Display": "Hi Tom, my name is Lan.",
+        "Confidence": 0.93,
+        "PronunciationAssessment": {
+          "AccuracyScore": 90,
+          "FluencyScore": 88,
+          "CompletenessScore": 100,
+          "ProsodyScore": 80
+        }
+      }
+    ]
+  }
+}

@@ -10,8 +10,8 @@ abstract final class LessonExerciseColors {
   static const tileBorder = Color(0xFFE5E5E5);
   // lesson/06.png
   static const matchedFill = Color(0xFFD6FFB8);
-  static const matchedBorder = Color(0xFFA5ED6E);
-  static const matchedText = Color(0xFF58A700);
+  static const matchedBorder = Color(0xFFF0B581);
+  static const matchedText = Color(0xFF963A00);
   // lesson/09.png
   static const wrongFill = Color(0xFFFFDFE0);
   static const wrongBorder = Color(0xFFFF4B4B);

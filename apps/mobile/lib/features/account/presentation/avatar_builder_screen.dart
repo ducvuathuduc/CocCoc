@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/design/reference_theme.dart';
 import '../application/avatar_controller.dart';
@@ -206,11 +205,12 @@ class _CategoryStrip extends ConsumerWidget {
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(8),
-                              child: SvgPicture.asset(
-                                selected
-                                    ? tab.selectedIconAsset
-                                    : tab.unselectedIconAsset,
-                                fit: BoxFit.contain,
+                              child: Icon(
+                                _avatarTabIcon(tab.name),
+                                size: 29,
+                                color: selected
+                                    ? const Color(0xFFF47721)
+                                    : const Color(0xFF807E80),
                               ),
                             ),
                           ),
@@ -232,6 +232,18 @@ class _CategoryStrip extends ConsumerWidget {
     ),
   );
 }
+
+IconData _avatarTabIcon(String name) => switch (name.toLowerCase()) {
+  'body' => Icons.person_outline_rounded,
+  'expression' => Icons.mood_rounded,
+  'hairstyle' => Icons.face_rounded,
+  'accessories' => Icons.auto_awesome_rounded,
+  'facial hair' => Icons.face_retouching_natural,
+  'headwear' => Icons.school_rounded,
+  'clothing' => Icons.checkroom_rounded,
+  'background' => Icons.wallpaper_rounded,
+  _ => Icons.tune_rounded,
+};
 
 class _Choices extends StatelessWidget {
   const _Choices({required this.tab, required this.state});

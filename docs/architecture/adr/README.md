@@ -23,4 +23,4 @@ Decision date2026-10-04. Accepted means normative V1 specification; conditional 
 | [ADR-0017](0017-transparent-learning-and-honest-zero-spend-scope.md) | Transparent learning and honest zero-spend scope | Accepted V1 |
 | [ADR-0018](0018-container-event-cache-runtime.md) | Container runtime, RabbitMQ event transport and Redis read cache | Accepted for implementation by human 2026-10-25; runtime admission pending |
 | [Closed evaluation ADR-0019](draft-0019-descope-identity.md) | Descope identity preserving current Flutter UI and Appwrite-owned data | Not adopted 2026-10-25; human chose to retain Appwrite Auth |
-
+| [ADR-0020](0020-dotnet-service-migration.md) | .NET service migration, preserving three owners and Appwrite | Accepted by human 2026-11-03; implementation/local acceptance in progress |

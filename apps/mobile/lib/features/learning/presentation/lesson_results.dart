@@ -220,7 +220,7 @@ class LessonResults extends ConsumerWidget {
                                     children: [
                                       const Icon(
                                         Icons.star_rounded,
-                                        color: LearningColors.green,
+                                        color: LearningColors.primary,
                                         size: 44,
                                       ),
                                       const SizedBox(width: 14),

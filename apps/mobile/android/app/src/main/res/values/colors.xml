@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Palette green (ReferenceColors.green) -->
+    <!-- CocEnglish orange brand accent -->
     <color name="launch_background">#FFF7EF</color>
     <color name="ic_launcher_background">#FFF7EF</color>
-    <color name="coc_accent">#5BCD05</color>
+    <color name="coc_accent">#C84E08</color>
     <color name="coc_surface">#FFFDFE</color>
     <color name="coc_ink">#4D4B4E</color>
     <color name="coc_muted">#807E80</color>

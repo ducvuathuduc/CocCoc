@@ -1,0 +1,99 @@
+name: .NET backend migration
+on:
+  pull_request:
+    paths:
+      [
+        'backend-dotnet/**',
+        '.gitattributes',
+        'docs/api/openapi.yaml',
+        'appwrite/schema/foundation.json',
+        'services/progress/**',
+        'services/learning/**',
+        'services/ai/**',
+        'services/shared/**',
+        'content/vi_en/**',
+        'package.json',
+        'pnpm-lock.yaml',
+        '.github/workflows/dotnet-backend.yml',
+      ]
+  push:
+    paths:
+      [
+        'backend-dotnet/**',
+        '.gitattributes',
+        'docs/api/openapi.yaml',
+        'appwrite/schema/foundation.json',
+        'services/progress/**',
+        'services/learning/**',
+        'services/ai/**',
+        'services/shared/**',
+        'content/vi_en/**',
+        'package.json',
+        'pnpm-lock.yaml',
+        '.github/workflows/dotnet-backend.yml',
+      ]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: dotnet-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  foundation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend-dotnet
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
+        with:
+          dotnet-version: 10.0.401
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22.23.3
+      - run: node tools/generate-contracts.mjs --check
+      - run: npm install --global pnpm@10.15.0
+      - run: pnpm install --frozen-lockfile
+        working-directory: .
+      - name: Verify the checked Node baseline fixture
+        run: node tools/generate-progress-parity.mjs --check
+      - name: Verify controlled-entropy quest chest parity
+        run: node tools/generate-quest-chest-parity.mjs --check
+      - name: Verify the Learning baseline fixture
+        run: node tools/generate-learning-parity.mjs --check
+      - name: Verify the AI route baseline fixture
+        run: node tools/generate-ai-parity.mjs --check
+      - name: Verify the AI Azure assessment provider-on fixture
+        run: node tools/generate-ai-speech-parity.mjs --check
+      - name: Verify the AI Azure voice-turn provider-on fixture
+        run: node tools/generate-ai-voice-turn-parity.mjs --check
+      - name: Verify the AI Deepgram fallback fixture
+        run: node tools/generate-ai-assessment-fallback-parity.mjs --check
+      - name: Verify the AI AssemblyAI fallback fixture
+        run: node tools/generate-ai-assembly-fallback-parity.mjs --check
+      - name: Verify the AI Deepgram voice-turn fallback fixture
+        run: node tools/generate-ai-voice-turn-fallback-parity.mjs --check
+      - name: Verify the AI AssemblyAI voice-turn fallback fixture
+        run: node tools/generate-ai-voice-turn-assembly-parity.mjs --check
+      - name: Verify operation coverage across Node/.NET fixtures
+        run: node tools/check-operation-parity.mjs
+      - run: dotnet restore CocEnglish.sln --locked-mode
+      - run: dotnet build CocEnglish.sln --no-restore --configuration Release
+      - run: dotnet test CocEnglish.sln --no-build --no-restore --configuration Release --logger 'trx;LogFileName=dotnet-migration.trx'
+      - name: Test inside the pinned Linux SDK image
+        run: docker build --target test -f docker/Dockerfile -t cocenglish-dotnet-foundation-tests ..
+      - name: Three unconfigured container hosts
+        run: docker compose -f docker/compose.foundation.yaml up --build --wait --wait-timeout 120
+      - run: node tools/smoke-hosts.mjs
+      - name: Stop only the isolated foundation stack
+        if: always()
+        run: docker compose -f docker/compose.foundation.yaml down --remove-orphans
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: dotnet-migration-tests
+          path: backend-dotnet/tests/*/TestResults/*.trx
+          if-no-files-found: warn
+          retention-days: 3

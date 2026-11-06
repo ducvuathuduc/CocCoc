@@ -38,11 +38,10 @@ class AndroidSuperFlow extends ConsumerWidget {
         backgroundColor: _ink,
         body: DecoratedBox(
           decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                'assets/reference_art/android-super-gradient.png',
-              ),
-              fit: BoxFit.fill,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [_ink, Color(0xFF008F8C)],
             ),
           ),
           child: SafeArea(

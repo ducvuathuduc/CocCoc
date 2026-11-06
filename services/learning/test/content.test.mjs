@@ -3,8 +3,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
+import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { loadKit } from './helpers/kit.mjs';
+import { loadKit, root } from './helpers/kit.mjs';
+import { authoredContent } from './helpers/authored-content.mjs';
 
 const kit = await loadKit('content');
 const local = kit.loadLocalContent();
@@ -23,6 +25,20 @@ test('committed content: deterministic rebuild matches, OpenAPI-valid, signed, 1
     const run = spawnSync(process.execPath, args, { encoding: 'utf8' });
     assert.equal(run.status, 0, run.stderr || run.stdout);
     assert.match(run.stdout, /"status":"PASS"/);
+  }
+});
+
+test('authored content resolves the committed course when cwd is backend-dotnet', async () => {
+  const originalCwd = process.cwd();
+  try {
+    process.chdir(path.join(root, 'backend-dotnet'));
+    const authored = await authoredContent(kit, {});
+    assert.deepEqual(
+      [authored.publication.courseId, authored.publication.versionId],
+      ['vi_en', 'v2'],
+    );
+  } finally {
+    process.chdir(originalCwd);
   }
 });
 

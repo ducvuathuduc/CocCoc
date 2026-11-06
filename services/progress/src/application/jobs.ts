@@ -105,12 +105,14 @@ export async function runProgressOutboxRelay(
   store: ProgressPersistence,
   deliver: RelayDeliver | undefined,
   tick: JobTick,
+  random?: () => number,
 ): Promise<JobCounts> {
   if (!deliver) throw new ServiceError('SERVICE_NOT_CONFIGURED', { details: { job: 'relay' } });
   const report = await relayOutbox(store, deliver, {
     limit: Math.min(tick.limit ?? RELAY_MAX_BATCH, RELAY_MAX_BATCH),
     deadlineMs: RELAY_DEADLINE_MS,
     owner: `tick-${tick.tickId.slice(0, 8)}-${Math.random().toString(36).slice(2, 10)}`,
+    ...(random ? { random } : {}),
   });
   return {
     ...emptyCounts(),

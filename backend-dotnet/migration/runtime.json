@@ -1,0 +1,687 @@
+{
+  "baseline": "12b1222554c9ae248e47f865e3ecb1f1f2a02633",
+  "status": "in-progress",
+  "implementationMode": "implementation-only; verification deferred at user request",
+  "vpsHttpsRouting": {
+    "guide": "../docker/staging/vps/nginx/README.md",
+    "status": "implemented-unverified-not-installed",
+    "scope": "Three host Nginx HTTPS routing templates, URI-preserving upstreams, internal-route source allowlist and bounded access log fields. Actual domains/certificates/source addresses, host integration and proxy behavior require configuration and deferred verification."
+  },
+  "hostingDirection": {
+    "selectedByUser": "VPS/server with Docker Compose",
+    "guide": "../docker/staging/vps/README.md",
+    "systemdUnit": "../docker/staging/vps/cocenglish-dotnet.service",
+    "status": "implemented-unverified-not-installed",
+    "remaining": "Actual VPS/OS/domain/TLS, permissions, registry access, admission and operational acceptance."
+  },
+  "mobileVpsProfile": {
+    "example": "../../apps/mobile/config/dotnet-vps.public.example.json",
+    "status": "prepared-with-reserved-hostnames-and-callback-guards",
+    "scope": "Separate public Flutter define profile for three .NET VPS services, preserving Appwrite Auth. API profile admission and Auth recovery/verification reject reserved .invalid hosts. Existing real.public.json stays pointed at Appwrite Functions until an approved cutover; native validation remains pending."
+  },
+  "requestObservability": {
+    "implementation": "../src/CocEnglish.Shared/Hosting/RequestTelemetryMiddleware.cs",
+    "status": "implemented-unverified",
+    "scope": "Structured completion event 1001 with route templates, status, elapsed time and request ID; bounded error codes and built-in request counter/duration histogram. Suppresses Information-level raw URL diagnostics. No body/credential/exception-message logging in this middleware. Optional OTLP/HTTP metrics exporter is separate; hosting collector/dashboard/alerts and behavioral verification remain pending."
+  },
+  "workerObservability": {
+    "implementation": "../src/CocEnglish.Shared/Hosting/WorkerTelemetry.cs",
+    "status": "implemented-unverified",
+    "scope": "Low-cardinality worker tick count/duration for all four Progress jobs and Learning/AI outbox dispatch, outbox leased/ACK/retry/dead counters, and owner-scoped pending/leased/dead backlog plus oldest active-event age gauges sampled once per minute only on admitted hosts. The age query selects occurredAt only and uses the declared status/occurredAt index. Optional OTLP/HTTP export is opt-in via COC_OTEL_METRICS_ENDPOINT and per-service header secret files; no logs/traces. Collector/dashboard, cloud index application and behavioral verification remain pending."
+  },
+  "secretFiles": {
+    "configurationDirectory": "/run/secrets",
+    "overlay": "../docker/compose.staging.secrets.yaml",
+    "status": "implemented-unverified-not-deployed",
+    "scope": "Startup key-per-file configuration overrides ordinary configuration. Optional directory, reload disabled; per-service secret mounts, with rotation requiring container recreation. Shared APPWRITE_API_KEY fallback is Development-only; Staging/Production require owner-specific COC_<SERVICE>_APPWRITE_KEY. Speech provider keys have a separate optional overlay; default provider/admission remain disabled."
+  },
+  "optionalSpeechSecrets": {
+    "composeOverlay": "../docker/compose.staging.ai-provider-secrets.yaml",
+    "status": "prepared-disabled-unverified",
+    "scope": "Separate AI-only file mounts for Azure, AssemblyAI and Deepgram credentials. The default AI template keeps provider/admission off; enabling still requires device, quality, privacy and cost acceptance."
+  },
+  "keyRotation": {
+    "guide": "KEY_ROTATION.md",
+    "status": "implemented-documented-unverified",
+    "scope": "Separates test-probe credentials from owner-scoped VPS keys and adds explicit HMAC active-key selection for overlapping rotation. No credential was changed; test-environment rehearsal remains pending."
+  },
+  "imagePackaging": {
+    "workflow": "../../.github/workflows/dotnet-images.yml",
+    "script": "../tools/build-images.sh",
+    "status": "implemented-unverified-not-executed",
+    "scope": "Manual build-only by default; explicitly selected publishing job requests GHCR write permissions. Three runtime images and commit/digest metadata; no tests, deployment or cloud configuration are run by this workflow."
+  },
+  "pendingVerificationChecklist": "VERIFICATION_PENDING.md",
+  "stagingDeployment": {
+    "compose": "../docker/compose.staging.yaml",
+    "guide": "../docker/staging/README.md",
+    "status": "implemented-unverified-not-deployed",
+    "scope": "Three existing .NET service images; owner-specific private env files, loopback ports, bounded logs and single-instance topology with workers disabled by default. Hosting TLS/routing, image publication and acceptance remain pending."
+  },
+  "operationMatrix": "operations.json",
+  "note": "Job routes and consumeEvent already belong to the 91-operation matrix. Owner-specific consumers, worker lifecycles and immediate relays also require independent acceptance; no runtime here is accepted yet.",
+  "eventConsumers": [
+    {
+      "owner": "progress",
+      "event": "lesson.completed.v1",
+      "producers": [
+        "learning"
+      ],
+      "source": "services/progress/src/application/consume-events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "LessonCompletionTests.SignedLessonEvent_RequiresLearningAndReplaysWithoutDoubleCredit",
+        "LessonCompletionTests.SignedLessonEvent_RejectsUnknownPayloadFieldsBeforeInboxWrites",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-inbox-and-effects",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "strict-envelope-and-producer-auth",
+        "atomic-inbox-and-effects",
+        "duplicate-and-conflicting-payload",
+        "durable-recovery"
+      ]
+    },
+    {
+      "owner": "progress",
+      "event": "ai.practice.completed.v1",
+      "producers": [
+        "ai"
+      ],
+      "source": "services/progress/src/application/consume-events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "PracticeCompletionTests.SignedEvent_RequiresAiAndDeduplicatesInbox",
+        "PracticeCompletionTests.SignedPracticeEvent_RejectsAggregateMismatchBeforeInboxWrites",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-inbox-and-effects",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "strict-envelope-and-producer-auth",
+        "atomic-inbox-and-effects",
+        "duplicate-and-conflicting-payload",
+        "durable-recovery"
+      ]
+    },
+    {
+      "owner": "progress",
+      "event": "account.purged.v1",
+      "producers": [
+        "learning",
+        "ai"
+      ],
+      "source": "services/progress/src/application/consume-events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "DeletionPurgeTests.SignedPurgeEvent_RequiresMatchingProducerAndDeduplicates",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-inbox-and-effects",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "strict-envelope-and-producer-auth",
+        "atomic-inbox-and-effects",
+        "duplicate-and-conflicting-payload",
+        "durable-recovery"
+      ]
+    },
+    {
+      "owner": "learning",
+      "event": "account.deleted.v1",
+      "producers": [
+        "progress"
+      ],
+      "source": "services/learning/src/application/events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "LearningManifestTests.AccountDeletionEvent_PurgesOwnedRowsAndStagesOneAcknowledgement",
+        "LearningEnrollmentTests.Deletion_PurgesOnlyUserInBatchesAndAcknowledgesOnce",
+        "LearningNodeParityTests.SignedEventConsumerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-recovery",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "durable-recovery"
+      ]
+    },
+    {
+      "owner": "learning",
+      "event": "entitlement.changed.v1",
+      "producers": [
+        "progress"
+      ],
+      "source": "services/learning/src/application/events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "LearningNodeParityTests.SignedEventConsumerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-recovery",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "strict-envelope-and-producer-auth",
+        "atomic-inbox-and-effects",
+        "duplicate-and-conflicting-payload",
+        "durable-recovery"
+      ]
+    },
+    {
+      "owner": "learning",
+      "event": "energy.granted.v1",
+      "producers": [
+        "progress"
+      ],
+      "source": "services/learning/src/application/events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "LearningNodeParityTests.SignedEventConsumerSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-recovery",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "strict-envelope-and-producer-auth",
+        "atomic-inbox-and-effects",
+        "duplicate-and-conflicting-payload",
+        "durable-recovery"
+      ]
+    },
+    {
+      "owner": "ai",
+      "event": "account.deleted.v1",
+      "producers": [
+        "progress"
+      ],
+      "source": "services/ai/src/application/events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "AiConversationTests.AccountDeletedEvent_PurgesOnlyTheOwnerAcrossBatchesAndStagesOneAcknowledgement",
+        "AiConversationTests.AccountDeletedEvent_RelaysPurgeAcknowledgementOnlyAfterDurableCommit",
+        "AiConversationTests.SignedEventConsumerSequence_MatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-inbox-and-effects",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "strict-envelope-and-producer-auth",
+        "atomic-inbox-and-effects",
+        "duplicate-and-conflicting-payload",
+        "durable-recovery"
+      ]
+    },
+    {
+      "owner": "ai",
+      "event": "entitlement.changed.v1",
+      "producers": [
+        "progress"
+      ],
+      "source": "services/ai/src/application/events.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "AiConversationTests.EntitlementEvent_IsSignedIdempotentAndKeepsTheNewestRevision",
+        "AiConversationTests.SignedEventConsumerSequence_MatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "durable-inbox-and-effects",
+        "mixed-runtime-event-boundaries",
+        "native-system-acceptance"
+      ],
+      "acceptance": [
+        "strict-envelope-and-producer-auth",
+        "atomic-inbox-and-effects",
+        "duplicate-and-conflicting-payload",
+        "durable-recovery"
+      ]
+    }
+  ],
+  "jobs": [
+    {
+      "owner": "progress",
+      "operationId": "runStreakRollover",
+      "path": "/internal/jobs/streak-rollover",
+      "status": "partial-http-local-tests-worker-partial",
+      "tests": [
+        "RolloverTests.SignedJob_UsesDurableCandidatesAndRepeatsWithoutAnotherFreeze",
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-recovery",
+        "native-system-acceptance"
+      ],
+      "allowedSenders": [
+        "scheduler",
+        "maintainer"
+      ]
+    },
+    {
+      "owner": "progress",
+      "operationId": "runLeagueSettlement",
+      "path": "/internal/jobs/league-settlement",
+      "status": "partial-http-local-tests-worker-partial",
+      "tests": [
+        "SettlementJobTests.SignedTick_EnforcesAuthorityAndReportsEmptyWeek",
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-recovery",
+        "native-system-acceptance"
+      ],
+      "allowedSenders": [
+        "scheduler",
+        "maintainer"
+      ]
+    },
+    {
+      "owner": "progress",
+      "operationId": "runDeletionPurge",
+      "path": "/internal/jobs/deletion-purge",
+      "status": "partial-http-local-tests-worker-partial",
+      "tests": [
+        "DeletionPurgeTests.SignedJob_PurgesOnlyReadyAccountsAndRetainsTombstone",
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-recovery",
+        "native-system-acceptance"
+      ],
+      "allowedSenders": [
+        "scheduler",
+        "maintainer"
+      ]
+    },
+    {
+      "owner": "progress",
+      "operationId": "runProgressOutboxRelay",
+      "path": "/internal/jobs/progress-outbox-relay",
+      "status": "partial-http-local-tests-worker-partial",
+      "tests": [
+        "RelayJobTests.SignedJob_RetriesUntilEveryTargetAcknowledgesOrFailsClosedWithoutKey",
+        "ProgressWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-lease-recovery",
+        "native-system-acceptance"
+      ],
+      "allowedSenders": [
+        "scheduler",
+        "maintainer"
+      ]
+    },
+    {
+      "owner": "learning",
+      "operationId": "runLearningOutboxDispatch",
+      "path": "/internal/jobs/learning-outbox-dispatch",
+      "status": "http-local-tests-worker-partial",
+      "tests": [
+        "LearningOutboxDispatchTests.ScheduledDispatch_DeliversPendingEventAndAcknowledgesIt",
+        "LearningOutboxDispatchTests.Dispatcher_RetriesWithBackoffThenAcknowledgesWhenDue",
+        "LearningOutboxDispatchTests.Dispatcher_RetryThenAckMatchesNodeReportsAndPersistedRows",
+        "LearningWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "LearningWorkerTests.DisabledWorker_DoesNotRunScheduledJobs",
+        "LearningWorkerTests.ScheduledTick_FailsClosedUntilHostIsAdmittedAndRelayIsConfigured"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-lease-recovery",
+        "mixed-runtime-and-native-acceptance"
+      ],
+      "allowedSenders": [
+        "scheduler",
+        "maintainer"
+      ]
+    },
+    {
+      "owner": "ai",
+      "source": "services/ai/src/index.ts",
+      "trigger": "Appwrite scheduled execution",
+      "cadence": "leased outbox dispatch each minute",
+      "status": "partial-local-tests-worker-partial",
+      "tests": [
+        "AiConversationTests.Dispatcher_RetriesWithBackoffThenAcknowledgesTheSameOutboxEvent",
+        "AiConversationTests.Dispatcher_RetryThenAckMatchesNodeReportsAndPersistedRows",
+        "AiConversationTests.Dispatcher_DeadLettersAtTheTenthFailedDelivery",
+        "AiConversationTests.HttpRelay_MatchesNodeSignedRequestAndOutcome",
+        "AiConversationTests.HttpRelay_SignsTheCanonicalEventForTheAiSender",
+        "AiConversationTests.ScheduledWorker_FailsClosedUntilHostIsAdmittedAndRelayIsConfigured",
+        "AiConversationTests.EnabledWorker_SerializesTicksAndCancelsCurrentTickOnShutdown",
+        "AiConversationTests.DisabledWorker_DoesNotRunScheduledTicks"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-lease-recovery",
+        "mixed-runtime-and-native-acceptance"
+      ]
+    }
+  ],
+  "workers": [
+    {
+      "owner": "progress",
+      "source": "services/progress/src/http/worker.ts",
+      "cadence": "outbox and deletion each minute; streak UTC minute 5; league UTC minute 15",
+      "status": "partial-local-tests",
+      "tests": [
+        "ProgressWorkerTests.ScheduledTick_FollowsNodeUtcCadenceAndAlwaysRetriesDeletion",
+        "ProgressWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "ProgressWorkerTests.DisabledWorker_DoesNotRunScheduledJobs"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-lease-recovery",
+        "mixed-runtime-and-native-system-acceptance"
+      ],
+      "acceptance": [
+        "no-overlapping-ticks",
+        "trusted-internal-trigger-only",
+        "bounded-batches-and-deadlines",
+        "retry-and-dead-letter",
+        "graceful-shutdown-and-restart"
+      ]
+    },
+    {
+      "owner": "learning",
+      "source": "services/learning/src/index.ts",
+      "cadence": "leased outbox dispatch each minute",
+      "status": "partial-local-tests",
+      "tests": [
+        "LearningWorkerTests.EnabledWorker_NeverOverlapsAndCancelsTheActiveTickOnShutdown",
+        "LearningWorkerTests.DisabledWorker_DoesNotRunScheduledJobs",
+        "LearningWorkerTests.Interval_IsBoundedAndDefaultsToOneMinute",
+        "LearningWorkerTests.ScheduledTick_FailsClosedUntilHostIsAdmittedAndRelayIsConfigured"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-lease-recovery",
+        "mixed-runtime-and-native-system-acceptance"
+      ],
+      "acceptance": [
+        "no-overlapping-ticks",
+        "trusted-internal-trigger-only",
+        "bounded-batches-and-deadlines",
+        "retry-and-dead-letter",
+        "graceful-shutdown-and-restart"
+      ]
+    },
+    {
+      "owner": "ai",
+      "source": "services/ai/src/index.ts",
+      "cadence": "leased outbox dispatch each minute",
+      "status": "partial-local-tests",
+      "tests": [
+        "AiConversationTests.EnabledWorker_SerializesTicksAndCancelsCurrentTickOnShutdown",
+        "AiConversationTests.DisabledWorker_DoesNotRunScheduledTicks",
+        "AiConversationTests.WorkerInterval_IsBoundedAndDefaultsToOneMinute",
+        "AiConversationTests.ScheduledWorker_FailsClosedUntilHostIsAdmittedAndRelayIsConfigured"
+      ],
+      "remainingAcceptance": [
+        "single-worker-replica-operational-gate",
+        "durable-restart-and-lease-recovery",
+        "mixed-runtime-and-native-system-acceptance"
+      ],
+      "acceptance": [
+        "no-overlapping-ticks",
+        "trusted-internal-trigger-only",
+        "bounded-batches-and-deadlines",
+        "retry-and-dead-letter",
+        "graceful-shutdown-and-restart"
+      ]
+    }
+  ],
+  "immediateRelays": [
+    {
+      "owner": "learning",
+      "source": "services/learning/src/application/relay.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "LearningCompletionTests.Complete_CommitsEnrollmentReviewOutboxAndReceiptOnce",
+        "LearningManifestTests.AccountDeletionEvent_PurgesOwnedRowsAndStagesOneAcknowledgement",
+        "LearningOutboxDispatchTests.ImmediateRelay_RetryMatchesNodeDeliveryAndPersistedRow"
+      ],
+      "remainingAcceptance": [
+        "durable-lease-recovery",
+        "mixed-runtime-and-native-system-acceptance"
+      ],
+      "acceptance": [
+        "post-commit-only",
+        "same-event-identity-on-retry",
+        "bounded-request-work",
+        "fallback-to-durable-worker"
+      ]
+    },
+    {
+      "owner": "ai",
+      "source": "services/ai/src/application/outbox.ts",
+      "status": "partial-http-local-tests",
+      "tests": [
+        "AiConversationTests.Conversation_CompletionScoresServerTurnsAndStagesOneOutboxEvent",
+        "AiConversationTests.AccountDeletedEvent_RelaysPurgeAcknowledgementOnlyAfterDurableCommit",
+        "AiConversationTests.Dispatcher_RetriesWithBackoffThenAcknowledgesTheSameOutboxEvent",
+        "AiConversationTests.ImmediateRelay_RetryMatchesNodeDeliveryAndPersistedRow",
+        "AiConversationTests.HttpRelay_SignsTheCanonicalEventForTheAiSender",
+        "AiConversationTests.HttpRelay_MatchesNodeSignedRequestAndOutcome"
+      ],
+      "remainingAcceptance": [
+        "durable-lease-recovery",
+        "mixed-runtime-and-native-system-acceptance"
+      ],
+      "acceptance": [
+        "post-commit-only",
+        "same-event-identity-on-retry",
+        "bounded-request-work",
+        "fallback-to-durable-worker"
+      ]
+    }
+  ],
+  "systemAcceptance": [
+    {
+      "gate": "durable-owner-storage",
+      "localEvidence": {
+        "date": "2026-11-05",
+        "testsPrepared": [
+          "AppwriteLiveTests.CommittedRow_SurvivesNewClientAndRejectsStaleRevision",
+          "AppwriteLiveTests.ProgressProfile_PersistsAcrossClientsAndRejectsStaleRevision",
+          "AppwriteLiveTests.AiActiveSlot_PersistsAcrossClientsAndRejectsStaleRevision",
+          "AppwriteLiveTests.CompetingTransactions_CommitExactlyOneRevision",
+          "AppwriteLiveTests.ListAsync_CursorsAcrossDurablePagesAndKeepsOwnerFilter",
+          "AppwriteStorageLiveTests.LearningAssetFile_RoundTripsThroughAppwriteAndIsDeleted"
+        ],
+        "runner": "backend-dotnet/tools/test-appwrite-live.ps1",
+        "localRun": "Windows Release solution passed 738 tests, failed 0 and skipped six gated Appwrite probes (five row probes and one Storage round-trip); focused Storage coverage includes ten passing local configuration/mock-HTTP cases. No cloud request made.",
+        "scope": "Five row persistence probes cover Learning, Progress and AI; pagination/concurrency covers Learning. A gated Storage probe uploads a tiny synthetic learning-assets file, downloads it through the .NET adapter, and deletes it with marker verification; local fake-HTTP tests check request shape and refuse cleanup when markers mismatch. It requires files.read and files.write. Account.get, user permissions, process restart/crash and worker leases still require live evidence on coccoc-test.",
+        "outboxLeaseProbe": {
+          "test": "AppwriteOutboxLiveTests.ExpiredLease_NewClientAcknowledgesAndOldWorkerCannotOverwriteIt",
+          "localRehearsal": "OutboxLeaseProbeTests.Probe_ExercisesLeaseBoundaryAndLateWorkerWithoutTouchingOtherEvents",
+          "status": "prepared-local-rehearsal-passed-live-pending",
+          "scope": "One synthetic Progress outbox row, separate Appwrite clients; no delivery before or at expiry, new owner ACK after expiry, late old worker cannot overwrite ACK; explicit RowIds prevent unrelated claims. Marker-verified cleanup. Delivery is a callback, not a downstream service. Does not prove process crash, lease discovery queries or cloud admission."
+        }
+      },
+      "status": "pending"
+    },
+    {
+      "gate": "mixed-node-dotnet-event-boundaries",
+      "localEvidence": {
+        "date": "2026-11-04",
+        "aiSignedEventDeliveriesCompared": 9,
+        "learningSignedEventDeliveriesCompared": 12,
+        "events": [
+          "entitlement.changed.v1",
+          "account.deleted.v1",
+          "energy.granted.v1"
+        ],
+        "result": "passed",
+        "scope": "21 Node test-router versus .NET TestServer deliveries with controlled memory stores; local differential evidence only, not live mixed deployment or durable Appwrite acceptance"
+      },
+      "status": "pending"
+    },
+    {
+      "gate": "all-dotnet-docker",
+      "localEvidence": {
+        "date": "2026-11-05",
+        "linuxTestsPassed": 715,
+        "linuxTestsSkipped": 3,
+        "progressFixtureSteps": 573,
+        "lastSuccessfulLinuxTestAttempt": {
+          "status": "passed",
+          "imageId": "sha256:ca47107fa5b55326199c3a5131cf095d7e2d289d732581710ae82f9d38245902",
+          "progressFixtureSteps": 257,
+          "passed": 715,
+          "failed": 0,
+          "skipped": 3
+        },
+        "latestLinuxTestAttempt": {
+          "status": "cancelled",
+          "phase": "dotnet restore",
+          "progressFixtureSteps": 352,
+          "imageId": null,
+          "passed": 0,
+          "failed": 0,
+          "skipped": 0,
+          "reason": "Stopped during NuGet restore. Host C: was confirmed at 0 GB free; after relocating the ignored .cache to D:, disk space recovered, but Docker Engine API probes remained unresponsive and the Linux test phase was not reached."
+        },
+        "latestWindowsValidation": {
+          "date": "2026-11-05",
+          "command": "dotnet test backend-dotnet/CocEnglish.sln --no-restore --configuration Release --logger \"console;verbosity=minimal\"",
+          "progressFixtureSteps": 573,
+          "passed": 747,
+          "failed": 0,
+          "skipped": 7,
+          "result": "passed",
+          "scope": "Windows Release; five row probes, one Storage round-trip and one outbox lease-recovery probe skipped because the live flag was off. Outbox local rehearsal passed; no cloud acceptance."
+        },
+        "latestProgressParityValidation": {
+          "date": "2026-11-05",
+          "command": "dotnet test backend-dotnet/tests/CocEnglish.IntegrationTests/CocEnglish.IntegrationTests.csproj --no-restore --configuration Release --filter \"FullyQualifiedName~ProgressNodeParityTests.ScriptedAccountEconomyShopSequenceMatchesNodeResponsesAndRows\" --logger \"console;verbosity=minimal\"",
+          "progressFixtureSteps": 573,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "result": "passed",
+          "scope": "Windows Release focused Node/.NET differential over the current 573-step fixture; all eight purchase product IDs, superseded-purchase entitlement protection, same-owner cancellation with retained expiry, successful gift send/redeem/replay, non-recipient denial, null-expiry MAX preservation, exact-now expiry replacement, referral counters across all five states, preserves an active MAX invitee, grants a trial at exact-now expiry, and covers promo expiry, the 999-item cap, and unlimited redemption, rewarded-ad successful creation/replay by a free owner, foreign-owner event-ID conflict, exact-now expired premium eligibility, 20-impression cap and Honolulu local-day rollover, Activity cursor pages and Friends/Activity pagination boundaries, league tie/exclusion ranking, multi-candidate friend-quest selection, CHILD/deleted-account writer denial, all five interaction kinds, Honolulu local-midnight deduplication, family entitlement projection with null and exact-now expiry, manager removal of a user who is no longer a member, malformed/extra/stale league-result seen requests and deleted-profile league result reads/writes, follow capacity at 999/1000 with removed edges excluded, deleted-target profile/follow denials and silent unfollow, classroom Unicode validation, year-review boundaries at Honolulu midnight and the supported lower year, plus streak-repair day mismatch/expiry, gem and item success/failure, continuing streak restoration, invalid payment, item replay and deleted-profile rejection, plus entitlement missing-row, MAX-null, active-CANCELED, near-expiry-GRACE, HOLD/REVOKED/EXPIRED, and exact-now projection. The GET projection does not write rows. Monthly quest parity additionally compares old-period badge-only completion with upgradeChest enabled, missing-row and malformed-period denial, and replay under the same or another request key without another award. Historical chest replay preserves the persisted 24-gem credit; zero credit, wrong quest and missing ledger fail closed without wallet effects. Activity parity covers all eight stored kinds, own private posts, current public/private/CHILD/deleted/purged/missing profiles, blocks in either direction, inactive/non-followed authors, privacy/unfollow changes, filtered pages and deleted-viewer denial. Reads leave stored rows unchanged. Shop parity covers all five available item kinds, price and quantity/capacity boundaries, invalid catalog/items, purchase replay, exact-price refill and insufficient funds; boost parity covers both kinds, same-kind stacking, replay, expired/exact-end windows and exhausted inventory. Freeze parity also checks the exact 20-gem price, same-key replay and 364/365-day capacity thresholds. Does not establish Docker/Linux or durable Appwrite acceptance."
+        },
+        "latestNodeBaselineValidation": {
+          "date": "2026-11-05",
+          "command": "node tools/scripts/backend-check.mjs",
+          "tests": 337,
+          "passed": 325,
+          "failed": 0,
+          "skipped": 12,
+          "result": "passed",
+          "scope": "TypeScript compile, service bundles, ESLint, Prettier and Node service tests; live Appwrite/provider checks remain gated."
+        },
+        "latestContractValidation": {
+          "date": "2026-11-05",
+          "compiledSchemas": 157,
+          "fixtureCases": 110,
+          "dartContractClasses": 168,
+          "dartContracts": "up to date",
+          "result": "passed"
+        },
+        "latestDirectKestrelSmoke": {
+          "date": "2026-11-05",
+          "services": [
+            "learning",
+            "progress",
+            "ai"
+          ],
+          "result": "passed",
+          "health": 200,
+          "unconfiguredBusinessRoutes": "503 SERVICE_NOT_CONFIGURED",
+          "unauthenticatedReadiness": 401,
+          "scope": "Windows Release DLLs on standalone Kestrel, no APPWRITE_ or COC_ environment variables; host processes stopped after smoke. No Docker or durable Appwrite acceptance."
+        },
+        "dockerDaemonDiagnostics": {
+          "date": "2026-11-05",
+          "cacheRelocated": "D:/CodexCache/PRM393/FinalProject-dotnet/.cache",
+          "hostCFreeGiBAfterRelocation": 8.85,
+          "dockerDesktopWslDistro": "running; df probe succeeded",
+          "dockerEngineApi": "read-only docker version on desktop-linux remained unresponsive for more than 30 seconds and was stopped with Ctrl+C; Docker Desktop/backend processes are present, but com.docker.service remains stopped (Manual). Start-Service was denied with Cannot open service on computer ., so the service could not be restarted from this shell; no Docker/Linux test was run",
+          "wslLogEvidence": "ext4 read I/O errors on device sdd during restore; Docker proxy logged Headers Timeout Error for container/image list requests",
+          "testBuildAfterRecovery": "not started; Docker Engine did not respond"
+        },
+        "containerHosts": [
+          "learning",
+          "progress",
+          "ai"
+        ],
+        "runtimeImages": "built",
+        "latestHttpSmoke": {
+          "date": "2026-11-04",
+          "result": "passed",
+          "services": [
+            "learning",
+            "progress",
+            "ai"
+          ],
+          "scope": "Docker Compose foundation without Appwrite credentials or workers"
+        },
+        "liveness": "passed",
+        "unconfiguredBusinessRoutes": "fail-closed",
+        "readiness": "not-admitted",
+        "remainingAcceptance": "configured three-owner Appwrite/event/worker integration; foundation build and smoke do not prove durable admission",
+        "latestQuestChestParityValidation": {
+          "date": "2026-11-05",
+          "command": "dotnet test backend-dotnet/tests/CocEnglish.IntegrationTests/CocEnglish.IntegrationTests.csproj --no-restore --configuration Release --filter \"FullyQualifiedName~QuestChestNodeParityTests\" --logger \"console;verbosity=minimal\"",
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "scope": "Quest chest creation has eight controlled-entropy Node/.NET cases covering every success/failure roll combination at the 63/64 boundary. Responses and all quest, wallet, ledger, activity and receipt rows match; replay under the same or a new key does not reroll. Production still uses cryptographic entropy through the public parameterless constructor. This is local controlled-storage evidence; live Appwrite acceptance is pending."
+        }
+      },
+      "status": "pending"
+    },
+    {
+      "gate": "flutter-native-end-to-end",
+      "localEvidence": {
+        "date": "2026-11-04",
+        "environment": "Ubuntu 24.04.4 LTS",
+        "flutterVersion": "3.47.0",
+        "command": "apps/mobile: flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false",
+        "passed": 1645,
+        "failed": 0,
+        "result": "passed",
+        "scope": "Full Flutter widget/golden suite on the pinned Linux baseline; does not cover Android/iOS device E2E through configured .NET hosts or live Appwrite",
+        "latestDeviceProbe": {
+          "date": "2026-11-05",
+          "devices": [
+            "Chrome",
+            "Edge"
+          ],
+          "nativeAndroidOrIosDevice": false
+        }
+      },
+      "status": "pending"
+    },
+    {
+      "gate": "one-writer-cutover-and-rollback",
+      "runbook": "CUTOVER_RUNBOOK.md",
+      "status": "pending"
+    }
+  ]
+}

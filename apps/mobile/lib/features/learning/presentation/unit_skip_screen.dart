@@ -406,7 +406,7 @@ class _ExerciseHeader extends StatelessWidget {
                 value:
                     (state.questionIndex + (state.correct == true ? 1 : 0)) /
                     state.questions.length,
-                color: LearningColors.green,
+                color: LearningColors.primary,
                 backgroundColor: ReferenceColors.border,
               ),
             ),
@@ -481,7 +481,7 @@ class _Feedback extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = correct ? LearningColors.greenDark : LearningColors.redDark;
+    final color = correct ? LearningColors.primaryDark : LearningColors.redDark;
     return Semantics(
       liveRegion: true,
       label: correct ? 'Correct' : 'Incorrect. Correct answer: $answer',
@@ -510,7 +510,7 @@ class _Feedback extends StatelessWidget {
               label: 'CONTINUE',
               minHeight: 52,
               backgroundColor: correct
-                  ? LearningColors.green
+                  ? LearningColors.primary
                   : LearningColors.red,
               edgeColor: color,
               onPressed: onContinue,
@@ -693,7 +693,7 @@ class _Passed extends StatelessWidget {
         label: 'GOOD',
         value: '$good%',
         icon: Icons.track_changes_rounded,
-        color: LearningColors.green,
+        color: LearningColors.primary,
       ),
       _ResultMetric(
         label: 'QUESTIONS',

@@ -1,8 +1,10 @@
 // Test-only: take the committed vi_en content and re-sign selected bundles after adding the
 // server-owned authored mode configuration (`modeConfig`). The dev content key is well known; see
 // src/testing/dev-content-key.ts. Returns a file store and publication for createTestApp().
+import { root } from './kit.mjs';
+
 export async function authoredContent(kit, patches) {
-  const local = kit.loadLocalContent();
+  const local = kit.loadLocalContent(root);
   const publication = local.publications.find((p) => p.courseId === 'vi_en');
   if (!publication) throw new Error('vi_en content is not committed');
   const texts = new Map();

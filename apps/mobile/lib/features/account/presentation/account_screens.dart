@@ -642,7 +642,7 @@ Widget _settingsSwitch(
   ),
   value: value,
   onChanged: onChanged,
-  activeThumbColor: LearningColors.green,
+  activeThumbColor: LearningColors.primary,
 );
 
 /// Settings > Preferences: lesson experience toggles and the home-screen
@@ -834,7 +834,7 @@ class _SchoolsState extends ConsumerState<SchoolsSettingsScreen> {
             style: const TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.w700,
-              color: LearningColors.greenDark,
+              color: LearningColors.primaryDark,
             ),
           ),
           const SizedBox(height: 20),

@@ -33,6 +33,23 @@ test('owned receipt read redacts tokens and hides other accounts', async () => {
   );
 });
 
+test('receipt read is unavailable after the account deletion tombstone is committed', async () => {
+  const h = setup();
+  await initUser(h, 'alice');
+  const p = await purchase(h);
+  const deletion = await h.call('POST', '/v1/me/deletion', {
+    user: 'alice',
+    key: randomUUID(),
+    body: { confirmation: 'DELETE' },
+  });
+  assert.equal(deletion.status, 202);
+  assert.equal(h.store.dump('p_purchases').length, 1);
+
+  const read = await h.call('GET', `/v1/billing/purchases/${p.purchaseId}`, { user: 'alice' });
+  assert.equal(read.status, 404);
+  assert.equal(read.body.error.code, 'PROFILE_UNAVAILABLE');
+});
+
 test('cancel renewal keeps paid access and emits one event across retries', async () => {
   const h = setup();
   await initUser(h, 'alice');
@@ -78,6 +95,55 @@ test('duplicate ACTIVE notifications do not extend paid expiry', async () => {
   });
   const ent = await h.call('GET', '/v1/me/entitlement', { user: 'alice' });
   assert.equal(ent.body.expiresAt, p.entitlement.expiresAt);
+});
+
+test('same-state newer billing notification advances ordering; equal and older notifications are ignored', async () => {
+  const h = setup();
+  await initUser(h, 'alice');
+  const p = await purchase(h);
+  const notify = h.kit
+    .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
+    .routes.find((r) => r.path === '/internal/billing/notifications');
+  const start = h.clock.now;
+  const send = (notificationId, state, offset) =>
+    notify.handle({
+      body: {
+        notificationId,
+        purchaseId: p.purchaseId,
+        platform: 'SIMULATION',
+        state,
+        occurredAt: new Date(start + offset).toISOString(),
+      },
+      requestId: 'r',
+      sender: 'maintainer',
+    });
+
+  const initial = h.store
+    .dump('p_purchases')
+    .find(({ row }) => row.purchaseId === p.purchaseId).row;
+  const initialOutboxCount = h.store.dump('p_outbox').length;
+  await send('newer-active', 'ACTIVE', 2000);
+  const advanced = h.store
+    .dump('p_purchases')
+    .find(({ row }) => row.purchaseId === p.purchaseId).row;
+  assert.equal(advanced.lastNotificationId, 'newer-active');
+  assert.equal(
+    JSON.parse(advanced.vendorStateJson).lastOccurredAt,
+    new Date(start + 2000).toISOString(),
+  );
+  assert.equal(advanced.verifiedAt, initial.verifiedAt);
+  assert.equal(h.store.dump('p_outbox').length, initialOutboxCount);
+
+  await send('equal-canceled', 'CANCELED', 2000);
+  await send('older-canceled', 'CANCELED', 1000);
+  const final = h.store.dump('p_purchases').find(({ row }) => row.purchaseId === p.purchaseId).row;
+  assert.equal(final.state, 'ACTIVE');
+  assert.equal(final.lastNotificationId, 'newer-active');
+  assert.equal(
+    JSON.parse(final.vendorStateJson).lastOccurredAt,
+    new Date(start + 2000).toISOString(),
+  );
+  assert.equal(h.store.dump('p_outbox').length, initialOutboxCount);
 });
 
 test('newer ACTIVE notification cannot resurrect a refunded purchase', async () => {
@@ -166,4 +232,31 @@ test('invalid billing notification timestamp is rejected without poisoning order
   );
   const receipt = await h.call('GET', `/v1/billing/purchases/${p.purchaseId}`, { user: 'alice' });
   assert.equal(receipt.body.state, 'ACTIVE');
+});
+
+test('billing notification timestamps normalize like JavaScript Date.parse', async () => {
+  const h = setup();
+  await initUser(h, 'alice');
+  const p = await purchase(h);
+  const notify = h.kit
+    .progressWiring(h.store, {}, { allowSimulatedCommerce: true })
+    .routes.find((r) => r.path === '/internal/billing/notifications');
+  const result = await notify.handle({
+    body: {
+      notificationId: randomUUID(),
+      purchaseId: p.purchaseId,
+      platform: 'SIMULATION',
+      state: 'CANCELED',
+      occurredAt: '2027-02-30T24:00:00.000Z',
+    },
+    requestId: 'r',
+    sender: 'maintainer',
+  });
+
+  assert.equal(result.status, 200);
+  assert.equal(result.body.status, 'accepted');
+  const stored = h.store.dump('p_purchases').find((x) => x.row.purchaseId === p.purchaseId).row;
+  assert.equal(JSON.parse(stored.vendorStateJson).lastOccurredAt, '2027-03-03T00:00:00.000Z');
+  const entitlement = await h.call('GET', '/v1/me/entitlement', { user: 'alice' });
+  assert.equal(entitlement.body.status, 'CANCELED');
 });

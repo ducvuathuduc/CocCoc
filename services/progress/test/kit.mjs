@@ -2,9 +2,11 @@
 import { buildSync } from 'esbuild';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { cleanupGeneratedBundleOnExit } from '../../shared/test/cleanup-generated-bundle.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const outfile = path.join(root, `.cache/progress-test/kit-${process.pid}.mjs`);
+cleanupGeneratedBundleOnExit(outfile);
 buildSync({
   entryPoints: [path.join(root, 'services/progress/src/testing/testkit.ts')],
   outfile,

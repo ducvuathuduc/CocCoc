@@ -6,7 +6,7 @@ Persistent mistake review: finish a lesson with an incorrect first answer, then 
 
 Flutter 3.47.0 / Dart 3.13.0; feature-first manual Riverpod MVVM and go_router. Android/iOS platform projects are generated; recorded Android evidence is kept in QA receipts, and iOS needs macOS/Xcode. New collaborators should start with the [developer handoff](../../docs/agent/DEVELOPER_HANDOFF.md).
 
-Run `flutter pub get` then `flutter run` from this directory. Run `pnpm verify` from the repository root for the complete local gate. Direct regression command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false`. Dedicated Duo tests enable the actual animation explicitly.
+Run `flutter pub get` then `flutter run` from this directory. Run `pnpm verify` from the repository root for the complete local gate. Direct regression command: `flutter test --dart-define=ENABLE_MASCOT_MOTION=false`. Mascot and avatar art use the CocEnglish PNG and Canvas assets listed in `assets/PROVENANCE.md`.
 
 Simulated payments: open Super/Max → select a plan → confirm demo payment. The
 checkout supports success, pending and declined outcomes, with no real money.
@@ -72,6 +72,8 @@ catalog are documented in the [avatar analysis](../../docs/design/flows/24_AVATA
 ## Native real learning flow
 
 Use `flutter run --dart-define-from-file=config/real.public.json` from this folder for the existing coccoc-test project. See [scope, limits and acceptance](../../docs/quality/REAL_LEARNING_FLOW.md). The browser preview remains a fixture preview; billing remains simulated.
+
+For the .NET VPS candidate, copy [dotnet-vps.public.example.json](config/dotnet-vps.public.example.json) to a local public profile, replace the `.invalid` HTTPS hostnames with the reviewed VPS API domains and the configured Appwrite recovery/verification callback domain, then run/build with `--dart-define-from-file=config/<your-profile>.json`. This profile keeps the same Appwrite project for Auth while pointing Learning, Progress and AI to the .NET hosts. Do not replace `real.public.json` until owner acceptance and the one-writer cutover are approved. API/HMAC keys must never be added to a Flutter define; the app sends only the signed-in Appwrite JWT.
 
 ## Real placement test (native API mode)
 

@@ -169,7 +169,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                             child: Text(
                               copy.notNowLabel,
                               style: const TextStyle(
-                                color: ReferenceColors.green,
+                                color: ReferenceColors.primary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: .8,
@@ -291,7 +291,7 @@ class _CenteredStep extends StatelessWidget {
         TextPainter(
           text: TextSpan(
             style: const TextStyle(
-              fontFamily: 'DuolingoSans',
+              fontFamily: 'sans-serif',
               fontSize: 20,
               height: 1.42,
             ),

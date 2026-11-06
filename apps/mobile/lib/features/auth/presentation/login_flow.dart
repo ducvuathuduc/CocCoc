@@ -214,7 +214,7 @@ class _LoginFlowState extends ConsumerState<LoginFlow> {
                     children: [
                       CircleAvatar(
                         radius: 21,
-                        backgroundColor: const Color(0xFF58A700),
+                        backgroundColor: ReferenceColors.primary,
                         child: Text(
                           name.isEmpty
                               ? '?'

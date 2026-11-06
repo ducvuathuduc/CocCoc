@@ -289,7 +289,7 @@ class _ClashScreenState extends ConsumerState<ClashScreen>
                                       textAlign: TextAlign.center,
                                       style: headingStyle.copyWith(
                                         fontSize: 30,
-                                        color: LearningColors.green,
+                                        color: LearningColors.primary,
                                       ),
                                     ),
                                   ),
@@ -329,7 +329,7 @@ class _ClashScreenState extends ConsumerState<ClashScreen>
                       : 'Correct answer: ${vm.question.answer.join(' ')}',
                   style: headingStyle.copyWith(
                     color: right
-                        ? LearningColors.greenDark
+                        ? LearningColors.primaryDark
                         : LearningColors.red,
                     fontSize: 25,
                   ),
@@ -350,13 +350,13 @@ class _ClashScreenState extends ConsumerState<ClashScreen>
                     s.stage == ClashStage.intro || s.stage == ClashStage.waiting
                     ? streakBlue
                     : !s.checked || right || !quiz
-                    ? LearningColors.green
+                    ? LearningColors.primary
                     : LearningColors.red,
                 edgeColor:
                     s.stage == ClashStage.intro || s.stage == ClashStage.waiting
                     ? const Color(0xFF1899D6)
                     : !s.checked || right || !quiz
-                    ? LearningColors.greenDark
+                    ? LearningColors.primaryDark
                     : LearningColors.redDark,
                 onPressed: quiz && s.answer.isEmpty
                     ? null
@@ -400,7 +400,7 @@ class _ClashScreenState extends ConsumerState<ClashScreen>
                     '${s.correct}',
                     textAlign: TextAlign.center,
                     style: headingStyle.copyWith(
-                      color: LearningColors.green,
+                      color: LearningColors.primary,
                       fontSize: 27,
                     ),
                   ),

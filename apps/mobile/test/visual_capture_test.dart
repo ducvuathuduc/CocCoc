@@ -8,10 +8,10 @@ import 'package:cocenglish/features/onboarding/domain/onboarding_state.dart';
 import 'package:cocenglish/features/onboarding/presentation/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/ui_comparison.dart';
+import 'support/app_fonts.dart';
 
 const capture = bool.fromEnvironment('CAPTURE_UI');
 final fixtures = <OnboardingState?>[
@@ -64,19 +64,8 @@ void main() {
       addTearDown(tester.view.resetDevicePixelRatio);
       addTearDown(tester.view.resetPadding);
       await tester.runAsync(() async {
-        final sans = FontLoader('DuolingoSans')
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-          ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf'));
-        final feather = FontLoader('Feather')
-          ..addFont(rootBundle.load('assets/fonts/Feather.ttf'));
-        final icons = FontLoader('MaterialIcons')
-          ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
-        await Future.wait([
-          sans.load(),
-          feather.load(),
-          icons.load(),
-          ReferenceArt.preload(),
-        ]);
+        await loadAppFonts();
+        await ReferenceArt.preload();
       });
       for (var index = 0; index < fixtures.length; index++) {
         final boundary = GlobalKey();

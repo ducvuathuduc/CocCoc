@@ -247,7 +247,7 @@ class _SectionCard extends StatelessWidget {
                     value: '${(progress * 100).round()}%',
                     child: LinearProgressIndicator(
                       value: progress,
-                      color: LearningColors.green,
+                      color: LearningColors.primary,
                       backgroundColor: ReferenceColors.border,
                       minHeight: 18,
                       borderRadius: BorderRadius.circular(30),
@@ -261,7 +261,7 @@ class _SectionCard extends StatelessWidget {
                         child: Text(
                           'CONTINUE',
                           style: TextStyle(
-                            color: LearningColors.green,
+                            color: LearningColors.primary,
                             fontWeight: FontWeight.w700,
                             fontSize: 17,
                           ),

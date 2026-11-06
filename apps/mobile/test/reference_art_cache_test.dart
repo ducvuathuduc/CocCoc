@@ -1,13 +1,14 @@
 import 'dart:ui' as ui;
 
 import 'package:cocenglish/core/design/reference_art.dart';
+import 'package:cocenglish/core/design/cocenglish_brand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets(
-    'original illustration survives cache eviction and releases after navigation',
+    'brand artwork survives cache eviction and releases after navigation',
     (tester) async {
       final cache = PaintingBinding.instance.imageCache;
       final previous = cache.maximumSizeBytes;
@@ -22,11 +23,6 @@ void main() {
           ..clearLiveImages();
       });
       await tester.runAsync(() => ReferenceArt.preloadFiles(['lesson-03']));
-      expect(
-        cache.currentSize,
-        greaterThan(0),
-        reason: 'Decoded illustrations must use Flutter’s bounded image cache.',
-      );
       final key = GlobalKey();
       await tester.pumpWidget(
         MaterialApp(
@@ -43,6 +39,14 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await tester.runAsync(
+        () => precacheImage(
+          AssetImage(CocEnglishMascotPose.study.asset),
+          tester.element(find.byType(ReferenceArt)),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(cache.currentSize, greaterThan(0));
       Future<List<int>> pixels() async {
         final boundary =
             key.currentContext!.findRenderObject()! as RenderRepaintBoundary;

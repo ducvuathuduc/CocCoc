@@ -42,9 +42,9 @@ for (const file of files) {
   fs.copyFileSync(path.join(root, file), destination);
   count++;
 }
-// The generated OpenAPI SHA is public integrity metadata, not a credential.
-// Keep the exception to this exact computed digest, match and generated path;
-// every other Dart/native value still goes through the default secret rules.
+// Exceptions below cover only public integrity metadata or generated test data.
+// Each is restricted to a specific path and exact value shape; deployment
+// credentials remain subject to the default secret rules.
 const contractHash = createHash('sha256')
   .update(fs.readFileSync(path.join(root, 'docs/api/openapi.yaml')))
   .digest('hex');
@@ -73,6 +73,24 @@ condition = "AND"
 regexTarget = "match"
 regexes = [ '''^key: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'$''' ]
 paths = [ '''services[/\\\\]shared[/\\\\]test[/\\\\]persistence\\.test\\.mjs$''' ]
+[[rules.allowlists]]
+description = "Generated deterministic Learning parity keys; no credentials"
+condition = "AND"
+regexTarget = "match"
+regexes = [ '''^key": "[A-Za-z0-9_-]{36}"$''' ]
+paths = [ '''backend-dotnet[/\\\\]tests[/\\\\]fixtures[/\\\\]learning-node-golden\\.json$''' ]
+[[rules.allowlists]]
+description = "Generated deterministic Learning scenario idempotency keys"
+condition = "AND"
+regexTarget = "match"
+regexes = [ '''^"?(?:key|sessionKey|activeSessionKey|duplicateKey|publishKey|reportKey|reviewSessionKey)": "[A-Za-z0-9_-]{36}"$''' ]
+paths = [ '''backend-dotnet[/\\\\]tests[/\\\\]fixtures[/\\\\]learning-parity-scenarios\\.json$''' ]
+[[rules.allowlists]]
+description = "Generated SHA-256 of the fixed test purchase token, never a payment token"
+condition = "AND"
+regexTarget = "match"
+regexes = [ '''^"?purchaseTokenHash": "[0-9a-fA-F]{64}"$''' ]
+paths = [ '''backend-dotnet[/\\\\]tests[/\\\\]fixtures[/\\\\]progress-node-golden\\.json$''' ]
 `,
 );
 const result = spawnSync(

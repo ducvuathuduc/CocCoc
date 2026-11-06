@@ -82,7 +82,9 @@
       {"key": "lessonId", "type": "string", "size": 36},
       {"key": "lessonVersion", "type": "string", "size": 36},
       {"key": "rewardIdentity", "type": "string", "size": 36},
-      {"key": "mode", "type": "enum", "elements": ["LESSON", "REVIEW", "MASTERY", "PLACEMENT", "JUMP", "MISTAKES", "WORDS", "LISTEN", "SPEAK", "STORY", "ADVENTURE", "RADIO", "SIDE_QUEST", "CLASH", "UNIT_REVIEW"]},
+      {"key": "mode", "type": "enum", "elements": ["LESSON", "REVIEW", "MASTERY", "PLACEMENT", "JUMP", "MISTAKES", "WORDS", "LISTEN", "SPEAK", "STORY", "STORIES", "ADVENTURE", "RADIO", "SIDE_QUEST", "CLASH", "UNIT_REVIEW", "TEST_OUT", "CHECKPOINT"]},
+      {"key": "activityId", "type": "string", "size": 36, "required": false},
+      {"key": "opponentId", "type": "string", "size": 36, "required": false},
       {"key": "source", "type": "enum", "elements": ["ONLINE", "OFFLINE"]},
       {"key": "status", "type": "enum", "elements": ["ACTIVE", "COMPLETED", "ABANDONED", "EXPIRED"]},
       {"key": "bundleHash", "type": "string", "size": 64},
@@ -502,7 +504,8 @@
       {"key": "updatedAt", "type": "datetime"}
     ], "indexes": [
       {"key": "u_eventId", "type": "unique", "columns": ["eventId"]},
-      {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]}
+      {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]},
+      {"key": "k_status_occurredAt", "type": "key", "columns": ["status", "occurredAt"]}
     ]},
     {"id": "p_receipts", "owner": "progress", "mutable": true, "columnsFrom": "l_receipts", "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "userId", "type": "string", "size": 36},
@@ -954,7 +957,9 @@
       {"key": "updatedAt", "type": "datetime"}
     ], "indexes": [
       {"key": "u_eventId", "type": "unique", "columns": ["eventId"]},
-      {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]}
+      {"key": "k_status_nextAttemptAt", "type": "key", "columns": ["status", "nextAttemptAt"]},
+      {"key": "k_status_occurredAt", "type": "key", "columns": ["status", "occurredAt"]},
+      {"key": "k_aggregateId_type", "type": "key", "columns": ["aggregateId", "type"]}
     ]},
     {"id": "a_conversations", "owner": "ai", "mutable": true, "permissions": [], "rowSecurity": true, "rowPermissions": [], "columns": [
       {"key": "conversationId", "type": "string", "size": 36},

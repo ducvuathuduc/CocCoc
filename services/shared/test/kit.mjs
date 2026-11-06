@@ -2,11 +2,13 @@
 import { buildSync } from 'esbuild';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { cleanupGeneratedBundleOnExit } from './cleanup-generated-bundle.mjs';
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 
 export async function loadTransportKit(name) {
   const outfile = path.join(root, `.cache/shared-tests/${name}-${process.pid}.mjs`);
+  cleanupGeneratedBundleOnExit(outfile);
   buildSync({
     entryPoints: [path.join(root, 'services/shared/src/testing/transport-kit.ts')],
     outfile,

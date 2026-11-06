@@ -18,16 +18,46 @@ test('backend CI runs when its content, contract, toolchain and workspace inputs
     ])
       assert.ok(paths.includes(required), `${event} missing ${required}`);
   }
-  assert.ok(
-    workflow.jobs.deterministic.steps.some(
-      (step) => step.run === 'node tools/scripts/local-load.mjs --requests=100 --concurrency=10',
-    ),
-    'bounded local load smoke is missing',
-  );
-  for (const command of ['pnpm postman:check', 'pnpm postman:test', 'pnpm postman:run:local']) {
+  assert.deepEqual(workflow.on.push.branches, ['main']);
+  const steps = workflow.jobs.deterministic.steps;
+  for (const command of [
+    'pnpm backend:verify',
+    'pnpm backend:smoke',
+    'pnpm dev:smoke',
+    'pnpm contracts:check',
+    'pnpm api:lint',
+  ]) {
     assert.ok(
-      workflow.jobs.deterministic.steps.some((step) => step.run === command),
+      steps.some((step) => step.run === command),
       command,
     );
   }
+  const extended = steps.find((step) => step.name === 'Extended checks (manual)');
+  assert.ok(extended?.if.includes("github.event_name == 'workflow_dispatch'"));
+  assert.ok(extended.if.includes('inputs.extended_checks'));
+  assert.ok(
+    extended.run.includes('node tools/scripts/local-load.mjs --requests=100 --concurrency=10'),
+  );
+  for (const command of ['pnpm postman:check', 'pnpm postman:test', 'pnpm postman:run:local']) {
+    assert.ok(extended.run.includes(command), command);
+    assert.equal(
+      steps.some((step) => step.run === command),
+      false,
+    );
+  }
+});
+
+test('expensive container and emulator checks are manual and ordinary CI stays read-only', () => {
+  for (const name of ['containers', 'android-e2e']) {
+    const workflow = parse(fs.readFileSync(`.github/workflows/${name}.yml`, 'utf8'));
+    assert.deepEqual(Object.keys(workflow.on), ['workflow_dispatch']);
+  }
+  for (const name of ['backend', 'mobile', 'security', 'containers']) {
+    const workflow = parse(fs.readFileSync(`.github/workflows/${name}.yml`, 'utf8'));
+    assert.deepEqual(workflow.permissions, { contents: 'read' });
+    if (name !== 'containers') assert.deepEqual(workflow.on.push.branches, ['main']);
+  }
+  const mobile = parse(fs.readFileSync('.github/workflows/mobile.yml', 'utf8'));
+  assert.equal(mobile.on.workflow_dispatch.inputs.build_ios.default, false);
+  assert.ok(mobile.jobs['macos-simulator'].if.includes('inputs.build_ios'));
 });

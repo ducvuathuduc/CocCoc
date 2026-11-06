@@ -69,3 +69,8 @@ private-exports/
 # Appwrite deploy staging (appwrite/scripts/ops.mjs --deploy)
 appwrite/.build/
 __pycache__/
+
+# .NET build and test outputs
+backend-dotnet/**/bin/
+backend-dotnet/**/obj/
+backend-dotnet/**/TestResults/

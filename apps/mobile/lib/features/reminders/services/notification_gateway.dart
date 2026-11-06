@@ -1,9 +1,9 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/painting.dart' show Color;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../../../core/design/cocenglish_brand.dart';
 import '../domain/reminder_models.dart';
 
 enum ReminderPermission { granted, denied, notDetermined }
@@ -41,8 +41,8 @@ class NoopNotificationGateway implements NotificationGateway {
   Future<void> cancel(Iterable<int> ids) async {}
 }
 
-/// Palette green (docs/design/qa/palette_from_refs.json, ReferenceColors.green).
-const _accent = Color(0xFF5BCD05);
+/// Orange CocEnglish accent used to tint native notifications.
+const _accent = CocEnglishBrand.actionOrange;
 
 /// `flutter_local_notifications` implementation.
 ///
