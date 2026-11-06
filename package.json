@@ -8,7 +8,7 @@
     "build:web": "node tools/scripts/mobile-web-build.mjs",
     "preview:web": "node tools/scripts/mobile-preview.mjs",
     "build:android": "node tools/scripts/mobile-check.mjs --build-android",
-    "verify": "node tools/scripts/mobile-check.mjs --with-blueprint",
+    "verify": "node tools/scripts/mobile-check.mjs",
     "backend:build": "node tools/scripts/backend-check.mjs --build",
     "backend:verify": "node tools/scripts/backend-check.mjs",
     "backend:smoke": "node tools/scripts/backend-smoke.mjs",

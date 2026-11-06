@@ -51,12 +51,8 @@ class AvatarCatalogLoader {
   }
 
   static AvatarTab _parseTab(Map<String, dynamic> value) {
-    final selected = value['selectedIcon'] as Map<String, dynamic>;
-    final unselected = value['unselectedIcon'] as Map<String, dynamic>;
     return AvatarTab(
       name: value['tabName'] as String,
-      selectedIconAsset: _localIcon(selected['lightUrl'] as String),
-      unselectedIconAsset: _localIcon(unselected['lightUrl'] as String),
       sections: (value['sections'] as List<dynamic>)
           .cast<Map<String, dynamic>>()
           .map(_parseSection)
@@ -65,9 +61,7 @@ class AvatarCatalogLoader {
   }
 
   static AvatarSection _parseSection(Map<String, dynamic> value) {
-    final palette = value['buttonType'] == 'IMAGE';
-    final rawOptions =
-        value[palette ? 'imageButtons' : 'featureButtons'] as List<dynamic>;
+    final rawOptions = value['options'] as List<dynamic>;
     return AvatarSection(
       title: value['header'] as String,
       layout: value['layoutType'] == 'LINEAR'
@@ -93,10 +87,5 @@ class AvatarCatalogLoader {
                 entry.key: (entry.value as num).toDouble(),
             },
     );
-  }
-
-  static String _localIcon(String url) {
-    final filename = Uri.parse(url).pathSegments.last;
-    return 'assets/avatar/$filename';
   }
 }

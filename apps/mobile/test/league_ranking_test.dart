@@ -177,7 +177,7 @@ void main() {
     final ownRow = tester.widget<Material>(
       find.byKey(const ValueKey('league-row-me')),
     );
-    expect(ownRow.color, const Color(0xFFD7FFB8));
+    expect(ownRow.color, const Color(0xFFFFE8D5));
   });
 
   testWidgets('ranking rows expand safely at 320 and text scale two', (
@@ -305,7 +305,8 @@ void main() {
       of: find.byKey(const ValueKey('league-row-Anna')),
       matching: find.byType(AvatarMotion),
     );
-    final before = tester.state(annaAvatar);
+    final before = tester.element(annaAvatar);
+    final valuesBefore = Map.of(tester.widget<AvatarMotion>(annaAvatar).values);
 
     container
         .read(learningStateProvider.notifier)
@@ -332,7 +333,8 @@ void main() {
       findsOneWidget,
     );
     expect(find.bySemanticsLabel('Rank 2, Anna, 214 XP'), findsOneWidget);
-    expect(identical(tester.state(annaAvatar), before), isTrue);
+    expect(identical(tester.element(annaAvatar), before), isTrue);
+    expect(tester.widget<AvatarMotion>(annaAvatar).values, valuesBefore);
   });
 
   testWidgets(

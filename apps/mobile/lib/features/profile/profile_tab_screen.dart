@@ -609,7 +609,7 @@ class _FinishProfileCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.badge_rounded, color: Color(0xFF58CC02), size: 64),
+            Icon(Icons.badge_rounded, color: ReferenceColors.primary, size: 64),
           ],
         ),
         const SizedBox(height: 10),

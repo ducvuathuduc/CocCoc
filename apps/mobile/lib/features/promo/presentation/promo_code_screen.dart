@@ -195,7 +195,7 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
             child: const Icon(
               Icons.check_rounded,
               size: 60,
-              color: LearningColors.green,
+              color: LearningColors.primary,
             ),
           ),
         ),

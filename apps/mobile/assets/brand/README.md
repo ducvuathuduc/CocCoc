@@ -1,11 +1,17 @@
-# CocEnglish orange conversation mark
+# CocEnglish brand assets
 
-New geometric logo created for CocEnglish: an orange speech bubble containing a white C. The stock VectorStock example selected by the user was a direction reference; its image/vector was not downloaded or copied into the app. This file is not a trademark clearance claim.
+The app uses a project-owned orange conversation mark and an original mascot:
+an orange speech-bubble learner with a cream face and teal shoes. The mascot
+has three original poses for welcoming, studying and celebrating.
 
-- Orange: #F47721. Surface: #FFF7EF.
-- cocenglish-mark.svg: scalable transparent master.
-- cocenglish-mark.png: transparent 1024px export.
-- brand-preview.png: presentation preview, not a screenshot of the app.
-- Generator: ../../tool/brand/cocenglish_logo.py (Python + Pillow).
+- `cocenglish-mark.svg`: scalable app mark.
+- `cocenglish-mascot-wave.png`: transparent welcome pose.
+- `cocenglish-mascot-study.png`: transparent study pose with vocabulary book.
+- `cocenglish-mascot-celebrate.png`: transparent reward pose.
+- Orange: `#F47721`; teal: `#008F8C`; surface: `#FFF7EF`.
 
-Applied to Flutter splash/welcome, Web favicon/PWA icons, Android launcher/adaptive icon and iOS AppIcon/LaunchImage assets. Owl artwork is now redirected to the C mark by `cocenglish_mascot_regions.dart`; `duo-*` motion uses the same mark. The audit manifest lists static/composite crops plus dynamic widget/badge/reminder crops. Non-owl standalone characters and ordinary icons keep their original rendering; composite crops containing an owl are replaced as a whole. Archived source PNGs remain for provenance and are not painted for the mapped crops.
+The mascots were generated for CocEnglish and have real PNG alpha transparency.
+The original reference screenshots, font files, character rigs and avatar SVGs
+remain in the source archive for historical provenance; `pubspec.yaml` does not
+package them, and the Flutter UI does not load them. App illustrations and icons
+are rendered from these owned files or from CocEnglish Flutter painters.

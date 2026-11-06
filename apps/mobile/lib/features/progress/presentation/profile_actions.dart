@@ -20,12 +20,12 @@ Widget _iosPanel(Widget child) => CupertinoTheme(
     primaryColor: Color(0xFF007AFF),
     textTheme: CupertinoTextThemeData(
       textStyle: TextStyle(
-        fontFamily: 'DuolingoSans',
+        fontFamily: 'sans-serif',
         fontSize: 17,
         color: Color(0xFF807E80),
       ),
       actionTextStyle: TextStyle(
-        fontFamily: 'DuolingoSans',
+        fontFamily: 'sans-serif',
         fontSize: 22,
         color: Color(0xFF007AFF),
       ),
@@ -48,7 +48,7 @@ Future<void> showProfileOptions(
             onPressed: () => Navigator.pop(sheet, 'report'),
             child: const Text(
               'Report user',
-              style: TextStyle(fontFamily: 'DuolingoSans'),
+              style: TextStyle(fontFamily: 'sans-serif'),
             ),
           ),
           CupertinoActionSheetAction(
@@ -56,7 +56,7 @@ Future<void> showProfileOptions(
             onPressed: () => Navigator.pop(sheet, 'block'),
             child: const Text(
               'Block user',
-              style: TextStyle(fontFamily: 'DuolingoSans'),
+              style: TextStyle(fontFamily: 'sans-serif'),
             ),
           ),
         ],
@@ -64,7 +64,7 @@ Future<void> showProfileOptions(
           onPressed: () => Navigator.pop(sheet),
           child: const Text(
             'Cancel',
-            style: TextStyle(fontFamily: 'DuolingoSans'),
+            style: TextStyle(fontFamily: 'sans-serif'),
           ),
         ),
       ),
@@ -105,7 +105,7 @@ Future<void> showReportUserFlow(
       CupertinoActionSheet(
         message: const Text(
           'Choose a reason for the report...',
-          style: TextStyle(fontFamily: 'DuolingoSans'),
+          style: TextStyle(fontFamily: 'sans-serif'),
         ),
         actions: [
           for (final reason in reportReasons)
@@ -113,7 +113,7 @@ Future<void> showReportUserFlow(
               onPressed: () => Navigator.pop(sheet, reason),
               child: Text(
                 reason,
-                style: const TextStyle(fontFamily: 'DuolingoSans'),
+                style: const TextStyle(fontFamily: 'sans-serif'),
               ),
             ),
         ],
@@ -121,7 +121,7 @@ Future<void> showReportUserFlow(
           onPressed: () => Navigator.pop(sheet),
           child: const Text(
             'Cancel',
-            style: TextStyle(fontFamily: 'DuolingoSans'),
+            style: TextStyle(fontFamily: 'sans-serif'),
           ),
         ),
       ),
@@ -149,23 +149,17 @@ Future<bool> _confirm(
       context: context,
       builder: (dialog) => _iosPanel(
         CupertinoAlertDialog(
-          title: Text(
-            title,
-            style: const TextStyle(fontFamily: 'DuolingoSans'),
-          ),
-          content: Text(
-            body,
-            style: const TextStyle(fontFamily: 'DuolingoSans'),
-          ),
+          title: Text(title, style: const TextStyle(fontFamily: 'sans-serif')),
+          content: Text(body, style: const TextStyle(fontFamily: 'sans-serif')),
           actions: [
             CupertinoDialogAction(
               onPressed: () => Navigator.pop(dialog, false),
-              textStyle: const TextStyle(fontFamily: 'DuolingoSans'),
+              textStyle: const TextStyle(fontFamily: 'sans-serif'),
               child: const Text('Cancel'),
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,
-              textStyle: const TextStyle(fontFamily: 'DuolingoSans'),
+              textStyle: const TextStyle(fontFamily: 'sans-serif'),
               onPressed: () => Navigator.pop(dialog, true),
               child: Text(action),
             ),

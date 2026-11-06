@@ -310,7 +310,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                             value: state.isRetry ? 1 : state.progress + .02,
                             color: state.correctStreak >= 5
                                 ? LearningColors.orange
-                                : LearningColors.green,
+                                : LearningColors.primary,
                             shineColor: state.correctStreak >= 5
                                 ? LessonMotionTokens.orangeShine
                                 : LessonMotionTokens.greenShine,
@@ -564,7 +564,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                                     : exercise?.audioPairs == true
                                     ? 'CONTINUE'
                                     : 'CHECK',
-                                backgroundColor: LearningColors.green,
+                                backgroundColor: LearningColors.primary,
                                 onPressed: state.canCheck
                                     ? () {
                                         FocusScope.of(context).unfocus();
@@ -703,7 +703,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
                               fontSize: 19,
                               color: state.selectedId == option.id
                                   ? state.correct == true
-                                        ? LearningColors.greenDark
+                                        ? LearningColors.primaryDark
                                         : LearningColors.blue
                                   : palette.ink,
                             ),
@@ -1042,7 +1042,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     LessonController controller,
   ) {
     final correct = state.correct == true;
-    final color = correct ? LearningColors.greenDark : LearningColors.redDark;
+    final color = correct ? LearningColors.primaryDark : LearningColors.redDark;
     return Container(
       width: double.infinity,
       color: correct ? LearningColors.correct : LearningColors.incorrect,
@@ -1127,7 +1127,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           ReferenceButton(
             label: correct ? 'CONTINUE' : 'GOT IT',
             backgroundColor: correct
-                ? LearningColors.green
+                ? LearningColors.primary
                 : LearningColors.red,
             edgeColor: color,
             onPressed: state.busy

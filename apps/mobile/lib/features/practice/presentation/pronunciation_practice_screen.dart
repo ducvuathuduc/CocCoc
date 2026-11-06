@@ -246,7 +246,7 @@ class _WordFeedback extends StatelessWidget {
     final title = Text(
       '${word.word}: $status${word.accuracy == null ? '' : ' (${word.accuracy!.round()}/100)'}',
       style: TextStyle(
-        color: word.ok ? LearningColors.greenDark : LearningColors.redDark,
+        color: word.ok ? LearningColors.primaryDark : LearningColors.redDark,
       ),
     );
     if (word.phonemes.isEmpty) {

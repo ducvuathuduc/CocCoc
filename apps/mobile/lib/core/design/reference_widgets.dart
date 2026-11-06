@@ -88,10 +88,10 @@ class _ReferenceButtonState extends State<ReferenceButton> {
               : palette.border
         : widget.outlined
         ? palette.surface
-        : widget.backgroundColor ?? ReferenceColors.green;
+        : widget.backgroundColor ?? ReferenceColors.primary;
     final edge = widget.outlined
         ? palette.border
-        : widget.edgeColor ?? ReferenceColors.greenEdge;
+        : widget.edgeColor ?? ReferenceColors.primaryEdge;
     return Semantics(
       button: true,
       enabled: enabled,
@@ -145,14 +145,14 @@ class _ReferenceButtonState extends State<ReferenceButton> {
                     : widget.foregroundColor != null
                     ? widget.foregroundColor!
                     : widget.outlined
-                    ? ReferenceColors.green
+                    ? ReferenceColors.primary
                     : Colors.white,
                 disabledForegroundColor: palette.disabled,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(widget.cornerRadius),
                 ),
                 textStyle: const TextStyle(
-                  fontFamily: 'DuolingoSans',
+                  fontFamily: 'sans-serif',
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.8,
@@ -435,7 +435,7 @@ class FlowHeader extends StatelessWidget {
                               ),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: ReferenceColors.green,
+                              color: ReferenceColors.primary,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Container(

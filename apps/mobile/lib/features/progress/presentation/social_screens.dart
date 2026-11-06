@@ -116,7 +116,7 @@ class StatusAvatar extends StatelessWidget {
               width: size * .2,
               height: size * .2,
               decoration: BoxDecoration(
-                color: ReferenceColors.green,
+                color: ReferenceColors.primary,
                 shape: BoxShape.circle,
                 border: Border.all(color: palette.surface, width: 2),
               ),
@@ -439,7 +439,7 @@ class _FeedSuggestions extends ConsumerWidget {
                 textScaler: MediaQuery.textScalerOf(context),
                 text: TextSpan(
                   style: TextStyle(
-                    fontFamily: 'DuolingoSans',
+                    fontFamily: 'sans-serif',
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     color: palette.ink,

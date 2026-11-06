@@ -12,7 +12,7 @@ import 'support/native_test_runtime.dart';
 /// exercise looping itself reset [DuoMotion.debugSingleCycleLoops]. The
 /// mock league is pinned to its 8-learner reference cohort the same way.
 ///
-/// Every test file also gets the real bundled fonts (DuolingoSans, Feather,
+/// Every test file also gets the real bundled fonts (sans-serif and
 /// Material icons) so goldens always compare real glyphs, never Ahem boxes.
 /// Goldens are canonical on Linux with the Flutter version pinned in
 /// tools/toolchain.json (the CI platform); regenerate them there.

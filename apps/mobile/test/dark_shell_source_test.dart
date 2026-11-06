@@ -35,12 +35,13 @@ void main() {
       );
       expect(mascot, findsOneWidget);
       expect(tester.getSize(mascot), const Size(118, 153));
-      final mark = find.descendant(
-        of: mascot,
-        matching: find.byType(CocEnglishMark),
+      final image = find.descendant(of: mascot, matching: find.byType(Image));
+      expect(image, findsOneWidget);
+      expect(tester.getSize(image), const Size(118, 153));
+      expect(
+        (tester.widget<Image>(image).image as AssetImage).assetName,
+        CocEnglishMascotPose.study.asset,
       );
-      expect(mark, findsOneWidget);
-      expect(tester.getSize(mark), const Size(118, 118));
       expect(
         find.descendant(of: mascot, matching: find.byType(ColoredBox)),
         findsNothing,

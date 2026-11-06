@@ -103,7 +103,7 @@ class LeagueScreen extends ConsumerWidget {
 class PersonAvatar extends StatelessWidget {
   const PersonAvatar({
     required this.name,
-    this.color = LearningColors.green,
+    this.color = LearningColors.primary,
     super.key,
   });
   final String name;

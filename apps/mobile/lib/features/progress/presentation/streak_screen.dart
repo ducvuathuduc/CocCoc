@@ -1075,7 +1075,7 @@ class FriendStreakInviteScreen extends ConsumerWidget {
                                       : 'INVITE',
                                   style: TextStyle(
                                     color: s.friends.containsKey(person.id)
-                                        ? ReferenceColors.green
+                                        ? ReferenceColors.primary
                                         : s.remaining == 0
                                         ? streakGray
                                         : streakBlue,

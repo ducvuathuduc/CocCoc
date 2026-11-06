@@ -1,40 +1,26 @@
 # CocEnglish design system
 
-Current audit preserves actual tokens/fonts/components/assets and UI. This is the project's engineering specification derived from references, not an official downloadable Duolingo DESIGN.md. [UI gaps](../audit/UI_IMPLEMENTATION_GAP.md), [behavior map](../product/SCREEN_BEHAVIOR_MAP.md) and existing QA receipts separate source/capture evidence from fresh device proof.
+Current UI uses CocEnglish-owned mascot art and Canvas glyphs, the orange conversation mark, and the platform sans-serif. This is the project's engineering specification derived from product requirements and archived reference research, not an official Duolingo DESIGN.md. [UI gaps](../audit/UI_IMPLEMENTATION_GAP.md), [behavior map](../product/SCREEN_BEHAVIOR_MAP.md) and existing QA receipts separate source/capture evidence from fresh device proof.
 
 This is **our engineering DESIGN.md**, derived from public [Duolingo brand colors](https://design.duolingo.com/identity/color), [typography guidance](https://design.duolingo.com/identity/typography), and inspected [Gummble references](GUMMBLE_RESEARCH.md). No official downloadable Duolingo engineering DESIGN.md was established. Exact app spacing/radii below are our chosen tokens, not extracted source constants.
 
-2026-10-04 frontend override: the user explicitly chose the original Duolingo screenshot appearance for onboarding/login, including Duo, icons, fonts and tactile controls. The active implementation uses locally bundled DuolingoSans/Feather, archived illustration regions, and measured reference-specific tokens in `apps/mobile/lib/core/design/`. [Onboarding](flows/01_ONBOARDING.md) and [login](flows/02_LOGIN.md) own screen deconstruction; [asset provenance](../../apps/mobile/assets/PROVENANCE.md) owns input sources. The adaptation tokens below remain the planned product baseline, not the active reference-reproduction palette. Reference fidelity is not a contrast certification or proof of identical motion.
+2026-11-05 asset refresh: the user requested replacing the currently used Duolingo icons, illustrations, mascots, avatar rig and fonts with CocEnglish assets. The app now paints all `ArtRegion` crops with original Flutter glyphs or the CocEnglish mascot, uses a code-drawn custom avatar, and ships three transparent CocEnglish mascot poses with the CocEnglish mark. Historical screenshots, source fonts and motion files remain only as unbundled provenance records. [Asset provenance](../../apps/mobile/assets/PROVENANCE.md) lists the current package set and archived sources.
 
 ## Visual direction
 
-2026-10-29 remote consolidation adopts the existing orange CocEnglish branding
-branch: the speech-bubble C mark replaces mapped owl artwork and `duo-*` motion,
-and supplies the splash, welcome and platform icons. The native screen layouts,
-ordinary icons and other lesson characters keep their established rendering.
-The branch's existing mapping replaces a whole composite illustration when it
-contains owl artwork; gift backgrounds and the decorative path-return preview
-therefore lose their illustrated scene context. Native controls remain in place,
-including the path-return banner action to `/home`.
-The [brand assets and mapping](../../apps/mobile/assets/brand/README.md) and
-[integration receipt](../quality/REMOTE_BRANCH_CONSOLIDATION_20261029.md) record
-the scope and canonical Linux visual checks. Archived reference images retain
-their provenance role.
-
 Bright learning path, round illustrated exercises, thick outlines, tactile bottom-edge buttons, generous space, one clear next action. Flat surface hierarchy; avoid generic KPI cards, gradients, glass effects and desktop-dashboard composition. Use our CocEnglish character illustration, no production dependency on proprietary fonts/assets.
 
-Typography: bundle Nunito Sans for Vietnamese+Latin UI and Nunito for short headings if glyph coverage is verified; system sans fallback during font load. Do not fetch fonts at runtime. Heading28/32 weight800; title22/28 weight800; body18/26 weight600; caption14/20 weight600; button16/20 weight800. Text scaling is respected; no fixed height for multi-line text. Proprietary Feather/DIN are not required.
+Typography: use the platform system sans-serif; the app bundles no proprietary display fonts. Do not fetch fonts at runtime. Heading28/32 weight800; title22/28 weight800; body18/26 weight600; caption14/20 weight600; button16/20 weight800. Text scaling is respected; no fixed height for multi-line text.
 
 ## Tokens (logical pixels)
 
 | Token | Value / role |
 |---|---|
-| brand.orange / brand.surface | #F47721 / #FFF7EF; CocEnglish mark and launch surface |
-| brand.green | #58CC02; icon/illustration/accent, not small white text background without contrast check |
-| action.green | #237A00; accessible primary filled control with white text |
-| action.edge | #185900; 4px tactile lower edge |
+| brand.orange | #F47721; CocEnglish mascot and decorative illustration accent |
+| action.orange | #C84E08; accessible primary filled control with white text |
+| action.edge | #963A00; 4px tactile lower edge |
 | accent.blue | #1CB0F6; audio accent; dark text/outline for legibility |
-| success.surface / text | #D7FFB8 / #235B00 |
+| success.surface / text | #FFE8D5 / #963A00 |
 | error.surface / text | #FFE1E1 / #A41414 |
 | warning.surface / text | #FFF3B0 / #704D00 |
 | surface / subtle / border / text | #FFFFFF / #F7F7F7 / #E5E5E5 / #4B4B4B |
@@ -48,7 +34,7 @@ Typography: bundle Nunito Sans for Vietnamese+Latin UI and Nunito for short head
 | width | mobile body max480; lesson bottom action pinned above keyboard/safe area |
 | shadow | 4px solid lower edge for buttons/nodes; ordinary surfaces no soft elevation |
 
-White on #58CC02 is not assumed to meet small-text contrast. Accent fidelity yields to readable controls; phase2 records contrast ratio for every text/control pairing and uses dark text or action.green where needed.
+The mascot orange is reserved for illustration. Primary controls use the darker CocEnglish orange so white labels remain readable.
 
 ## Components / assets
 

@@ -8,12 +8,12 @@ import 'package:cocenglish/features/auth/domain/auth_state.dart';
 import 'package:cocenglish/features/auth/presentation/login_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'login_flow_test.dart';
 import 'support/ui_comparison.dart';
+import 'support/app_fonts.dart';
 
 void main() {
   testWidgets('login reference fixtures render native inputs and artwork', (
@@ -21,12 +21,8 @@ void main() {
   ) async {
     final comparison = UiComparison(flow: 'login');
     await tester.runAsync(() async {
-      final fonts = FontLoader('DuolingoSans')
-        ..addFont(rootBundle.load('assets/fonts/DuolingoSans.ttf'))
-        ..addFont(rootBundle.load('assets/fonts/DuolingoSans-Bold.ttf'));
-      final icons = FontLoader('MaterialIcons')
-        ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
-      await Future.wait([fonts.load(), icons.load(), ReferenceArt.preload()]);
+      await loadAppFonts();
+      await ReferenceArt.preload();
     });
     const fixtures = <int, AuthState>{
       2: AuthState(),

@@ -272,16 +272,18 @@ class _PromptBubble extends StatelessWidget {
         const SizedBox(height: 6),
         GestureDetector(
           onTap: onTranslate,
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.translate_rounded,
-                color: LearningColors.blue,
-                size: 20,
-              ),
-              SizedBox(width: 8),
-              Text(
+              if (MediaQuery.textScalerOf(context).scale(15) <= 24) ...[
+                const Icon(
+                  Icons.translate_rounded,
+                  color: LearningColors.blue,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+              ],
+              const Text(
                 'TRANSLATE',
                 style: TextStyle(
                   color: LearningColors.blue,
@@ -386,14 +388,14 @@ class _ScenarioFeedbackState extends ConsumerState<RoleplayScenarioFeedback> {
                     children: [
                       Icon(
                         Icons.check_circle_rounded,
-                        color: LearningColors.green,
+                        color: LearningColors.primary,
                         size: 28,
                       ),
                       SizedBox(width: 8),
                       Text(
                         'WELL DONE!',
                         style: TextStyle(
-                          color: LearningColors.green,
+                          color: LearningColors.primary,
                           fontWeight: FontWeight.w700,
                           fontSize: 15,
                           letterSpacing: .6,
@@ -520,7 +522,7 @@ class _ReplyCard extends StatelessWidget {
                   Text(
                     'Great',
                     style: TextStyle(
-                      color: LearningColors.greenDark,
+                      color: LearningColors.primaryDark,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                     ),
@@ -528,7 +530,7 @@ class _ReplyCard extends StatelessWidget {
                   SizedBox(width: 4),
                   Icon(
                     Icons.check_rounded,
-                    color: LearningColors.greenDark,
+                    color: LearningColors.primaryDark,
                     size: 18,
                   ),
                 ],
@@ -567,14 +569,14 @@ class _ReplyCard extends StatelessWidget {
                       visualDensity: VisualDensity.compact,
                       color: helpful == false
                           ? LearningColors.red
-                          : LearningColors.greenDark,
+                          : LearningColors.primaryDark,
                       onPressed: () => onRate(false),
                       icon: const Icon(Icons.thumb_down_outlined),
                     ),
                     IconButton(
                       tooltip: 'Helpful feedback ${index + 1}',
                       visualDensity: VisualDensity.compact,
-                      color: LearningColors.greenDark,
+                      color: LearningColors.primaryDark,
                       onPressed: () => onRate(true),
                       icon: Icon(
                         helpful == true

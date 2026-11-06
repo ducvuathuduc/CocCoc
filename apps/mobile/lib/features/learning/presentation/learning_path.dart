@@ -290,11 +290,13 @@ class _LearningPathState extends ConsumerState<LearningPath> {
 
   Widget _unitBanner(BuildContext context, int unit, String title) => Container(
     decoration: BoxDecoration(
-      color: unit == 2 ? const Color(0xFFBA4095) : LearningColors.green,
+      color: unit == 2 ? const Color(0xFFBA4095) : LearningColors.primary,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
-          color: unit == 2 ? const Color(0xFF962877) : LearningColors.greenDark,
+          color: unit == 2
+              ? const Color(0xFF962877)
+              : LearningColors.primaryDark,
           offset: const Offset(0, 4),
         ),
       ],
@@ -314,7 +316,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                     fontWeight: FontWeight.w700,
                     color: unit == 2
                         ? const Color(0xFFFFC9E9)
-                        : const Color(0xFFD7FFB8),
+                        : const Color(0xFFFFE8D5),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -337,7 +339,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
               left: BorderSide(
                 color: unit == 2
                     ? const Color(0xFF962877)
-                    : LearningColors.greenDark,
+                    : LearningColors.primaryDark,
                 width: 2,
               ),
             ),
@@ -406,7 +408,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                     fontWeight: FontWeight.w700,
                     color: _active.unit == 2
                         ? const Color(0xFF962877)
-                        : LearningColors.greenDark,
+                        : LearningColors.primaryDark,
                   ),
                 ),
               ),
@@ -461,7 +463,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
   ) => Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: LearningColors.green,
+      color: LearningColors.primary,
       borderRadius: BorderRadius.circular(16),
     ),
     child: Column(
@@ -490,8 +492,8 @@ class _LearningPathState extends ConsumerState<LearningPath> {
               ? 'START'
               : 'START +20 XP',
           backgroundColor: Colors.white,
-          edgeColor: const Color(0xFFD7FFB8),
-          foregroundColor: LearningColors.green,
+          edgeColor: const Color(0xFFFFE8D5),
+          foregroundColor: LearningColors.primary,
           onPressed: () async {
             await ref.read(courseNavigationProvider.notifier).startLesson(i);
             if (!mounted || !context.mounted) return;
@@ -588,7 +590,7 @@ class _LearningPathState extends ConsumerState<LearningPath> {
                             value: value,
                             minHeight: 16,
                             borderRadius: BorderRadius.circular(20),
-                            color: LearningColors.green,
+                            color: LearningColors.primary,
                             backgroundColor: palette.border,
                           ),
                         ),
@@ -701,7 +703,7 @@ class _PathNodeState extends State<PathNode> {
                       size: const Size(98, 87),
                       painter: _NodeRing(
                         value,
-                        color ?? LearningColors.green,
+                        color ?? LearningColors.primary,
                         palette.border,
                       ),
                     ),
@@ -742,7 +744,7 @@ class _PathNodeState extends State<PathNode> {
                             (current || completed
                                 ? completed
                                       ? LearningColors.yellow
-                                      : LearningColors.green
+                                      : LearningColors.primary
                                 : dark
                                 ? palette.border
                                 : ReferenceColors.border),
@@ -754,7 +756,7 @@ class _PathNodeState extends State<PathNode> {
                                 (current || completed
                                     ? completed
                                           ? const Color(0xFFE5A400)
-                                          : LearningColors.greenDark
+                                          : LearningColors.primaryDark
                                     : dark
                                     ? palette.raisedSurface
                                     : const Color(0xFFBCBABC)),

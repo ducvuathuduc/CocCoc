@@ -291,7 +291,7 @@ Future<void> showScoreShareDialog(
               if (state.copied)
                 const Text(
                   'Copied',
-                  style: TextStyle(color: LearningColors.green),
+                  style: TextStyle(color: LearningColors.primary),
                 ),
             ],
           ),
