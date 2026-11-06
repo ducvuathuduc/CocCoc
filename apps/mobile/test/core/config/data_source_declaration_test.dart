@@ -30,10 +30,7 @@ void main() {
   });
 
   test('a declared source clears the guard', () {
-    const api = AppConfig(
-      dataSource: DataSource.api,
-      declaredDataSource: true,
-    );
+    const api = AppConfig(dataSource: DataSource.api, declaredDataSource: true);
     const fixtures = AppConfig(
       dataSource: DataSource.mock,
       declaredDataSource: true,
