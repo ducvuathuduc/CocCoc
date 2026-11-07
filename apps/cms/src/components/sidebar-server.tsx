@@ -1,5 +1,6 @@
-import { Sidebar } from './sidebar';
+import { ShellNav } from './shell';
 import { courseUnitStats, listCourseSummaries } from '@/server/queries';
+import { learnerQueue } from '@/server/ops/learners';
 import { requireAdmin } from '@/server/session';
 import { storeLabel } from '@/server/audit';
 
@@ -18,5 +19,23 @@ export async function SidebarNav() {
       theme: unit.theme,
     })),
   );
-  return <Sidebar identity={identity.email || identity.userId} mode={storeLabel()} lessons={lessons} />;
+
+  // The bell counts what is still unanswered. A learner-data outage must not take
+  // the chrome down with it, so a failed read is simply "no badge".
+  let inboxCount = 0;
+  try {
+    const queue = await learnerQueue();
+    inboxCount = queue.feedback.length + queue.userReports.length + queue.contentReports.length;
+  } catch {
+    inboxCount = 0;
+  }
+
+  return (
+    <ShellNav
+      identity={identity.email || identity.userId}
+      mode={storeLabel()}
+      lessons={lessons}
+      inboxCount={inboxCount}
+    />
+  );
 }

@@ -39,9 +39,12 @@ const LIMIT = 12;
 export function QuickJump({
   lessons,
   onNavigate,
+  openButton,
 }: {
   lessons: JumpLesson[];
   onNavigate?: () => void;
+  /** Replaces the default labelled trigger, e.g. the round search button in the top bar. */
+  openButton?: (open: () => void) => React.ReactNode;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -120,28 +123,32 @@ export function QuickJump({
 
   return (
     <>
-      <button
-        type="button"
-        aria-haspopup="dialog"
-        onClick={show}
-        className="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-input-bg px-3 py-2 text-sm text-fg-4 transition-colors hover:border-line-strong hover:text-fg"
-      >
-        <span className="flex items-center gap-2">
-          <svg viewBox="0 0 20 20" className="size-4 shrink-0" aria-hidden="true">
-            <path
-              d="M9 3.5a5.5 5.5 0 1 1-3.9 9.4M13.4 13.4 17 17"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          </svg>
-          Đi tới một bài học
-        </span>
-        <kbd className="rounded border border-line bg-elevated px-1.5 py-0.5 text-[10px] font-medium">
-          Ctrl K
-        </kbd>
-      </button>
+      {openButton ? (
+        openButton(show)
+      ) : (
+        <button
+          type="button"
+          aria-haspopup="dialog"
+          onClick={show}
+          className="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-input-bg px-3 py-2 text-sm text-fg-4 transition-colors hover:border-line-strong hover:text-fg"
+        >
+          <span className="flex items-center gap-2">
+            <svg viewBox="0 0 20 20" className="size-4 shrink-0" aria-hidden="true">
+              <path
+                d="M9 3.5a5.5 5.5 0 1 1-3.9 9.4M13.4 13.4 17 17"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+            Đi tới một bài học
+          </span>
+          <kbd className="rounded border border-line bg-elevated px-1.5 py-0.5 text-[10px] font-medium">
+            Ctrl K
+          </kbd>
+        </button>
+      )}
 
       {open && (
         <div

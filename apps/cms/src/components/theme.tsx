@@ -42,7 +42,13 @@ function useTheme(): Theme {
   return useSyncExternalStore(subscribe, read, () => 'light');
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({
+  className,
+  showLabel = true,
+}: {
+  className?: string;
+  showLabel?: boolean;
+}) {
   const theme = useTheme();
 
   // Both icons ship in the markup and CSS picks the visible one off `.dark`,
@@ -53,7 +59,10 @@ export function ThemeToggle() {
       type="button"
       onClick={() => write(theme === 'dark' ? 'light' : 'dark')}
       aria-label={theme === 'dark' ? 'Chuyển sang nền sáng' : 'Chuyển sang nền tối'}
-      className="flex h-8 w-full items-center justify-center rounded-lg border border-line bg-elevated text-fg-3 hover:border-primary/40 hover:bg-primary-soft hover:text-primary-text active:scale-[0.98]"
+      className={
+        className ??
+        'flex h-8 w-full items-center justify-center rounded-lg border border-line bg-elevated text-fg-3 hover:border-primary/40 hover:bg-primary-soft hover:text-primary-text active:scale-[0.98]'
+      }
     >
       <span className="relative block h-4 w-4">
         <svg
@@ -79,7 +88,7 @@ export function ThemeToggle() {
           <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
         </svg>
       </span>
-      <span className="ml-2 text-xs">{theme === 'dark' ? 'Nền tối' : 'Nền sáng'}</span>
+      {showLabel && <span className="ml-2 text-xs">{theme === 'dark' ? 'Nền tối' : 'Nền sáng'}</span>}
     </button>
   );
 }

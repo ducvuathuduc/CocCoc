@@ -56,9 +56,10 @@ export interface NavLink {
   hint: string;
 }
 
-/** The three jobs of a teacher: work on lessons, send them to the app, then look after the people learning. */
+/** The three jobs of a teacher, plus the one screen that decides today's job for them. */
 export const PRIMARY_NAV: NavLink[] = [
-  { href: '/', label: 'Bài học', hint: 'Tìm, sửa và xem trước từng bài' },
+  { href: '/', label: 'Tổng quan', hint: 'Việc cần làm hôm nay, đếm từ bản soạn thật' },
+  { href: '/lessons', label: 'Bài học', hint: 'Tìm, sửa và xem trước từng bài' },
   { href: '/builds', label: 'Xuất bản', hint: 'Kiểm tra rồi đưa bài lên app' },
   { href: '/users', label: 'Người học', hint: 'Tìm tài khoản, khóa khi cần' },
 ];

@@ -28,7 +28,9 @@ Không có Appwrite thì cũng không đăng nhập được: file store chỉ c
 
 | Trang | Nội dung |
 | --- | --- |
-| `/` | Tóm tắt các khóa, số unit |
+| `/` | Bảng điều khiển: việc cần làm hôm nay (đếm từ bản nháp thật), hành trình Soạn → Kiểm tra → Xuất bản, bài học gần đây và tình trạng khóa |
+| `/lessons` | Không gian bài học của khóa: tìm, lọc theo trạng thái, sửa và xem trước từng bài |
+| `/courses` | Danh sách khóa học |
 | `/courses/[courseId]` | Thông tin khóa, cấu trúc section, bài kiểm tra trình độ (10 câu bộ dựng lấy theo vị trí), danh sách unit, tạo/xóa unit, đổi thứ tự unit, nhập từ repo, lối vào media toàn khóa và lối vào tìm kiếm trong nội dung |
 | `/courses/[courseId]/media` | Báo cáo nợ media của cả khóa: bảng từng unit, danh sách key cho `generate-audio.mjs --only`, bản JSON `/api/media/owed`, ô nạp audio/ảnh cấp khóa |
 | `/courses/[courseId]/search` | Tìm trên bản nháp của cả khóa (không phân biệt hoa thường và dấu thanh), mỗi kết quả chỉ đúng tab · dòng · cột trong editor và bấm vào là mở ngay chỗ đó; kèm ba danh sách nội dung lặp lại và bảng "Thay thế trong toàn khóa" xem trước từng dòng sẽ đổi |
