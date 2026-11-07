@@ -14,6 +14,12 @@ export const ghost =
 export const danger =
   'rounded-md px-2 py-1 text-xs text-fg-3 hover:bg-danger-bg hover:text-danger-fg disabled:opacity-40';
 export const card = 'rounded-xl border border-line bg-card shadow-card';
+/* The big borderless surfaces of the overview: on the grey page background a
+   shadow alone reads as a card, so a border would only add noise. */
+export const panel = 'rounded-3xl bg-card shadow-card';
+/* Circular icon button, the one control shape the top bar and the rail share. */
+export const circle =
+  'relative flex size-10 shrink-0 items-center justify-center rounded-full bg-card text-fg-2 shadow-card hover:-translate-y-px hover:text-fg hover:shadow-lift disabled:pointer-events-none disabled:opacity-50';
 export const link =
   'text-primary-text underline-offset-4 transition-colors hover:text-primary hover:underline';
 export const badge =

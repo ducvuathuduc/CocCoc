@@ -1,19 +1,31 @@
 import { redirect } from 'next/navigation';
-import { CourseWorkspace } from '@/components/course-workspace';
+import { Dashboard } from '@/components/dashboard';
+import { PageTransition } from '@/components/page-transition';
 import { listCourseSummaries } from '@/server/queries';
 import { requireAdmin } from '@/server/session';
+import { courseWorkflow } from '@/server/workflow';
+import { workspaceData } from '@/server/workspace';
 
 export const instant = false;
 
-export const metadata = { title: 'Bài học' };
+export const metadata = { title: 'Tổng quan' };
 
 /**
- * One course means one workspace: a teacher lands on the lesson list instead of a dashboard that
- * asks which course to open. More than one course still goes through the course list.
+ * The landing screen answers one question — "what do I do now?" — from the real
+ * draft store, then hands over to the lesson workspace at /lessons. With more than
+ * one course there is no single journey to show, so the course list decides first.
  */
 export default async function HomePage() {
   await requireAdmin();
   const courses = await listCourseSummaries();
   if (courses.length !== 1) redirect('/courses');
-  return <CourseWorkspace courseId={courses[0].courseId} />;
+  const courseId = courses[0].courseId;
+  const data = await workspaceData(courseId);
+  const workflow = data ? await courseWorkflow(courseId, data) : null;
+  if (!data || !workflow) redirect('/courses');
+  return (
+    <PageTransition>
+      <Dashboard data={data} workflow={workflow} />
+    </PageTransition>
+  );
 }
