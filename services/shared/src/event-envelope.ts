@@ -1,15 +1,16 @@
-// AMQP event envelope (ADR-0018 "AMQP producer authentication"). The broker carries the
-// unchanged versioned BusinessEvent inside a signed envelope:
+// [VI] Phong bì event cho RabbitMQ (bưu điện giữa các service). Event (nội dung nghiệp vụ)
+// được bọc trong phong bì CÓ CHỮ KÝ trước khi đưa lên hàng đợi:
 //   { v: 1, keyId, sender, bodyHash, signature, event }
-//   bodyHash  = canonicalBodyHash(event)            (same identity as the direct relay/inbox)
+//   bodyHash  = hash chuẩn của event           (giống hệt luồng inbox trực tiếp)
 //   signature = HMAC-SHA256(secret, "coc-amqp-v1\n" + keyId + "\n" + sender + "\n" + bodyHash)
-// The key comes from the existing COC_SERVICE_KEYS keyring (domain-separated from the HTTP
-// signing string). Verification needs the key ID in the receiver's keyring, the key's sender to
-// equal event.producer, and the recomputed hash to match. There is deliberately NO freshness
-// window: a queued event may be delivered long after creation (> 300 s); replay protection is the
-// durable inbox (eventId + bodyHash). Key rotation: add the new key to every receiver first,
-// then make it the producer's first key for its sender, then retire the old key after the
-// retention window (docs/devops/OPERATIONS.md).
+//
+// ★ Khác biệt then chốt so với ký HTTP (service-hmac.ts): KHÔNG có cửa sổ thời gian 300 giây!
+// Lý do: event có thể nằm trong hàng đợi HÀNG GIỜ trước khi được giao. Nếu kiểm tra timestamp
+// thì event cũ hợp lệ sẽ bị từ chối oan. Thay vào đó, chống trùng bằng inbox bền: eventId + bodyHash
+// — event giao 2 lần thì lần 2 nhìn thấy eventId đã có trong inbox → bỏ qua (idempotency).
+//
+// Xoay key (key rotation): thêm key mới vào MỌI bên nhận trước → rồi mới cho bên gửi dùng key mới
+// → hủy key cũ sau window retention. Làm ngược lại = key mới không ai nhận diện được, sập luôn.
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { ServiceError } from './errors.js';
 import type { BusinessEvent, EventOwner } from './ports.js';
@@ -17,7 +18,7 @@ import type { Keyring, ServiceKey } from './service-hmac.js';
 import { canonicalBodyHash, validateEventEnvelope } from './transport.js';
 
 export const ENVELOPE_VERSION = 1;
-export const MAX_ENVELOPE_BYTES = 64_000;
+export const MAX_ENVELOPE_BYTES = 64_000; // [VI] phong bì quá 64KB bị chặn ngay — chống bomb
 const OWNERS = new Set<string>(['learning', 'progress', 'ai']);
 const KEY_ID = /^[A-Za-z0-9._-]{1,64}$/;
 const HEX64 = /^[0-9a-f]{64}$/;
@@ -31,13 +32,16 @@ export interface SignedEnvelope {
   event: BusinessEvent;
 }
 
+/** [VI] Công thức tính chữ ký: trộn tiêu đề "coc-amqp-v1" + keyId + sender + bodyHash.
+ * Tiêu đề riêng (domain separation) để một chữ ký của luồng event KHÔNG THỂ bị đem
+ * sang dùng cho luồng HTTP — hai loại chữ ký không lẫn lộn nhau được. */
 function mac(key: ServiceKey, sender: string, bodyHash: string): Buffer {
   return createHmac('sha256', key.secret)
     .update(`coc-amqp-v1\n${key.keyId}\n${sender}\n${bodyHash}`, 'utf8')
     .digest();
 }
 
-/** The producer's signing key: the first key in the keyring whose sender is this owner. */
+/** [VI] Chọn key để ký: key ĐẦU TIÊN trong chùm có sender trùng owner này. */
 export function signingKeyFor(
   keyring: Keyring | undefined,
   owner: EventOwner,
@@ -45,7 +49,10 @@ export function signingKeyFor(
   return keyring ? [...keyring.values()].find((key) => key.sender === owner) : undefined;
 }
 
+/** [VI] Bên GỬI: đóng event vào phong bì có chữ ký, trả về Buffer JSON để đẩy lên broker. */
 export function signEnvelope(key: ServiceKey, event: BusinessEvent): Buffer {
+  // [VI] Chốt an toàn: key của Learning mà ký event khai producer là "ai" → FORBIDDEN ngay.
+  // Chữ ký gắn chặt danh tính; không ai ký hộ ai được.
   if (!OWNERS.has(key.sender) || event.producer !== key.sender) {
     throw new ServiceError('FORBIDDEN', { details: { reason: 'PRODUCER_KEY_MISMATCH' } });
   }
@@ -69,9 +76,14 @@ export interface VerifiedEnvelope {
 }
 
 /**
- * Verify a raw broker message body. Throws ServiceError: VALIDATION_ERROR for a malformed
- * envelope/event, AUTH_REQUIRED for an unknown key or bad signature, FORBIDDEN when the signer is
- * not the event's producer. Never trusts AMQP headers.
+ * [VI] Bên NHẬN: mở phong bì ra xác thực. Thứ tự:
+ *  1. Không có chùm chìa? → AUTH_REQUIRED (fail closed)
+ *  2. Quá 64KB?           → PAYLOAD_TOO_LARGE (chặn TRƯỚC khi parse — chống bomb)
+ *  3. JSON lỗi / thiếu trường / sai format? → VALIDATION_ERROR
+ *  4. keyId lạ?           → AUTH_REQUIRED
+ *  5. Chữ ký không khớp?  → AUTH_REQUIRED
+ *  6. Người ký ≠ producer khai trong event? → FORBIDDEN (chống mạo danh)
+ * Lưu ý cuối: KHÔNG BAO GIỜ tin header của RabbitMQ — chỉ chữ ký HMAC mới đáng tin.
  */
 export function verifyEnvelope(keyring: Keyring | undefined, raw: Buffer): VerifiedEnvelope {
   if (!keyring || keyring.size === 0) throw new ServiceError('AUTH_REQUIRED');

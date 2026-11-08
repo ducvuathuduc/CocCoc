@@ -1,3 +1,19 @@
+// [VI] BỘ BUILD NỘI DUNG KHÓA HỌC — "cái máy" biến 16 file bản thảo (source/v2/uNN.mjs)
+// thành các bundle JSON đóng băng (dist/v2/) mà điện thoại chơi hằng ngày.
+//
+// Đường đi dữ liệu:
+//   CMS soạn bài (bảng c_*) → export ra content/vi_en/source/v2/*.mjs (bản thảo, dễ đọc/sửa)
+//   → file NÀY build → content/vi_en/dist/v2/{manifest.json, bundles/*.json, publish.json,
+//   audio-catalog.json} → publish lên Appwrite → điện thoại tải về chơi.
+//
+// ★ Nguyên tắc DETERMINISTIC (quyết định): KHÔNG dùng đồng hồ, KHÔNG dùng random
+// (xáo trộn chỉ lấy sha256 làm hạt giống). Hệ quả: build lại 100 lần trên 100 máy
+// khác nhau → ra 100 file GIỐNG HỆT NHAU từng byte. Vì sao cực quan trọng?
+//   (1) So hash là biết content "có thật sự đổi không" — đổi comment không làm đổi bản build.
+//   (2) Không bao giờ có bug "máy em build khác máy CI".
+//
+// Chế độ --check: build lại trong bộ nhớ, fail nếu dist/v2 hoặc build-report đã commit
+// khác kết quả vừa build → dùng làm gate chặn "commit bản thảo mà quên build lại".
 // `node tools/content/build-course.mjs [--check]` — generate the published Duolingo-style vi_en course
 // (version v2) from the structured tables in content/vi_en/source/v2/ into the committed
 // content/vi_en/dist/v2/ (manifest.json, bundles/*.json, publish.json, audio-catalog.json) and
@@ -31,12 +47,16 @@ const REPORT_PATH = path.join(
 );
 
 // ---------- load + parse authored tables ----------
+// [VI] Bước 1 của pipeline: đọc bản thảo → phân tích bảng từ vựng/câu/đối thoại/story
+// thành object có cấu trúc. loadCourseData() là "hàm đọc kho nguyên liệu".
 export function loadCourseData() {
   // COURSE_UNITS=n builds only the first n units (authoring aid; not used by gates).
   const limit = Number(process.env.COURSE_UNITS) || unitModules.length;
   const units = unitModules.slice(0, limit).map((m, index) => {
     const u = m.default;
-    const unitId = `u${index + 1}`;
+    const unitId = `u${index + 1}`; // [VI] ★ VỊ TRÍ CHÍNH LÀ ID: unit thứ 3 → "u3".
+    // Vì vậy CMS cấm xóa unit giữa chừng / đổi thứ tự lung tung: id đổi = app coi là bài khác,
+    // và tiến độ đã lưu của học viên bị mồ côi (orphan).
     const vocab = parseVocab(unitId, u.vocab);
     const sentences = parseSentences(unitId, u.sentences);
     const dialogues = parseDialogues(unitId, u.dialogues);
@@ -63,6 +83,9 @@ export function loadCourseData() {
   const match = vocabMatcher(allVocab);
   const unitIndex = new Map(units.map((u, i) => [u.unitId, i]));
   // Sentence/dialogue level = latest (unit, level) of any vocabulary it uses.
+  // [VI] rank = "độ khó" của 1 câu tiếng Anh = mức cao nhất của từ vựng mà câu đó chứa.
+  // Builder dùng rank để XẾP BÀI TẬP TỪ DỄ ĐẾN KHÓ trong từng lesson tự động —
+  // người soạn chỉ cần viết nội dung, không phải xếp tay thứ tự từng câu.
   const rank = (v) => unitIndex.get(v.unitId) * 10 + v.level;
   for (const u of units) {
     for (const item of [...u.sentences, ...u.dialogues]) {
@@ -72,7 +95,8 @@ export function loadCourseData() {
       item.level = Math.max(1, ...own.map((v) => v.level));
       item.rank = Math.max(unitIndex.get(u.unitId) * 10 + 1, ...item.vocab.map(rank));
       item.homeRank = unitIndex.get(u.unitId) * 10 + item.level;
-      item.audioKey = `a.${u.unitId}.${item.key}`;
+      item.audioKey = `a.${u.unitId}.${item.key}`; // [VI] khóa audio cho từng câu: "a.u3.s12"
+      // → audio-manifest.json / dist audio-catalog tra đúng file clip nào đọc câu này.
     }
   }
   return { units, allVocab, match, unitIndex };
@@ -175,7 +199,10 @@ function englishTileWords(exercise) {
   const c = exercise.content ?? {};
   if (exercise.type === 'wordBank' || exercise.type === 'sentenceOrder') {
     const ids = new Set(exercise.gradingRule.correctTokenIds);
-    const answer = c.tokens.filter((t) => ids.has(t.id)).map((t) => t.text).join(' ');
+    const answer = c.tokens
+      .filter((t) => ids.has(t.id))
+      .map((t) => t.text)
+      .join(' ');
     if (!VI_CHARS.test(answer)) out.push(...c.tokens.map((t) => t.text));
   } else if (exercise.type === 'matchPairs') {
     out.push(...c.pairs.map((p) => p.left.text));
@@ -1115,14 +1142,16 @@ export async function buildCourse() {
     versionId: VERSION,
     locale: 'en-US',
     speeds: { n: 1, s: 0.75 },
-    items: units.flatMap((u) => [
-      ...u.sentences.map((s) => ({ key: s.audioKey, kind: 'sentence', text: s.en })),
-      ...u.dialogues.map((d) => ({ key: d.audioKey, kind: 'dialogueLine', text: d.line })),
-    ]).concat(
-      [...wordAudioTexts.entries()]
-        .sort(([a], [b]) => (a < b ? -1 : 1))
-        .map(([slug, text]) => ({ key: `a.w.${slug}`, kind: 'word', text })),
-    ),
+    items: units
+      .flatMap((u) => [
+        ...u.sentences.map((s) => ({ key: s.audioKey, kind: 'sentence', text: s.en })),
+        ...u.dialogues.map((d) => ({ key: d.audioKey, kind: 'dialogueLine', text: d.line })),
+      ])
+      .concat(
+        [...wordAudioTexts.entries()]
+          .sort(([a], [b]) => (a < b ? -1 : 1))
+          .map(([slug, text]) => ({ key: `a.w.${slug}`, kind: 'word', text })),
+      ),
   };
   const typeCounts = {};
   for (const f of finished)
@@ -1192,9 +1221,7 @@ export async function buildCourse() {
   };
 }
 
-const isMain =
-  process.argv[1] &&
-  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
   const built = await buildCourse();
   if (built.problems.length) {

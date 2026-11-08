@@ -1,3 +1,10 @@
+// [VI] BỘ NÃO của feature "Học bài" (ViewModel trong mô hình MVVM).
+// Luồng 1 chiều: màn hình (presentation) gọi hàm ở đây → controller gọi Repository (data)
+// → repository gọi server/journal → kết quả cập nhật state → UI tự vẽ lại qua Riverpod.
+//
+// Riverpod là gì (nói đơn giản): mỗi xxxProvider là một "phiên dịch viên toàn cầu".
+// Widget cần dữ liệu thì ref.watch(provider) — khi dữ liệu đổi, mọi widget đang watch
+// TỰ ĐỘNG vẽ lại. Không cần tự viết code "đổi xong thì thông báo ai cập nhật".
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +25,11 @@ import '../../session/application/real_learning_session.dart';
 import '../data/path_repository.dart';
 import '../../progress/data/progress_snapshot.dart';
 
+// [VI] Dependency Injection: MỘT chỗ duy nhất quyết định dùng repo thật hay repo giả.
+// isApi = false (chế độ demo/mock) → MockLearningRepository với dữ liệu cứng.
+// isApi = true  (chế độ thật)     → ApiLearningRepository gọi HTTP lên service.
+// Màn hình chỉ cần ref.watch(learningRepositoryProvider) là nhận đúng repo —
+// không có if/else rải khắp codebase, muốn đổi nguồn dữ liệu chỉ sửa đây.
 final learningRepositoryProvider = Provider<LearningRepository>((ref) {
   if (!ref.watch(appConfigProvider).isApi) return MockLearningRepository();
   return ApiLearningRepository(
@@ -29,6 +41,9 @@ final learningRepositoryProvider = Provider<LearningRepository>((ref) {
 
 /// Durable lesson journal, namespaced per signed-in user so one account never
 /// sees another's queued answers.
+// [VI] Journal = "cuốn sổ tay offline": mất mạng thì đáp án ghi vào đây, có mạng thì sync lên.
+// namespace theo userId → MỖI TÀI KHOẢN MỘT CUỐN SỔ RIÊNG: tài khoản A không bao giờ nhìn thấy
+// câu trả lời đang chờ gửi của tài khoản B (kể cả khi dùng chung 1 cái điện thoại).
 final lessonJournalProvider = Provider<LessonJournal>((ref) {
   final apiMode = ref.watch(appConfigProvider).isApi;
   final user = ref.watch(authControllerProvider.select((s) => s.user?.id));
@@ -69,11 +84,17 @@ class LearningStateController extends Notifier<LearningState> {
     );
   }
 
+  // [VI] Nhận thưởng sau khi xong bài. Chế độ thật (isApi): app KHÔNG tự cộng điểm —
+  // chỉ invalidate để refetch từ server, vì quy tắc đóng băng là "never trust client XP":
+  // điểm phải do SERVER tính, client tự cộng là lỗ hổng bị hack tiền ảo.
   void claim(SessionReceipt receipt) {
     if (ref.read(appConfigProvider).isApi) {
+      // [VI] "làm fresh lại phần thưởng từ server"
       ref.invalidate(realRewardsProvider);
       return;
     }
+    // [VI] Chống nhận thưởng 2 lần: mỗi phiếu (receipt) có id duy nhất; id đã có trong
+    // tập claimedReceiptIds thì bỏ qua ngay — đây là pattern idempotency phía client.
     if (state.claimedReceiptIds.contains(receipt.id)) return;
     final claimed = <String>{...state.claimedReceiptIds, receipt.id};
     if (!receipt.firstCompletion || receipt.guest || receipt.placement) {
@@ -95,6 +116,9 @@ class LearningStateController extends Notifier<LearningState> {
 }
 
 class LessonController extends Notifier<LessonState> {
+  // [VI] Cờ chống chạy chồng: syncProgress có thể được gọi nhiều lần (app mở lại, có mạng
+  // lại...) — _syncing=true khiến lần gọi thứ 2 đang khi đang sync thì return ngay,
+  // tránh 2 luồng cùng đẩy journal lên server gây trùng dữ liệu.
   bool _syncing = false;
   bool _disposed = false;
   bool _commandActive = false;
@@ -108,6 +132,8 @@ class LessonController extends Notifier<LessonState> {
 
   LearningRepository get _repository => ref.read(learningRepositoryProvider);
 
+  // [VI] Đồng bộ "sổ tay offline" lên server (đáp án làm khi mất mạng). Chỉ chạy ở chế độ
+  // API và chỉ khi đã đăng nhập. syncPending() đẩy các bản ghi chờ trong journal lên.
   Future<void> syncProgress() async {
     if (!ref.read(appConfigProvider).isApi || _syncing) return;
     final userId = ref.read(authControllerProvider).user?.id;
