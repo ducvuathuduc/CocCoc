@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"inference": {
+		"run": {
+			"detectorVersion": 4,
+			"framework": "nextjs",
+			"workspacePath": "apps/cms"
+		}
+	},
+	"ports": {
+		"preview": 5174,
+		"additional": {}
+	},
+	"services": [],
+	"scripts": {
+		"setup": {
+			"enabled": true,
+			"command": null
+		},
+		"run": {
+			"enabled": true,
+			"command": "pnpm --filter '@cocenglish/cms' dev"
+		},
+		"archive": {
+			"enabled": true,
+			"command": null
+		}
+	},
+	"mcpServers": []
+}
