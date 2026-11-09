@@ -62,8 +62,8 @@ for (const course of db.courses) {
   const listed = rendered.sections.flatMap((s) => s.units);
 
   check(
-    `${course.courseId}: đủ 2 section cho lint-course`,
-    rendered.sections.length >= 2,
+    `${course.courseId}: có ít nhất một section để build-course gán được sectionId`,
+    rendered.sections.length >= 1,
     `${rendered.sections.length} section`,
   );
 
@@ -98,5 +98,5 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(
-  `OK — ${checks.length} checks: course.mjs xuất từ bản nháp CMS không làm build-course crash và đủ section cho lint-course.`,
+  `OK — ${checks.length} checks: course.mjs xuất từ bản nháp CMS không làm build-course crash và mỗi unit có section để gán.`,
 );

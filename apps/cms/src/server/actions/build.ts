@@ -11,6 +11,7 @@ import { config } from '../config';
 import { getStore } from '../store';
 import { assertAdmin } from '../session';
 import { recordAudit } from '../audit';
+import { explainGateFailure, type GateLabel } from '../plain-errors';
 
 const run = promisify(execFile);
 
@@ -114,15 +115,22 @@ export async function exportCourseToRepo(courseId: string): Promise<ExportResult
 }
 
 interface GateCommand {
-  label: string;
+  label: GateLabel;
   args: string[];
 }
 
-const GATES: GateCommand[] = [
-  { label: 'build-course', args: ['tools/content/build-course.mjs'] },
-  { label: 'lint-course', args: ['tools/content/lint-course.mjs'] },
-  { label: 'check-content', args: ['content/tools/check-content.mjs'] },
-];
+/**
+ * Every gate is scoped to the course being built. check-content verifies media for each course it
+ * visits, so an unscoped run would let an unfinished course fail another course's build.
+ */
+const gatesFor = (courseId: string, versionId: string): GateCommand[] => {
+  const scope = ['--course', courseId, '--version', versionId];
+  return [
+    { label: 'build-course', args: ['tools/content/build-course.mjs', ...scope] },
+    { label: 'lint-course', args: ['tools/content/lint-course.mjs', ...scope] },
+    { label: 'check-content', args: ['content/tools/check-content.mjs', ...scope] },
+  ];
+};
 
 /** Runs the repository's own content gates and records the outcome as a build run. */
 export async function runContentGates(courseId: string): Promise<BuildRun & { warning?: string }> {
@@ -148,7 +156,7 @@ export async function runContentGates(courseId: string): Promise<BuildRun & { wa
   };
   await store.saveBuildRun(record);
 
-  for (const gate of GATES) {
+  for (const gate of gatesFor(courseId, versionId)) {
     log.push(`$ node ${gate.args.join(' ')}`);
     try {
       const { stdout, stderr } = await run(process.execPath, gate.args, {
@@ -160,8 +168,11 @@ export async function runContentGates(courseId: string): Promise<BuildRun & { wa
       log.push(`✓ ${gate.label}`);
     } catch (error) {
       const failure = error as { stdout?: string; stderr?: string; message?: string };
+      const raw = [failure.stderr, failure.stdout, failure.message].filter(Boolean).join('\n');
       status = 'FAILED';
-      message = `Bước kiểm tra “${gate.label}” chưa qua: ${firstMeaningLine(failure)}`;
+      // The author reads one sentence; the raw output stays in the run record and the server log.
+      message = explainGateFailure(gate.label, raw);
+      console.error(`[content gate ${gate.label}] ${courseId}\n${raw.slice(-2000)}`);
       log.push(...tail(failure.stdout ?? ''), ...tail(failure.stderr ?? failure.message ?? ''));
       log.push(`✗ ${gate.label}`);
       break;
@@ -186,12 +197,3 @@ const tail = (text: string, lines = 40): string[] =>
     .filter(Boolean)
     .slice(-lines);
 
-function firstMeaningLine(failure: { stderr?: string; stdout?: string; message?: string }): string {
-  const source = failure.stderr || failure.stdout || failure.message || 'lỗi không rõ';
-  const line =
-    source
-      .split('\n')
-      .reverse()
-      .find((l) => l.trim().length > 0) ?? source;
-  return line.trim().slice(0, 300);
-}

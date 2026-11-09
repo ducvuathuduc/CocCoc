@@ -30,6 +30,16 @@ export { httpDeliver, createImmediateRelay } from '../application/relay.js';
 export { loadLocalContent } from './local-content.js';
 export { withRequestScope } from '../http/scope.js';
 export { createContentRepository } from '../content/repository.js';
+export {
+  createMediaVerifier,
+  DEFAULT_MEDIA_POLICY,
+  MEDIA_REASONS,
+  MEDIA_STAT_BATCH,
+  mediaPolicyFromEnv,
+} from '../content/media.js';
+export { verifyVersionMedia } from '../application/content.js';
+export { ServiceError } from '../../../shared/src/errors.js';
+export { localMediaStore } from './local-content.js';
 export { createStorageContentFiles, downloadText } from '../content/storage-files.js';
 export { createDisabledLearningPersistence } from '../persistence/disabled.js';
 export { createKeyring, signServiceRequest } from '../../../shared/src/service-hmac.js';

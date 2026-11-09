@@ -175,6 +175,15 @@ export type LearnerQueue = {
   contentReports: LearnerContentReportView[];
 };
 
+/** Counts, never rows: the overview only needs "how many", and a number costs one indexed query. */
+export type EntitlementCount = { status: string; count: number };
+
+export type OpenCounts = {
+  feedback: number;
+  userReports: number;
+  contentReports: number;
+};
+
 /**
  * Every read is one query on one indexed column; an unindexed filter is a 400 that only a live project
  * reports, so the interface offers whole questions instead of raw queries and the implementations below
@@ -192,6 +201,18 @@ export interface LearnerDirectory {
     limit: number,
   ): Promise<T[]>;
   openRows<T>(table: AppTableName, limit: number): Promise<T[]>;
+  /** Total accounts in the project. Appwrite answers `total` without shipping a page of rows. */
+  countAccounts(): Promise<number>;
+  /** One count per entitlement status — the six values the schema allows. */
+  entitlementCounts(): Promise<EntitlementCount[]>;
+  /** Every entitlement row the plan map needs, so one list screen is one query. */
+  entitlements(limit: number): Promise<EntitlementRow[]>;
+  /** Only ACTIVE rows, for the Super/Max split on the overview. */
+  activeEntitlements(limit: number): Promise<EntitlementRow[]>;
+  /** Nicknames, so a list shows "Mai" instead of an account id. */
+  profiles(limit: number): Promise<ProfileRow[]>;
+  /** How many notes and reports are still unanswered. */
+  openCounts(): Promise<OpenCounts>;
 }
 
 /** Appwrite's own rule for an account ID, restated so a malformed one never reaches the network. */

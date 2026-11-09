@@ -61,7 +61,8 @@ export function structureIssues(sections: SectionDraft[], themes: string[]): str
   for (const theme of new Set(listed))
     if (!themes.includes(theme))
       problems.push(`Có phần học đang giữ bài “${theme}” nhưng khóa không còn bài đó.`);
-  // lint-course of the repo refuses a course with fewer than two sections.
-  if (sections.length < 2) problems.push('Cần ít nhất 2 phần học để máy dựng chấp nhận bản xuất.');
+  // The repo builder needs a section for every unit; how many sections a course has is a content
+  // decision. The shipped vi_en path keeps its own floor in tools/content/lint-course.mjs.
+  if (sections.length < 1) problems.push('Cần ít nhất 1 phần học để máy dựng chấp nhận bản xuất.');
   return problems;
 }

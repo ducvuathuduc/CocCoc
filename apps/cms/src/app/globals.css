@@ -251,30 +251,6 @@
     animation: shimmer 1.5s var(--ease-out-soft) infinite;
   }
 
-  /* Sun/moon pair on the theme button: markup stays theme-independent so the
-     server render cannot disagree with the pre-paint script. */
-  .t-sun,
-  .t-moon {
-    transition:
-      opacity 200ms ease-out,
-      transform 340ms var(--ease-out-soft);
-  }
-
-  .t-moon {
-    opacity: 0;
-    transform: rotate(-45deg) scale(0.5);
-  }
-
-  .dark .t-sun {
-    opacity: 0;
-    transform: rotate(45deg) scale(0.5);
-  }
-
-  .dark .t-moon {
-    opacity: 1;
-    transform: none;
-  }
-
   /* Applied to <html> for one frame around a theme switch, so the whole page
      crossfades instead of snapping. */
   .theme-anim,
@@ -357,20 +333,6 @@
    has time to be read. */
 ::view-transition {
   pointer-events: none;
-}
-
-::view-transition-group(sidebar) {
-  animation: none;
-  z-index: 100;
-}
-
-::view-transition-image-pair(sidebar) {
-  animation: none;
-}
-
-::view-transition-old(sidebar),
-::view-transition-new(sidebar) {
-  animation: none;
 }
 
 ::view-transition-old(.leave-up) {
@@ -459,9 +421,5 @@
     animation-delay: 0s !important;
     animation-name: fade-in !important;
     translate: none !important;
-  }
-
-  ::view-transition-group(sidebar) {
-    animation-name: none !important;
   }
 }

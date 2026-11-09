@@ -1,0 +1,11 @@
+{
+  "DATA_SOURCE": "api",
+  "USE_MOCK_AUTH": "false",
+  "APPWRITE_ENDPOINT": "https://REPLACE_REGION.cloud.appwrite.io/v1",
+  "APPWRITE_PROJECT_ID": "REPLACE_WITH_STAGING_PROJECT_ID",
+  "LEARNING_API_URL": "https://REPLACE-staging-learning.REPLACE_REGION.appwrite.run",
+  "PROGRESS_API_URL": "https://REPLACE-staging-progress.REPLACE_REGION.appwrite.run",
+  "AI_API_URL": "https://REPLACE-staging-ai.REPLACE_REGION.appwrite.run",
+  "APPWRITE_GOOGLE_ENABLED": "false",
+  "RIVE_NATIVE_WASM_HOST": "rive/"
+}

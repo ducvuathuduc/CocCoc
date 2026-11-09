@@ -1,0 +1,41 @@
+{
+  "$comment": "Overlay for a dedicated STAGING Appwrite project, merged over appwrite/ops/project.json (the reviewed TEST project) by tools/scripts/staging-preflight.mjs. Copy to appwrite/ops/project.staging.json, replace every REPLACE_ value and run `node tools/scripts/staging-preflight.mjs`. Only what must differ from TEST is listed, so the two cannot drift apart. Never put a secret here: COC_SERVICE_KEYS is generated at apply time and the content signing seed lives in a vault. The live ops scripts still accept only APPWRITE_PROJECT_ENV=test; see docs/devops/STAGING_APPWRITE.md, decision D1, before any apply.",
+  "projectId": "REPLACE_WITH_STAGING_PROJECT_ID",
+  "projectEnv": "staging",
+  "endpoint": "https://REPLACE_REGION.cloud.appwrite.io/v1",
+  "auth": {
+    "oauth2": {
+      "google": { "enabled": false }
+    }
+  },
+  "functions": {
+    "coc-learning": {
+      "functionDomain": "REPLACE-staging-learning.REPLACE_REGION.appwrite.run",
+      "variables": {
+        "APPWRITE_ENDPOINT": "https://REPLACE_REGION.cloud.appwrite.io/v1",
+        "APPWRITE_PROJECT_ID": "REPLACE_WITH_STAGING_PROJECT_ID",
+        "COC_PROGRESS_URL": "https://REPLACE-staging-progress.REPLACE_REGION.appwrite.run",
+        "COC_MAINTAINER_USER_IDS": "REPLACE_WITH_STAGING_MAINTAINER_USER_ID",
+        "COC_CONTENT_PUBLIC_KEYS": "[{\"keyId\":\"staging-content-1\",\"publicKeyHex\":\"REPLACE_WITH_STAGING_ED25519_PUBLIC_KEY_HEX\"}]"
+      }
+    },
+    "coc-progress": {
+      "functionDomain": "REPLACE-staging-progress.REPLACE_REGION.appwrite.run",
+      "variables": {
+        "APPWRITE_ENDPOINT": "https://REPLACE_REGION.cloud.appwrite.io/v1",
+        "APPWRITE_PROJECT_ID": "REPLACE_WITH_STAGING_PROJECT_ID",
+        "COC_LEARNING_URL": "https://REPLACE-staging-learning.REPLACE_REGION.appwrite.run",
+        "COC_AI_URL": "https://REPLACE-staging-ai.REPLACE_REGION.appwrite.run"
+      }
+    },
+    "coc-ai": {
+      "functionDomain": "REPLACE-staging-ai.REPLACE_REGION.appwrite.run",
+      "variables": {
+        "APPWRITE_ENDPOINT": "https://REPLACE_REGION.cloud.appwrite.io/v1",
+        "APPWRITE_PROJECT_ID": "REPLACE_WITH_STAGING_PROJECT_ID",
+        "COC_PROGRESS_URL": "https://REPLACE-staging-progress.REPLACE_REGION.appwrite.run",
+        "COC_GEMINI_ENABLED": "false"
+      }
+    }
+  }
+}

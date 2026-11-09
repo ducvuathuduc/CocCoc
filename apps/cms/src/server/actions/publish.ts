@@ -8,6 +8,7 @@ import { getStore } from '../store';
 import { publishReadiness } from '../publish-state';
 import { assertAdmin } from '../session';
 import { recordAudit } from '../audit';
+import { explainPublishFailure } from '../plain-errors';
 
 const run = promisify(execFile);
 
@@ -46,7 +47,7 @@ export async function publishCourseVersion(courseId: string, live: boolean): Pro
     return {
       ok: false,
       message:
-        'Cần đặt CMS_ALLOW_PUBLISH=1 để xác nhận bạn muốn ghi vào máy chủ dùng chung của app.',
+        'Xuất bản thật đang bị khóa ở máy chủ. Nhờ người quản trị mở quyền xuất bản, hoặc bấm “Chạy thử” để xem trước mà không ghi gì.',
     };
 
   const args = [PUBLISHER, '--course', courseId, '--version', readiness.version];
@@ -87,8 +88,10 @@ export async function publishCourseVersion(courseId: string, live: boolean): Pro
     log.push(...tail(stdout), ...tail(stderr));
   } catch (error) {
     const failure = error as { stdout?: string; stderr?: string; message?: string };
+    const raw = [failure.stderr, failure.stdout, failure.message].filter(Boolean).join('\n');
     status = 'FAILED';
-    message = `Chưa cho app nhận bản được: ${lastLine(failure)}`;
+    message = explainPublishFailure(raw);
+    console.error(`[publish ${courseId}/${readiness.version}]\n${raw.slice(-2000)}`);
     log.push(...tail(failure.stdout ?? ''), ...tail(failure.stderr ?? failure.message ?? ''));
   }
 
@@ -115,7 +118,3 @@ const tail = (text: string, lines = 30): string[] =>
     .filter(Boolean)
     .slice(-lines);
 
-function lastLine(failure: { stderr?: string; stdout?: string; message?: string }): string {
-  const source = failure.stderr || failure.stdout || failure.message || 'lỗi không rõ';
-  return (source.split('\n').reverse().find((l) => l.trim().length > 0) ?? source).trim().slice(0, 300);
-}

@@ -18,12 +18,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       >
         Bỏ qua điều hướng
       </a>
-      <Suspense fallback={<div className="skeleton h-16" />}>
+      <Suspense fallback={<div className="skeleton h-14 lg:h-screen lg:w-64" />}>
         <SidebarNav />
       </Suspense>
-      {/* The top bar and the rail are fixed chrome, so the content column simply
-          starts below and beside them instead of nesting inside a flex row. */}
-      <main id="main" tabIndex={-1} className="min-w-0 pt-16 outline-none lg:pl-14">
+      {/* The rail is fixed chrome on desktop and a top bar on phones, so the content column simply
+          starts after it instead of nesting inside a flex row. */}
+      <main id="main" tabIndex={-1} className="min-w-0 pt-14 outline-none lg:pt-0 lg:pl-64">
         <div className="mx-auto w-full max-w-[1240px] px-4 py-7 sm:px-6 lg:px-10 lg:py-9">
           <Suspense
             fallback={

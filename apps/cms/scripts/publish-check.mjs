@@ -96,6 +96,7 @@ const bundled = await build({
       "export * from '@/server/actions/build';\n" +
       "export * from '@/server/actions/publish';\n" +
       "export * from '@/server/publish-state';\n" +
+      "export * from '@/server/media-service';\n" +
       "export * from '@/server/store';\n" +
       "export * from '@/server/config';\n" +
       "export * from '@/cms/blank';\n",
@@ -273,6 +274,38 @@ async function seed(ctx) {
     actorId: 'harness-publish',
     expectedRevision: 0,
   });
+  // The course needs its media files before it can publish: the readiness checklist and the offline
+  // gate both refuse a missing required asset, so seed exactly what the report flags as missing — the
+  // same files the CMS media-upload writes — to exercise the publish path honestly.
+  await seedMedia(ctx);
+}
+
+/** Writes the missing required media via `writeMediaFile` (the storage call the upload route makes). */
+async function seedMedia(ctx) {
+  const report = await ctx.cms.courseMediaReport('vi_en');
+  for (const gap of report.gaps.filter((g) => g.state === 'missing')) {
+    const ext = gap.kind === 'image' ? 'webp' : 'aac';
+    const body =
+      ext === 'webp'
+        ? new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
+        : new Uint8Array([0xff, 0xf0, 0x00, 0x00]);
+    await ctx.cms.writeMediaFile(
+      'vi_en',
+      {
+        fileId: gap.fileId,
+        kind: gap.kind,
+        ext,
+        group: 'word',
+        label: gap.label ?? '',
+        text: gap.text ?? '',
+        draft: gap.draft ?? '',
+        inCatalog: false,
+        speed: 1,
+      },
+      body,
+      false,
+    );
+  }
 }
 
 // ---------- A. gates: three repo commands, one run row, no project writes ----------
@@ -283,9 +316,9 @@ await seed(a);
 const gateRun = await a.cms.runContentGates('vi_en');
 const gateCalls = calls();
 check(
-  'gate chạy đúng ba cổng của repo, theo thứ tự, bằng tool của repo chứ không phải bản tái hiện trong CMS',
+  'gate chạy đúng ba cổng của repo, theo thứ tự, mỗi cổng khoanh đúng khóa và phiên bản đang dựng',
   join(gateCalls.map((c) => c.line)) ===
-    'tools/content/build-course.mjs, tools/content/lint-course.mjs, content/tools/check-content.mjs',
+    'tools/content/build-course.mjs --course vi_en --version v2, tools/content/lint-course.mjs --course vi_en --version v2, content/tools/check-content.mjs --course vi_en --version v2',
   join(gateCalls.map((c) => c.line)),
 );
 check(
@@ -370,9 +403,10 @@ check(
 
 const liveRefused = await a.cms.publishCourseVersion('vi_en', true);
 check(
-  'publish thật bị chặn khi chưa đặt CMS_ALLOW_PUBLISH=1',
+  'publish thật bị chặn khi quyền xuất bản chưa mở, bằng một câu dễ hiểu (không nhắc tên biến)',
   liveRefused.ok === false &&
-    (liveRefused.message ?? '').includes('CMS_ALLOW_PUBLISH=1') &&
+    (liveRefused.message ?? '').includes('đang bị khóa') &&
+    !(liveRefused.message ?? '').includes('CMS_') &&
     calls().length === dryRunTotal,
   `${liveRefused.message} / ${calls().length} lệnh`,
 );
@@ -433,14 +467,16 @@ const failedGates = await b.cms.runContentGates('vi_en');
 check(
   'gate giữa đường chết thì dừng lại: cổng thứ ba không được gọi',
   join(calls().map((c) => c.line)) ===
-    'tools/content/build-course.mjs, tools/content/lint-course.mjs',
+    'tools/content/build-course.mjs --course vi_en --version v2, tools/content/lint-course.mjs --course vi_en --version v2',
   join(calls().map((c) => c.line)),
 );
 check(
-  'thất bại mang tên cổng và dòng lỗi thật từ stderr, không phải "lỗi không rõ"',
+  'thất bại nói một câu dễ hiểu cho người soạn; tên bước và dòng lỗi thật nằm ở nhật ký, không ở câu báo',
   failedGates.status === 'FAILED' &&
-    failedGates.message.includes('lint-course') &&
-    failedGates.message.includes('lacks a Vietnamese meaning') &&
+    failedGates.message.startsWith('Chưa qua bước kiểm tra.') &&
+    !failedGates.message.includes('lint-course') &&
+    !failedGates.message.includes('Node.js') &&
+    failedGates.log.some((l) => l.includes('lacks a Vietnamese meaning')) &&
     failedGates.log.some((l) => l.startsWith('✗ lint-course')),
   JSON.stringify({ message: failedGates.message, log: failedGates.log.slice(-3) }),
 );
@@ -482,10 +518,12 @@ await seed(d);
 await d.cms.runContentGates('vi_en');
 const failedPublish = await d.cms.publishCourseVersion('vi_en', true);
 check(
-  'bộ publish chết giữa chừng → dòng PUBLISH FAILED với lý do, không phải thành công giả',
+  'bộ publish chết giữa chừng → dòng PUBLISH FAILED, câu báo dễ hiểu, lý do thật nằm ở nhật ký',
   failedPublish.ok === false &&
     failedPublish.run?.status === 'FAILED' &&
-    (failedPublish.message ?? '').includes('bucket rejected the file'),
+    (failedPublish.message ?? '').startsWith('Chưa cho app nhận bản được.') &&
+    !(failedPublish.message ?? '').includes('bucket rejected the file') &&
+    failedPublish.run.log.some((l) => l.includes('bucket rejected the file')),
   JSON.stringify({ message: failedPublish.message, status: failedPublish.run?.status }),
 );
 check(

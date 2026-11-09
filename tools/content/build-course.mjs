@@ -1,16 +1,21 @@
-// `node tools/content/build-course.mjs [--check]` — generate the published Duolingo-style vi_en course
-// (version v2) from the structured tables in content/vi_en/source/v2/ into the committed
-// content/vi_en/dist/v2/ (manifest.json, bundles/*.json, publish.json, audio-catalog.json) and
-// content/vi_en/source/v2/build-report.json (counts + manifestSha256). Canonical JSON + Ed25519
-// signing + validateCourse (services/learning content tools). Deterministic: no clock, no randomness
-// beyond sha256-seeded shuffles. --check rebuilds in memory and fails if the committed dist/v2 or the
-// build report differ. Learning's local loader publishes every dist/ version (v2 is the only one).
+// `node tools/content/build-course.mjs [--course <id>] [--version <v>] [--check|--report-only]` —
+// generate a Duolingo-style course from the structured tables in content/<course>/source/<version>/
+// into the committed content/<course>/dist/<version>/ (manifest.json, bundles/*.json, publish.json,
+// audio-catalog.json) and content/<course>/source/<version>/build-report.json (counts +
+// manifestSha256). Canonical JSON + Ed25519 signing + validateCourse (services/learning content
+// tools). Deterministic: no clock, no randomness beyond sha256-seeded shuffles. --check rebuilds in
+// memory and fails if the committed dist or the build report differ; --report-only writes just the
+// build report (courses whose dist is never committed). Learning's local loader publishes every
+// dist/ version of every course.
+//
+// Defaults to vi_en / v2, the only published course; `--course` / `--version` are validated by
+// ./course-target.mjs before they are used as path segments.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { course, sections, unitModules } from '../../content/vi_en/source/v2/course.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadContentTools, root } from '../../content/tools/lib.mjs';
+import { parseCourseTarget } from './course-target.mjs';
 import {
   englishVariants,
   parseDialogues,
@@ -22,13 +27,51 @@ import {
   vocabMatcher,
 } from './course-lib.mjs';
 
-export const VERSION = 'v2';
+export const TARGET = parseCourseTarget();
+/** The version the CLI was asked for; `buildCourse(target)` may select another one in-process. */
+export const VERSION = TARGET.version;
 const GRADING_RULES_VERSION = 'g1';
-const OUT_DIR = path.join(root, `content/${course.courseId}/dist/${VERSION}`);
-const REPORT_PATH = path.join(
-  root,
-  `content/${course.courseId}/source/${VERSION}/build-report.json`,
-);
+
+// Everything below is per-course. The CLI builds TARGET, but the multi-course tests and
+// lint-course build another course in the same process, so selectTarget() re-assigns all of it and
+// clears the per-build caches. buildCourse() itself writes nothing — only the main block does.
+let course;
+let sections;
+let unitModules;
+let OUT_DIR;
+let REPORT_PATH;
+let audioMedia;
+let IMAGE_DIR;
+
+async function selectTarget(target) {
+  const sourceDir = path.join(root, 'content', target.courseId, 'source', target.version);
+  const modulePath = path.join(sourceDir, 'course.mjs');
+  if (!fs.existsSync(modulePath)) {
+    const known = fs
+      .readdirSync(path.join(root, 'content'))
+      .filter((d) => fs.existsSync(path.join(root, 'content', d, 'source')));
+    throw new Error(
+      `Không có bảng nội dung cho ${target.courseId}/${target.version}: thiếu content/${target.courseId}/source/${target.version}/course.mjs (khóa đang có: ${known.join(', ') || 'không có'})`,
+    );
+  }
+  const loaded = await import(pathToFileURL(modulePath).href);
+  if (loaded.course.courseId !== target.courseId)
+    throw new Error(
+      `content/${target.courseId}/source/${target.version}/course.mjs khai courseId "${loaded.course.courseId}", không khớp --course ${target.courseId}`,
+    );
+  course = loaded.course;
+  sections = loaded.sections;
+  unitModules = loaded.unitModules;
+  OUT_DIR = path.join(root, `content/${course.courseId}/dist/${target.version}`);
+  REPORT_PATH = path.join(sourceDir, 'build-report.json');
+  const audioManifest = path.join(root, `content/${course.courseId}/media/audio-manifest.json`);
+  audioMedia = fs.existsSync(audioManifest)
+    ? JSON.parse(fs.readFileSync(audioManifest, 'utf8')).files
+    : {};
+  IMAGE_DIR = path.join(root, `content/${course.courseId}/media/images`);
+  imageFiles.clear();
+  wordAudioTexts.clear();
+}
 
 // ---------- load + parse authored tables ----------
 export function loadCourseData() {
@@ -111,12 +154,9 @@ const KEY_RULE = { caseSensitive: false, ignorePunctuation: false, ignoreDiacrit
 const wc = (s) => tokenize(s).length;
 
 // Real lesson audio (tools/content/generate-audio.mjs): content/<course>/media/audio-manifest.json maps
-// each audio fileId to the committed AAC file's sha256/bytes/duration/voice. A clip without an entry
-// (or whose transcript changed) keeps a deterministic placeholder hash until audio is regenerated.
-const AUDIO_MANIFEST = path.join(root, `content/${course.courseId}/media/audio-manifest.json`);
-const audioMedia = fs.existsSync(AUDIO_MANIFEST)
-  ? JSON.parse(fs.readFileSync(AUDIO_MANIFEST, 'utf8')).files
-  : {};
+// each audio fileId to the committed AAC file's sha256/bytes/duration/voice (loaded by selectTarget).
+// A clip without an entry (or whose transcript changed) keeps a deterministic placeholder hash until
+// audio is regenerated.
 function audioAsset(fileId, transcript, speed, perWord, locale) {
   const real = audioMedia[fileId];
   if (real && real.text === transcript) {
@@ -204,7 +244,6 @@ function addWordAudio(draft) {
 // Word illustrations (imageChoice art) live in content/<course>/media/images/<fileId>.webp
 // (drawn by tools/content/lesson_art/render.py, 512x512 WebP). A committed file contributes its real
 // sha256 + byte size; a word without a file keeps a deterministic placeholder hash.
-const IMAGE_DIR = path.join(root, `content/${course.courseId}/media/images`);
 const imageFiles = new Map();
 function imageFile(fileId) {
   if (!imageFiles.has(fileId)) {
@@ -799,7 +838,9 @@ export function unitPlan(unit) {
 }
 
 // ---------- build ----------
-export async function buildCourse() {
+export async function buildCourse(target = TARGET) {
+  await selectTarget(target);
+  const version = target.version;
   tools = await loadContentTools();
   const data = loadCourseData();
   const { units } = data;
@@ -976,14 +1017,14 @@ export async function buildCourse() {
         drafts.push({
           schemaVersion: 1,
           courseId: course.courseId,
-          courseVersion: VERSION,
+          courseVersion: version,
           sectionId: unit.sectionId,
           unitId: unit.unitId,
           nodeId,
           order,
           lessonId,
-          lessonVersion: `${VERSION}.${lessonId}`,
-          rewardIdentity: `${VERSION}.${lessonId}`,
+          lessonVersion: `${version}.${lessonId}`,
+          rewardIdentity: `${version}.${lessonId}`,
           title: `${plan.title} · Bài ${lessonNo}`.slice(0, 120),
           skillIds: [...new Set(exercises.flatMap((e) => e.skillIds))].slice(0, 20),
           guideText: unit.guide,
@@ -1029,14 +1070,14 @@ export async function buildCourse() {
   const placementDraft = {
     schemaVersion: 1,
     courseId: course.courseId,
-    courseVersion: VERSION,
+    courseVersion: version,
     sectionId: units[0].sectionId,
     unitId: 'u1',
     nodeId: 'placement',
     order: 0,
     lessonId: 'placement',
-    lessonVersion: `${VERSION}.placement`,
-    rewardIdentity: `${VERSION}.placement`,
+    lessonVersion: `${version}.placement`,
+    rewardIdentity: `${version}.placement`,
     title: 'Kiểm tra trình độ',
     skillIds: [...new Set(pex.flatMap((e) => e.skillIds))],
     guideText: 'Trả lời đúng ít nhất 8/10 câu để bắt đầu từ Unit 2.',
@@ -1053,7 +1094,7 @@ export async function buildCourse() {
   const structure = {
     schemaVersion: 1,
     courseId: course.courseId,
-    courseVersion: VERSION,
+    courseVersion: version,
     sourceLocale: course.sourceLocale,
     targetLocale: course.targetLocale,
     title: course.title,
@@ -1068,7 +1109,7 @@ export async function buildCourse() {
   const keyId = seedHex ? process.env.COC_CONTENT_SIGNING_KEY_ID : tools.DEV_CONTENT_KEY_ID;
   assert.ok(keyId, 'COC_CONTENT_SIGNING_KEY_ID is required with a custom seed');
   const manifestHash = tools.manifestStructureHash(structure);
-  const fileIdOf = (lessonId) => `${course.courseId}.${VERSION}.${lessonId}`;
+  const fileIdOf = (lessonId) => `${course.courseId}.${version}.${lessonId}`;
   const finish = (draft) => {
     const unsigned = { ...draft, manifestHash };
     const signed = {
@@ -1112,7 +1153,7 @@ export async function buildCourse() {
   // Audio catalog: one key per sentence and dialogue line (TTS production list, P7-AUDIO-001).
   const audioCatalog = {
     courseId: course.courseId,
-    versionId: VERSION,
+    versionId: version,
     locale: 'en-US',
     speeds: { n: 1, s: 0.75 },
     items: units.flatMap((u) => [
@@ -1129,7 +1170,7 @@ export async function buildCourse() {
     for (const e of f.bundle.exercises) typeCounts[e.type] = (typeCounts[e.type] ?? 0) + 1;
   const report = {
     courseId: course.courseId,
-    versionId: VERSION,
+    versionId: version,
     signatureKeyId: keyId,
     sections: manifestSections.length,
     units: manifestUnits.length,
@@ -1157,7 +1198,7 @@ export async function buildCourse() {
     manifestSha256: tools.sha256(manifestText),
   };
   const files = [
-    { fileId: `${course.courseId}.${VERSION}.manifest`, path: 'manifest.json', text: manifestText },
+    { fileId: `${course.courseId}.${version}.manifest`, path: 'manifest.json', text: manifestText },
     ...[...finished, placement].map((f) => ({
       fileId: f.index.fileId,
       path: `bundles/${f.bundle.lessonId}.json`,
@@ -1166,7 +1207,7 @@ export async function buildCourse() {
   ];
   const publish = {
     courseId: course.courseId,
-    versionId: VERSION,
+    versionId: version,
     signatureKeyId: keyId,
     manifestFileId: files[0].fileId,
     manifestSha256: tools.sha256(manifestText),
@@ -1208,17 +1249,21 @@ if (isMain) {
     { path: 'audio-catalog.json', text: `${JSON.stringify(built.audioCatalog, null, 1)}\n` },
   ];
   if (process.argv.includes('--check')) {
-    // The committed build report and dist/v2 must match a fresh in-memory build byte for byte.
+    // The committed build report and dist must match a fresh in-memory build byte for byte.
+    assert.ok(
+      fs.existsSync(OUT_DIR),
+      `content/${course.courseId}/dist/${VERSION} chưa được build; chạy node tools/content/build-course.mjs --course ${course.courseId} --version ${VERSION}`,
+    );
     assert.equal(
       fs.existsSync(REPORT_PATH) ? fs.readFileSync(REPORT_PATH, 'utf8') : null,
       reportText,
-      'v2 build-report.json is stale; run node tools/content/build-course.mjs',
+      `content/${course.courseId}/source/${VERSION}/build-report.json is stale; run node tools/content/build-course.mjs --course ${course.courseId} --version ${VERSION}`,
     );
     for (const file of all) {
       const p = path.join(OUT_DIR, file.path);
       assert.ok(
         fs.existsSync(p) && fs.readFileSync(p, 'utf8') === file.text,
-        `dist/${VERSION}/${file.path} is stale; run node tools/content/build-course.mjs`,
+        `content/${course.courseId}/dist/${VERSION}/${file.path} is stale; run node tools/content/build-course.mjs --course ${course.courseId} --version ${VERSION}`,
       );
     }
     const expected = new Set(all.map((f) => f.path));
@@ -1226,7 +1271,12 @@ if (isMain) {
       .readdirSync(path.join(OUT_DIR, 'bundles'))
       .map((f) => `bundles/${f}`)
       .filter((f) => !expected.has(f));
-    assert.deepEqual(extra, [], `dist/${VERSION} has stale files`);
+    assert.deepEqual(extra, [], `content/${course.courseId}/dist/${VERSION} has stale files`);
+  } else if (process.argv.includes('--report-only')) {
+    // Writes only the committed build report. Used by courses whose dist is never committed (the
+    // multi-course fixture): check-content verifies media for every course that has a dist/, so a
+    // fixture dist left on disk would fail a gate it is not part of.
+    if (!process.env.COURSE_UNITS) fs.writeFileSync(REPORT_PATH, reportText);
   } else {
     fs.rmSync(OUT_DIR, { recursive: true, force: true });
     fs.mkdirSync(path.join(OUT_DIR, 'bundles'), { recursive: true });
@@ -1237,7 +1287,13 @@ if (isMain) {
   console.log(
     JSON.stringify({
       status: 'PASS',
-      mode: process.argv.includes('--check') ? 'check' : 'write',
+      courseId: course.courseId,
+      versionId: VERSION,
+      mode: process.argv.includes('--check')
+        ? 'check'
+        : process.argv.includes('--report-only')
+          ? 'report-only'
+          : 'write',
       ...summary,
     }),
   );

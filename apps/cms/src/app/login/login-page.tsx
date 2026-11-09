@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
+import { Icon } from '@/components/icons';
 import { ThemeToggle } from '@/components/theme';
 import { cn } from '@/lib/utils';
 import { card, field, primary } from '@/lib/ui';
@@ -47,11 +48,16 @@ export function LoginPage({ next }: { next: string }) {
         onSubmit={submit}
         className={cn(card, 'relative w-full max-w-sm animate-scale-in p-8 shadow-lift')}
       >
-        <div className="flex items-center gap-2">
-          <span className="size-2.5 rounded-full bg-primary shadow-[0_0_0_4px_var(--primary-soft)]" />
-          <h1 className="text-xl font-semibold tracking-tight">CocEnglish CMS</h1>
+        <div className="flex items-center gap-2.5">
+          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-fg shadow-card">
+            <Icon name="courses" className="size-5" />
+          </span>
+          <div>
+            <h1 className="text-lg font-semibold tracking-tight">CocEnglish CMS</h1>
+            <p className="text-xs text-fg-4">Bảng điều khiển nội dung</p>
+          </div>
         </div>
-        <p className="mt-1 text-sm text-fg-3">Quản lý nội dung và vận hành cho app.</p>
+        <p className="mt-4 text-sm text-fg-3">Quản lý bài học, người học và doanh số cho app.</p>
 
         <label className="mt-6 block text-sm text-fg-2">
           Email

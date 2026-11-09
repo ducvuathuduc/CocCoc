@@ -2,73 +2,72 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Icon, type IconName } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
-const TOOLS = [
-  { key: 'structure', label: 'Cấu trúc & thông tin khóa', hint: 'Các phần học, tên khóa' },
-  { key: 'media', label: 'Âm thanh & ảnh', hint: 'File chưa có, file chưa dùng được' },
-  { key: 'search', label: 'Tìm & thay thế', hint: 'Tìm một từ trong cả khóa' },
-  { key: 'readiness', label: 'Điều kiện xuất bản', hint: 'Còn gì chưa xong' },
+/**
+ * One navigation for the whole course, shown on the course home and every sub-page (cấu trúc, media,
+ * tìm kiếm, sẵn sàng). A teacher never has to remember which tools live where: the current screen is
+ * always highlighted, and Xuất bản stays one tap away on the right as the one action that ships.
+ */
+const ITEMS: { key: string; href: string; label: string; icon: IconName }[] = [
+  { key: 'home', href: '', label: 'Bài học', icon: 'lessons' },
+  { key: 'structure', href: '/structure', label: 'Cấu trúc & thông tin', icon: 'courses' },
+  { key: 'media', href: '/media', label: 'Âm thanh & ảnh', icon: 'media' },
+  { key: 'search', href: '/search', label: 'Tìm kiếm', icon: 'search' },
+  { key: 'readiness', href: '/readiness', label: 'Sẵn sàng', icon: 'audit' },
 ];
 
-/**
- * The six tabs read like an admin console. The way back to the lessons is the one link an author
- * needs every time; the four inspection tools are still here, one click deeper.
- */
-export function CourseTabs({ courseId }: { courseId: string }) {
+export function CourseTabs({
+  courseId,
+  showPublish = true,
+}: {
+  courseId: string;
+  showPublish?: boolean;
+}) {
   const pathname = usePathname();
   const base = `/courses/${courseId}`;
+  // The lesson editor lives below /units, so "Bài học" stays lit while a teacher is inside one.
+  const isActive = (href: string) =>
+    href === ''
+      ? pathname === base || pathname.startsWith(`${base}/units`)
+      : pathname.startsWith(`${base}${href}`);
 
   return (
-    <div className="flex flex-wrap items-center gap-2 border-b border-line pb-2">
-      <Link
-        href={base}
-        transitionTypes={['nav-back']}
-        className="rounded-lg px-2 py-2 text-sm text-fg-3 hover:bg-elevated hover:text-fg"
-      >
-        ← Bài học
-      </Link>
-
-      <details className="relative">
-        <summary className="cursor-pointer list-none rounded-lg border border-line px-3 py-2 text-sm text-fg-2 hover:border-line-strong hover:bg-elevated [&::-webkit-details-marker]:hidden">
-          Công cụ khóa
-        </summary>
-        <div className="absolute left-0 z-30 mt-1 w-72 max-w-[calc(100vw-2rem)] rounded-xl border border-line-strong bg-card p-2 shadow-lift">
-          {TOOLS.map((tool) => {
-            const active = pathname.startsWith(`${base}/${tool.key}`);
-            return (
-              <Link
-                key={tool.key}
-                href={`${base}/${tool.key}`}
-                transitionTypes={['nav-forward']}
-                aria-current={active ? 'page' : undefined}
-                className={cn(
-                  'block rounded-lg px-3 py-2 hover:bg-elevated',
-                  active && 'bg-primary-soft',
-                )}
-              >
-                <span
-                  className={cn(
-                    'block text-sm',
-                    active ? 'font-medium text-primary-text' : 'text-fg-2',
-                  )}
-                >
-                  {tool.label}
-                </span>
-                <span className="block text-xs text-fg-4">{tool.hint}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </details>
-
-      <Link
-        href={`/builds?course=${courseId}`}
-        transitionTypes={['nav-forward']}
-        className="ml-auto text-sm text-fg-3 hover:text-primary-text"
-      >
-        Xuất bản →
-      </Link>
-    </div>
+    <nav
+      aria-label="Màn hình khóa học"
+      className="flex flex-wrap items-center gap-1 border-b border-line pb-2"
+    >
+      {ITEMS.map((item) => {
+        const active = isActive(item.href);
+        return (
+          <Link
+            key={item.key}
+            href={`${base}${item.href}`}
+            transitionTypes={['nav-forward']}
+            aria-current={active ? 'page' : undefined}
+            className={cn(
+              'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm transition-colors',
+              active
+                ? 'bg-primary-soft font-medium text-primary-text'
+                : 'text-fg-3 hover:bg-elevated hover:text-fg',
+            )}
+          >
+            <Icon name={item.icon} className="size-4 shrink-0" />
+            <span>{item.label}</span>
+          </Link>
+        );
+      })}
+      {showPublish && (
+        <Link
+          href={`/builds?course=${courseId}`}
+          transitionTypes={['nav-forward']}
+          className="ml-auto flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-fg shadow-card hover:bg-primary-hover hover:shadow-lift"
+        >
+          <Icon name="publish" className="size-4 shrink-0" />
+          Xuất bản
+        </Link>
+      )}
+    </nav>
   );
 }

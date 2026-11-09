@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 64f4993f049da84184d4fac4c0d5ad558907061d2ca688aff6a4f919b12a7c00).
+// Source: docs/api/openapi.yaml (sha256 f62020e20576dc5b7b654e8685894b48a1be3c64b370db8f2ab078ffcaf98504).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import 'api_operation.dart';
@@ -144,6 +144,13 @@ abstract final class ApiOperations {
     'GET',
     '/v1/ai/capabilities',
     ApiService.ai,
+    idempotent: false,
+  );
+  static const getCourseBundle = ApiOperation(
+    'getCourseBundle',
+    'GET',
+    '/v1/courses/{courseId}/lessons/{lessonId}/bundle',
+    ApiService.learning,
     idempotent: false,
   );
   static const getEnergy = ApiOperation(
@@ -588,6 +595,7 @@ abstract final class ApiOperations {
     getAssessment,
     getBundle,
     getCapabilities,
+    getCourseBundle,
     getEnergy,
     getEntitlement,
     getLeague,

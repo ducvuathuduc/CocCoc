@@ -1,5 +1,6 @@
-// Content-lifecycle proof. The five controls an admin presses every day — "Nhập bảng tác giả từ repo",
-// "Tạo unit", Lưu unit, đổi Cấu trúc khóa, Xóa unit — live in src/server/actions/{import,course,unit}.ts.
+// Content-lifecycle proof. The six controls an admin presses every day — "Tạo khóa mới", "Nhập bảng
+// tác giả từ repo", "Tạo unit", Lưu unit, đổi Cấu trúc khóa, Xóa unit — live in
+// src/server/actions/{import,course,unit}.ts.
 // Their pure helpers (parse/render, order, structure, lint) have harnesses of their own; what nothing
 // covered was the *actions*: which rows they write, in what order, and what they refuse to write. Those
 // are exactly the places where a CMS silently loses content.
@@ -393,9 +394,9 @@ const metaNoCourse = await cms.saveCourseMeta({
   expectedRevision: 0,
 });
 check(
-  'chưa nhập mà đã lưu thông tin thì được hướng dẫn nhập từ repo trước, không phải một hàng khóa cô đơn',
+  'chưa có khóa mà đã lưu thông tin thì được hướng dẫn tạo khóa trước, không phải một hàng khóa cô đơn',
   metaNoCourse.ok === false &&
-    (metaNoCourse.message ?? '').includes('nhập từ repo') &&
+    (metaNoCourse.message ?? '').includes('tạo khóa') &&
     state.c_courses.length === 1,
   slice(JSON.stringify(metaNoCourse)),
 );
@@ -616,6 +617,80 @@ check(
   `${unitRows().length} unit`,
 );
 
+// ---------- F2. createCourse: a course that has no authoring tables in the repo ----------
+const NEW_COURSE = 'vi_en_moi';
+const fresh = await cms.createCourse({
+  courseId: NEW_COURSE,
+  title: '  Khóa mới  ',
+  sourceLocale: 'vi-VN',
+  targetLocale: 'en-US',
+  version: 'v1',
+});
+const freshRecord = await store.getCourse(NEW_COURSE);
+check(
+  'tạo khóa mới không cần repo: hàng khóa ra đời với DRAFT, version v1 và một phần học rỗng',
+  fresh.ok &&
+    freshRecord !== null &&
+    freshRecord.draft.course.title === 'Khóa mới' &&
+    freshRecord.draft.course.status === 'DRAFT' &&
+    freshRecord.draft.version === 'v1' &&
+    freshRecord.draft.sections.length === 1 &&
+    freshRecord.draft.sections[0].units.length === 0,
+  slice(JSON.stringify(freshRecord?.draft ?? fresh)),
+);
+check(
+  'tạo khóa ghi audit course.create kèm version và tên',
+  auditOps().at(-1) === 'course.create' &&
+    JSON.parse(lastAudit().afterJson).version === 'v1',
+  slice(JSON.stringify({ op: lastAudit().operation, after: lastAudit().afterJson })),
+);
+const dupCourse = await cms.createCourse({
+  courseId: NEW_COURSE,
+  title: 'Trùng mã',
+  sourceLocale: 'vi-VN',
+  targetLocale: 'en-US',
+  version: 'v1',
+});
+check(
+  'tạo trùng mã khóa bị từ chối bằng lời và không thêm hàng nào',
+  dupCourse.ok === false &&
+    (dupCourse.message ?? '').includes('Đã có khóa') &&
+    state.c_courses.filter((r) => r.courseId === NEW_COURSE).length === 1,
+  slice(JSON.stringify(dupCourse)),
+);
+const badCourse = await cms.createCourse({
+  courseId: '../etc',
+  title: 'Đường dẫn',
+  sourceLocale: 'vi-VN',
+  targetLocale: 'en-US',
+  version: 'v1',
+});
+check(
+  'mã khóa có thể thành đường dẫn bị chặn ngay ở cửa, trước khi nó thành tên thư mục nội dung',
+  badCourse.ok === false &&
+    (badCourse.message ?? '').includes('Mã khóa') &&
+    (await store.getCourse('../etc')) === null,
+  slice(JSON.stringify(badCourse)),
+);
+const freshUnit = await cms.createUnitDraft(NEW_COURSE, 'Chào hỏi');
+const freshUnits = await store.listUnits(NEW_COURSE);
+check(
+  'khóa mới tạo được bài học ngay, không cần nhập từ repo trước',
+  freshUnit.ok &&
+    freshUnits.length === 1 &&
+    freshUnits[0].draft.theme === cms.slug('Chào hỏi') &&
+    freshUnits[0].unitId === freshUnit.unitId,
+  slice(JSON.stringify({ reply: freshUnit, units: freshUnits.map((u) => u.unitId) })),
+);
+check(
+  'cấu trúc của khóa mới sạch với đúng một phần học — một khóa một phần vẫn xuất được',
+  cms.structureIssues(
+    (await store.getCourse(NEW_COURSE)).draft.sections,
+    freshUnits.map((u) => u.draft.theme),
+  ).length === 0,
+  join(cms.structureIssues((await store.getCourse(NEW_COURSE)).draft.sections, freshUnits.map((u) => u.draft.theme))),
+);
+
 // ---------- G. nothing was written outside the CMS's own tables, or into the repo ----------
 const touched = new Set();
 for (const table of cTables) if (state[table.id].length) touched.add(table.id);
@@ -652,5 +727,5 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(
-  `OK — ${checks.length} checks: nhập ${repo.units.length} unit từ bảng tác giả thật sinh đúng mã NN-theme theo index file, section nguyên văn từ course.mjs, vị trí liền mạch, lint sạch và id đầy đủ nên bấm Lưu được ngay, nhập lại ghi đè chứ không nhân đôi; lưu thông tin khóa không đụng tới cấu trúc section và bị chặn khi revision cũ; tạo unit đưa theme vào section cuối trước khi ghi hàng, chặn trùng theme trước khi ghi; cấu trúc tự cắt-trùng và từ chối unit mồ côi / trùng section / dưới 2 section / section vô tên bằng đúng câu của panel; lưu unit tự sinh id từ headword và trả danh sách lỗi thay vì ghi nửa bản; xóa unit mang theo theme của nó khỏi section; chỉ bảng c_* được ghi, mọi lượt đọc có index, và folder tác giả không đổi một byte nào.`,
+  `OK — ${checks.length} checks: nhập ${repo.units.length} unit từ bảng tác giả thật sinh đúng mã NN-theme theo index file, section nguyên văn từ course.mjs, vị trí liền mạch, lint sạch và id đầy đủ nên bấm Lưu được ngay, nhập lại ghi đè chứ không nhân đôi; tạo khóa mới không cần repo, chặn mã trùng và mã có thể thành đường dẫn; lưu thông tin khóa không đụng tới cấu trúc section và bị chặn khi revision cũ; tạo unit đưa theme vào section cuối trước khi ghi hàng, chặn trùng theme trước khi ghi; cấu trúc tự cắt-trùng và từ chối unit mồ côi / trùng section / section rỗng / section vô tên bằng đúng câu của panel; lưu unit tự sinh id từ headword và trả danh sách lỗi thay vì ghi nửa bản; xóa unit mang theo theme của nó khỏi section; chỉ bảng c_* được ghi, mọi lượt đọc có index, và folder tác giả không đổi một byte nào.`,
 );

@@ -1,14 +1,19 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
 // dart format off
-// Source: docs/api/openapi.yaml (sha256 94faa43c48fd72aaeb5d18cf93bcbbe5caf125fd1dbebccd7a1a273caceb7ed5).
+// Source: docs/api/openapi.yaml (sha256 86f01af92eb95c66846378d72843b1ffe611a8f032178f8a99f649b1bd1bab77).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (schemas).
 
 
 /// SHA-256 of docs/api/openapi.yaml this output was generated from.
-const String apiContractSourceSha256 = '94faa43c48fd72aaeb5d18cf93bcbbe5caf125fd1dbebccd7a1a273caceb7ed5';
+const String apiContractSourceSha256 = '86f01af92eb95c66846378d72843b1ffe611a8f032178f8a99f649b1bd1bab77';
 
 /// `components.schemas` from docs/api/openapi.yaml, verbatim, for runtime validation.
 const String apiSchemasJson = r'''{
+"ContentVersion":{"type":"object","additionalProperties":false,"properties":{"courseId":{"type":"string","minLength":1,"maxLength":36,"pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]*$"},"versionId":{"type":"string","minLength":1,"maxLength":36,"pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]*$"},"status":{"type":"string","enum":["LIVE","SUPERSEDED","RETIRED"]},"manifestSha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"publishedAt":{"type":"string","format":"date-time"},"retiredAt":{"anyOf":[{"type":"string","format":"date-time"},{"type":"null"}]}},"required":["courseId","versionId","status","manifestSha256","publishedAt","retiredAt"]},
+"ContentVersionList":{"type":"object","additionalProperties":false,"properties":{"items":{"type":"array","items":{"$ref":"#/components/schemas/ContentVersion"}},"asOf":{"type":"string","format":"date-time"}},"required":["items","asOf"]},
+"UnpublishRequest":{"type":"object","additionalProperties":false,"properties":{"expectedPublishedVersion":{"anyOf":[{"type":"string","minLength":1,"maxLength":36,"pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]*$"},{"type":"null"}]}},"required":[]},
+"RetireRequest":{"type":"object","additionalProperties":false,"properties":{"expectedPublishedVersion":{"anyOf":[{"type":"string","minLength":1,"maxLength":36,"pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]*$"},{"type":"null"}]}},"required":[]},
+"RollbackRequest":{"type":"object","additionalProperties":false,"properties":{"targetVersionId":{"type":"string","minLength":1,"maxLength":36,"pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]*$"},"expectedPublishedVersion":{"anyOf":[{"type":"string","minLength":1,"maxLength":36,"pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]*$"},{"type":"null"}]}},"required":["targetVersionId"]},
 "Error":{"type":"object","additionalProperties":false,"properties":{"error":{"type":"object","additionalProperties":false,"properties":{"code":{"type":"string","maxLength":64},"message":{"type":"string","maxLength":256},"requestId":{"type":"string","maxLength":64},"details":{"type":"object","additionalProperties":true},"retryable":{"type":"boolean"}},"required":["code","message","requestId","details","retryable"]}},"required":["error"]},
 "Health":{"type":"object","additionalProperties":false,"properties":{"service":{"type":"string","enum":["learning","progress","ai"]},"buildId":{"type":"string","maxLength":64},"status":{"type":"string","enum":["ok","degraded"]}},"required":["service","buildId","status"]},
 "Prompt":{"type":"object","additionalProperties":false,"properties":{"text":{"type":"string","maxLength":1024},"locale":{"type":"string","maxLength":16},"audioAssetId":{"anyOf":[{"type":"string","minLength":1,"maxLength":36,"pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]*$"},{"type":"null"}]}},"required":["text","locale"]},

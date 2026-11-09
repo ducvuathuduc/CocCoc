@@ -24,6 +24,7 @@ cd apps/mobile && flutter pub get --offline   # restore deps; revert any pubspec
 flutter analyze --no-pub
 flutter test --no-pub --dart-define=ENABLE_MASCOT_MOTION=false
 flutter test --no-pub test/api_contracts_round_trip_test.dart
+pnpm mobile:api-lane                          # (root) API-mode lane: Learning test backend + flutter test test_api, DATA_SOURCE=api
 python3 tools/palette_check.py                # (root) colors must come from docs/design/qa/palette_from_refs.json
 pnpm contracts:dart                           # regenerate lib/core/api/generated after an OpenAPI change
 ```
@@ -33,6 +34,11 @@ pnpm contracts:dart                           # regenerate lib/core/api/generate
 backend). An undeclared build opens a screen naming that flag rather than the fixture lessons;
 `test/core/config/data_source_declaration_test.dart` pins both that guard and CI passing the flag.
 `flutter test` stays the undeclared case on purpose — it pumps widgets, never `main()`.
+
+`test_api/` is the opposite case and is not part of `flutter test`: it runs the app's generated clients and
+parsers against a real Learning service with `DATA_SOURCE=api`. Start it only through
+`pnpm mobile:api-lane`, which owns the backend and the defines; run bare, it fails instead of skipping.
+It never reads or replaces `config/real.public.json`, which every release build keeps.
 
 ## Gates
 

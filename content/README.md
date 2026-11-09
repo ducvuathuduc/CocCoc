@@ -54,3 +54,14 @@ then call `POST /v1/admin/content-versions` (maintainer) with `courseId`, `versi
 file before the `l_courses` pointer and the `l_content_versions` row commit together. `pnpm
 dev:services` publishes the committed versions into its in-memory store at startup. Uploading to a
 cloud project is a deploy action and needs its own authorization.
+
+The publish gate also checks every media file the bundles declare against the target bucket: present,
+upload finished, declared size, readable by anyone (`read(any)`, what Mobile's public download
+needs) and, by downloading it once, the declared SHA-256. A placeholder hash from a build with no
+media fails here, as does a file deleted from Storage. Rollback runs the same audit on its target.
+Metadata is read in batches of 50 ids with 8 calls in flight and bytes are cached per stored object,
+so a course costs about `ceil(assets / 50)` metadata calls plus one download per new file, not one
+request per reference. Large first publishes should use `publish-appwrite.mjs` (no 60 s function
+limit). `node tools/content/lifecycle-appwrite.mjs --action verify-media --course <id>` audits the
+live version read-only and exits 1 on any defect; run it on a schedule against any project you
+publish to.

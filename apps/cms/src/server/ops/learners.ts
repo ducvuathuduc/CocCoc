@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { config } from '../config';
 import { StoreUnavailableError } from '../store/port';
 import { AppwriteLearnerDirectory } from './appwrite';
@@ -173,7 +174,7 @@ export async function learnerDetail(userId: string): Promise<LearnerDetail | nul
 }
 
 /** What learners told us and still wait for an answer: feedback, reports about a person, reports about a lesson. */
-export async function learnerQueue(): Promise<LearnerQueue> {
+export const learnerQueue = cache(async (): Promise<LearnerQueue> => {
   const found = requireDirectory();
   const [feedback, userReports, contentReports] = await explain(() =>
     Promise.all([
@@ -187,4 +188,4 @@ export async function learnerQueue(): Promise<LearnerQueue> {
     userReports: userReports.map(toUserReport),
     contentReports: contentReports.map(toContentReport),
   };
-}
+});

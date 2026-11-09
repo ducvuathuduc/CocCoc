@@ -26,8 +26,11 @@ class PracticeReviewItem {
 /// Content behind the practice screens.
 ///
 /// Listen/Speak typed practice resolves the learner's current lesson bundle
-/// (`GET /v1/lessons/{lessonId}/bundle`) and the review index comes from
-/// `GET /v1/review`. Offline and mock mode keep the local fixtures.
+/// (`GET /v1/courses/{courseId}/lessons/{lessonId}/bundle`, course-scoped) and
+/// the review index comes from `GET /v1/review`. Offline and mock mode keep the
+/// local fixtures. The bundle is fetched for the repository's active course, so
+/// two courses that share a `lessonId` never collide: the `courseId` is part of
+/// the request and the response can only ever be that course's bundle.
 abstract interface class PracticeContentRepository {
   bool get isRemote;
 
@@ -102,7 +105,7 @@ class ApiPracticeContentRepository implements PracticeContentRepository {
         (id) => !path.enrollment.completedLessonIds.contains(id),
         orElse: () => node.lessonIds.first,
       );
-      final bundle = await api.getBundle(lessonId);
+      final bundle = await api.getCourseBundle(courseId, lessonId);
       final mapper = LessonWireMapper(bundle.exercises, assets: bundle.assets);
       return _bundle = mapper.toDomain();
     } on ApiException {

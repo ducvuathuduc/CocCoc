@@ -1,11 +1,174 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
 // dart format off
-// Source: docs/api/openapi.yaml (sha256 94faa43c48fd72aaeb5d18cf93bcbbe5caf125fd1dbebccd7a1a273caceb7ed5).
+// Source: docs/api/openapi.yaml (sha256 86f01af92eb95c66846378d72843b1ffe611a8f032178f8a99f649b1bd1bab77).
 // Generator: tools/blueprint/generate-dart-contracts.mjs (models).
 
 // ignore_for_file: prefer_const_constructors
 
 import '../contract_validator.dart';
+
+/// Wire DTO for `#/components/schemas/ContentVersion`.
+final class ContentVersion {
+  const ContentVersion({
+    required this.courseId,
+    required this.versionId,
+    required this.status,
+    required this.manifestSha256,
+    required this.publishedAt,
+    required this.retiredAt,
+  });
+
+  /// Validates [json] against the `ContentVersion` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ContentVersion.fromJson(Object? json) {
+    ContractValidator.instance.check('ContentVersion', json);
+    return ContentVersion._decode(json);
+  }
+
+  static ContentVersion _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ContentVersion(
+      courseId: map['courseId'] as String,
+      versionId: map['versionId'] as String,
+      status: map['status'] as String,
+      manifestSha256: map['manifestSha256'] as String,
+      publishedAt: map['publishedAt'] as String,
+      retiredAt: map['retiredAt'] == null ? null : map['retiredAt'] as String,
+    );
+  }
+
+  final String courseId;
+  final String versionId;
+  final String status;
+  final String manifestSha256;
+  final String publishedAt;
+  final String? retiredAt;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'courseId': courseId,
+        'versionId': versionId,
+        'status': status,
+        'manifestSha256': manifestSha256,
+        'publishedAt': publishedAt,
+        'retiredAt': retiredAt,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/ContentVersionList`.
+final class ContentVersionList {
+  const ContentVersionList({
+    required this.items,
+    required this.asOf,
+  });
+
+  /// Validates [json] against the `ContentVersionList` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory ContentVersionList.fromJson(Object? json) {
+    ContractValidator.instance.check('ContentVersionList', json);
+    return ContentVersionList._decode(json);
+  }
+
+  static ContentVersionList _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return ContentVersionList(
+      items: List<ContentVersion>.unmodifiable((map['items'] as List<Object?>).map((Object? x) => ContentVersion._decode(x))),
+      asOf: map['asOf'] as String,
+    );
+  }
+
+  final List<ContentVersion> items;
+  final String asOf;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'items': items.map((ContentVersion x) => x.toJson()).toList(),
+        'asOf': asOf,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/UnpublishRequest`.
+final class UnpublishRequest {
+  const UnpublishRequest({
+    this.expectedPublishedVersion = const JsonPresence<String>.absent(),
+  });
+
+  /// Validates [json] against the `UnpublishRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory UnpublishRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('UnpublishRequest', json);
+    return UnpublishRequest._decode(json);
+  }
+
+  static UnpublishRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return UnpublishRequest(
+      expectedPublishedVersion: map.containsKey('expectedPublishedVersion') ? JsonPresence<String>.value(map['expectedPublishedVersion'] == null ? null : map['expectedPublishedVersion'] as String) : const JsonPresence<String>.absent(),
+    );
+  }
+
+  final JsonPresence<String> expectedPublishedVersion;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        if (expectedPublishedVersion.isPresent) 'expectedPublishedVersion': expectedPublishedVersion.value,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/RetireRequest`.
+final class RetireRequest {
+  const RetireRequest({
+    this.expectedPublishedVersion = const JsonPresence<String>.absent(),
+  });
+
+  /// Validates [json] against the `RetireRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory RetireRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('RetireRequest', json);
+    return RetireRequest._decode(json);
+  }
+
+  static RetireRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return RetireRequest(
+      expectedPublishedVersion: map.containsKey('expectedPublishedVersion') ? JsonPresence<String>.value(map['expectedPublishedVersion'] == null ? null : map['expectedPublishedVersion'] as String) : const JsonPresence<String>.absent(),
+    );
+  }
+
+  final JsonPresence<String> expectedPublishedVersion;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        if (expectedPublishedVersion.isPresent) 'expectedPublishedVersion': expectedPublishedVersion.value,
+      };
+}
+
+/// Wire DTO for `#/components/schemas/RollbackRequest`.
+final class RollbackRequest {
+  const RollbackRequest({
+    required this.targetVersionId,
+    this.expectedPublishedVersion = const JsonPresence<String>.absent(),
+  });
+
+  /// Validates [json] against the `RollbackRequest` schema, then decodes it.
+  /// Throws [ContractViolation] when the payload does not match the contract.
+  factory RollbackRequest.fromJson(Object? json) {
+    ContractValidator.instance.check('RollbackRequest', json);
+    return RollbackRequest._decode(json);
+  }
+
+  static RollbackRequest _decode(Object? json) {
+    final Map<Object?, Object?> map = json as Map<Object?, Object?>;
+    return RollbackRequest(
+      targetVersionId: map['targetVersionId'] as String,
+      expectedPublishedVersion: map.containsKey('expectedPublishedVersion') ? JsonPresence<String>.value(map['expectedPublishedVersion'] == null ? null : map['expectedPublishedVersion'] as String) : const JsonPresence<String>.absent(),
+    );
+  }
+
+  final String targetVersionId;
+  final JsonPresence<String> expectedPublishedVersion;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'targetVersionId': targetVersionId,
+        if (expectedPublishedVersion.isPresent) 'expectedPublishedVersion': expectedPublishedVersion.value,
+      };
+}
 
 /// Wire DTO for `#/components/schemas/Error`.
 final class Error {
@@ -7611,6 +7774,11 @@ final class QuestChestReceipt {
 /// Decoders for every `#/components/schemas` entry, keyed by schema name.
 const Map<String, Object Function(Object?)> apiContractDecoders =
     <String, Object Function(Object?)>{
+  'ContentVersion': ContentVersion.fromJson,
+  'ContentVersionList': ContentVersionList.fromJson,
+  'UnpublishRequest': UnpublishRequest.fromJson,
+  'RetireRequest': RetireRequest.fromJson,
+  'RollbackRequest': RollbackRequest.fromJson,
   'Error': Error.fromJson,
   'Health': Health.fromJson,
   'Prompt': Prompt.fromJson,

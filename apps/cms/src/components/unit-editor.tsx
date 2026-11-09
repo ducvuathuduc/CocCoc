@@ -16,8 +16,13 @@ import { saveUnitDraft } from '@/server/actions/unit';
 import { lintUnit } from '@/cms/lint';
 import { fold } from '@/cms/search';
 import { placementMarks, type PlacementRowMark } from '@/cms/placement';
-import { slug } from '@/cms/tables';
-import { renderUnitFile } from '@/cms/render';
+import {
+  parseDialogues,
+  parseSentences,
+  parseStoryQuestions,
+  parseVocab,
+  slug,
+} from '@/cms/tables';
 import { blankVocabRow } from '@/cms/blank';
 import type {
   Cefr,
@@ -29,31 +34,35 @@ import type {
 } from '@/cms/types';
 import { BackToCourse } from '@/components/course-tools';
 import { PageTransition } from '@/components/page-transition';
+import { PasteRows } from '@/components/paste-rows';
 import { TechDetails } from '@/components/tech-details';
-import { badge, button, card, code, compact, field, ghost, hint, link, log, primary, td, th } from '@/lib/ui';
+import { badge, button, card, code, compact, field, ghost, hint, link, primary, td, th } from '@/lib/ui';
 import { whereIs } from '@/lib/words';
 import { cn } from '@/lib/utils';
 
-/* Content first, like the app itself. Naming the lesson and the machine file are the exceptions. */
-const TABS = [
+/**
+ * The lesson is one job told in six steps. The first one names the lesson, the next four fill its
+ * content, and the last shows the learner's view — so the tabs read top-to-bottom like the work,
+ * not like a settings dialog. Media and the build's own file are operator concerns; they stay behind
+ * the "Tùy chọn nâng cao" switch so a first-time author never meets them.
+ */
+const VISIBLE_TABS = [
+  ['basics', 'Thông tin bài'],
   ['vocab', 'Từ vựng'],
   ['sentences', 'Câu'],
   ['dialogues', 'Hội thoại'],
-  ['story', 'Truyện đọc'],
+  ['story', 'Truyện'],
   ['media', 'Ảnh & âm thanh'],
   ['preview', 'Xem trước'],
-  ['basics', 'Thông tin bài'],
-  ['file', 'File kỹ thuật'],
 ] as const;
 
-type TabKey = (typeof TABS)[number][0];
+const ALL_TABS = VISIBLE_TABS;
+
+type TabKey = (typeof ALL_TABS)[number][0];
 
 /** Search results deep-link `?tab=story`; anything unknown, or a tab that does not exist, is vocab. */
 const tabKey = (want: string | undefined): TabKey =>
-  TABS.some(([key]) => key === want) ? (want as TabKey) : 'vocab';
-
-/** The file the build script writes is only interesting to whoever runs the build script. */
-const TECHNICAL_TABS: TabKey[] = ['file'];
+  ALL_TABS.some(([key]) => key === want) ? (want as TabKey) : 'vocab';
 
 /**
  * One lesson carries 20 words and 34 sentences, and a table that long is where a first-time editor
@@ -78,7 +87,7 @@ const LIST_KEYS = Object.keys(ROW_PATH) as ListKey[];
 const lintTab = (path: string): TabKey | null => {
   const root = path.split(/[[.\s]/)[0];
   if (['title', 'cefr', 'theme', 'levels', 'guide'].includes(root)) return 'basics';
-  return TABS.some(([key]) => key === root) ? (root as TabKey) : null;
+  return ALL_TABS.some(([key]) => key === root) ? (root as TabKey) : null;
 };
 
 const ADVANCED_KEY = 'coc.cms.advanced';
@@ -591,33 +600,37 @@ export function UnitEditor({
   // The server paints the plain view; whatever this browser remembered is applied after hydration,
   // so a returning author keeps the extra columns without a second render.
   const remembered = useSyncExternalStore(subscribeAdvanced, readAdvanced, () => false);
-  const advanced = advancedChoice ?? (remembered || TECHNICAL_TABS.includes(tab));
+  const advanced = advancedChoice ?? remembered;
 
   const dirty = JSON.stringify(draft) !== JSON.stringify(saved.draft);
   const issues = useMemo(() => lintUnit(normalize(draft)), [draft]);
   const errors = issues.filter((i) => i.level === 'error');
   const warnings = issues.filter((i) => i.level === 'warning');
-  // A tab badge is only useful if it says "this panel still has work in it", not "here is a number".
-  const issuesByTab = useMemo(() => {
-    const out: Partial<Record<TabKey, { error: number; warning: number }>> = {};
-    for (const issue of issues) {
-      const key = lintTab(issue.path);
-      if (!key) continue;
-      const cell = out[key] ?? { error: 0, warning: 0 };
-      out[key] = { ...cell, [issue.level]: cell[issue.level] + 1 };
+  // A step is "done" when it has content and carries no error of its own — the only honest signal a
+  // non-technical author needs to know "this part is finished, move on". The preview step counts as
+  // done once the lesson has any content and the whole draft is error-free.
+  const stepDone = useMemo(() => {
+    const errorsIn = (key: TabKey) =>
+      issues.filter((i) => lintTab(i.path) === key && i.level === 'error').length;
+    const hasContent: Record<string, boolean> = {
+      basics: draft.title.trim().length > 0,
+      vocab: draft.vocab.length > 0,
+      sentences: draft.sentences.length > 0,
+      dialogues: draft.dialogues.length > 0,
+      story: Boolean(draft.story.passage) || draft.story.questions.length > 0,
+      preview: true,
+    };
+    const out: Partial<Record<TabKey, boolean>> = {};
+    for (const [key] of VISIBLE_TABS) {
+      out[key] =
+        key === 'preview'
+          ? errors.length === 0 &&
+            (draft.vocab.length + draft.sentences.length + draft.dialogues.length > 0 ||
+              Boolean(draft.story.passage))
+          : hasContent[key] && errorsIn(key) === 0;
     }
     return out;
-  }, [issues]);
-  const countOf = (key: TabKey): number =>
-    key === 'vocab'
-      ? draft.vocab.length
-      : key === 'sentences'
-        ? draft.sentences.length
-        : key === 'dialogues'
-          ? draft.dialogues.length
-          : key === 'story'
-            ? draft.story.questions.length
-            : 0;
+  }, [issues, draft, errors.length]);
   // `build-course.mjs:1005-1028` harvests the placement test from the first unit by position, so only
   // that unit's rows carry consequences the author cannot see anywhere else.
   const placement = useMemo(() => (order === 0 ? placementMarks(draft) : null), [draft, order]);
@@ -883,43 +896,52 @@ export function UnitEditor({
             </div>
           </div>
 
-          <nav className="mt-2 flex flex-wrap items-center gap-1 border-b border-line">
-            {TABS.filter(([key]) => advanced || !TECHNICAL_TABS.includes(key)).map(
-              ([key, label]) => {
-                const count = countOf(key);
-                const bad = issuesByTab[key]?.error ?? 0;
-                return (
+          <ol className="mt-3 flex flex-wrap items-center gap-2" aria-label="Các bước soạn bài">
+            {VISIBLE_TABS.map(([key, label], idx) => {
+              const done = stepDone[key];
+              const current = tab === key;
+              return (
+                <li key={key}>
                   <button
-                    key={key}
                     type="button"
                     onClick={() => goTab(key)}
-                    aria-current={tab === key ? 'page' : undefined}
+                    aria-current={current ? 'step' : undefined}
+                    title={
+                      done
+                        ? 'Phần này đã có nội dung và không lỗi'
+                        : current
+                          ? 'Đang soạn phần này'
+                          : 'Chưa hoàn thành'
+                    }
                     className={cn(
-                      '-mb-px flex items-center gap-2 border-b-2 px-3 py-2 text-sm active:scale-[0.98]',
-                      tab === key
-                        ? 'border-primary font-medium text-fg'
-                        : 'border-transparent text-fg-3 hover:border-line-strong hover:text-fg',
+                      'flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors',
+                      current
+                        ? 'border-primary bg-primary-soft text-fg'
+                        : done
+                          ? 'border-line bg-elevated text-fg-2 hover:border-line-strong'
+                          : 'border-line bg-card text-fg-3 hover:border-line-strong hover:text-fg',
                     )}
                   >
+                    <span
+                      className={cn(
+                        'flex size-5 items-center justify-center rounded-full text-[11px] font-semibold',
+                        current
+                          ? 'bg-primary text-white'
+                          : done
+                            ? 'bg-ok-fg text-white'
+                            : 'bg-elevated text-fg-3',
+                      )}
+                    >
+                      {done ? '✓' : idx + 1}
+                    </span>
                     {label}
-                    {count > 0 && (
-                      <span className="rounded-full bg-elevated px-1.5 py-0.5 text-[11px] tabular-nums text-fg-3">
-                        {count}
-                      </span>
-                    )}
-                    {bad > 0 && (
-                      <span
-                        className={cn(
-                          'size-1.5 rounded-full bg-danger-fg',
-                          tab === key && 'animate-pulse',
-                        )}
-                        title={`${bad} chỗ cần sửa trong phần này`}
-                      />
-                    )}
                   </button>
-                );
-              },
-            )}
+                </li>
+              );
+            })}
+          </ol>
+
+          <div className="mt-2 flex flex-wrap items-center gap-1">
             <label className={cn(hint, 'ml-auto flex cursor-pointer items-center gap-2 pb-2')}>
               <input
                 type="checkbox"
@@ -928,12 +950,11 @@ export function UnitEditor({
                 onChange={(e) => {
                   setAdvancedChoice(e.target.checked);
                   localStorage.setItem(ADVANCED_KEY, e.target.checked ? '1' : '0');
-                  if (!e.target.checked && TECHNICAL_TABS.includes(tab)) goTab('vocab');
                 }}
               />
-              Hiện cột nâng cao
+              Tùy chọn nâng cao
             </label>
-          </nav>
+          </div>
 
           {tab === 'sentences' && (
             <>
@@ -1068,6 +1089,13 @@ export function UnitEditor({
         <ViewTransition key={tab} name="unit-tab" share="auto" enter="auto" default="none">
           {tab === 'vocab' && (
             <section className={`${card} overflow-x-auto p-4`}>
+              <PasteRows
+                title="Dán nhiều từ một lúc"
+                format="Mỗi dòng một từ: cấp (1 đến 5), chữ tiếng Anh, dấu |, nghĩa tiếng Việt. Thêm | img nếu từ có ảnh."
+                example={'1 hello, hi | xin chào / chào\n2 friend | bạn / bạn bè | img\n3 thank you | cảm ơn'}
+                parse={parseVocab}
+                onAdd={(rows) => set('vocab', [...draft.vocab, ...rows])}
+              />
               <p className={cn(hint, 'mb-3')}>
                 Một dòng là một từ mới. Chỉ cần Cấp, Tiếng Anh và Tiếng Việt.
                 <span className="sm:hidden"> Kéo ngang bảng để xem đủ các cột.</span>
@@ -1238,6 +1266,15 @@ export function UnitEditor({
 
           {tab === 'sentences' && (
             <section className={cn(card, 'overflow-hidden')} aria-label="Câu của bài học">
+              <div className="px-3 pt-3">
+                <PasteRows
+                  title="Dán nhiều câu một lúc"
+                  format="Mỗi dòng một câu: câu tiếng Anh, dấu = , nghĩa tiếng Việt. Cách nói khác thì thêm sau dấu ##."
+                  example={'Hello, Mai! ## Hi, Mai! = Xin chào, Mai! ## Chào Mai!\nWhat is your name? = Bạn tên là gì?'}
+                  parse={parseSentences}
+                  onAdd={(rows) => set('sentences', [...draft.sentences, ...rows])}
+                />
+              </div>
               <p className={cn(hint, 'border-b border-line px-3 py-2')}>
                 Bấm vào một câu để sửa; những câu còn lại giữ một dòng gọn. Phím mũi tên đi giữa các
                 câu, Shift + mũi tên mở ô soạn, Alt + mũi tên dời câu, Esc quay lại danh sách.
@@ -1486,6 +1523,13 @@ export function UnitEditor({
 
           {tab === 'dialogues' && (
             <section className={`${card} overflow-x-auto p-4`}>
+              <PasteRows
+                title="Dán nhiều lượt hội thoại một lúc"
+                format="Mỗi dòng một lượt: câu người kia nói, dấu => , câu người học đáp, dấu = , nghĩa tiếng Việt."
+                example={'Hello! => Hi! ## Hello! = Xin chào!\nWhere are you from? => I am from Vietnam. = Tôi đến từ Việt Nam.'}
+                parse={parseDialogues}
+                onAdd={(rows) => set('dialogues', [...draft.dialogues, ...rows])}
+              />
               <p className={cn(hint, 'mb-3')}>
                 Mỗi dòng là một lượt: người kia nói, rồi người học đáp.
                 <span className="sm:hidden"> Kéo ngang bảng để xem đủ các cột.</span>
@@ -1598,6 +1642,15 @@ export function UnitEditor({
 
           {tab === 'story' && (
             <section className={`${card} space-y-4 p-4`}>
+              <PasteRows
+                title="Dán nhiều câu hỏi một lúc"
+                format="Mỗi dòng một câu hỏi: câu hỏi, dấu * , đáp án đúng, rồi các đáp án sai cách nhau bằng dấu |."
+                example={'Who is Tom? * A new student | A teacher | Mai\'s brother\nWhere is Tom from? * Canada | Vietnam | Japan'}
+                parse={parseStoryQuestions}
+                onAdd={(rows) =>
+                  set('story', { ...draft.story, questions: [...draft.story.questions, ...rows] })
+                }
+              />
               <p className={hint}>
                 Phần đọc hiểu của bài. Cần đúng 6 câu hỏi.
                 <span className="sm:hidden"> Kéo ngang bảng để xem đủ các cột.</span>
@@ -1819,23 +1872,6 @@ export function UnitEditor({
             />
           )}
 
-          {tab === 'file' && (
-            <section className={`${card} p-4`}>
-              <p className={cn(hint, 'mb-3')}>
-                Tệp máy dựng ghi ra từ bài này. Chỉ mở khi cần đối chiếu với app.
-              </p>
-              <p className="text-xs text-fg-4">
-                <code className="text-fg">
-                  {renderUnitFile(order, normalize(draft)).fileName}
-                </code>
-              </p>
-              <pre
-                className={cn(log, 'mt-3 max-h-[36rem] overflow-auto leading-relaxed text-fg-2')}
-              >
-                {renderUnitFile(order, normalize(draft)).source}
-              </pre>
-            </section>
-          )}
         </ViewTransition>
       </div>
     </PageTransition>

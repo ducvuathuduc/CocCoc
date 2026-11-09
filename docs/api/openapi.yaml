@@ -348,7 +348,7 @@
           {
             "name": "version",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "minLength": 1,
@@ -613,11 +613,129 @@
         }
       }
     },
+    "/v1/courses/{courseId}/lessons/{lessonId}/bundle": {
+      "get": {
+        "operationId": "getCourseBundle",
+        "summary": "Get one lesson bundle inside one course",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. A lessonId is only unique inside a course (every course numbers its nodes u<n>n<m>l<k>), so the course is part of the lesson identity. Omit version to read the course's published pointer, or pass it to read an immutable version. Answers NOT_FOUND when the course does not author that lessonId.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-COURSE-001",
+          "FR-CONTENT-001",
+          "FR-LISTEN-001"
+        ],
+        "x-tables": [
+          "l_content_versions"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "name": "lessonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonBundle"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
     "/v1/lessons/{lessonId}/bundle": {
       "get": {
         "operationId": "getBundle",
         "summary": "Get exact published version",
-        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Get exact published version",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Legacy read kept for clients that predate multi-course publishing: it resolves a lessonId without naming a course. Because a lessonId is only unique inside a course, it answers only when exactly one published course authors it; when several do it returns 409 LESSON_AMBIGUOUS with details.courseIds and never picks one. New clients use GET /v1/courses/{courseId}/lessons/{lessonId}/bundle.",
         "tags": [
           "learning"
         ],
@@ -661,7 +779,7 @@
           {
             "name": "version",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "minLength": 1,
@@ -1671,6 +1789,451 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/PublishRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/courses/{courseId}/content-versions": {
+      "get": {
+        "operationId": "listContentVersions",
+        "summary": "Maintainer: publish history with derived version status.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Lists every published version of a course with a derived status (LIVE = current course pointer, RETIRED = retiredAt set, SUPERSEDED = otherwise). No version is ever deleted.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-CONTENT-001",
+          "FR-ADMIN-001"
+        ],
+        "x-tables": [
+          "l_courses",
+          "l_content_versions"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentVersionList"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        }
+      }
+    },
+    "/v1/admin/courses/{courseId}/unpublish": {
+      "post": {
+        "operationId": "unpublishCourse",
+        "summary": "Maintainer: take a course offline without deleting history.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. PUBLISHED -> DRAFT and clears the live pointer; the course disappears from Mobile's listCourses but every version row is preserved. Idempotent when already offline.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-CONTENT-001",
+          "FR-ADMIN-001"
+        ],
+        "x-tables": [
+          "l_courses",
+          "l_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnpublishRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/courses/{courseId}/content-versions/{versionId}/retire": {
+      "post": {
+        "operationId": "retireVersion",
+        "summary": "Maintainer: permanently retire one content version.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Sets retiredAt on the version. If it was the live version, the course is also taken offline (DRAFT). A retired version can never become live again (rollback refuses it). No row is deleted. Idempotent when already retired.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-CONTENT-001",
+          "FR-ADMIN-001"
+        ],
+        "x-tables": [
+          "l_courses",
+          "l_content_versions",
+          "l_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          {
+            "name": "versionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetireRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/courses/{courseId}/rollback": {
+      "post": {
+        "operationId": "rollbackCourse",
+        "summary": "Maintainer: re-point the course at a previous version.",
+        "description": "Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Atomically moves the course pointer to a non-retired, still-verifiable version; the previously-live version is left untouched (SUPERSEDED by derivation) so history is never lost. Refuses a retired or missing target. expectedPublishedVersion provides optimistic concurrency.",
+        "tags": [
+          "learning"
+        ],
+        "x-owner": "learning",
+        "x-requirements": [
+          "FR-CONTENT-001",
+          "FR-ADMIN-001"
+        ],
+        "x-tables": [
+          "l_courses",
+          "l_content_versions",
+          "l_receipts"
+        ],
+        "servers": [
+          {
+            "url": "https://learning.example.invalid",
+            "description": "Configured service domain; example.invalid is intentionally non-routable"
+          }
+        ],
+        "security": [
+          {
+            "appwriteJWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceParent"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Request-ID": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 64
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "401": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "403": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "404": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "409": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "413": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "429": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "500": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "503": {
+            "$ref": "#/components/responses/Failure"
+          },
+          "504": {
+            "$ref": "#/components/responses/Failure"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RollbackRequest"
               }
             }
           }
@@ -9396,6 +9959,147 @@
       }
     },
     "schemas": {
+      "ContentVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "courseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "versionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "LIVE",
+              "SUPERSEDED",
+              "RETIRED"
+            ]
+          },
+          "manifestSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "retiredAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "courseId",
+          "versionId",
+          "status",
+          "manifestSha256",
+          "publishedAt",
+          "retiredAt"
+        ]
+      },
+      "ContentVersionList": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContentVersion"
+            }
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "asOf"
+        ]
+      },
+      "UnpublishRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedPublishedVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": []
+      },
+      "RetireRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedPublishedVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": []
+      },
+      "RollbackRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "targetVersionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "expectedPublishedVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "targetVersionId"
+        ]
+      },
       "Error": {
         "type": "object",
         "additionalProperties": false,

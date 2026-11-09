@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { foldKey } from '@/cms/search';
+import { jumpIndex } from '@/server/actions/jump';
 import { NAV_GROUPS } from '@/lib/words';
 import { field } from '@/lib/ui';
 import { cn } from '@/lib/utils';
@@ -37,24 +38,35 @@ const PAGES: Row[] = NAV_GROUPS.flatMap((group) => group.links).map((link) => ({
 const LIMIT = 12;
 
 export function QuickJump({
-  lessons,
   onNavigate,
   openButton,
 }: {
-  lessons: JumpLesson[];
   onNavigate?: () => void;
-  /** Replaces the default labelled trigger, e.g. the round search button in the top bar. */
+  /** Replaces the default labelled trigger, e.g. the text button in the top bar. */
   openButton?: (open: () => void) => React.ReactNode;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [index, setIndex] = useState(0);
+  const [lessons, setLessons] = useState<JumpLesson[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [failed, setFailed] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const active = useRef<HTMLButtonElement>(null);
 
+  // The index is fetched the first time the palette opens, so no page pays for it up front.
+  const load = useCallback(() => {
+    setLoading(true);
+    setFailed(false);
+    jumpIndex()
+      .then(setLessons)
+      .catch(() => setFailed(true))
+      .finally(() => setLoading(false));
+  }, []);
+
   const rows = useMemo<Row[]>(() => {
-    const lessonRows: Row[] = lessons.map((lesson) => ({
+    const lessonRows: Row[] = (lessons ?? []).map((lesson) => ({
       key: `lesson:${lesson.courseId}/${lesson.unitId}`,
       primary: `Bài ${lesson.order + 1} · ${lesson.title || '(chưa đặt tên)'}`,
       secondary: lesson.theme,
@@ -76,7 +88,8 @@ export function QuickJump({
     setQuery('');
     setIndex(0);
     setOpen(true);
-  }, []);
+    if (lessons === null && !loading) load();
+  }, [lessons, loading, load]);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -132,18 +145,7 @@ export function QuickJump({
           onClick={show}
           className="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-input-bg px-3 py-2 text-sm text-fg-4 transition-colors hover:border-line-strong hover:text-fg"
         >
-          <span className="flex items-center gap-2">
-            <svg viewBox="0 0 20 20" className="size-4 shrink-0" aria-hidden="true">
-              <path
-                d="M9 3.5a5.5 5.5 0 1 1-3.9 9.4M13.4 13.4 17 17"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
-            Đi tới một bài học
-          </span>
+          Đi tới một bài học
           <kbd className="rounded border border-line bg-elevated px-1.5 py-0.5 text-[10px] font-medium">
             Ctrl K
           </kbd>
@@ -200,7 +202,24 @@ export function QuickJump({
                   </button>
                 </li>
               ))}
-              {rows.length === 0 && (
+              {lessons === null && !failed && (
+                <li className="px-4 py-3 text-sm text-fg-3" aria-live="polite">
+                  Đang tải danh sách bài…
+                </li>
+              )}
+              {failed && (
+                <li className="px-4 py-3 text-sm text-fg-3">
+                  Chưa tải được danh sách bài.{' '}
+                  <button
+                    type="button"
+                    onClick={load}
+                    className="font-medium text-primary-text hover:underline"
+                  >
+                    Thử lại
+                  </button>
+                </li>
+              )}
+              {rows.length === 0 && lessons !== null && (
                 <li className="px-4 py-6 text-sm text-fg-3">
                   Không có bài nào khớp “{query}”. Thử ít chữ hơn, hoặc gõ một từ có trong tên bài.
                 </li>

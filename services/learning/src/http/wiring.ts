@@ -11,7 +11,17 @@ import {
   type RouteContext,
   type ServiceWiring,
 } from '../../../shared/src/transport.js';
-import { getBundle, getManifest, listCourses, publishContent } from '../application/content.js';
+import {
+  getBundle,
+  getCourseBundle,
+  getManifest,
+  listContentVersions,
+  listCourses,
+  publishContent,
+  retireVersion,
+  rollbackCourse,
+  unpublishCourse,
+} from '../application/content.js';
 import type { LearningDeps } from '../application/deps.js';
 import { getEnergy } from '../application/energy.js';
 import { enrollCourse, enrollmentCommand, getPath } from '../application/enrollment.js';
@@ -81,6 +91,19 @@ export function learningRoutes(deps: LearningDeps): Route[] {
           pathParam('courseId'),
           v.cursorOf(q),
           v.limitOf(q, 24),
+        ),
+      };
+    }),
+    user('GET', '/v1/courses/{courseId}/lessons/{lessonId}/bundle', async (c) => {
+      userId(c);
+      const q = noBodyQuery(c, ['version']);
+      return {
+        status: 200,
+        body: await getCourseBundle(
+          deps,
+          pathParam('courseId'),
+          pathParam('lessonId'),
+          q['version'] ? v.id(q['version'], 'version') : undefined,
         ),
       };
     }),
@@ -336,6 +359,79 @@ export function learningRoutes(deps: LearningDeps): Route[] {
           idempotencyKey(),
           hash('publishContent', body),
           c.requestId,
+        ),
+      );
+    }),
+    user('GET', '/v1/admin/courses/{courseId}/content-versions', async (c) => {
+      const uid = userId(c);
+      return {
+        status: 200,
+        body: await listContentVersions(deps, uid, v.id(pathParam('courseId'), 'courseId')),
+      };
+    }),
+    user('POST', '/v1/admin/courses/{courseId}/unpublish', async (c) => {
+      const uid = userId(c);
+      const courseId = v.id(pathParam('courseId'), 'courseId');
+      const b = v.object(c.body, 'body', ['expectedPublishedVersion'], []);
+      const expectedPublishedVersion =
+        b['expectedPublishedVersion'] == null
+          ? null
+          : v.id(b['expectedPublishedVersion'], 'expectedPublishedVersion');
+      return fromReceipt(
+        await unpublishCourse(
+          deps,
+          uid,
+          courseId,
+          expectedPublishedVersion,
+          idempotencyKey(),
+          hash('unpublishCourse', { courseId, expectedPublishedVersion }),
+        ),
+      );
+    }),
+    user('POST', '/v1/admin/courses/{courseId}/content-versions/{versionId}/retire', async (c) => {
+      const uid = userId(c);
+      const courseId = v.id(pathParam('courseId'), 'courseId');
+      const versionId = v.id(pathParam('versionId'), 'versionId');
+      const b = v.object(c.body, 'body', ['expectedPublishedVersion'], []);
+      const expectedPublishedVersion =
+        b['expectedPublishedVersion'] == null
+          ? null
+          : v.id(b['expectedPublishedVersion'], 'expectedPublishedVersion');
+      return fromReceipt(
+        await retireVersion(
+          deps,
+          uid,
+          courseId,
+          versionId,
+          expectedPublishedVersion,
+          idempotencyKey(),
+          hash('retireVersion', { courseId, versionId, expectedPublishedVersion }),
+        ),
+      );
+    }),
+    user('POST', '/v1/admin/courses/{courseId}/rollback', async (c) => {
+      const uid = userId(c);
+      const courseId = v.id(pathParam('courseId'), 'courseId');
+      const b = v.object(
+        c.body,
+        'body',
+        ['targetVersionId', 'expectedPublishedVersion'],
+        ['targetVersionId'],
+      );
+      const targetVersionId = v.id(b['targetVersionId'], 'targetVersionId');
+      const expectedPublishedVersion =
+        b['expectedPublishedVersion'] == null
+          ? null
+          : v.id(b['expectedPublishedVersion'], 'expectedPublishedVersion');
+      return fromReceipt(
+        await rollbackCourse(
+          deps,
+          uid,
+          courseId,
+          targetVersionId,
+          expectedPublishedVersion,
+          idempotencyKey(),
+          hash('rollbackCourse', { courseId, targetVersionId, expectedPublishedVersion }),
         ),
       );
     }),

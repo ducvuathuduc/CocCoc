@@ -28,6 +28,8 @@ export async function authoredContent(kit, patches) {
   return {
     files: {
       read: async (fileId) => texts.get(fileId) ?? (await local.files.read(fileId)),
+      // Patching modeConfig re-signs bundles only; the media bytes are the committed ones.
+      ...kit.localMediaStore(root),
     },
     publication: { ...publication, manifestSha256: kit.sha256(manifestText) },
   };

@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { cache } from 'react';
 import { config } from './config';
 // The spelled-out path is the hook the harness scripts alias to a fake Appwrite account store;
 // './auth-core' would resolve before the alias and drag a real Appwrite call into every check.
@@ -30,19 +31,21 @@ export async function readSessionSecret(): Promise<string | undefined> {
   return jar.get(SESSION_COOKIE)?.value;
 }
 
-export async function currentIdentity(): Promise<AdminIdentity | null> {
-  const identity = await resolveIdentity(await readSessionSecret());
+/** One Account.get per request, shared by every guard below. */
+const sessionIdentity = cache(() => readSessionSecret().then(resolveIdentity));
+
+export const currentIdentity = cache(async (): Promise<AdminIdentity | null> => {
+  const identity = await sessionIdentity();
   return identity && isAdmin(identity) ? identity : null;
-}
+});
 
 /** For pages: sends the visitor to the sign-in screen when there is no admin session. */
-export async function requireAdmin(): Promise<AdminIdentity> {
-  const secret = await readSessionSecret();
-  const identity = await resolveIdentity(secret);
+export const requireAdmin = cache(async (): Promise<AdminIdentity> => {
+  const identity = await sessionIdentity();
   if (!identity) redirect('/login');
   if (!isAdmin(identity)) redirect('/denied');
   return identity;
-}
+});
 
 /** For Server Actions: throws instead of redirecting, so the caller can show an error toast. */
 export async function assertAdmin(): Promise<AdminIdentity> {

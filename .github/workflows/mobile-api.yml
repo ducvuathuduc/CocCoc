@@ -1,0 +1,123 @@
+name: Mobile API lane
+# Flutter tests that call a real Learning service instead of the bundled fixtures. mobile.yml keeps
+# the mock-mode suite and the real-profile Android build; this lane is independent of it, so a
+# failure here never hides a mock-mode failure and the reverse.
+on:
+  pull_request:
+    paths:
+      - apps/mobile/**
+      - services/learning/**
+      - services/shared/**
+      - content/**
+      - tools/content/**
+      - docs/api/openapi.yaml
+      - tools/scripts/api-lane-backend.mjs
+      - tools/scripts/mobile-api-lane.mjs
+      - tools/scripts/flutter-toolchain.mjs
+      - tools/scripts/dev-services.mjs
+      - tools/toolchain.json
+      - package.json
+      - pnpm-workspace.yaml
+      - pnpm-lock.yaml
+      - .github/workflows/mobile-api.yml
+  push:
+    paths:
+      - apps/mobile/**
+      - services/learning/**
+      - services/shared/**
+      - content/**
+      - tools/content/**
+      - docs/api/openapi.yaml
+      - tools/scripts/api-lane-backend.mjs
+      - tools/scripts/mobile-api-lane.mjs
+      - tools/scripts/flutter-toolchain.mjs
+      - tools/scripts/dev-services.mjs
+      - tools/toolchain.json
+      - package.json
+      - pnpm-workspace.yaml
+      - pnpm-lock.yaml
+      - .github/workflows/mobile-api.yml
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      build_release:
+        description: Also build the release-profile APK with config/real.public.json
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: mobile-api-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  FLUTTER_VERSION: 3.47.0
+jobs:
+  api-lane:
+    name: Flutter tests against the local Learning backend
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - name: Use Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22.23.3
+      - run: npm install --global pnpm@10.15.0
+      - run: pnpm install --frozen-lockfile
+      - name: Install pinned Flutter SDK
+        shell: bash
+        run: >
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git
+          "$RUNNER_TEMP/flutter"
+
+          echo "FLUTTER_ROOT=$RUNNER_TEMP/flutter" >> "$GITHUB_ENV"
+
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Prepare Flutter dependencies
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          flutter config --no-analytics
+          flutter pub get --enforce-lockfile
+      - name: Format check of the lane tests
+        working-directory: apps/mobile
+        run: dart format --output=none --set-exit-if-changed test_api
+      - name: Run Flutter tests in API mode
+        run: node tools/scripts/mobile-api-lane.mjs
+  release-profile:
+    name: Build the release-profile APK
+    if: github.event_name == 'workflow_dispatch' && inputs.build_release
+    needs: api-lane
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - name: Install pinned Flutter SDK
+        shell: bash
+        run: >
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git
+          "$RUNNER_TEMP/flutter"
+
+          echo "FLUTTER_ROOT=$RUNNER_TEMP/flutter" >> "$GITHUB_ENV"
+
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Prepare Flutter dependencies
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          flutter config --no-analytics
+          flutter precache --android
+          flutter pub get --enforce-lockfile
+      - name: Build release APK
+        working-directory: apps/mobile
+        run: flutter build apk --release --no-pub --dart-define-from-file=config/real.public.json
+      - name: Upload release APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cocenglish-release-apk
+          path: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 3

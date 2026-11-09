@@ -4,22 +4,30 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { importCourseFromRepo } from '@/server/actions/import';
-import { big, hint, primary } from '@/lib/ui';
+import { button, hint, primary } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
 /**
- * The one control a new operator needs before there is anything to edit: turn the already-written
- * lessons into drafts. Deliberally a single button with a plain sentence — the three-way
- * import/export/gate bar is for the release screen, not for a course that has no content yet.
+ * Turns authoring tables that are already in the repository into editable drafts. Deliberately one
+ * button and one plain sentence: the three-way import/export/gate bar belongs on the release screen,
+ * not on a course that has no draft yet.
  */
-export function ImportCourseButton({ courseId }: { courseId: string }) {
+export function ImportCourseButton({
+  courseId,
+  version = 'v2',
+  variant = 'primary',
+}: {
+  courseId: string;
+  version?: string;
+  variant?: 'primary' | 'quiet';
+}) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
 
   async function run() {
     setBusy(true);
     try {
-      const result = await importCourseFromRepo(courseId);
+      const result = await importCourseFromRepo(courseId, version);
       if (!result.ok) {
         toast.error(result.message ?? 'Không lấy được nội dung cũ.');
         return;
@@ -36,8 +44,13 @@ export function ImportCourseButton({ courseId }: { courseId: string }) {
 
   return (
     <div className="space-y-2">
-      <button type="button" className={cn(primary, big)} onClick={run} disabled={busy}>
-        {busy ? 'Đang lấy bài…' : 'Lấy các bài đã viết sẵn'}
+      <button
+        type="button"
+        className={cn(variant === 'primary' ? primary : button, 'min-h-11 px-4')}
+        onClick={run}
+        disabled={busy}
+      >
+        {busy ? 'Đang lấy bài…' : `Lấy khóa ${courseId} (${version})`}
       </button>
       <p className={hint}>
         Máy đọc danh sách bài trong thư mục nội dung gốc và tạo một bản soạn cho từng bài. Nội dung

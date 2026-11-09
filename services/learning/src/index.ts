@@ -23,6 +23,7 @@ import { energyModeFrom } from './application/energy.js';
 import { dispatchOutbox } from './application/outbox.js';
 import { createImmediateRelay, httpDeliver } from './application/relay.js';
 import { parseContentKeyring } from './content/integrity.js';
+import { mediaPolicyFromEnv } from './content/media.js';
 import { createContentRepository, type ContentFileStore } from './content/repository.js';
 import { createStorageContentFiles } from './content/storage-files.js';
 import { learningHandler, learningWiring } from './http/wiring.js';
@@ -79,7 +80,7 @@ const files: ContentFileStore = config
       config,
       keyed((client) => new Storage(client)),
     )
-  : { read: async () => null };
+  : { read: async () => null, stat: async () => new Map(), readBytes: async () => null };
 let contentKeyring = new Map();
 try {
   contentKeyring = new Map(parseContentKeyring(env['COC_CONTENT_PUBLIC_KEYS']));
@@ -88,7 +89,12 @@ try {
 }
 const deps: LearningDeps = {
   persistence,
-  content: createContentRepository({ persistence, files, keyring: contentKeyring }),
+  content: createContentRepository({
+    persistence,
+    files,
+    keyring: contentKeyring,
+    media: mediaPolicyFromEnv(env),
+  }),
   nowMs: Date.now,
   newId: randomUUID,
   maintainers: new Set((env['COC_MAINTAINER_USER_IDS'] ?? '').split(',').filter(Boolean)),

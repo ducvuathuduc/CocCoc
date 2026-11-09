@@ -124,6 +124,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/courses/{courseId}/lessons/{lessonId}/bundle": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get one lesson bundle inside one course
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. A lessonId is only unique inside a course (every course numbers its nodes u<n>n<m>l<k>), so the course is part of the lesson identity. Omit version to read the course's published pointer, or pass it to read an immutable version. Answers NOT_FOUND when the course does not author that lessonId.
+         */
+        get: operations["getCourseBundle"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lessons/{lessonId}/bundle": {
         parameters: {
             query?: never;
@@ -133,7 +153,7 @@ export interface paths {
         };
         /**
          * Get exact published version
-         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Get exact published version
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Legacy read kept for clients that predate multi-course publishing: it resolves a lessonId without naming a course. Because a lessonId is only unique inside a course, it answers only when exactly one published course authors it; when several do it returns 409 LESSON_AMBIGUOUS with details.courseIds and never picks one. New clients use GET /v1/courses/{courseId}/lessons/{lessonId}/bundle.
          */
         get: operations["getBundle"];
         put?: never;
@@ -318,6 +338,86 @@ export interface paths {
          * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Requires verified maintainer; manifest/assets validated before pointer flip.
          */
         post: operations["publishContent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/courses/{courseId}/content-versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Maintainer: publish history with derived version status.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Lists every published version of a course with a derived status (LIVE = current course pointer, RETIRED = retiredAt set, SUPERSEDED = otherwise). No version is ever deleted.
+         */
+        get: operations["listContentVersions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/courses/{courseId}/unpublish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Maintainer: take a course offline without deleting history.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. PUBLISHED -> DRAFT and clears the live pointer; the course disappears from Mobile's listCourses but every version row is preserved. Idempotent when already offline.
+         */
+        post: operations["unpublishCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/courses/{courseId}/content-versions/{versionId}/retire": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Maintainer: permanently retire one content version.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Sets retiredAt on the version. If it was the live version, the course is also taken offline (DRAFT). A retired version can never become live again (rollback refuses it). No row is deleted. Idempotent when already retired.
+         */
+        post: operations["retireVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/courses/{courseId}/rollback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Maintainer: re-point the course at a previous version.
+         * @description Normative behavior: docs/product/SRS.md and docs/api/EVENTS_ERRORS.md. Atomically moves the course pointer to a non-retired, still-verifiable version; the previously-live version is left untouched (SUPERSEDED by derivation) so history is never lost. Refuses a retired or missing target. expectedPublishedVersion provides optimistic concurrency.
+         */
+        post: operations["rollbackCourse"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1764,6 +1864,31 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ContentVersion: {
+            courseId: string;
+            versionId: string;
+            /** @enum {string} */
+            status: "LIVE" | "SUPERSEDED" | "RETIRED";
+            manifestSha256: string;
+            /** Format: date-time */
+            publishedAt: string;
+            retiredAt: string | null;
+        };
+        ContentVersionList: {
+            items: components["schemas"]["ContentVersion"][];
+            /** Format: date-time */
+            asOf: string;
+        };
+        UnpublishRequest: {
+            expectedPublishedVersion?: string | null;
+        };
+        RetireRequest: {
+            expectedPublishedVersion?: string | null;
+        };
+        RollbackRequest: {
+            targetVersionId: string;
+            expectedPublishedVersion?: string | null;
+        };
         Error: {
             error: {
                 code: string;
@@ -3421,8 +3546,8 @@ export interface operations {
     };
     getManifest: {
         parameters: {
-            query: {
-                version: string;
+            query?: {
+                version?: string;
             };
             header?: {
                 "X-Request-ID"?: components["parameters"]["RequestId"];
@@ -3535,10 +3660,48 @@ export interface operations {
             504: components["responses"]["Failure"];
         };
     };
+    getCourseBundle: {
+        parameters: {
+            query?: {
+                version?: string;
+            };
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path: {
+                courseId: string;
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonBundle"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
     getBundle: {
         parameters: {
-            query: {
-                version: string;
+            query?: {
+                version?: string;
             };
             header?: {
                 "X-Request-ID"?: components["parameters"]["RequestId"];
@@ -3901,6 +4064,165 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PublishRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    listContentVersions: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+            };
+            path: {
+                courseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContentVersionList"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    unpublishCourse: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                courseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnpublishRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    retireVersion: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                courseId: string;
+                versionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RetireRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Receipt"];
+                };
+            };
+            400: components["responses"]["Failure"];
+            401: components["responses"]["Failure"];
+            403: components["responses"]["Failure"];
+            404: components["responses"]["Failure"];
+            409: components["responses"]["Failure"];
+            413: components["responses"]["Failure"];
+            429: components["responses"]["Failure"];
+            500: components["responses"]["Failure"];
+            503: components["responses"]["Failure"];
+            504: components["responses"]["Failure"];
+        };
+    };
+    rollbackCourse: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Request-ID"?: components["parameters"]["RequestId"];
+                traceparent?: components["parameters"]["TraceParent"];
+                "Idempotency-Key": components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                courseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RollbackRequest"];
             };
         };
         responses: {

@@ -69,13 +69,16 @@ export interface ImportResult {
  * server-action error with a digest, so the operator would read "a server-side exception" instead of
  * the one sentence that tells them which folder is missing.
  */
-export async function importCourseFromRepo(courseId: string): Promise<ImportResult> {
+export async function importCourseFromRepo(
+  courseId: string,
+  version = 'v2',
+): Promise<ImportResult> {
   const actor = await assertAdmin();
   const c = config();
   const script = path.join(c.repoRoot, 'apps', 'cms', 'scripts', 'read-authored.mjs');
   let stdout: string;
   try {
-    ({ stdout } = await run(process.execPath, [script, courseId, 'v2'], {
+    ({ stdout } = await run(process.execPath, [script, courseId, version], {
       cwd: c.repoRoot,
       maxBuffer: 32 * 1024 * 1024,
     }));
@@ -85,7 +88,7 @@ export async function importCourseFromRepo(courseId: string): Promise<ImportResu
     console.error(`[cms] read-authored.mjs failed for ${courseId}`, error);
     return {
       ok: false,
-      message: `Không đọc được bảng tác giả của khóa “${courseId}”. Kiểm tra content/${courseId}/source/v2/course.mjs có tồn tại và đúng mã khóa không.`,
+      message: `Không đọc được bảng tác giả của khóa “${courseId}”. Kiểm tra content/${courseId}/source/${version}/course.mjs có tồn tại và đúng mã khóa không.`,
     };
   }
   const authored = JSON.parse(stdout) as ReaderOutput;
@@ -99,7 +102,7 @@ export async function importCourseFromRepo(courseId: string): Promise<ImportResu
   const draft: CourseDraft = {
     course: { ...authored.course, status: 'ACTIVE' },
     sections: authored.sections,
-    version: 'v2',
+    version,
   };
 
   const store = getStore();

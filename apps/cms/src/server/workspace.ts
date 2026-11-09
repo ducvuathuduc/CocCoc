@@ -1,9 +1,16 @@
+import { cache } from 'react';
 import { lintUnit } from '@/cms/lint';
 import { structureIssues } from '@/cms/structure';
 import { config } from './config';
-import { buildRuns, lastLivePublish, toSummary, type CourseSummary } from './queries';
+import {
+  buildRuns,
+  courseUnits,
+  getCourseRecord,
+  lastLivePublish,
+  toSummary,
+  type CourseSummary,
+} from './queries';
 import { publishReadiness } from './publish-state';
-import { getStore } from './store';
 
 export type LessonState = 'empty' | 'error' | 'warning' | 'ready';
 
@@ -56,13 +63,18 @@ export interface WorkspaceData {
 /**
  * The lesson workspace reads one course, its units and the build history once. A lesson's status is
  * the same lint the editor runs, so the list and the editor cannot disagree about what is broken.
+ * The reads are independent, so they fly together; the shared query cache dedupes what readiness
+ * asks again.
  */
-export async function workspaceData(courseId: string): Promise<WorkspaceData | null> {
-  const store = getStore();
-  const course = await store.getCourse(courseId);
+export const workspaceData = cache(async (courseId: string): Promise<WorkspaceData | null> => {
+  const [course, units, runs, readiness] = await Promise.all([
+    getCourseRecord(courseId),
+    courseUnits(courseId),
+    buildRuns(courseId),
+    publishReadiness(courseId),
+  ]);
   if (!course) return null;
 
-  const units = await store.listUnits(courseId);
   const lessons: WorkspaceLesson[] = units.map((unit) => {
     const issues = lintUnit(unit.draft);
     const errors = issues.filter((issue) => issue.level === 'error').length;
@@ -104,8 +116,6 @@ export async function workspaceData(courseId: string): Promise<WorkspaceData | n
     course.draft.sections,
     units.map((unit) => unit.draft.theme),
   );
-  const readiness = await publishReadiness(courseId);
-  const runs = await buildRuns(courseId);
   // A dry run proved the content but reached no learner, so it cannot be reported as published.
   const lastPublish = lastLivePublish(runs);
   const gateAt = readiness?.gateRunAt;
@@ -153,4 +163,4 @@ export async function workspaceData(courseId: string): Promise<WorkspaceData | n
       lessons[0] ??
       null,
   };
-}
+});
