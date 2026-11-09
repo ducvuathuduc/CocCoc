@@ -10,6 +10,7 @@ Generated from [OpenAPI](openapi.yaml); wire DTOs/headers/errors/idempotency/rat
 | GET /v1/courses/{courseId}/manifest | getManifest / learning | FR-COURSE-001, FR-CONTENT-001 | l_content_versions | JWT or specified internal signature |
 | POST /v1/enrollments | enrollCourse / learning | FR-COURSE-002 | l_enrollments, l_receipts | JWT or specified internal signature |
 | GET /v1/courses/{courseId}/path | getPath / learning | FR-PATH-001 | l_enrollments, l_content_versions | JWT or specified internal signature |
+| GET /v1/courses/{courseId}/lessons/{lessonId}/bundle | getCourseBundle / learning | FR-COURSE-001, FR-CONTENT-001, FR-LISTEN-001 | l_content_versions | JWT or specified internal signature |
 | GET /v1/lessons/{lessonId}/bundle | getBundle / learning | FR-CONTENT-001, FR-LISTEN-001 | l_content_versions | JWT or specified internal signature |
 | POST /v1/sessions | startSession / learning | FR-LESSON-001, FR-COURSE-002, FR-PRACTICE-001, FR-PATH-002, FR-ACTIVITY-001, FR-ACTIVITY-002 | l_sessions, l_active_slots, l_receipts | JWT or specified internal signature |
 | GET /v1/sessions/{sessionId} | getSession / learning | FR-LESSON-004 | l_sessions, l_answers | JWT or specified internal signature |
@@ -20,6 +21,10 @@ Generated from [OpenAPI](openapi.yaml); wire DTOs/headers/errors/idempotency/rat
 | GET /v1/review | getReview / learning | FR-PRACTICE-001, FR-PRACTICE-002 | l_review_items | JWT or specified internal signature |
 | POST /v1/reports | createReport / learning | FR-LESSON-005 | l_reports, l_receipts | JWT or specified internal signature |
 | POST /v1/admin/content-versions | publishContent / learning | FR-CONTENT-001, FR-ADMIN-001 | l_courses, l_content_versions, l_receipts | JWT or specified internal signature |
+| GET /v1/admin/courses/{courseId}/content-versions | listContentVersions / learning | FR-CONTENT-001, FR-ADMIN-001 | l_courses, l_content_versions | JWT or specified internal signature |
+| POST /v1/admin/courses/{courseId}/unpublish | unpublishCourse / learning | FR-CONTENT-001, FR-ADMIN-001 | l_courses, l_receipts | JWT or specified internal signature |
+| POST /v1/admin/courses/{courseId}/content-versions/{versionId}/retire | retireVersion / learning | FR-CONTENT-001, FR-ADMIN-001 | l_courses, l_content_versions, l_receipts | JWT or specified internal signature |
+| POST /v1/admin/courses/{courseId}/rollback | rollbackCourse / learning | FR-CONTENT-001, FR-ADMIN-001 | l_courses, l_content_versions, l_receipts | JWT or specified internal signature |
 | GET /v1/me | getMe / progress | FR-AUTH-002, FR-SET-001, FR-GAME-004 | p_profiles, p_achievements | JWT or specified internal signature |
 | PATCH /v1/me | updateMe / progress | FR-SET-001 | p_profiles, p_zone_history, p_receipts | JWT or specified internal signature |
 | POST /v1/me/initialize | initializeProfile / progress | FR-AUTH-001 | p_profiles, p_rewards, p_reward_ledger, p_zone_history, p_receipts | JWT or specified internal signature |
