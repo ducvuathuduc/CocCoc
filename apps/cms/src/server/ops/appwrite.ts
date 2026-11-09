@@ -1,11 +1,14 @@
 import { Client, Query, TablesDB, Users } from 'node-appwrite';
 import type { Models } from 'node-appwrite';
 import { statusOf, withTransientRetry } from '../store/retry';
-import { APP_TABLE, type AppTableName, type LearnerDirectory, type LearnerSummary } from './port';
+import { APP_TABLE, type AppTableName, type LearnerDirectory, type LearnerSummary, type EntitlementCount, type EntitlementRow, type OpenCounts, type ProfileRow } from './port';
 
 type AnyRow = Models.Row & Record<string, unknown>;
 
 const ACCOUNTS_PAGE = 50;
+
+/** The six values `p_entitlements.status` allows; one count each is six cheap indexed queries. */
+const ENTITLEMENT_STATUSES = ['ACTIVE', 'GRACE', 'HOLD', 'CANCELED', 'EXPIRED', 'REVOKED'] as const;
 
 const toSummary = (user: Models.User<Models.Preferences>): LearnerSummary => ({
   userId: user.$id,
@@ -87,6 +90,60 @@ export class AppwriteLearnerDirectory implements LearnerDirectory {
       Query.orderDesc('createdAt'),
       Query.limit(limit),
     ]);
+  }
+
+  async countAccounts(): Promise<number> {
+    const list = await withTransientRetry(() =>
+      this.people.list({ queries: [Query.limit(1)] }),
+    );
+    return list.total;
+  }
+
+  async entitlementCounts(): Promise<EntitlementCount[]> {
+    return Promise.all(
+      ENTITLEMENT_STATUSES.map(async (status) => ({
+        status,
+        count: await this.count('entitlements', [Query.equal('status', [status])]),
+      })),
+    );
+  }
+
+  async entitlements(limit: number): Promise<EntitlementRow[]> {
+    // No filter and no order: `p_entitlements` has no index on `plan`, and inventing one here would be
+    // the unindexed query this module exists to avoid.
+    return this.list<EntitlementRow>('entitlements', [Query.limit(limit)]);
+  }
+
+  async activeEntitlements(limit: number): Promise<EntitlementRow[]> {
+    return this.list<EntitlementRow>('entitlements', [
+      Query.equal('status', ['ACTIVE']),
+      Query.limit(limit),
+    ]);
+  }
+
+  async profiles(limit: number): Promise<ProfileRow[]> {
+    return this.list<ProfileRow>('profiles', [Query.limit(limit)]);
+  }
+
+  async openCounts(): Promise<OpenCounts> {
+    const [feedback, userReports, contentReports] = await Promise.all([
+      this.count('feedback', [Query.equal('status', ['OPEN'])]),
+      this.count('userReports', [Query.equal('status', ['OPEN'])]),
+      this.count('contentReports', [Query.equal('status', ['OPEN'])]),
+    ]);
+    return { feedback, userReports, contentReports };
+  }
+
+  /** Appwrite returns `total` alongside the page; asking for one row is the cheapest honest count. */
+  private async count(table: AppTableName, filters: string[]): Promise<number> {
+    const result = await withTransientRetry(() =>
+      this.rows.listRows<AnyRow>({
+        databaseId: this.databaseId,
+        tableId: APP_TABLE[table],
+        queries: [...filters, Query.limit(1)],
+      }),
+    );
+    return result.total;
   }
 
   private async list<T>(table: AppTableName, queries: string[]): Promise<T[]> {

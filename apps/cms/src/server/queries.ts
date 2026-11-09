@@ -1,6 +1,8 @@
+import { cache } from 'react';
 import type { AuditEntry, BuildRun, CourseRecord, UnitRecord } from '@/cms/types';
 import { lintUnit, type ContentIssue } from '@/cms/lint';
 import { getStore } from './store';
+import type { UnitIndexEntry } from './store/port';
 
 export interface CourseSummary {
   courseId: string;
@@ -24,61 +26,33 @@ export function toSummary(course: CourseRecord): CourseSummary {
   };
 }
 
-export async function listCourseSummaries(): Promise<CourseSummary[]> {
+/* One render asks the same question from the layout, the page and the readiness panel. React's
+   cache dedupes the in-flight promise per request, so each Appwrite read happens once. */
+export const listCourseSummaries = cache(async (): Promise<CourseSummary[]> => {
   const courses = await getStore().listCourses();
   return courses.map(toSummary);
-}
+});
 
-export async function courseUnits(courseId: string): Promise<UnitRecord[]> {
+export const courseUnits = cache((courseId: string): Promise<UnitRecord[]> => {
   return getStore().listUnits(courseId);
-}
+});
 
-export interface UnitStat {
-  unitId: string;
-  theme: string;
-  title: string;
-  cefr: string;
-  order: number;
-  revision: number;
-  updatedAt: string;
-  vocab: number;
-  sentences: number;
-  dialogues: number;
-  questions: number;
-}
+/** Four columns, no draft payloads: what navigation and structure lists actually read. */
+export const unitIndex = cache((courseId: string): Promise<UnitIndexEntry[]> => {
+  return getStore().listUnitIndex(courseId);
+});
 
-export function toUnitStat(unit: UnitRecord): UnitStat {
-  return {
-    unitId: unit.unitId,
-    theme: unit.draft.theme,
-    title: unit.draft.title,
-    cefr: unit.draft.cefr,
-    order: unit.order,
-    revision: unit.revision,
-    updatedAt: unit.updatedAt,
-    vocab: unit.draft.vocab.length,
-    sentences: unit.draft.sentences.length,
-    dialogues: unit.draft.dialogues.length,
-    questions: unit.draft.story.questions.length,
-  };
-}
-
-export async function courseUnitStats(courseId: string): Promise<UnitStat[]> {
-  const units = await courseUnits(courseId);
-  return units.map(toUnitStat);
-}
-
-export function getCourseRecord(courseId: string): Promise<CourseRecord | null> {
+export const getCourseRecord = cache((courseId: string): Promise<CourseRecord | null> => {
   return getStore().getCourse(courseId);
-}
+});
 
 export function getUnitRecord(courseId: string, unitId: string): Promise<UnitRecord | null> {
   return getStore().getUnit(courseId, unitId);
 }
 
-export function buildRuns(courseId: string): Promise<BuildRun[]> {
+export const buildRuns = cache((courseId: string): Promise<BuildRun[]> => {
   return getStore().listBuildRuns(courseId);
-}
+});
 
 /**
  * The publisher writes the command line it ran as the first log line, so a run that carried
@@ -96,9 +70,9 @@ export function lastLivePublish(runs: BuildRun[]): BuildRun | null {
   );
 }
 
-export function auditLog(limit = 100): Promise<AuditEntry[]> {
+export const auditLog = cache((limit = 100): Promise<AuditEntry[]> => {
   return getStore().listAudit(limit);
-}
+});
 
 export interface UnitReport {
   courseId: string;
@@ -109,11 +83,11 @@ export interface UnitReport {
 }
 
 /** Runs the CMS-side lint over every draft: the same questions the repo gates will ask. */
-export async function contentReport(): Promise<UnitReport[]> {
+export const contentReport = cache(async (): Promise<UnitReport[]> => {
   const courses = await getStore().listCourses();
   const reports: UnitReport[] = [];
   for (const course of courses) {
-    for (const unit of await getStore().listUnits(course.courseId)) {
+    for (const unit of await courseUnits(course.courseId)) {
       const issues = lintUnit(unit.draft);
       reports.push({
         courseId: course.courseId,
@@ -125,4 +99,4 @@ export async function contentReport(): Promise<UnitReport[]> {
     }
   }
   return reports;
-}
+});

@@ -1,14 +1,12 @@
-import { TechDetails } from '@/components/tech-details';
 import { CourseMetaForm } from '@/components/course-tools';
 import { CourseStructure } from '@/components/course-structure';
 import { CourseTabs } from '@/components/course-tabs';
 import { PageTransition } from '@/components/page-transition';
 import { PlacementPanel } from '@/components/placement-panel';
-import { courseUnitStats, getCourseRecord } from '@/server/queries';
+import { getCourseRecord, unitIndex } from '@/server/queries';
 import { requireAdmin } from '@/server/session';
 import { card, hint } from '@/lib/ui';
 import { cn } from '@/lib/utils';
-import { WORDS } from '@/lib/words';
 
 export const instant = false;
 
@@ -35,7 +33,7 @@ export default async function CourseStructurePage({
     );
   }
 
-  const units = await courseUnitStats(courseId);
+  const units = await unitIndex(courseId);
   const unplaced = units.filter(
     (u) => !course.draft.sections.some((s) => s.units.includes(u.theme)),
   ).length;
@@ -74,19 +72,6 @@ export default async function CourseStructurePage({
         </section>
 
         <PlacementPanel courseId={courseId} />
-
-        <TechDetails title="Vì sao cấu trúc lại quan trọng với máy dựng">
-          <p>
-            Bộ dựng của repo nối {WORDS.unit} với {WORDS.section} theo <i>{WORDS.theme}</i> của bài,
-            không theo tên bài. Một bài có {WORDS.theme} mà chưa {WORDS.section} nào liệt kê sẽ làm
-            lần build kế tiếp hỏng ngay.
-          </p>
-          <p>
-            Xóa bài sẽ gỡ {WORDS.theme} của nó khỏi {WORDS.section} trong cùng một thao tác — nếu
-            không, file nội dung gốc còn lại một {WORDS.theme} không bài nào và cổng kiểm tra từ
-            chối bản xuất.
-          </p>
-        </TechDetails>
       </div>
     </PageTransition>
   );

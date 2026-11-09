@@ -1,7 +1,9 @@
-// `node content/tools/check-content.mjs` — offline gate for committed course content:
+// `node content/tools/check-content.mjs [--course <id>] [--version <v>]` — offline gate for committed
+// course content:
 // OpenAPI schema validation of every manifest/bundle (CourseManifest, LessonBundle), file sha256 vs
 // the manifest index and publish.json, Ed25519 signatures (dev keyring, or COC_CONTENT_PUBLIC_KEYS),
-// structural/answer-key validation and all 12 exercise types present. No network.
+// structural/answer-key validation and all 12 exercise types present. No network. Without flags every
+// built course is checked; `--course`/`--version` narrows it to one.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -9,6 +11,7 @@ import { spawnSync } from 'node:child_process';
 import Ajv from 'ajv/dist/2020.js';
 import formats from 'ajv-formats';
 import { loadContentTools, root } from './lib.mjs';
+import { parseCourseTarget } from '../../tools/content/course-target.mjs';
 import { verifyMediaAssets } from '../../tools/content/verify-media.mjs';
 
 const tools = await loadContentTools();
@@ -25,10 +28,24 @@ const keyring = process.env.COC_CONTENT_PUBLIC_KEYS
   : tools.devContentKeyring();
 
 const summary = [];
-for (const courseDir of fs
+// Without flags every built course/version is verified (the repo-wide gate). With `--course` and/or
+// `--version` only that course is verified — the CMS runs the gates per course, and one incomplete
+// course must not fail another course's gate.
+const scoped = process.argv.includes('--course') || process.argv.includes('--version');
+const target = scoped ? parseCourseTarget() : null;
+const courseDirs = fs
   .readdirSync(path.join(root, 'content'))
-  .filter((d) => fs.existsSync(path.join(root, 'content', d, 'dist')))) {
-  for (const version of fs.readdirSync(path.join(root, 'content', courseDir, 'dist'))) {
+  .filter((d) => fs.existsSync(path.join(root, 'content', d, 'dist')))
+  .filter((d) => !target || d === target.courseId);
+if (target && !courseDirs.length)
+  assert.fail(`content/${target.courseId}/dist does not exist; build the course first`);
+for (const courseDir of courseDirs) {
+  const versions = fs
+    .readdirSync(path.join(root, 'content', courseDir, 'dist'))
+    .filter((v) => !target || v === target.version);
+  if (target && !versions.length)
+    assert.fail(`content/${courseDir}/dist/${target.version} does not exist; build it first`);
+  for (const version of versions) {
     const dir = path.join(root, 'content', courseDir, 'dist', version);
     const publish = JSON.parse(fs.readFileSync(path.join(dir, 'publish.json'), 'utf8'));
     const read = (p) => fs.readFileSync(path.join(dir, p), 'utf8');
@@ -74,12 +91,16 @@ for (const courseDir of fs
   }
 }
 assert.ok(summary.length > 0, 'no content found');
-// Published vi_en v2: source-table lint + grader round-trip +
-// OpenAPI + determinism against the committed build report (tools/content/lint-course.mjs).
-const lint = spawnSync(process.execPath, [path.join(root, 'tools/content/lint-course.mjs')], {
-  encoding: 'utf8',
-});
-assert.equal(lint.status, 0, `v2 content lint failed:\n${lint.stderr}${lint.stdout}`);
+// Source-table lint + grader round-trip + OpenAPI + determinism against the committed build report
+// (tools/content/lint-course.mjs), for the same course the schema check just covered.
+const lintArgs = [path.join(root, 'tools/content/lint-course.mjs')];
+if (target) lintArgs.push('--course', target.courseId, '--version', target.version);
+const lint = spawnSync(process.execPath, lintArgs, { encoding: 'utf8' });
+assert.equal(
+  lint.status,
+  0,
+  `${target ? `${target.courseId}/${target.version}` : 'vi_en/v2'} content lint failed:\n${lint.stderr}${lint.stdout}`,
+);
 summary.push({ lint: JSON.parse(lint.stdout.trim().split('\n').pop()) });
 console.log(
   JSON.stringify({

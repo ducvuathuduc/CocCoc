@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT EDIT BY HAND.
-// Source: docs/api/openapi.yaml (sha256 64f4993f049da84184d4fac4c0d5ad558907061d2ca688aff6a4f919b12a7c00).
+// Source: docs/api/openapi.yaml (sha256 f62020e20576dc5b7b654e8685894b48a1be3c64b370db8f2ab078ffcaf98504).
 // Generator: apps/mobile/tool/gen_api_operations.py
 
 import '../api_contracts.dart' as wire;
@@ -189,6 +189,18 @@ final class ApiEndpoints {
         decode: wire.CoursePage.fromJson,
         query: {'cursor': cursor, 'limit': limit},
       );
+
+  /// `GET /v1/courses/{courseId}/lessons/{lessonId}/bundle`
+  Future<wire.LessonBundle> getCourseBundle(
+    String courseId,
+    String lessonId, {
+    String? version,
+  }) => client.call(
+    ApiOperations.getCourseBundle,
+    decode: wire.LessonBundle.fromJson,
+    pathParams: {'courseId': courseId, 'lessonId': lessonId},
+    query: {'version': version},
+  );
 
   /// `GET /v1/courses/{courseId}/manifest`
   Future<wire.CourseManifest> getManifest(String courseId, {String? version}) =>

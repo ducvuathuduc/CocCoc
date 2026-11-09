@@ -118,13 +118,19 @@ export class TablesDB {
     for (const raw of queries) {
       const q = JSON.parse(raw);
       if (q.method === 'equal') rows = rows.filter((r) => q.values.includes(r[q.attribute]));
-      if (q.method === 'limit') rows = rows.slice(0, q.values[0]);
       if (q.method === 'orderAsc')
         rows.sort((a, b) => String(a[q.attribute]).localeCompare(String(b[q.attribute])));
       if (q.method === 'orderDesc')
         rows.sort((a, b) => String(b[q.attribute]).localeCompare(String(a[q.attribute])));
     }
-    return { total: rows.length, rows };
+    // Appwrite reports total for the whole filtered set, not for the page it just returned — the
+    // overview counts rows by asking for one and reading this number, so the stub must behave the same.
+    const total = rows.length;
+    for (const raw of queries) {
+      const q = JSON.parse(raw);
+      if (q.method === 'limit') rows = rows.slice(0, q.values[0]);
+    }
+    return { total, rows };
   }
   async createRow({ tableId, rowId, data }) {
     boom();
@@ -177,6 +183,7 @@ const bundled = await build({
   stdin: {
     contents:
       "export * from '@/server/ops/learners';\n" +
+      "export * from '@/server/ops/overview';\n" +
       "export * from '@/server/actions/users';\n" +
       "export * from '@/server/config';\n" +
       "export * from '@/lib/activity';\n",
@@ -375,6 +382,12 @@ if (offlineMode) {
   );
   assert('và khóa tài khoản bị từ chối trước khi gọi đi', refusedAction?.ok === false, JSON.stringify(refusedAction));
   assert('không có yêu cầu Appwrite nào được gửi', world.calls.length === 0, world.calls.join(','));
+  const offlineStats = await cms.learnerOverview();
+  assert(
+    'máy chưa nối: tổng quan nói "chưa nối" thay vì in số 0 tự tin',
+    offlineStats.connected === false && offlineStats.accounts === 0,
+    JSON.stringify(offlineStats),
+  );
   await rm(scratch, { recursive: true, force: true });
   if (failures.length) {
     console.error(`FAIL — ${failures.length}/${checks} offline checks failed:`);
@@ -671,6 +684,66 @@ assert(
   world.writes.join(','),
 );
 
+// ---------- H. the overview numbers ----------
+resetWorld();
+const ovStats = await cms.learnerOverview();
+assert(
+  'tổng tài khoản lấy từ `total` của Appwrite Users, không đếm trang trả về',
+  ovStats.connected && ovStats.accounts === 4,
+  JSON.stringify({ connected: ovStats.connected, accounts: ovStats.accounts }),
+);
+assert(
+  'gói trả phí đếm đúng dòng ACTIVE: 1 Super, 0 Max',
+  ovStats.paying === 1 &&
+    ovStats.plans.find((p) => p.plan === 'SUPER')?.count === 1 &&
+    ovStats.plans.find((p) => p.plan === 'MAX')?.count === 0,
+  JSON.stringify(ovStats.plans),
+);
+assert(
+  'miễn phí = tổng tài khoản - gói trả phí, không âm',
+  ovStats.free === 3,
+  `free=${ovStats.free} accounts=${ovStats.accounts} paying=${ovStats.paying}`,
+);
+assert(
+  'mỗi trạng thái gói có một con số, kể cả trạng thái chưa ai dùng',
+  ovStats.statuses.length === 6 && ovStats.statuses.every((s) => typeof s.count === 'number'),
+  JSON.stringify(ovStats.statuses),
+);
+
+resetWorld();
+const ovRows = await cms.listLearnerRows('');
+const fullRow = ovRows.find((r) => r.userId === FULL);
+assert(
+  'danh sách người học hiện tên thật và gói, không bắt đọc mã tài khoản',
+  fullRow?.displayName === 'Mai' && fullRow?.plan === 'SUPER' && fullRow?.planStatus === 'ACTIVE',
+  JSON.stringify(fullRow),
+);
+assert(
+  'người chưa có hồ sơ vẫn có tên dự phòng từ email, không hiện chuỗi rỗng',
+  ovRows.find((r) => r.userId === BARE)?.displayName === 'learner-bare@example.test',
+  JSON.stringify(ovRows.map((r) => r.displayName)),
+);
+
+resetWorld();
+const ovPlans = await cms.planRows(200);
+assert(
+  'trang gói nối tên người học vào dòng gói',
+  ovPlans.length === 1 && ovPlans[0].userId === FULL && ovPlans[0].name === 'Mai' && ovPlans[0].plan === 'SUPER',
+  JSON.stringify(ovPlans),
+);
+assert(
+  'mọi bộ lọc của màn tổng quan và màn gói đều có index',
+  world.queries.every((entry) => filtersAreIndexed(entry) === ''),
+  world.queries.map((entry) => `${entry.table}:${filtersAreIndexed(entry)}`).join(' | '),
+);
+
+const ovQueue = await cms.openQueue();
+assert(
+  'hộp thư chờ đếm bằng `total` của từng bảng, không tải cả trang',
+  ovQueue && ovQueue.feedback === 1 && ovQueue.userReports === 1 && ovQueue.contentReports === 1,
+  JSON.stringify(ovQueue),
+);
+
 await rm(scratch, { recursive: true, force: true });
 
 const child = spawnSync(process.execPath, [selfFile], {
@@ -680,7 +753,7 @@ const child = spawnSync(process.execPath, [selfFile], {
 const childOut = (child.stdout ?? '') + (child.stderr ?? '');
 assert(
   'máy chưa nối Appwrite: màn người dùng từ chối, không trả về danh sách rỗng giả',
-  child.status === 0 && childOut.includes('OK — 3 checks'),
+  child.status === 0 && childOut.includes('OK — 4 checks'),
   `status=${child.status}\n${childOut}`,
 );
 
@@ -690,7 +763,7 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(
-  `OK — ${checks} checks: the learner screen reads Appwrite Auth plus only indexed columns of the app's own tables, shows nothing invented for a learner without a profile, keeps a queue of open feedback / user reports / lesson reports, and the one thing it writes back is the account status — with a refusal for locking an admin out, for a malformed or already-deleted userId, for an unreachable Appwrite, for a second lock, for anyone outside CMS_ADMIN_USER_IDS, and for a machine with no Appwrite at all.`,
+  `OK — ${checks} checks: the learner screen reads Appwrite Auth plus only indexed columns of the app's own tables, shows nothing invented for a learner without a profile, keeps a queue of open feedback / user reports / lesson reports, and the one thing it writes back is the account status — with a refusal for locking an admin out, for a malformed or already-deleted userId, for an unreachable Appwrite, for a second lock, for anyone outside CMS_ADMIN_USER_IDS, and for a machine with no Appwrite at all. The overview counts accounts, plans and the open queue from \`total\` (never by loading every row), names a learner from their profile instead of their id, and reports "chưa nối" rather than a confident zero when the project is unreachable.`,
 );
 
 function join(list) {

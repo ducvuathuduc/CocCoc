@@ -1,24 +1,14 @@
 import Link from 'next/link';
 import { LessonList } from '@/components/lesson-list';
+import { CourseTabs } from '@/components/course-tabs';
+import { PublishBadge } from '@/components/publish-badge';
 import { NewUnitForm } from '@/components/course-tools';
 import { PageTransition } from '@/components/page-transition';
-import { TechDetails } from '@/components/tech-details';
 import { courseWorkflow, type CourseWorkflow, type StageView } from '@/server/workflow';
 import { workspaceData } from '@/server/workspace';
 import { STAGE_STATE } from '@/lib/stages';
 import { card, hint, primary, warnBox } from '@/lib/ui';
 import { cn, timeAgo } from '@/lib/utils';
-
-const TOOLS = [
-  {
-    href: 'structure',
-    label: 'Cấu trúc & thông tin khóa',
-    hint: 'Các phần học, tên khóa, thứ tự bài',
-  },
-  { href: 'media', label: 'Âm thanh & ảnh', hint: 'File chưa có, file chưa dùng được' },
-  { href: 'search', label: 'Tìm & thay thế', hint: 'Tìm một từ trong cả khóa' },
-  { href: 'readiness', label: 'Điều kiện xuất bản', hint: 'Còn gì chưa xong' },
-];
 
 function Step({
   n,
@@ -82,6 +72,16 @@ function Flow({ workflow }: { workflow: CourseWorkflow }) {
   );
 }
 
+/** One number with a plain-language label: the teacher reads "12 bài" before opening anything. */
+function Stat({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="flex flex-col">
+      <span className="text-xl font-semibold tabular-nums tracking-tight">{value}</span>
+      <span className="text-xs text-fg-4">{label}</span>
+    </div>
+  );
+}
+
 export async function CourseWorkspace({
   courseId,
   showAllCourses = false,
@@ -110,32 +110,49 @@ export async function CourseWorkspace({
               ← Tất cả khóa học
             </Link>
           )}
-          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
             <div className="min-w-0">
               <h1 className="truncate text-2xl font-semibold tracking-tight">{course.title}</h1>
               <p className={cn(hint, 'mt-1 text-sm')}>
-                {counts.total} bài học · {words} từ · {sentences} câu
+                {course.locales} · cập nhật {timeAgo(course.updatedAt)}
                 {lastEdited && <> · sửa {timeAgo(lastEdited.updatedAt)}</>}
               </p>
             </div>
-            <Link
-              href={`/builds?course=${courseId}`}
-              transitionTypes={['nav-forward']}
-              className="text-sm text-fg-3 hover:text-primary-text"
-            >
-              Xuất bản →
-            </Link>
+            <PublishBadge publish={publish} />
           </div>
         </header>
+
+        <CourseTabs courseId={courseId} />
+
+        <div className={cn(card, 'flex flex-wrap items-center gap-x-8 gap-y-3 px-5 py-4')}>
+          <Stat label="Bài học" value={counts.total} />
+          <Stat
+            label="Sẵn sàng"
+            value={
+              <span className={cn(counts.total > 0 && counts.ready === counts.total && 'text-ok-fg')}>
+                {counts.ready}/{counts.total}
+              </span>
+            }
+          />
+          <Stat label="Từ vựng" value={words} />
+          <Stat label="Câu" value={sentences} />
+          {(counts.errors > 0 || counts.warnings > 0) && (
+            <Stat
+              label="Cần sửa"
+              value={
+                <span className="text-warn-fg">
+                  {counts.errors > 0 && <>{counts.errors} lỗi</>}
+                  {counts.errors > 0 && counts.warnings > 0 && ' · '}
+                  {counts.warnings > 0 && <>{counts.warnings} cảnh báo</>}
+                </span>
+              }
+            />
+          )}
+        </div>
 
         {!publish.appwriteMode && (
           <div className={warnBox}>
             Bản soạn chỉ lưu trên máy này; người khác không thấy và chưa gửi lên app được.
-            <TechDetails title="Dành cho người quản trị máy chủ">
-              Dữ liệu nằm trong <code className="rounded bg-elevated px-1 py-0.5">.cms-data/</code>.
-              Bản dùng chung cần <code>APPWRITE_ENDPOINT</code>, <code>APPWRITE_PROJECT_ID</code>,{' '}
-              <code>APPWRITE_API_KEY</code>.
-            </TechDetails>
           </div>
         )}
 
@@ -172,28 +189,6 @@ export async function CourseWorkspace({
             <LessonList courseId={courseId} lessons={lessons} />
           )}
         </section>
-
-        <details className={cn(card, 'px-4 py-3')}>
-          <summary className="cursor-pointer text-sm font-medium text-fg-2 hover:text-fg">
-            Công cụ khóa
-          </summary>
-          <p className={cn(hint, 'mt-1')}>
-            Dùng khi cần sửa cấu trúc, kiểm tra âm thanh hoặc xem điều kiện xuất bản.
-          </p>
-          <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            {TOOLS.map((tool) => (
-              <Link
-                key={tool.href}
-                href={`/courses/${courseId}/${tool.href}`}
-                transitionTypes={['nav-forward']}
-                className="rounded-lg border border-line px-3 py-2 transition-colors hover:border-line-strong hover:bg-elevated"
-              >
-                <span className="block text-sm font-medium">{tool.label}</span>
-                <span className="block text-xs text-fg-4">{tool.hint}</span>
-              </Link>
-            ))}
-          </div>
-        </details>
       </div>
     </PageTransition>
   );

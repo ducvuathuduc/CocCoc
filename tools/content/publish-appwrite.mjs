@@ -85,14 +85,20 @@ async function ensureFile(file) {
 }
 
 // Media referenced by the bundles that has a committed file (images now; audio when produced).
+// Declared assets with no committed file are listed: the publish gate below refuses the version
+// unless Storage already holds them (complete, public, right size and sha256).
 const mediaRoot = path.join(root, 'content', courseId, 'media');
 const mediaFiles = new Map();
+const noLocalFile = new Set();
 for (const f of publish.files) {
   if (!f.path.startsWith('bundles/')) continue;
   for (const asset of JSON.parse(fs.readFileSync(path.join(dir, f.path), 'utf8')).assets ?? []) {
-    const ext = { 'image/webp': 'webp', 'image/png': 'png', 'audio/aac': 'aac', 'audio/wav': 'wav' }[
-      asset.mime
-    ];
+    const ext = {
+      'image/webp': 'webp',
+      'image/png': 'png',
+      'audio/aac': 'aac',
+      'audio/wav': 'wav',
+    }[asset.mime];
     const kind = asset.mime.startsWith('image/') ? 'images' : 'audio';
     const abs = path.join(mediaRoot, kind, `${asset.fileId}.${ext}`);
     if (!mediaFiles.has(asset.fileId) && fs.existsSync(abs)) {
@@ -102,9 +108,19 @@ for (const f of publish.files) {
         abs,
         sha256: asset.sha256,
       });
+    } else if (!mediaFiles.has(asset.fileId)) {
+      noLocalFile.add(asset.fileId);
     }
   }
 }
+if (noLocalFile.size)
+  console.error(
+    JSON.stringify({
+      step: 'media-warning',
+      declaredWithoutLocalFile: noLocalFile.size,
+      sample: [...noLocalFile].slice(0, 5),
+    }),
+  );
 
 async function uploadAll(files, step) {
   const counts = { present: 0, uploaded: 0, replaced: 0, stale: 0, missing: 0 };
@@ -159,17 +175,12 @@ const persistence = new Proxy(durable, {
     };
   },
 });
-const files = {
-  async read(fileId) {
-    try {
-      return downloadText(await storage.getFileDownload({ bucketId, fileId }));
-    } catch (error) {
-      if (error?.code === 404) return null;
-      throw error;
-    }
-  },
-};
-const app = await kit.createTestApp({ persistence, files, seed: false });
+// The same Storage file store the hosted Learning function uses: it also serves the batched media
+// checks (existence, size, public read, sha256) that gate every publish. This CLI has no function
+// timeout, so the media phase gets a longer budget unless COC_MEDIA_VERIFY_* says otherwise.
+const files = kit.createStorageContentFiles({ endpoint, projectId, apiKey, bucketId }, storage);
+const media = { deadlineMs: 300_000, ...kit.mediaPolicyFromEnv(process.env) };
+const app = await kit.createTestApp({ persistence, files, media, seed: false });
 const course = await persistence.read('l_courses', kit.ids.course(courseId));
 const current = course ? String(course.publishedVersion) : null;
 let result = { status: 'already-published' };
@@ -185,7 +196,7 @@ if (current === versionId && existing && existing.manifestSha256 !== publish.man
     );
   }
   // Verify the replaced version exactly like a publish, against Storage, in memory.
-  const check = await kit.createTestApp({ files, seed: false });
+  const check = await kit.createTestApp({ files, media, seed: false });
   const r = await check.call('POST', '/v1/admin/content-versions', {
     user: 'maintainer-1',
     key: randomUUID(),

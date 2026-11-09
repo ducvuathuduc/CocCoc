@@ -210,15 +210,37 @@ export async function courseReadiness(courseId: string): Promise<ReadinessReport
 
   const media = await courseMediaReport(courseId);
   if (media) {
-    const owed = media.totals.missing + media.totals.unmanifested + media.totals.drift;
+    // A missing file is the only media state that actually fails the offline gate (verifyMediaAssets
+    // throws on an absent asset), so it is a hard block — the same rule the build/publish gates use.
+    // `unmanifested` (clip present but the catalog still stubs it) and `drift` (catalog behind the
+    // draft) do not fail the gate, so they stay warnings: the app ships but plays a placeholder.
+    const titleOf = (uid: string) => units.find((u) => u.unitId === uid)?.draft.title ?? uid;
+    const missingGaps = media.gaps
+      .filter((g) => g.state === 'missing')
+      .slice(0, 8)
+      .map((g) => `${titleOf(g.unitId)} · ${g.fileId} · ${g.kind === 'image' ? 'ảnh' : 'audio'}`);
+    const missing = media.totals.missing;
     push(
       item(
-        'media',
-        'Audio và ảnh: chưa có file, hoặc đã có file mà app chưa dùng được',
-        owed,
-        owed
-          ? `${media.totals.missing} chưa có file · ${media.totals.unmanifested} có file nhưng máy chưa đọc được · ${media.totals.drift} lời thoại khác bản soạn · ${media.totals.ready} đã đủ. Phát hành chỉ gửi file đang tồn tại; phần thiếu app sẽ dùng phương án không audio/ảnh.`
+        'media-missing',
+        'Audio, ảnh: thiếu file (chặn phát hành)',
+        missing,
+        missing
+          ? `${missing} file audio/ảnh chưa có trên kho — máy kiểm tra nội dung sẽ dừng và không đóng gói được, nên chưa thể phát hành. ${missingGaps.join('; ')}${missing > missingGaps.length ? ` … +${missing - missingGaps.length} nữa` : ''}. Nạp file tại trang Kho media của khóa này để gỡ.`
           : `${media.totals.ready} file audio/ảnh đều có mặt và máy đọc được.`,
+        `/courses/${courseId}/media`,
+        missing ? 'block' : 'ok',
+      ),
+    );
+    const softOwed = media.totals.unmanifested + media.totals.drift;
+    push(
+      item(
+        'media-warn',
+        'Audio, ảnh: cần đồng bộ hoặc dựng lại',
+        softOwed,
+        softOwed
+          ? `${media.totals.unmanifested} clip có file nhưng máy chưa ghi nhận (chạy generate-audio) · ${media.totals.drift} lời thoại khác bản soạn (cần dựng lại). Không chặn phát hành, nhưng app sẽ phát placeholder.`
+          : 'Mọi clip đều có catalog khớp bản soạn.',
         `/courses/${courseId}/media`,
       ),
     );

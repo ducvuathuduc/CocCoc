@@ -17,7 +17,7 @@ export const card = 'rounded-xl border border-line bg-card shadow-card';
 /* The big borderless surfaces of the overview: on the grey page background a
    shadow alone reads as a card, so a border would only add noise. */
 export const panel = 'rounded-3xl bg-card shadow-card';
-/* Circular icon button, the one control shape the top bar and the rail share. */
+/* Circular initials button for the account control in the top bar. */
 export const circle =
   'relative flex size-10 shrink-0 items-center justify-center rounded-full bg-card text-fg-2 shadow-card hover:-translate-y-px hover:text-fg hover:shadow-lift disabled:pointer-events-none disabled:opacity-50';
 export const link =

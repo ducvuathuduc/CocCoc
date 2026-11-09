@@ -1,41 +1,43 @@
+import { Suspense } from 'react';
 import { ShellNav } from './shell';
-import { courseUnitStats, listCourseSummaries } from '@/server/queries';
 import { learnerQueue } from '@/server/ops/learners';
 import { requireAdmin } from '@/server/session';
 import { storeLabel } from '@/server/audit';
 
-export async function SidebarNav() {
-  const identity = await requireAdmin();
-  const courses = await listCourseSummaries();
-  const stats = await Promise.all(
-    courses.map(async (course) => ({ course, units: await courseUnitStats(course.courseId) })),
-  );
-  const lessons = stats.flatMap(({ course, units }) =>
-    units.map((unit) => ({
-      courseId: course.courseId,
-      unitId: unit.unitId,
-      order: unit.order,
-      title: unit.title,
-      theme: unit.theme,
-    })),
-  );
-
-  // The bell counts what is still unanswered. A learner-data outage must not take
-  // the chrome down with it, so a failed read is simply "no badge".
-  let inboxCount = 0;
+/**
+ * The badge counts what is still unanswered. It streams in behind its own Suspense boundary so the
+ * chrome never waits on learner data; a learner-data outage must not take the chrome down with it,
+ * so a failed read is simply "no badge".
+ */
+async function InboxBadge() {
+  let count = 0;
   try {
     const queue = await learnerQueue();
-    inboxCount = queue.feedback.length + queue.userReports.length + queue.contentReports.length;
+    count = queue.feedback.length + queue.userReports.length + queue.contentReports.length;
   } catch {
-    inboxCount = 0;
+    count = 0;
   }
+  if (count === 0) return null;
+  return (
+    <span className="ml-1.5 flex min-w-4.5 items-center justify-center rounded-full bg-danger-fg px-1 py-0.5 text-[9px] font-semibold text-white">
+      {count > 9 ? '9+' : count}
+      <span className="sr-only"> thư chưa xử lý</span>
+    </span>
+  );
+}
 
+/** The chrome only needs the session: everything else loads when a screen or palette asks for it. */
+export async function SidebarNav() {
+  const identity = await requireAdmin();
   return (
     <ShellNav
       identity={identity.email || identity.userId}
       mode={storeLabel()}
-      lessons={lessons}
-      inboxCount={inboxCount}
+      inbox={
+        <Suspense fallback={null}>
+          <InboxBadge />
+        </Suspense>
+      }
     />
   );
 }

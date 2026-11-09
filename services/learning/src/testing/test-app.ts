@@ -8,6 +8,7 @@ import { publishContent } from '../application/content.js';
 import type { LearningDeps } from '../application/deps.js';
 import { createImmediateRelay } from '../application/relay.js';
 import type { Deliver } from '../application/outbox.js';
+import type { MediaPolicy } from '../content/media.js';
 import { createContentRepository, type ContentFileStore } from '../content/repository.js';
 import { learningHandler, learningWiring } from '../http/wiring.js';
 import { createMemoryLearningPersistence } from '../persistence/memory.js';
@@ -36,6 +37,7 @@ export async function createTestApp(
     keyring?: Keyring;
     persistence?: LearningPersistence;
     files?: ContentFileStore;
+    media?: Partial<MediaPolicy>;
     seed?: boolean;
     energyMode?: 'LIMITED' | 'UNLIMITED';
   } = {},
@@ -48,6 +50,7 @@ export async function createTestApp(
       persistence,
       files: options.files ?? local.files,
       keyring: devContentKeyring(),
+      ...(options.media ? { media: options.media } : {}),
     }),
     nowMs: options.nowMs ?? Date.now,
     newId: randomUUID,

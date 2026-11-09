@@ -77,21 +77,8 @@ export function LessonList({
     <div className="space-y-3">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="relative min-w-0 flex-1">
-          <svg
-            viewBox="0 0 20 20"
-            aria-hidden
-            className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-fg-4"
-          >
-            <path
-              d="M9 3.5a5.5 5.5 0 1 1-3.9 9.4M13.4 13.4 17 17"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          </svg>
           <input
-            className={cn(field, 'pl-9')}
+            className={field}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Tìm bài theo tên…"
@@ -200,14 +187,13 @@ export function LessonList({
                     </Link>
                     <details className="relative">
                       <summary
-                        className="grid size-9 cursor-pointer list-none place-items-center rounded-md text-fg-3 hover:bg-primary-soft hover:text-primary-text [&::-webkit-details-marker]:hidden"
-                        aria-label={`Thêm lựa chọn cho ${title}`}
+                        className={cn(
+                          button,
+                          'grid min-h-9 cursor-pointer list-none place-items-center px-3 py-1.5 [&::-webkit-details-marker]:hidden',
+                        )}
+                        aria-label={`Lựa chọn khác cho ${title}`}
                       >
-                        <svg viewBox="0 0 20 20" aria-hidden className="size-4">
-                          <circle cx="4" cy="10" r="1.4" fill="currentColor" />
-                          <circle cx="10" cy="10" r="1.4" fill="currentColor" />
-                          <circle cx="16" cy="10" r="1.4" fill="currentColor" />
-                        </svg>
+                        Khác
                       </summary>
                       <div className="absolute right-0 z-20 mt-1 w-48 rounded-lg border border-line-strong bg-card p-2 shadow-lift">
                         <Link

@@ -6,9 +6,19 @@ import { ServiceError } from '../../../shared/src/errors.js';
 import { ids } from '../persistence/ids.js';
 import type { LearningPersistence, Row } from '../persistence/port.js';
 import { sha256, verifyBundle, verifyManifest, type ContentKeyring } from './integrity.js';
+import {
+  createMediaVerifier,
+  type MediaPolicy,
+  type MediaStore,
+  type MediaVerifier,
+} from './media.js';
 import type { BundleIndex, CourseManifest, LessonBundle } from './types.js';
 
-export interface ContentFileStore {
+/**
+ * Published files. `read` serves JSON (manifests, bundles); `stat` and `readBytes` serve the media
+ * those bundles declare, which the publish gate verifies before a pointer flips (media.ts).
+ */
+export interface ContentFileStore extends MediaStore {
   /** Raw file text, or null when the file does not exist. */
   read(fileId: string): Promise<string | null>;
 }
@@ -21,6 +31,8 @@ export interface PublishedCourse {
 export interface ContentRepository {
   keyring: ContentKeyring;
   files: ContentFileStore;
+  /** Publication media gate over `files`; holds the per-process verified-bytes cache. */
+  media: MediaVerifier;
   published(courseId: string): Promise<PublishedCourse>;
   manifestVersion(courseId: string, versionId: string): Promise<CourseManifest>;
   bundle(
@@ -41,8 +53,14 @@ export function createContentRepository(options: {
   persistence: LearningPersistence;
   files: ContentFileStore;
   keyring: ContentKeyring;
+  media?: Partial<MediaPolicy>;
+  nowMs?: () => number;
 }): ContentRepository {
   const { persistence, files, keyring } = options;
+  const media = createMediaVerifier(files, {
+    ...(options.media ? { policy: options.media } : {}),
+    ...(options.nowMs ? { nowMs: options.nowMs } : {}),
+  });
   const manifests = new Map<string, CourseManifest>();
   const bundles = new Map<string, LessonBundle>();
 
@@ -53,6 +71,7 @@ export function createContentRepository(options: {
   const repo: ContentRepository = {
     keyring,
     files,
+    media,
     parseVerifiedManifest(text, expectedSha256) {
       if (sha256(text) !== expectedSha256) corrupt('MANIFEST_HASH_MISMATCH');
       const manifest = JSON.parse(text) as CourseManifest;

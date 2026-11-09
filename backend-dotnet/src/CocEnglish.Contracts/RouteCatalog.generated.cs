@@ -6,7 +6,7 @@ public sealed record ContractOperation(string OperationId, string Owner, string 
 
 public static class RouteCatalog
 {
-    public const string SourceSha256 = "94faa43c48fd72aaeb5d18cf93bcbbe5caf125fd1dbebccd7a1a273caceb7ed5";
+    public const string SourceSha256 = "86f01af92eb95c66846378d72843b1ffe611a8f032178f8a99f649b1bd1bab77";
     public static IReadOnlyList<ContractOperation> All { get; } =
     [
         new("getHealth", "learning", "GET", "/health", [], null, "Health"),
@@ -15,6 +15,7 @@ public static class RouteCatalog
         new("getManifest", "learning", "GET", "/v1/courses/{courseId}/manifest", ["version"], null, "CourseManifest"),
         new("enrollCourse", "learning", "POST", "/v1/enrollments", [], "EnrollRequest", "Enrollment"),
         new("getPath", "learning", "GET", "/v1/courses/{courseId}/path", ["cursor", "limit"], null, "Path"),
+        new("getCourseBundle", "learning", "GET", "/v1/courses/{courseId}/lessons/{lessonId}/bundle", ["version"], null, "LessonBundle"),
         new("getBundle", "learning", "GET", "/v1/lessons/{lessonId}/bundle", ["version"], null, "LessonBundle"),
         new("startSession", "learning", "POST", "/v1/sessions", [], "SessionRequest", "Session"),
         new("getSession", "learning", "GET", "/v1/sessions/{sessionId}", [], null, "Session"),
@@ -25,6 +26,10 @@ public static class RouteCatalog
         new("getReview", "learning", "GET", "/v1/review", ["cursor", "limit", "courseId"], null, "ReviewPage"),
         new("createReport", "learning", "POST", "/v1/reports", [], "ReportRequest", "Receipt"),
         new("publishContent", "learning", "POST", "/v1/admin/content-versions", [], "PublishRequest", "Receipt"),
+        new("listContentVersions", "learning", "GET", "/v1/admin/courses/{courseId}/content-versions", [], null, "ContentVersionList"),
+        new("unpublishCourse", "learning", "POST", "/v1/admin/courses/{courseId}/unpublish", [], "UnpublishRequest", "Receipt"),
+        new("retireVersion", "learning", "POST", "/v1/admin/courses/{courseId}/content-versions/{versionId}/retire", [], "RetireRequest", "Receipt"),
+        new("rollbackCourse", "learning", "POST", "/v1/admin/courses/{courseId}/rollback", [], "RollbackRequest", "Receipt"),
         new("getMe", "progress", "GET", "/v1/me", [], null, "Profile"),
         new("updateMe", "progress", "PATCH", "/v1/me", [], "ProfilePatch", "Profile"),
         new("initializeProfile", "progress", "POST", "/v1/me/initialize", [], null, "Profile"),

@@ -3,91 +3,58 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { QuickJump, type JumpLesson } from '@/components/quick-jump';
+import { Icon } from '@/components/icons';
+import { QuickJump } from '@/components/quick-jump';
 import { ThemeToggle } from '@/components/theme';
-import { ADMIN_NAV, PRIMARY_NAV, type NavLink } from '@/lib/words';
+import { NAV_GROUPS, type NavLink } from '@/lib/words';
 import { button, circle } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
-/* One stroke vocabulary for the whole chrome: 20x20, round caps, 1.6 weight, so a
-   rail icon and a top-bar icon read as the same hand. */
-const PATHS: Record<string, React.ReactNode> = {
-  '/': <path d="M4 4h5v5H4zM11 4h5v5h-5zM4 11h5v5H4zM11 11h5v5h-5z" />,
-  '/lessons': <path d="M5 4.5h8.5A1.5 1.5 0 0 1 15 6v9.5H6.5A1.5 1.5 0 0 1 5 14zM5 14a2 2 0 0 1 2-2h8M8 7.5h4" />,
-  '/builds': <path d="M10 13V4M6.5 7.5 10 4l3.5 3.5M4 15.5h12" />,
-  '/users': (
-    <>
-      <circle cx="8" cy="7.5" r="2.5" />
-      <path d="M3.5 15.5c.6-2.7 2.4-4 4.5-4s3.9 1.3 4.5 4M13 5.4a2.5 2.5 0 0 1 0 4.9M14.3 11.6c1.5.5 2.4 1.8 2.8 3.9" />
-    </>
-  ),
-  '/courses': <path d="M10 3.5 16 7l-6 3.5L4 7zM4 10.5l6 3.5 6-3.5M4 13.5 10 17l6-3.5" />,
-  '/ops/inbox': (
-    <>
-      <rect x="3.5" y="5" width="13" height="10" rx="2" />
-      <path d="m4.5 7.5 5.5 4 5.5-4" />
-    </>
-  ),
-  '/ops/audit': (
-    <>
-      <circle cx="10" cy="10" r="6.5" />
-      <path d="M10 6.5V10l2.5 2" />
-    </>
-  ),
-  '/ops/access': <path d="M10 3.5 15 5.5v4.2c0 3.3-2.1 5.7-5 6.8-2.9-1.1-5-3.5-5-6.8V5.5z" />,
-  search: <path d="M9 3.5a5.5 5.5 0 1 1-3.9 9.4M13.4 13.4 17 17" />,
-};
-
-function Icon({ name, className }: { name: string; className?: string }) {
+/**
+ * A small logo mark plus the wordmark: the operator reads "CocEnglish" by the coloured tile, not by
+ * scanning a row of text. Kept at module scope so its identity is stable across shell re-renders.
+ */
+function BrandMark({ size = 17 }: { size?: number }) {
   return (
-    <svg
-      viewBox="0 0 20 20"
-      className={className ?? 'size-5'}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
+    <Link
+      href="/"
+      transitionTypes={['nav-back']}
+      aria-label="CocEnglish CMS — về tổng quan"
+      className="flex items-center gap-2"
     >
-      {PATHS[name] ?? PATHS['/']}
-    </svg>
+      <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-primary text-primary-fg shadow-card">
+        <Icon name="courses" className="size-4" />
+      </span>
+      <span className={cn('font-semibold tracking-tight', size === 15 && 'text-[15px]')}>
+        CocEnglish <span className="font-normal text-fg-4">CMS</span>
+      </span>
+    </Link>
   );
 }
 
-function MenuIcon({ open }: { open: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      aria-hidden
-      className="size-5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-    >
-      {open ? <path d="M5 5l10 10M15 5L5 15" /> : <path d="M3.5 6h13M3.5 10h13M3.5 14h13" />}
-    </svg>
-  );
-}
-
+/**
+ * The chrome is a fixed left rail, not a top bar: nine destinations in one horizontal strip read as a
+ * toolbar, while a grouped column reads as a table of contents. Every item is a word plus a shape, so
+ * the operator can find "Người học" by position or by icon without reading the whole list.
+ */
 export function ShellNav({
   identity,
   mode,
-  lessons,
-  inboxCount,
+  inbox,
 }: {
   identity: string;
   mode: string;
-  lessons: JumpLesson[];
-  inboxCount: number;
+  /** The unread-count badge, streamed in separately so the chrome never waits on learner data. */
+  inbox: React.ReactNode;
 }) {
   const pathname = usePathname();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [sheet, setSheet] = useState(false);
   const [menu, setMenu] = useState(false);
-  const menuBox = useRef<HTMLDivElement>(null);
+  // One menu, two places it can be anchored: the mobile bar and the desktop rail footer.
+  const menuTop = useRef<HTMLDivElement>(null);
+  const menuBottom = useRef<HTMLDivElement>(null);
   const sheetPanel = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
 
@@ -101,7 +68,8 @@ export function ShellNav({
   useEffect(() => {
     if (!menu) return;
     const onDown = (event: MouseEvent) => {
-      if (!menuBox.current?.contains(event.target as Node)) setMenu(false);
+      const target = event.target as Node;
+      if (!menuTop.current?.contains(target) && !menuBottom.current?.contains(target)) setMenu(false);
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setMenu(false);
@@ -136,13 +104,13 @@ export function ShellNav({
 
   const activeOf = (href: string): boolean => {
     if (href === '/') return pathname === '/';
-    // The lesson workspace lives under /courses/<id>, so "Bài học" owns those paths.
-    if (href === '/lessons') return pathname === '/lessons' || pathname.startsWith('/courses/');
+    // `/courses` is the course list; a course workspace lives below it and belongs to "Bài học".
     if (href === '/courses') return pathname === '/courses';
+    if (href === '/lessons') return pathname === '/lessons' || pathname.startsWith('/courses/');
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  const pill = (link: NavLink) => {
+  const row = (link: NavLink, inMenu = false) => {
     const active = activeOf(link.href);
     return (
       <Link
@@ -151,46 +119,98 @@ export function ShellNav({
         title={link.hint}
         transitionTypes={['nav-section']}
         aria-current={active ? 'page' : undefined}
-        onClick={() => setSheet(false)}
+        role={inMenu ? 'menuitem' : undefined}
+        onClick={() => {
+          setSheet(false);
+          setMenu(false);
+        }}
         className={cn(
-          'rounded-full px-4 py-2 text-sm transition-colors',
+          'group flex min-h-10 items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors',
           active
-            ? 'bg-fg font-medium text-card shadow-card'
+            ? 'bg-primary-soft font-medium text-primary-text'
             : 'text-fg-2 hover:bg-elevated hover:text-fg',
         )}
       >
-        {link.label}
+        <Icon
+          name={link.icon}
+          className={cn('size-[18px] shrink-0', active ? 'text-primary-text' : 'text-fg-4')}
+        />
+        <span className="truncate">{link.label}</span>
       </Link>
     );
   };
 
-  const row = (link: NavLink) => {
-    const active = activeOf(link.href);
-    return (
-      <Link
-        key={link.href}
-        href={link.href}
-        title={link.hint}
-        transitionTypes={['nav-section']}
-        aria-current={active ? 'page' : undefined}
-        onClick={() => setSheet(false)}
-        className={cn(
-          'flex min-h-10 items-center gap-2.5 rounded-xl px-3 py-2 text-sm transition-colors',
-          active ? 'bg-fg font-medium text-card' : 'text-fg-2 hover:bg-elevated hover:text-fg',
-        )}
-      >
-        <Icon name={link.href} className="size-4.5 shrink-0" />
-        {link.label}
-      </Link>
-    );
-  };
+  const groups = (inMenu = false) =>
+    NAV_GROUPS.map((group) => (
+      <div key={group.title} className="space-y-0.5">
+        <p className="px-2.5 pt-3 pb-1 text-[10px] font-semibold tracking-[0.08em] text-fg-4 uppercase">
+          {group.title}
+        </p>
+        {group.links.map((link) => row(link, inMenu))}
+      </div>
+    ));
 
   const shared = mode.includes('Appwrite');
   const initials = identity.replace(/@.*/, '').slice(0, 2).toUpperCase() || '•';
 
+  const account = (placement: 'top' | 'bottom') => (
+    <div ref={placement === 'top' ? menuTop : menuBottom} className="relative">
+      <button
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={menu}
+        aria-label={`Tài khoản ${identity}`}
+        onClick={() => setMenu((value) => !value)}
+        className={cn(
+          circle,
+          'bg-fg text-xs font-semibold text-card hover:text-card',
+          menu && 'shadow-lift',
+        )}
+      >
+        {initials}
+      </button>
+      {menu && (
+        <div
+          role="menu"
+          aria-label="Tài khoản"
+          className={cn(
+            'absolute z-50 w-60 rounded-2xl bg-card p-2 shadow-lift',
+            placement === 'top' ? 'right-0 top-12' : 'bottom-12 left-0',
+          )}
+        >
+          <div className="px-3 pt-2 pb-1">
+            <div className="truncate text-sm font-medium" title={identity}>
+              {identity}
+            </div>
+            <div
+              className="mt-1 flex items-center gap-1.5 text-[11px] text-fg-4"
+              title={shared ? 'Bản soạn lưu trên máy chủ dùng chung' : 'Bản soạn chỉ lưu trên máy này'}
+            >
+              <span className={cn('size-1.5 rounded-full', shared ? 'bg-ok-fg' : 'bg-warn-fg')} />
+              {shared ? 'Máy chủ dùng chung' : 'Chỉ máy này'}
+            </div>
+          </div>
+          <div className="my-1 border-t border-line" />
+          <div className="px-1">
+            <ThemeToggle />
+          </div>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={signOut}
+            disabled={busy}
+            className={cn(button, 'mt-1 w-full')}
+          >
+            {busy ? 'Đang thoát…' : 'Thoát'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center gap-2 border-b border-line/70 bg-surface/90 px-3 backdrop-blur sm:px-5">
+      <header className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-2 border-b border-line/70 bg-surface/95 px-3 backdrop-blur lg:hidden">
         <button
           ref={toggle}
           type="button"
@@ -198,32 +218,42 @@ export function ShellNav({
           aria-expanded={sheet}
           aria-controls="cms-sheet"
           onClick={() => setSheet((value) => !value)}
-          className={cn(circle, 'lg:hidden')}
+          className={cn(button, 'min-h-10 px-3')}
         >
-          <MenuIcon open={sheet} />
+          Menu
         </button>
 
-        <Link
-          href="/"
-          transitionTypes={['nav-back']}
-          aria-label="CocEnglish CMS — về tổng quan"
-          className="flex items-center gap-2.5 pr-1"
-        >
-          <span className="flex size-9 items-center justify-center rounded-2xl bg-fg text-card shadow-card">
-            <Icon name="/courses" className="size-4.5" />
-          </span>
-          <span className="hidden text-[15px] font-semibold tracking-tight md:block">
-            CocEnglish <span className="font-normal text-fg-4">CMS</span>
-          </span>
-        </Link>
+        <div className="pr-1 text-[15px] font-semibold tracking-tight">
+          <BrandMark size={15} />
+        </div>
 
-        <nav aria-label="Điều hướng chính" className="mx-auto hidden items-center gap-1 lg:flex">
-          {PRIMARY_NAV.map(pill)}
-        </nav>
+        <div className="ml-auto flex items-center gap-1.5">
+          <Link
+            href="/ops/inbox"
+            transitionTypes={['nav-section']}
+            title="Thư của người học — góp ý và báo cáo còn đang mở"
+            className={cn(
+              'flex min-h-10 items-center rounded-lg border border-line-strong px-3 text-sm shadow-card transition-colors',
+              activeOf('/ops/inbox')
+                ? 'bg-fg font-medium text-card'
+                : 'bg-card text-fg-2 hover:bg-primary-soft hover:text-primary-text',
+            )}
+          >
+            Thư
+            {inbox}
+          </Link>
+          {account('top')}
+        </div>
+      </header>
 
-        <div className="ml-auto flex items-center gap-2">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-line bg-surface lg:flex">
+        <div className="px-5 pt-6 pb-4">
+          <BrandMark />
+          <p className="mt-0.5 text-xs text-fg-4">Quản lý bài học và người học</p>
+        </div>
+
+        <div className="px-3 pb-2">
           <QuickJump
-            lessons={lessons}
             openButton={(open) => (
               <button
                 type="button"
@@ -231,112 +261,53 @@ export function ShellNav({
                 aria-haspopup="dialog"
                 aria-label="Tìm bài học hoặc màn làm việc (Ctrl K)"
                 title="Tìm bài học hoặc màn làm việc (Ctrl K)"
-                className={circle}
+                className={cn(
+                  button,
+                  'flex w-full min-h-10 items-center gap-2 px-3 text-fg-3',
+                )}
               >
-                <Icon name="search" className="size-4.5" />
+                <Icon name="search" />
+                <span>Tìm bài học…</span>
+                <kbd className="ml-auto rounded border border-line bg-elevated px-1.5 py-0.5 text-[10px] font-medium text-fg-4">
+                  Ctrl K
+                </kbd>
               </button>
             )}
           />
+        </div>
 
+        <nav
+          aria-label="Điều hướng chính"
+          className="flex-1 space-y-1 overflow-y-auto px-3 pt-1 pb-4"
+        >
+          {groups()}
+        </nav>
+
+        <div className="border-t border-line p-3">
+          <div className="flex items-center gap-2.5">
+            {account('bottom')}
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-xs font-medium" title={identity}>
+                {identity}
+              </div>
+              <div
+                className="flex items-center gap-1.5 text-[11px] text-fg-4"
+                title={shared ? 'Bản soạn lưu trên máy chủ dùng chung' : 'Bản soạn chỉ lưu trên máy này'}
+              >
+                <span className={cn('size-1.5 rounded-full', shared ? 'bg-ok-fg' : 'bg-warn-fg')} />
+                {shared ? 'Máy chủ dùng chung' : 'Chỉ máy này'}
+              </div>
+            </div>
+          </div>
           <Link
             href="/ops/inbox"
             transitionTypes={['nav-section']}
-            title="Thư của người học — góp ý và báo cáo còn đang mở"
-            aria-label={`Thư của người học${inboxCount > 0 ? `, ${inboxCount} thư chưa xử lý` : ''}`}
-            className={cn(circle, activeOf('/ops/inbox') && 'bg-fg text-card')}
+            className="mt-2 flex min-h-9 items-center gap-2 rounded-lg px-2 text-xs text-fg-3 hover:bg-elevated hover:text-fg"
           >
-            <Icon name="/ops/inbox" className="size-4.5" />
-            {inboxCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex size-4.5 items-center justify-center rounded-full bg-danger-fg text-[9px] font-semibold text-white">
-                {inboxCount > 9 ? '9+' : inboxCount}
-              </span>
-            )}
+            <Icon name="inbox" className="size-4 shrink-0 text-fg-4" />
+            Thư chờ xử lý
+            {inbox}
           </Link>
-
-          <div ref={menuBox} className="relative">
-            <button
-              type="button"
-              aria-haspopup="menu"
-              aria-expanded={menu}
-              aria-label={`Tài khoản ${identity}`}
-              onClick={() => setMenu((value) => !value)}
-              className={cn(
-                circle,
-                'bg-fg text-xs font-semibold text-card hover:text-card',
-                menu && 'shadow-lift',
-              )}
-            >
-              {initials}
-            </button>
-            {menu && (
-              <div
-                role="menu"
-                aria-label="Tài khoản"
-                className="absolute right-0 top-12 w-60 rounded-2xl bg-card p-2 shadow-lift"
-              >
-                <div className="px-3 pt-2 pb-1">
-                  <div className="truncate text-sm font-medium" title={identity}>
-                    {identity}
-                  </div>
-                  <div
-                    className="mt-1 flex items-center gap-1.5 text-[11px] text-fg-4"
-                    title={shared ? 'Bản soạn lưu trên máy chủ dùng chung' : 'Bản soạn chỉ lưu trên máy này'}
-                  >
-                    <span
-                      className={cn('size-1.5 rounded-full', shared ? 'bg-ok-fg' : 'bg-warn-fg')}
-                    />
-                    {shared ? 'Máy chủ dùng chung' : 'Chỉ máy này'}
-                  </div>
-                </div>
-                <div className="my-1 border-t border-line" />
-                <div className="px-1">
-                  <ThemeToggle />
-                </div>
-                <button
-                  type="button"
-                  role="menuitem"
-                  onClick={signOut}
-                  disabled={busy}
-                  className={cn(button, 'mt-1 w-full')}
-                >
-                  {busy ? 'Đang thoát…' : 'Thoát'}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
-
-      <aside
-        aria-label="Quản trị"
-        // The rail is the spatial anchor of the admin: naming it keeps it still
-        // while the screen inside it changes.
-        style={{ viewTransitionName: 'sidebar' }}
-        className="fixed bottom-0 left-0 top-16 z-30 hidden w-14 flex-col items-center gap-1.5 border-r border-line/70 bg-surface pt-4 pb-16 lg:flex"
-      >
-        {ADMIN_NAV.map((link) => {
-          const active = activeOf(link.href);
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              title={`${link.label} — ${link.hint}`}
-              transitionTypes={['nav-section']}
-              aria-current={active ? 'page' : undefined}
-              className={cn(
-                'flex size-10 items-center justify-center rounded-full transition-colors',
-                active ? 'bg-fg text-card shadow-card' : 'text-fg-3 hover:bg-elevated hover:text-fg',
-              )}
-            >
-              <Icon name={link.href} className="size-4.5" />
-            </Link>
-          );
-        })}
-        <div className="mt-auto">
-          <ThemeToggle
-            showLabel={false}
-            className={cn(circle, 'bg-surface text-fg-3 shadow-none hover:bg-elevated')}
-          />
         </div>
       </aside>
 
@@ -357,25 +328,21 @@ export function ShellNav({
         aria-label="Khu điều hướng"
         aria-hidden={!sheet}
         className={cn(
-          'fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-line bg-surface p-4 outline-none transition-transform duration-200 lg:hidden',
+          'fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-line bg-surface p-3 outline-none transition-transform duration-200 lg:hidden',
           sheet ? 'translate-x-0 shadow-lift' : '-translate-x-full',
         )}
       >
-        <div className="flex items-center gap-2 px-1">
-          <span className="flex size-8 items-center justify-center rounded-xl bg-fg text-card">
-            <Icon name="/courses" className="size-4" />
-          </span>
-          <span className="text-sm font-semibold tracking-tight">
-            CocEnglish <span className="font-normal text-fg-4">CMS</span>
-          </span>
+        <div className="px-2 pt-2 pb-3 text-sm font-semibold tracking-tight">
+          <BrandMark size={15} />
         </div>
-        <nav aria-label="Điều hướng chính" className="mt-4 flex flex-col gap-0.5">
-          {PRIMARY_NAV.map(row)}
+        <nav aria-label="Điều hướng chính" className="flex flex-col">
+          {groups(true)}
         </nav>
-        <div className="mt-4 flex flex-col gap-0.5 border-t border-line pt-3">
-          {ADMIN_NAV.map(row)}
-        </div>
-        <div className="mt-auto space-y-2 border-t border-line pt-4">
+        <div className="mt-auto space-y-2 border-t border-line pt-3">
+          <div className="flex items-center gap-2 px-1 text-xs text-fg-4">
+            <span className={cn('size-1.5 rounded-full', shared ? 'bg-ok-fg' : 'bg-warn-fg')} />
+            {identity}
+          </div>
           <ThemeToggle />
           <button type="button" onClick={signOut} disabled={busy} className={cn(button, 'w-full')}>
             {busy ? 'Đang thoát…' : 'Thoát'}

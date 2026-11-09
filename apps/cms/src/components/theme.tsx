@@ -42,18 +42,11 @@ function useTheme(): Theme {
   return useSyncExternalStore(subscribe, read, () => 'light');
 }
 
-export function ThemeToggle({
-  className,
-  showLabel = true,
-}: {
-  className?: string;
-  showLabel?: boolean;
-}) {
+export function ThemeToggle({ className }: { className?: string }) {
   const theme = useTheme();
 
-  // Both icons ship in the markup and CSS picks the visible one off `.dark`,
-  // because the pre-paint script in the document head already flipped <html>
-  // before React hydrated.
+  // The label names the current state, so the server render cannot disagree with the pre-paint
+  // script in the document head that already flipped <html> before React hydrated.
   return (
     <button
       type="button"
@@ -61,34 +54,10 @@ export function ThemeToggle({
       aria-label={theme === 'dark' ? 'Chuyển sang nền sáng' : 'Chuyển sang nền tối'}
       className={
         className ??
-        'flex h-8 w-full items-center justify-center rounded-lg border border-line bg-elevated text-fg-3 hover:border-primary/40 hover:bg-primary-soft hover:text-primary-text active:scale-[0.98]'
+        'flex h-8 w-full items-center justify-center rounded-lg border border-line bg-elevated text-xs text-fg-3 hover:border-primary/40 hover:bg-primary-soft hover:text-primary-text active:scale-[0.98]'
       }
     >
-      <span className="relative block h-4 w-4">
-        <svg
-          viewBox="0 0 24 24"
-          className="t-sun absolute inset-0 size-4"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-        >
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-        </svg>
-        <svg
-          viewBox="0 0 24 24"
-          className="t-moon absolute inset-0 size-4"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
-        </svg>
-      </span>
-      {showLabel && <span className="ml-2 text-xs">{theme === 'dark' ? 'Nền tối' : 'Nền sáng'}</span>}
+      {theme === 'dark' ? 'Nền tối' : 'Nền sáng'}
     </button>
   );
 }

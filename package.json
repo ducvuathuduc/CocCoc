@@ -5,6 +5,7 @@
   "scripts": {
     "blueprint:check": "node tools/blueprint/validate.mjs",
     "mobile:verify": "node tools/scripts/mobile-check.mjs",
+    "mobile:api-lane": "node tools/scripts/mobile-api-lane.mjs",
     "build:web": "node tools/scripts/mobile-web-build.mjs",
     "preview:web": "node tools/scripts/mobile-preview.mjs",
     "build:android": "node tools/scripts/mobile-check.mjs --build-android",

@@ -1,0 +1,48 @@
+{
+  "courseId": "vi_en_mini",
+  "versionId": "v1",
+  "signatureKeyId": "dev-content-1",
+  "sections": 1,
+  "units": 1,
+  "nodes": 8,
+  "lessons": 32,
+  "exercises": 395,
+  "exerciseTypes": {
+    "choice": 35,
+    "dialogueTurn": 15,
+    "dictation": 42,
+    "fillBlank": 33,
+    "imageChoice": 7,
+    "listenChoice": 43,
+    "matchPairs": 24,
+    "sentenceOrder": 26,
+    "speakRepeat": 31,
+    "storyQuestion": 8,
+    "textTranslation": 71,
+    "wordBank": 60
+  },
+  "nodeKinds": {
+    "lesson": 5,
+    "story": 1,
+    "mastery": 2
+  },
+  "vocabulary": 16,
+  "sentences": 24,
+  "dialogues": 7,
+  "storyQuestions": 6,
+  "audioKeys": 56,
+  "assets": 91,
+  "ambiguousTiles": [],
+  "maxBundleBytes": 21983,
+  "unitsDetail": [
+    {
+      "unitId": "u1",
+      "sectionId": "sec1",
+      "cefr": "A1",
+      "title": "Động vật quanh em",
+      "vocab": 16,
+      "sentences": 24
+    }
+  ],
+  "manifestSha256": "3410e70b3f9c9ce633bc30917bf20d2310d4df38e1f1e2dcd29c1fe869e30cd9"
+}

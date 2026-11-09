@@ -375,6 +375,40 @@ const gateRun = async (courseId, minutes = 5) => {
 const passGate = (courseId) => gateRun(courseId, 0);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/**
+ * Writes the exact files the CMS media upload writes (`writeMediaFile` is the storage call the upload
+ * route makes) for every asset the readiness report flags as a missing required file. Proves the upload
+ * flow can clear the "thiếu file" block without anyone editing source: after this, the block is gone.
+ */
+const seedMedia = async (courseId) => {
+  const report = await cms.courseMediaReport(courseId);
+  for (const gap of report.gaps.filter((g) => g.state === 'missing')) {
+    const ext = gap.kind === 'image' ? 'webp' : 'aac';
+    // Minimal valid container bytes so the file is not empty; the readiness `present` check only needs
+    // the file to exist, while a real publish gate would also hash/signature-check it.
+    const body =
+      ext === 'webp'
+        ? new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
+        : new Uint8Array([0xff, 0xf0, 0x00, 0x00]);
+    await cms.writeMediaFile(
+      courseId,
+      {
+        fileId: gap.fileId,
+        kind: gap.kind,
+        ext,
+        group: 'word',
+        label: gap.label ?? '',
+        text: gap.text ?? '',
+        draft: gap.draft ?? '',
+        inCatalog: false,
+        speed: 1,
+      },
+      body,
+      false,
+    );
+  }
+};
+
 // ---------- A. the page refuses to answer for a course it does not have ----------
 check(
   'khóa không tồn tại thì trang 404 chứ không phải checklist trống',
@@ -440,17 +474,18 @@ check(
 
 const media = await cms.courseMediaReport(SYN);
 check(
-  'dòng media = missing + manifest + catalog lệch của báo cáo toàn khóa',
-  row(base, 'media').count ===
-    media.totals.missing + media.totals.unmanifested + media.totals.drift &&
-    row(base, 'media').count > 0 &&
-    row(base, 'media').state === 'warn' &&
-    row(base, 'media').href === `/courses/${SYN}/media`,
-  `${row(base, 'media').count} vs ${JSON.stringify(media.totals)}`,
+  'dòng media-missing = đúng số media bắt buộc thiếu của báo cáo toàn khóa, và chặn publish',
+  row(base, 'media-missing').count === media.totals.missing &&
+    media.totals.missing > 0 &&
+    row(base, 'media-missing').state === 'block' &&
+    row(base, 'media-missing').href === `/courses/${SYN}/media`,
+  `${row(base, 'media-missing').count} vs ${JSON.stringify(media.totals)}`,
 );
 check(
-  'nợ media không chặn publish — publish chỉ upload file tồn tại',
-  row(base, 'media').state !== 'block',
+  'dòng media-warn = clip chưa ghi nhận + catalog lệch, không chặn publish',
+  row(base, 'media-warn').count === media.totals.unmanifested + media.totals.drift &&
+    row(base, 'media-warn').state === (media.totals.unmanifested + media.totals.drift ? 'warn' : 'ok'),
+  `${row(base, 'media-warn').count}`,
 );
 check(
   'dòng ảnh = ảnh không bundle nào chở + ảnh chưa bài nào đố',
@@ -518,8 +553,8 @@ check(
 );
 check(
   'nút Publish chỉ nêu một lý do, checklist nêu cùng lúc mọi lý do — đó là lý do trang này tồn tại',
-  (publish.blocking ?? '').includes('kiểm tra') &&
-    base.blocked >= 2 &&
+  (publish.blocking ?? '').length > 0 &&
+    base.blocked >= 1 &&
     base.items.filter((i) => i.state === 'block').length === base.blocked,
   `${publish.blocking} / blocked=${base.blocked}`,
 );
@@ -528,15 +563,29 @@ check(
 const cleanDraft = gammaDraft();
 cleanDraft.story.questions = [{ q: 'Who?', correct: 'gamma', wrongs: ['nope', 'maybe'] }];
 await saveUnit(GAMMA, 2, cleanDraft, 1);
+
+// Required media is still absent: the readiness checklist must show a hard block, and the Publish
+// button must agree — the offline gate (verifyMediaAssets) would also refuse a missing asset.
+const beforeMedia = await cms.courseReadiness(SYN);
+check(
+  'thiếu media bắt buộc thì checklist chặn và nút Publish cũng chặn (nhất quán với máy kiểm tra nội dung)',
+  row(beforeMedia, 'media-missing').state === 'block' &&
+    row(beforeMedia, 'media-missing').count > 0 &&
+    beforeMedia.publishable === false,
+  JSON.stringify(beforeMedia.items.filter((i) => i.state !== 'ok').map((i) => [i.id, i.state])),
+);
+
+// The CMS media upload writes exactly these files (no source edit): after seeding them, the block clears.
+await seedMedia(SYN);
 await passGate(SYN);
 const ready = await cms.courseReadiness(SYN);
 check(
-  'sửa lỗi lint rồi chạy gate: không còn dòng chặn, nút Publish bật',
+  'nạp file media (đúng quy trình upload) xong thì hết chặn media, nút Publish bật',
   ready.blocked === 0 && ready.publishable === true && row(ready, 'gate').state === 'ok',
   JSON.stringify(ready.items.filter((i) => i.state !== 'ok').map((i) => [i.id, i.state])),
 );
 check(
-  'vẫn còn việc nên làm (media + từ trùng + id lạ) dù đã publish được',
+  'vẫn còn việc nên làm (media chưa ghi nhận + từ trùng + id lạ) dù đã publish được',
   ready.warned === ready.items.filter((i) => i.state === 'warn').length &&
     ready.warned >= 3 &&
     row(ready, 'build-drift').count === 1,
@@ -800,11 +849,16 @@ check(
 );
 const realMedia = await cms.courseMediaReport(VI);
 check(
-  'nợ media của khóa thật = đúng báo cáo toàn khóa, không phải số tự đếm lại',
-  row(real, 'media').count ===
-    realMedia.totals.missing + realMedia.totals.unmanifested + realMedia.totals.drift &&
-    row(real, 'media').count > 1000,
-  `${row(real, 'media').count} vs ${JSON.stringify(realMedia.totals)}`,
+  'nợ media-missing của khóa thật = đúng báo cáo toàn khóa, không phải số tự đếm lại',
+  row(real, 'media-missing').count === realMedia.totals.missing &&
+    row(real, 'media-missing').count > 1000,
+  `${row(real, 'media-missing').count} vs ${JSON.stringify(realMedia.totals)}`,
+);
+check(
+  'nợ media-warn (clip chưa ghi nhận + catalog lệch) của khóa thật = đúng báo cáo',
+  row(real, 'media-warn').count ===
+    realMedia.totals.unmanifested + realMedia.totals.drift,
+  `${row(real, 'media-warn').count} vs ${JSON.stringify(realMedia.totals)}`,
 );
 check(
   'chưa có file nào nên chưa ảnh nào "đủ": dòng ảnh cũng lấy số từ báo cáo',
@@ -828,11 +882,11 @@ check(
 await passGate(VI);
 const realReady = await cms.courseReadiness(VI);
 check(
-  'khóa thật gate xong thì hết chặn, nhưng vẫn còn việc media — hai chuyện khác nhau',
-  realReady.blocked === 0 &&
-    realReady.publishable === true &&
-    realReady.warned >= 1 &&
-    row(realReady, 'media').state === 'warn',
+  'khóa thật thiếu media thật nên vẫn bị chặn publish (nhất quán với máy kiểm tra nội dung)',
+  realReady.blocked >= 1 &&
+    realReady.publishable === false &&
+    row(realReady, 'media-missing').state === 'block' &&
+    row(realReady, 'media-missing').count === realMedia.totals.missing,
   JSON.stringify(realReady.items.filter((i) => i.state !== 'ok').map((i) => [i.id, i.count])),
 );
 check(

@@ -1,5 +1,6 @@
-// `node tools/content/lint-course.mjs` — content lint for the v2 course (builds in memory; no writes).
-// Fails (exit 1) on any error. Checks, beyond Learning's publish validator (validateCourse):
+// `node tools/content/lint-course.mjs [--course <id>] [--version <v>]` — content lint for one course
+// (builds in memory; no writes). Defaults to vi_en / v2. Fails (exit 1) on any error. Checks, beyond
+// Learning's publish validator (validateCourse):
 //   source tables  : unique vocabulary ids/headwords; no sentence/dialogue uses a word before the unit
 //                    that introduces it; every level has enough sentences; English casing/punctuation;
 //                    Vietnamese text carries diacritics; no duplicate sentences; one audio key per sentence
@@ -10,8 +11,9 @@
 //                    authored key and EVERY acceptedText variant, and rejects a wrong answer
 //   schema         : every bundle + the manifest validate against OpenAPI LessonBundle/CourseManifest
 //   coverage       : >= 2 sections, >= 12 units, >= 400 lessons, all 12 exercise types; each unit =
-//                    5 levels x 4-6 lessons + story + unit review + Legendary
-//   determinism    : content/vi_en/source/v2/build-report.json equals the in-memory build (manifestSha256)
+//                    5 levels x 4-6 lessons + story + unit review + Legendary (the scale floors apply
+//                    to the published course; another course still gets every structural check)
+//   determinism    : content/<course>/source/<version>/build-report.json equals the in-memory build
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -20,8 +22,13 @@ import formats from 'ajv-formats';
 import { build } from 'esbuild';
 import { root } from '../../content/tools/lib.mjs';
 import { buildCourse } from './build-course.mjs';
+import { parseCourseTarget } from './course-target.mjs';
 import { tokenize } from './course-lib.mjs';
 
+const target = parseCourseTarget();
+// The scale floors describe the shipped vi_en path; a smaller course still has to pass every
+// per-unit and per-bundle check below.
+const published = target.courseId === 'vi_en' && target.version === 'v2';
 const errors = [];
 const warnings = [];
 const err = (where, msg) => errors.push(`${where}: ${msg}`);
@@ -39,16 +46,22 @@ await build({
 });
 const { gradeAnswer } = await import(`${pathToFileURL(graderFile).href}?t=${Date.now()}`);
 
-const built = await buildCourse();
+const built = await buildCourse(target);
 const { data, manifest, finished, placement, audioCatalog, report } = built;
 for (const p of built.problems) err(p.where, `validator ${p.problem}`);
 // Determinism / staleness: the committed build report must equal this in-memory build.
-const reportPath = path.join(root, 'content/vi_en/source/v2/build-report.json');
+const reportPath = path.join(
+  root,
+  `content/${target.courseId}/source/${target.version}/build-report.json`,
+);
 if (
   !fs.existsSync(reportPath) ||
   fs.readFileSync(reportPath, 'utf8') !== `${JSON.stringify(report, null, 2)}\n`
 )
-  err('build-report.json', 'stale or missing; run node tools/content/build-course.mjs');
+  err(
+    'build-report.json',
+    `stale or missing; run node tools/content/build-course.mjs --course ${target.courseId} --version ${target.version}`,
+  );
 
 // ---------- source tables ----------
 const VI_MARKS = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
@@ -249,9 +262,16 @@ for (const id of report.ambiguousTiles)
   err(id, 'token exercise whose sentence has a same-tiles alternative');
 
 // ---------- coverage ----------
-if (report.sections < 2) err('course', 'needs >= 2 sections');
-if (report.units < 12) err('course', 'needs >= 12 units');
-if (report.lessons < 400) err('course', `needs >= 400 lessons (has ${report.lessons})`);
+if (report.sections < 1) err('course', 'needs at least 1 section');
+if (report.units < 1) err('course', 'needs at least 1 unit');
+if (report.lessons < 1) err('course', 'needs at least 1 lesson');
+if (published) {
+  if (report.sections < 2) err('course', 'needs >= 2 sections');
+  if (report.units < 12) err('course', 'needs >= 12 units');
+  if (report.lessons < 400) err('course', `needs >= 400 lessons (has ${report.lessons})`);
+  if (report.exercises < 5232)
+    err('course', `exercise total fell below v2 baseline (${report.exercises})`);
+}
 // Duolingo-true unit shape: 5 level nodes with 4-6 lessons each, then story, unit review, Legendary.
 for (const unit of manifest.units) {
   const nodes = unit.nodeIds.map((id) => manifest.nodes.find((n) => n.nodeId === id));
@@ -265,8 +285,6 @@ for (const unit of manifest.units) {
   if (!mastery.includes('Ôn tập cửa ải') || !mastery.includes('Huyền thoại'))
     err(unit.unitId, 'needs unit review + Legendary');
 }
-if (report.exercises < 5232)
-  err('course', `exercise total fell below v2 baseline (${report.exercises})`);
 if (Object.keys(report.exerciseTypes).length !== 12)
   err('course', `types ${Object.keys(report.exerciseTypes)}`);
 
@@ -280,8 +298,10 @@ if (errors.length) {
 console.log(
   JSON.stringify({
     status: 'PASS',
+    courseId: target.courseId,
+    versionId: target.version,
     scope:
-      'v2 content lint: source tables, introduction order, grader round-trip, OpenAPI schemas, coverage',
+      'content lint: source tables, introduction order, grader round-trip, OpenAPI schemas, coverage',
     lessons: report.lessons,
     exercises: report.exercises,
     warnings: warnings.length,

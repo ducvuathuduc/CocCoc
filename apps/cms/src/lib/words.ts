@@ -1,3 +1,5 @@
+import type { IconName } from '@/components/icons';
+
 /**
  * One place where developer vocabulary becomes the words the person editing lessons actually uses.
  * Screens show the left-hand term; the technical name stays available inside `TechDetails` so nothing
@@ -54,25 +56,44 @@ export interface NavLink {
   href: string;
   label: string;
   hint: string;
+  icon: IconName;
 }
 
-/** The three jobs of a teacher, plus the one screen that decides today's job for them. */
-export const PRIMARY_NAV: NavLink[] = [
-  { href: '/', label: 'Tổng quan', hint: 'Việc cần làm hôm nay, đếm từ bản soạn thật' },
-  { href: '/lessons', label: 'Bài học', hint: 'Tìm, sửa và xem trước từng bài' },
-  { href: '/builds', label: 'Xuất bản', hint: 'Kiểm tra rồi đưa bài lên app' },
-  { href: '/users', label: 'Người học', hint: 'Tìm tài khoản, khóa khi cần' },
-];
-
-/** Everything else stays reachable, but behind one disclosure so it does not read as the job. */
-export const ADMIN_NAV: NavLink[] = [
-  { href: '/courses', label: 'Tất cả khóa học', hint: 'Mở khóa khác nếu có' },
-  { href: '/ops/inbox', label: 'Thư của người học', hint: 'Góp ý và báo cáo còn đang mở' },
-  { href: '/ops/audit', label: 'Lịch sử hoạt động', hint: 'Ai làm gì, lúc nào' },
-  { href: '/ops/access', label: 'Thành viên & quyền', hint: 'Ai được phép soạn bài' },
-];
-
+/**
+ * The sidebar, grouped by the job it belongs to. A teacher opens "Nội dung" every day; billing and
+ * history are read less often, so they sit further down instead of competing for the same attention.
+ * Every item is a word, never a noun the operator has to decode.
+ */
 export const NAV_GROUPS: { title: string; links: NavLink[] }[] = [
-  { title: 'Làm việc', links: PRIMARY_NAV },
-  { title: 'Quản trị', links: ADMIN_NAV },
+  {
+    title: 'Hôm nay',
+    links: [
+      { href: '/', label: 'Tổng quan', hint: 'Số liệu người học và việc cần làm hôm nay', icon: 'overview' },
+    ],
+  },
+  {
+    title: 'Nội dung',
+    links: [
+      { href: '/lessons', label: 'Bài học', hint: 'Tìm, sửa và xem trước từng bài', icon: 'lessons' },
+      { href: '/builds', label: 'Xuất bản', hint: 'Kiểm tra rồi đưa bài lên app', icon: 'publish' },
+      { href: '/courses', label: 'Tất cả khóa học', hint: 'Mở khóa khác nếu có', icon: 'courses' },
+    ],
+  },
+  {
+    title: 'Người dùng',
+    links: [
+      { href: '/users', label: 'Người học', hint: 'Tìm tài khoản, xem tiến độ, khóa khi cần', icon: 'learners' },
+      { href: '/billing', label: 'Gói & thanh toán', hint: 'Ai đang dùng gói trả phí', icon: 'billing' },
+      { href: '/ops/inbox', label: 'Thư của người học', hint: 'Góp ý và báo cáo còn đang mở', icon: 'inbox' },
+    ],
+  },
+  {
+    title: 'Quản trị',
+    links: [
+      { href: '/ops/audit', label: 'Lịch sử hoạt động', hint: 'Ai làm gì, lúc nào', icon: 'audit' },
+      { href: '/ops/access', label: 'Thành viên & quyền', hint: 'Ai được phép soạn bài', icon: 'access' },
+    ],
+  },
 ];
+
+export const ALL_NAV: NavLink[] = NAV_GROUPS.flatMap((group) => group.links);

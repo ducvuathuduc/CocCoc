@@ -7,6 +7,7 @@ import {
   type CmsStore,
   type SaveCourseInput,
   type SaveUnitInput,
+  type UnitIndexEntry,
 } from './port';
 import { statusOf, withTransientRetry } from './retry';
 
@@ -206,6 +207,22 @@ export class AppwriteStore implements CmsStore {
       Query.limit(200),
     ]);
     return rows.map((r) => this.toUnit(r));
+  }
+
+  /** Navigation only reads four columns; selecting them keeps the draftJson payloads off the wire. */
+  async listUnitIndex(courseId: string): Promise<UnitIndexEntry[]> {
+    const rows = await this.list<UnitRow>(TABLE.units, [
+      Query.equal('courseId', [courseId]),
+      Query.orderAsc('order'),
+      Query.limit(200),
+      Query.select(['unitId', 'order', 'title', 'theme']),
+    ]);
+    return rows.map((r) => ({
+      unitId: r.unitId,
+      order: Number(r.order),
+      title: r.title,
+      theme: r.theme,
+    }));
   }
 
   async getUnit(courseId: string, unitId: string): Promise<UnitRecord | null> {

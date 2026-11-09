@@ -51,12 +51,21 @@ export interface SaveCourseInput {
   expectedRevision: number;
 }
 
+/** The columns a navigation list needs — never the draft payload, which is the heavy part of a unit row. */
+export interface UnitIndexEntry {
+  unitId: string;
+  order: number;
+  title: string;
+  theme: string;
+}
+
 export interface CmsStore {
   readonly mode: 'appwrite' | 'file';
   listCourses(): Promise<CourseRecord[]>;
   getCourse(courseId: string): Promise<CourseRecord | null>;
   saveCourse(input: SaveCourseInput): Promise<CourseRecord>;
   listUnits(courseId: string): Promise<UnitRecord[]>;
+  listUnitIndex(courseId: string): Promise<UnitIndexEntry[]>;
   getUnit(courseId: string, unitId: string): Promise<UnitRecord | null>;
   saveUnit(input: SaveUnitInput): Promise<UnitRecord>;
   deleteUnit(courseId: string, unitId: string, actorId: string): Promise<void>;

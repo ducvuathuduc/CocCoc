@@ -1,16 +1,15 @@
 import Link from 'next/link';
 import { ViewTransition } from 'react';
 import { ContentActions } from '@/components/content-actions';
+import { VersionHistorySection } from '@/components/version-history-section';
 import { PageTransition } from '@/components/page-transition';
-import { TechDetails } from '@/components/tech-details';
 import { WorkflowPanel } from '@/components/workflow-panel';
 import { buildRuns, isDryRunPublish, listCourseSummaries } from '@/server/queries';
 import type { BuildRun } from '@/cms/types';
-import { config } from '@/server/config';
 import { requireAdmin } from '@/server/session';
 import { courseWorkflow } from '@/server/workflow';
 import { cn, formatDateTime } from '@/lib/utils';
-import { card, code, link, log } from '@/lib/ui';
+import { card, hint, link } from '@/lib/ui';
 
 export const metadata = { title: 'Kiểm tra và xuất bản' };
 
@@ -110,76 +109,52 @@ export default async function BuildsPage({
             </ViewTransition>
 
             {courseId && (
-              <details className={cn(card, 'px-4 py-3')}>
-                <summary className="cursor-pointer text-sm font-medium text-fg-2 hover:text-fg">
-                  Vận hành nâng cao (dành cho quản trị máy chủ)
-                </summary>
-                <p className="mt-1 text-xs text-fg-4">
-                  Nhập nội dung từ thư mục nội dung gốc, xem hệ thống chạy lệnh gì và mỗi lần chạy
-                  in ra những gì.
-                </p>
+              <>
+                <section className={cn(card, 'space-y-3 p-4')}>
+                  <h2 className="text-sm font-medium">Các bản đã đưa lên app</h2>
+                  <p className={hint}>
+                    Mỗi lần cho app nhận là một bản. Bản cũ không bao giờ bị xóa: gỡ bản đang chạy
+                    làm khóa biến mất khỏi app, ngừng dùng hẳn thì bản đó không bao giờ chạy lại,
+                    còn quay lại là chọn một bản cũ làm bản đang chạy.
+                  </p>
+                  <VersionHistorySection courseId={courseId} />
+                </section>
 
-                <div className="mt-3 space-y-4 border-t border-line pt-3">
-                  <ContentActions courseId={courseId} />
+                <ContentActions courseId={courseId} />
 
-                  <TechDetails title="Bước kiểm tra và bước xuất bản chạy gì">
-                    <p className="text-xs text-fg-3">
-                      Kiểm tra gọi đúng ba bước mà thư mục nội dung gốc dùng:{' '}
-                      <code className={code}>build-course</code>,{' '}
-                      <code className={code}>lint-course</code>, <code className={code}>check-content</code>{' '}
-                      ở <code className={code}>CMS_REPO_ROOT</code> và dừng ở bước đầu tiên báo đỏ.
-                      Xuất bản chạy <code className={code}>publish-appwrite.mjs</code>:{' '}
-                      <code className={code}>--dry-run</code> không ghi gì, còn bản thật cần{' '}
-                      <code className={code}>CMS_ALLOW_PUBLISH=1</code> — hiện đang{' '}
-                      {config().publishAllowed ? 'bật' : 'tắt'}. CMS chỉ ghi các bảng{' '}
-                      <code className={code}>c_*</code>.
+                <section className={cn(card, 'space-y-2 p-4')}>
+                  <h2 className="text-sm font-medium">
+                    Những lần kiểm tra và xuất bản trước ({runs.length})
+                  </h2>
+                  {runs.length === 0 ? (
+                    <p className="text-xs text-fg-4">
+                      Khóa này chưa được kiểm tra lần nào. Bấm việc tiếp theo ở trên.
                     </p>
-                  </TechDetails>
-
-                  <section>
-                    <h2 className="text-sm font-medium">
-                      Những lần kiểm tra và xuất bản trước ({runs.length})
-                    </h2>
-                    {runs.length === 0 ? (
-                      <p className="mt-1 text-xs text-fg-4">
-                        Khóa này chưa được kiểm tra lần nào. Bấm việc tiếp theo ở trên.
-                      </p>
-                    ) : (
-                      <ul className="rise mt-2 divide-y divide-line">
-                        {runs.map((run) => (
-                          <li key={run.runId} className="py-2">
-                            <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-                              <span
-                                className={cn(
-                                  'rounded-full px-2 py-0.5 text-xs font-medium ring-1',
-                                  STATUS[run.status] ??
-                                    'bg-primary-soft text-primary-text ring-transparent',
-                                )}
-                              >
-                                {runLabel(run)}
-                              </span>
-                              <span className="text-xs tabular-nums text-fg-4">
-                                {formatDateTime(run.createdAt)} · {run.actorId}
-                              </span>
-                            </div>
-                            <p className="mt-1 text-sm text-fg-2">{run.message}</p>
-                            {run.log.length > 0 && (
-                              <details className="mt-1">
-                                <summary className="cursor-pointer text-xs text-fg-4 hover:text-primary-text">
-                                  Log ({run.log.length} dòng)
-                                </summary>
-                                <pre className={cn(log, 'mt-2 max-h-72 overflow-auto')}>
-                                  {run.log.join('\n')}
-                                </pre>
-                              </details>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </section>
-                </div>
-              </details>
+                  ) : (
+                    <ul className="rise divide-y divide-line">
+                      {runs.map((run) => (
+                        <li key={run.runId} className="py-2">
+                          <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                            <span
+                              className={cn(
+                                'rounded-full px-2 py-0.5 text-xs font-medium ring-1',
+                                STATUS[run.status] ??
+                                  'bg-primary-soft text-primary-text ring-transparent',
+                              )}
+                            >
+                              {runLabel(run)}
+                            </span>
+                            <span className="text-xs tabular-nums text-fg-4">
+                              {formatDateTime(run.createdAt)}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-sm text-fg-2">{run.message}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              </>
             )}
           </>
         )}

@@ -48,7 +48,7 @@ export async function buildDevBundles() {
   return outdir;
 }
 
-function toFunctionContext(req, bodyText, res) {
+export function toFunctionContext(req, bodyText, res) {
   const url = new URL(req.url ?? '/', 'http://127.0.0.1');
   const headers = Object.fromEntries(
     Object.entries(req.headers).map(([key, value]) => [

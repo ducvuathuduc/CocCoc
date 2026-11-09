@@ -203,6 +203,12 @@ A sentence's level is derived from the newest word it contains. Commands:
 
 ```sh
 node tools/content/build-course.mjs          # write content/vi_en/dist/v2 + source/v2/build-report.json
-node tools/content/build-course.mjs --check  # fail if build-report.json is stale
+node tools/content/build-course.mjs --check  # fail if build-report.json or dist/ is stale
 node tools/content/lint-course.mjs           # full content lint (also run by content/tools/check-content.mjs)
 ```
+
+Every command takes `--course <id> --version <v>` (default `vi_en v2`) and reads
+`content/<course>/source/<version>/`; `--course` / `--version` are validated so they can only name a
+folder inside `content/`. A course whose `dist/` is not committed (the multi-course test fixture
+`vi_en_mini`) uses `--report-only` to refresh its build report without writing a `dist/` that
+`check-content` would then demand media for.

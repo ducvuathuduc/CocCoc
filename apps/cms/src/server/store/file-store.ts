@@ -6,7 +6,7 @@ import type {
   CourseRecord,
   UnitRecord,
 } from '@/cms/types';
-import { ConflictError, NotFoundError, type CmsStore } from './port';
+import { ConflictError, NotFoundError, type CmsStore, type UnitIndexEntry } from './port';
 
 interface Db {
   courses: CourseRecord[];
@@ -93,6 +93,16 @@ export class FileStore implements CmsStore {
     return db.units
       .filter((u) => u.courseId === courseId)
       .sort((a, b) => a.order - b.order);
+  }
+
+  async listUnitIndex(courseId: string): Promise<UnitIndexEntry[]> {
+    const units = await this.listUnits(courseId);
+    return units.map((u) => ({
+      unitId: u.unitId,
+      order: u.order,
+      title: u.draft.title,
+      theme: u.draft.theme,
+    }));
   }
 
   async getUnit(courseId: string, unitId: string): Promise<UnitRecord | null> {

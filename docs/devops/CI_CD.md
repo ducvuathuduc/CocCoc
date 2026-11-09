@@ -10,6 +10,7 @@ Run once for a pull request and again after a push to `main`. Feature-branch pus
 |---|---|---|
 | Backend foundation | Frozen pnpm install; TypeScript build/typecheck, ESLint, formatting and tests; in-process and local HTTP smoke; API contracts and OpenAPI lint; CI regression tests | Three independent service bundles |
 | Mobile frontend | Pinned Flutter; locked dependency restore; Dart format, analyzer and Flutter tests; Android debug build | Debug APK, golden failure images on failure |
+| Mobile API lane | Pinned Flutter; the Learning test backend (fixtures, in-memory, loopback only) is started and `apps/mobile/test_api` runs with `DATA_SOURCE=api`; Dart format of the lane tests. It is independent of the Mobile frontend workflow, which keeps the mock suite | Pass/fail of Flutter runtime against real Learning responses |
 | Source secret scan | Checksum-pinned Gitleaks with redacted output | Fails when a source secret is detected |
 
 Dependencies and action commits are pinned. Ordinary jobs have only `contents: read`, no deployment/provider secrets, timeouts, and cancellation of superseded runs. Artifacts expire after three days; diagnostic golden failures expire after seven.
@@ -22,6 +23,9 @@ Dependencies and action commits are pinned. Ordinary jobs have only `contents: r
 - **Container runtime:** build the three owner images, check startup/restart behavior, and collect logs. This duplicates backend compilation, so it runs on demand.
 - **Mobile frontend:** manual dispatch with `build_ios=true` also builds the unsigned iOS simulator artifact after Linux verification succeeds; it does not rerun the Linux visual suite on macOS.
 - **Android E2E:** the existing manual emulator workflow is retained for native/device changes.
+- **Mobile API lane → build_release:** manual dispatch also builds the release-profile APK with `config/real.public.json` after the lane passes. `tools/tests/mobile-release-config.test.mjs` fails when any workflow builds an app without that profile.
+
+The Mobile API lane (`.github/workflows/mobile-api.yml`) is an addition to the 2026-11-06 minimal policy that closes the gap where CI ran Flutter tests only in mock mode. It is prepared and verified locally but needs human approval before it becomes a pull-request gate. It proves the Flutter clients and parsers against the local Learning service only. It is not cloud, Appwrite, device or staging evidence.
 
 ## Deployment
 

@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { CourseTabs } from '@/components/course-tabs';
 import { MediaUpload } from '@/components/media-upload';
 import { PageTransition } from '@/components/page-transition';
-import { TechDetails } from '@/components/tech-details';
-import { audioTask, courseMediaReport, imageTask, type MediaGap } from '@/server/media-service';
+import { courseMediaReport, type MediaGap } from '@/server/media-service';
 import { requireAdmin } from '@/server/session';
 import { cn } from '@/lib/utils';
 import { badge, card, code, link, row, td, th, warnBox } from '@/lib/ui';
@@ -132,8 +131,6 @@ export default async function CourseMediaPage({
   const gaps = report.gaps.filter(
     (gap) => (state === 'all' || gap.state === state) && (!unit || gap.unitId === unit),
   );
-  const audio = audioTask(report.gaps);
-  const images = imageTask(report.gaps);
   const { totals } = report;
 
   return (
@@ -205,125 +202,6 @@ export default async function CourseMediaPage({
             )}
           </ul>
 
-          <TechDetails title="Dành cho người chạy lệnh dựng">
-            <p className="text-xs text-fg-3">
-              Tên file chính là mã của nó: <code className={code}>a.u3.s7.n</code> là tiếng của câu 7
-              trong bài 3, <code className={code}>i.u3.apple.webp</code> là ảnh quả táo, hậu tố{' '}
-              <code className={code}>.n</code> là bản thường và <code className={code}>.s</code> là
-              bản chậm.
-            </p>
-            <p className="text-xs text-fg-3">
-              Danh sách này do CMS suy ra từ bản nháp đã lưu theo quy tắc đánh số của{' '}
-              <code className={code}>build-course.mjs</code>, và khớp với những gì từng unit hiển
-              thị. Bản máy đọc được:{' '}
-              <a
-                href={`/api/media/owed?course=${encodeURIComponent(courseId)}`}
-                className={cn(link, 'font-mono text-xs')}
-              >
-                /api/media/owed?course={courseId}
-              </a>
-            </p>
-            <p className="mt-2 text-xs text-fg-3">
-              {totals.ready} đủ điều kiện dựng · {totals.missing} chưa có file ·{' '}
-              {totals.unmanifested} clip đã có file nhưng{' '}
-              <code className={code}>audio-manifest.json</code> chưa lấy được · {totals.drift} dòng
-              có lời thoại trong nháp khác với catalog bản dựng · {totals.unused} ảnh có file nhưng
-              không bài nào của bản dựng chở · {totals.picturesWithoutDrill} ảnh bài có chở nhưng
-              chưa câu hỏi nào đố tới.
-            </p>
-            {audio.keys.length > 0 ? (
-              <pre className="mt-2 overflow-x-auto rounded-lg bg-elevated p-3 text-xs text-fg-2">
-                {`node tools/content/generate-audio.mjs --course ${courseId} --version ${report.version} --only ${audio.keys.join(',')}
-node tools/content/generate-audio.mjs --check`}
-              </pre>
-            ) : (
-              <p className="mt-2 text-xs text-fg-3">
-                Mọi clip app cần đều đã nằm trong catalog và đã có manifest khớp.
-              </p>
-            )}
-            {audio.needsBuild.length > 0 && (
-              <p className={cn(warnBox, 'mt-2')}>
-                {audio.needsBuild.length} key ({audio.needsBuild.slice(0, 5).join(', ')}
-                {audio.needsBuild.length > 5 ? ', …' : ''}) do bản nháp mới thêm nên chưa có trong{' '}
-                <code className={code}>dist/{report.version}/audio-catalog.json</code>.{' '}
-                <code className={code}>generate-audio.mjs</code> chỉ đi theo catalog, nên phải chạy{' '}
-                <code className={code}>
-                  node tools/content/build-course.mjs --course {courseId}
-                </code>{' '}
-                trước thì các key này mới sinh được audio.
-              </p>
-            )}
-            {audio.drift.length > 0 && (
-              <p className={cn(warnBox, 'mt-2')}>
-                {audio.drift.length} dòng ({audio.drift.slice(0, 5).join(', ')}
-                {audio.drift.length > 5 ? ', …' : ''}) có catalog bản dựng ghi lời khác với bản nháp
-                đã lưu — thường xảy ra sau khi sửa câu hoặc{' '}
-                <Link href={`/courses/${courseId}`} className={link}>
-                  đổi thứ tự bài
-                </Link>
-                , vì <code className={code}>generate-audio.mjs</code> thu âm theo catalog chớ không
-                theo nháp. Chạy{' '}
-                <code className={code}>
-                  node tools/content/build-course.mjs --course {courseId}
-                </code>{' '}
-                để cập nhật catalog rồi thu âm lại những key này; khi đó chúng sẽ xuất hiện ở danh
-                sách <code className={code}>--only</code> phía trên.
-              </p>
-            )}
-            {report.unreadableBundles.length > 0 && (
-              <p className={cn(warnBox, 'mt-2')}>
-                {report.unreadableBundles.length} file trong{' '}
-                <code className={code}>dist/{report.version}/bundles/</code> đọc được nhưng không có{' '}
-                <code className={code}>unitId</code> hoặc <code className={code}>assets</code> (
-                {report.unreadableBundles.slice(0, 5).join(', ')}
-                {report.unreadableBundles.length > 5 ? ', …' : ''}). Clip từ vựng lấy từ chính những
-                file này, nên danh sách trên có thể đang thiếu tài nguyên app thật sự cần — dựng lại
-                khóa sẽ vá lại các bundle.
-              </p>
-            )}
-            {totals.unused > 0 && (
-              <p className={cn(warnBox, 'mt-2')}>
-                {totals.unused} ảnh đã có file và đúng chuẩn nhưng không một bài tập nào của{' '}
-                <code className={code}>dist/{report.version}/bundles/</code> chở (
-                {report.units
-                  .filter((u) => u.unused > 0)
-                  .slice(0, 5)
-                  .map((u) => `${u.genUnitId}: ${u.unused}`)
-                  .join(', ')}
-                {report.units.filter((u) => u.unused > 0).length > 5 ? ', …' : ''}). App chỉ hiện
-                ảnh trong bài <code className={code}>imageChoice</code>, và{' '}
-                <code className={code}>build-course.mjs:923</code> bỏ qua dạng bài này khi chưa có 4
-                từ đánh dấu <code className={code}>img</code> được giới thiệu tới lúc dựng. Đây là
-                việc của nội dung, không phải của kho media: thêm từ có ảnh rồi dựng lại, không cần
-                tạo file nào cả.
-              </p>
-            )}
-            {totals.picturesWithoutDrill > 0 && (
-              <p className={cn(warnBox, 'mt-2')}>
-                {totals.picturesWithoutDrill} ảnh đã vào được bài của{' '}
-                <code className={code}>dist/{report.version}/bundles/</code> nhưng không một câu hỏi{' '}
-                <code className={code}>imageChoice</code> nào đố tới, nên app không bao giờ đưa
-                chúng lên màn hình (
-                {report.units
-                  .filter((u) => u.picturesWithoutDrill > 0)
-                  .slice(0, 5)
-                  .map((u) => `${u.genUnitId}: ${u.picturesWithoutDrill}/${u.image}`)
-                  .join(', ')}
-                {report.units.filter((u) => u.picturesWithoutDrill > 0).length > 5 ? ', …' : ''}).{' '}
-                <code className={code}>build-course.mjs:918-925</code> đổi bài chọn ảnh sang bài
-                chọn chữ khi chưa có 4 từ đánh dấu <code className={code}>img</code> được giới thiệu
-                tới lúc dựng, và <code className={code}>:928-944</code> làm tương tự với lượt thoại.
-                Mở panel từng unit để xem đúng những dạng bài bản dựng đã sinh cho unit đó.
-              </p>
-            )}
-            {images.length > 0 && (
-              <p className="mt-2 text-xs text-fg-3">
-                {images.length} ảnh còn thiếu —{' '}
-                <code className={code}>python3 tools/content/lesson_art</code> vẽ theo key, tên file
-                phải đúng như <code className={code}>{images[0]}.webp</code> thì CMS mới nhận.
-              </p>
-            )}
-          </TechDetails>
         </section>
 
         <section className={cn(card, 'p-4')}>
@@ -390,15 +268,6 @@ node tools/content/generate-audio.mjs --check`}
               </tbody>
             </table>
           </div>
-          <TechDetails title="Mã dựng của từng bài (cần khi chạy lệnh)">
-            <ul className="space-y-0.5 font-mono text-xs text-fg-3">
-              {report.units.map((summary) => (
-                <li key={summary.unitId}>
-                  {summary.unitId} → {summary.genUnitId}
-                </li>
-              ))}
-            </ul>
-          </TechDetails>
         </section>
 
         <section className={cn(card, 'p-4')}>

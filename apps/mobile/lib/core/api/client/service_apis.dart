@@ -49,6 +49,20 @@ final class LearningApi {
         query: {'version': version},
       );
 
+  /// Course-scoped lesson bundle. Prefer this over [getBundle] whenever the
+  /// active course is known, so two courses that share a `lessonId` never
+  /// resolve to the wrong course's content.
+  Future<wire.LessonBundle> getCourseBundle(
+    String courseId,
+    String lessonId, {
+    String? version,
+  }) => client.call(
+    ApiOperations.getCourseBundle,
+    decode: wire.LessonBundle.fromJson,
+    pathParams: {'courseId': courseId, 'lessonId': lessonId},
+    query: {'version': version},
+  );
+
   Future<wire.Session> startSession(
     wire.SessionRequest request, {
     String? idempotencyKey,

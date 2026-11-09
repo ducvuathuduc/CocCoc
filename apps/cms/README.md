@@ -28,18 +28,19 @@ Không có Appwrite thì cũng không đăng nhập được: file store chỉ c
 
 | Trang | Nội dung |
 | --- | --- |
-| `/` | Bảng điều khiển: việc cần làm hôm nay (đếm từ bản nháp thật), hành trình Soạn → Kiểm tra → Xuất bản, bài học gần đây và tình trạng khóa |
+| `/` | Tổng quan: tổng người học, gói trả phí (Super/Max), thư chờ xử lý, tình trạng bài học, tài khoản mới nhất và việc cần làm hôm nay — đếm từ dữ liệu thật của app |
 | `/lessons` | Không gian bài học của khóa: tìm, lọc theo trạng thái, sửa và xem trước từng bài |
 | `/courses` | Danh sách khóa học |
 | `/courses/[courseId]` | Thông tin khóa, cấu trúc section, bài kiểm tra trình độ (10 câu bộ dựng lấy theo vị trí), danh sách unit, tạo/xóa unit, đổi thứ tự unit, nhập từ repo, lối vào media toàn khóa và lối vào tìm kiếm trong nội dung |
 | `/courses/[courseId]/media` | Báo cáo nợ media của cả khóa: bảng từng unit, danh sách key cho `generate-audio.mjs --only`, bản JSON `/api/media/owed`, ô nạp audio/ảnh cấp khóa |
 | `/courses/[courseId]/search` | Tìm trên bản nháp của cả khóa (không phân biệt hoa thường và dấu thanh), mỗi kết quả chỉ đúng tab · dòng · cột trong editor và bấm vào là mở ngay chỗ đó; kèm ba danh sách nội dung lặp lại và bảng "Thay thế trong toàn khóa" xem trước từng dòng sẽ đổi |
-| `/courses/[courseId]/units/[unitId]` | Editor từ vựng / câu / hội thoại / truyện, lint trực tiếp, `Ctrl+S` lưu, panel media app sẽ dùng (nghe + xem ảnh), ô nạp audio/ảnh, cảnh báo manifest/catalog lệch bản nháp, badge `#N` trên những dòng bài kiểm tra trình độ đọc theo vị trí (chỉ unit đầu), lối vào *bài học bản dựng* |
+| `/courses/[courseId]/units/[unitId]` | Trình soạn bài theo 6 bước có dấu tích (Thông tin bài → Từ vựng → Câu → Hội thoại → Truyện → Xem trước); lint trực tiếp, `Ctrl+S` lưu. Mỗi tab bảng (từ vựng, câu, hội thoại, câu hỏi truyện) có ô *Dán nhiều dòng* để dán cả bảng một lần; tab *Ảnh & âm thanh* luôn hiện, còn cột đáp án thay thế nằm sau *Tùy chọn nâng cao*. Badge `#N` trên những dòng bài kiểm tra trình độ đọc theo vị trí (chỉ unit đầu), lối vào *bài học bản dựng* |
 | `/courses/[courseId]/units/[unitId]/lesson` | Những gì bản dựng gần nhất thực sự giao cho app: node/bài/câu theo `manifest.json`, đáp án đọc từ đúng trường bộ dựng dùng để chấm, mỗi câu trỏ lại dòng soạn (kể cả khi từ ấy thuộc unit khác), bài thay thế khi máy không có mic/loa, và danh sách id mà không bản nháp nào còn sở hữu |
 | `/courses/[courseId]/readiness` | Checklist "còn việc gì trước khi app nhận bản này": mọi điều kiện của bản hiện hành trong một bảng, mỗi dòng lấy số từ đúng màn hình sở hữu nó và có lối `sửa →` |
-| `/builds?course=` | Nút xuất file tác giả + chạy ba cổng kiểm tra nội dung, panel Publish (chạy thử / publish thật) và lịch sử mọi lần chạy kèm log |
-| `/users?q=` | Mọi tài khoản người học trong Appwrite (mới nhất trước), tìm theo email hoặc mã tài khoản |
+| `/builds?course=` | Nút xuất file tác giả + chạy ba cổng kiểm tra nội dung, các nút xuất bản (chạy thử / publish thật), lịch sử phiên bản và lịch sử mọi lần chạy. Lỗi hiện bằng một câu tiếng Việt; log thô nằm trong bản ghi lần chạy và console server |
+| `/users?q=&plan=` | Mọi tài khoản người học trong Appwrite (mới nhất trước), hiện tên thật và gói thay vì bắt đọc mã tài khoản; tìm theo email/tên/mã và lọc theo gói trả phí hoặc miễn phí |
 | `/users/[userId]` | Một người học: hồ sơ, gói đang dùng, khóa đang học, 14 ngày gần nhất, góp ý còn mở, và nút khóa/mở tài khoản |
+| `/billing` | Gói & thanh toán: số tài khoản theo gói (Super/Max) và theo trạng thái gói, danh sách người đang dùng gói trả phí kèm nguồn và hạn dùng. Không có số tiền — xem lý do bên dưới |
 | `/ops/inbox` | Thư của người học: góp ý còn mở, báo cáo về một người, báo lỗi câu hỏi |
 | `/ops/reports` | Báo cáo lỗi & cảnh báo theo unit |
 | `/ops/audit` | Nhật ký thao tác của admin |
@@ -76,8 +77,9 @@ nên một unit chưa section nào liệt kê theme của nó làm lần build h
 - Tạo unit tự gán theme vào section cuối (`sec1` nếu khóa chưa có section).
 - Xóa unit gỡ theme khỏi section trong cùng một action — nếu không, `course.mjs` còn lại một theme
   không unit nào và cổng lint sẽ từ chối bản xuất.
-- Panel *Cấu trúc khóa* ở `/courses/[courseId]` cho phép đổi mã/tên section, thêm section, chuyển unit
-  sang section khác, và xóa section **rỗng** (nút Xóa bị chặn khi section còn unit).
+- Panel *Cấu trúc khóa* ở `/courses/[courseId]/structure` hiện từng phần học là một thẻ chứa danh sách
+  bài (theo tên), kèm khối *Bài chưa xếp vào phần nào* để gán bài bằng dropdown. Mã section và mã theme
+  tự sinh, không hiện ra giao diện; nút Xóa phần bị chặn khi phần còn bài.
 - `structureIssues()` trong `src/cms/structure.ts` là một kiểm tra duy nhất, dùng chung cho panel,
   `exportCourseToRepo` và trạng thái sẵn sàng publish, nên không thể lưu màn hình sang trạng thái mà
   lần xuất kế tiếp sẽ bị từ chối. Cổng lint còn đòi ít nhất 2 section (`tools/content/lint-course.mjs:252`).
@@ -460,6 +462,27 @@ Một tab cũ bấm khóa lần hai chỉ nhận toast "Tài khoản đã bị k
 bốn mục cho hai lần khóa hai lần mở, không có dòng thứ năm. Màn `/users/<id>` của một userId không còn
 trong project (các dòng `p_day_activity` do probe cũ để lại) hiện đúng trang "Không có tài khoản này" thay
 vì một bộ số toàn 0.
+
+## Tổng quan và gói trả phí
+
+`/` và `/billing` trả lời câu hỏi kinh doanh, không phải câu hỏi kỹ thuật: bao nhiêu người học, bao nhiêu
+đang trả phí, còn bao nhiêu thư chờ. Cả hai đọc qua `src/server/ops/overview.ts`, và mọi con số đều là
+`total` của một truy vấn có index — không tải cả bảng về để đếm.
+
+- **Đếm bằng `total`, không đếm trang trả về.** `countAccounts`, `entitlementCounts` và `openCounts` xin
+  đúng một dòng rồi đọc `total` mà Appwrite trả kèm; `users-check.mjs` sửa stub cho đúng hành vi đó
+  (`total` là của cả tập đã lọc, không phải của trang vừa trả) để một lần đếm sai không lọt qua.
+- **Không lọc trên cột không có index.** `p_day_activity` chỉ có index `(userId, day)` và `p_purchases`
+  chỉ có `(userId, state)`, nên không có "đang hoạt động hôm nay" hay "đơn mua mới nhất": những truy vấn
+  đó là 400 trên project thật. Số người học theo gói đọc từ `p_entitlements` với `status = ACTIVE`, đúng
+  index `k_status_expiresAt`.
+- **Không có doanh thu, và nói rõ vì sao.** Thanh toán trong app là mô phỏng và `p_purchases` không lưu
+  số tiền của đơn, nên trang gói chỉ đếm người theo gói. Một con số tiền ở đây sẽ là số bịa.
+- **Máy chưa nối Appwrite thì nói "chưa nối".** `learnerOverview()` trả `connected: false` thay vì một
+  bộ số 0 trông như kết luận; phần nội dung của trang chủ vẫn dùng bình thường.
+- **Danh sách hiện tên, không hiện mã.** `/users` nối `p_profiles` và `p_entitlements` một lần cho cả
+  trang (không phải một truy vấn mỗi dòng) để hiện nickname và huy hiệu gói; người chưa có hồ sơ rơi về
+  email, và mã tài khoản chỉ còn trong `title`.
 
 ## Khi Appwrite chập chờn
 
