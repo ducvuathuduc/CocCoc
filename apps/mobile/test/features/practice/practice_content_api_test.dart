@@ -78,7 +78,7 @@ void main() {
     setUp(() {
       transport = FakeApiTransport()
         ..json('GET /v1/courses/vi_en/path', path())
-        ..json('GET /v1/lessons/u1n1l1/bundle', bundle)
+        ..json('GET /v1/courses/vi_en/lessons/u1n1l1/bundle', bundle)
         ..json('GET /v1/review', reviewPage());
       final api = ApiEndpoints(fakeClient(transport));
       repository = ApiPracticeContentRepository(
@@ -94,10 +94,16 @@ void main() {
 
       expect(exercises, hasLength(1));
       expect(exercises.single.kind, ExerciseKind.dictation);
-      expect(transport.to('GET /v1/lessons/u1n1l1/bundle'), hasLength(1));
+      expect(
+        transport.to('GET /v1/courses/vi_en/lessons/u1n1l1/bundle'),
+        hasLength(1),
+      );
 
       await repository.practiceExercises(ExerciseKind.dictation);
-      expect(transport.to('GET /v1/lessons/u1n1l1/bundle'), hasLength(1));
+      expect(
+        transport.to('GET /v1/courses/vi_en/lessons/u1n1l1/bundle'),
+        hasLength(1),
+      );
     });
 
     test('offline typed practice keeps the mock fixture', () async {
