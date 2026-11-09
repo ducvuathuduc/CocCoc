@@ -66,6 +66,10 @@ desktop.ini
 artifacts/private/
 private-exports/
 
+# Local report-draft and browser-automation scratch output (not project source)
+.report-work/
+.playwright-cli/
+
 # Appwrite deploy staging (appwrite/scripts/ops.mjs --deploy)
 appwrite/.build/
 __pycache__/
