@@ -1,3 +1,6 @@
+// [VI] Hợp đồng journal offline của bài học: ghi từng answer/completion với idempotencyKey
+// để replay sau crash không gửi trùng; trạng thái synced/rejected quyết định UI có chờ server
+// hay hiển thị lỗi. Đây là interface, implementation bền nằm ở drift_lesson_journal.dart.
 import 'dart:convert';
 
 import 'package:flutter/services.dart';

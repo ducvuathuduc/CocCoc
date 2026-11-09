@@ -1,3 +1,5 @@
+# [VI] CI bảo mật: cài Gitleaks bản pin checksum và quét source đã track (không quét credential
+# deploy). Fail nếu phát hiện secret; output được redact, không in giá trị bí mật.
 name: Source secret scan
 on:
   pull_request: null

@@ -1,3 +1,7 @@
+// [VI] Adapter bền của AI trên Appwrite TablesDB, cùng giao thức commit với Learning:
+// stage toàn bộ op → đọc lại row để kiểm version → commit; 409 là conflict có thể retry.
+// AI chỉ ghi bảng a_*; row không gắn permission vì chỉ server dùng.
+// Key Appwrite đọc theo từng execution (x-appwrite-key), fallback key cấu hình.
 // Durable AI persistence over Appwrite TablesDB (node-appwrite), same commit protocol as the
 // Learning adapter. One database (`cocenglish`); AI writes only its a_ tables. Commits use TablesDB transactions:
 //   1. stage every create/update/delete with createOperations (unique row IDs collide on duplicates),

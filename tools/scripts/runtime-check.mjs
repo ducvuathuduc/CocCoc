@@ -1,3 +1,6 @@
+// [VI] Kiểm tra runtime native/container: build bundle http/worker, khởi động process HTTP
+// cô lập, thử /health, xác nhận request private chưa ký bị từ chối, rồi tắt sạch.
+// Không dùng dữ liệu bền hay credential cloud.
 import { createHash, createHmac } from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';

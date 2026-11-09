@@ -1,3 +1,7 @@
+// [VI] Probe LIVE trên TEST project đã admitted (không chạy trong CI):
+// tạo 2 user tạm, đăng nhập, mint JWT, kiểm Account.get, transaction/conflict và permission;
+// luôn dọn row/user trong finally; output là evidence JSON đã redact, không chứa secret/JWT.
+// Cần APPWRITE_PROJECT_ENV=test + ALLOW_LIVE_PROBE=reviewed-test-project + endpoint/project/key.
 // Live probes against an explicitly admitted Appwrite TEST project (P1-FOUND-002 / P1-OPS-001 cloud half).
 // Never run by CI. Requires: APPWRITE_PROJECT_ENV=test, ALLOW_LIVE_PROBE=reviewed-test-project,
 // APPWRITE_ENDPOINT (https), APPWRITE_PROJECT_ID, APPWRITE_API_KEY (server key; never printed).

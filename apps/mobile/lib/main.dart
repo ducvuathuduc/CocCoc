@@ -1,3 +1,6 @@
+// [VI] Entrypoint Flutter: dựng ProviderScope, GoRouter và các controller toàn cục.
+// Build bắt buộc khai báo DATA_SOURCE (api/mock) qua dart-define; thiếu khai báo thì app
+// dừng ở màn hình hướng dẫn thay vì âm thầm chạy fixture. View không gọi SDK trực tiếp.
 import 'features/super_trial/presentation/android_super_flow.dart';
 import 'features/super_trial/application/super_access_reminder.dart';
 import 'features/appearance/application/appearance_controller.dart';

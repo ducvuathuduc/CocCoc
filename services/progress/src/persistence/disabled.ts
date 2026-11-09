@@ -1,3 +1,5 @@
+// [VI] Adapter mặc định của hosted khi chưa cấu hình: readiness/business route fail closed.
+// Thiếu credential hoặc chưa admitted thì không phục vụ dữ liệu.
 import { createDisabledOwnerStore } from '../../../shared/src/disabled-store.js';
 import { ServiceError } from '../../../shared/src/errors.js';
 import { PROGRESS_TABLES, type ProgressPersistence } from './port.js';

@@ -1,3 +1,6 @@
+// [VI] Port persistence của Progress: chỉ Progress ghi các bảng p_*.
+// Mở rộng OwnerStore (receipt + inbox) với transaction lạc quan, xóa row và query có giới hạn;
+// mọi adapter (tạm cho test/dev, Appwrite cho hosted) implement cùng driver contract ở core.ts.
 // Progress-owned persistence port. Only Progress writes these tables (docs/data/DATA_MODEL.md).
 // The shared OwnerStore contract (receipts + inbox) is extended with a generic optimistic
 // transaction, deletes and bounded owner-table queries; every adapter (memory for tests/dev,

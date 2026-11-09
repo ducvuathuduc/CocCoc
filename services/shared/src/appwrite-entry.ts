@@ -1,3 +1,10 @@
+// [VI] Cầu nối giữa Appwrite Function runtime và router của service:
+// - plainRequest(): chỉ copy các field request an toàn; không spread req vì getter bodyJson
+//   có thể ném lỗi khi body rỗng/không phải JSON.
+// - Dynamic key: Appwrite inject key theo từng execution qua header x-appwrite-key;
+//   key chỉ sống trong AsyncLocalStorage của execution, không log, không lưu DB.
+// - Scheduled execution: cron của Appwrite gọi path "/" với x-appwrite-trigger=schedule;
+//   worker không đọc input từ request, mọi job đều idempotent nên trigger giả không gây hại.
 // Hosted Appwrite Function entry helpers (transport only, no business logic).
 // - plainRequest: copy only the documented plain request fields; the runtime req has lazy getters
 //   (bodyJson throws on an empty/non-JSON body), so it must never be spread or enumerated.

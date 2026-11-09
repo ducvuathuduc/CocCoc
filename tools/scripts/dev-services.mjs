@@ -1,3 +1,7 @@
+// [VI] Chạy 3 service ở DEV MODE: dùng router/wiring thật nhưng adapter tạm trong bộ nhớ,
+// dữ liệu mất khi tắt và /ready luôn 503 (adapter tạm không bao giờ được admitted).
+// User route fail closed trừ khi COC_DEV_AUTH=1 (chỉ chấp nhận Bearer dev-<userId> trên loopback).
+// Port 4101/4102/4103; HMAC dùng key dev có sẵn trừ khi COC_SERVICE_KEYS được set.
 // `pnpm dev:services [learning|progress|ai ...]` — run the services locally in DEV MODE.
 // Each service uses its real router/wiring (services/<svc>/src/dev.ts) with the explicit
 // in-memory adapter: nothing is durable and /ready stays 503 (memory is never admitted).

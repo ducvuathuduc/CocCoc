@@ -1,3 +1,6 @@
+// [VI] Bản đồ route HTTP của AI, dùng chung cho hosted và local dev.
+// Mỗi route dưới đây ứng với một operation tag ai trong docs/api/openapi.yaml;
+// /health, /ready và /internal/events do shared/transport cung cấp.
 // AI HTTP wiring shared by the hosted entrypoint (src/index.ts) and local dev (src/dev.ts).
 // Built-in /health, /ready and /internal/events come from services/shared/src/transport.ts.
 // Every route below implements a docs/api/openapi.yaml operation (tag ai).

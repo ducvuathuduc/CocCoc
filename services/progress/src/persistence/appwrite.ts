@@ -1,3 +1,8 @@
+// [VI] Adapter bền của Progress trên Appwrite TablesDB.
+// Mỗi lần commit: createTransaction → stage toàn bộ op bằng createOperations → đọc lại các row
+// update/delete để chắc revision chưa đổi → commit. Appwrite trả 409 khi row đổi sau stage hoặc
+// create trùng row ID/unique index; cả hai được coi là TransactionConflict để lõi retry.
+// Bảng p_ chỉ server dùng; quyền row do owner quyết định, không mở cho client.
 // Durable Progress adapter over Appwrite TablesDB (node-appwrite 29.2.0, server API key).
 // One attempt = point reads/queries outside the transaction, then at commit: createTransaction,
 // stage every op with one createOperations call, re-read each updated/deleted row and abort

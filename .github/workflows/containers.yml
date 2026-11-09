@@ -1,3 +1,6 @@
+# [VI] CI container (thủ công): build image của 3 service, chạy compose không credential,
+# kiểm tra /health + restart, lưu checksum bundle và log đã redact.
+# Đây chỉ là bằng chứng runtime cô lập; không deploy, không dùng cloud key, không phải admission.
 name: Container runtime
 on:
   workflow_dispatch: null

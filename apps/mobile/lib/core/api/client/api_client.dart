@@ -1,3 +1,7 @@
+// [VI] HTTP client có kiểu cho các API OpenAPI:
+// - chọn service (Learning/Progress/AI) theo operation, gắn Bearer JWT + Idempotency-Key;
+// - parse response thành DTO đã validate schema, map lỗi server thành ApiException;
+// - retry/refresh token do tầng repository/provider quyết định, không tự ý retry mutation.
 import 'dart:async';
 import 'dart:convert';
 

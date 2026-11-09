@@ -1,3 +1,5 @@
+# [VI] Build/publish image staging cho .NET (thủ công). Mặc định chỉ build và lưu metadata;
+# chỉ publish lên GHCR khi input publish=true. Không deploy host nào.
 name: .NET staging images (manual)
 
 on:

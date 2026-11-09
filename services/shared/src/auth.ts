@@ -1,3 +1,9 @@
+// [VI] Cổng xác thực danh tính: chỉ chấp nhận Appwrite JWT rồi gọi Account.get để lấy userId.
+// - Token lấy từ Authorization: Bearer (hoặc x-appwrite-user-jwt khi Appwrite gọi trực tiếp).
+// - Tuyệt đối không đọc userId/XP/điểm do client tự gửi.
+// - Phân loại lỗi: thiếu token → AUTH_REQUIRED; hết hạn → AUTH_EXPIRED;
+//   tài khoản bị khóa → ACCOUNT_BLOCKED; lỗi mạng/5xx → AUTH_UNAVAILABLE (fail closed).
+// - Timeout 2 giây, chỉ retry 1 lần cho lỗi transport/5xx.
 // Verified-subject auth port (docs/api/AUTH.md). The router depends only on AuthPort;
 // the hosted adapter wraps createAccountVerifier (Account.get), tests inject a fake.
 import { ServiceError } from './errors.js';

@@ -1,3 +1,10 @@
+// [VI] "Nhà máy" sinh khai báo DB từ tài liệu:
+//   docs/data/DATA_MODEL.md + PERMISSIONS.md
+//     → parse bảng/cột/index/permission
+//     → foundation.json (tables, columns, indexes, bucket)
+// Đồng thời kiểm tra declaration đã commit có khớp docs không và diff với Appwrite live.
+// Index được parse từ cột "Indexes / retention": unique(...) / key(...) → key u_/k_...
+// File thuần hàm, không network, không đọc env.
 // Derives the Appwrite TablesDB declaration from docs/data/DATA_MODEL.md and
 // docs/data/PERMISSIONS.md, and checks a committed declaration against it.
 // Pure functions only: no network, no environment access.

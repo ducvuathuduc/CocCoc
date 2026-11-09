@@ -1,3 +1,10 @@
+// [VI] Router REST dùng chung cho cả 3 service — "cửa kiểm soát" của mọi request:
+//   1. gắn requestId và trả lỗi theo đúng envelope trong docs/api/EVENTS_ERRORS.md;
+//   2. xác thực Appwrite JWT qua AuthPort (Account.get), không tin userId client gửi;
+//   3. xác thực HMAC cho các route /internal/* giữa service với service;
+//   4. /health công khai; /ready và business route fail-closed nếu chưa cấu hình/admitted;
+//   5. nhận event vào inbox và chống trùng bằng eventId + bodyHash.
+// Không có rule chấm bài/XP nào ở đây — rule thuộc domain của từng service.
 // Shared REST router: request ID, error envelope, verified JWT (AuthPort), service HMAC,
 // fail-closed /ready and /internal/events. No grading/reward logic lives here.
 import { randomUUID } from 'node:crypto';

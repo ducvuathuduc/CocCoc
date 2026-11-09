@@ -1,3 +1,5 @@
+// [VI] Kiểm tra seed catalog (appwrite/seeds/catalog.json) khớp JSON Schema trong OpenAPI.
+// Đây là gate offline: không gọi mạng, không gọi AI; seed chỉ là dữ liệu catalog có kiểu.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

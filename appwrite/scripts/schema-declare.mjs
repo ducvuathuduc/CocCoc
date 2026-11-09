@@ -1,3 +1,6 @@
+// [VI] Regenerate appwrite/schema/foundation.json từ docs/data sau khi data model được duyệt.
+// Chạy: pnpm schema:declare → pnpm schema:plan && pnpm schema:test.
+// Giữ metadata (schemaVersion/scope/sources/conventions), còn tables/buckets thì derive lại.
 // Regenerates appwrite/schema/foundation.json from docs/data/DATA_MODEL.md and PERMISSIONS.md.
 // Run after a reviewed data-model doc change: `pnpm schema:declare`, then `pnpm schema:plan && pnpm schema:test`.
 // Keeps the declaration's metadata block (schemaVersion/scope/sources/conventions); tables and buckets are derived.

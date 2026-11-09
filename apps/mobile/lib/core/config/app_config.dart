@@ -1,3 +1,6 @@
+// [VI] Cấu hình runtime công khai của app: chọn nguồn dữ liệu api/mock và endpoint từng service.
+// Mọi giá trị đến từ dart-define, không chứa secret. API key không bao giờ nằm trong app;
+// danh tính lấy từ Appwrite JWT sau khi đăng nhập.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/client/api_operation.dart';

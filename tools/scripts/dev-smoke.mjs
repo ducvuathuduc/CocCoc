@@ -1,3 +1,7 @@
+// [VI] Smoke HTTP thật cho dev: khởi động dev:services như child process rồi kiểm tra
+// /health cả 3 service, /ready fail-closed, và gửi event lesson.completed.v1 đã ký HMAC
+// từ Learning sang Progress (accept/replay/substitution/impersonation/unsigned).
+// Không gọi cloud/provider; dùng COC_DEV_PORT_BASE nếu cần đổi port.
 // `pnpm dev:smoke` — starts `dev:services` as a child process and exercises it over real HTTP:
 // /health on all three services, fail-closed /ready, and a signed lesson.completed.v1 event sent
 // with Learning's key to Progress /internal/events (accept, replay, substitution, impersonation,

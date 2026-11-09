@@ -1,3 +1,12 @@
+// [VI] Entrypoint HOSTED của Learning (đóng gói thành dist/function.mjs để deploy Appwrite
+// Function hoặc chạy trong container).
+// - Mặc định persistence = disabled → business route trả SERVICE_NOT_CONFIGURED.
+// - Chỉ chọn adapter Appwrite TablesDB khi COC_LEARNING_PERSISTENCE=appwrite + endpoint/project.
+// - Business route còn cần marker COC_LEARNING_ADMITTED=reviewed-cloud-gate.
+// - Appwrite cấp key theo từng execution (x-appwrite-key, giới hạn bởi scope Function);
+//   key không bị log hay ghi xuống DB.
+// - Cron gọi path "/" với x-appwrite-trigger=schedule → drain l_outbox, gửi event đã ký HMAC.
+// - Nội dung khóa học được xác minh bằng COC_CONTENT_PUBLIC_KEYS trước khi dùng.
 // Hosted Learning Function artifact (dist/function.mjs).
 // Default: disabled persistence (fail closed). The durable Appwrite TablesDB adapter is selected only
 // when COC_LEARNING_PERSISTENCE=appwrite with endpoint/project present, and serves business routes

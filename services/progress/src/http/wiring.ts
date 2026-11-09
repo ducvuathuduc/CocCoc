@@ -1,3 +1,7 @@
+// [VI] Bản đồ route HTTP của Progress, dùng chung cho hosted và local dev.
+// Route nghiệp vụ nằm trong routes.ts/routes-extended.ts và phải khớp OpenAPI;
+// withRequestScope cấp path parameter + Idempotency-Key; các tick /internal/jobs/*
+// phải được ký bằng key 'scheduler' hoặc 'maintainer'.
 // Progress HTTP wiring shared by the hosted entrypoint (src/index.ts) and local dev (src/dev.ts).
 // Built-in /health, /ready and /internal/events come from services/shared/src/transport.ts.
 // Business routes are the docs/api/openapi.yaml operations tagged progress (./routes.ts);

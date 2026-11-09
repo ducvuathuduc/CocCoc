@@ -1,3 +1,6 @@
+// [VI] Port persistence của AI: chỉ AI ghi các bảng a_*.
+// Mở rộng OwnerStore (receipt, inbox, allowlist bảng) với list có index, transaction nguyên tử
+// không receipt (lease outbox, purge tài khoản) và xóa row — cùng shape với Learning.
 // AI-owned persistence port. Only AI writes these tables (docs/data/DATA_MODEL.md).
 // It extends the shared OwnerStore contract (receipts, inbox, owner-table allowlist) with indexed
 // listing, a receipt-less atomic transaction (outbox leasing, account purge) and row removal,

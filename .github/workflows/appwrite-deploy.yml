@@ -1,4 +1,7 @@
 name: Appwrite deploy (test project, manual)
+# [VI] CD Appwrite CHỈ CHẠY THỦ CÔNG (workflow_dispatch), không bao giờ tự chạy khi push/PR.
+# Deploy 3 bundle lên TEST project đã review bằng chính script local (appwrite:apply/deploy).
+# Cần secret APPWRITE_TEST_API_KEY; bước apply sinh keyring HMAC server-side và không in ra log.
 # Manual dispatch only: never runs on push/PR. Deploys the three service bundles to the reviewed
 # TEST project with the same script used locally (pnpm appwrite:apply / appwrite:deploy).
 # Required repository secret: APPWRITE_TEST_API_KEY (project key with functions/variables/project

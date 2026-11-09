@@ -1,3 +1,8 @@
+// [VI] Entrypoint LOCAL DEV cho `pnpm dev:services learning`.
+// Dùng cùng router/wiring với hosted nhưng chọn adapter tạm trong bộ nhớ (mất khi tắt),
+// nạp seed content đã commit và chạy mode 'local-dev'. Không bao giờ được import bởi index.ts.
+//   COC_DEV_AUTH=1   → chấp nhận Bearer dev-<userId> (chỉ loopback, không có trong hosted)
+//   COC_DEV_RELAY=0  → tắt gửi event sang Progress dev server
 // LOCAL DEV composition root for `pnpm dev:services`. Same wiring as the hosted entrypoint, but
 // with the explicit in-memory adapter, the committed seed content (content/*/dist, dev-signed and
 // published at startup through the real publish use case) and mode 'local-dev'.

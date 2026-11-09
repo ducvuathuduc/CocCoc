@@ -1,3 +1,5 @@
+// [VI] Entrypoint LOCAL DEV cho AI: cùng wiring, adapter tạm trong bộ nhớ, mode 'local-dev'.
+// Provider mặc định là scripted; chỉ dùng cho `pnpm dev:services`, không import từ index.ts.
 // LOCAL DEV composition root for `pnpm dev:services`. Same wiring as the hosted entrypoint,
 // but with the explicit in-memory adapter and mode 'local-dev'. Never imported by src/index.ts.
 // Optional, local only:

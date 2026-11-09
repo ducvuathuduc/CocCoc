@@ -1,3 +1,6 @@
+// [VI] Smoke in-process cho luồng outbox → inbox:
+// dựng fixture, ghi event đã ký, chạy consumer và kiểm tra hiệu ứng/replay/idempotency.
+// Không mở port, không gọi cloud; dùng để bắt lỗi transaction/dedupe trước khi chạy HTTP thật.
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import Ajv from 'ajv/dist/2020.js';

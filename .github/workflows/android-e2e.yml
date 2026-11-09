@@ -1,3 +1,5 @@
+# [VI] E2E Android bằng Patrol trên emulator API 34 (thủ công, cần KVM). Chỉ dùng cho thay đổi
+# native/device; không thay thế kiểm thử trên máy thật.
 name: Android E2E (reminders)
 on:
   workflow_dispatch: null

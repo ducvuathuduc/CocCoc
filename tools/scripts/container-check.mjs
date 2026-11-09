@@ -1,3 +1,6 @@
+// [VI] Smoke chỉ-đọc cho compose không credential: kiểm tra /health từng container,
+// xác nhận private route vẫn fail closed và container restart không phục vụ dữ liệu.
+// Đây chỉ là bằng chứng runtime cô lập, KHÔNG phải admission cloud.
 import assert from 'node:assert/strict';
 
 // Read-only smoke for the no-credential Compose profile. This is not admission.

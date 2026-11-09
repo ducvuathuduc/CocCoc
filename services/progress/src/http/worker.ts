@@ -1,3 +1,9 @@
+// [VI] Worker chạy theo cron của Progress (Appwrite gọi path "/" với x-appwrite-trigger=schedule).
+// Một cron mỗi phút tự quyết định job theo giờ server:
+//   mỗi phút   relay p_outbox (account.deleted / entitlement.changed / energy.granted)
+//   mỗi phút   retry deletion purge
+//   phút 5     streak rollover mỗi giờ (đêm của mọi timezone rơi vào một giờ UTC nào đó)
+//   phút 15    league settlement mỗi giờ (idempotent, chờ watermark của Learning)
 // Progress scheduled worker (Appwrite cron, x-appwrite-trigger=schedule at `/`). One function
 // schedule (every minute) drives every Progress job; cadence is decided here from the server clock:
 //   every minute    outbox relay (account.deleted / entitlement.changed / energy.granted)

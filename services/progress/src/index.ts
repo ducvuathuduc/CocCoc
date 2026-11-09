@@ -1,3 +1,9 @@
+// [VI] Entrypoint HOSTED của Progress.
+// - Adapter Appwrite TablesDB chỉ được chọn khi COC_PROGRESS_PERSISTENCE=appwrite + endpoint/project.
+// - Business route chỉ mở khi persistence.admittedForHosting=true (COC_PROGRESS_ADMITTED).
+// - Key Appwrite lấy theo từng execution (x-appwrite-key), fallback COC_PROGRESS_APPWRITE_KEY.
+// - Cron "/" chạy worker: relay p_outbox, streak rollover, league settlement, deletion purge.
+// - jobPorts() ký HMAC bằng key 'progress' trong COC_SERVICE_KEYS để gọi Learning/AI.
 import {
   currentExecutionKey,
   isScheduledExecution,

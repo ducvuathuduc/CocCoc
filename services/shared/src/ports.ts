@@ -1,3 +1,8 @@
+// [VI] Các "hợp đồng cổng" (port) ở tầng giao thức mà router dùng chung:
+// ServiceName, BusinessEvent, PersistencePort, OwnerStore, InboxEntry, ReceiptKey...
+// Port chỉ mô tả hành vi, không chứa I/O hay rule nghiệp vụ.
+// Port riêng của từng owner (bảng nào được ghi, transaction ra sao) nằm ở
+// services/<service>/src/persistence/port.ts.
 // Protocol-level port contracts the shared router depends on. Owner-specific persistence
 // interfaces (tables, receipts, inbox) live in services/<owner>/src/persistence/port.ts.
 import type { components } from '../../../packages/api_contracts/generated.js';

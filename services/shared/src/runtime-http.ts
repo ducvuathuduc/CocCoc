@@ -1,3 +1,6 @@
+// [VI] HTTP server cho container/native runtime (không phải Appwrite Function).
+// Cùng một handler hosted được bọc vào node:http, bind theo env, giới hạn body, CORS,
+// requestId và graceful shutdown. Đây là entrypoint `http.mjs` trong Docker image.
 import { randomUUID } from 'node:crypto';
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
