@@ -1,3 +1,9 @@
+# [VI] Compose local/demo cho 3 service:
+# - mỗi service bind loopback 4101/4102/4103, root filesystem read-only, user không phải root,
+#   giới hạn CPU/RAM/PID và healthcheck /health;
+# - worker là profile "workers" (chỉ bật khi cần drain outbox);
+# - env công khai đọc từ env.public.example; secret riêng từng owner đọc từ .secrets/<svc>.env
+#   (không commit). File này không deploy production và không chứa credential.
 name: cocenglish-local
 
 x-common: &common

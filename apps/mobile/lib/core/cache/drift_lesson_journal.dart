@@ -1,3 +1,6 @@
+// [VI] Journal bài học bền trên SQLite (Drift): bảng active session, completion chờ gửi,
+// completion bị từ chối và migration marker. Mọi thao tác đi qua một hàng đợi tuần tự để
+// tránh ghi đè; namespace tách dữ liệu theo tài khoản. Có migrate từ SharedPreferences cũ.
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';

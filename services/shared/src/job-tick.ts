@@ -1,3 +1,9 @@
+// [VI] Tick scheduler có chữ ký cho các job /internal/jobs/*:
+// - parse/validate JobTickRequest và bọc JobRunReport;
+// - job cụ thể do từng owner implement (streak rollover, league settlement, deletion purge,
+//   outbox relay...);
+// - tick idempotent: job đọc lại state bền, dùng lease/row ID xác định nên chạy lặp không
+//   tạo hiệu ứng trùng.
 // Signed scheduler ticks (OpenAPI JobTickRequest/JobRunReport, /internal/jobs/*). Transport-level
 // parsing and the report envelope only; each owner implements the job itself. A tick is
 // idempotent by construction: every job re-reads durable state, so a repeated or overlapping

@@ -1,3 +1,6 @@
+// [VI] Worker loop cho container/native runtime: gọi handler theo chu kỳ để drain outbox
+// và chạy các job nội bộ. Không nhận input từ HTTP; dừng mềm qua stop() để không cắt ngang
+// transaction đang chạy.
 import type { RawAppwriteContext } from './appwrite-entry.js';
 import type { ServiceName } from './transport.js';
 import type { HostedHandler } from './runtime-http.js';

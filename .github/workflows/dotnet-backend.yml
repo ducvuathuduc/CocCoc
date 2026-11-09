@@ -1,3 +1,6 @@
+# [VI] CI cho nhánh migration .NET: build/test solution .NET 10, kiểm tra parity fixture với
+# Node baseline, build image test và chạy 3 host chưa cấu hình trong compose cô lập.
+# Đây là bằng chứng migration, KHÔNG phải cutover: Node vẫn là runtime chính.
 name: .NET backend migration
 on:
   pull_request:

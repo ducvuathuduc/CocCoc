@@ -1,3 +1,7 @@
+// [VI] One-command setup cho môi trường LOCAL BỀN (`pnpm local:setup`):
+// tạo config riêng + CA dev, start Appwrite/TablesDB/Storage + 3 service container, apply schema
+// additive, chạy probe permission/transaction, publish nội dung, admit adapter và smoke đăng nhập.
+// Không đọc credential cloud của người dùng; lỗi probe sẽ chặn admission.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

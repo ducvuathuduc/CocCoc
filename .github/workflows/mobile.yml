@@ -1,3 +1,6 @@
+# [VI] CI mobile: pin Flutter 3.47, restore dependency theo lockfile, chạy dart format/analyze/test
+# và build APK debug. iOS simulator chỉ build khi dispatch thủ công với build_ios=true.
+# Artifact APK/golden failure được upload; workflow không ký release và không publish store.
 name: Mobile frontend
 on:
   pull_request:

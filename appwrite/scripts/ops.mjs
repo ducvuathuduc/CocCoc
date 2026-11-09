@@ -1,3 +1,10 @@
+// [VI] Điều khiển Appwrite project theo các mode:
+//   (mặc định) plan offline — validate + in kế hoạch + SHA;
+//   --apply       tạo/cập nhật Function, biến, secret, auth, platform, domain, cron trên TEST;
+//   --check-live  so sánh live với khai báo, báo drift;
+//   --deploy      build bundle, copy runtime adapter, push code bằng Appwrite CLI, chờ ready, health;
+//   --health      gọi /health từng Function.
+// COC_SERVICE_KEYS được sinh server-side và chỉ lưu dưới dạng secret variable.
 // Per-service Appwrite operations: functions (one per microservice), variables/secrets, auth, platforms,
 // function domains, schedules. Declarations: appwrite/appwrite.config.json (Appwrite CLI functions) and
 // appwrite/ops/project.json. Modes:

@@ -1,3 +1,8 @@
+// [VI] Gate backend chính (`pnpm backend:verify` / `backend:build`):
+// chạy tsc strict → esbuild đóng gói 3 bundle độc lập (function/http/worker) → ESLint +
+// Prettier → toàn bộ test node của services. `--build` chỉ build, dùng cho deploy/container.
+// Esbuild thêm banner createRequire vì node-appwrite kéo dependency CommonJS dùng require()
+// cho built-in của Node; bundle ESM vẫn phải load được trong Appwrite Function.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';

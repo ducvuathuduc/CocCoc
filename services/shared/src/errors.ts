@@ -1,3 +1,8 @@
+// [VI] Bảng mã lỗi chuẩn + hàm tạo error envelope thống nhất cho cả 3 service.
+// Mỗi ServiceError mang code, HTTP status, message an toàn, details và cờ retryable.
+// Client chỉ thấy envelope { error: { code, message, requestId, details, retryable } };
+// stack trace và chi tiết nội bộ không bao giờ lọt ra response.
+// SERVICE_NOT_CONFIGURED = 503 fail-closed khi adapter/hosted route chưa được cấu hình.
 // Standard error envelope and code table from docs/api/EVENTS_ERRORS.md.
 // SERVICE_NOT_CONFIGURED is the scaffold's fail-closed 503 code (documented in EVENTS_ERRORS.md).
 const CODE_STATUS = {

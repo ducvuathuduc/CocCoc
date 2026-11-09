@@ -1,3 +1,7 @@
+# [VI] CI backend: chạy khi PR/push main có thay đổi service, schema, contract, docs API/data
+# hoặc hạ tầng. Các bước chính: cài pnpm theo lockfile → TypeScript/ESLint/Prettier/test →
+# smoke nội bộ → smoke HTTP thật cho 3 service → contract/OpenAPI lint.
+# Artifact đầu ra là 3 bundle Function độc lập; workflow không deploy và không dùng secret cloud.
 name: Backend foundation
 on:
   pull_request:

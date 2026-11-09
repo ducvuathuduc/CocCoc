@@ -1,3 +1,6 @@
+// [VI] Cấp Bearer token cho API: mint Appwrite JWT từ session đang đăng nhập và cache đến
+// gần hết hạn (JWT sống 15 phút). 401/sign-out sẽ invalidate cache; token không ghi xuống
+// SharedPreferences.
 /// Supplies the bearer token for API calls (an Appwrite JWT).
 abstract interface class AccessTokenProvider {
   /// Current JWT, minting a new one when needed. Null when signed out.

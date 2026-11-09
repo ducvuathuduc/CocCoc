@@ -1,3 +1,5 @@
+// [VI] Chọn implementation journal cho native: mở database `cocenglish_lesson_journal` trong
+// Application Support, dùng Drift + migrate dữ liệu legacy từ SharedPreferences.
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 

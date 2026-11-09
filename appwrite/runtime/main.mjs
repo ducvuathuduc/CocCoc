@@ -1,3 +1,6 @@
+// [VI] Adapter runtime của Appwrite: được deploy cạnh bundle function.mjs với tên main.mjs.
+// Runtime truyền req có lazy getter (bodyJson ném lỗi nếu body rỗng/không JSON), nên adapter
+// chỉ copy các field plain sang FunctionContext rồi gọi handler. Không có logic nghiệp vụ.
 // Appwrite runtime adapter (deployed next to each service's hosted bundle as main.mjs).
 // The Appwrite node runtime passes a req object with lazy getters (bodyJson throws on an empty or
 // non-JSON body), so spreading or enumerating it can crash before the service router runs. This

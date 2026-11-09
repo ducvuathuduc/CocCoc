@@ -1,3 +1,6 @@
+// [VI] Port persistence của Learning: chỉ Learning được ghi các bảng l_*.
+// Port mở rộng OwnerStore (receipt, inbox, allowlist bảng) với list có index và transaction
+// nguyên tử không receipt (lease outbox, seed) cùng khả năng xóa row (giải phóng active slot).
 // Learning-owned persistence port. Only Learning writes these tables (docs/data/DATA_MODEL.md).
 // It extends the shared OwnerStore contract (receipts, inbox, owner-table allowlist) with the two
 // things Learning's use cases need beyond get-by-id: indexed listing and a receipt-less atomic

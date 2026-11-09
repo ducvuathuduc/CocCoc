@@ -1,3 +1,8 @@
+// [VI] Lõi store của Progress, độc lập adapter. Driver cung cấp primitive (đọc 1 row, query,
+// count, commit có phát hiện conflict); lõi thêm allowlist bảng, validate schema, stamp
+// revision/createdAt/updatedAt, retry lạc quan, receipt (p_receipts) và inbox (p_inbox).
+// Driver Appwrite và driver tạm dùng chung đúng ngữ nghĩa này, nên test trên adapter tạm
+// kiểm tra cùng một rule với môi trường hosted.
 // Adapter-neutral Progress store. A driver supplies single-attempt primitives (point read,
 // bounded query, count, atomic commit with conflict detection); this core adds owner-table
 // allowlisting, schema validation, mutable-row stamping (revision/createdAt/updatedAt),

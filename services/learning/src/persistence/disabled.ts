@@ -1,3 +1,5 @@
+// [VI] Adapter mặc định của hosted khi chưa cấu hình: mọi readiness/business route fail closed.
+// Đây là "cầu dao an toàn" — thiếu credential hoặc chưa admitted thì không phục vụ dữ liệu.
 import { createDisabledOwnerStore } from '../../../shared/src/disabled-store.js';
 import { ServiceError } from '../../../shared/src/errors.js';
 import { LEARNING_TABLES, type LearningPersistence } from './port.js';

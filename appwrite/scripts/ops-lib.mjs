@@ -1,3 +1,6 @@
+// [VI] Helper thuần (không network) cho khai báo vận hành Appwrite:
+// appwrite.config.json (Function settings) + ops/project.json (auth, platform, biến, domain, cron).
+// Có hàm validate/diff và sinh keyring HMAC; được ops.mjs và test dùng chung.
 // Pure (no network) helpers for the per-service Appwrite operations declaration:
 // appwrite/appwrite.config.json (Appwrite CLI functions) + appwrite/ops/project.json (auth, platforms,
 // variables, domains, schedules). Used by appwrite/scripts/ops.mjs and appwrite/test/ops.test.mjs.

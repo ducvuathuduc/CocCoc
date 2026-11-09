@@ -1,3 +1,7 @@
+// [VI] Bản đồ route HTTP của Learning, dùng chung cho hosted (index.ts) và local dev (dev.ts).
+// /health, /ready, /internal/events do shared/transport cung cấp; các route nghiệp vụ dưới đây
+// phải khớp operation trong docs/api/openapi.yaml. Path template do http/scope.ts resolve,
+// còn learningHandler() bọc thêm phần kiểm tra scope/receipt.
 // Learning HTTP wiring shared by the hosted entrypoint (src/index.ts) and local dev (src/dev.ts).
 // Built-in /health, /ready and /internal/events come from services/shared/src/transport.ts.
 // Business routes exist only for operations in docs/api/openapi.yaml. Path templates are resolved

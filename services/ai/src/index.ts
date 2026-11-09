@@ -1,3 +1,9 @@
+// [VI] Entrypoint HOSTED của AI.
+// - Persistence mặc định disabled; chỉ dùng Appwrite TablesDB khi COC_AI_PERSISTENCE=appwrite
+//   + endpoint https + project, và business route cần COC_AI_ADMITTED=reviewed-cloud-gate.
+// - Provider thật bị gate sau env/secret: COC_AI_PROVIDER=speech + key Azure/AssemblyAI/Deepgram.
+//   Không có key → speech unavailable; không bao giờ tự bịa transcript.
+// - Cron "/" drain a_outbox và gửi ai.practice.completed.v1 / account.purged.v1 đã ký HMAC.
 // Hosted AI Function artifact (dist/function.mjs).
 // Default: disabled persistence (fail closed). The durable Appwrite TablesDB adapter is selected
 // only when COC_AI_PERSISTENCE=appwrite with an https endpoint and project; its credential is the

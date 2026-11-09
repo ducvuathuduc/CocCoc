@@ -1,11 +1,15 @@
-// Progress inbox consumer (docs/api/EVENTS_ERRORS.md, docs/architecture/CONSISTENCY.md).
-// lesson.completed.v1: the inbox row and every reward effect (ledger, day, totals, streak,
-// quests, league, achievements, notification) commit atomically; duplicate delivery replays and
-// a changed payload under the same eventId is IDEMPOTENCY_CONFLICT.
-// ai.practice.completed.v1: PRACTICE credit for one completed Roleplay/Video Call conversation,
-// same inbox atomicity and once-per-event rules (application/practice.ts).
-// account.purged.v1: owner acknowledgement recorded with the inbox row; the purge itself runs
-// in bounded follow-up transactions (application/deletion.ts).
+// [VI] BỘ NHẬN EVENT CỦA PROGRESS — "hộp thư đến" nơi Progress xử lý thư từ các service khác.
+// Luồng: Learning ghi event "bài học đã xong" ra outbox → relay ký HMAC gửi qua → file này xử lý.
+//
+// 3 loại event nhận được:
+//  • lesson.completed.v1   — user xong 1 bài học. Inbox row + MỌI hiệu ứng thưởng (sổ XP,
+//    streak ngày, tổng, quest, league, achievement, notification) commit trong MỘT transaction.
+//    Thư bị giao 2 lần → lần 2 thấy eventId trùng trong inbox → bỏ qua (không cộng XP đôi).
+//    Cùng eventId nhưng payload khác → IDEMPOTENCY_CONFLICT (báo động, không im lặng).
+//  • ai.practice.completed.v1 — công PRACTICE cho 1 buổi Roleplay/Video Call xong,
+//    cùng tính nguyên tử & once-per-event như trên (application/practice.ts).
+//  • account.purged.v1     — ghi nhận "đã nhận lệnh xóa tài khoản"; việc xóa thật chạy
+//    trong các transaction tiếp theo có giới hạn (application/deletion.ts).
 import { ServiceError } from '../../../shared/src/errors.js';
 import type { BusinessEvent, EventConsumer } from '../../../shared/src/ports.js';
 import { validateGraded } from '../domain/lesson-xp.js';
@@ -35,12 +39,17 @@ function invalid(reason: string): never {
   throw new ServiceError('VALIDATION_ERROR', { details: { reason } });
 }
 
+/** [VI] Kiểm tra event bài học: payload chỉ được chứa đúng các trường đã biết —
+ * xuất hiện MỘT trường lạ là từ chối toàn bộ (UNKNOWN_FIELD). Đây là strict validation:
+ * với dữ liệu từ service khác, thà chặt chém còn hơn bị tấn công bằng trường bất ngờ. */
 function checkLesson(event: CompletionEvent): void {
   const p = event.payload as unknown as Record<string, unknown>;
   if (Object.keys(p).some((key) => !LESSON_KEYS.includes(key))) invalid('UNKNOWN_FIELD');
+  // [VI] 5 trường id phải là string hợp regex ID — chặn id rỗng / ký tự lạ / quá dài
   for (const key of ['completionId', 'userId', 'courseId', 'lessonVersion', 'rewardIdentity']) {
     if (typeof p[key] !== 'string' || !ID.test(p[key])) invalid('INVALID_IDENTIFIER');
   }
+  // [VI] Nếu event khai có điểm (graded) thì validate thêm logic điểm ở domain/lesson-xp.ts
   const graded = validateGraded(event.payload);
   if (graded && !graded.ok) invalid(graded.reason);
 }
@@ -58,6 +67,8 @@ const PRACTICE_KEYS = [
 const isInt = (value: unknown, min: number, max: number) =>
   Number.isInteger(value) && (value as number) >= min && (value as number) <= max;
 
+/** [VI] Kiểm tra event practice (AI gửi khi user xong buổi luyện nói): cùng strict style —
+ * chỉ trường đã biết, id hợp lệ, số nguyên trong khoảng cho phép (xp 0..max, stars 0..3). */
 function checkPractice(event: PracticeEvent): void {
   const p = event.payload as unknown as Record<string, unknown>;
   if (!p || typeof p !== 'object') invalid('INVALID_PRACTICE');
@@ -65,7 +76,8 @@ function checkPractice(event: PracticeEvent): void {
   for (const key of ['completionId', 'userId', 'courseId', 'scenarioId']) {
     if (typeof p[key] !== 'string' || !ID.test(p[key])) invalid('INVALID_IDENTIFIER');
   }
-  // The AI producer keys its practice events by the owning user.
+  // [VI] AI phải key event theo user sở hữu: userId trong payload phải trùng aggregateId
+  // (aggregateId là "chủ sở hữu" của event) — chặn event ghi công nhầm người khác.
   if (p['userId'] !== event.aggregateId) invalid('AGGREGATE_MISMATCH');
   if (!(PRACTICE_KINDS as readonly unknown[]).includes(p['kind'])) invalid('INVALID_PRACTICE');
   if (
@@ -82,16 +94,23 @@ export interface ConsumerOptions {
   purgeAfterAck?: boolean;
 }
 
+/** [VI] Tạo consumer: hàm consume() được transport gọi cho MỖI event đến.
+ * Đây là "cửa hải quan": validate chặt → rồi mới đưa vào transaction nguyên tử. */
 export function createProgressEventConsumer(
   store: ProgressPersistence,
   options: ConsumerOptions = {},
 ): EventConsumer {
   return {
     async consume(event, context) {
+      // [VI] bodyHash dùng làm "vân tay" của event: cùng eventId + khác vân tay = payload bị
+      // đổi giữa chừng → inbox sẽ phát hiện và báo IDEMPOTENCY_CONFLICT.
       const entry = { eventId: event.eventId, type: event.type, bodyHash: context.bodyHash };
       if (event.type === 'lesson.completed.v1') {
         const completion = event as CompletionEvent;
         checkLesson(completion);
+        // [VI] applyInboxEvent = ghi dòng inbox VÀ chạy applyLessonCompletion trong CÙNG một
+        // transaction. Thành công → cả sổ thư và thưởng cùng được lưu. Thất bại → cùng rollback.
+        // Thư giao lại lần 2 → thấy eventId trong inbox → replay an toàn, không cộng thưởng đôi.
         return store.applyInboxEvent(entry, (tx) => applyLessonCompletion(tx, completion));
       }
       if (event.type === 'ai.practice.completed.v1') {

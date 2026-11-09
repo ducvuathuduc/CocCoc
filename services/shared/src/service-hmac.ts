@@ -1,21 +1,29 @@
-// Internal service request signing per docs/api/EVENTS_ERRORS.md ("HMAC-SHA256 keys ...").
-// Signed string: timestamp \n METHOD \n canonicalPathAndQuery \n sha256hex(rawBody).
-// Replay protection: timestamp skew <= 300s here; event IDs/inbox give effect-level dedupe.
+// [VI] Ký số HMAC cho các request NỘI BỘ giữa các service (Learning ↔ Progress ↔ AI).
+// Ý tưởng như "thư có con dấu": người gửi trộn nội dung thư với MẬT KHẨU CHUNG (secret)
+// bằng công thức HMAC-SHA256 → ra chữ ký. Người nhận làm lại cùng công thức: khớp = thư thật.
+//
+// Chuỗi được ký gồm 4 phần (xem signingString() bên dưới):
+//   timestamp \n METHOD \n path \n sha256hex(body)
+// → Kẻ tấn công sửa bất kỳ phần nào (đổi body, đổi đường dẫn) thì chữ ký lệch ngay.
+//
+// Chống "replay" (bắt gói tin cũ gửi lại): timestamp lệch quá 300 giây là bị từ chối.
+// Với event qua hàng đợi (RabbitMQ) xem event-envelope.ts — event nằm queue lâu nên
+// không dùng thời gian, mà dùng eventId + inbox để chống trùng.
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import { ServiceError } from './errors.js';
 
-/** 'scheduler' signs only the /internal/jobs/* ticks (no event or business route accepts it). */
+/** [VI] 'scheduler' chỉ được ký các lệnh tick /internal/jobs/* (không route nào khác chấp nhận nó). */
 export type ServiceSender = 'learning' | 'progress' | 'ai' | 'maintainer' | 'scheduler';
 export interface ServiceKey {
-  keyId: string;
-  sender: ServiceSender;
-  secret: Buffer;
+  keyId: string; // [VI] tên chìa khóa, vd "learning-key-1" — gửi kèm để bên nhận biết tra chìa nào
+  sender: ServiceSender; // [VI] chìa này thuộc về ai — Learning, Progress, AI...
+  secret: Buffer; // [VI] mật khẩu bí mật (≥32 bytes) — chỉ nằm server, tuyệt đối không đưa client
 }
 export type Keyring = ReadonlyMap<string, ServiceKey>;
 
-export const MAX_SKEW_SECONDS = 300;
-export const MIN_KEY_BYTES = 32;
-/** Signed-request header names; also advertised in the CORS preflight allow-list. */
+export const MAX_SKEW_SECONDS = 300; // [VI] lệch giờ tối đa giữa gửi & nhận: 5 phút
+export const MIN_KEY_BYTES = 32; // [VI] chìa bí mật phải dài ≥32 bytes, chống dò mò vét cạn
+/** [VI] Tên 3 header đi kèm mọi request nội bộ có chữ ký; cũng được cho phép trong CORS preflight. */
 export const SERVICE_HMAC_HEADERS = [
   'X-Service-Key-Id',
   'X-Service-Timestamp',
@@ -39,8 +47,9 @@ export function createKeyring(keys: readonly ServiceKey[]): Keyring {
 }
 
 /**
- * Parse a keyring from configuration JSON: [{"keyId","sender","secretHex"}].
- * Returns undefined when unset so readiness/internal routes fail closed.
+ * [VI] Tạo "chùm chìa" từ cấu hình JSON: [{"keyId","sender","secretHex"}].
+ * Trả về undefined khi chưa cấu hình → mọi route nội bộ sẽ fail closed (chặn hết).
+ * Đây là chủ ý: KHÔNG cấu hình key thì KHÔNG ai gọi được nhau, an toàn hơn là "tạm cho qua".
  */
 export function parseKeyring(raw: string | undefined): Keyring | undefined {
   if (!raw) return undefined;
@@ -66,7 +75,7 @@ export function parseKeyring(raw: string | undefined): Keyring | undefined {
   );
 }
 
-/** RFC3986 percent-encoding: unreserved kept, everything else as UTF-8 %XX uppercase. */
+/** [VI] Mã hóa chuẩn RFC3986: giữ nguyên ký tự an toàn, còn lại thành %XX viết hoa. */
 export function rfc3986Encode(value: string): string {
   return encodeURIComponent(value).replace(
     /[!'()*]/g,
@@ -83,7 +92,9 @@ function strictDecode(value: string): string {
   }
 }
 
-/** Decode then re-encode each segment; reject dot segments, empty/duplicate slashes. */
+/** [VI] Chuẩn hóa đường dẫn URL: giải mã rồi mã hóa lại từng đoạn; từ chối ".", "..", "//".
+ * Quan trọng vì bên gửi và bên nhận phải tính ra CHÍNH XÁC cùng một chuỗi mới so chữ ký được.
+ * Nếu không, "/a/b" và "//a//b" (vẫn trỏ tới chỗ nhau) sẽ cho 2 chữ ký khác nhau → false mismatch. */
 export function canonicalPath(rawPath: string): string {
   if (!rawPath.startsWith('/')) throw new ServiceError('VALIDATION_ERROR');
   if (rawPath === '/') return '/';
@@ -102,7 +113,8 @@ export function canonicalPath(rawPath: string): string {
   );
 }
 
-/** Sort keys by code unit, reject duplicate/unknown keys; '' when there is no query. */
+/** [VI] Chuẩn hóa query: sắp xếp key theo alphabet, từ chối key trùng/key lạ.
+ * Cùng lý do canonicalPath: "?b=2&a=1" và "?a=1&b=2" phải ra cùng chuỗi để ký khớp nhau. */
 export function canonicalQuery(rawQuery: string, allowedKeys: readonly string[]): string {
   const query = rawQuery.startsWith('?') ? rawQuery.slice(1) : rawQuery;
   if (!query) return '';
@@ -121,10 +133,12 @@ export function canonicalQuery(rawQuery: string, allowedKeys: readonly string[])
   );
 }
 
+/** [VI] Tính SHA-256 của body → hex. Dùng hash thay vì body thô để chuỗi ký có độ dài cố định. */
 export function sha256Hex(body: string | Uint8Array): string {
   return createHash('sha256').update(body).digest('hex');
 }
 
+/** [VI] Ghép 4 phần thành "bản gốc" cần ký. Mỗi phần ngăn bằng xuống dòng \n. */
 export function signingString(
   timestamp: string,
   method: string,
@@ -144,7 +158,8 @@ export interface SignInput {
   nowSeconds: number;
 }
 
-/** Produce the three X-Service-* headers for an outbound internal request. */
+/** [VI] Bên GỬI gọi hàm này: tạo 3 header X-Service-* đính kèm request.
+ * Giống gửi thư kèm: CMND (keyId) + ngày ký (timestamp) + con dấu (signature). */
 export function signServiceRequest(input: SignInput): Record<string, string> {
   const timestamp = String(Math.floor(input.nowSeconds));
   const pathAndQuery =
@@ -171,7 +186,19 @@ export interface VerifyInput {
   allowedSenders: readonly ServiceSender[];
 }
 
-/** Verify an inbound internal request; returns the authenticated sender. Fails closed. */
+/**
+ * [VI] Bên NHẬN gọi hàm này để xác thực request nội bộ. Trả về danh tính người gửi thật.
+ * Nguyên tắc "fail closed": mặc định là CHẶN, chỉ khi mọi lớp kiểm tra đều pass mới cho qua.
+ *
+ * Thứ tự kiểm tra (từ rẻ đến đắt) — mỗi lớp fail là trả lỗi ngay, không cố "fix hộ":
+ *  1. Không có chìa nào cấu hình?        → AUTH_REQUIRED (chặn hết)
+ *  2. Thiếu 1 trong 3 header?            → AUTH_REQUIRED
+ *  3. Định dạng header sai (regex)?      → AUTH_REQUIRED (kiểm tra format TRƯỚC khi dùng)
+ *  4. keyId không có trong chùm chìa?    → AUTH_REQUIRED
+ *  5. Timestamp lệch quá 300s?           → AUTH_EXPIRED (chống replay gói tin cũ)
+ *  6. Tự tính lại chữ ký mà không khớp?  → AUTH_REQUIRED
+ *  7. Chìa hợp lệ nhưng không được phép gọi route này? → FORBIDDEN
+ */
 export function verifyServiceRequest(input: VerifyInput): { keyId: string; sender: ServiceSender } {
   if (!input.keyring || input.keyring.size === 0) throw new ServiceError('AUTH_REQUIRED');
   const keyId = input.headers['x-service-key-id'];
@@ -191,6 +218,8 @@ export function verifyServiceRequest(input: VerifyInput): { keyId: string; sende
   const expected = createHmac('sha256', key.secret)
     .update(signingString(timestamp, input.method, pathAndQuery, input.body), 'utf8')
     .digest();
+  // [VI] timingSafeEqual: hàm so sánh mất CÙNG thời gian dù đúng hay sai. Nếu dùng ===
+  // thường, hacker đo thời gian trả lời để dò từng ký tự của chữ ký (timing attack).
   if (!timingSafeEqual(expected, Buffer.from(signature, 'hex'))) {
     throw new ServiceError('AUTH_REQUIRED');
   }

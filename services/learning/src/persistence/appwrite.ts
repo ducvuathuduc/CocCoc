@@ -1,3 +1,10 @@
+// [VI] Adapter bền cho Learning trên Appwrite TablesDB. Một commit gồm:
+//   1. createTransaction + stage mọi create/update/delete bằng createOperations;
+//   2. đọc lại từng row mà effect đã đọc, nếu $updatedAt đổi thì rollback (đóng khoảng trống
+//      giữa lúc đọc và lúc stage);
+//   3. commit; Appwrite tự kiểm tra tiếp từ stage → commit.
+// 409 (conflict/trùng row) được coi là conflict có thể retry. Mỗi transaction tối đa 95 thao tác
+// (giới hạn 100 của Appwrite Free). Row không gắn permission vì bảng l_ chỉ server dùng.
 // Durable Learning persistence over Appwrite TablesDB (node-appwrite). One serverless database
 // (`cocenglish`); Learning writes only its l_ tables. Commits use TablesDB transactions:
 //   1. stage every create/update/delete with createOperations (unique row IDs collide on duplicates),

@@ -1,3 +1,9 @@
+// [VI] Plan/apply schema Appwrite TablesDB:
+//   (mặc định) dry-run offline, đối chiếu foundation.json với docs/data và in kế hoạch;
+//   --apply     tạo database/table/column/index/bucket còn thiếu trên TEST project đã admitted;
+//   --check-live đọc live và báo drift.
+// Apply chỉ additive: không drop, không sửa destructive; drift buộc review tay.
+// Thứ tự bắt buộc: tạo cột → chờ available → tạo index → chờ available → bucket.
 // Appwrite TablesDB schema plan/apply for all canonical tables.
 // Default: offline dry run that validates appwrite/schema/foundation.json against docs/data and prints the plan.
 // --apply: additive create-if-absent on an explicitly admitted TEST project only (never run by CI).

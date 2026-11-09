@@ -1,3 +1,7 @@
+// [VI] Transaction engine lạc quan của AI, cùng thiết kế với Learning:
+// mỗi row đọc được ghi version; commit chỉ thành công nếu mọi version chưa đổi.
+// Conflict thì chạy lại effect trên state mới; receipt/inbox nằm cùng transaction
+// nên hiệu ứng + receipt/inbox luôn nguyên tử.
 // AI optimistic transaction engine (same design as services/learning/src/persistence/engine.ts),
 // shared by the durable Appwrite adapter and the local memory adapter.
 // An effect reads rows through the transaction (every read is recorded with its version), stages

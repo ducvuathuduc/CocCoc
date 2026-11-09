@@ -1,3 +1,6 @@
+// [VI] Điều khiển stack local bền: `up`, `stop`, `status`, `logs`, `doctor`.
+// `stop` giữ nguyên volume/dữ liệu; không có lệnh reset xóa DB. Logic compose/WSL nằm trong
+// local-dev-lib.mjs để test được mà không cần Docker thật.
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runLocalDev } from './local-dev-lib.mjs';

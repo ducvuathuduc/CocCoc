@@ -1,3 +1,5 @@
+// [VI] Cổng kiểm tra cấu hình trước khi dựng SDK/HTTP: profile release/local phải đủ
+// endpoint HTTPS, Appwrite project và cờ bắt buộc; thiếu thì chặn khởi tạo thay vì chạy nửa vời.
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,3 +1,9 @@
+// [VI] Transaction engine lạc quan (optimistic) dùng chung cho adapter Appwrite và adapter tạm:
+// - Mỗi lần đọc row được ghi lại kèm version ($updatedAt hoặc counter).
+// - Effect stage toàn bộ create/update/delete rồi commit; nếu version của bất kỳ row đã đọc
+//   thay đổi, commit bị hủy và effect chạy lại trên state mới (có giới hạn số lần).
+// - Receipt và inbox là row bình thường trong cùng transaction, nên
+//   "effect + receipt" và "inbox + effect" luôn nguyên tử.
 // Optimistic transaction engine shared by the durable Appwrite adapter and the local memory adapter.
 // An effect reads rows through the transaction (every read is recorded with its version), stages
 // put/remove writes, and the backend commits them atomically only if every recorded read is still
